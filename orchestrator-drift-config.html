@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Orchestrator – Drift & Reset Coach Setup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Configure your AI Coach with drift patterns, alignment patterns, and gentle reset behaviors for the Orchestrator Program."
+  />
+  <style>
+    :root {
+      --bg: #f7fafc;
+      --bg-alt: #ffffff;
+      --border-subtle: #e5e7eb;
+      --accent: #c6a667;
+      --accent-soft: #fef3c7;
+      --accent-deep: #92400e;
+      --text-main: #111827;
+      --text-soft: #4b5563;
+      --text-muted: #6b7280;
+      --heading-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      --body-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      --max-width: 1000px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--body-font);
+      background: var(--bg);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      padding: 32px 16px 48px;
+      display: flex;
+      justify-content: center;
+    }
+
+    main {
+      max-width: var(--max-width);
+      width: 100%;
+    }
+
+    header.top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .crumbs span:not(:last-child)::after {
+      content: "›";
+      margin: 0 6px;
+      color: #d1d5db;
+    }
+
+    .pill-tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .coach-config {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 20px 22px;
+    }
+
+    .eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    h1.title {
+      font-family: var(--heading-font);
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      margin: 0 0 6px;
+      color: var(--text-main);
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      margin: 0 0 10px;
+      max-width: 44rem;
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+
+    .field-card {
+      border-radius: var(--radius-md);
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 10px 10px 8px;
+      font-size: 0.9rem;
+    }
+
+    .field-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: var(--text-main);
+    }
+
+    .field-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      resize: vertical;
+      padding: 6px 7px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-family: var(--body-font);
+      font-size: 0.86rem;
+      color: var(--text-main);
+      background: #ffffff;
+    }
+
+    textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    .config-block {
+      margin-top: 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 10px 10px 8px;
+      font-size: 0.9rem;
+    }
+
+    .config-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .config-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .pill-small {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .config-help {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .config-textarea {
+      min-height: 260px;
+      background: #fefce8;
+    }
+
+    .callout {
+      margin-top: 12px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .callout strong {
+      color: var(--accent-deep);
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 20px 10px 32px;
+      }
+
+      .coach-config {
+        padding: 16px 14px 18px;
+      }
+
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="top-nav">
+      <div class="crumbs">
+        <span>Trainstorm.ai</span>
+        <span>Orchestrator Program</span>
+        <span>Coach Drift Setup</span>
+      </div>
+      <div class="pill-tag">Drift &amp; Reset</div>
+    </header>
+
+    <section class="coach-config">
+      <div class="eyebrow">Orchestrator Coach</div>
+      <h1 class="title">Drift &amp; Reset Configuration</h1>
+      <p class="subtitle">
+        Use this panel to define your personal <strong>Drift Library</strong>,
+        <strong>Alignment Library</strong>, and common drift situations. Then copy the
+        generated configuration prompt into your AI Coach (e.g., ChatGPT). You’re not
+        “confessing” — you’re teaching your Coach how to catch you gently when you slide.
+      </p>
+      <p class="hint">
+        Tip: bullet points are fine. Imperfect is fine. You can always refine this with
+        your Coach later.
+      </p>
+
+      <div class="grid">
+        <div class="field-card">
+          <div class="field-label">1. Drift Library</div>
+          <div class="field-subtitle">
+            How you sound / act when you’re drifting away from your best self.
+          </div>
+          <textarea placeholder="- I tell myself I'm already behind
+- I stop asking questions and assume the worst
+- I catastrophize future scenarios
+- I feel like I have to do everything alone"></textarea>
+        </div>
+
+        <div class="field-card">
+          <div class="field-label">2. Alignment Library</div>
+          <div class="field-subtitle">
+            How you sound / act when you’re grounded and Orchestrator-like.
+          </div>
+          <textarea placeholder="- I breathe before responding
+- I use one of my muscles (Mindwide Reset, Rapid Clarity, etc.)
+- I ask for options instead of doom predictions
+- I remember my future self and make choices for them"></textarea>
+        </div>
+
+        <div class="field-card">
+          <div class="field-label">3. Drift Situations (optional)</div>
+          <div class="field-subtitle">
+            Situations where drift is especially likely to show up.
+          </div>
+          <textarea placeholder="- Before a high-stakes meeting or presentation
+- After receiving criticism or negative feedback
+- When too many tasks pile up and I feel behind
+- When I'm tired at the end of the day and still trying to push"></textarea>
+        </div>
+      </div>
+
+      <div class="config-block">
+        <div class="config-header">
+          <div class="config-title">4. Coach Configuration Prompt</div>
+          <div class="pill-small">Copy &amp; paste into your AI Coach</div>
+        </div>
+        <p class="config-help">
+          Replace the bracketed sections with your own text from the boxes above.
+          Then paste this entire block into your Coach to install drift detection and
+          gentle reset behavior.
+        </p>
+        <textarea class="config-textarea">
+Coach, I want to teach you how to notice when I'm drifting away from my best self and how to help me reset without shame.
+
+PART 1 — DRIFT PATTERNS
+
+Here are phrases, tones, and patterns I tend to use when I am drifting:
+
+[PASTE YOUR DRIFT LIBRARY HERE]
+
+When I write like this, I am usually stressed, overwhelmed, ashamed, disconnected, or tired.
+Treat these as early-warning signs, not as failures.
+
+
+PART 2 — ALIGNMENT PATTERNS
+
+Here is how I tend to sound and act when I'm grounded and operating as my better, "Orchestrator" self:
+
+[PASTE YOUR ALIGNMENT LIBRARY HERE]
+
+
+PART 3 — PREFERRED INTERVENTIONS
+
+If you detect drift patterns in my messages:
+- Do NOT judge me.
+- Do NOT escalate intensity.
+- Gently ask: "Would you like to run a quick muscle?"
+- Offer 1–2 options: Mindwide Reset, State Anchor, Rapid Clarity, or Intelligence Cycle.
+
+If I say yes, briefly guide me through the chosen muscle.
+If I say no, respect that without pressure.
+
+If I say:
+"I drifted"
+"I fell off"
+or "I messed up",
+
+please respond:
+"Okay. Good catch. Want to restart with one small step?"
+
+Then ask which small step or muscle I want to use to re-enter.
+
+
+PART 4 — TEMPORAL CHECK-INS
+
+If I haven't talked with you about:
+- my muscles,
+- my identity / future self,
+- or my current projects
+
+in roughly 10 days, gently check in with:
+"How are you doing? Want to do a 2-minute tune-up together?"
+
+If I say no, accept it without judgment.
+
+
+PART 5 — SITUATIONAL DRIFT (OPTIONAL)
+
+Here are situations where I'm especially likely to drift:
+
+[PASTE YOUR DRIFT SITUATIONS HERE, IF ANY]
+
+If future messages suggest I'm in one of these contexts, you may ask:
+"Which muscle do you want to use right now?"
+
+
+OVERALL TONE
+
+At all times:
+- Be on my side.
+- Keep your tone calm, kind, and respectful.
+- Assume I am doing my best in a noisy environment.
+- Help me return to the identity I chose in the Orchestrator workshop.
+        </textarea>
+      </div>
+
+      <div class="callout">
+        <strong>How to use this:</strong> once you’ve edited the prompt above, select
+        all of it, copy, and paste it into your AI Coach. You can refine it together
+        over time — this is just your first “drift &amp; reset firmware.”
+      </div>
+    </section>
+  </main>
+</body>
+</html>
