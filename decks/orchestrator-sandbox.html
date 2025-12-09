@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Orchestrator: Sandbox Mode Deck</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --bg: #050816;
+      --fg: #f5f5f5;
+      --accent: #7dd3fc;
+      --accent-soft: #1d293b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at top, #0b1220, #020617 60%);
+      color: var(--fg);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+    .deck {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    .tag {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .slide-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .slide-title {
+      font-size: 2.6rem;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+    .slide-subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    .slide-body {
+      margin-top: 1.5rem;
+      font-size: 1.15rem;
+      max-width: 48rem;
+      line-height: 1.6;
+    }
+    .muted {
+      opacity: 0.75;
+      font-size: 0.95rem;
+    }
+    ul {
+      margin-left: 1.2rem;
+      margin-top: 0.75rem;
+    }
+    li {
+      margin-bottom: 0.4rem;
+    }
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      opacity: 0.85;
+    }
+    .progress-bar {
+      height: 4px;
+      background: rgba(148, 163, 184, 0.3);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 0.6rem;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #22d3ee, #a855f7);
+      transition: width 0.25s ease-out;
+    }
+    .key-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .keycap {
+      border-radius: 6px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      padding: 0.1rem 0.35rem;
+      font-size: 0.7rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: rgba(15, 23, 42, 0.8);
+    }
+    .pill {
+      display: inline-flex;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .blockquote {
+      border-left: 3px solid rgba(148, 163, 184, 0.9);
+      padding-left: 0.75rem;
+      margin-top: 0.75rem;
+      font-style: italic;
+      opacity: 0.9;
+    }
+    .layout-two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 2.5rem;
+      align-items: flex-start;
+    }
+    .code-ish {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 0.75rem;
+      padding: 0.9rem 1rem;
+      font-size: 0.85rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+    @media (max-width: 800px) {
+      .deck { padding: 1.5rem 1.25rem 2rem; }
+      .slide-title { font-size: 2rem; }
+      .layout-two-col { grid-template-columns: minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <div class="slide-header">
+      <div class="tag">Orchestrator · Sandbox Mode</div>
+      <div id="slide-counter"></div>
+    </div>
+
+    <div id="slide-main" class="slide-main"></div>
+
+    <div class="slide-footer">
+      <div class="key-hint">
+        <span class="keycap">←</span>
+        <span class="keycap">→</span>
+        <span class="muted">Navigate</span>
+      </div>
+      <div style="min-width: 120px;">
+        <div class="progress-bar">
+          <div id="progress-inner" class="progress-bar-inner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slides = [
+      {
+        tag: "Cold Open",
+        title: "What Game Are We Even Playing?",
+        subtitle: "Why AI feels like chaos (and why it isn’t).",
+        layout: "single",
+        body: `
+          <p class="muted">
+            “Most of us built our identity for a survival game. AI quietly switched the world into sandbox mode.”
+          </p>
+          <div class="slide-body">
+            <p>Today we’re going to talk about why AI feels overwhelming, hilarious, threatening, and wondrous all at once.</p>
+            <p>And we’re going to start by admitting something deeply important:</p>
+            <div class="blockquote">
+              <p>You’ve been playing a cozy farming simulator like it’s a boss-rush survival game.</p>
+            </div>
+          </div>
+        `
+      },
+      {
+        tag: "Story",
+        title: "The Sprinkler Identity",
+        layout: "single",
+        body: `
+          <div class="slide-body">
+            <p>I played <strong>Stardew Valley</strong> for three in-game years without ever talking to the villagers.</p>
+            <p>I wasn’t farming. I was running a pre-seed irrigation startup.</p>
+            <ul>
+              <li>Hyper-optimized sprinkler grids</li>
+              <li>Parsnip yield maximization</li>
+              <li>Automation like a Silicon Valley fever dream</li>
+            </ul>
+            <p>Meanwhile the villagers were just trying to give me <em>baked goods and friendship.</em></p>
+            <div class="blockquote">
+              <p>That’s when I realized: I brought a <strong>survival-game identity</strong> into a <strong>sandbox world.</strong></p>
+            </div>
+          </div>
+        `
+      },
+      {
+        tag: "Concept",
+        title: "Survival Game vs Sandbox Game",
+        layout: "two-col",
+        left: `
+          <div class="pill">Survival Game Identity</div>
+          <div class="slide-body">
+            <ul>
+              <li>Optimize or die</li>
+              <li>Scarcity everywhere</li>
+              <li>Mistakes are expensive</li>
+              <li>Vigilance &amp; control</li>
+              <li>Efficiency over exploration</li>
+            </ul>
+          </div>
+        `,
+        right: `
+          <div class="pill">Sandbox Game World</div>
+          <div class="slide-body">
+            <ul>
+              <li>Iteration is cheap</li>
+              <li>Exploration is rewarded</li>
+              <li>Failure is reversible</li>
+              <li>Creativity is currency</li>
+              <li>Intelligence is abundant</li>
+            </ul>
+            <p class="muted">AI didn’t just add a new tool. It changed the physics.</p>
+          </div>
+        `
+      },
+      {
+        tag: "Metaphor",
+        title: "Dark Souls Drops Into Roblox",
+        layout: "single",
+        body: `
+          <div class="slide-body">
+            <p>Your nervous system was built like <strong>Dark Souls</strong>:</p>
+            <ul>
+              <li>“Prepare to die” as a learning loop</li>
+              <li>Mastery through suffering</li>
+              <li>Every mistake feels lethal</li>
+            </ul>
+            <p>AI dropped that identity into <strong>Roblox</strong>:</p>
+            <ul>
+              <li>Chaos, creativity, neon obstacle courses</li>
+              <li>An 11-year-old in a banana suit with a laser rifle</li>
+              <li>Physics: optional</li>
+            </ul>
+            <div class="blockquote">
+              <p>A Dark Souls nervous system in a Roblox world doesn’t feel “innovative”. It feels <strong>personally attacked by fruit-based weaponry.</strong></p>
+            </div>
+          </div>
+        `
+      },
+      {
+        tag: "Psychology",
+        title: "Identity Mismatched to the Physics Engine",
+        layout: "two-col",
+        left: `
+          <div class="slide-body">
+            <p>Identity is a strategy for navigating a particular rule set.</p>
+            <ul>
+              <li>Built under threat &amp; scarcity</li>
+              <li>Optimized for minimizing risk</li>
+              <li>Rewarded for caution &amp; control</li>
+            </ul>
+          </div>
+        `,
+        right: `
+          <div class="slide-body">
+            <p>When the <em>physics</em> change:</p>
+            <ul>
+              <li>Abundance replaces scarcity</li>
+              <li>Exploration beats optimization</li>
+              <li>Iteration is almost free</li>
+            </ul>
+            <p>Your old identity isn’t “broken”. It’s just using the wrong game mode.</p>
+          </div>
+        `
+      },
+      {
+        tag: "Bridge",
+        title: "Meet the Sandbox Self",
+        layout: "single",
+        body: `
+          <div class="slide-body">
+            <p>There is a version of you that was never built for the survival game.</p>
+            <p>The part that:</p>
+            <ul>
+              <li>Asks strange questions</li>
+              <li>Likes learning for its own sake</li>
+              <li>Wants to build, not just endure</li>
+              <li>Gets excited when constraints loosen</li>
+            </ul>
+            <p>That is your <strong>Sandbox Self</strong> — the identity built for the AI era.</p>
+            <p class="muted">The Orchestrator is the human who knows the game has changed, and chooses how to play.</p>
+          </div>
+        `
+      }
+    ];
+
+    let currentIndex = 0;
+
+    function renderSlide() {
+      const slide = slides[currentIndex];
+      const mainEl = document.getElementById("slide-main");
+      const counterEl = document.getElementById("slide-counter");
+      const progressInner = document.getElementById("progress-inner");
+
+      const total = slides.length;
+      counterEl.textContent = `${currentIndex + 1} / ${total}`;
+
+      const progress = ((currentIndex + 1) / total) * 100;
+      progressInner.style.width = progress + "%";
+
+      if (slide.layout === "two-col") {
+        mainEl.innerHTML = `
+          <div class="slide-title">${slide.title}</div>
+          ${slide.subtitle ? `<div class="slide-subtitle">${slide.subtitle}</div>` : ""}
+          <div class="layout-two-col">
+            <div>${slide.left}</div>
+            <div>${slide.right}</div>
+          </div>
+        `;
+      } else {
+        mainEl.innerHTML = `
+          <div class="slide-title">${slide.title}</div>
+          ${slide.subtitle ? `<div class="slide-subtitle">${slide.subtitle}</div>` : ""}
+          ${slide.body}
+        `;
+      }
+    }
+
+    function nextSlide() {
+      if (currentIndex < slides.length - 1) {
+        currentIndex++;
+        renderSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderSlide();
+      }
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+
+    // Initial render
+    renderSlide();
+  </script>
+</body>
+</html>
