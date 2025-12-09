@@ -45,6 +45,7 @@ function prevSlide() {
   }
 }
 
+// Keyboard navigation
 document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
     e.preventDefault();
@@ -55,5 +56,22 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// Initial render once DOM is ready
-document.addEventListener("DOMContentLoaded", renderSlide);
+// Click navigation on footer:
+// click left half = previous, right half = next
+document.addEventListener("DOMContentLoaded", () => {
+  renderSlide();
+
+  const footer = document.querySelector(".slide-footer");
+  if (footer) {
+    footer.style.cursor = "pointer";
+    footer.addEventListener("click", (e) => {
+      const rect = footer.getBoundingClientRect();
+      const mid = rect.left + rect.width / 2;
+      if (e.clientX < mid) {
+        prevSlide();
+      } else {
+        nextSlide();
+      }
+    });
+  }
+});
