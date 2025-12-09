@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Orchestrator – Build Your AI Coach</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Build your AI Coach for the Orchestrator Program: define tone, identity, context, muscles, and boundaries."
+  />
+  <style>
+    :root {
+      --bg: #f7fafc;
+      --bg-alt: #ffffff;
+      --border-subtle: #e5e7eb;
+      --accent: #c6a667;
+      --accent-soft: #fef3c7;
+      --accent-deep: #92400e;
+      --text-main: #111827;
+      --text-soft: #4b5563;
+      --text-muted: #6b7280;
+      --heading-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      --body-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      --max-width: 1000px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--body-font);
+      background: var(--bg);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      padding: 32px 16px 48px;
+      display: flex;
+      justify-content: center;
+    }
+
+    main {
+      max-width: var(--max-width);
+      width: 100%;
+    }
+
+    /* Top nav / crumbs */
+    header.top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .crumbs span {
+      display: inline-block;
+    }
+
+    .crumbs span:not(:last-child)::after {
+      content: "›";
+      margin: 0 6px;
+      color: #d1d5db;
+    }
+
+    .crumbs a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .crumbs a:hover {
+      text-decoration: underline;
+    }
+
+    .pill-tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Main card */
+    .coach-build {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 20px 22px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .coach-build::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -10%;
+      right: -10%;
+      height: 4px;
+      background: linear-gradient(
+        90deg,
+        var(--accent) 0%,
+        var(--accent-deep) 100%
+      );
+      opacity: 0.85;
+    }
+
+    .eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    h1.title {
+      font-family: var(--heading-font);
+      font-size: clamp(1.8rem, 3vw, 2.3rem);
+      margin: 0 0 6px;
+      color: var(--text-main);
+    }
+
+    .subtitle {
+      font-size: 0.96rem;
+      color: var(--text-soft);
+      margin: 0 0 10px;
+      max-width: 45rem;
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .link-row {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .link-row a {
+      color: var(--accent-deep);
+      text-decoration: none;
+    }
+
+    .link-row a:hover {
+      text-decoration: underline;
+    }
+
+    /* Grid for inputs */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+
+    .field-card {
+      border-radius: var(--radius-md);
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 10px 10px 8px;
+      font-size: 0.9rem;
+    }
+
+    .field-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: var(--text-main);
+    }
+
+    .field-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      resize: vertical;
+      padding: 6px 7px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-family: var(--body-font);
+      font-size: 0.86rem;
+      color: var(--text-main);
+      background: #ffffff;
+    }
+
+    textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    /* Config blocks */
+    .config-block {
+      margin-top: 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 10px 10px 8px;
+      font-size: 0.9rem;
+    }
+
+    .config-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .config-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .pill-small {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .config-help {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .config-textarea {
+      min-height: 280px;
+      background: #fefce8;
+    }
+
+    .callout {
+      margin-top: 12px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .callout strong {
+      color: var(--accent-deep);
+    }
+
+    /* Bottom CTA back-links */
+    .next-step {
+      margin-top: 24px;
+      padding: 20px 20px 22px;
+      border-radius: var(--radius-lg);
+      background: var(--bg-alt);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .next-step::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -10%;
+      right: -10%;
+      height: 4px;
+      background: linear-gradient(
+        90deg,
+        var(--accent-deep) 0%,
+        var(--accent) 100%
+      );
+      opacity: 0.85;
+    }
+
+    .next-step-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      font-family: var(--heading-font);
+    }
+
+    .next-step-text {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin-bottom: 14px;
+      max-width: 38rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .link-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .link-buttons a {
+      display: inline-block;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      background: #fff7ed;
+      color: var(--accent-deep);
+      text-decoration: none;
+      font-size: 0.88rem;
+      letter-spacing: 0.03em;
+    }
+
+    .link-buttons a:hover {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 20px 10px 32px;
+      }
+
+      .coach-build {
+        padding: 16px 14px 18px;
+      }
+
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="top-nav">
+      <div class="crumbs">
+        <span>Trainstorm.ai</span>
+        <span>Orchestrator Program</span>
+        <span><a href="orchestrator-muscles.html">Muscle Toolkit</a></span>
+        <span>Build Your Coach</span>
+      </div>
+      <div class="pill-tag">Coach Setup</div>
+    </header>
+
+    <section class="coach-build">
+      <div class="eyebrow">Orchestrator Coach</div>
+      <h1 class="title">Build Your AI Coach</h1>
+      <p class="subtitle">
+        This page helps you define who your AI Coach is, how it should support you, 
+        and how it should understand your identity, context, and tools. When you're done, 
+        you'll copy a single configuration prompt into your Coach to give it a clear role.
+      </p>
+      <p class="hint">
+        You can keep this rough at first. Think of it as a Version 1 character sheet. 
+        You and your Coach will refine it together over time.
+      </p>
+
+      <div class="link-row">
+        Already familiar with the tools? Visit the
+        <a href="orchestrator-muscles.html">Muscle Toolkit</a> or 
+        set up <a href="orchestrator-drift-config.html">Drift &amp; Reset</a> next.
+      </div>
+
+      <div class="grid">
+        <div class="field-card">
+          <div class="field-label">1. Who is your Coach?</div>
+          <div class="field-subtitle">
+            Tone, style, role. How do you want this Coach to feel when you talk to it?
+          </div>
+          <textarea placeholder="- Warm, calm, and lightly humorous
+- Speaks plainly, not in jargon
+- Treats me like a capable peer, not a student
+- Challenges me gently but never shames me
+- Helps me think, does not just give answers"></textarea>
+        </div>
+
+        <div class="field-card">
+          <div class="field-label">2. You: Role &amp; Work Context</div>
+          <div class="field-subtitle">
+            What do you do? What kinds of problems do you bring to the Coach?
+          </div>
+          <textarea placeholder="- Senior instructional designer working in biopharma
+- Work across complex cross-functional teams and compliance-heavy content
+- Main tasks: designing learning experiences, structuring content, communicating with SMEs
+- Constraints: limited time, changing priorities, sensitive information boundaries"></textarea>
+        </div>
+
+        <div class="field-card">
+          <div class="field-label">3. Your Orchestrator Identity</div>
+          <div class="field-subtitle">
+            How does your “Orchestrator self” think, act, and choose?
+          </div>
+          <textarea placeholder="- Curious, experimental, and willing to try small safe bets
+- Sees AI as a thinking partner, not a threat
+- Makes decisions that respect my future self, not just present stress
+- Uses muscles like Mindwide Reset, Rapid Clarity, and Intelligence Cycle intentionally"></textarea>
+        </div>
+
+        <div class="field-card">
+          <div class="field-label">4. Boundaries &amp; Red Lines</div>
+          <div class="field-subtitle">
+            Topics or behaviors where the Coach should be careful, limited, or redirect to humans.
+          </div>
+          <textarea placeholder="- Do not give me medical, legal, or financial advice beyond general education
+- If I sound deeply distressed or self-destructive, encourage me to talk to a trusted human or professional
+- Do not push productivity at the cost of my health
+- Respect privacy: remind me not to paste sensitive or regulated data"></textarea>
+        </div>
+      </div>
+
+      <div class="config-block">
+        <div class="config-header">
+          <div class="config-title">5. Coach Configuration Prompt</div>
+          <div class="pill-small">Copy &amp; paste into your AI Coach</div>
+        </div>
+        <p class="config-help">
+          Replace the bracketed sections with your own text from the boxes above. 
+          Then paste this entire block into your AI Coach (e.g., ChatGPT) to give it 
+          a clear role, style, and understanding of you.
+        </p>
+        <textarea class="config-textarea">
+You are my Orchestrator Coach.
+
+Your job is to help me think, decide, and grow as my “Orchestrator” self in an AI-native world, not to take over my agency.
+
+ABOUT YOU (COACH STYLE)
+Here is how I would like you to show up in our conversations:
+[PASTE "WHO IS YOUR COACH?" TEXT HERE]
+
+ABOUT ME (ROLE & CONTEXT)
+Here is who I am and the kind of work and problems I bring you:
+[PASTE "ROLE & WORK CONTEXT" TEXT HERE]
+
+MY ORCHESTRATOR IDENTITY
+This is how my better, Orchestrator self thinks and behaves. Use this as a reference point for your guidance:
+[PASTE "YOUR ORCHESTRATOR IDENTITY" TEXT HERE]
+
+BOUNDARIES & RED LINES
+Please respect the following limits at all times:
+[PASTE "BOUNDARIES & RED LINES" TEXT HERE]
+
+MUSCLES & TOOLS
+I am using a set of cognitive tools from the Orchestrator Program (e.g., Mindwide Reset, Signal–Noise Splitter, State Anchor Protocol, Hidden Answer Switch, Narrative Recode, Constraint Inversion Engine, Judgment Triad, Temporal Lens Stack, Rapid Clarity Protocol, Intelligence Cycle).
+
+When I ask for help, you may:
+- Suggest which muscle might fit the situation
+- Guide me through a chosen muscle step by step
+- Help me connect muscles to real decisions and projects
+
+DRIFT & RESET (IF CONFIGURED)
+If I have also given you a Drift & Reset configuration:
+- Use those instructions to notice when I'm drifting
+- Offer gentle, opt-in resets without shame
+- Treat drift as a pattern, not a personal failure
+
+OVERALL
+- Treat me as capable and growing.
+- Favor clarity, compassion, and concrete steps.
+- Help me protect the identity I am choosing to build, not the one I am leaving behind.
+        </textarea>
+      </div>
+
+      <div class="callout">
+        <strong>Next:</strong> once you’ve edited the prompt above, select all, copy, 
+        and paste it into your AI Coach. You can return here any time to revise this 
+        “Coach profile” as your work and identity evolve.
+      </div>
+    </section>
+
+    <section class="next-step">
+      <div class="next-step-title">Keep Building Your System</div>
+      <p class="next-step-text">
+        Your Coach works best when it knows your tools and your drift patterns. You 
+        can revisit the Orchestrator Muscle Toolkit or set up Drift &amp; Reset at any time.
+      </p>
+      <div class="link-buttons">
+        <a href="orchestrator-muscles.html">← Muscle Toolkit</a>
+        <a href="orchestrator-drift-config.html">Drift &amp; Reset Setup →</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
