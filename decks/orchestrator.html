@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Orchestrator Program – Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="The Orchestrator Program – a workshop and toolkit for helping humans partner with AI, shift identity, and build an AI Coach for real work."
+  />
+  <style>
+    :root {
+      --bg: #f7fafc;
+      --bg-alt: #ffffff;
+      --border-subtle: #e5e7eb;
+      --accent: #c6a667;
+      --accent-soft: #fef3c7;
+      --accent-deep: #92400e;
+      --text-main: #111827;
+      --text-soft: #4b5563;
+      --text-muted: #6b7280;
+      --heading-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      --body-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      --max-width: 1000px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--body-font);
+      background: var(--bg);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      padding: 32px 16px 48px;
+      display: flex;
+      justify-content: center;
+    }
+
+    main {
+      max-width: var(--max-width);
+      width: 100%;
+    }
+
+    /* Top nav / crumbs */
+    header.top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .crumbs span:not(:last-child)::after {
+      content: "›";
+      margin: 0 6px;
+      color: #d1d5db;
+    }
+
+    .pill-tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Hero */
+    .hero {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 20px 22px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -10%;
+      right: -10%;
+      height: 4px;
+      background: linear-gradient(
+        90deg,
+        var(--accent) 0%,
+        var(--accent-deep) 100%
+      );
+      opacity: 0.9;
+    }
+
+    .eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    h1.hero-title {
+      font-family: var(--heading-font);
+      font-size: clamp(1.9rem, 3.1vw, 2.4rem);
+      margin: 0 0 6px;
+      color: var(--text-main);
+    }
+
+    .hero-subtitle {
+      font-size: 0.96rem;
+      color: var(--text-soft);
+      margin: 0 0 10px;
+      max-width: 46rem;
+    }
+
+    .hero-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hero-meta span:not(:last-child)::after {
+      content: "•";
+      margin: 0 6px;
+      color: #d1d5db;
+    }
+
+    .hero-foot {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* Section headings */
+    .section-heading {
+      margin: 18px 0 8px;
+      font-family: var(--heading-font);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .section-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+      max-width: 40rem;
+    }
+
+    /* Cards grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 12px 12px 14px;
+      font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -10%;
+      right: -10%;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        rgba(198, 166, 103, 0.5) 0%,
+        rgba(146, 64, 14, 0.7) 100%
+      );
+      opacity: 0.7;
+    }
+
+    .card-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .card-label {
+      font-size: 0.74rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .card-body {
+      font-size: 0.86rem;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+
+    .card-link {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 0.82rem;
+      color: var(--accent-deep);
+      text-decoration: none;
+    }
+
+    .card-link:hover {
+      text-decoration: underline;
+    }
+
+    /* L&D row */
+    .ld-strip {
+      margin-top: 22px;
+      border-radius: var(--radius-lg);
+      border: 1px dashed #d4d4d8;
+      background: #f9fafb;
+      padding: 12px 12px 14px;
+      font-size: 0.86rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .ld-label {
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .ld-main {
+      flex: 2 1 220px;
+    }
+
+    .ld-links {
+      flex: 1 1 180px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ld-links a {
+      font-size: 0.82rem;
+      color: var(--accent-deep);
+      text-decoration: none;
+    }
+
+    .ld-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer note */
+    .footnote {
+      margin-top: 18px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 20px 10px 32px;
+      }
+
+      .hero {
+        padding: 16px 14px 18px;
+      }
+
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .ld-strip {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="top-nav">
+      <div class="crumbs">
+        <span>Trainstorm.ai</span>
+        <span>Orchestrator Program</span>
+      </div>
+      <div class="pill-tag">Program Hub</div>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">Orchestrator Program</div>
+      <h1 class="hero-title">Humans, AI, and the Shift Beyond “Just a Worker”</h1>
+      <p class="hero-subtitle">
+        The Orchestrator Program is a 4-hour, high-intensity workshop and toolkit that 
+        helps people move from <em>AI anxiety and survival mode</em> into a new identity 
+        as an Orchestrator: someone who can think with AI, design systems, and protect 
+        what actually matters in their work and life.
+      </p>
+      <div class="hero-meta">
+        <span>Format: 4-hour workshop + tools</span>
+        <span>Core arc: Align → Disrupt → Reform → Assist</span>
+        <span>Audience: L&amp;D, knowledge workers, AI-curious teams</span>
+      </div>
+      <div class="hero-foot">
+        This hub collects the live tools participants use during and after the workshop.
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-heading">For Participants</h2>
+      <p class="section-subtitle">
+        These pages are the live “user guide” for your Orchestrator system: your core 
+        tools, your AI Coach, and the drift protections that keep it all alive once 
+        the workshop high wears off.
+      </p>
+
+      <div class="grid">
+        <!-- Muscles card -->
+        <article class="card">
+          <div class="card-label">Tools</div>
+          <h3 class="card-title">Orchestrator Muscle Toolkit</h3>
+          <p class="card-body">
+            Ten signature cognitive “muscles,” each with three versions:
+            human-only, AI-integrated, and AI-directed. These are the practical 
+            exercises you run with yourself and your Coach to stabilize, reframe, 
+            clarify, and orchestrate.
+          </p>
+          <a class="card-link" href="orchestrator-muscles.html">
+            Open Muscle Toolkit →
+          </a>
+        </article>
+
+        <!-- Build Coach card -->
+        <article class="card">
+          <div class="card-label">Coach</div>
+          <h3 class="card-title">Build Your AI Coach</h3>
+          <p class="card-body">
+            Define who your Coach is, how it talks to you, what it knows about 
+            your work, and what lines it never crosses. This is your Coach’s 
+            “character sheet” and identity brief.
+          </p>
+          <a class="card-link" href="orchestrator-build-coach.html">
+            Build Your Coach →
+          </a>
+        </article>
+
+        <!-- Drift card -->
+        <article class="card">
+          <div class="card-label">Long Tail</div>
+          <h3 class="card-title">Drift &amp; Reset Setup</h3>
+          <p class="card-body">
+            Teach your Coach what “drift” looks like, how to spot it, and how 
+            to invite you back into your Orchestrator identity without shame.
+            This is the anti-relapse firmware that makes the workshop stick.
+          </p>
+          <a class="card-link" href="orchestrator-drift-config.html">
+            Set Up Drift &amp; Reset →
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <section class="ld-strip">
+      <div class="ld-main">
+        <div class="ld-label">For L&amp;D Leaders &amp; Decision Makers</div>
+        <p>
+          The Orchestrator Program is designed for teams living through AI disruption:
+          especially L&amp;D, knowledge work, and cross-functional roles in complex
+          environments like biopharma. It blends identity work, concrete tools, and AI
+          literacy into a system people can actually live with after the workshop.
+        </p>
+        <p>
+          Use the resources on the right to understand how the program fits into your
+          learning strategy, infrastructure, and culture.
+        </p>
+      </div>
+      <div class="ld-links">
+        <!-- You can wire these when you’re ready to publish those pages/files -->
+        <a href="#"
+           onclick="return false;">Decision-Maker Brief (PDF coming soon)</a>
+        <a href="#"
+           onclick="return false;">Orchestrator White Paper (HTML / PDF)</a>
+        <a href="#"
+           onclick="return false;">Implementation Notes (AI access, constraints)</a>
+      </div>
+    </section>
+
+    <div class="footnote">
+      As the program evolves, this hub can grow with it: additional modules, stories, 
+      and resources can be linked here without changing the core experience.
+    </div>
+  </main>
+</body>
+</html>
