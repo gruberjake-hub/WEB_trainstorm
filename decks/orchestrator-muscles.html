@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Orchestrator Muscle Toolkit – Signature Edition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="The Orchestrator Muscle Toolkit – ten signature cognitive tools, each with human, AI-integrated, and AI-directed versions for working with an AI Coach."
+  />
+  <style>
+    :root {
+      --bg: #f7fafc;
+      --bg-alt: #ffffff;
+      --border-subtle: #e5e7eb;
+      --accent: #c6a667;
+      --accent-soft: #fef3c7;
+      --accent-deep: #92400e;
+      --stage1: #dbeafe;
+      --stage2: #dcfce7;
+      --stage3: #fef9c3;
+      --stage4: #f5d0fe;
+      --text-main: #111827;
+      --text-soft: #4b5563;
+      --text-muted: #6b7280;
+      --heading-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      --body-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      --max-width: 1000px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--body-font);
+      background: var(--bg);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      padding: 32px 16px 48px;
+      display: flex;
+      justify-content: center;
+    }
+
+    main {
+      max-width: var(--max-width);
+      width: 100%;
+    }
+
+    /* Top nav / crumbs */
+    header.top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .crumbs span:not(:last-child)::after {
+      content: "›";
+      margin: 0 6px;
+      color: #d1d5db;
+    }
+
+    .pill-tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Hero */
+    .hero {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 20px 18px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    h1.hero-title {
+      font-family: var(--heading-font);
+      font-size: clamp(1.9rem, 3.2vw, 2.4rem);
+      margin: 0 0 6px;
+      color: var(--text-main);
+    }
+
+    .hero-subtitle {
+      font-size: 0.96rem;
+      color: var(--text-soft);
+      margin: 0 0 8px;
+      max-width: 44rem;
+    }
+
+    .hero-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-meta span:not(:last-child)::after {
+      content: "•";
+      margin: 0 6px;
+      color: #d1d5db;
+    }
+
+    .hero-diagram {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      background: #f9fafb;
+      border: 1px dashed #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .hero-diagram-title {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+    }
+
+    .legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+    }
+
+    .swatch-stage1 { background: var(--stage1); }
+    .swatch-stage2 { background: var(--stage2); }
+    .swatch-stage3 { background: var(--stage3); }
+    .swatch-stage4 { background: var(--stage4); }
+
+    /* Stage sections */
+    .stage {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 20px;
+      margin-bottom: 18px;
+    }
+
+    .stage-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .stage-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .stage-title {
+      font-family: var(--heading-font);
+      font-size: 1.3rem;
+      margin: 0;
+      color: var(--text-main);
+    }
+
+    .stage-tagline {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      max-width: 26rem;
+    }
+
+    .stage-badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stage-badge-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+    }
+
+    .stage1-dot { background: var(--stage1); }
+    .stage2-dot { background: var(--stage2); }
+    .stage3-dot { background: var(--stage3); }
+    .stage4-dot { background: var(--stage4); }
+
+    .stage-body {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+
+    .muscle-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 20px 10px 32px;
+      }
+
+      .stage,
+      .hero {
+        padding: 16px 14px 18px;
+      }
+
+      .muscle-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* Muscle cards */
+    .muscle-card {
+      border-radius: var(--radius-md);
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 8px 10px;
+      font-size: 0.9rem;
+    }
+
+    .muscle-name {
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+    }
+
+    .muscle-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .muscle-summary {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      margin-bottom: 4px;
+    }
+
+    /* Details / summaries */
+    details {
+      border-radius: var(--radius-sm);
+      border: 1px dashed #e5e7eb;
+      background: #ffffff;
+      margin-top: 4px;
+      padding: 4px 6px 6px;
+    }
+
+    details summary {
+      list-style: none;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    details[open] {
+      border-style: solid;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .summary-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .summary-pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      color: var(--text-muted);
+    }
+
+    .summary-chevron {
+      font-size: 0.8rem;
+      color: #d1d5db;
+      margin-left: 6px;
+    }
+
+    details[open] .summary-chevron {
+      transform: rotate(90deg);
+    }
+
+    .details-body {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+
+    .details-body ul {
+      margin: 4px 0 4px 1.1rem;
+      padding-left: 0;
+    }
+
+    .details-body li {
+      margin-bottom: 2px;
+    }
+
+    .code-block {
+      margin: 4px 0;
+      padding: 4px 6px;
+      border-radius: 6px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.78rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .callout {
+      margin: 10px 0 0;
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .callout strong {
+      color: var(--accent-deep);
+    }
+
+     /* New bottom CTA style */
+    .next-step {
+      margin-top: 32px;
+      padding: 20px 20px;
+      border-radius: var(--radius-lg);
+      background: var(--bg-alt);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+
+    .next-step-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .next-step-text {
+      font-size: 0.92rem;
+      color: var(--text-soft);
+      margin-bottom: 14px;
+    }
+
+    .next-step a {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+    }
+
+    .next-step a:hover {
+      background: var(--accent-deep);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="top-nav">
+      <div class="crumbs">
+        <span>Trainstorm.ai</span>
+        <span>Orchestrator Program</span>
+        <span>Muscle Toolkit</span>
+      </div>
+      <div class="pill-tag">Signature Edition</div>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">Orchestrator Program</div>
+      <h1 class="hero-title">The Orchestrator Muscle Toolkit</h1>
+      <p class="hero-subtitle">
+        Ten signature cognitive tools for the AI-native era, each available in three
+        versions: traditional human exercise, AI-integrated exercise, and an
+        AI-directed version that configures a personal AI Coach while quietly reshaping
+        identity and behavior.
+      </p>
+      <div class="hero-meta">
+        <span>Stages: Survival → Sandbox → Orchestrator</span>
+        <span>Audience: L&amp;D, teams, high-agency individuals</span>
+      </div>
+      <div class="hero-diagram">
+        <div class="hero-diagram-title">Muscle Map</div>
+        <div class="legend-row">
+          <div class="legend-item">
+            <span class="legend-swatch swatch-stage1"></span>
+            <span>Stage 1 · Stabilize &amp; Observe</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch swatch-stage2"></span>
+            <span>Stage 2 · Reframe &amp; Play</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch swatch-stage3"></span>
+            <span>Stage 3 · Clarify &amp; Expand</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch swatch-stage4"></span>
+            <span>Stage 4 · Full Orchestration</span>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Three Versions per Muscle:</strong>  
+          Human · AI-Integrated · AI-Directed (configure your Coach, change your mind).
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 1 -->
+    <section class="stage" id="stage1">
+      <div class="stage-header">
+        <div>
+          <div class="stage-label">Stage 1</div>
+          <h2 class="stage-title">Stabilize &amp; Observe</h2>
+        </div>
+        <div class="stage-badge">
+          <span class="stage-badge-dot stage1-dot"></span>
+          Survival → Self-awareness
+        </div>
+      </div>
+      <div class="stage-body">
+        <p>
+          These muscles reduce noise, create psychological breathing room, and help
+          people see how their mind and body are actually operating before we ask them
+          to change anything.
+        </p>
+
+        <div class="muscle-grid">
+          <!-- Muscle 1 -->
+          <article class="muscle-card" id="mindwide-reset">
+            <div class="muscle-name">1. The Mindwide Reset</div>
+            <div class="muscle-subtitle">Meta-Cognition Reset · “Executive Prompt Reset”</div>
+            <p class="muscle-summary">
+              Teaches people to notice the “prompt” their brain is running and rewrite
+              it toward agency.
+            </p>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">Human</span>
+                  <span>Classic exercise</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <ul>
+                  <li>Recall a recent moment of friction or looping self-talk.</li>
+                  <li>Write down the exact “internal prompt” your mind was answering (e.g., “Why am I always behind?”).</li>
+                  <li>Rewrite that prompt into one that assumes agency (e.g., “What is the next smallest step that moves this forward?”).</li>
+                  <li>Say or think the new prompt deliberately, then list 1–3 actions it suggests.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Integrated</span>
+                  <span>Coach collaborates</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <p>Use your AI Coach as a prompt designer:</p>
+                <div class="code-block">
+Executive Prompt Reset:
+Old mental prompt: "..."
+New intentional prompt: "..."
+Help me:
+- Remove any self-blame or fatalism
+- Clarify what I'm actually asking for
+- Propose 1–3 very small actions aligned with the new prompt
+                </div>
+                <p>The Coach:</p>
+                <ul>
+                  <li>Strips out self-attack and vague language.</li>
+                  <li>Clarifies what “success” might look like.</li>
+                  <li>Offers a tiny, doable action list.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Directed</span>
+                  <span>Configure your Coach</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <p>
+                  Frame it as: <strong>“Teach your AI how your mind currently prompts
+                  itself.”</strong>
+                </p>
+                <ul>
+                  <li>Describe one moment where your self-talk was loud.</li>
+                  <li>Give the Coach the old prompt and your new, preferred prompt.</li>
+                  <li>Ask the Coach: “If you notice me using the old pattern in future sessions, gently nudge me back to the new one.”</li>
+                </ul>
+                <p>
+                  The learner believes they’re configuring the AI, but they’re also
+                  consciously reconfiguring their own mental default.
+                </p>
+              </div>
+            </details>
+          </article>
+
+          <!-- Muscle 2 -->
+          <article class="muscle-card" id="signal-noise">
+            <div class="muscle-name">2. The Signal–Noise Splitter</div>
+            <div class="muscle-subtitle">Two-Track Mind · Thought vs Feeling</div>
+            <p class="muscle-summary">
+              Separates the thinking track and the feeling track so decisions don’t get
+              hijacked by raw emotion.
+            </p>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">Human</span>
+                  <span>Classic exercise</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <ul>
+                  <li>Write a brief description of a current issue.</li>
+                  <li>On the left: “Thinking Track” – what you believe is true, what you predict will happen.</li>
+                  <li>On the right: “Feeling Track” – emotions, body sensations, urges.</li>
+                  <li>Ask: “Which track needs attention first for me to move sanely?”</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Integrated</span>
+                  <span>Coach collaborates</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <div class="code-block">
+Two-Track Mind:
+Thinking Track: "..."
+Feeling Track: "..."
+
+Coach:
+- Which track seems most volatile?
+- Which small action would calm that track without ignoring it?
+- Once calmer, what decision becomes clearer?
+                </div>
+                <p>
+                  The Coach helps you avoid both “logic-only” and “emotion-only”
+                  decisions by sequencing the work.
+                </p>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Directed</span>
+                  <span>Configure your Coach</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <p>
+                  Frame it as: <strong>“Give your AI data on how your thoughts and
+                  feelings diverge.”</strong>
+                </p>
+                <ul>
+                  <li>Describe one situation and fill in both tracks.</li>
+                  <li>Ask the Coach: “When my Feeling Track looks like this, what is the safest way you can respond so I don’t feel dismissed?”</li>
+                  <li>Optionally: “When my Thinking Track looks like this, how can you gently challenge me without escalating my emotions?”</li>
+                </ul>
+                <p>This trains both the AI and the human in emotional containment.</p>
+              </div>
+            </details>
+          </article>
+
+          <!-- Muscle 3 -->
+          <article class="muscle-card" id="state-anchor">
+            <div class="muscle-name">3. The State Anchor Protocol</div>
+            <div class="muscle-subtitle">90-Second State Shift</div>
+            <p class="muscle-summary">
+              A quick physiological reset to keep the nervous system from running the
+              meeting, the project, or the day.
+            </p>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">Human</span>
+                  <span>Classic exercise</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <ul>
+                  <li>Name your current state in one word (“amped”, “foggy”, “anxious”).</li>
+                  <li>Notice 3 body sensations (temperature, tightness, movement).</li>
+                  <li>Do 4 slow breaths with long exhales while feeling your feet or the chair.</li>
+                  <li>Choose a single word for the state you want to move toward (“steady”, “curious”, “focused”).</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Integrated</span>
+                  <span>Coach collaborates</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <div class="code-block">
+State Anchor Protocol:
+Current state (1–2 words): "..."
+Body signals: "..."
+Desired state: "..."
+
+Coach:
+- Normalize what I'm feeling
+- Identify what this state might be trying to protect
+- Suggest one 60–120 second micro-action that moves me toward my desired state
+                </div>
+                <p>The Coach becomes a calm reflector, not an amplifier.</p>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Directed</span>
+                  <span>Configure your Coach</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <p>
+                  Frame it as: <strong>“Show your AI the shape of your emotional state
+                  so it can calibrate.”</strong>
+                </p>
+                <ul>
+                  <li>Describe 1–2 common states you enter at work (e.g., pre-meeting anxiety, end-of-day depletion).</li>
+                  <li>Tell the Coach what kind of response helps and what doesn’t when you’re in that state.</li>
+                  <li>Ask it to mirror that preference in future interactions.</li>
+                </ul>
+                <p>You’re quietly teaching the AI and yourself how to de-escalate.</p>
+              </div>
+            </details>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 2 -->
+    <section class="stage" id="stage2">
+      <div class="stage-header">
+        <div>
+          <div class="stage-label">Stage 2</div>
+          <h2 class="stage-title">Reframe &amp; Play</h2>
+        </div>
+        <div class="stage-badge">
+          <span class="stage-badge-dot stage2-dot"></span>
+          Awareness → Sandbox
+        </div>
+      </div>
+      <div class="stage-body">
+        <p>
+          Here we help people loosen the grip of doom-heavy survival narratives and
+          rediscover experimental, sandbox-style thinking.
+        </p>
+
+        <div class="muscle-grid">
+          <!-- Muscle 4 -->
+          <article class="muscle-card" id="hidden-answer">
+            <div class="muscle-name">4. The Hidden Answer Switch</div>
+            <div class="muscle-subtitle">Proxy-Knowing Technique</div>
+            <p class="muscle-summary">
+              Bypasses “I don’t know” to access the intuitive answer that was already
+              there.
+            </p>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">Human</span>
+                  <span>Classic exercise</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <ul>
+                  <li>Pick a decision or stuck point.</li>
+                  <li>Say or write: “I know I don’t know, but if I DID know the next right move, what would it be?”</li>
+                  <li>Write the first answer without editing.</li>
+                  <li>Later, evaluate that answer with a calmer mind.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Integrated</span>
+                  <span>Coach collaborates</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <div class="code-block">
+Hidden Answer Switch:
+Stuck question: "..."
+My proxy answer (first thought): "..."
+
+Coach:
+- What looks wise about this answer?
+- What might be driven by fear, habit, or ego?
+- Suggest 1–2 safe experiments to test or refine this answer.
+                </div>
+                <p>Now the Coach helps separate intuition from defense.</p>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Directed</span>
+                  <span>Configure your Coach</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <p>
+                  Frame it as: <strong>“Upload your intuitive answer so your AI can
+                  learn your implicit wisdom.”</strong>
+                </p>
+                <ul>
+                  <li>Share a few past examples where your “if I did know” answer turned out helpful.</li>
+                  <li>Ask the Coach to describe what your wise answers have in common.</li>
+                  <li>Invite it to remind you of those patterns when you start overthinking.</li>
+                </ul>
+              </div>
+            </details>
+          </article>
+
+          <!-- Muscle 5 -->
+          <article class="muscle-card" id="narrative-recode">
+            <div class="muscle-name">5. The Narrative Recode</div>
+            <div class="muscle-subtitle">Second Story Method</div>
+            <p class="muscle-summary">
+              Turns “I’m doomed” narratives into “I have options” narratives without
+              pretending everything is fine.
+            </p>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">Human</span>
+                  <span>Classic exercise</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <ul>
+                  <li>Write down your current story about a situation (First Story).</li>
+                  <li>Write a Second Story that is still honest but more empowered and curious.</li>
+                  <li>Ask: “What would I do differently if the Second Story were true?”</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Integrated</span>
+                  <span>Coach collaborates</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <div class="code-block">
+Narrative Recode:
+First Story: "..."
+Second Story (my attempt): "..."
+
+Coach:
+- Make my Second Story more compassionate and more empowering, without denying difficulty.
+- Highlight one behavior change implied by the new story.
+                </div>
+                <p>The Coach becomes a narrative editor who protects dignity.</p>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Directed</span>
+                  <span>Configure your Coach</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <p>
+                  Frame it as: <strong>“Train your AI to recognize your disempowering
+                  narratives.”</strong>
+                </p>
+                <ul>
+                  <li>Feed the Coach 2–3 examples of your First Stories.</li>
+                  <li>Ask it to name common phrases or assumptions that tend to show up.</li>
+                  <li>Invite it to gently flag those patterns in future conversations and ask, “Do you want to try a Second Story here?”</li>
+                </ul>
+              </div>
+            </details>
+          </article>
+
+          <!-- Muscle 6 -->
+          <article class="muscle-card" id="constraint-engine">
+            <div class="muscle-name">6. The Constraint Inversion Engine</div>
+            <div class="muscle-subtitle">Constraint Flip</div>
+            <p class="muscle-summary">
+              Uses limits and blockers as creativity fuel instead of kill switches.
+            </p>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">Human</span>
+                  <span>Classic exercise</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <ul>
+                  <li>Write a single constraint (“We can’t use external AI tools,” “Our budget is tiny”).</li>
+                  <li>Flip it: “What becomes uniquely possible because this constraint exists?”</li>
+                  <li>Generate at least 5 ideas that only make sense under this constraint.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Integrated</span>
+                  <span>Coach collaborates</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <div class="code-block">
+Constraint Inversion:
+Constraint: "..."
+First attempt at flip: "..."
+
+Coach:
+- Improve my constraint-flip so it feels concrete, not fluffy
+- Generate 5–10 ideas that become attractive specifically because of this constraint
+                </div>
+                <p>The Coach functions as an idea engine tuned to your reality.</p>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Directed</span>
+                  <span>Configure your Coach</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <p>
+                  Frame it as: <strong>“Give your AI this constraint so it learns how to
+                  innovate inside your boundaries.”</strong>
+                </p>
+                <ul>
+                  <li>List your non-negotiables (compliance, budget, tools allowed).</li>
+                  <li>Ask the Coach to treat these as guardrails, not annoyances.</li>
+                  <li>Invite it to explicitly say “Because of your constraints X and Y, here’s a creative option.”</li>
+                </ul>
+              </div>
+            </details>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 3 -->
+    <section class="stage" id="stage3">
+      <div class="stage-header">
+        <div>
+          <div class="stage-label">Stage 3</div>
+          <h2 class="stage-title">Clarify &amp; Expand</h2>
+        </div>
+        <div class="stage-badge">
+          <span class="stage-badge-dot stage3-dot"></span>
+          Sandbox → Designer
+        </div>
+      </div>
+      <div class="stage-body">
+        <p>
+          Once people can play again, these muscles sharpen judgment, widen time
+          horizons, and extract clarity from complex situations.
+        </p>
+
+        <div class="muscle-grid">
+          <!-- Muscle 7 -->
+          <article class="muscle-card" id="judgment-triad">
+            <div class="muscle-name">7. The Judgment Triad</div>
+            <div class="muscle-subtitle">Three-Lens Decision Check</div>
+            <p class="muscle-summary">
+              Aligns surface facts, recurring patterns, and deep principles before a
+              decision is made.
+            </p>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">Human</span>
+                  <span>Classic exercise</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <ul>
+                  <li>Facts: List what is objectively true right now.</li>
+                  <li>Patterns: Recall similar situations you’ve seen before.</li>
+                  <li>Principles: Write 2–3 values or non-negotiables that should govern this decision.</li>
+                  <li>Check for conflicts between the three; adjust the decision accordingly.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Integrated</span>
+                  <span>Coach collaborates</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <div class="code-block">
+Judgment Triad:
+Facts: "..."
+Patterns I've seen before: "..."
+Principles/values that matter here: "..."
+
+Coach:
+- Spot any contradictions or blind spots across the three lenses
+- Suggest 2–3 decision options that honor my principles while respecting the facts
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Directed</span>
+                  <span>Configure your Coach</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <p>
+                  Frame it as: <strong>“Feed your AI your decision logic so it can
+                  detect blind spots.”</strong>
+                </p>
+                <ul>
+                  <li>Describe 1–2 past decisions you’re proud of and how the three lenses aligned.</li>
+                  <li>Describe 1–2 decisions you regret and where the misalignment was.</li>
+                  <li>Ask the Coach to watch for those misalignments in future reasoning.</li>
+                </ul>
+              </div>
+            </details>
+          </article>
+
+          <!-- Muscle 8 -->
+          <article class="muscle-card" id="temporal-stack">
+            <div class="muscle-name">8. The Temporal Lens Stack</div>
+            <div class="muscle-subtitle">Time-Horizon Shift</div>
+            <p class="muscle-summary">
+              Evaluates decisions at three time horizons: 1 week, 6 months, 5 years.
+            </p>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">Human</span>
+                  <span>Classic exercise</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <ul>
+                  <li>Take a decision or habit.</li>
+                  <li>Ask: “What does this do to my life/work in 1 week? 6 months? 5 years?”</li>
+                  <li>Notice where short-term and long-term trade off.</li>
+                  <li>Adjust the decision to better respect the long-term identity you care about.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Integrated</span>
+                  <span>Coach collaborates</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <div class="code-block">
+Temporal Lens Stack:
+Decision or habit: "..."
+
+Coach:
+- Describe likely consequences in:
+  - 1 week
+  - 6 months
+  - 5 years
+- Where do these conflict with the kind of person I say I want to become?
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Directed</span>
+                  <span>Configure your Coach</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <p>
+                  Frame it as: <strong>“Teach your AI how you weigh present vs future
+                  identity.”</strong>
+                </p>
+                <ul>
+                  <li>Explain what you typically prioritize: immediate relief, medium-term stability, or long-term growth.</li>
+                  <li>Tell the Coach what kind of gentle challenge you want when you sacrifice long-term for short-term too often.</li>
+                  <li>Ask it to periodically ask, “How does this serve your 5-year self?”</li>
+                </ul>
+              </div>
+            </details>
+          </article>
+
+          <!-- Muscle 9 -->
+          <article class="muscle-card" id="rapid-clarity">
+            <div class="muscle-name">9. The Rapid Clarity Protocol</div>
+            <div class="muscle-subtitle">30-Second Synthesis</div>
+            <p class="muscle-summary">
+              Compresses noise into: What it’s about, what it means, and what it
+              implies.
+            </p>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">Human</span>
+                  <span>Classic exercise</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <ul>
+                  <li>Write messy notes about a situation or idea.</li>
+                  <li>Then force a 3-line summary:
+                    <ul>
+                      <li><strong>Anchor:</strong> What is this about?</li>
+                      <li><strong>Insight:</strong> What is the key thing to notice?</li>
+                      <li><strong>Implication:</strong> What follows from that?</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Integrated</span>
+                  <span>Coach collaborates</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <div class="code-block">
+Rapid Clarity:
+Here are my messy notes:
+" ... paste notes ... "
+
+Coach:
+- Give me:
+  - Anchor (1 sentence)
+  - Insight (1–2 sentences)
+  - Implication (1–2 sentences, focused on action or risk)
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Directed</span>
+                  <span>Configure your Coach</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <p>
+                  Frame it as: <strong>“Upload messy thinking; let the AI learn your
+                  synthesis pattern.”</strong>
+                </p>
+                <ul>
+                  <li>Feed the Coach examples of problems plus the Anchor/Insight/Implication you eventually arrived at.</li>
+                  <li>Ask it to mimic your style of synthesis.</li>
+                  <li>Later, compare its summary with your own and refine the rules together.</li>
+                </ul>
+              </div>
+            </details>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 4 -->
+    <section class="stage" id="stage4">
+      <div class="stage-header">
+        <div>
+          <div class="stage-label">Stage 4</div>
+          <h2 class="stage-title">Full Orchestration</h2>
+        </div>
+        <div class="stage-badge">
+          <span class="stage-badge-dot stage4-dot"></span>
+          Designer → Orchestrator
+        </div>
+      </div>
+      <div class="stage-body">
+        <p>
+          The capstone muscle integrates everything: context-setting, AI collaboration,
+          synthesis, and decisive action.
+        </p>
+
+        <div class="muscle-grid">
+          <!-- Muscle 10 -->
+          <article class="muscle-card" id="intelligence-cycle">
+            <div class="muscle-name">10. The Intelligence Cycle</div>
+            <div class="muscle-subtitle">Orchestration Loop</div>
+            <p class="muscle-summary">
+              A repeatable loop: context → intelligence → synthesis → action. This is
+              the Orchestrator’s core operating system.
+            </p>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">Human</span>
+                  <span>Classic exercise</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <ul>
+                  <li><strong>Context:</strong> What am I actually trying to achieve?</li>
+                  <li><strong>Intelligence:</strong> What information or perspectives do I need?</li>
+                  <li><strong>Synthesis:</strong> What does all this mean when put together?</li>
+                  <li><strong>Action:</strong> What is the smallest meaningful next step?</li>
+                  <li>Run this loop explicitly for any important project or decision.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Integrated</span>
+                  <span>Coach collaborates</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <div class="code-block">
+Intelligence Cycle:
+Context:
+"Here is what I'm trying to do..."
+
+Intelligence request:
+"Help me understand X / generate options for Y / pressure-test Z..."
+
+Coach:
+- Summarize 3–5 key insights from this exchange
+- Name one obvious but important next step
+- Name one non-obvious but promising experiment
+                </div>
+                <p>The loop becomes a shared ritual between human and AI.</p>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="summary-label">
+                  <span class="summary-pill">AI-Directed</span>
+                  <span>Configure your Coach</span>
+                </span>
+                <span class="summary-chevron">›</span>
+              </summary>
+              <div class="details-body">
+                <p>
+                  Frame it as: <strong>“Configure your AI to run this loop with you
+                  continuously.”</strong>
+                </p>
+                <ul>
+                  <li>Describe your typical work context (roles, types of problems, constraints).</li>
+                  <li>Explain how you like intelligence presented (bullets vs narrative, risks vs opportunities, etc.).</li>
+                  <li>Tell the Coach what “synthesis” looks like when you feel satisfied.</li>
+                  <li>Ask it to always close big exchanges with: “Here’s what this means, and here are your next two steps.”</li>
+                </ul>
+                
+              </div>
+            </details>
+          </article>
+       
+      </a>
+        </div>
+       
+      </div>
+     <section class="next-step">
+  <div class="next-step-title">Ready to Make This Stick?</div>
+  <p class="next-step-text">
+    Configure your AI Coach to recognize drift, support gentle resets, and help 
+    you preserve your Orchestrator identity in the real world.
+  </p>
+  <a href="orchestrator-drift-config.html">
+    Set Up Drift &amp; Reset →
+  </a>
+
+
+    </section>
+ 
+  </main>
+ 
+</body>
+</html>
