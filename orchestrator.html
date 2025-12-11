@@ -296,6 +296,23 @@
       .grid {
         grid-template-columns: minmax(0, 1fr);
       }
+
+      /* -------------------------- */
+/* VISUAL GROUPING ENHANCERS */
+/* -------------------------- */
+
+/* Identity / Skills / Systems column cards */
+.tier-card {
+  background: #f3f4f6;    /* soft neutral grey */
+  border-color: #d6d9df;  /* slightly deeper border */
+}
+
+/* Course / Track cards */
+.track-card {
+  background: #fff7ed;    /* light warm neutral (aligned to your gold palette) */
+  border-color: #f2e5d8;
+}
+
     }
   </style>
 </head>
@@ -324,7 +341,7 @@
 
       <!-- 3-column summary: Identity / Skills / Systems -->
       <div class="grid">
-        <div class="field-card">
+        <div class="field-card tier-card">
           <div class="field-label">Identity</div>
           <div class="field-subtitle">Who your people believe they are with AI.</div>
           <p>
@@ -335,7 +352,7 @@
           </p>
         </div>
 
-        <div class="field-card">
+        <div class="field-card tier-card">
           <div class="field-label">Skills</div>
           <div class="field-subtitle">How they actually work with AI.</div>
           <p>
@@ -346,7 +363,7 @@
           </p>
         </div>
 
-        <div class="field-card">
+        <div class="field-card tier-card">
           <div class="field-label">Systems</div>
           <div class="field-subtitle">How your organization scales it.</div>
           <p>
@@ -359,7 +376,7 @@
       </div>
 
       <!-- Identity Intensive block -->
-      <div class="config-block">
+      <div class="config-block track-card">
         <div class="config-header">
           <div class="config-title">The Orchestrator Identity Intensive (4 hours)</div>
           <div class="pill-small">Identity · Front Door</div>
@@ -386,7 +403,7 @@
       </div>
 
       <!-- Technical tracks block -->
-      <div class="config-block">
+      <div class="config-block track-card">
         <div class="config-header">
           <div class="config-title">Technical Orchestrator Tracks</div>
           <div class="pill-small">Skills · Capability</div>
@@ -410,7 +427,7 @@
       </div>
 
       <!-- Systems / enterprise block -->
-      <div class="config-block">
+      <div class="config-block track-card">
         <div class="config-header">
           <div class="config-title">Systems &amp; Enterprise Transformation</div>
           <div class="pill-small">Systems · Org-Level</div>
@@ -434,7 +451,7 @@
       </div>
 
       <!-- Who we are / who it's for -->
-      <div class="config-block">
+      <div class="config-block track-card">
         <div class="config-header">
           <div class="config-title">Who Trainstorm.ai Is For</div>
           <div class="pill-small">People · Teams</div>
