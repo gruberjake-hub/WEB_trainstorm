@@ -2,302 +2,468 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Trainstorm.ai – Orchestrating Human Learning in the AI Era</title>
-  <meta name="description" content="Trainstorm.ai helps individuals, learning teams, and organizations transform how they work with AI through identity shifts, technical skills, and systems-level orchestration." />
+  <title>Trainstorm.ai – Orchestrator Overview</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #f7fafc;
+      --bg-alt: #ffffff;
+      --border-subtle: #e5e7eb;
+      --accent: #c6a667;
+      --accent-soft: #fef3c7;
+      --accent-deep: #92400e;
+      --text-main: #111827;
+      --text-soft: #4b5563;
+      --text-muted: #6b7280;
+      --heading-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      --body-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      --max-width: 1000px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--body-font);
+      background: var(--bg);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      padding: 32px 16px 48px;
+      display: flex;
+      justify-content: center;
+    }
+
+    main {
+      max-width: var(--max-width);
+      width: 100%;
+    }
+
+    header.top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .crumbs span:not(:last-child)::after {
+      content: "›";
+      margin: 0 6px;
+      color: #d1d5db;
+    }
+
+    .pill-tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .coach-config {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 20px 22px;
+    }
+
+    .eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    h1.title {
+      font-family: var(--heading-font);
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      margin: 0 0 6px;
+      color: var(--text-main);
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      margin: 0 0 10px;
+      max-width: 44rem;
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+
+    .field-card {
+      border-radius: var(--radius-md);
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 10px 10px 8px;
+      font-size: 0.9rem;
+    }
+
+    .field-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: var(--text-main);
+    }
+
+    .field-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      resize: vertical;
+      padding: 6px 7px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-family: var(--body-font);
+      font-size: 0.86rem;
+      color: var(--text-main);
+      background: #ffffff;
+    }
+
+    textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    .config-block {
+      margin-top: 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 10px 10px 8px;
+      font-size: 0.9rem;
+    }
+
+    .config-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .config-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .pill-small {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .config-help {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .config-textarea {
+      min-height: 260px;
+      background: #fefce8;
+    }
+
+    .callout {
+      margin-top: 12px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .callout strong {
+      color: var(--accent-deep);
+    }
+
+    .next-step {
+      margin-top: 28px;
+      padding: 24px 20px 26px;
+      border-radius: var(--radius-lg);
+      background: var(--bg-alt);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .next-step::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(
+        90deg,
+        var(--accent-deep) 0%,
+        var(--accent) 100%
+      );
+      opacity: 0.85;
+    }
+
+    .next-step-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      font-family: var(--heading-font);
+    }
+
+    .next-step-text {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin-bottom: 16px;
+      max-width: 40rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .next-step a {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .next-step a:hover {
+      background: var(--accent-deep);
+      transform: translateY(-1px);
+    }
+
+    .next-step a:active {
+      transform: translateY(0px);
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 20px 10px 32px;
+      }
+
+      .coach-config {
+        padding: 16px 14px 18px;
+      }
+
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
 </head>
 <body>
-
-  <!-- SITE HEADER / NAV -->
-  <header class="site-header">
-    <div class="container nav-bar">
-      <div class="logo">
-        <!-- Swap this for your actual logo -->
-        <a href="/">Trainstorm.ai</a>
+  <main>
+    <!-- Top nav / crumbs (optional) -->
+    <header class="top-nav">
+      <div class="crumbs">
+        <span>Trainstorm.ai</span>
+        <span>Orchestrator Overview</span>
       </div>
-      <nav class="main-nav">
-        <a href="#orchestrator">Orchestrator</a>
-        <a href="#identity">Identity Intensive</a>
-        <a href="#tracks">Technical Tracks</a>
-        <a href="#systems">Systems & Enterprise</a>
-        <a href="#about">About</a>
-        <a href="#contact" class="nav-cta">Contact</a>
-      </nav>
-    </div>
-  </header>
+      <div class="pill-tag">Orchestrator Framework</div>
+    </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container hero-content">
-      <div class="hero-text">
-        <h1>Orchestrating Human Learning in the AI Era</h1>
-        <p class="hero-subtitle">
-          Trainstorm.ai helps people and organizations move beyond “using AI tools” to <strong>orchestrating AI-powered systems</strong>—starting with identity, then skills, then infrastructure.
-        </p>
-        <div class="hero-ctas">
-          <a href="#identity" class="btn btn-primary">Explore the Identity Intensive</a>
-          <a href="#orchestrator" class="btn btn-secondary">See the Full Orchestrator Map</a>
+    <!-- Main card: company + orchestrator overview -->
+    <section class="coach-config">
+      <div class="eyebrow">Trainstorm.ai · Orchestrator</div>
+      <h1 class="title">Orchestrating Human Learning in the AI Era</h1>
+      <p class="subtitle">
+        Trainstorm.ai helps people and organizations move beyond “using AI tools” to 
+        <strong>orchestrating AI-powered systems</strong>—starting with identity, then skills, then infrastructure.
+      </p>
+      <p class="hint">
+        This page maps the full Orchestrator ecosystem: the 4-hour Identity Intensive, the technical tracks, and the systems-level work we do with teams and enterprises.
+      </p>
+
+      <!-- 3-column summary: Identity / Skills / Systems -->
+      <div class="grid">
+        <div class="field-card">
+          <div class="field-label">Identity</div>
+          <div class="field-subtitle">Who your people believe they are with AI.</div>
+          <p>
+            We start with mindset and identity: how people locate their value, what they believe they’re capable of, and how they relate to intelligent systems.
+          </p>
+          <p>
+            The flagship 4-hour <strong>Orchestrator Identity Intensive</strong> creates the human foundation for everything that follows.
+          </p>
+        </div>
+
+        <div class="field-card">
+          <div class="field-label">Skills</div>
+          <div class="field-subtitle">How they actually work with AI.</div>
+          <p>
+            Once the identity shift is in place, we teach vendor-agnostic AI skills: prompt chaining, structured outputs, learning pipelines, persona-driven design, and more.
+          </p>
+          <p>
+            The result is practitioners who can <strong>orchestrate</strong> AI instead of just “asking it for stuff.”
+          </p>
+        </div>
+
+        <div class="field-card">
+          <div class="field-label">Systems</div>
+          <div class="field-subtitle">How your organization scales it.</div>
+          <p>
+            At the systems layer, we help teams design and implement AI-enabled learning and content ecosystems: workflows, governance, automation, analytics.
+          </p>
+          <p>
+            This is where pilots become durable capability.
+          </p>
         </div>
       </div>
-      <div class="hero-aside">
-        <p class="hero-tag">
-          Built at the intersection of learning design, psychology, and AI systems.
+
+      <!-- Identity Intensive block -->
+      <div class="config-block">
+        <div class="config-header">
+          <div class="config-title">The Orchestrator Identity Intensive (4 hours)</div>
+          <div class="pill-small">Identity · Front Door</div>
+        </div>
+        <div class="config-help">
+          A live, highly interactive experience for L&amp;D, HR, and knowledge teams that creates the “human who can learn anything” in an AI-shaped world.
+        </div>
+        <p>
+          In this session, participants:
         </p>
-        <ul class="hero-bullets">
-          <li>For L&amp;D and HR leaders</li>
-          <li>For teams building AI-powered learning</li>
-          <li>For organizations navigating real transformation</li>
+        <ul>
+          <li>Surface and normalize real fears and questions about AI</li>
+          <li>Reframe AI as an amplifier of their strengths, not a replacement</li>
+          <li>Reconnect to their unique value in an augmented landscape</li>
+          <li>Craft a more hopeful, grounded story about who they are becoming</li>
         </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHAT TRAINSTORM DOES -->
-  <section class="section section-light" id="orchestrator">
-    <div class="container">
-      <h2>The Trainstorm.ai / Orchestrator Model</h2>
-      <p>
-        Trainstorm.ai is built around a simple but powerful idea: <strong>AI transformation fails when it starts with tools instead of people.</strong> Our flagship framework, <strong>Orchestrator™</strong>, is a three-layer ecosystem that aligns humans and AI so that both can do their best work.
-      </p>
-
-      <div class="three-column-grid">
-        <div class="card">
-          <h3>1. Identity</h3>
-          <p>
-            Who do your people believe they are in an AI-shaped world? We start with the human layer—mindset, identity, and how people locate their value when intelligent systems enter the room.
-          </p>
-          <p>
-            This layer reduces fear, increases curiosity, and creates psychological space for change.
-          </p>
-        </div>
-        <div class="card">
-          <h3>2. Skills</h3>
-          <p>
-            Once the identity shift is in place, we build real, vendor-agnostic capabilities: prompt chains, structured outputs, content pipelines, persona-driven design, and AI-assisted asset creation.
-          </p>
-          <p>
-            Participants learn to <strong>orchestrate AI</strong>, not just “ask it for stuff.”
-          </p>
-        </div>
-        <div class="card">
-          <h3>3. Systems</h3>
-          <p>
-            At the organizational level, we help teams design and implement AI-enabled learning systems: workflows, governance, automation, metrics, and scalable architectures.
-          </p>
-          <p>
-            The goal is lasting capability, not another pilot that fades out.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- IDENTITY INTENSIVE -->
-  <section class="section" id="identity">
-    <div class="container">
-      <div class="split-layout">
-        <div class="split-text">
-          <h2>Orchestrator™ Identity Intensive</h2>
-          <p class="section-lede">
-            A 4-hour live experience that creates the <strong>human who can actually thrive with AI</strong>.
-          </p>
-          <p>
-            The Identity Intensive is the “front door” to Orchestrator. It’s designed for broad participation but is especially powerful for Learning &amp; Development, HR, and creative/knowledge teams.
-          </p>
-          <p>In this session, participants:</p>
-          <ul>
-            <li>Examine their real fears and assumptions about AI</li>
-            <li>Reframe AI as an amplifier, not a replacement</li>
-            <li>Reconnect to their unique value in an AI-augmented landscape</li>
-            <li>Craft a more hopeful, grounded narrative about their future</li>
-          </ul>
-          <p>
-            The session concludes with something practical and concrete: each participant leaves with a <strong>configured GPT “coach”</strong> that reflects their goals, values, and preferred working style.
-          </p>
-          <p>
-            That coach becomes an ongoing companion for experimentation, reflection, and growth—extending the impact of the session far beyond four hours.
-          </p>
-          <a href="#contact" class="btn btn-primary">Bring the Identity Intensive to Your Team</a>
-        </div>
-        <div class="split-aside">
-          <h3>Designed For</h3>
-          <ul>
-            <li>L&amp;D and HR teams asked to “solve AI” for everyone else</li>
-            <li>Leaders and managers navigating AI-related change</li>
-            <li>Designers, facilitators, and content teams</li>
-            <li>Any knowledge workers facing rapid shift in tools and expectations</li>
-          </ul>
-          <h3>Format</h3>
-          <ul>
-            <li>4 hours, live (virtual or in-person)</li>
-            <li>10–40 participants per cohort (larger by arrangement)</li>
-            <li>Interactive, reflective, and conversational—not a lecture</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TECHNICAL TRACKS -->
-  <section class="section section-light" id="tracks">
-    <div class="container">
-      <h2>From Insight to Capability: Technical Orchestrator Tracks</h2>
-      <p class="section-lede">
-        Once the identity foundation is in place, we move into skills—teaching people how to design and run AI-powered learning systems in the real world.
-      </p>
-      <p>
-        These modular tracks can be offered as follow-ups to the Identity Intensive or as stand-alone experiences for teams ready to level up their AI practice.
-      </p>
-
-      <div class="tracks-grid">
-        <div class="card">
-          <h3>Structured Prompting &amp; Chains</h3>
-          <ul>
-            <li>Moving beyond one-off prompts</li>
-            <li>Designing multi-step chains that produce consistent outputs</li>
-            <li>Working with JSON and structured formats without “being a coder”</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>AI for Learning Design</h3>
-          <ul>
-            <li>Persona and audience modeling</li>
-            <li>Outcome analysis and alignment to competencies</li>
-            <li>Scenario and assessment generation that’s actually on-model</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Pipelines &amp; Production</h3>
-          <ul>
-            <li>From brief → storyboard → assets → slides → LMS-ready packages</li>
-            <li>Automating low-value tasks, preserving high-value judgment</li>
-            <li>Connecting outputs to tools like Storyline, Rise, or custom microsites</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Governance &amp; Quality</h3>
-          <ul>
-            <li>Reducing hallucinations through smart constraints</li>
-            <li>Versioning prompts and chains like real assets</li>
-            <li>Building review, QA, and remediation into your AI workflows</li>
-          </ul>
+        <p>
+          The session ends with something concrete: each person configures a personalized <strong>GPT “coach”</strong> tuned to their goals, values, and working style.
+          That coach becomes an ongoing companion that reinforces the identity shift and supports daily experimentation.
+        </p>
+        <div class="callout">
+          <strong>Why start here?</strong> Most AI programs begin with tools and platforms. We start with humans. Once identity shifts, every subsequent AI initiative lands faster and with less resistance.
         </div>
       </div>
 
-      <p>
-        The goal isn’t to turn everyone into engineers. It’s to give learning and content professionals the structures they need to use AI <strong>reliably, responsibly, and creatively.</strong>
-      </p>
-    </div>
-  </section>
-
-  <!-- SYSTEMS & ENTERPRISE WORK -->
-  <section class="section" id="systems">
-    <div class="container">
-      <h2>Beyond Individuals: Systems &amp; Enterprise Transformation</h2>
-      <p class="section-lede">
-        For organizations ready to move past experiments and pilots, Trainstorm.ai helps install Orchestrator as a <strong>capability framework</strong> across teams.
-      </p>
-
-      <div class="three-column-grid">
-        <div class="card">
-          <h3>Systems Bootcamps</h3>
-          <p>
-            Deep-dive experiences where L&amp;D and adjacent teams learn to design and run end-to-end AI-enabled learning pipelines:
-          </p>
-          <ul>
-            <li>Content and asset pipelines</li>
-            <li>Microsite and SCORM/xAPI strategies</li>
-            <li>Analytics and feedback loops</li>
-          </ul>
+      <!-- Technical tracks block -->
+      <div class="config-block">
+        <div class="config-header">
+          <div class="config-title">Technical Orchestrator Tracks</div>
+          <div class="pill-small">Skills · Capability</div>
         </div>
-        <div class="card">
-          <h3>Enterprise Partnerships</h3>
-          <p>
-            Longer-term engagements where we work with leadership to:
-          </p>
-          <ul>
-            <li>Map AI readiness and opportunity in L&amp;D</li>
-            <li>Redesign workflows and roles</li>
-            <li>Define governance and responsible use practices</li>
-            <li>Build internal “orchestrator” champions</li>
-          </ul>
+        <div class="config-help">
+          Modular skill-building paths that help your team move from curiosity to confident, repeatable practice with AI.
         </div>
-        <div class="card">
-          <h3>Fractional AI Learning Architecture</h3>
-          <p>
-            For organizations in transition, Trainstorm.ai can act as a fractional “Head of AI for Learning Systems” role—guiding strategy, advising teams, and helping de-risk decisions while your internal capability develops.
-          </p>
-        </div>
+        <p>
+          Following the Identity Intensive (or as a stand-alone offering), we run targeted tracks such as:
+        </p>
+        <ul>
+          <li><strong>Structured Prompting &amp; Chains</strong> – designing multi-step prompt flows that produce consistent, reviewable outputs.</li>
+          <li><strong>AI for Learning Design</strong> – using AI for audience analysis, outcomes mapping, scenario and assessment generation.</li>
+          <li><strong>Pipelines &amp; Production</strong> – moving from brief → storyboard → assets → slides → LMS-ready packages with AI as a force multiplier.</li>
+          <li><strong>Governance &amp; Quality</strong> – reducing hallucinations, versioning prompt chains, building in QA and human review.</li>
+        </ul>
+        <p>
+          The aim isn’t to turn everyone into engineers. It’s to give learning and content professionals the structures and patterns they need to use AI
+          <strong>reliably, responsibly, and creatively.</strong>
+        </p>
       </div>
-    </div>
-  </section>
 
-  <!-- ABOUT / FOUNDER -->
-  <section class="section section-light" id="about">
-    <div class="container">
-      <div class="split-layout">
-        <div class="split-text">
-          <h2>About Trainstorm.ai</h2>
-          <p class="section-lede">
-            Trainstorm.ai sits at the intersection of <strong>learning design, enterprise reality, and frontier AI.</strong>
-          </p>
-          <p>
-            The company grew out of years of work in complex, regulated environments—pharma, healthcare, and large corporate ecosystems—combined with hands-on experimentation in AI pipelines, prompt chains, and automated content production.
-          </p>
-          <p>
-            That work led to a simple observation: the biggest barrier to AI wasn’t technology. It was how humans understood themselves in relation to it.
-          </p>
-          <p>
-            Orchestrator is the response: a way to help people transform first, then build skills, then build systems.
-          </p>
+      <!-- Systems / enterprise block -->
+      <div class="config-block">
+        <div class="config-header">
+          <div class="config-title">Systems &amp; Enterprise Transformation</div>
+          <div class="pill-small">Systems · Org-Level</div>
         </div>
-        <div class="split-aside">
-          <h3>Who We Work With</h3>
-          <ul>
-            <li>Learning &amp; Development and HR teams</li>
-            <li>Business and functional leaders</li>
-            <li>Content, design, and training shops</li>
-            <li>Organizations in regulated or complex spaces</li>
-          </ul>
-          <h3>How We Engage</h3>
-          <ul>
-            <li>Workshops and intensives</li>
-            <li>Capability-building programs</li>
-            <li>Consulting and advisory partnerships</li>
-          </ul>
+        <div class="config-help">
+          For organizations ready to move beyond pilots and experiments into durable, AI-enabled learning capability.
         </div>
+        <p>
+          At the systems level, Trainstorm.ai works with leadership and cross-functional teams to:
+        </p>
+        <ul>
+          <li>Map AI readiness and opportunity in L&amp;D and adjacent functions</li>
+          <li>Redesign workflows, roles, and interfaces with AI tools</li>
+          <li>Define responsible use and governance practices that are workable in the real world</li>
+          <li>Design and install AI-backed content pipelines and microsite-based learning experiences</li>
+          <li>Develop internal “orchestrator” champions who can extend the work</li>
+        </ul>
+        <p>
+          Depending on the organization, this can take the shape of intensive bootcamps, targeted capability-building, or fractional “Head of AI for Learning Systems” support.
+        </p>
       </div>
-    </div>
-  </section>
 
-  <!-- CONTACT / CTA -->
-  <section class="section" id="contact">
-    <div class="container">
-      <h2>Let’s Talk About Your AI + Learning Landscape</h2>
-      <p>
-        Whether you’re just beginning to experiment with AI or already rolling out tools and looking for a more human-centered, sustainable approach, Trainstorm.ai can help you design the next phase.
-      </p>
-      <p>
-        The best starting point is a short conversation about where you are now and where you’d like your people and systems to be 12–24 months from today.
-      </p>
-      <a href="mailto:hello@trainstorm.ai" class="btn btn-primary">Schedule a Conversation</a>
-      <!-- Replace with your calendaring link or contact form if you prefer -->
-    </div>
-  </section>
+      <!-- Who we are / who it's for -->
+      <div class="config-block">
+        <div class="config-header">
+          <div class="config-title">Who Trainstorm.ai Is For</div>
+          <div class="pill-small">People · Teams</div>
+        </div>
+        <p>
+          We start in Learning &amp; Development because that’s where training, culture, and capability converge—and where AI expectations are often the highest.
+          But the Orchestrator framework applies to any group facing real change.
+        </p>
+        <ul>
+          <li>L&amp;D, HR, and talent teams</li>
+          <li>Business and functional leaders navigating AI disruption</li>
+          <li>Design, content, and training shops under pressure to scale</li>
+          <li>Organizations in complex or regulated spaces (e.g., pharma, healthcare, finance)</li>
+        </ul>
+        <p>
+          Over time, the Identity Intensive and technical tracks can be extended beyond L&amp;D to broader populations: leaders, creatives, knowledge workers, and whole business units.
+        </p>
+      </div>
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container footer-content">
-      <p>&copy; <span id="year"></span> Trainstorm.ai. All rights reserved.</p>
-      <p class="footer-small">
-        Orchestrator™ is a Trainstorm.ai framework for human and organizational transformation in the AI era.
-      </p>
-    </div>
-    <script>
-      // Simple year injector
-      document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
-  </footer>
-
+      <!-- Next step / CTA -->
+      <div class="next-step">
+        <div class="next-step-title">Let’s Map Your AI + Learning Landscape</div>
+        <div class="next-step-text">
+          If you’re exploring how AI fits into your learning ecosystem—or you’re already experimenting and want a more human, structured approach—the next step
+          is a simple conversation. We’ll look at where you are now, where you want your people and systems to be, and whether Orchestrator is the right bridge.
+        </div>
+        <a href="mailto:hello@trainstorm.ai">Schedule a Conversation</a>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
