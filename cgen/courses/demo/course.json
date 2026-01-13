@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "title": "Demo Course"
+  },
+  "nav": {
+    "startSceneId": "s1"
+  },
+  "scenes": [
+    {
+      "id": "s1",
+      "title": "Hello",
+      "components": [
+        {
+          "type": "Heading",
+          "props": { "text": "It Works.", "level": 1 }
+        },
+        {
+          "type": "Body",
+          "props": { "text": "This is the first rendered scene in the cgen runtime." }
+        }
+      ]
+    }
+  ]
+}
