@@ -12,11 +12,16 @@
       "components": [
         {
           "type": "Heading",
-          "props": { "text": "It Works.", "level": 1 }
+          "props": {
+            "text": "It works.",
+            "level": 1
+          }
         },
         {
           "type": "Body",
-          "props": { "text": "This is the first rendered scene in the cgen runtime." }
+          "props": {
+            "text": "This content is coming from course.json."
+          }
         }
       ]
     }
