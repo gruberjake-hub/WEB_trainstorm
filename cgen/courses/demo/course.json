@@ -1,6 +1,9 @@
 {
   "meta": {
-    "title": "Demo Course"
+     "id": "demo-astellas-course",
+    "title": "Demo Course",
+    "client": "astellas",
+    "theme": "astellas"
   },
   "nav": {
     "startSceneId": "s1"
