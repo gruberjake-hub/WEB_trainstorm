@@ -1,109 +1,170 @@
-/* Astellas Layout (v1)
-   - Shell, stage, typography defaults, and overall rhythm
-   - Assumes your engine provides structure (.app, header/main/nav/footer, etc.)
-*/
+/* =========================================================
+   Astellas Layout Overrides (Engine-Aware)
+   Purpose:
+   - Rebind engine variables to Astellas brand tokens
+   - Override all visual surfaces deliberately
+   - Leave layout mechanics untouched
+   ========================================================= */
 
-html, body {
-  background: var(--color-bg);
-  color: var(--color-text);
+/* -----------------------------------------
+   1. Rebind Engine Tokens to Astellas Tokens
+   ----------------------------------------- */
+
+:root {
+  /* Engine variables → Astellas semantics */
+  --brand: var(--color-accent);              /* was blue; now Astellas red */
+  --bg: var(--color-bg);                     /* page background */
+  --panel: var(--color-panel);               /* chrome + stage surfaces */
+  --text: var(--color-text);                 /* body text */
+  --muted: var(--color-text-muted);
+
+  /* Focus ring: accessible, calm */
+  --focus: 3px solid color-mix(
+    in srgb,
+    var(--color-accent),
+    white 35%
+  );
+
+  /* Typography */
   font-family: var(--font-body);
-  font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-body);
 }
 
-/* Prefer calm, readable page rhythm */
-* { box-sizing: border-box; }
-img, video { max-width: 100%; height: auto; }
-a { color: var(--color-link); text-decoration: underline; text-underline-offset: 2px; }
-a:hover { text-decoration-thickness: 2px; }
+/* -----------------------------------------
+   2. Page-Level Overrides
+   ----------------------------------------- */
 
-/* Focus visibility (keyboard-first) */
-:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--color-focus), white 30%);
-  outline-offset: 2px;
-  border-radius: 6px;
+body {
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* If your engine has an app wrapper */
-.app, #app {
-  background: radial-gradient(1200px 600px at 50% -50px, #FFFFFF 0%, var(--color-bg) 55%, var(--color-bg) 100%);
-  color: var(--color-text);
+/* -----------------------------------------
+   3. App Container
+   ----------------------------------------- */
+
+.app {
+  background: transparent; /* let page background breathe */
 }
 
-/* Header / Nav / Footer (calm panels) */
-.header, header,
-.nav, nav,
-.footer, footer {
-  background: var(--color-panel);
+/* -----------------------------------------
+   4. Player Chrome (Header / Nav / Footer)
+   ----------------------------------------- */
+
+.header,
+.nav,
+.footer {
+  background: var(--panel);
+  color: var(--text);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
 }
 
-/* Stage: reading-friendly, centered */
-.stage, main#stage, main.stage {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: var(--space-8);
+/* Astellas accent rule (subtle but unmistakable) */
+.header::after {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 100%;
+  background: var(--color-accent);
+  border-radius: 999px;
+  margin-top: var(--space-3);
 }
 
-/* Panel styling for scene content blocks if your engine wraps them */
-.scene, .scene-panel, .card, .panel {
-  background: var(--color-panel);
+/* -----------------------------------------
+   5. Learning Stage (Primary Content Area)
+   ----------------------------------------- */
+
+.stage {
+  background: var(--panel);
+  color: var(--text);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
 }
 
-/* Headings */
-h1, .h1 {
-  font-family: var(--font-heading);
-  font-size: var(--text-2xl);
-  line-height: var(--line-height-heading);
+/* -----------------------------------------
+   6. Typography Refinements
+   ----------------------------------------- */
+
+.title {
+  font-weight: var(--font-weight-bold);
   letter-spacing: -0.01em;
-  margin: 0 0 var(--space-4) 0;
-  font-weight: var(--font-weight-bold);
 }
 
-h2, .h2 {
-  font-family: var(--font-heading);
-  font-size: var(--text-xl);
-  line-height: var(--line-height-heading);
-  margin: var(--space-6) 0 var(--space-3) 0;
-  font-weight: var(--font-weight-bold);
+p {
+  color: var(--text);
 }
 
-h3, .h3 {
-  font-family: var(--font-heading);
-  font-size: var(--text-lg);
-  line-height: var(--line-height-heading);
-  margin: var(--space-5) 0 var(--space-2) 0;
-  font-weight: var(--font-weight-semibold);
+/* -----------------------------------------
+   7. Buttons (Professional, Non-Playful)
+   ----------------------------------------- */
+
+.btn {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--color-border-strong);
 }
 
-p, .body {
-  margin: 0 0 var(--space-4) 0;
-  font-size: var(--text-md);
+.btn:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--color-border-strong),
+    var(--color-accent) 25%
+  );
 }
 
-/* Subtle divider */
-.hr, hr {
-  border: none;
-  border-top: 1px solid var(--color-border);
-  margin: var(--space-6) 0;
+.btn:focus {
+  outline: var(--focus);
+  outline-offset: 2px;
 }
 
-/* Small text */
-.small, small {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
+/* -----------------------------------------
+   8. Progress Indicator
+   ----------------------------------------- */
+
+.progressBar {
+  background: #E7EAED;
 }
 
-/* Reduce motion if user requests */
+.progressFill {
+  background: var(--color-accent);
+}
+
+/* -----------------------------------------
+   9. Cards / Panels
+   ----------------------------------------- */
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* -----------------------------------------
+   10. Feedback (Knowledge Checks, Status)
+   ----------------------------------------- */
+
+.feedback {
+  background: color-mix(
+    in srgb,
+    var(--color-accent),
+    white 88%
+  );
+  border: 1px solid var(--color-border);
+  color: var(--text);
+}
+
+/* -----------------------------------------
+   11. Accessibility & Motion
+   ----------------------------------------- */
+
+:focus-visible {
+  outline: var(--focus);
+  outline-offset: 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     transition-duration: 1ms !important;
     animation-duration: 1ms !important;
-    scroll-behavior: auto !important;
   }
 }
