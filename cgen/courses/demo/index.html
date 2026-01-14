@@ -7,52 +7,45 @@
 
   <!-- Engine base styles -->
   <link rel="stylesheet" href="../../engine/styles.css" />
-
-  
 </head>
-
-<header class="header">
-  <div class="brand">
-    <img id="brandLogo" alt="" />
-  </div>
-  <div id="courseTitle" class="title"></div>
-  <div class="controls">
-  <button id="ccToggle" class="btn" aria-pressed="true">CC</button>
-</div>
-
-</header>
-
 
 <body>
   <div id="app" class="app">
-    <header class="header">
-      <div id="courseTitle" class="title"></div>
-     <div class="controls">
-  <button id="ccToggle" class="btn" aria-pressed="true">CC</button>
-</div>
 
+    <!-- PLAYER HEADER (single source of truth) -->
+    <header class="header">
+      <div class="brand">
+        <img id="brandLogo" alt="" />
+      </div>
+
+      <div id="courseTitle" class="title"></div>
+
+      <div class="controls">
+        <button id="ccToggle" class="btn" aria-pressed="true">CC</button>
+      </div>
     </header>
 
     <main id="stage" class="stage" tabindex="-1"></main>
 
     <nav class="nav">
       <button id="prevBtn" class="btn">Prev</button>
+
       <div class="progress">
         <span id="progressText">0%</span>
         <div class="progressBar">
           <div id="progressFill" class="progressFill"></div>
         </div>
       </div>
+
       <button id="nextBtn" class="btn">Next</button>
     </nav>
 
     <footer class="footer">
       <audio id="vo" controls></audio>
     </footer>
+
   </div>
 
-  <script type="module" src="./main.js">
-
-     </script>
+  <script type="module" src="./main.js"></script>
 </body>
 </html>
