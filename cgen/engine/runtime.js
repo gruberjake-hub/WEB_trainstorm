@@ -2,8 +2,9 @@ import { Store } from "./store.js";
 import { RulesEngine } from "./rules.js";
 import { getAdapter } from "./scorm.js";
 
-/* NEW: theme loader */
+/* NEW: theme + brand loaders */
 import { loadTheme } from "./themeLoader.js";
+import { loadBrand } from "./brandLoader.js";
 
 import { Heading } from "./components/Heading.js";
 import { Body } from "./components/Body.js";
@@ -14,6 +15,9 @@ const COMPONENTS = { Heading, Body, RevealCards, MCQ };
 
 export class Runtime {
   constructor(opts) {
+    /* -------------------------------
+       Core runtime wiring (unchanged)
+       ------------------------------- */
     this.course = opts.course;
     this.mount = opts.mount;
     this.audioEl = opts.audioEl;
@@ -26,9 +30,25 @@ export class Runtime {
     this.nextBtn = opts.nextBtn;
     this.ccToggle = opts.ccToggle;
 
-    /* NEW: load theme declared by course.json */
+    /* -------------------------------
+       NEW: declarative theme + brand
+       ------------------------------- */
+
     const theme = this.course?.meta?.theme;
+
+    // 1️⃣ Load CSS immediately (synchronous side-effect)
     loadTheme(theme);
+
+    // 2️⃣ Begin loading brand identity (async)
+    //    We store the promise because constructors can't be async
+    this.brandPromise = loadBrand(theme);
+
+    // 3️⃣ Cache the logo slot (shell owns the slot)
+    this.brandLogoEl = document.getElementById("brandLogo");
+
+    /* -------------------------------
+       Persistence, rules, state
+       ------------------------------- */
 
     this.adapter = getAdapter(this.course.meta?.id || "course");
     this.store = new Store(this.course, this.adapter);
@@ -39,17 +59,40 @@ export class Runtime {
     );
   }
 
-  init() {
+  /* ======================================================
+     INIT (now async so we can await brand resolution)
+     ====================================================== */
+  async init() {
     this.adapter.init?.();
+
+    /* -------------------------------
+       NEW: apply brand identity
+       ------------------------------- */
+    const brand = await this.brandPromise;
+    this.applyBrand(brand);
+
+    /* -------------------------------
+       Existing init logic (unchanged)
+       ------------------------------- */
 
     this.titleEl.textContent = this.course.meta?.title || "Course";
     this.store.load();
 
-    this.prevBtn.addEventListener("click", () => this.dispatch({ type: "NAV_PREV" }));
-    this.nextBtn.addEventListener("click", () => this.dispatch({ type: "NAV_NEXT" }));
-    this.ccToggle.addEventListener("click", () => this.dispatch({ type: "CAPTIONS_TOGGLE" }));
+    this.prevBtn.addEventListener("click", () =>
+      this.dispatch({ type: "NAV_PREV" })
+    );
 
-    this.audioEl.addEventListener("ended", () => this.dispatch({ type: "MEDIA_ENDED" }));
+    this.nextBtn.addEventListener("click", () =>
+      this.dispatch({ type: "NAV_NEXT" })
+    );
+
+    this.ccToggle.addEventListener("click", () =>
+      this.dispatch({ type: "CAPTIONS_TOGGLE" })
+    );
+
+    this.audioEl.addEventListener("ended", () =>
+      this.dispatch({ type: "MEDIA_ENDED" })
+    );
 
     this.dispatch({ type: "COURSE_INIT" });
 
@@ -60,5 +103,139 @@ export class Runtime {
     this.gotoScene(startId);
   }
 
-  /* --- rest of file unchanged --- */
+  /* ======================================================
+     NEW: Brand application logic (small + deterministic)
+     ====================================================== */
+  applyBrand(brand) {
+    if (!brand || !this.brandLogoEl) return;
+
+    // Prefer primary logo, fallback safely
+    const logo =
+      brand.logos?.primary ||
+      brand.logos?.inverse ||
+      null;
+
+    if (!logo?.src) return;
+
+    this.brandLogoEl.src = `../../brands/${brand.brand}/${logo.src}`;
+    this.brandLogoEl.alt = logo.alt || brand.brand;
+  }
+
+  /* ======================================================
+     Everything below here is unchanged
+     ====================================================== */
+
+  dispatch(event) {
+    this.rules.handle(event);
+
+    if (event.type === "NAV_NEXT") this.gotoRelative(1);
+    if (event.type === "NAV_PREV") this.gotoRelative(-1);
+
+    if (event.type === "CAPTIONS_TOGGLE") {
+      const ccOn = !this.store.get("vars.ccOn");
+      this.store.set("vars.ccOn", ccOn);
+      this.ccToggle.setAttribute("aria-pressed", String(ccOn));
+      this.applyCaptionsVisibility(ccOn);
+      this.store.save();
+    }
+
+    this.updateProgressUI();
+  }
+
+  gotoRelative(delta) {
+    const scenes = this.course.scenes;
+    const idx = scenes.findIndex(
+      s => s.id === this.store.state.runtime.sceneId
+    );
+    const next = scenes[idx + delta];
+    if (next) this.gotoScene(next.id);
+  }
+
+  gotoScene(sceneId) {
+    const scene = this.course.scenes.find(s => s.id === sceneId);
+    if (!scene) return;
+
+    this.store.set("runtime.sceneId", sceneId);
+    this.store.set("runtime.sceneTitle", scene.title || "");
+    this.store.save();
+
+    this.mount.innerHTML = "";
+    this.mount.focus();
+
+    this.dispatch({ type: "SCENE_ENTER", payload: { sceneId } });
+
+    for (const node of scene.components || []) {
+      const Cmp = COMPONENTS[node.type];
+      if (!Cmp) continue;
+
+      const el = Cmp({
+        props: node.props || {},
+        store: this.store,
+        emit: (type, payload) =>
+          this.dispatch({ type, payload })
+      });
+
+      this.mount.appendChild(el);
+    }
+
+    this.loadVoiceover(scene.voiceover);
+
+    this.prevBtn.disabled =
+      this.course.scenes[0].id === sceneId;
+
+    this.nextBtn.disabled =
+      this.course.scenes[this.course.scenes.length - 1].id === sceneId;
+
+    this.updateProgressUI();
+  }
+
+  loadVoiceover(voiceover) {
+    while (this.audioEl.firstChild)
+      this.audioEl.removeChild(this.audioEl.firstChild);
+
+    if (!voiceover?.src) {
+      this.audioEl.removeAttribute("src");
+      return;
+    }
+
+    this.audioEl.src = voiceover.src;
+
+    if (voiceover.captionsVtt) {
+      const track = document.createElement("track");
+      track.kind = "captions";
+      track.label = "English";
+      track.srclang = "en";
+      track.src = voiceover.captionsVtt;
+      track.default = true;
+      this.audioEl.appendChild(track);
+    }
+
+    const ccOn = !!this.store.get("vars.ccOn");
+    this.ccToggle.setAttribute("aria-pressed", String(ccOn));
+    this.applyCaptionsVisibility(ccOn);
+  }
+
+  applyCaptionsVisibility(on) {
+    const tracks = this.audioEl.textTracks;
+    for (let i = 0; i < tracks.length; i++) {
+      tracks[i].mode = on ? "showing" : "hidden";
+    }
+  }
+
+  updateProgressUI() {
+    const total = this.course.scenes.length;
+    const completed =
+      (this.store.get("vars.completedScenes") || []).length;
+
+    const pct = total
+      ? Math.round((completed / total) * 100)
+      : 0;
+
+    this.progressTextEl.textContent = `${pct}%`;
+    this.progressFillEl.style.width = `${pct}%`;
+    this.progressFillEl.parentElement?.setAttribute(
+      "aria-valuenow",
+      String(pct)
+    );
+  }
 }
