@@ -4,8 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Demo Course</title>
+
+  <!-- Engine base styles -->
   <link rel="stylesheet" href="../../engine/styles.css" />
+
+  <!-- Astellas brand theme -->
+  <link rel="stylesheet" href="../../brands/astellas/astellas-tokens.css" />
+  <link rel="stylesheet" href="../../brands/astellas/astellas-layout.css" />
+  <link rel="stylesheet" href="../../brands/astellas/astellas-components.css" />
 </head>
+
 <body>
   <div id="app" class="app">
     <header class="header">
@@ -33,24 +41,6 @@
 
   <script type="module" src="./main.js">
 
-    import { Runtime } from "../../engine/runtime.js";
-
-    const res = await fetch("./course.json");
-    const course = await res.json();
-
-    const runtime = new Runtime({
-      course,
-      mount: document.getElementById("stage"),
-      audioEl: document.getElementById("vo"),
-      titleEl: document.getElementById("courseTitle"),
-      progressTextEl: document.getElementById("progressText"),
-      progressFillEl: document.getElementById("progressFill"),
-      prevBtn: document.getElementById("prevBtn"),
-      nextBtn: document.getElementById("nextBtn"),
-      ccToggle: document.getElementById("ccToggle")
-    });
-
-    runtime.init();
-  </script>
+     </script>
 </body>
 </html>
