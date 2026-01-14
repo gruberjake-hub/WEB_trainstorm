@@ -1,9 +1,5 @@
 /* =========================================================
    Astellas Layout Overrides (Engine-Aware)
-   Purpose:
-   - Rebind engine variables to Astellas brand tokens
-   - Override all visual surfaces deliberately
-   - Leave layout mechanics untouched
    ========================================================= */
 
 /* -----------------------------------------
@@ -11,21 +7,18 @@
    ----------------------------------------- */
 
 :root {
-  /* Engine variables → Astellas semantics */
-  --brand: var(--color-accent);              /* was blue; now Astellas red */
-  --bg: var(--color-bg);                     /* page background */
-  --panel: var(--color-panel);               /* chrome + stage surfaces */
-  --text: var(--color-text);                 /* body text */
+  --brand: var(--color-accent);
+  --bg: var(--color-bg);
+  --panel: var(--color-panel);
+  --text: var(--color-text);
   --muted: var(--color-text-muted);
 
-  /* Focus ring: accessible, calm */
   --focus: 3px solid color-mix(
     in srgb,
     var(--color-accent),
     white 35%
   );
 
-  /* Typography */
   font-family: var(--font-body);
 }
 
@@ -39,47 +32,55 @@ body {
 }
 
 /* -----------------------------------------
-   3. App Container
+   3. Player Container (AUTHORITATIVE)
    ----------------------------------------- */
 
 .app {
-  background: transparent; /* let page background breathe */
+  width: clamp(720px, 65vw, 1200px);
+  margin: 32px auto;
+  display: grid;
+  gap: 16px;
 }
 
 /* -----------------------------------------
    4. Player Chrome (Header / Nav / Footer)
    ----------------------------------------- */
 
-.header {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: var(--space-4);
-}
-
+.header,
 .nav,
 .footer {
   background: var(--panel);
   color: var(--text);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
-   padding-left: var(--space-6);
-  padding-right: var(--space-6);
+
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
-/* Astellas accent rule (subtle but unmistakable) */
+/* Header-specific layout */
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+/* Astellas accent rule */
 .header::after {
   content: "";
   display: block;
+  grid-column: 1 / -1;
   height: 4px;
-  width: 100%;
   background: var(--color-accent);
   border-radius: 999px;
-  margin-top: var(--space-3);
+  margin-top: 8px;
 }
 
 /* -----------------------------------------
-   5. Learning Stage (Primary Content Area)
+   5. Learning Stage
    ----------------------------------------- */
 
 .stage {
@@ -87,21 +88,27 @@ body {
   color: var(--text);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
+  padding: 24px;
 }
+
+/* -----------------------------------------
+   6. Brand / Logo Slot
+   ----------------------------------------- */
+
 .brand {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: 12px;
 }
-/* Logo placement*/
+
 .brand img {
-  height: 28px;              /* conservative, pharma-appropriate */
-  max-width: 180px;
+  height: 28px;
+  max-width: 160px;
   object-fit: contain;
 }
 
 /* -----------------------------------------
-   6. Typography Refinements
+   7. Typography
    ----------------------------------------- */
 
 .title {
@@ -114,13 +121,16 @@ p {
 }
 
 /* -----------------------------------------
-   7. Buttons (Professional, Non-Playful)
+   8. Buttons (Controls, Not CTAs)
    ----------------------------------------- */
 
 .btn {
   background: transparent;
   color: var(--text);
   border: 1px solid var(--color-border-strong);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.875rem;
 }
 
 .btn:hover {
@@ -136,8 +146,18 @@ p {
   outline-offset: 2px;
 }
 
+/* CC button explicitly constrained */
+#ccToggle {
+  min-width: unset;
+  height: auto;
+}
+
+#ccToggle[aria-pressed="true"] {
+  background: rgba(0, 0, 0, 0.04);
+}
+
 /* -----------------------------------------
-   8. Progress Indicator
+   9. Progress Indicator
    ----------------------------------------- */
 
 .progressBar {
@@ -149,7 +169,7 @@ p {
 }
 
 /* -----------------------------------------
-   9. Cards / Panels
+   10. Cards / Panels
    ----------------------------------------- */
 
 .card {
@@ -159,7 +179,7 @@ p {
 }
 
 /* -----------------------------------------
-   10. Feedback (Knowledge Checks, Status)
+   11. Feedback
    ----------------------------------------- */
 
 .feedback {
@@ -173,7 +193,7 @@ p {
 }
 
 /* -----------------------------------------
-   11. Accessibility & Motion
+   12. Accessibility & Motion
    ----------------------------------------- */
 
 :focus-visible {
@@ -186,12 +206,4 @@ p {
     transition-duration: 1ms !important;
     animation-duration: 1ms !important;
   }
-}
-/* 12. Adding to make header and player consistent in sizing*/
-.app {
-  max-width: 980px;
-  margin: 24px auto;
-  padding: 16px;
-  display: grid;
-  gap: 14px;
 }
