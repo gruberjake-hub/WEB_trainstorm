@@ -178,3 +178,11 @@ p {
     animation-duration: 1ms !important;
   }
 }
+/* 12. Adding to make header and player consistent in sizing*/
+.app {
+  max-width: 980px;
+  margin: 24px auto;
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+}
