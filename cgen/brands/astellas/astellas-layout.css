@@ -38,9 +38,11 @@ body {
 .app {
   width: clamp(720px, 65vw, 1200px);
   margin: 32px auto;
+  padding: 0;
   display: grid;
   gap: 16px;
 }
+
 
 /* -----------------------------------------
    4. Player Chrome (Header / Nav / Footer)
@@ -54,19 +56,17 @@ body {
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
 
-  padding-left: 24px;
-  padding-right: 24px;
+ padding: 16px 20px;
+  border-radius: 14px;
 }
 
 /* Header-specific layout */
 .header {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 16px;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
+
 
 /* Astellas accent rule */
 .header::after {
