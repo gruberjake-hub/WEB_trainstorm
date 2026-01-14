@@ -1,29 +1,195 @@
 {
   "meta": {
-     "id": "demo-astellas-course",
-    "title": "Demo Course",
-    "client": "astellas",
-    "theme": "astellas"
+    "id": "brunswick-achieve-manager-part-2",
+    "title": "Achieve Manager Training: Performance & Rewards Conversations",
+    "theme": "default",
+    "client": "Brunswick"
   },
+
   "nav": {
-    "startSceneId": "s1"
+    "startSceneId": "intro"
   },
+
   "scenes": [
     {
-      "id": "s1",
-      "title": "Hello",
+      "id": "intro",
+      "title": "Welcome",
       "components": [
         {
           "type": "Heading",
           "props": {
-            "text": "It works.",
-            "level": 1
+            "level": 1,
+            "text": "Welcome to Achieve Manager Training"
           }
         },
         {
           "type": "Body",
           "props": {
-            "text": "This content is coming from course.json."
+            "text": "This training is designed to help you confidently navigate compensation planning and lead meaningful year-end performance conversations. As a manager, your approach shapes engagement, trust, and performance."
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "objectives",
+      "title": "Learning Objectives",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "By the end of this session, you will be able to:"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "• Understand your role in performance and rewards conversations\n• Differentiate pay rewards effectively during compensation planning\n• Recognize the three core psychological needs employees have\n• Prepare intentionally for meaningful conversations\n• Conduct conversations with confidence and impact"
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "manager-role",
+      "title": "Your Role as a Manager",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Your Role as a Manager"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Your role includes building trust, focusing on fairness, supporting growth, and aligning employee work with team and organizational goals. Showing up this way helps employees feel capable, supported, and empowered to grow."
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "comp-planning",
+      "title": "Compensation Planning Process",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Compensation Planning Process"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Once ratings are finalized, managers determine compensation recommendations in Workday. Merit and bonus pools are calculated based on salary, targets, and company performance. Recommendations outside guidelines are flagged for review."
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "employee-needs",
+      "title": "What Employees Need",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "What Employees Need in Performance Conversations"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Research shows employees need to feel Competent, Connected, and Autonomous. Meeting these needs builds motivation and engagement. Unmet needs can lead to defensiveness or disengagement."
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "conversation-structure",
+      "title": "Structuring the Conversation",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Five Stages of an Effective Conversation"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "1. Introduction\n2. Performance Discussion\n3. Explaining Rewards\n4. Looking Forward\n5. Closing\n\nA clear structure helps you lead with confidence, empathy, and impact."
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "handling-tough-moments",
+      "title": "Handling Tough Moments",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Handling Tough Moments"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "If an employee is disappointed or disagrees, pause and listen. Acknowledge their feelings, ground your response in facts, and redirect toward development."
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "knowledge-check-1",
+      "title": "Knowledge Check",
+      "components": [
+        {
+          "type": "MCQ",
+          "props": {
+            "question": "What is the primary purpose of a year-end performance conversation?",
+            "choices": [
+              "To review the manager’s goals for the next year",
+              "To strictly deliver the performance rating",
+              "To inspire, guide, and empower employees through a fair and transparent conversation",
+              "To announce company-wide budget changes"
+            ],
+            "correctIndex": 2,
+            "feedback": {
+              "correct": "Correct. Performance conversations are opportunities to inspire, guide, and empower employees.",
+              "incorrect": "Not quite. Performance conversations are about inspiring and empowering employees through clarity and fairness."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "wrap-up",
+      "title": "Conclusion",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Wrapping Up"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Achieve gives you the tools to lead performance and rewards conversations with fairness, empathy, and clarity. By showing up intentionally, you help employees feel valued, supported, and inspired to grow."
           }
         }
       ]
