@@ -1,198 +1,227 @@
 {
   "meta": {
-    "id": "brunswick-achieve-manager-part-2",
-    "title": "Achieve Manager Training: Performance & Rewards Conversations",
-    "theme": "astellas",
-    "client": "Astellas"
+    "id": "alsap-overview",
+    "title": "ALSAP Overview",
+    "client": "Astellas",
+    "theme": "astellas"
   },
-
   "nav": {
-    "startSceneId": "intro"
+    "startSceneId": "s1-title"
   },
-
   "scenes": [
     {
-      "id": "intro",
-      "title": "Welcome",
+      "id": "s1-title",
+      "title": "ALSAP Overview",
       "components": [
         {
           "type": "Heading",
           "props": {
             "level": 1,
-            "text": "Welcome to Achieve Manager Training"
+            "text": "ALSAP Overview"
           }
         },
         {
           "type": "Body",
           "props": {
-            "text": "This training is designed to help you confidently navigate compensation planning and lead meaningful year-end performance conversations. As a manager, your approach shapes engagement, trust, and performance."
+            "text": "Asset Level Safety Assessment Plan\n\nUnderstanding Astellas’ approach to proactive safety surveillance."
           }
         }
       ]
     },
-
     {
-      "id": "objectives",
-      "title": "Learning Objectives",
+      "id": "s2-challenge",
+      "title": "Why ALSAP Exists",
       "components": [
         {
           "type": "Heading",
           "props": {
             "level": 2,
-            "text": "By the end of this session, you will be able to:"
+            "text": "The Challenge"
           }
         },
         {
           "type": "Body",
           "props": {
-            "text": "• Understand your role in performance and rewards conversations\n• Differentiate pay rewards effectively during compensation planning\n• Recognize the three core psychological needs employees have\n• Prepare intentionally for meaningful conversations\n• Conduct conversations with confidence and impact"
+            "text": "When we develop a new drug, multiple clinical trials often run at the same time. Each trial monitors safety carefully within its own protocol. However, safety data accumulates across trials, and without a systematic way to review the full picture, important patterns may be missed until late in development.\n\nALSAP was created to address this gap."
           }
         }
       ]
     },
-
     {
-      "id": "manager-role",
-      "title": "Your Role as a Manager",
+      "id": "s3-what-is-alsap",
+      "title": "What Is ALSAP?",
       "components": [
         {
           "type": "Heading",
           "props": {
             "level": 2,
-            "text": "Your Role as a Manager"
+            "text": "What Is ALSAP?"
           }
         },
         {
-          "type": "Body",
+          "type": "RevealCards",
           "props": {
-            "text": "Your role includes building trust, focusing on fairness, supporting growth, and aligning employee work with team and organizational goals. Showing up this way helps employees feel capable, supported, and empowered to grow."
+            "cards": [
+              {
+                "title": "A Plan",
+                "content": "A documented strategy that defines when and how aggregate safety data will be analyzed for a specific asset."
+              },
+              {
+                "title": "A Team",
+                "content": "Dedicated statistical programmers and statisticians responsible for conducting the analyses."
+              },
+              {
+                "title": "A Process",
+                "content": "Standardized procedures that connect planning, execution, and decision-making."
+              }
+            ]
           }
         }
       ]
     },
-
     {
-      "id": "comp-planning",
-      "title": "Compensation Planning Process",
+      "id": "s4-comparison",
+      "title": "ALSAP vs Other Safety Processes",
       "components": [
         {
           "type": "Heading",
           "props": {
             "level": 2,
-            "text": "Compensation Planning Process"
+            "text": "ALSAP Compared to Other Safety Processes"
           }
         },
         {
           "type": "Body",
           "props": {
-            "text": "Once ratings are finalized, managers determine compensation recommendations in Workday. Merit and bonus pools are calculated based on salary, targets, and company performance. Recommendations outside guidelines are flagged for review."
+            "text": "ALSAP provides proactive, planned analysis of aggregate safety data across trials. Trial-level monitoring focuses on individual studies. The Safety Management Team provides governance and decision-making, while the Safety Assessment Committee conducts unblinded reviews when required.\n\nEach process plays a distinct role in Astellas’ overall safety strategy."
           }
         }
       ]
     },
-
     {
-      "id": "employee-needs",
-      "title": "What Employees Need",
-      "components": [
-        {
-          "type": "Heading",
-          "props": {
-            "level": 2,
-            "text": "What Employees Need in Performance Conversations"
-          }
-        },
-        {
-          "type": "Body",
-          "props": {
-            "text": "Research shows employees need to feel Competent, Connected, and Autonomous. Meeting these needs builds motivation and engagement. Unmet needs can lead to defensiveness or disengagement."
-          }
-        }
-      ]
-    },
-
-    {
-      "id": "conversation-structure",
-      "title": "Structuring the Conversation",
-      "components": [
-        {
-          "type": "Heading",
-          "props": {
-            "level": 2,
-            "text": "Five Stages of an Effective Conversation"
-          }
-        },
-        {
-          "type": "Body",
-          "props": {
-            "text": "1. Introduction\n2. Performance Discussion\n3. Explaining Rewards\n4. Looking Forward\n5. Closing\n\nA clear structure helps you lead with confidence, empathy, and impact."
-          }
-        }
-      ]
-    },
-
-    {
-      "id": "handling-tough-moments",
-      "title": "Handling Tough Moments",
-      "components": [
-        {
-          "type": "Heading",
-          "props": {
-            "level": 2,
-            "text": "Handling Tough Moments"
-          }
-        },
-        {
-          "type": "Body",
-          "props": {
-            "text": "If an employee is disappointed or disagrees, pause and listen. Acknowledge their feelings, ground your response in facts, and redirect toward development."
-          }
-        }
-      ]
-    },
-
-    {
-      "id": "knowledge-check-1",
+      "id": "s5-kc1",
       "title": "Knowledge Check",
       "components": [
         {
           "type": "MCQ",
           "props": {
-            "question": "What is the primary purpose of a year-end performance conversation?",
+            "question": "What is the primary purpose of ALSAP?",
             "choices": [
-              "To review the manager’s goals for the next year",
-              "To strictly deliver the performance rating",
-              "To inspire, guide, and empower employees through a fair and transparent conversation",
-              "To announce company-wide budget changes"
+              "To replace the Safety Management Team",
+              "To provide real-time monitoring within individual trials",
+              "To systematically analyze aggregate safety data across trials",
+              "To conduct final benefit-risk assessments"
             ],
             "correctIndex": 2,
             "feedback": {
-              "correct": "Correct. Performance conversations are opportunities to inspire, guide, and empower employees.",
-              "incorrect": "Not quite. Performance conversations are about inspiring and empowering employees through clarity and fairness."
+              "correct": "That’s right. ALSAP provides proactive, systematic analysis of aggregate safety data across trials.",
+              "incorrect": "Not quite. ALSAP focuses on aggregate analysis across trials, not replacing existing governance or trial-level monitoring."
             }
           }
         }
       ]
     },
-
     {
-      "id": "wrap-up",
-      "title": "Conclusion",
+      "id": "s6-workflow",
+      "title": "How ALSAP Works",
       "components": [
         {
           "type": "Heading",
           "props": {
             "level": 2,
-            "text": "Wrapping Up"
+            "text": "The ALSAP Workflow"
+          }
+        },
+        {
+          "type": "RevealCards",
+          "props": {
+            "cards": [
+              {
+                "title": "Plan",
+                "content": "The asset team determines ALSAP is needed and drafts an ALSAP Plan."
+              },
+              {
+                "title": "Assign",
+                "content": "A dedicated ALSAP programmer or statistician is assigned."
+              },
+              {
+                "title": "Execute",
+                "content": "Aggregate safety analyses are performed according to the plan."
+              },
+              {
+                "title": "Review",
+                "content": "The SMT reviews outputs and assesses potential safety signals."
+              },
+              {
+                "title": "Act",
+                "content": "Findings are documented, escalated if needed, and actions are implemented."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "s7-relevance",
+      "title": "Why ALSAP May Matter to You",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "When Might ALSAP Affect Your Work?"
           }
         },
         {
           "type": "Body",
           "props": {
-            "text": "Achieve gives you the tools to lead performance and rewards conversations with fairness, empathy, and clarity. By showing up intentionally, you help employees feel valued, supported, and inspired to grow."
+            "text": "ALSAP connects to many roles across the organization. Clinical Operations may support data access. Drug Safety may use ALSAP findings for signal detection. Regulatory Affairs may reference ALSAP outputs in submissions. Biostatistics and programming teams may collaborate on analyses. SMT members review ALSAP outputs and determine next steps."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s8-kc2",
+      "title": "Knowledge Check",
+      "components": [
+        {
+          "type": "MCQ",
+          "props": {
+            "question": "When might ALSAP be particularly useful?",
+            "choices": [
+              "When waiting for all trials to complete",
+              "When similar safety findings appear across multiple trials",
+              "When unblinding is immediately required",
+              "When monitoring a single trial only"
+            ],
+            "correctIndex": 1,
+            "feedback": {
+              "correct": "Correct. ALSAP helps identify patterns across multiple trials.",
+              "incorrect": "ALSAP is most useful when looking across trials, not within a single study."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "s9-resources",
+      "title": "Resources and Next Steps",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Resources and Next Steps"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Key documents include the ALSAP SOP and the ALSAP Plan template. If you have questions about ALSAP or how it may relate to your work, reach out to the ALSAP team or your project lead. Additional role-specific training is available for ALSAP team members, SMT members, and Asset Leads."
           }
         }
       ]
     }
-  ]
+  ],
+  "rules": []
 }
