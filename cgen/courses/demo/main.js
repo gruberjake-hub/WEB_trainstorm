@@ -1,4 +1,5 @@
 import { Runtime } from "../../engine/runtime.js";
+import { applyBranding } from "../../engine/theme-manager.js";
 
 function say(msg) {
   const stage = document.getElementById("stage");
@@ -29,6 +30,11 @@ async function boot() {
       return;
     }
 
+  // 🔑 🔑 🔑 ONE-LINE FIX (actually one call, async-safe)
+    say("🎨 Applying brand...");
+    await applyBranding(course.meta);
+    say("✅ Brand applied");
+    
     const runtime = new Runtime({
       course,
       mount: document.getElementById("stage"),
