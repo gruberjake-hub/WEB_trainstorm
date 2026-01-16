@@ -1,226 +1,317 @@
 {
   "meta": {
-    "id": "alsap-overview",
-    "title": "ALSAP Overview",
-    "client": "Astellas",
-    "theme": "astellas"
+    "id": "ALSAP_Foundations_01",
+    "title": "ALSAP Foundations: Thinking at the Asset Level",
+    "theme": "clinical_safety",
+    "client": "Astellas"
   },
   "nav": {
-    "startSceneId": "s1-title"
+    "startSceneId": "S01"
   },
   "scenes": [
     {
-      "id": "s1-title",
-      "title": "ALSAP Overview",
-      "components": [
-        {
-          "type": "Heading",
-          "props": {
-            "level": 1,
-            "text": "ALSAP Overview"
-          }
-        },
-        {
-          "type": "Body",
-          "props": {
-            "text": "Asset Level Safety Assessment Plan\n\nUnderstanding Astellas’ approach to proactive safety surveillance."
-          }
-        }
-      ]
-    },
-    {
-      "id": "s2-challenge",
+      "id": "S01",
       "title": "Why ALSAP Exists",
       "components": [
         {
           "type": "Heading",
           "props": {
-            "level": 2,
-            "text": "The Challenge"
+            "text": "Why ALSAP Exists",
+            "level": 2
           }
         },
         {
           "type": "Body",
           "props": {
-            "text": "When we develop a new drug, multiple clinical trials often run at the same time. Each trial monitors safety carefully within its own protocol. However, safety data accumulates across trials, and without a systematic way to review the full picture, important patterns may be missed until late in development.\n\nALSAP was created to address this gap."
+            "text": "ALSAP exists because safety oversight is not static. As an asset moves through development, safety knowledge accumulates, changes, and sometimes contradicts earlier assumptions."
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "ALSAP provides a structured way to plan how safety data will be monitored, assessed, and revisited over time so that safety decisions are intentional, consistent, and defensible."
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "ALSAP is not primarily about compliance. It is about coherent safety thinking over time.",
+            "emphasis": "high"
           }
         }
-      ]
+      ],
+      "voiceover": null
     },
     {
-      "id": "s3-what-is-alsap",
-      "title": "What Is ALSAP?",
+      "id": "S02",
+      "title": "What Asset-Level Really Means",
       "components": [
         {
           "type": "Heading",
           "props": {
-            "level": 2,
-            "text": "What Is ALSAP?"
+            "text": "What Asset-Level Really Means",
+            "level": 2
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Asset-level thinking means stepping back from individual studies, datasets, or events and asking a different question: What do these signals collectively mean for the future of this asset?"
           }
         },
         {
           "type": "RevealCards",
           "props": {
-            "cards": [
+            "items": [
               {
-                "title": "A Plan",
-                "content": "A documented strategy that defines when and how aggregate safety data will be analyzed for a specific asset."
+                "title": "Across Studies",
+                "body": "Considers multiple studies rather than isolated results."
               },
               {
-                "title": "A Team",
-                "content": "Dedicated statistical programmers and statisticians responsible for conducting the analyses."
+                "title": "Across Populations",
+                "body": "Looks at safety patterns across different patient groups."
               },
               {
-                "title": "A Process",
-                "content": "Standardized procedures that connect planning, execution, and decision-making."
+                "title": "Across Time",
+                "body": "Accounts for how safety knowledge evolves over development phases."
+              },
+              {
+                "title": "Across Patterns",
+                "body": "Focuses on interpretation, not simple aggregation."
               }
             ]
-          }
-        }
-      ]
-    },
-    {
-      "id": "s4-comparison",
-      "title": "ALSAP vs Other Safety Processes",
-      "components": [
-        {
-          "type": "Heading",
-          "props": {
-            "level": 2,
-            "text": "ALSAP Compared to Other Safety Processes"
           }
         },
         {
           "type": "Body",
           "props": {
-            "text": "ALSAP provides proactive, planned analysis of aggregate safety data across trials. Trial-level monitoring focuses on individual studies. The Safety Management Team provides governance and decision-making, while the Safety Assessment Committee conducts unblinded reviews when required.\n\nEach process plays a distinct role in Astellas’ overall safety strategy."
+            "text": "Asset-level does not mean everything. It means the information that materially informs safety understanding and decision-making for the asset as a whole.",
+            "emphasis": "high"
           }
         }
-      ]
+      ],
+      "voiceover": null
     },
     {
-      "id": "s5-kc1",
-      "title": "Knowledge Check",
-      "components": [
-        {
-          "type": "MCQ",
-          "props": {
-            "question": "What is the primary purpose of ALSAP?",
-            "choices": [
-              "To replace the Safety Management Team",
-              "To provide real-time monitoring within individual trials",
-              "To systematically analyze aggregate safety data across trials",
-              "To conduct final benefit-risk assessments"
-            ],
-            "correctIndex": 2,
-            "feedback": {
-              "correct": "That’s right. ALSAP provides proactive, systematic analysis of aggregate safety data across trials.",
-              "incorrect": "Not quite. ALSAP focuses on aggregate analysis across trials, not replacing existing governance or trial-level monitoring."
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": "s6-workflow",
-      "title": "How ALSAP Works",
+      "id": "S03",
+      "title": "ALSAP and Other Safety Documents",
       "components": [
         {
           "type": "Heading",
           "props": {
-            "level": 2,
-            "text": "The ALSAP Workflow"
+            "text": "ALSAP and Other Safety Documents",
+            "level": 2
           }
         },
         {
           "type": "RevealCards",
           "props": {
-            "cards": [
+            "items": [
               {
-                "title": "Plan",
-                "content": "The asset team determines ALSAP is needed and drafts an ALSAP Plan."
+                "title": "Other Safety Documents",
+                "body": "Define study-specific monitoring, protocol procedures, and detailed statistical analysis."
               },
               {
-                "title": "Assign",
-                "content": "A dedicated ALSAP programmer or statistician is assigned."
-              },
-              {
-                "title": "Execute",
-                "content": "Aggregate safety analyses are performed according to the plan."
-              },
-              {
-                "title": "Review",
-                "content": "The SMT reviews outputs and assesses potential safety signals."
-              },
-              {
-                "title": "Act",
-                "content": "Findings are documented, escalated if needed, and actions are implemented."
+                "title": "ALSAP",
+                "body": "Defines how safety will be monitored and assessed at the asset level, including what is reviewed, when, and why."
               }
             ]
-          }
-        }
-      ]
-    },
-    {
-      "id": "s7-relevance",
-      "title": "Why ALSAP May Matter to You",
-      "components": [
-        {
-          "type": "Heading",
-          "props": {
-            "level": 2,
-            "text": "When Might ALSAP Affect Your Work?"
           }
         },
         {
           "type": "Body",
           "props": {
-            "text": "ALSAP connects to many roles across the organization. Clinical Operations may support data access. Drug Safety may use ALSAP findings for signal detection. Regulatory Affairs may reference ALSAP outputs in submissions. Biostatistics and programming teams may collaborate on analyses. SMT members review ALSAP outputs and determine next steps."
+            "text": "ALSAP does not replace other safety documents. It provides the asset-level frame that connects them.",
+            "emphasis": "high"
           }
         }
-      ]
+      ],
+      "voiceover": null
     },
     {
-      "id": "s8-kc2",
+      "id": "S04",
+      "title": "Safety Topics of Interest",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "text": "Safety Topics of Interest",
+            "level": 2
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Safety Topics of Interest are the backbone of ALSAP. A STOI is not simply a list of adverse events."
+          }
+        },
+        {
+          "type": "RevealCards",
+          "props": {
+            "items": [
+              {
+                "title": "Plausible Concern",
+                "body": "Grounded in mechanism, data, or emerging signal."
+              },
+              {
+                "title": "Focused Monitoring",
+                "body": "Warrants targeted review or analysis."
+              },
+              {
+                "title": "Decision-Relevant",
+                "body": "Has the potential to influence safety decisions."
+              }
+            ]
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Not every observation is a STOI, and not every STOI requires escalation. Judgment is required.",
+            "emphasis": "high"
+          }
+        }
+      ],
+      "voiceover": null
+    },
+    {
+      "id": "S05",
+      "title": "Judgment Over Checklists",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "text": "Judgment Over Checklists",
+            "level": 2
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "ALSAP is intentionally structured, but it is not a checklist."
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "There will be moments where data are incomplete, signals are ambiguous, or experts disagree."
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "ALSAP does not provide answers in these moments. It provides a framework for disciplined judgment and documentation of rationale.",
+            "emphasis": "high"
+          }
+        }
+      ],
+      "voiceover": null
+    },
+    {
+      "id": "S06",
+      "title": "Roles and Responsibility",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "text": "Roles and Responsibility",
+            "level": 2
+          }
+        },
+        {
+          "type": "RevealCards",
+          "props": {
+            "items": [
+              {
+                "title": "ALSAP Lead",
+                "body": "Coordinates the process and ensures coherence."
+              },
+              {
+                "title": "Contributing Authors",
+                "body": "Provide domain expertise from their functional areas."
+              },
+              {
+                "title": "SMT Members",
+                "body": "Provide oversight and make safety decisions."
+              }
+            ]
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Alignment does not mean agreement. It means shared understanding of rationale.",
+            "emphasis": "high"
+          }
+        }
+      ],
+      "voiceover": null
+    },
+    {
+      "id": "S07",
+      "title": "What ALSAP Is and Is Not",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "text": "What ALSAP Is and Is Not",
+            "level": 2
+          }
+        },
+        {
+          "type": "RevealCards",
+          "props": {
+            "items": [
+              {
+                "title": "ALSAP Is",
+                "body": "A planning tool, coordination mechanism, and record of safety intent and rationale."
+              },
+              {
+                "title": "ALSAP Is Not",
+                "body": "A checklist, a guarantee against safety issues, or a static compliance document."
+              }
+            ]
+          }
+        }
+      ],
+      "voiceover": null
+    },
+    {
+      "id": "S08",
       "title": "Knowledge Check",
       "components": [
         {
           "type": "MCQ",
           "props": {
-            "question": "When might ALSAP be particularly useful?",
-            "choices": [
-              "When waiting for all trials to complete",
-              "When similar safety findings appear across multiple trials",
-              "When unblinding is immediately required",
-              "When monitoring a single trial only"
+            "question": "Which statement best reflects the purpose of ALSAP?",
+            "options": [
+              {
+                "id": "A",
+                "text": "To ensure all safety documents follow the same template",
+                "correct": false
+              },
+              {
+                "id": "B",
+                "text": "To support coherent, asset-level safety thinking and decision-making over time",
+                "correct": true
+              },
+              {
+                "id": "C",
+                "text": "To replace other safety monitoring documents",
+                "correct": false
+              }
             ],
-            "correctIndex": 1,
             "feedback": {
-              "correct": "Correct. ALSAP helps identify patterns across multiple trials.",
-              "incorrect": "ALSAP is most useful when looking across trials, not within a single study."
+              "correct": "Correct. ALSAP supports coherent, asset-level safety thinking and decision-making.",
+              "incorrect": "ALSAP is not primarily about templates or replacing other documents."
+            },
+            "retry": {
+              "allowed": true
             }
           }
         }
-      ]
-    },
-    {
-      "id": "s9-resources",
-      "title": "Resources and Next Steps",
-      "components": [
-        {
-          "type": "Heading",
-          "props": {
-            "level": 2,
-            "text": "Resources and Next Steps"
-          }
-        },
-        {
-          "type": "Body",
-          "props": {
-            "text": "Key documents include the ALSAP SOP and the ALSAP Plan template. If you have questions about ALSAP or how it may relate to your work, reach out to the ALSAP team or your project lead. Additional role-specific training is available for ALSAP team members, SMT members, and Asset Leads."
-          }
-        }
-      ]
+      ],
+      "voiceover": null
     }
   ],
   "rules": []
