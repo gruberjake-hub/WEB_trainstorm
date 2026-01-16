@@ -1,5 +1,5 @@
 :root{
-  --brand:#026AFE;
+  --brand:#f7f8f8;
   --bg:#ebecf3;
   --panel:#0a43ec;
   --text:#e9ecf1;
@@ -14,7 +14,8 @@ body{ margin:0; background:var(--bg); color:var(--text); }
   display:flex; align-items:center; justify-content:space-between; gap:12px;
 }
 .stage{
-  margin:14px 0; background:var(--panel); border-radius:14px; padding:18px;
+  margin:14px 0; background:var(--panel); border-radius:14px; padding:48px 56px;
+
   outline:none;
 }
 .title{ font-weight:700; }
