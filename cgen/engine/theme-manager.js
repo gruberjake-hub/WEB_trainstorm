@@ -15,14 +15,13 @@ export async function applyBranding(meta = {}) {
   // 2. Apply brand styles (tokens, layout, components)
   loadTheme(brandName);
 
-  // 3. Apply brand identity to shell (if present)
-  if (brand) {
-    if (brand.logo) {
-      const logoEl = document.getElementById("brandLogo");
-      if (logoEl) {
-        logoEl.src = brand.logo;
-        logoEl.alt = brand.displayName || brandName;
-      }
+  // 3. Apply brand identity to shell (logo, metadata)
+  if (brand && brand.logos && brand.logos.primary) {
+    const logoEl = document.getElementById("brandLogo");
+
+    if (logoEl) {
+      logoEl.src = `../../brands/${brand.brand}/${brand.logos.primary.src}`;
+      logoEl.alt = brand.logos.primary.alt || brand.brand;
     }
 
     // Optional: expose brand to runtime later
