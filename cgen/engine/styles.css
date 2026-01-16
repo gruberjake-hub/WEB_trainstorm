@@ -18,7 +18,7 @@ body{ margin:0; background:var(--bg); color:var(--text); }
 
   outline:none;
 }
-.title{ font-weight:700; }
+.title{ font-weight:800; }
 .btn{
   background:transparent; color:var(--text);
   border:1px solid rgba(233,236,241,.2);
@@ -30,7 +30,7 @@ body{ margin:0; background:var(--bg); color:var(--text); }
 .progressFill{ height:100%; width:0%; background:var(--brand); }
 h1,h2,h3{ margin:0 0 8px; }
 p{ margin:0 0 12px; color:var(--text); }
-.cardGrid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
+.cardGrid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:48px; }
 .card{
   border:1px solid rgba(233,236,241,.18); border-radius:12px; padding:12px;
   background:rgba(255,255,255,.02);
