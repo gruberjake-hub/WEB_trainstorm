@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "oneOf": [
+      { "$ref": "#/definitions/orientation" },
+      { "$ref": "#/definitions/context_frame" },
+      { "$ref": "#/definitions/definition" },
+      { "$ref": "#/definitions/decomposition" },
+      { "$ref": "#/definitions/distinction" },
+      { "$ref": "#/definitions/process_flow" },
+      { "$ref": "#/definitions/role_relevance" },
+      { "$ref": "#/definitions/knowledge_check" },
+      { "$ref": "#/definitions/boundary_statement" },
+      { "$ref": "#/definitions/resource_pointer" },
+      { "$ref": "#/definitions/closure" }
+    ]
+  },
+
+  "definitions": {
+    "orientation": {
+      "type": "object",
+      "required": ["type", "text"],
+      "properties": {
+        "type": { "const": "orientation" },
+        "text": { "type": "string" }
+      }
+    },
+
+    "context_frame": {
+      "type": "object",
+      "required": ["type", "problem"],
+      "properties": {
+        "type": { "const": "context_frame" },
+        "problem": { "type": "string" },
+        "risk": { "type": "string" }
+      }
+    },
+
+    "definition": {
+      "type": "object",
+      "required": ["type", "term", "meaning"],
+      "properties": {
+        "type": { "const": "definition" },
+        "term": { "type": "string" },
+        "meaning": { "type": "string" }
+      }
+    }
+
+    
+  }
+}
