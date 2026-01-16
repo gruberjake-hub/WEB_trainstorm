@@ -28,7 +28,7 @@ body{ margin:0; background:var(--bg); color:var(--text); }
 .progress{ flex:1; display:flex; align-items:center; gap:12px; }
 .progressBar{ flex:1; height:10px; background:rgba(233,236,241,.12); border-radius:999px; overflow:hidden; }
 .progressFill{ height:100%; width:0%; background:var(--brand); }
-h1,h2,h3{ margin:0 0 8px; }
+h1,h2,h3{ margin:14px 0 8px; }
 p{ margin:0 0 12px; color:var(--text); }
 .cardGrid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:48px; }
 .card{
