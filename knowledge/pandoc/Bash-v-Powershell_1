@@ -1,0 +1,28 @@
+# Bash vs PowerShell line continuation
+
+## Symptom
+Pandoc command fails with:
+Missing expression after unary operator '--'
+
+## Root Cause
+Used "\" line continuation in PowerShell instead of Bash.
+
+## Fix
+PowerShell:
+pandoc input.md `
+  --css=styles.css `
+  --standalone
+
+Bash:
+pandoc input.md \
+  --css=styles.css \
+  --standalone
+
+## Guardrail
+Pick ONE shell per repo. Set default terminal in VS Code.
+
+## Context
+MythEngine slides build.
+
+## Tags
+pandoc, powershell, bash
