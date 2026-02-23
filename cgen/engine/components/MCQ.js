@@ -2,18 +2,23 @@ export function MCQ({ props, emit }) {
   const wrap = document.createElement("section");
   wrap.setAttribute("aria-label", "Knowledge check");
 
+  // ✅ Backward-compatible normalization (supports old + new schemas)
+  const stemText = props.stem ?? props.question ?? props.prompt ?? "";
+  const choices = props.choices ?? props.options ?? [];
+  const qid = props.id ?? props.qid ?? "q";
+
   const stem = document.createElement("p");
-  stem.textContent = props.stem || "";
+  stem.textContent = stemText;
   wrap.appendChild(stem);
 
   const form = document.createElement("form");
-  const name = `mcq-${props.id || "q"}`;
+  const name = `mcq-${qid}`;
 
   const feedback = document.createElement("div");
   feedback.className = "feedback";
   feedback.hidden = true;
 
-  (props.choices || []).forEach((c, idx) => {
+  (choices || []).forEach((c, idx) => {
     const id = `${name}-${idx}`;
 
     const row = document.createElement("div");
@@ -30,7 +35,7 @@ export function MCQ({ props, emit }) {
 
     const label = document.createElement("label");
     label.setAttribute("for", id);
-    label.textContent = c.text;
+    label.textContent = c.text ?? c.label ?? "";
 
     row.appendChild(input);
     row.appendChild(label);
@@ -48,13 +53,15 @@ export function MCQ({ props, emit }) {
     const chosen = new FormData(form).get(name);
     if (!chosen) return;
 
-    const choice = (props.choices || []).find(c => c.id === chosen);
+    const choice = (choices || []).find(c => c.id === chosen);
     const correct = !!choice?.correct;
 
     feedback.hidden = false;
-    feedback.textContent = correct ? (props.feedback?.correct || "Correct.") : (props.feedback?.incorrect || "Try again.");
+    feedback.textContent = correct
+      ? (props.feedback?.correct || "Correct.")
+      : (props.feedback?.incorrect || "Try again.");
 
-    emit("MCQ_ANSWERED", { id: props.id, chosen, correct });
+    emit("MCQ_ANSWERED", { id: qid, chosen, correct });
   });
 
   wrap.appendChild(form);
