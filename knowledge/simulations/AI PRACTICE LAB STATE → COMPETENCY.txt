@@ -1,0 +1,43 @@
+AI PRACTICE LAB: STATE → COMPETENCY → OUTCOME
+
+[ Learner Turn ]
+   |
+   v
+[ Input ]
+(typed response OR MCQ choice)
+   |
+   v
+[ Scoring / Classification ]
+- Convert input → ΔDim vector (6 dims)
+  e.g., [-2, +1, 0, +2, -1, 0]
+- Source can be:
+  A) Deterministic MCQ mapping
+  B) LLM classifier (outputs JSON deltas)
+   |
+   v
+[ Layer 1: Conversation State (Heat Map) ]
+- Maintain running totals per dimension
+  Dim_i(t+1) = clamp(Dim_i(t) + ΔDim_i, bounds)
+- Display to learner each round (fast feedback)
+   |
+   v
+[ Scenario Emphasis Profile ]
+- Multipliers per dimension by scenario/context
+  Dim'_i = Dim_i * ScenarioMultiplier_i
+   |
+   v
+[ Translation Layer: Weight Matrix ]
+- Map dimensions → competencies
+  Competency_j = Σ (Dim'_i * Weight_ij)
+- Weights are stable, reviewable, defensible
+   |
+   v
+[ Layer 2: Competency Scores (Character Sheet) ]
+- Normalize to 0–100 or 1–5
+- Show end-of-sim (slow, meaningful feedback)
+   |
+   v
+[ Layer 3: Outcomes + Guidance ]
+- Success/risk flags (e.g., escalation risk high)
+- Recommended practice targets
+- Next scenario selection (adaptive pathing)

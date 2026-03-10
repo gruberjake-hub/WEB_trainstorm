@@ -1,0 +1,257 @@
+/* =========================================================
+   Brunswick CSS tokens for Trainstorm
+   Source basis: Brunswick Brand Guidelines 2023
+   Distilled implementation layer for runtime use
+   ========================================================= */
+
+:root {
+  /* Core colors */
+  --brunswick-blue: #026AFE;
+  --brunswick-midnight: #000018;
+  --brunswick-white: #FFFFFF;
+  --brunswick-sky: #D4E8FF;
+
+  /* Support colors */
+  --brunswick-grey-a: #6D6E70;
+  --brunswick-grey-b: #A7A9AB;
+
+  /* Accent colors */
+  --brunswick-accent-green: #04E255;
+  --brunswick-accent-blue: #00C4FF;
+  --brunswick-accent-purple: #A665FF;
+
+  /* Semantic tokens */
+  --color-bg-primary: var(--brunswick-white);
+  --color-bg-brand: var(--brunswick-blue);
+  --color-bg-dark: var(--brunswick-midnight);
+  --color-bg-soft: var(--brunswick-sky);
+
+  --color-text-primary: var(--brunswick-midnight);
+  --color-text-inverse: var(--brunswick-white);
+  --color-text-muted: var(--brunswick-grey-a);
+
+  --color-border-subtle: var(--brunswick-grey-b);
+  --color-link: var(--brunswick-blue);
+  --color-focus: var(--brunswick-accent-blue);
+
+  /* Typography */
+  --font-brand-sans: "Telegraf", "Titillium Web", "Titillium", "Helvetica Neue", Arial, sans-serif;
+  --font-body-serif: "EB Garamond", Garamond, Georgia, serif;
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+}
+
+/* =========================================================
+   Base runtime mappings
+   ========================================================= */
+
+.trainstorm-theme-brunswick {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-brand-sans);
+}
+
+.trainstorm-theme-brunswick a {
+  color: var(--color-link);
+}
+
+.trainstorm-theme-brunswick :focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   Typography
+   ========================================================= */
+
+.brunswick-title,
+.trainstorm-brunswick-screen-title {
+  font-family: var(--font-brand-sans);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-primary);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.brunswick-subtitle {
+  font-family: var(--font-brand-sans);
+  font-weight: var(--weight-light);
+  color: var(--color-text-muted);
+  line-height: 1.1;
+}
+
+.brunswick-h2,
+.brunswick-callout-title {
+  font-family: var(--font-brand-sans);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+}
+
+.brunswick-callout-body {
+  font-family: var(--font-brand-sans);
+  font-weight: var(--weight-light);
+  color: var(--color-text-primary);
+}
+
+.brunswick-callout-secondary {
+  font-family: var(--font-brand-sans);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary);
+}
+
+.brunswick-body,
+.trainstorm-brunswick-screen-body {
+  font-family: var(--font-body-serif);
+  font-weight: var(--weight-regular);
+  color: var(--color-text-primary);
+}
+
+/* Case helpers */
+.brunswick-case-title { text-transform: none; }
+.brunswick-case-sentence { text-transform: none; }
+.brunswick-case-upper {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Headline rule: generally no periods at end of headlines.
+   Em dash helper for title/subtitle pairings. */
+.brunswick-headline-dash::after {
+  content: " —";
+}
+
+/* =========================================================
+   Surfaces
+   ========================================================= */
+
+.brunswick-surface-brand {
+  background: var(--brunswick-blue);
+  color: var(--brunswick-white);
+}
+
+.brunswick-surface-dark,
+.trainstorm-brunswick-panel-dark {
+  background: var(--brunswick-midnight);
+  color: var(--brunswick-white);
+}
+
+.brunswick-surface-soft,
+.trainstorm-brunswick-panel-soft {
+  background: var(--brunswick-sky);
+  color: var(--brunswick-midnight);
+}
+
+.brunswick-surface-neutral {
+  background: var(--brunswick-white);
+  color: var(--brunswick-midnight);
+}
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+
+.trainstorm-brunswick-button-primary {
+  background: var(--brunswick-blue);
+  color: var(--brunswick-white);
+  border: none;
+  font-family: var(--font-brand-sans);
+  font-weight: var(--weight-bold);
+}
+
+.trainstorm-brunswick-button-secondary {
+  background: var(--brunswick-white);
+  color: var(--brunswick-blue);
+  border: 1px solid var(--brunswick-blue);
+  font-family: var(--font-brand-sans);
+  font-weight: var(--weight-bold);
+}
+
+/* =========================================================
+   Energy Current implementation notes
+   ========================================================= */
+
+/*
+Use sparingly. Rule of thumb from the guidelines:
+no more than once every five pages.
+Best used on title screens, section breakers, or low-content hero moments.
+*/
+
+/* Allowed backgrounds */
+.brunswick-energy-bg-blue { background-color: var(--brunswick-blue); }
+.brunswick-energy-bg-midnight { background-color: var(--brunswick-midnight); }
+.brunswick-energy-bg-sky { background-color: var(--brunswick-sky); }
+.brunswick-energy-bg-white { background-color: var(--brunswick-white); }
+.brunswick-energy-bg-grey-a { background-color: var(--brunswick-grey-a); }
+.brunswick-energy-bg-grey-b { background-color: var(--brunswick-grey-b); }
+
+/*
+Forbidden:
+- Accent Green background
+- Accent Blue background
+- Accent Purple background
+- Non-Brunswick palette backgrounds
+*/
+
+/*
+Pop of color:
+Use only one accent color per Energy Current.
+Allowed:
+  --brunswick-accent-blue
+  --brunswick-accent-green
+  --brunswick-accent-purple
+*/
+
+/*
+With people:
+- Person must be fully in front of the Energy Current
+- Never interweave the current with a person
+- Prefer simple backgrounds or solid color backdrops
+*/
+
+/*
+Live line usage:
+- Keep lines thin, elegant, readable, printable
+- Adjust line weight as scale changes
+- Use fine line weight for large hero graphics
+- Crop elegantly; avoid awkward junction crops
+*/
+
+/* Small application helper */
+.brunswick-energy-small-application {
+  background-position: center;
+  background-size: cover;
+}
+
+/* =========================================================
+   Iconography notes
+   ========================================================= */
+
+/*
+Icons should be:
+- Simple
+- Monotone
+- Outline-based
+- Built from consistent line weight
+- Based on basic geometry
+- Rounded joints/angles
+- Minimum rendered size: 100px
+*/
+
+/* =========================================================
+   Layout notes
+   ========================================================= */
+
+/*
+Grid guidance:
+- Default to 12-column layout
+- Small formats may use 6 or 4 columns
+- Give content room to breathe
+- Aim for hierarchy, clarity, and an expressive-clean feel
+*/

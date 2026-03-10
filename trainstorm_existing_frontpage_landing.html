@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trainstorm.ai | AI Learning Experiences</title>
+  <meta name="description" content="Scenario-based learning experiences, AI rehearsal, and modern course systems designed for complex organizations." />
+  <meta name="theme-color" content="#0a1020" />
+  <style>
+    :root{
+      --bg:#081120;
+      --bg2:#0d1830;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.04);
+      --line:rgba(255,255,255,.12);
+      --text:#eef4ff;
+      --muted:#bcc8df;
+      --soft:#90a2c0;
+      --accent:#7dd3fc;
+      --accent2:#8b5cf6;
+      --good:#7ee787;
+      --warn:#f5c76f;
+      --radius:22px;
+      --shadow:0 26px 72px rgba(0,0,0,.34);
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at 10% -10%, rgba(125,211,252,.12), transparent 56%),
+        radial-gradient(900px 560px at 85% 8%, rgba(139,92,246,.16), transparent 48%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      line-height:1.5;
+    }
+
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(calc(100% - 40px), var(--max));margin:0 auto}
+
+    .nav{
+      position:sticky;top:0;z-index:30;
+      backdrop-filter:saturate(150%) blur(14px);
+      background:rgba(8,17,32,.72);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav-inner{
+      min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:14px;font-weight:700;letter-spacing:.02em;
+    }
+    .mark{
+      width:38px;height:38px;border-radius:14px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.65), transparent 24%),
+        linear-gradient(135deg, rgba(125,211,252,.95), rgba(139,92,246,.95));
+      box-shadow:0 10px 32px rgba(125,211,252,.2);
+      position:relative;
+    }
+    .mark:after{
+      content:"";position:absolute;inset:9px;border-radius:10px;border:1px solid rgba(255,255,255,.55);
+      transform:rotate(12deg);
+    }
+    .nav-links{display:flex;gap:24px;color:var(--muted);font-size:.96rem}
+    .nav-links a:hover{color:var(--text)}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-height:46px;padding:0 18px;border-radius:14px;
+      border:1px solid var(--line);background:rgba(255,255,255,.04);
+      color:var(--text);font-weight:600;
+      transition:transform .18s ease, background .18s ease;
+    }
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.08)}
+    .btn.primary{
+      background:linear-gradient(135deg, rgba(125,211,252,.22), rgba(139,92,246,.24));
+      border-color:rgba(125,211,252,.28);
+      box-shadow:0 10px 26px rgba(125,211,252,.12);
+    }
+
+    .hero{padding:86px 0 56px}
+    .hero-grid{
+      display:grid;grid-template-columns:1.12fr .88fr;gap:34px;align-items:center;
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:8px 12px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:#dce8ff;font-size:.84rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;background:var(--good);
+      box-shadow:0 0 0 6px rgba(126,231,135,.12);
+    }
+    h1{
+      margin:18px 0 18px;
+      font-size:clamp(2.5rem, 6vw, 5rem);
+      line-height:.98;letter-spacing:-.04em;max-width:11ch;
+    }
+    .lead{
+      margin:0 0 28px;max-width:62ch;color:var(--muted);font-size:1.12rem;
+    }
+    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 24px}
+    .proof{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;
+    }
+    .proof-card{
+      border:1px solid var(--line);background:var(--panel2);border-radius:16px;padding:14px 16px;
+    }
+    .proof-card strong{display:block;margin-bottom:4px}
+    .proof-card span{color:var(--soft);font-size:.92rem}
+
+    .player{
+      border:1px solid var(--line);
+      border-radius:28px;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow:var(--shadow);
+    }
+    .player-top{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:16px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);
+      color:var(--muted);font-size:.94rem;
+    }
+    .window-dots{display:flex;gap:8px}
+    .window-dots span{
+      width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.18);display:block;
+    }
+    .player-body{padding:18px}
+    .shell{
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:20px;
+      overflow:hidden;background:rgba(7,17,31,.75);
+    }
+    .shell-head,.shell-nav,.shell-foot{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:14px;padding:14px 16px;
+    }
+    .shell-head{border-bottom:1px solid rgba(255,255,255,.08)}
+    .shell-nav{
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.02);
+    }
+    .tiny-btn{
+      min-width:74px;height:34px;border-radius:10px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);display:grid;place-items:center;color:var(--text);font-size:.9rem;
+    }
+    .progress{
+      flex:1;display:grid;gap:8px;
+    }
+    .progress small{color:var(--soft)}
+    .bar{
+      width:100%;height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;
+    }
+    .bar > span{
+      display:block;height:100%;width:42%;
+      background:linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius:999px;
+    }
+    .stage{
+      min-height:280px;padding:24px;
+      display:grid;gap:14px;
+      background:
+        radial-gradient(500px 240px at 0% 0%, rgba(125,211,252,.07), transparent 52%),
+        rgba(255,255,255,.02);
+    }
+    .stage-card{
+      border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);
+      border-radius:18px;padding:18px;
+    }
+    .stage-card h3{margin:0 0 8px;font-size:1.08rem}
+    .stage-card p{margin:0;color:var(--muted)}
+    .shell-foot{
+      border-top:1px solid rgba(255,255,255,.08);
+      color:var(--soft);
+    }
+    .audio{
+      width:100%;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.04);display:flex;align-items:center;padding:0 14px;
+    }
+
+    section{padding:34px 0 16px}
+    .section-head{
+      display:grid;gap:10px;max-width:820px;margin:0 0 28px;
+    }
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      color:#dce8ff;font-size:.82rem;font-weight:700;
+      padding:8px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.035);
+      text-transform:uppercase;letter-spacing:.06em;
+    }
+    .section-head h2{
+      margin:0;font-size:clamp(1.8rem,4vw,3.1rem);line-height:1.05;letter-spacing:-.03em;
+    }
+    .section-head p{margin:0;color:var(--muted);font-size:1.02rem}
+
+    .grid-3,.grid-2{display:grid;gap:18px}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .card{
+      border:1px solid var(--line);
+      background:var(--panel);
+      border-radius:22px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+    .card h3{margin:0 0 10px;font-size:1.18rem}
+    .card p{margin:0;color:var(--muted)}
+    .card ul{margin:14px 0 0;padding-left:18px;color:var(--muted)}
+    .card li{margin:8px 0}
+
+    .strip{
+      display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;
+    }
+    .strip .mini{
+      border:1px solid var(--line);background:var(--panel2);border-radius:18px;padding:18px;
+    }
+    .mini strong{display:block;margin-bottom:6px}
+    .mini span{color:var(--muted)}
+
+    .cta{padding:30px 0 82px}
+    .cta-box{
+      display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center;
+      border:1px solid var(--line);border-radius:30px;padding:28px;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow:var(--shadow);
+    }
+    .cta-box h2{margin:0 0 10px;font-size:clamp(1.8rem,4vw,3rem);line-height:1.04;letter-spacing:-.03em}
+    .cta-box p{margin:0;color:var(--muted)}
+    .cta-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:12px}
+
+    footer{
+      padding:26px 0 50px;color:var(--soft);
+    }
+    .foot{
+      display:flex;justify-content:space-between;gap:20px;align-items:center;
+      border-top:1px solid rgba(255,255,255,.08);padding-top:22px;font-size:.95rem;
+    }
+
+    @media (max-width: 980px){
+      .hero-grid,.grid-3,.grid-2,.strip,.cta-box{grid-template-columns:1fr}
+      .nav-links{display:none}
+      .cta-actions{justify-content:flex-start}
+      .proof{grid-template-columns:1fr}
+      h1{max-width:none}
+    }
+
+    @media (max-width: 640px){
+      .wrap{width:min(calc(100% - 28px), var(--max))}
+      .hero{padding-top:54px}
+      .nav-inner{min-height:68px}
+      .btn{width:100%}
+      .hero-actions{display:grid}
+      .foot{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav" aria-label="Primary">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#">
+        <span class="mark" aria-hidden="true"></span>
+        <span>Trainstorm.ai</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#platform">Platform</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#fit">Who it fits</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a class="btn primary" href="#contact">Discuss a project</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">
+            <span class="dot" aria-hidden="true"></span>
+            Modern Learning Systems
+          </div>
+
+          <h1>AI-enabled learning experiences built for real organizational complexity.</h1>
+
+          <p class="lead">
+            Trainstorm.ai designs scenario-based learning systems, rehearsal environments, and modern course
+            experiences that connect strong instructional architecture with AI-enabled practice. The result is
+            learning that feels more alive, more adaptive, and more relevant to the work people actually do.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#platform">Explore the platform</a>
+            <a class="btn" href="#fit">See where it fits</a>
+          </div>
+
+          <div class="proof">
+            <div class="proof-card">
+              <strong>Scenario-centered</strong>
+              <span>Designed for role-based judgment, conversation practice, and difficult real-world decisions.</span>
+            </div>
+            <div class="proof-card">
+              <strong>AI rehearsal ready</strong>
+              <span>Extend traditional learning with guided roleplay, simulation, and contextual feedback loops.</span>
+            </div>
+            <div class="proof-card">
+              <strong>Deployable structure</strong>
+              <span>Built to support practical enterprise delivery, governance, and phased implementation.</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="player" aria-label="Platform preview">
+          <div class="player-top">
+            <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div>Learning Experience Runtime Preview</div>
+          </div>
+
+          <div class="player-body">
+            <div class="shell">
+              <div class="shell-head">
+                <strong>Course</strong>
+                <div class="tiny-btn">CC On</div>
+              </div>
+
+              <div class="shell-nav">
+                <div class="tiny-btn">Prev</div>
+                <div class="progress">
+                  <small>Progress: 42%</small>
+                  <div class="bar"><span></span></div>
+                </div>
+                <div class="tiny-btn">Next</div>
+              </div>
+
+              <div class="stage">
+                <div class="stage-card">
+                  <h3>Interactive scenario stage</h3>
+                  <p>
+                    Present decisions, conversations, reflection prompts, branching content, and AI-enabled
+                    rehearsal extensions inside a cleaner modern runtime.
+                  </p>
+                </div>
+                <div class="stage-card">
+                  <h3>Built for guided practice</h3>
+                  <p>
+                    Combine structured learning flow with emerging AI experiences without losing clarity,
+                    governance, or instructional intent.
+                  </p>
+                </div>
+              </div>
+
+              <div class="shell-foot">
+                <div class="audio">Voiceover / media controls</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="platform">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="tag">The Platform Direction</div>
+          <h2>A better front end for modern enterprise learning.</h2>
+          <p>
+            This landing page represents the learning-experience side of Trainstorm: clean runtime structure,
+            guided navigation, multimedia support, and room for AI-enhanced practice without collapsing into novelty.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Structured course runtime</h3>
+            <p>
+              A modern shell for navigable content, progress tracking, stage-based interactions, and embedded media.
+            </p>
+            <ul>
+              <li>Clear progression and learner orientation</li>
+              <li>Lightweight, flexible front-end structure</li>
+              <li>Ready for enterprise adaptation</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Scenario and rehearsal layers</h3>
+            <p>
+              Extend a conventional module with roleplay prompts, AI practice flows, and reflection loops that deepen transfer.
+            </p>
+            <ul>
+              <li>Conversation practice</li>
+              <li>Manager coaching scenarios</li>
+              <li>Judgment-based decision rehearsal</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Governed innovation</h3>
+            <p>
+              Bring AI into learning in a way that still respects enterprise controls, compliance requirements, and practical deployment realities.
+            </p>
+            <ul>
+              <li>Phased rollout options</li>
+              <li>Human review where needed</li>
+              <li>Hybrid deterministic + AI architecture</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="capabilities">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="tag">Capabilities</div>
+          <h2>What this landing page is meant to sell.</h2>
+          <p>
+            Not abstract AI. Not generic courseware. A practical bridge between conventional learning delivery
+            and the next generation of AI-assisted rehearsal and performance development.
+          </p>
+        </div>
+
+        <div class="strip">
+          <div class="mini">
+            <strong>Interactive course shells</strong>
+            <span>Modernize the front-end experience around clarity, navigation, and media support.</span>
+          </div>
+          <div class="mini">
+            <strong>AI roleplay extensions</strong>
+            <span>Launch controlled practice in a new window or companion environment for richer conversation rehearsal.</span>
+          </div>
+          <div class="mini">
+            <strong>Scenario hub design</strong>
+            <span>Create decision-centered flows that connect formal content to realistic application.</span>
+          </div>
+          <div class="mini">
+            <strong>Instructional systems thinking</strong>
+            <span>Design learning as part of a larger human + AI capability architecture.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fit">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="tag">Best Fit</div>
+          <h2>Best for organizations ready to move beyond static eLearning.</h2>
+          <p>
+            Trainstorm is a strong fit for teams that want better learning architecture without abandoning structure,
+            especially where judgment, communication, and procedural complexity matter.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Leadership and manager training</h3>
+            <p>
+              Support sensitive conversations, coaching practice, and high-stakes decision-making with scenario-rich experiences.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Pharma and regulated learning</h3>
+            <p>
+              Introduce more adaptive practice while maintaining the discipline required in controlled enterprise environments.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Transformation initiatives</h3>
+            <p>
+              Turn communication-heavy change efforts into guided experiences that help people practice the new reality.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Organizations exploring AI safely</h3>
+            <p>
+              Start with bounded, purposeful use cases that generate value without turning learning into a gimmick.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="wrap">
+        <div class="cta-box">
+          <div>
+            <h2>Make this your learning landing page.</h2>
+            <p>
+              Use this page as the customer-facing home for Trainstorm’s AI learning experience work while the broader
+              organizational cognition homepage serves as the main front door.
+            </p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn primary" href="mailto:hello@trainstorm.ai">Talk with Trainstorm</a>
+            <a class="btn" href="#">View homepage</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>Trainstorm.ai</div>
+      <div>Scenario-based learning systems, AI rehearsal, and modern instructional architecture.</div>
+    </div>
+  </footer>
+</body>
+</html>
