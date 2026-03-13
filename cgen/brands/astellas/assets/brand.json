@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "brand": "Astellas",
+    "version": "1.0",
+    "source": "Astellas Brand Guidelines",
+    "system": "Trainstorm Runtime"
+  },
+
+  "identity": {
+    "name": "Astellas",
+    "tone": "clean, clinical, modern, spacious"
+  },
+
+  "colors": {
+    "primary": {
+      "astellas_red": "#E60028",
+      "astellas_black": "#000000",
+      "white": "#FFFFFF"
+    },
+
+    "secondary": {
+      "purple": "#6A2C91",
+      "blue": "#009FDA",
+      "green": "#7AB800",
+      "orange": "#F58220"
+    },
+
+    "grays": {
+      "gray_dark": "#4D4D4D",
+      "gray_mid": "#7A7A7A",
+      "gray_light": "#D9D9D9"
+    }
+  },
+
+  "typography": {
+    "primary": {
+      "sans": "Myriad Pro",
+      "serif": "Meridien"
+    },
+
+    "secondary": {
+      "sans": "Arial",
+      "serif": "Garamond"
+    },
+
+    "runtime_defaults": {
+      "heading": "Arial",
+      "body": "Arial",
+      "long_form": "Garamond"
+    }
+  },
+
+  "rules": {
+    "whitespace": "Layouts should feel open and spacious",
+    "secondary_colors": "Use sparingly",
+    "data_visualization": "Purple recommended for accessibility",
+    "tone": "professional, minimal, clinical"
+  },
+
+  "semantic_tokens": {
+    "primary": "#E60028",
+    "primary_dark": "#B80020",
+
+    "surface": "#FFFFFF",
+    "surface_muted": "#F7F7F7",
+
+    "text_primary": "#000000",
+    "text_secondary": "#4D4D4D",
+
+    "divider": "#D9D9D9",
+
+    "interactive": "#E60028",
+    "interactive_hover": "#B80020",
+
+    "highlight": "#6A2C91",
+
+    "panel_dark": "#000000",
+    "panel_soft": "#F7F7F7"
+  },
+
+  "components": {
+    "button_primary": {
+      "background": "#E60028",
+      "text": "#FFFFFF"
+    },
+
+    "button_secondary": {
+      "background": "#FFFFFF",
+      "border": "#E60028",
+      "text": "#E60028"
+    },
+
+    "card": {
+      "background": "#FFFFFF",
+      "border": "#D9D9D9"
+    }
+  }
+}

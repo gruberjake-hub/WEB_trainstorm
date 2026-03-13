@@ -1,0 +1,241 @@
+REHYDRATION SCRIPT_Extracting Brand Guidelines to json and CSS
+
+I’m building a multi-brand design system for the Trainstorm runtime and want to continue from work already completed for the Brunswick brand.
+
+Here’s what we already established:
+
+## Objective
+Convert corporate brand guidelines into a structured, reusable brand package that can support:
+1. machine-readable brand logic (`brand.json`)
+2. front-end rendering (`<client>.css`)
+3. eventual downstream assets like Adobe swatches, templates, and runtime theme mappings
+
+## Brunswick deliverables already created
+We created these artifacts for Brunswick:
+
+```text
+brands/brunswick/
+├── brand.json
+├── brunswick.css
+├── logo/
+├── icons/
+└── energy-current/
+Architectural intent
+
+The design pattern is:
+
+brand.json  = canonical system-of-record
+CSS         = runtime implementation layer
+
+This supports a Trainstorm architecture like:
+
+Brand Tokens
+↓
+UI Tokens
+↓
+CSS Variables / Theme Layer
+↓
+Components / Runtime Rendering
+
+The long-term goal is to support multiple brands with the same runtime, e.g.:
+
+brands/brunswick/
+brands/astellas/
+brands/abbvie/
+brands/trainstorm/
+What was extracted from Brunswick
+
+The Brunswick guidelines were distilled into:
+
+core colors
+
+supporting grays
+
+accent colors
+
+typography stack
+
+usage rules
+
+headline/casing rules
+
+Energy Current rules
+
+iconography guidance
+
+layout/grid guidance
+
+Brunswick palette captured
+
+Core colors:
+
+Brunswick Blue: #026AFE
+
+Brunswick Midnight: #000018
+
+White: #FFFFFF
+
+Brunswick Sky: #D4E8FF
+
+Supporting grays:
+
+Gray A: #6D6E70
+
+Gray B: #A7A9AB
+
+Digital accent colors:
+
+Accent Green: #04E255
+
+Accent Blue: #00C4FF
+
+Accent Purple: #A665FF
+
+Typography rules captured
+
+Primary sans: Telegraf
+
+Serif/body: EB Garamond
+
+Open-source fallback for web: Titillium
+
+EB Garamond should be used for long-form body copy, not display text
+
+Brand rule insights captured
+
+Brunswick is essentially a constrained marketing palette, not a learning UI system.
+That means the practical solution is to derive a functional learning palette from the brand colors rather than using only the raw palette literally.
+
+We discussed the idea that the real structure should be:
+
+Marketing Brand
+↓
+Learning UI Palette
+↓
+Runtime Component Styling
+
+Examples of semantic UI roles:
+
+primary
+
+primary-dark
+
+surface
+
+surface-muted
+
+divider
+
+interactive
+
+interactive-hover
+
+highlight
+
+button-primary
+
+button-secondary
+
+panel-dark
+
+panel-soft
+
+Key insight
+
+Brunswick’s strict brand rules make traditional eLearning design harder because the guidelines are optimized for marketing/hero use, not high-density learning interfaces. The Trainstorm opportunity is to turn a static brand guide into a runtime-ready design system.
+
+CSS approach already used
+
+The Brunswick CSS included:
+
+:root color variables
+
+font variables
+
+semantic application tokens
+
+typography classes
+
+surface classes
+
+button classes
+
+panel classes
+
+implementation notes for Energy Current usage
+
+JSON approach already used
+
+The Brunswick brand.json included structured sections for:
+
+colors
+
+fonts
+
+weights
+
+rules
+
+semantic mappings
+
+likely future extensibility for component tokens and asset references
+
+Adobe / Illustrator discussion
+
+We also discussed how Illustrator and After Effects do not natively consume CSS or JSON as a theme system the way PowerPoint/Storyline use themes.
+
+Recommended Adobe-side approach:
+
+Illustrator: save brand swatches as .ase
+
+Illustrator: optionally create an .ai template with swatches/styles
+
+After Effects: create a BRAND_CONTROLS comp with color controls tied to expressions
+
+Long-term: generate Adobe assets from brand.json
+
+Potential future folder pattern:
+
+brands/brunswick/
+├── brand.json
+├── brunswick.css
+├── brunswick-colors.ase
+├── brunswick-ai-template.ai
+├── brunswick-ae-controls.aep
+├── logo/
+├── icons/
+└── energy-current/
+Bash / file structure notes
+
+We also created / discussed this directory command:
+
+mkdir -p brands/brunswick/{logo,icons,energy-current}
+
+And confirmed the pattern of storing each client brand under /brands/<client>/.
+
+What I want to do next
+
+Please continue from this architecture and help me do one or more of the following:
+
+create equivalent outputs for another client brand (for example Astellas)
+
+improve the brand.json schema into a more robust Trainstorm standard
+
+derive a theme.json or ui-theme.json layer between brand tokens and CSS
+
+generate Adobe-compatible swatch output logic from brand.json
+
+create a generalized multi-brand loader pattern for the Trainstorm runtime
+
+Important:
+
+Keep the answer practical and implementation-oriented
+
+Assume I want deterministic, reusable structure
+
+Assume this will eventually support governed enterprise learning runtimes
+
+Prefer structured outputs over loose brainstorming
+
+
+If you want, I can also give you a **shorter, stripped-down version** that’s optimized just for “continue the Astellas brand package from the Brunswick pattern.”

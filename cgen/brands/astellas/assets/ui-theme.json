@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "theme": "astellas-ui",
+    "derived_from": "brand.json"
+  },
+
+  "layout": {
+    "density": "airy",
+    "radius": "4px",
+    "shadow": "soft"
+  },
+
+  "typography": {
+    "heading_font": "Arial",
+    "body_font": "Arial",
+    "longform_font": "Garamond"
+  },
+
+  "spacing": {
+    "xs": "4px",
+    "sm": "8px",
+    "md": "16px",
+    "lg": "24px",
+    "xl": "40px"
+  },
+
+  "surfaces": {
+    "background": "#FFFFFF",
+    "panel": "#F7F7F7",
+    "divider": "#D9D9D9"
+  },
+
+  "interaction": {
+    "primary": "#E60028",
+    "hover": "#B80020",
+    "focus_ring": "#6A2C91"
+  }
+}
