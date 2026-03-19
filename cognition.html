@@ -3,76 +3,81 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Trainstorm.ai | AI Learning Experiences</title>
-  <meta name="description" content="Scenario-based learning experiences, AI rehearsal, and modern course systems designed for complex organizations." />
-  <meta name="theme-color" content="#0a1020" />
+  <title>Trainstorm.ai | AI Systems That Help Organizations Think</title>
+  <meta name="description" content="Trainstorm.ai designs AI systems that increase organizational cognition — decision intelligence, initiative awareness, and AI-assisted learning infrastructure." />
+  <meta name="theme-color" content="#0b1020" />
   <style>
     :root{
-      --bg:#081120;
-      --bg2:#0d1830;
+      --bg:#07111f;
+      --bg2:#0b1730;
       --panel:rgba(255,255,255,.06);
       --panel2:rgba(255,255,255,.04);
       --line:rgba(255,255,255,.12);
-      --text:#eef4ff;
-      --muted:#bcc8df;
-      --soft:#90a2c0;
+      --text:#ecf3ff;
+      --muted:#b9c6de;
+      --soft:#8ea3c5;
       --accent:#7dd3fc;
       --accent2:#8b5cf6;
       --good:#7ee787;
-      --warn:#f5c76f;
-      --radius:22px;
-      --shadow:0 26px 72px rgba(0,0,0,.34);
+      --shadow:0 24px 70px rgba(0,0,0,.35);
       --max:1180px;
+      --radius:22px;
     }
 
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(1100px 700px at 10% -10%, rgba(125,211,252,.12), transparent 56%),
-        radial-gradient(900px 560px at 85% 8%, rgba(139,92,246,.16), transparent 48%),
+        radial-gradient(1200px 700px at 15% -10%, rgba(125,211,252,.16), transparent 55%),
+        radial-gradient(900px 600px at 85% 10%, rgba(139,92,246,.18), transparent 48%),
         linear-gradient(180deg, var(--bg), var(--bg2));
       line-height:1.5;
     }
 
     a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
     .wrap{width:min(calc(100% - 40px), var(--max));margin:0 auto}
 
     .nav{
-      position:sticky;top:0;z-index:30;
-      backdrop-filter:saturate(150%) blur(14px);
-      background:rgba(8,17,32,.72);
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:saturate(160%) blur(14px);
+      background:rgba(7,17,31,.68);
       border-bottom:1px solid rgba(255,255,255,.08);
     }
     .nav-inner{
-      min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px;
+      display:flex;align-items:center;justify-content:space-between;
+      min-height:74px;gap:20px;
     }
     .brand{
       display:flex;align-items:center;gap:14px;font-weight:700;letter-spacing:.02em;
     }
-    .mark{
+    .brand-mark{
       width:38px;height:38px;border-radius:14px;
       background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.65), transparent 24%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.65), transparent 22%),
         linear-gradient(135deg, rgba(125,211,252,.95), rgba(139,92,246,.95));
-      box-shadow:0 10px 32px rgba(125,211,252,.2);
+      box-shadow:0 10px 30px rgba(125,211,252,.22);
       position:relative;
     }
-    .mark:after{
-      content:"";position:absolute;inset:9px;border-radius:10px;border:1px solid rgba(255,255,255,.55);
+    .brand-mark:after{
+      content:"";
+      position:absolute;inset:9px;
+      border:1px solid rgba(255,255,255,.55);
+      border-radius:10px;
       transform:rotate(12deg);
     }
-    .nav-links{display:flex;gap:24px;color:var(--muted);font-size:.96rem}
+    .nav-links{
+      display:flex;gap:24px;align-items:center;color:var(--muted);font-size:.96rem;
+    }
     .nav-links a:hover{color:var(--text)}
     .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      min-height:46px;padding:0 18px;border-radius:14px;
-      border:1px solid var(--line);background:rgba(255,255,255,.04);
-      color:var(--text);font-weight:600;
-      transition:transform .18s ease, background .18s ease;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      min-height:46px;padding:0 18px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.04);color:var(--text);font-weight:600;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease;
     }
     .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.08)}
     .btn.primary{
@@ -81,178 +86,202 @@
       box-shadow:0 10px 26px rgba(125,211,252,.12);
     }
 
-    .hero{padding:86px 0 56px}
+    .hero{
+      padding:82px 0 58px;
+    }
     .hero-grid{
-      display:grid;grid-template-columns:1.12fr .88fr;gap:34px;align-items:center;
+      display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:center;
     }
     .eyebrow{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:8px 12px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      color:#dce8ff;font-size:.84rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+      display:inline-flex;gap:10px;align-items:center;
+      color:#d8e8ff;font-size:.86rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+      padding:8px 12px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(255,255,255,.04);
     }
-    .dot{
+    .eyebrow-dot{
       width:8px;height:8px;border-radius:999px;background:var(--good);
       box-shadow:0 0 0 6px rgba(126,231,135,.12);
     }
     h1{
       margin:18px 0 18px;
       font-size:clamp(2.5rem, 6vw, 5rem);
-      line-height:.98;letter-spacing:-.04em;max-width:11ch;
+      line-height:.98;
+      letter-spacing:-.04em;
+      max-width:11ch;
     }
     .lead{
-      margin:0 0 28px;max-width:62ch;color:var(--muted);font-size:1.12rem;
+      margin:0 0 28px;
+      max-width:64ch;
+      font-size:1.12rem;color:var(--muted);
     }
-    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 24px}
-    .proof{
-      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;
+    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 26px}
+    .micro{
+      display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:12px;
+      margin-top:18px;
     }
-    .proof-card{
-      border:1px solid var(--line);background:var(--panel2);border-radius:16px;padding:14px 16px;
-    }
-    .proof-card strong{display:block;margin-bottom:4px}
-    .proof-card span{color:var(--soft);font-size:.92rem}
-
-    .player{
+    .micro-card{
       border:1px solid var(--line);
-      border-radius:28px;
-      overflow:hidden;
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      box-shadow:var(--shadow);
+      background:var(--panel2);
+      padding:14px 16px;border-radius:16px;
     }
-    .player-top{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:16px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);
-      color:var(--muted);font-size:.94rem;
-    }
-    .window-dots{display:flex;gap:8px}
-    .window-dots span{
-      width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.18);display:block;
-    }
-    .player-body{padding:18px}
-    .shell{
-      border:1px solid rgba(255,255,255,.1);
-      border-radius:20px;
-      overflow:hidden;background:rgba(7,17,31,.75);
-    }
-    .shell-head,.shell-nav,.shell-foot{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:14px;padding:14px 16px;
-    }
-    .shell-head{border-bottom:1px solid rgba(255,255,255,.08)}
-    .shell-nav{
-      border-bottom:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.02);
-    }
-    .tiny-btn{
-      min-width:74px;height:34px;border-radius:10px;border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.05);display:grid;place-items:center;color:var(--text);font-size:.9rem;
-    }
-    .progress{
-      flex:1;display:grid;gap:8px;
-    }
-    .progress small{color:var(--soft)}
-    .bar{
-      width:100%;height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;
-    }
-    .bar > span{
-      display:block;height:100%;width:42%;
-      background:linear-gradient(90deg, var(--accent), var(--accent2));
-      border-radius:999px;
-    }
-    .stage{
-      min-height:280px;padding:24px;
-      display:grid;gap:14px;
-      background:
-        radial-gradient(500px 240px at 0% 0%, rgba(125,211,252,.07), transparent 52%),
-        rgba(255,255,255,.02);
-    }
-    .stage-card{
-      border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);
-      border-radius:18px;padding:18px;
-    }
-    .stage-card h3{margin:0 0 8px;font-size:1.08rem}
-    .stage-card p{margin:0;color:var(--muted)}
-    .shell-foot{
-      border-top:1px solid rgba(255,255,255,.08);
-      color:var(--soft);
-    }
-    .audio{
-      width:100%;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
-      background:rgba(255,255,255,.04);display:flex;align-items:center;padding:0 14px;
-    }
+    .micro-card strong{display:block;font-size:1.05rem;margin-bottom:4px}
+    .micro-card span{color:var(--soft);font-size:.92rem}
 
-    section{padding:34px 0 16px}
+    .hero-card{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .hero-card .top{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);
+      color:var(--muted);font-size:.95rem;
+    }
+    .hero-card .body{padding:18px}
+    .signal{
+      border:1px solid rgba(125,211,252,.2);
+      background:linear-gradient(180deg, rgba(125,211,252,.09), rgba(139,92,246,.08));
+      padding:18px;border-radius:18px;margin-bottom:14px;
+    }
+    .signal h3{margin:0 0 8px;font-size:1rem}
+    .signal p{margin:0;color:var(--muted)}
+    .list{
+      display:grid;gap:10px;
+    }
+    .list-item{
+      display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:flex-start;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.035);
+      padding:14px;border-radius:16px;
+    }
+    .bullet{
+      width:26px;height:26px;border-radius:10px;
+      display:grid;place-items:center;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.05);
+      color:var(--accent);
+      font-weight:700;
+      font-size:.85rem;
+      margin-top:2px;
+    }
+    .list-item strong{display:block;margin-bottom:3px}
+    .list-item span{color:var(--soft);font-size:.95rem}
+
+    section{
+      padding:32px 0 16px;
+    }
     .section-head{
       display:grid;gap:10px;max-width:820px;margin:0 0 28px;
-    }
-    .tag{
-      display:inline-flex;align-items:center;gap:8px;
-      color:#dce8ff;font-size:.82rem;font-weight:700;
-      padding:8px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.035);
-      text-transform:uppercase;letter-spacing:.06em;
     }
     .section-head h2{
       margin:0;font-size:clamp(1.8rem,4vw,3.1rem);line-height:1.05;letter-spacing:-.03em;
     }
     .section-head p{margin:0;color:var(--muted);font-size:1.02rem}
 
-    .grid-3,.grid-2{display:grid;gap:18px}
+    .grid-3,.grid-2{
+      display:grid;gap:18px;
+    }
     .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
     .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
     .card{
       border:1px solid var(--line);
       background:var(--panel);
-      border-radius:22px;
+      border-radius:var(--radius);
       padding:22px;
       box-shadow:var(--shadow);
     }
-    .card h3{margin:0 0 10px;font-size:1.18rem}
+    .card h3{margin:0 0 10px;font-size:1.2rem}
     .card p{margin:0;color:var(--muted)}
-    .card ul{margin:14px 0 0;padding-left:18px;color:var(--muted)}
-    .card li{margin:8px 0}
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      color:#dce8ff;font-size:.82rem;font-weight:700;
+      padding:8px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.035);margin-bottom:14px;
+      text-transform:uppercase;letter-spacing:.06em;
+    }
 
-    .strip{
+    .product-card{
+      padding:24px;position:relative;overflow:hidden;
+    }
+    .product-card:before{
+      content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:999px;
+      background:radial-gradient(circle, rgba(125,211,252,.16), transparent 62%);
+      pointer-events:none;
+    }
+    .product-card ul{
+      margin:14px 0 0;padding-left:18px;color:var(--muted)
+    }
+    .product-card li{margin:8px 0}
+
+    .flow{
       display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;
     }
-    .strip .mini{
-      border:1px solid var(--line);background:var(--panel2);border-radius:18px;padding:18px;
+    .step{
+      border:1px solid var(--line);
+      background:var(--panel2);
+      border-radius:18px;padding:18px;position:relative;
     }
-    .mini strong{display:block;margin-bottom:6px}
-    .mini span{color:var(--muted)}
+    .step small{
+      display:block;color:var(--accent);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;
+    }
+    .step p{margin:0;color:var(--muted)}
+    .step strong{display:block;margin-bottom:6px}
 
-    .cta{padding:30px 0 82px}
+    .use-case{
+      display:grid;gap:10px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+      border-radius:18px;padding:18px;
+    }
+    .use-case strong{font-size:1.02rem}
+    .use-case span{color:var(--muted)}
+
+    .quote{
+      padding:28px;border-radius:28px;border:1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04)),
+        radial-gradient(600px 220px at 0% 0%, rgba(125,211,252,.08), transparent 55%);
+      box-shadow:var(--shadow);
+    }
+    .quote p{
+      margin:0;font-size:clamp(1.25rem,2.6vw,2rem);line-height:1.2;letter-spacing:-.03em;
+    }
+
+    .cta{
+      padding:28px 0 80px;
+    }
     .cta-box{
-      display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center;
-      border:1px solid var(--line);border-radius:30px;padding:28px;
+      display:grid;grid-template-columns:1.2fr .8fr;gap:26px;align-items:center;
+      border:1px solid var(--line);
+      border-radius:30px;padding:28px;
       background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
       box-shadow:var(--shadow);
     }
     .cta-box h2{margin:0 0 10px;font-size:clamp(1.8rem,4vw,3rem);line-height:1.04;letter-spacing:-.03em}
     .cta-box p{margin:0;color:var(--muted)}
-    .cta-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:12px}
+    .cta-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end}
 
     footer{
       padding:26px 0 50px;color:var(--soft);
     }
     .foot{
       display:flex;justify-content:space-between;gap:20px;align-items:center;
-      border-top:1px solid rgba(255,255,255,.08);padding-top:22px;font-size:.95rem;
+      border-top:1px solid rgba(255,255,255,.08);padding-top:22px;
+      font-size:.95rem;
     }
 
     @media (max-width: 980px){
-      .hero-grid,.grid-3,.grid-2,.strip,.cta-box{grid-template-columns:1fr}
+      .hero-grid,.grid-3,.grid-2,.flow,.cta-box{grid-template-columns:1fr}
       .nav-links{display:none}
       .cta-actions{justify-content:flex-start}
-      .proof{grid-template-columns:1fr}
+      .micro{grid-template-columns:1fr}
       h1{max-width:none}
     }
 
     @media (max-width: 640px){
       .wrap{width:min(calc(100% - 28px), var(--max))}
-      .hero{padding-top:54px}
+      .hero{padding-top:52px}
       .nav-inner{min-height:68px}
       .btn{width:100%}
       .hero-actions{display:grid}
@@ -264,18 +293,18 @@
   <header class="nav" aria-label="Primary">
     <div class="wrap nav-inner">
       <a class="brand" href="#">
-        <span class="mark" aria-hidden="true"></span>
+        <span class="brand-mark" aria-hidden="true"></span>
         <span>Trainstorm.ai</span>
       </a>
 
       <nav class="nav-links" aria-label="Sections">
-        <a href="#platform">Platform</a>
-        <a href="#capabilities">Capabilities</a>
-        <a href="#fit">Who it fits</a>
-        <a href="#contact">Contact</a>
+        <a href="#products">Products</a>
+        <a href="#how">How it works</a>
+        <a href="#use-cases">Use cases</a>
+        <a href="#vision">Vision</a>
       </nav>
 
-      <a class="btn primary" href="#contact">Discuss a project</a>
+      <a class="btn primary" href="#contact">Start a conversation</a>
     </div>
   </header>
 
@@ -284,80 +313,74 @@
       <div class="wrap hero-grid">
         <div>
           <div class="eyebrow">
-            <span class="dot" aria-hidden="true"></span>
-            Modern Learning Systems
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            AI Systems That Help Organizations Think
           </div>
 
-          <h1>AI-enabled learning experiences built for real organizational complexity.</h1>
+          <h1>From fragmented projects to organizational intelligence.</h1>
 
           <p class="lead">
-            Trainstorm.ai designs scenario-based learning systems, rehearsal environments, and modern course
-            experiences that connect strong instructional architecture with AI-enabled practice. The result is
-            learning that feels more alive, more adaptive, and more relevant to the work people actually do.
+            Trainstorm.ai designs AI systems that capture decisions, structure initiative knowledge,
+            and surface strategic overlap across teams. We help organizations build the cognitive layer
+            that sits between scattered activity and coordinated insight.
           </p>
 
           <div class="hero-actions">
-            <a class="btn primary" href="#platform">Explore the platform</a>
-            <a class="btn" href="#fit">See where it fits</a>
+            <a class="btn primary" href="#products">See the product layers</a>
+            <a class="btn" href="#vision">Read the vision</a>
           </div>
 
-          <div class="proof">
-            <div class="proof-card">
-              <strong>Scenario-centered</strong>
-              <span>Designed for role-based judgment, conversation practice, and difficult real-world decisions.</span>
+          <div class="micro" aria-label="Highlights">
+            <div class="micro-card">
+              <strong>Decision intelligence</strong>
+              <span>Convert meetings and project activity into structured, reusable organizational memory.</span>
             </div>
-            <div class="proof-card">
-              <strong>AI rehearsal ready</strong>
-              <span>Extend traditional learning with guided roleplay, simulation, and contextual feedback loops.</span>
+            <div class="micro-card">
+              <strong>Cross-team awareness</strong>
+              <span>Identify overlap, redundancy, dependencies, and opportunity across initiatives.</span>
             </div>
-            <div class="proof-card">
-              <strong>Deployable structure</strong>
-              <span>Built to support practical enterprise delivery, governance, and phased implementation.</span>
+            <div class="micro-card">
+              <strong>Human-centered deployment</strong>
+              <span>Design AI coworkers that increase trust, clarity, and capability rather than surveillance.</span>
             </div>
           </div>
         </div>
 
-        <aside class="player" aria-label="Platform preview">
-          <div class="player-top">
-            <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-            <div>Learning Experience Runtime Preview</div>
+        <aside class="hero-card" aria-label="Example insight card">
+          <div class="top">
+            <span>Initiative Intelligence Preview</span>
+            <span>Live organizational signal</span>
           </div>
+          <div class="body">
+            <div class="signal">
+              <h3>Potential strategic overlap detected</h3>
+              <p>
+                The SOP modernization initiative and the LLM rehearsal training program appear to share
+                a dependency on procedural knowledge structure. Coordination recommended.
+              </p>
+            </div>
 
-          <div class="player-body">
-            <div class="shell">
-              <div class="shell-head">
-                <strong>Course</strong>
-                <div class="tiny-btn">CC On</div>
-              </div>
-
-              <div class="shell-nav">
-                <div class="tiny-btn">Prev</div>
-                <div class="progress">
-                  <small>Progress: 42%</small>
-                  <div class="bar"><span></span></div>
-                </div>
-                <div class="tiny-btn">Next</div>
-              </div>
-
-              <div class="stage">
-                <div class="stage-card">
-                  <h3>Interactive scenario stage</h3>
-                  <p>
-                    Present decisions, conversations, reflection prompts, branching content, and AI-enabled
-                    rehearsal extensions inside a cleaner modern runtime.
-                  </p>
-                </div>
-                <div class="stage-card">
-                  <h3>Built for guided practice</h3>
-                  <p>
-                    Combine structured learning flow with emerging AI experiences without losing clarity,
-                    governance, or instructional intent.
-                  </p>
+            <div class="list">
+              <div class="list-item">
+                <div class="bullet">01</div>
+                <div>
+                  <strong>Capture</strong>
+                  <span>Meetings, decisions, documents, and initiative artifacts become structured signals.</span>
                 </div>
               </div>
-
-              <div class="shell-foot">
-                <div class="audio">Voiceover / media controls</div>
+              <div class="list-item">
+                <div class="bullet">02</div>
+                <div>
+                  <strong>Compare</strong>
+                  <span>AI looks across teams, domains, and ongoing work to detect meaningful overlap.</span>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="bullet">03</div>
+                <div>
+                  <strong>Surface</strong>
+                  <span>The right insight appears at the right moment — before misalignment becomes waste.</span>
+                </div>
               </div>
             </div>
           </div>
@@ -365,128 +388,145 @@
       </div>
     </section>
 
-    <section id="platform">
+    <section id="products">
       <div class="wrap">
         <div class="section-head">
-          <div class="tag">The Platform Direction</div>
-          <h2>A better front end for modern enterprise learning.</h2>
+          <div class="tag">Product Layers</div>
+          <h2>Start with immediate value. Expand toward organizational cognition.</h2>
           <p>
-            This landing page represents the learning-experience side of Trainstorm: clean runtime structure,
-            guided navigation, multimedia support, and room for AI-enhanced practice without collapsing into novelty.
+            Trainstorm is built to be deployed in layers. Each layer solves a real problem on its own,
+            while also creating the conditions for the next one.
           </p>
         </div>
 
         <div class="grid-3">
-          <article class="card">
-            <h3>Structured course runtime</h3>
+          <article class="card product-card">
+            <h3>1. Initiative Intelligence</h3>
             <p>
-              A modern shell for navigable content, progress tracking, stage-based interactions, and embedded media.
+              AI systems that transform meetings, transcripts, and project artifacts into structured
+              decision logs, risks, dependencies, and strategic themes.
             </p>
             <ul>
-              <li>Clear progression and learner orientation</li>
-              <li>Lightweight, flexible front-end structure</li>
-              <li>Ready for enterprise adaptation</li>
+              <li>Decision capture and traceability</li>
+              <li>Machine-readable project context</li>
+              <li>Clearer onboarding and handoffs</li>
             </ul>
           </article>
 
-          <article class="card">
-            <h3>Scenario and rehearsal layers</h3>
+          <article class="card product-card">
+            <h3>2. Cross-Initiative Awareness</h3>
             <p>
-              Extend a conventional module with roleplay prompts, AI practice flows, and reflection loops that deepen transfer.
+              Compare multiple initiatives to detect overlap, redundancy, hidden dependencies,
+              and opportunities for coordination.
             </p>
             <ul>
-              <li>Conversation practice</li>
-              <li>Manager coaching scenarios</li>
-              <li>Judgment-based decision rehearsal</li>
+              <li>Shared capability detection</li>
+              <li>Redundancy and conflict spotting</li>
+              <li>Strategic adjacency mapping</li>
             </ul>
           </article>
 
-          <article class="card">
-            <h3>Governed innovation</h3>
+          <article class="card product-card">
+            <h3>3. AI-Augmented Learning Systems</h3>
             <p>
-              Bring AI into learning in a way that still respects enterprise controls, compliance requirements, and practical deployment realities.
+              Connect organizational knowledge to rehearsal, simulation, and learning experiences
+              so training reflects the living reality of the organization.
             </p>
             <ul>
-              <li>Phased rollout options</li>
-              <li>Human review where needed</li>
-              <li>Hybrid deterministic + AI architecture</li>
+              <li>LLM rehearsal and roleplay</li>
+              <li>Faster content alignment to source truth</li>
+              <li>Higher-fidelity performance support</li>
             </ul>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="capabilities">
+    <section id="how">
       <div class="wrap">
         <div class="section-head">
-          <div class="tag">Capabilities</div>
-          <h2>What this landing page is meant to sell.</h2>
+          <div class="tag">How It Works</div>
+          <h2>A practical path from raw activity to organizational insight.</h2>
           <p>
-            Not abstract AI. Not generic courseware. A practical bridge between conventional learning delivery
-            and the next generation of AI-assisted rehearsal and performance development.
+            The underlying idea is simple: organizations generate intelligence constantly,
+            but rarely structure it in a way that can be reused, connected, or reasoned across.
           </p>
         </div>
 
-        <div class="strip">
-          <div class="mini">
-            <strong>Interactive course shells</strong>
-            <span>Modernize the front-end experience around clarity, navigation, and media support.</span>
+        <div class="flow" aria-label="Process">
+          <div class="step">
+            <small>Step 1</small>
+            <strong>Capture meaningful signals</strong>
+            <p>Meetings, decisions, artifacts, and initiative updates are converted into structured organizational data.</p>
           </div>
-          <div class="mini">
-            <strong>AI roleplay extensions</strong>
-            <span>Launch controlled practice in a new window or companion environment for richer conversation rehearsal.</span>
+          <div class="step">
+            <small>Step 2</small>
+            <strong>Create machine-readable context</strong>
+            <p>Signals are normalized into shared schemas so they can be compared, indexed, and connected.</p>
           </div>
-          <div class="mini">
-            <strong>Scenario hub design</strong>
-            <span>Create decision-centered flows that connect formal content to realistic application.</span>
+          <div class="step">
+            <small>Step 3</small>
+            <strong>Run cross-context reasoning</strong>
+            <p>AI scans across projects and domains to detect patterns humans cannot reliably track at scale.</p>
           </div>
-          <div class="mini">
-            <strong>Instructional systems thinking</strong>
-            <span>Design learning as part of a larger human + AI capability architecture.</span>
+          <div class="step">
+            <small>Step 4</small>
+            <strong>Surface action-worthy insight</strong>
+            <p>The system reveals overlap, risk, dependency, and opportunity while decisions are still being shaped.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="fit">
+    <section id="use-cases">
       <div class="wrap">
         <div class="section-head">
-          <div class="tag">Best Fit</div>
-          <h2>Best for organizations ready to move beyond static eLearning.</h2>
+          <div class="tag">Use Cases</div>
+          <h2>Where Trainstorm is most useful.</h2>
           <p>
-            Trainstorm is a strong fit for teams that want better learning architecture without abandoning structure,
-            especially where judgment, communication, and procedural complexity matter.
+            The strongest fit is inside organizations with complex cross-functional work, heavy knowledge flow,
+            and strategic initiatives that influence each other whether anyone notices or not.
           </p>
         </div>
 
         <div class="grid-2">
-          <article class="card">
-            <h3>Leadership and manager training</h3>
-            <p>
-              Support sensitive conversations, coaching practice, and high-stakes decision-making with scenario-rich experiences.
-            </p>
-          </article>
+          <div class="use-case">
+            <strong>Strategic initiatives</strong>
+            <span>Capture and compare decisions, assumptions, and dependencies across major programs.</span>
+          </div>
+          <div class="use-case">
+            <strong>Pharma and regulated environments</strong>
+            <span>Maintain traceability while increasing clarity, coordination, and learning fidelity.</span>
+          </div>
+          <div class="use-case">
+            <strong>SOP and knowledge modernization</strong>
+            <span>Connect procedural knowledge changes to downstream learning, rehearsal, and performance systems.</span>
+          </div>
+          <div class="use-case">
+            <strong>AI learning and rehearsal</strong>
+            <span>Build roleplay and simulation experiences that stay aligned to living organizational context.</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-          <article class="card">
-            <h3>Pharma and regulated learning</h3>
-            <p>
-              Introduce more adaptive practice while maintaining the discipline required in controlled enterprise environments.
-            </p>
-          </article>
+    <section id="vision">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="tag">Vision</div>
+          <h2>The long game is not more software. It is better organizational thinking.</h2>
+          <p>
+            Most organizations do not suffer from a lack of activity. They suffer from fragmented memory,
+            local reasoning, and weak visibility across their own initiatives. Trainstorm exists to build the
+            layer that allows organizations to perceive more of themselves.
+          </p>
+        </div>
 
-          <article class="card">
-            <h3>Transformation initiatives</h3>
-            <p>
-              Turn communication-heavy change efforts into guided experiences that help people practice the new reality.
-            </p>
-          </article>
-
-          <article class="card">
-            <h3>Organizations exploring AI safely</h3>
-            <p>
-              Start with bounded, purposeful use cases that generate value without turning learning into a gimmick.
-            </p>
-          </article>
+        <div class="quote">
+          <p>
+            The goal is not to replace human judgment. The goal is to create AI systems that help organizations
+            notice what they would otherwise miss — and become more intelligent as a result.
+          </p>
         </div>
       </div>
     </section>
@@ -495,15 +535,15 @@
       <div class="wrap">
         <div class="cta-box">
           <div>
-            <h2>Make this your learning landing page.</h2>
+            <h2>Build the first layer first.</h2>
             <p>
-              Use this page as the customer-facing home for Trainstorm’s AI learning experience work while the broader
-              organizational cognition homepage serves as the main front door.
+              Start with a focused deployment: initiative intelligence, decision capture, or an AI-enabled
+              learning system tied to real organizational context. Then expand from there.
             </p>
           </div>
           <div class="cta-actions">
             <a class="btn primary" href="mailto:hello@trainstorm.ai">Talk with Trainstorm</a>
-            <a class="btn" href="#">View homepage</a>
+            <a class="btn" href="#">View current thinking</a>
           </div>
         </div>
       </div>
@@ -513,7 +553,7 @@
   <footer>
     <div class="wrap foot">
       <div>Trainstorm.ai</div>
-      <div>Scenario-based learning systems, AI rehearsal, and modern instructional architecture.</div>
+      <div>AI systems for organizational cognition, decision intelligence, and learning architecture.</div>
     </div>
   </footer>
 </body>
