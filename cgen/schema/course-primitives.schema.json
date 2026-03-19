@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/course-primitives.schema.json",
+  "title": "Trainstorm Course Primitives",
+  "description": "Schema for a structured course definition that bridges spreadsheet-style authoring and JSON-native rendering.",
+  "type": "object",
+  "required": [
+    "course_id",
+    "title",
+    "version",
+    "default_locale",
+    "elements"
+  ],
+  "properties": {
+    "course_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "default_locale": {
+      "type": "string",
+      "default": "en"
+    },
+    "locales": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "en"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "source_type": {
+          "type": "string"
+        },
+        "source_name": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/courseElement"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "localizedText": {
+      "type": "object",
+      "description": "Localized payload. Additional locale keys are allowed.",
+      "properties": {
+        "en": {
+          "type": "string"
+        },
+        "fr": {
+          "type": "string"
+        },
+        "de": {
+          "type": "string"
+        },
+        "es": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "courseElement": {
+      "type": "object",
+      "required": [
+        "row_id",
+        "section_id",
+        "slide_id",
+        "element_id",
+        "primitive_type",
+        "content_role",
+        "layout_hint",
+        "content"
+      ],
+      "properties": {
+        "row_id": {
+          "type": "string"
+        },
+        "section_id": {
+          "type": "string"
+        },
+        "slide_id": {
+          "type": "string"
+        },
+        "element_id": {
+          "type": "string"
+        },
+        "primitive_type": {
+          "type": "string",
+          "enum": [
+            "course",
+            "meta",
+            "informational",
+            "section",
+            "module",
+            "scene",
+            "scenario",
+            "knowledge_check",
+            "assessment",
+            "resource",
+            "job_aid",
+            "optional",
+            "conclusion"
+          ]
+        },
+        "content_role": {
+          "type": "string",
+          "description": "Specific role of the element inside the primitive."
+        },
+        "speaker": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Optional speaker or voice owner (e.g., Narrator, Alex, Jordan)."
+        },
+        "layout_hint": {
+          "type": "string",
+          "description": "Soft rendering hint for runtime or template mapping."
+        },
+        "content": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "notes": {
+          "type": "string",
+          "default": ""
+        },
+        "render": {
+          "type": "object",
+          "properties": {
+            "animation_tag": {
+              "type": "string"
+            },
+            "asset_ref": {
+              "type": "string"
+            },
+            "voiceover_ref": {
+              "type": "string"
+            },
+            "layout_variant": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "relationships": {
+          "type": "object",
+          "properties": {
+            "parent_id": {
+              "type": "string"
+            },
+            "group_id": {
+              "type": "string"
+            },
+            "sequence_index": {
+              "type": "integer"
+            },
+            "feedback_for": {
+              "type": "string"
+            },
+            "correct_option": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

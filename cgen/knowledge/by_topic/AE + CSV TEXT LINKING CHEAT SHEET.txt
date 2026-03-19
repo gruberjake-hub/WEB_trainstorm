@@ -1,0 +1,281 @@
+AE + CSV TEXT LINKING CHEAT SHEET
+Brunswick / Trainstorm Prototype Workflow
+
+==================================================
+CORE IDEA
+==================================================
+
+Separate content from layout:
+
+CSV = source of truth for text
+AE = text containers, styling, animation, rendering
+
+Workflow:
+Edit CSV → Save → Reload Footage in AE → All linked text updates
+
+==================================================
+BASIC ARCHITECTURE
+==================================================
+
+External file:
+course_content.csv
+
+AE project:
+- imported footage item: course_content.csv
+- global control comp: __GLOBAL_DATA__
+- null layer inside __GLOBAL_DATA__: LANGUAGE_CTRL
+- slider effect on LANGUAGE_CTRL: LangIndex
+
+==================================================
+CSV COLUMN STRUCTURE
+==================================================
+
+0  row_id
+1  section_id
+2  slide_id
+3  element_id
+4  primitive_type
+5  content_role
+6  speaker
+7  layout_hint
+8  en
+9  fr
+10 de   (if present)
+11 notes
+
+IMPORTANT:
+AE dataValue indexing is zero-based.
+
+==================================================
+GLOBAL LANGUAGE CONTROL
+==================================================
+
+Comp name:
+__GLOBAL_DATA__
+
+Layer name inside comp:
+LANGUAGE_CTRL
+
+Effect on that layer:
+Slider Control
+
+Rename slider effect:
+LangIndex
+
+Set:
+1 = English
+2 = French
+3 = German
+
+==================================================
+WORKING SOURCE TEXT EXPRESSION
+==================================================
+
+IMPORTANT:
+For this CSV import, AE is reading:
+dataValue([column, row])
+
+NOT:
+dataValue([row, column])
+
+Use this template:
+
+var row = 12;
+var lang = Math.round(comp("__GLOBAL_DATA__").layer("LANGUAGE_CTRL").effect("LangIndex")("Slider"));
+footage("course_content.csv").dataValue([7 + lang, row]);
+
+Explanation:
+row = the CSV row you want
+7 + lang = language column
+    lang 1 → column 8 (en)
+    lang 2 → column 9 (fr)
+    lang 3 → column 10 (de)
+
+==================================================
+KNOWN-GOOD TESTS
+==================================================
+
+Test CSV only:
+footage("course_content.csv").dataValue([8,1]);
+
+Test another English row:
+footage("course_content.csv").dataValue([8,12]);
+
+Test global slider only:
+comp("__GLOBAL_DATA__").layer("LANGUAGE_CTRL").effect("LangIndex")("Slider");
+
+Test full language-linked expression:
+var row = 12;
+var lang = Math.round(comp("__GLOBAL_DATA__").layer("LANGUAGE_CTRL").effect("LangIndex")("Slider"));
+footage("course_content.csv").dataValue([7 + lang, row]);
+
+==================================================
+HOW TO APPLY TO A TEXT LAYER
+==================================================
+
+1. Create a text layer
+2. Open:
+   Text → Source Text
+3. ALT + click stopwatch
+4. Paste expression
+5. Change only:
+   var row = X;
+
+==================================================
+BEST PRACTICES
+==================================================
+
+1. Use PARAGRAPH TEXT, not point text
+   - Better for French/German expansion
+   - More stable wrapping
+
+2. Keep the CSV filename fixed
+   Good:
+   course_content.csv
+   Bad:
+   course_content_v2.csv
+   course_content_final.csv
+
+3. Overwrite the same CSV file when editing
+
+4. After editing the CSV:
+   Right-click course_content.csv in AE Project Panel
+   → Reload Footage
+
+5. Name text layers clearly
+   Example:
+   TXT_012_s01_header
+   TXT_013_s01_body
+   TXT_102_alex_line_01
+
+==================================================
+TROUBLESHOOTING
+==================================================
+
+Problem:
+Expression error / invalid node index
+
+Likely cause:
+Wrong dataValue index order
+
+Fix:
+Use:
+dataValue([column, row])
+
+NOT:
+dataValue([row, column])
+
+--------------------------------
+
+Problem:
+Global language control not found
+
+Likely cause:
+LANGUAGE_CTRL is not a layer inside __GLOBAL_DATA__
+
+Fix:
+Make sure:
+__GLOBAL_DATA__ = comp
+LANGUAGE_CTRL = null layer inside that comp
+LangIndex = slider effect name on that null
+
+--------------------------------
+
+Problem:
+Text does not update after CSV edit
+
+Fix:
+Right-click imported CSV
+→ Reload Footage
+
+If still stuck:
+Save AE project
+or reopen comp
+
+--------------------------------
+
+Problem:
+Language 3 errors out
+
+Likely cause:
+No "de" column yet
+
+Fix:
+Only use slider values for existing language columns
+
+==================================================
+CURRENT PRODUCTION MODEL
+==================================================
+
+course_content.csv
+      ↓
+AE expressions
+      ↓
+styled text containers
+      ↓
+rendered video
+      ↓
+Storyline wrapper / SCORM runtime
+
+This means:
+- text content is fully separated from design
+- translations can be handled in CSV
+- AE becomes a renderer, not a text authoring tool
+
+==================================================
+MENTAL MODEL
+==================================================
+
+You are no longer authoring slides.
+You are authoring structured content that AE renders.
+
+Spreadsheet = human-readable structure
+JSON = machine-readable structure
+CSV = bridge between the two
+
+
+
+var targetId = "scene_10_your_role_in_pay_conversations_body_narrator_01";
+var idCol = 3;
+var contentStart = 7;   // use 7 now if en is still column 8; use 8 if you add group_id before en
+var maxRows = 700;
+
+var lang = Math.round(comp("__GLOBAL_DATA__").layer("LANGUAGE_CTRL").effect("LangIndex")("Slider"));
+lang = Math.max(1, Math.min(lang, 3));
+
+var data = footage("course_content.csv");
+var result = "[[MISSING: " + targetId + "]]";
+
+for (var r = 0; r <= maxRows; r++) {
+    var currentId = "";
+    try {
+        currentId = data.dataValue([idCol, r]);
+    } catch (err) {
+        break;
+    }
+
+    if (String(currentId) == targetId) {
+        result = data.dataValue([contentStart + lang, r]);
+        break;
+    }
+}
+
+result;
+==================================================
+
+
+AE CSV LOOKUP REMINDER
+
+dataValue([column, row])
+
+Both indices are zero-based.
+
+Example:
+0 = first column
+3 = fourth column
+
+0 = first data row
+1 = second data row
+
+element_id is looked up by exact string match.
+If the ID doesn’t exist, result = MISSING.
