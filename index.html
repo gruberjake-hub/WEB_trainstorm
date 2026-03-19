@@ -3,23 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Trainstorm.ai | AI Systems That Help Organizations Think</title>
-  <meta name="description" content="Trainstorm.ai designs AI systems that increase organizational cognition — decision intelligence, initiative awareness, and AI-assisted learning infrastructure." />
-  <meta name="theme-color" content="#0b1020" />
+  <title>Trainstorm.ai — AI for Organizational Cognition</title>
+  <meta name="description" content="Trainstorm.ai helps organizations evolve from fragmented teams into coordinated, AI-augmented systems through learning systems, human transformation, and organizational cognition." />
+  <meta name="theme-color" content="#0b1220" />
   <style>
     :root{
-      --bg:#07111f;
-      --bg2:#0b1730;
+      --bg:#081120;
+      --bg2:#0f1930;
       --panel:rgba(255,255,255,.06);
       --panel2:rgba(255,255,255,.04);
-      --line:rgba(255,255,255,.12);
-      --text:#ecf3ff;
-      --muted:#b9c6de;
+      --line:rgba(255,255,255,.11);
+      --text:#eef4ff;
+      --muted:#b8c6de;
       --soft:#8ea3c5;
       --accent:#7dd3fc;
       --accent2:#8b5cf6;
       --good:#7ee787;
-      --shadow:0 24px 70px rgba(0,0,0,.35);
+      --gold:#d6b46d;
+      --shadow:0 26px 72px rgba(0,0,0,.34);
       --max:1180px;
       --radius:22px;
     }
@@ -28,50 +29,44 @@
     html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(1200px 700px at 15% -10%, rgba(125,211,252,.16), transparent 55%),
-        radial-gradient(900px 600px at 85% 10%, rgba(139,92,246,.18), transparent 48%),
+        radial-gradient(1100px 700px at 8% -10%, rgba(125,211,252,.13), transparent 56%),
+        radial-gradient(900px 560px at 88% 6%, rgba(139,92,246,.16), transparent 46%),
         linear-gradient(180deg, var(--bg), var(--bg2));
       line-height:1.5;
     }
 
     a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
     .wrap{width:min(calc(100% - 40px), var(--max));margin:0 auto}
 
     .nav{
       position:sticky;top:0;z-index:50;
-      backdrop-filter:saturate(160%) blur(14px);
-      background:rgba(7,17,31,.68);
+      backdrop-filter:saturate(150%) blur(14px);
+      background:rgba(8,17,32,.72);
       border-bottom:1px solid rgba(255,255,255,.08);
     }
     .nav-inner{
-      display:flex;align-items:center;justify-content:space-between;
-      min-height:74px;gap:20px;
+      min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px;
     }
     .brand{
       display:flex;align-items:center;gap:14px;font-weight:700;letter-spacing:.02em;
     }
-    .brand-mark{
+    .mark{
       width:38px;height:38px;border-radius:14px;
       background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.65), transparent 22%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.65), transparent 24%),
         linear-gradient(135deg, rgba(125,211,252,.95), rgba(139,92,246,.95));
-      box-shadow:0 10px 30px rgba(125,211,252,.22);
+      box-shadow:0 10px 32px rgba(125,211,252,.2);
       position:relative;
+      flex:0 0 auto;
     }
-    .brand-mark:after{
-      content:"";
-      position:absolute;inset:9px;
-      border:1px solid rgba(255,255,255,.55);
-      border-radius:10px;
+    .mark:after{
+      content:"";position:absolute;inset:9px;border-radius:10px;border:1px solid rgba(255,255,255,.55);
       transform:rotate(12deg);
     }
-    .nav-links{
-      display:flex;gap:24px;align-items:center;color:var(--muted);font-size:.96rem;
-    }
+    .nav-links{display:flex;gap:24px;color:var(--muted);font-size:.96rem}
     .nav-links a:hover{color:var(--text)}
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
@@ -86,104 +81,89 @@
       box-shadow:0 10px 26px rgba(125,211,252,.12);
     }
 
-    .hero{
-      padding:82px 0 58px;
-    }
+    .hero{padding:84px 0 54px}
     .hero-grid{
-      display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:center;
+      display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center;
     }
     .eyebrow{
-      display:inline-flex;gap:10px;align-items:center;
-      color:#d8e8ff;font-size:.86rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-      padding:8px 12px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(255,255,255,.04);
+      display:inline-flex;align-items:center;gap:10px;
+      padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);color:#dce8ff;
+      font-size:.84rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
     }
-    .eyebrow-dot{
+    .dot{
       width:8px;height:8px;border-radius:999px;background:var(--good);
       box-shadow:0 0 0 6px rgba(126,231,135,.12);
     }
     h1{
       margin:18px 0 18px;
-      font-size:clamp(2.5rem, 6vw, 5rem);
-      line-height:.98;
-      letter-spacing:-.04em;
+      font-size:clamp(2.8rem, 6vw, 5.2rem);
+      line-height:.95;letter-spacing:-.05em;
       max-width:11ch;
     }
     .lead{
-      margin:0 0 28px;
-      max-width:64ch;
-      font-size:1.12rem;color:var(--muted);
+      margin:0 0 28px;max-width:64ch;color:var(--muted);font-size:1.14rem;
     }
-    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 26px}
-    .micro{
-      display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:12px;
-      margin-top:18px;
+    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 24px}
+    .hero-note{
+      border-left:3px solid rgba(125,211,252,.5);
+      padding-left:14px;color:var(--soft);max-width:62ch;font-size:.96rem;
     }
-    .micro-card{
-      border:1px solid var(--line);
-      background:var(--panel2);
-      padding:14px 16px;border-radius:16px;
-    }
-    .micro-card strong{display:block;font-size:1.05rem;margin-bottom:4px}
-    .micro-card span{color:var(--soft);font-size:.92rem}
 
-    .hero-card{
+    .signal-card{
       border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
       border-radius:28px;
-      box-shadow:var(--shadow);
       overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow:var(--shadow);
     }
-    .hero-card .top{
-      display:flex;justify-content:space-between;align-items:center;
-      padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);
-      color:var(--muted);font-size:.95rem;
+    .signal-top{
+      display:flex;justify-content:space-between;gap:16px;align-items:center;
+      padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.08);
+      color:var(--muted);font-size:.94rem;
     }
-    .hero-card .body{padding:18px}
-    .signal{
-      border:1px solid rgba(125,211,252,.2);
-      background:linear-gradient(180deg, rgba(125,211,252,.09), rgba(139,92,246,.08));
-      padding:18px;border-radius:18px;margin-bottom:14px;
+    .signal-body{padding:18px}
+    .interrupt{
+      border:1px solid rgba(214,180,109,.26);
+      background:linear-gradient(180deg, rgba(214,180,109,.12), rgba(125,211,252,.08));
+      border-radius:18px;padding:18px;margin-bottom:14px;
     }
-    .signal h3{margin:0 0 8px;font-size:1rem}
-    .signal p{margin:0;color:var(--muted)}
-    .list{
-      display:grid;gap:10px;
+    .interrupt small{
+      display:inline-block;margin-bottom:8px;
+      color:#f4dfad;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
     }
-    .list-item{
-      display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:flex-start;
+    .interrupt p{margin:0;color:#eef4ff;font-size:1.02rem}
+    .sublist{display:grid;gap:10px}
+    .subitem{
       border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.035);
-      padding:14px;border-radius:16px;
+      background:rgba(255,255,255,.03);
+      border-radius:16px;padding:14px;
     }
-    .bullet{
-      width:26px;height:26px;border-radius:10px;
-      display:grid;place-items:center;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.05);
-      color:var(--accent);
-      font-weight:700;
-      font-size:.85rem;
-      margin-top:2px;
-    }
-    .list-item strong{display:block;margin-bottom:3px}
-    .list-item span{color:var(--soft);font-size:.95rem}
+    .subitem strong{display:block;margin-bottom:4px}
+    .subitem span{color:var(--soft);font-size:.95rem}
 
-    section{
-      padding:32px 0 16px;
-    }
+    section{padding:36px 0 18px}
     .section-head{
-      display:grid;gap:10px;max-width:820px;margin:0 0 28px;
+      display:grid;gap:10px;max-width:860px;margin:0 0 28px;
+    }
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      color:#dce8ff;font-size:.82rem;font-weight:700;
+      padding:8px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.035);
+      text-transform:uppercase;letter-spacing:.06em;
     }
     .section-head h2{
-      margin:0;font-size:clamp(1.8rem,4vw,3.1rem);line-height:1.05;letter-spacing:-.03em;
+      margin:0;font-size:clamp(1.9rem,4vw,3.2rem);line-height:1.05;letter-spacing:-.03em;
     }
-    .section-head p{margin:0;color:var(--muted);font-size:1.02rem}
+    .section-head p{margin:0;color:var(--muted);font-size:1.03rem}
 
-    .grid-3,.grid-2{
+    .problem-grid,.pillar-grid,.progression,.stats,.cta-grid{
       display:grid;gap:18px;
     }
-    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .problem-grid,.pillar-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .progression{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .stats{grid-template-columns:repeat(4,minmax(0,1fr))}
     .card{
       border:1px solid var(--line);
       background:var(--panel);
@@ -191,51 +171,55 @@
       padding:22px;
       box-shadow:var(--shadow);
     }
-    .card h3{margin:0 0 10px;font-size:1.2rem}
+    .card h3{margin:0 0 10px;font-size:1.18rem}
     .card p{margin:0;color:var(--muted)}
-    .tag{
-      display:inline-flex;align-items:center;gap:8px;
-      color:#dce8ff;font-size:.82rem;font-weight:700;
-      padding:8px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.035);margin-bottom:14px;
-      text-transform:uppercase;letter-spacing:.06em;
-    }
+    .card ul{margin:14px 0 0;padding-left:18px;color:var(--muted)}
+    .card li{margin:8px 0}
 
-    .product-card{
-      padding:24px;position:relative;overflow:hidden;
+    .problem-card{background:var(--panel2)}
+    .problem-card strong{display:block;margin-bottom:8px;font-size:1.03rem}
+    .problem-card span{color:var(--muted)}
+
+    .pillar{
+      position:relative;overflow:hidden;
     }
-    .product-card:before{
-      content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:999px;
-      background:radial-gradient(circle, rgba(125,211,252,.16), transparent 62%);
+    .pillar:before{
+      content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:999px;
+      background:radial-gradient(circle, rgba(125,211,252,.14), transparent 62%);
       pointer-events:none;
     }
-    .product-card ul{
-      margin:14px 0 0;padding-left:18px;color:var(--muted)
+    .pillar .kicker{
+      display:inline-flex;margin-bottom:10px;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+      color:#dce8ff;background:rgba(255,255,255,.04);padding:7px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.1);
     }
-    .product-card li{margin:8px 0}
+    .pillar a{
+      display:inline-block;margin-top:14px;color:var(--accent);font-weight:700;
+    }
 
-    .flow{
-      display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;
+    .flow-card{
+      padding:24px;
     }
-    .step{
-      border:1px solid var(--line);
-      background:var(--panel2);
-      border-radius:18px;padding:18px;position:relative;
-    }
-    .step small{
+    .flow-card small{
       display:block;color:var(--accent);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;
     }
-    .step p{margin:0;color:var(--muted)}
-    .step strong{display:block;margin-bottom:6px}
+    .flow-card strong{display:block;font-size:1.18rem;margin-bottom:8px}
+    .flow-card p{margin:0;color:var(--muted)}
+    .arrow-note{
+      margin-top:20px;padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,.1);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      color:var(--muted);
+    }
 
-    .use-case{
-      display:grid;gap:10px;
+    .stat{
+      text-align:center;
       border:1px solid var(--line);
       background:var(--panel2);
       border-radius:18px;padding:18px;
     }
-    .use-case strong{font-size:1.02rem}
-    .use-case span{color:var(--muted)}
+    .stat strong{
+      display:block;font-size:2rem;line-height:1;margin-bottom:8px;color:var(--text);
+    }
+    .stat span{color:var(--muted);font-size:.94rem}
 
     .quote{
       padding:28px;border-radius:28px;border:1px solid var(--line);
@@ -248,40 +232,35 @@
       margin:0;font-size:clamp(1.25rem,2.6vw,2rem);line-height:1.2;letter-spacing:-.03em;
     }
 
-    .cta{
-      padding:28px 0 80px;
-    }
+    .cta{padding:30px 0 84px}
     .cta-box{
-      display:grid;grid-template-columns:1.2fr .8fr;gap:26px;align-items:center;
-      border:1px solid var(--line);
-      border-radius:30px;padding:28px;
+      border:1px solid var(--line);border-radius:30px;padding:28px;
       background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
       box-shadow:var(--shadow);
     }
-    .cta-box h2{margin:0 0 10px;font-size:clamp(1.8rem,4vw,3rem);line-height:1.04;letter-spacing:-.03em}
+    .cta-grid{grid-template-columns:1.1fr .9fr;align-items:center}
+    .cta-box h2{margin:0 0 10px;font-size:clamp(1.9rem,4vw,3rem);line-height:1.04;letter-spacing:-.03em}
     .cta-box p{margin:0;color:var(--muted)}
-    .cta-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end}
+    .cta-actions{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap}
 
     footer{
       padding:26px 0 50px;color:var(--soft);
     }
     .foot{
       display:flex;justify-content:space-between;gap:20px;align-items:center;
-      border-top:1px solid rgba(255,255,255,.08);padding-top:22px;
-      font-size:.95rem;
+      border-top:1px solid rgba(255,255,255,.08);padding-top:22px;font-size:.95rem;
     }
 
     @media (max-width: 980px){
-      .hero-grid,.grid-3,.grid-2,.flow,.cta-box{grid-template-columns:1fr}
+      .hero-grid,.problem-grid,.pillar-grid,.progression,.stats,.cta-grid{grid-template-columns:1fr}
       .nav-links{display:none}
       .cta-actions{justify-content:flex-start}
-      .micro{grid-template-columns:1fr}
       h1{max-width:none}
     }
 
     @media (max-width: 640px){
       .wrap{width:min(calc(100% - 28px), var(--max))}
-      .hero{padding-top:52px}
+      .hero{padding-top:56px}
       .nav-inner{min-height:68px}
       .btn{width:100%}
       .hero-actions{display:grid}
@@ -293,15 +272,15 @@
   <header class="nav" aria-label="Primary">
     <div class="wrap nav-inner">
       <a class="brand" href="#">
-        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="mark" aria-hidden="true"></span>
         <span>Trainstorm.ai</span>
       </a>
 
       <nav class="nav-links" aria-label="Sections">
-        <a href="#products">Products</a>
-        <a href="#how">How it works</a>
-        <a href="#use-cases">Use cases</a>
-        <a href="#vision">Vision</a>
+        <a href="#problem">Why now</a>
+        <a href="#pillars">Pillars</a>
+        <a href="#progression">How it grows</a>
+        <a href="#contact">Contact</a>
       </nav>
 
       <a class="btn primary" href="#contact">Start a conversation</a>
@@ -313,74 +292,51 @@
       <div class="wrap hero-grid">
         <div>
           <div class="eyebrow">
-            <span class="eyebrow-dot" aria-hidden="true"></span>
-            AI Systems That Help Organizations Think
+            <span class="dot" aria-hidden="true"></span>
+            AI for Organizational Cognition
           </div>
 
-          <h1>From fragmented projects to organizational intelligence.</h1>
+          <h1>Build organizations that can think with AI.</h1>
 
           <p class="lead">
-            Trainstorm.ai designs AI systems that capture decisions, structure initiative knowledge,
-            and surface strategic overlap across teams. We help organizations build the cognitive layer
-            that sits between scattered activity and coordinated insight.
+            Trainstorm helps organizations evolve from fragmented teams into coordinated,
+            AI-augmented systems — starting with learning, expanding through human transformation,
+            and ultimately enabling the organization itself to think.
           </p>
 
           <div class="hero-actions">
-            <a class="btn primary" href="#products">See the product layers</a>
-            <a class="btn" href="#vision">Read the vision</a>
+            <a class="btn primary" href="#pillars">Explore the three paths</a>
+            <a class="btn" href="#progression">See how it fits together</a>
           </div>
 
-          <div class="micro" aria-label="Highlights">
-            <div class="micro-card">
-              <strong>Decision intelligence</strong>
-              <span>Convert meetings and project activity into structured, reusable organizational memory.</span>
-            </div>
-            <div class="micro-card">
-              <strong>Cross-team awareness</strong>
-              <span>Identify overlap, redundancy, dependencies, and opportunity across initiatives.</span>
-            </div>
-            <div class="micro-card">
-              <strong>Human-centered deployment</strong>
-              <span>Design AI coworkers that increase trust, clarity, and capability rather than surveillance.</span>
-            </div>
+          <div class="hero-note">
+            Most companies adopt AI as tools. A few adopt it as capability. Very few redesign themselves
+            around it. Trainstorm exists to help make that transition coherent, human, and strategically useful.
           </div>
         </div>
 
-        <aside class="hero-card" aria-label="Example insight card">
-          <div class="top">
-            <span>Initiative Intelligence Preview</span>
-            <span>Live organizational signal</span>
+        <aside class="signal-card" aria-label="Organizational cognition moment">
+          <div class="signal-top">
+            <span>Signature moment</span>
+            <span>What this looks like in real life</span>
           </div>
-          <div class="body">
-            <div class="signal">
-              <h3>Potential strategic overlap detected</h3>
+          <div class="signal-body">
+            <div class="interrupt">
+              <small>AI intervention</small>
               <p>
-                The SOP modernization initiative and the LLM rehearsal training program appear to share
-                a dependency on procedural knowledge structure. Coordination recommended.
+                “Before this team finalizes the decision: a related initiative elsewhere in the organization
+                encountered a similar constraint last quarter. Their findings may change the path you choose.”
               </p>
             </div>
 
-            <div class="list">
-              <div class="list-item">
-                <div class="bullet">01</div>
-                <div>
-                  <strong>Capture</strong>
-                  <span>Meetings, decisions, documents, and initiative artifacts become structured signals.</span>
-                </div>
+            <div class="sublist">
+              <div class="subitem">
+                <strong>That is the moment.</strong>
+                <span>The room realizes the organization just noticed something the room alone could not see.</span>
               </div>
-              <div class="list-item">
-                <div class="bullet">02</div>
-                <div>
-                  <strong>Compare</strong>
-                  <span>AI looks across teams, domains, and ongoing work to detect meaningful overlap.</span>
-                </div>
-              </div>
-              <div class="list-item">
-                <div class="bullet">03</div>
-                <div>
-                  <strong>Surface</strong>
-                  <span>The right insight appears at the right moment — before misalignment becomes waste.</span>
-                </div>
+              <div class="subitem">
+                <strong>That is organizational cognition.</strong>
+                <span>Not another dashboard. Not another summary. A live increase in the intelligence of the system.</span>
               </div>
             </div>
           </div>
@@ -388,144 +344,177 @@
       </div>
     </section>
 
-    <section id="products">
+    <section id="problem">
       <div class="wrap">
         <div class="section-head">
-          <div class="tag">Product Layers</div>
-          <h2>Start with immediate value. Expand toward organizational cognition.</h2>
+          <div class="tag">Why This Matters</div>
+          <h2>Organizations are busy. They are not necessarily intelligent.</h2>
           <p>
-            Trainstorm is built to be deployed in layers. Each layer solves a real problem on its own,
-            while also creating the conditions for the next one.
+            Teams generate decisions, knowledge, experiments, and strategy constantly. But most of that
+            intelligence remains siloed, unstructured, and invisible to other teams that need it.
           </p>
         </div>
 
-        <div class="grid-3">
-          <article class="card product-card">
-            <h3>1. Initiative Intelligence</h3>
-            <p>
-              AI systems that transform meetings, transcripts, and project artifacts into structured
-              decision logs, risks, dependencies, and strategic themes.
-            </p>
-            <ul>
-              <li>Decision capture and traceability</li>
-              <li>Machine-readable project context</li>
-              <li>Clearer onboarding and handoffs</li>
-            </ul>
-          </article>
-
-          <article class="card product-card">
-            <h3>2. Cross-Initiative Awareness</h3>
-            <p>
-              Compare multiple initiatives to detect overlap, redundancy, hidden dependencies,
-              and opportunities for coordination.
-            </p>
-            <ul>
-              <li>Shared capability detection</li>
-              <li>Redundancy and conflict spotting</li>
-              <li>Strategic adjacency mapping</li>
-            </ul>
-          </article>
-
-          <article class="card product-card">
-            <h3>3. AI-Augmented Learning Systems</h3>
-            <p>
-              Connect organizational knowledge to rehearsal, simulation, and learning experiences
-              so training reflects the living reality of the organization.
-            </p>
-            <ul>
-              <li>LLM rehearsal and roleplay</li>
-              <li>Faster content alignment to source truth</li>
-              <li>Higher-fidelity performance support</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="how">
-      <div class="wrap">
-        <div class="section-head">
-          <div class="tag">How It Works</div>
-          <h2>A practical path from raw activity to organizational insight.</h2>
-          <p>
-            The underlying idea is simple: organizations generate intelligence constantly,
-            but rarely structure it in a way that can be reused, connected, or reasoned across.
-          </p>
-        </div>
-
-        <div class="flow" aria-label="Process">
-          <div class="step">
-            <small>Step 1</small>
-            <strong>Capture meaningful signals</strong>
-            <p>Meetings, decisions, artifacts, and initiative updates are converted into structured organizational data.</p>
+        <div class="problem-grid">
+          <div class="card problem-card">
+            <strong>Fragmented memory</strong>
+            <span>Meetings happen. Documents accumulate. Decisions get made. But the organization rarely develops a usable memory of what it learned.</span>
           </div>
-          <div class="step">
-            <small>Step 2</small>
-            <strong>Create machine-readable context</strong>
-            <p>Signals are normalized into shared schemas so they can be compared, indexed, and connected.</p>
+          <div class="card problem-card">
+            <strong>Local reasoning</strong>
+            <span>Teams make decisions with partial context because nobody can reliably track what related groups are discovering at the same time.</span>
           </div>
-          <div class="step">
-            <small>Step 3</small>
-            <strong>Run cross-context reasoning</strong>
-            <p>AI scans across projects and domains to detect patterns humans cannot reliably track at scale.</p>
-          </div>
-          <div class="step">
-            <small>Step 4</small>
-            <strong>Surface action-worthy insight</strong>
-            <p>The system reveals overlap, risk, dependency, and opportunity while decisions are still being shaped.</p>
+          <div class="card problem-card">
+            <strong>Human resistance</strong>
+            <span>Even good AI initiatives stall when people are psychologically unprepared for the identity shift required to work with intelligent systems.</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="use-cases">
+    <section id="pillars">
       <div class="wrap">
         <div class="section-head">
-          <div class="tag">Use Cases</div>
-          <h2>Where Trainstorm is most useful.</h2>
+          <div class="tag">The Three Paths</div>
+          <h2>Three entry points. One overarching system.</h2>
           <p>
-            The strongest fit is inside organizations with complex cross-functional work, heavy knowledge flow,
-            and strategic initiatives that influence each other whether anyone notices or not.
+            These are not disconnected services. They are coordinated paths into the same Trainstorm vision:
+            organizations that can learn faster, adapt better, and reason more coherently with AI.
           </p>
         </div>
 
-        <div class="grid-2">
-          <div class="use-case">
-            <strong>Strategic initiatives</strong>
-            <span>Capture and compare decisions, assumptions, and dependencies across major programs.</span>
+        <div class="pillar-grid">
+          <article class="card pillar">
+            <div class="kicker">Immediate Value</div>
+            <h3>AI Learning Systems</h3>
+            <p>
+              Scenario-based learning, rehearsal engines, rapid course building, and deep script generation
+              designed for complex, real-world performance.
+            </p>
+            <ul>
+              <li>Modern learning runtimes</li>
+              <li>AI rehearsal and roleplay</li>
+              <li>Rapid build pipelines</li>
+            </ul>
+            <a href="learning.html">Explore Learning Systems →</a>
+          </article>
+
+          <article class="card pillar">
+            <div class="kicker">Human Unlock</div>
+            <h3>Human Transformation</h3>
+            <p>
+              Identity-driven programs that help teams become psychologically ready for AI — not just trained
+              on tools, but transformed in how they locate their value.
+            </p>
+            <ul>
+              <li>Expert → orchestrator identity shift</li>
+              <li>AI readiness for leaders and teams</li>
+              <li>Orchestrator intensive and technical tracks</li>
+            </ul>
+            <a href="orchestrator.html">Explore Orchestrator →</a>
+          </article>
+
+          <article class="card pillar">
+            <div class="kicker">Highest Leverage</div>
+            <h3>Organizational Cognition</h3>
+            <p>
+              AI systems that capture decisions, compare initiatives, detect overlap, and help the organization
+              itself become more aware of what it knows.
+            </p>
+            <ul>
+              <li>Decision intelligence</li>
+              <li>Cross-initiative awareness</li>
+              <li>Structured organizational memory</li>
+            </ul>
+            <a href="cognition.html">Explore Organizational Cognition →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="progression">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="tag">How It Grows</div>
+          <h2>Start where the organization can say yes. Build toward the larger system.</h2>
+          <p>
+            Trainstorm’s offerings are strongest when understood as a progression. You do not need to sell
+            the whole future all at once. You can enter through what is needed now and expand from there.
+          </p>
+        </div>
+
+        <div class="progression">
+          <div class="card flow-card">
+            <small>1 / Start with learning</small>
+            <strong>Get paid for visible value.</strong>
+            <p>
+              Launch modern learning systems, scenario platforms, and AI rehearsal experiences that solve
+              immediate capability problems.
+            </p>
           </div>
-          <div class="use-case">
-            <strong>Pharma and regulated environments</strong>
-            <span>Maintain traceability while increasing clarity, coordination, and learning fidelity.</span>
+
+          <div class="card flow-card">
+            <small>2 / Unlock the human layer</small>
+            <strong>Reduce friction and deepen adoption.</strong>
+            <p>
+              Help leaders and teams psychologically reframe their role in an AI-shaped world so future initiatives land faster.
+            </p>
           </div>
-          <div class="use-case">
-            <strong>SOP and knowledge modernization</strong>
-            <span>Connect procedural knowledge changes to downstream learning, rehearsal, and performance systems.</span>
+
+          <div class="card flow-card">
+            <small>3 / Build the cognition layer</small>
+            <strong>Create strategic advantage.</strong>
+            <p>
+              Connect initiatives, decisions, and knowledge flows into something the organization can reason across.
+            </p>
           </div>
-          <div class="use-case">
-            <strong>AI learning and rehearsal</strong>
-            <span>Build roleplay and simulation experiences that stay aligned to living organizational context.</span>
+        </div>
+
+        <div class="arrow-note">
+          <strong style="color:var(--text)">The conversion logic:</strong>
+          You get paid for training. You earn trust through transformation. You build the future through cognition.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="tag">What This Creates</div>
+          <h2>A company with one spine, not three random offerings.</h2>
+          <p>
+            The coherence matters. When the three paths are framed together, Trainstorm stops looking like
+            a collection of experiments and starts looking like a company with an integrated thesis.
+          </p>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <strong>1</strong>
+            <span>overarching vision</span>
+          </div>
+          <div class="stat">
+            <strong>3</strong>
+            <span>entry paths into the same transformation</span>
+          </div>
+          <div class="stat">
+            <strong>∞</strong>
+            <span>future systems that can emerge from the engine</span>
+          </div>
+          <div class="stat">
+            <strong>0</strong>
+            <span>need to leap to the whole end state at once</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="vision">
+    <section>
       <div class="wrap">
-        <div class="section-head">
-          <div class="tag">Vision</div>
-          <h2>The long game is not more software. It is better organizational thinking.</h2>
-          <p>
-            Most organizations do not suffer from a lack of activity. They suffer from fragmented memory,
-            local reasoning, and weak visibility across their own initiatives. Trainstorm exists to build the
-            layer that allows organizations to perceive more of themselves.
-          </p>
-        </div>
-
         <div class="quote">
           <p>
-            The goal is not to replace human judgment. The goal is to create AI systems that help organizations
-            notice what they would otherwise miss — and become more intelligent as a result.
+            Trainstorm is not just an AI training company. It is an emerging architecture for helping
+            humans, teams, and organizations become more capable in the age of intelligent systems.
           </p>
         </div>
       </div>
@@ -534,16 +523,19 @@
     <section class="cta" id="contact">
       <div class="wrap">
         <div class="cta-box">
-          <div>
-            <h2>Build the first layer first.</h2>
-            <p>
-              Start with a focused deployment: initiative intelligence, decision capture, or an AI-enabled
-              learning system tied to real organizational context. Then expand from there.
-            </p>
-          </div>
-          <div class="cta-actions">
-            <a class="btn primary" href="mailto:hello@trainstorm.ai">Talk with Trainstorm</a>
-            <a class="btn" href="#">View current thinking</a>
+          <div class="cta-grid">
+            <div>
+              <h2>Start anywhere. Build toward the whole system.</h2>
+              <p>
+                Whether the first need is learning, change readiness, or initiative intelligence, each engagement
+                can become a coherent step toward a more intelligent organization.
+              </p>
+            </div>
+
+            <div class="cta-actions">
+              <a class="btn primary" href="mailto:hello@trainstorm.ai">Start a conversation</a>
+              <a class="btn" href="#pillars">View the pillars</a>
+            </div>
           </div>
         </div>
       </div>
@@ -553,7 +545,7 @@
   <footer>
     <div class="wrap foot">
       <div>Trainstorm.ai</div>
-      <div>AI systems for organizational cognition, decision intelligence, and learning architecture.</div>
+      <div>Learning systems, human transformation, and organizational cognition.</div>
     </div>
   </footer>
 </body>
