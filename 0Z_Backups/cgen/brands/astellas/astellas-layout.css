@@ -1,0 +1,210 @@
+/* =========================================================
+   Astellas Layout Overrides (Engine-Aware)
+   ========================================================= */
+
+/* -----------------------------------------
+   1. Rebind Engine Tokens to Astellas Tokens
+   ----------------------------------------- */
+
+:root {
+  --brand: var(--color-accent);
+  --bg: var(--color-bg);
+  --panel: var(--color-panel);
+  --text: var(--color-text);
+  --muted: var(--color-text-muted);
+
+  --focus: 3px solid color-mix(
+    in srgb,
+    var(--color-accent),
+    white 35%
+  );
+
+  font-family: var(--font-body);
+}
+
+/* -----------------------------------------
+   2. Page-Level Overrides
+   ----------------------------------------- */
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* -----------------------------------------
+   3. Player Container (AUTHORITATIVE)
+   ----------------------------------------- */
+
+.app {
+  width: clamp(720px, 65vw, 1200px);
+  margin: 32px auto;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+
+/* -----------------------------------------
+   4. Player Chrome (Header / Nav / Footer)
+   ----------------------------------------- */
+
+.header,
+.nav,
+.footer {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+
+ padding: 16px 20px;
+  border-radius: 14px;
+}
+
+/* Header-specific layout */
+.header {
+  background: var(--panel);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+
+
+/* Astellas accent rule */
+.header::after {
+  content: "";
+  display: block;
+  grid-column: 1 / -1;
+  height: 4px;
+  background: var(--color-accent);
+  border-radius: 999px;
+  margin-top: 8px;
+}
+
+/* -----------------------------------------
+   5. Learning Stage
+   ----------------------------------------- */
+
+.stage {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  padding: 24px;
+}
+
+/* -----------------------------------------
+   6. Brand / Logo Slot
+   ----------------------------------------- */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand img {
+  height: 28px;
+  max-width: 160px;
+  object-fit: contain;
+}
+
+/* -----------------------------------------
+   7. Typography
+   ----------------------------------------- */
+
+.title {
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.01em;
+}
+
+p {
+  color: var(--text);
+}
+
+/* -----------------------------------------
+   8. Buttons (Controls, Not CTAs)
+   ----------------------------------------- */
+
+.btn {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--color-border-strong);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+.btn:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--color-border-strong),
+    var(--color-accent) 25%
+  );
+}
+
+.btn:focus {
+  outline: var(--focus);
+  outline-offset: 2px;
+}
+
+/* CC button explicitly constrained */
+#ccToggle {
+  min-width: unset;
+  height: auto;
+}
+
+#ccToggle[aria-pressed="true"] {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* -----------------------------------------
+   9. Progress Indicator
+   ----------------------------------------- */
+
+.progressBar {
+  background: #E7EAED;
+}
+
+.progressFill {
+  background: var(--color-accent);
+}
+
+/* -----------------------------------------
+   10. Cards / Panels
+   ----------------------------------------- */
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* -----------------------------------------
+   11. Feedback
+   ----------------------------------------- */
+
+.feedback {
+  background: color-mix(
+    in srgb,
+    var(--color-accent),
+    white 88%
+  );
+  border: 1px solid var(--color-border);
+  color: var(--text);
+}
+
+/* -----------------------------------------
+   12. Accessibility & Motion
+   ----------------------------------------- */
+
+:focus-visible {
+  outline: var(--focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+}

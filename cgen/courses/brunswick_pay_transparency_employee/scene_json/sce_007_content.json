@@ -1,0 +1,73 @@
+{
+  "scene_id": "sce_007",
+  "module": "Module 1: How Pay Works at Brunswick",
+  "title": "Base Pay and Your Total Rewards",
+  "delivery": "ae_render",
+  "elements": {
+    "Head_01": {
+      "type": "Head",
+      "intent": "orient",
+      "text": "Base Pay and Your Total Rewards",
+      "text_primitive": "Headline",
+      "motion_primitive": "GlassReveal",
+      "layout_primitive": "TopTitle",
+      "style_ref": "head-primary"
+    },
+    "Statement_01": {
+      "type": "Statement",
+      "intent": "assert",
+      "text": "Base pay is only one part of how Brunswick compensates you.",
+      "text_primitive": "Statement",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "CenterStatement",
+      "style_ref": "statement-primary"
+    },
+    "List_01": {
+      "type": "List",
+      "intent": "structure",
+      "text": "Base salary\\nIncentive compensation\\nHealth, dental, and vision benefits\\nLife insurance\\nRetirement contributions and 401(k) matching\\nWellness, EAP, paid time off, and other offerings",
+      "text_primitive": "BulletList",
+      "motion_primitive": "MarkerStaggerReveal",
+      "layout_primitive": "TotalRewardsWheel",
+      "style_ref": "content-list"
+    },
+    "Impact_01": {
+      "type": "Impact",
+      "intent": "persuade",
+      "text": "A posted range reflects base pay only. It is useful—but incomplete—when thinking about full compensation.",
+      "text_primitive": "EmphasisLine",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "BottomEmphasis",
+      "style_ref": "impact-emphasis"
+    },
+    "Callout_01": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "View your Total Rewards Statement in Workday under Benefits and Pay.",
+      "text_primitive": "SystemCallout",
+      "motion_primitive": "MarkerPop",
+      "layout_primitive": "WorkdayCallout",
+      "style_ref": "callout-system"
+    }
+  },
+  "narration": {
+    "text": "Base pay is the number that gets talked about most in pay transparency conversations—and that makes sense. It's what shows on your paycheck, and it's what you see posted on job listings. But base pay is only one part of how Brunswick compensates you. Your total rewards picture includes several other components. In addition to your base salary, you may receive incentive compensation—bonuses or other variable pay tied to your performance, your role, and company results. Brunswick also invests significantly in your benefits: health, dental, and vision coverage, life insurance, and retirement contributions including 401(k) matching. Wellness programs, employee assistance resources, paid time off, and other company-provided offerings round out the picture. Together, these components represent the full value of your employment relationship with Brunswick. The gap between what appears on your paycheck and what Brunswick invests in you is often larger than people realize. Why does this matter for pay transparency? Because when you see a pay range on a job posting—at Brunswick or anywhere else—that range reflects base pay only. It's a useful reference point for understanding where a role sits in the market. But it's an incomplete comparison if you're thinking about your full compensation. You can view your Total Rewards Statement in Workday, under the Benefits and Pay app. It's worth taking a look. Understanding the full picture gives you a more accurate foundation for any conversation about your compensation.",
+    "audio_file": "sce_007_vo.wav"
+  },
+  "visual_notes": [
+    "Visual showing base pay as one component within a larger total rewards picture.",
+    "Workday callout for Total Rewards Statement."
+  ],
+  "asset_reuse": [
+    {
+      "source": "Manager module",
+      "scene": "Scene 6",
+      "description": "Base Pay vs. Total Rewards adapted for employee framing"
+    }
+  ],
+  "render": {
+    "ae_comp": "sce_007",
+    "output_file": "sce_007.mp4",
+    "review_required": true
+  }
+}

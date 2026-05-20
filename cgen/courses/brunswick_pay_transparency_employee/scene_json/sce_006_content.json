@@ -1,0 +1,54 @@
+{
+  "scene_id": "sce_006",
+  "module": "Module 1: How Pay Works at Brunswick",
+  "title": "What Shapes Where You Fall in Your Range",
+  "delivery": "ae_render",
+  "elements": {
+    "Head_01": {
+      "type": "Head",
+      "intent": "orient",
+      "text": "What Shapes Where You Fall in Your Range",
+      "text_primitive": "Headline",
+      "motion_primitive": "GlassReveal",
+      "layout_primitive": "TopTitle",
+      "style_ref": "head-primary"
+    },
+    "List_01": {
+      "type": "List",
+      "intent": "structure",
+      "text": "Performance\\nSkills & Experience\\nEducation\\nRole Complexity\\nGeographic Location\\nTenure in Role",
+      "text_primitive": "GridList",
+      "motion_primitive": "MarkerStaggerReveal",
+      "layout_primitive": "SixFactorGrid",
+      "style_ref": "content-grid"
+    },
+    "Impact_01": {
+      "type": "Impact",
+      "intent": "persuade",
+      "text": "A posted range tells you where the role sits. Your individual factors determine where you are within that range.",
+      "text_primitive": "EmphasisLine",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "BottomEmphasis",
+      "style_ref": "impact-emphasis"
+    }
+  },
+  "narration": {
+    "text": "Within your pay range, several factors shape exactly where you fall. Performance matters—but it's not the only factor. Two people in the same role can have different pay for entirely legitimate reasons. One may have been hired when market rates were different. One may have specialized certifications the other doesn't. One may have more years in the role with a sustained track record of strong performance. This is why seeing a pay range on a job posting doesn't tell you whether you personally are paid fairly—it tells you the range your role sits in. Your individual factors determine where you are within that range.",
+    "audio_file": "sce_006_vo.wav"
+  },
+  "visual_notes": [
+    "Six-factor grid: Performance / Skills & Experience / Education / Role Complexity / Geographic Location / Tenure in Role."
+  ],
+  "asset_reuse": [
+    {
+      "source": "Manager module",
+      "scene": "Scene 5",
+      "description": "What Determines Individual Pay factors visual/VO"
+    }
+  ],
+  "render": {
+    "ae_comp": "sce_006",
+    "output_file": "sce_006.mp4",
+    "review_required": true
+  }
+}

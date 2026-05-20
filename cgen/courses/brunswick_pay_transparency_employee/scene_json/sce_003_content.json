@@ -1,0 +1,54 @@
+{
+  "scene_id": "sce_003",
+  "module": "Module 1: How Pay Works at Brunswick",
+  "title": "Three Principles Behind Every Pay Decision",
+  "delivery": "ae_render",
+  "elements": {
+    "Head_01": {
+      "type": "Head",
+      "intent": "orient",
+      "text": "Three Principles Behind Every Pay Decision",
+      "text_primitive": "Headline",
+      "motion_primitive": "GlassReveal",
+      "layout_primitive": "TopTitle",
+      "style_ref": "head-primary"
+    },
+    "List_01": {
+      "type": "List",
+      "intent": "structure",
+      "text": "Market-Competitive Benchmarking\\nExternal & Internal Equity\\nPay Linked to Performance",
+      "text_primitive": "NumberedList",
+      "motion_primitive": "MarkerStaggerReveal",
+      "layout_primitive": "ThreePillarCards",
+      "style_ref": "content-list"
+    },
+    "Impact_01": {
+      "type": "Impact",
+      "intent": "persuade",
+      "text": "No single factor determines your pay.",
+      "text_primitive": "EmphasisLine",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "BottomEmphasis",
+      "style_ref": "impact-emphasis"
+    }
+  },
+  "narration": {
+    "text": "Before we look at what these changes mean for you, it helps to understand how Brunswick sets pay in the first place. Every compensation decision is guided by three principles. First: We benchmark against real market data from reputable third-party surveys in which we participate along with hundreds of other companies—not guesswork, not arbitrary numbers. Second: We balance what the market pays with fairness inside Brunswick, so people doing similar work are compensated similarly. Third: Pay is connected to performance. Your ratings and contributions influence how you progress through your pay range over time. These three principles work together. No single factor determines your pay.",
+    "audio_file": "sce_003_vo.wav"
+  },
+  "visual_notes": [
+    "Three numbered pillar cards: 01 Market-Competitive Benchmarking / 02 External & Internal Equity / 03 Pay Linked to Performance."
+  ],
+  "asset_reuse": [
+    {
+      "source": "Manager module",
+      "scene": "Scene 3",
+      "description": "Compensation Philosophy Overview visual/VO"
+    }
+  ],
+  "render": {
+    "ae_comp": "sce_003",
+    "output_file": "sce_003.mp4",
+    "review_required": true
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "scene_id": "sce_001",
+  "module": "Introduction",
+  "title": "Welcome",
+  "delivery": "ae_render",
+  "elements": {
+    "Head_01": {
+      "type": "Head",
+      "intent": "orient",
+      "text": "Pay Transparency at Brunswick",
+      "text_primitive": "Headline",
+      "motion_primitive": "GlassReveal",
+      "layout_primitive": "TitleCard",
+      "style_ref": "head-primary"
+    },
+    "SubHead_01": {
+      "type": "SubHead",
+      "intent": "refine",
+      "text": "What It Means for You",
+      "text_primitive": "Subheadline",
+      "motion_primitive": "FadeUp",
+      "layout_primitive": "UnderHead",
+      "style_ref": "subhead-primary"
+    },
+    "Statement_01": {
+      "type": "Statement",
+      "intent": "assert",
+      "text": "Pay ranges now appear on all U.S. job postings.",
+      "text_primitive": "Statement",
+      "motion_primitive": "GlassReveal",
+      "layout_primitive": "CenterStatement",
+      "style_ref": "statement-primary"
+    }
+  },
+  "narration": {
+    "text": "Welcome. Brunswick has made changes to how we share information about pay. Starting January 1, 2025, pay ranges now appear on all U.S. job postings. Whether you've already noticed this or you're hearing about it for the first time, this short module explains what it means—and what you can do with that information.",
+    "audio_file": "sce_001_vo.wav"
+  },
+  "visual_notes": [
+    "Module title card.",
+    "~10-minute badge."
+  ],
+  "render": {
+    "ae_comp": "sce_001",
+    "output_file": "sce_001.mp4",
+    "review_required": true
+  }
+}

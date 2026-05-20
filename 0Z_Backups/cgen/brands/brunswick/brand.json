@@ -1,0 +1,239 @@
+{
+  "$schema": "https://trainstorm.ai/schemas/brand.schema.json",
+  "brand": {
+    "id": "brunswick",
+    "name": "Brunswick",
+    "source": "Brunswick Brand Guidelines 2023",
+    "notes": "Distilled for Trainstorm runtime use. Not a substitute for the full official guidelines."
+  },
+  "tokens": {
+    "colors": {
+      "primary": {
+        "brunswickBlue": "#026AFE",
+        "brunswickMidnight": "#000018",
+        "brunswickWhite": "#FFFFFF",
+        "brunswickSky": "#D4E8FF"
+      },
+      "support": {
+        "greyA": "#6D6E70",
+        "greyB": "#A7A9AB"
+      },
+      "accent": {
+        "accentGreen": "#04E255",
+        "accentBlue": "#00C4FF",
+        "accentPurple": "#A665FF"
+      },
+      "semantic": {
+        "backgroundPrimary": "#FFFFFF",
+        "backgroundBrand": "#026AFE",
+        "backgroundDark": "#000018",
+        "backgroundSoft": "#D4E8FF",
+        "textPrimary": "#000018",
+        "textInverse": "#FFFFFF",
+        "textMuted": "#6D6E70",
+        "borderSubtle": "#A7A9AB",
+        "link": "#026AFE",
+        "focus": "#00C4FF"
+      }
+    },
+    "typography": {
+      "fontFamilies": {
+        "brandSans": [
+          "Telegraf",
+          "Titillium Web",
+          "Titillium",
+          "Helvetica Neue",
+          "Arial",
+          "sans-serif"
+        ],
+        "bodySerif": [
+          "EB Garamond",
+          "Garamond",
+          "Georgia",
+          "serif"
+        ]
+      },
+      "fontRoles": {
+        "primary": "brandSans",
+        "body": "bodySerif",
+        "webFallbackForTelegraf": "Titillium Web"
+      },
+      "weights": {
+        "light": 300,
+        "regular": 400,
+        "medium": 500,
+        "semibold": 600,
+        "bold": 700
+      },
+      "styles": {
+        "h1": {
+          "family": "brandSans",
+          "weight": "medium"
+        },
+        "subtitle": {
+          "family": "brandSans",
+          "weight": "light"
+        },
+        "h2": {
+          "family": "brandSans",
+          "weight": "bold"
+        },
+        "calloutTitle": {
+          "family": "brandSans",
+          "weight": "bold"
+        },
+        "calloutBody": {
+          "family": "brandSans",
+          "weight": "light"
+        },
+        "bodyText": {
+          "family": "bodySerif",
+          "weight": "regular"
+        },
+        "calloutLevel2": {
+          "family": "brandSans",
+          "weight": "bold",
+          "case": "uppercase"
+        }
+      }
+    }
+  },
+  "rules": {
+    "headline": {
+      "periodAtEnd": false,
+      "emDash": {
+        "useWhen": "A title/headline is followed by a subtitle/subhead of the same type size on a new line.",
+        "spacing": "Add one space before the em dash."
+      },
+      "caseRules": {
+        "titleCase": "Use for titles/headers and subtitles/subheads with three words or fewer.",
+        "sentenceCase": "Use for text with three words or more, limited to one sentence, and for callouts.",
+        "upperCase": "Use for second-level callouts."
+      }
+    },
+    "typography": {
+      "useTelegrafAsPrimary": true,
+      "useEBGaramondOnlyForLongFormBody": true,
+      "neverUseEBGaramondForDisplay": true,
+      "useTitilliumWhenTelegrafUnavailable": true
+    },
+    "energyCurrent": {
+      "description": "Dynamic line-based graphic element representing Innovation Untethered.",
+      "frequency": {
+        "guidance": "Use sparingly so it feels special and important.",
+        "ruleOfThumb": "No more than once every five pages."
+      },
+      "allowedUsages": [
+        "On solid branded colors",
+        "Interacting with simple images",
+        "Interacting with headlines",
+        "Using a single pop of accent color"
+      ],
+      "allowedBackgrounds": [
+        "Brunswick Blue",
+        "Brunswick Midnight",
+        "Brunswick Sky",
+        "White",
+        "Grey A",
+        "Grey B"
+      ],
+      "forbiddenBackgrounds": [
+        "Accent Green",
+        "Accent Blue",
+        "Accent Purple",
+        "Colors outside the Brunswick palette"
+      ],
+      "popOfColor": {
+        "allowedAccentColors": [
+          "Accent Blue",
+          "Accent Green",
+          "Accent Purple"
+        ],
+        "maxAccentColorsPerCurrent": 1
+      },
+      "peopleRule": {
+        "personMustBeFullyInFront": true,
+        "neverInterweaveWithPeople": true,
+        "preferredBackground": "Very simple background or solid color"
+      },
+      "liveLine": {
+        "lineWeight": "Keep stroke thin, elegant, readable, and printable.",
+        "scaling": "Adjust stroke weight when scaling; use a fine line weight when enlarged.",
+        "cropping": "Crop elegantly; avoid awkward junctures and avoid cropping too little or too much."
+      },
+      "smallApplication": {
+        "guidance": "In smaller applications, use a larger, zoomed-in current that draws attention toward the message or content."
+      }
+    },
+    "iconography": {
+      "construction": "Uniform line weight and basic geometry.",
+      "corners": "Rounded joints/angles.",
+      "style": "Simple, monotone outlined shapes and lines.",
+      "minimumSizePx": 100,
+      "clearSpace": "Maintain minimum safe area around icons; keep free of other elements."
+    },
+    "layout": {
+      "defaultGrid": 12,
+      "smallFormatGrids": [
+        6,
+        4
+      ],
+      "principles": [
+        "Give content room to breathe.",
+        "Prioritize hierarchy and clarity.",
+        "Keep layouts informational and essential.",
+        "Use expressive and clean compositions with photography, Energy Currents, or negative space."
+      ]
+    },
+    "logo": {
+      "approvedColors": [
+        "Brunswick Blue",
+        "Brunswick Midnight",
+        "White"
+      ],
+      "doNotRecreate": true,
+      "mustUseSuppliedArtwork": true,
+      "mustRemainLegible": true,
+      "misuse": [
+        "Do not obscure with overlapping elements.",
+        "Do not modify any part of the logo.",
+        "Do not distort.",
+        "Do not recreate with objects, shapes, people, or products.",
+        "Do not add gradients.",
+        "Do not apply unauthorized color changes.",
+        "Do not add drop shadow or effects.",
+        "Do not rotate.",
+        "Do not fill with imagery."
+      ]
+    }
+  },
+  "trainstormMappings": {
+    "screen": {
+      "background": "tokens.colors.semantic.backgroundPrimary",
+      "text": "tokens.colors.semantic.textPrimary",
+      "titleFont": "tokens.typography.fontFamilies.brandSans",
+      "bodyFont": "tokens.typography.fontFamilies.bodySerif"
+    },
+    "buttons": {
+      "primary": {
+        "background": "tokens.colors.primary.brunswickBlue",
+        "text": "tokens.colors.primary.brunswickWhite"
+      },
+      "secondary": {
+        "background": "tokens.colors.primary.brunswickWhite",
+        "text": "tokens.colors.primary.brunswickBlue",
+        "border": "tokens.colors.primary.brunswickBlue"
+      }
+    },
+    "panels": {
+      "dark": {
+        "background": "tokens.colors.primary.brunswickMidnight",
+        "text": "tokens.colors.primary.brunswickWhite"
+      },
+      "soft": {
+        "background": "tokens.colors.primary.brunswickSky",
+        "text": "tokens.colors.primary.brunswickMidnight"
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "scene_id": "sce_008",
+  "module": "Module 2: What This Means for You",
+  "title": "You Have Every Right to Understand Your Pay",
+  "delivery": "ae_render",
+  "elements": {
+    "Head_01": {
+      "type": "Head",
+      "intent": "orient",
+      "text": "You Have Every Right to Understand Your Pay",
+      "text_primitive": "Headline",
+      "motion_primitive": "GlassReveal",
+      "layout_primitive": "TopTitle",
+      "style_ref": "head-primary"
+    },
+    "List_01": {
+      "type": "List",
+      "intent": "structure",
+      "text": "Ask your manager where you fall in your pay range.\\nUnderstand which factors are shaping your current position.\\nDiscuss what development would support your progression over time.\\nReach out to HR with questions your manager can't answer.",
+      "text_primitive": "NumberedList",
+      "motion_primitive": "MarkerStaggerReveal",
+      "layout_primitive": "ActionList",
+      "style_ref": "content-list"
+    },
+    "Quote_01": {
+      "type": "Quote",
+      "intent": "contextualize",
+      "text": "These aren't uncomfortable questions—they're reasonable ones.",
+      "text_primitive": "PullQuote",
+      "motion_primitive": "QuoteFade",
+      "layout_primitive": "PullQuoteRight",
+      "style_ref": "quote-primary"
+    }
+  },
+  "narration": {
+    "text": "Pay transparency gives you more visibility—and with that comes the opportunity to have better conversations. You have the right to understand your pay positioning. If you're curious about where you fall in your range, or what it would take to progress, your manager is the right starting point. HR is also available if you have more detailed questions or concerns. Here are four things you can do right now: Ask your manager where you fall in your pay range. Understand which factors are shaping your current position. Discuss what development would support your progression over time. Reach out to HR with questions your manager can't answer. These aren't uncomfortable questions—they're reasonable ones, and Brunswick encourages them.",
+    "audio_file": "sce_008_vo.wav"
+  },
+  "visual_notes": [
+    "Dark slide.",
+    "Four action bullets.",
+    "Pull quote."
+  ],
+  "render": {
+    "ae_comp": "sce_008",
+    "output_file": "sce_008.mp4",
+    "review_required": true
+  }
+}

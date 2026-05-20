@@ -1,0 +1,127 @@
+# TTS Module — Build Notes & Wiring Roadmap
+**Created:** March 2026  
+**Status:** Stage 1 complete — manual operation, voice selected, wiring pending
+
+---
+
+## What We Built
+
+A standalone Python TTS module (`cgen/scripts/tts_module.py`) that takes a script and renders it as audio. Intentionally built outside the pipeline so it can be pressure-tested manually before automation.
+
+**Engine:** Kokoro (local, free, no API dependency)  
+**Underlying model:** ContentVec / HuBERT-derived speech representations  
+**Why Kokoro:** No vendor lock-in, runs on local GPU (RTX 3060 Ti), no per-minute cost, quality is competitive with paid APIs for narration use cases.
+
+---
+
+## How to Run It (Manual)
+
+```bash
+python cgen/scripts/tts_module.py --file "path/to/script.txt" --output "path/to/output.wav" --format wav --voice bf_emma --speed 1.0
+```
+
+**Input options:**
+- `--file path` — .txt script or course.json
+- `--paste` — interactive paste from terminal
+- `--list-voices` — print available voices
+
+**Output options:**
+- `--format wav` — works out of the box
+- `--format mp3` — requires pydub + ffmpeg (see known issues)
+
+---
+
+## Voice Selection
+
+Tested on Brunswick pay transparency module. Results:
+
+| Voice | Result |
+|-------|--------|
+| af_nicole | Too intimate. ASMR quality. Not appropriate for compliance training. |
+| af_bella | Professional, neutral. Viable backup. |
+| bf_emma | **Selected.** British female, natural authority, clear without warmth overload. |
+| af_heart | **Selected.** American female, natural authority, clear without warmth overload. |
+| am_michael | Neutral authoritative male. Good alternative if gender-neutral delivery needed. |
+
+**Current default for Brunswick:** `bf_emma` at speed `1.0`
+
+---
+
+## JSON Integration (How It Already Works)
+
+The module already accepts `course.json` as input via `--file`. It walks the JSON tree looking for these keys:
+
+```
+narration, script, narrator_text, vo, voiceover, text
+```
+
+If your course.json schema uses different field names, update `TARGET_KEYS` in `extract_narration_from_json()` near the top of the script.
+
+---
+
+## Known Issues / Deferred
+
+**MP3 output not working despite ffmpeg install**  
+- Likely cause: ffmpeg installed but not on system PATH  
+- Workaround: WAV output works fine for auditioning  
+- Fix when ready: `pip install pydub` + verify ffmpeg is on PATH (`ffmpeg -version` in terminal)  
+- Not a priority at current stage
+
+---
+
+## Future Wiring — Where This Goes
+
+### Where it fits in the pipeline
+
+```
+Intake → ADDIE Generation → course.json → [TTS Stage] → Runtime Engine
+```
+
+The TTS stage sits between course.json output and the runtime engine. The compiler reads narration fields from the JSON and passes them to this module. Audio files are written alongside their corresponding slide assets.
+
+### What the wiring looks like
+
+The compiler (in `cgen/compiler/`) will call tts_module programmatically rather than via CLI. The call will look roughly like:
+
+```python
+from scripts.tts_module import render
+render(text=slide["narration"], voice="bf_emma", speed=1.0, output_path=audio_path, fmt="wav")
+```
+
+Voice ID and speed become parameters in the course config — same layer separation used for brand identity and visual themes. Different courses or clients can use different voices without touching the pipeline logic.
+
+### Voice-per-client potential
+
+Each client gets a voice parameter in their brand/config layer:
+- Brunswick → bf_emma
+- Astellas → (TBD)
+- AbbVie → (TBD)
+
+If a client wants a cloned voice (specific SME, brand persona), swap Kokoro for ElevenLabs at the render call. The rest of the pipeline is unchanged.
+
+### Rehearsal engine consideration
+
+When the rehearsal engine comes online (conversational, potentially real-time), TTS requirements change:
+- Latency matters — Kokoro may need to be replaced with Cartesia (~90ms) or similar
+- Streaming audio chunks rather than full file renders
+- Voice consistency with async narration voice TBD (same voice = continuity, different voice = intentional persona separation)
+
+This is a separate design conversation. Flag it when rehearsal engine architecture begins.
+
+---
+
+## Technology Stack Reference
+
+| Layer | Tool | Notes |
+|-------|------|-------|
+| TTS engine | Kokoro | Local, free, GPU-accelerated |
+| Speech representation | ContentVec / HuBERT | Under the hood in Kokoro |
+| Voice conversion (future) | RVC (open source) | For custom voice cloning if needed |
+| MP3 conversion | pydub + ffmpeg | Currently deferred |
+| Future API alternative | Cartesia or ElevenLabs | If latency or cloning quality requires it |
+
+---
+
+## Session Context
+
+Built during Brunswick pay transparency module development (March 2026). First manual run produced WAV output successfully. Voice audition conducted on actual course script. bf_emma selected. MP3 output deferred. Pipeline wiring deferred until manual workflow is stable.

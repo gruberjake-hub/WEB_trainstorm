@@ -1,0 +1,146 @@
+This is the directory tree for CGEN as represented prior to rebuild with ChatGPT 5.2 on March 27 2026 in the new "CGEN" project. 
+
+C:\Users\Solipsis Black\Documents\GitHub\WEB_trainstorm\cgen
+├── assets
+|  ├── images
+|  |  ├── faces
+|  |  ├── icons
+|  |  |  ├── BenchmarkSextant_Icon_PayTrans_Brunswick.png
+|  |  |  ├── EquityChart_Icon_PayTrans_Brunswick3.png - Shortcut.lnk
+|  |  |  ├── LinkPay_Icons_PayTrans_Brunswick.png
+|  |  |  └── Link_Icons_PayTrans_Brunswick.png
+|  |  └── objects
+|  ├── sounds
+|  └── video
+├── brands
+|  ├── astellas
+|  |  ├── assets
+|  |  |  ├── brand.json
+|  |  |  ├── logo-primary.png
+|  |  |  └── ui-theme.json
+|  |  ├── astellas-brand.json
+|  |  ├── astellas-components.css
+|  |  ├── astellas-constraints.md
+|  |  ├── astellas-layout.css
+|  |  └── astellas-tokens.css
+|  └── brunswick
+|     ├── brand.json
+|     ├── Brunswick Brand Guidelines.pdf
+|     └── brunswick.css
+├── compiler
+|  └── compileScriptToCourse.js
+├── courses
+|  ├── annual-review
+|  |  └── assets
+|  |     ├── audio
+|  |     ├── captions
+|  |     ├── images
+|  |     └── video
+|  ├── demo
+|  |  ├── assets
+|  |  |  ├── audio
+|  |  |  ├── captions
+|  |  |  |  ├── s1.vtt
+|  |  |  |  └── s2.vtt
+|  |  |  ├── images
+|  |  |  └── video
+|  |  ├── course.json
+|  |  ├── index.html
+|  |  └── main.js
+|  └── MythEngine
+|     ├── MythEngine.docx
+|     └── slides.html
+├── desktop.ini
+├── docs
+├── engine
+|  ├── brandLoader.js
+|  ├── components
+|  |  ├── Body.js
+|  |  ├── Heading.js
+|  |  ├── MCQ.js
+|  |  └── RevealCards.js
+|  ├── rules.js
+|  ├── runtime.js
+|  ├── runtimeConfig.js
+|  ├── scorm.js
+|  ├── store.js
+|  ├── styles.css
+|  ├── theme-manager.js
+|  └── themeLoader.js
+├── git
+├── index.html
+├── knowledge
+|  ├── by_project
+|  ├── by_topic
+|  |  ├── AE + CSV TEXT LINKING CHEAT SHEET.txt
+|  |  ├── AE Technique Moving Magnifier  Insp.txt
+|  |  ├── astellas_voiceover_initiative.md
+|  |  ├── nodes_modules_tracking.md
+|  |  ├── primitive-framing_rehydration-script_openai.md
+|  |  ├── REHYDRATE_CONVERSATION-REHEARSAL-ENGINE_v1.0.md
+|  |  ├── REHYDRATION PROMPT_Concepts_Tranformers.txt
+|  |  ├── REHYDRATION SCRIPT_Extracting Brand.txt
+|  |  ├── rehydration_packages.md
+|  |  ├── TTS-voice_TERMINAL-CALL-EXAMPLE.txt
+|  |  └── _CGEN-Runtime
+|  |     ├── 01_REHYDRATION-master_Trainstorm-Course-Generator_Full-System.md
+|  |     ├── 02_REHYDRATION_AE-Course-Renderer.md
+|  |     └── 03_REHYDRATION-3_Schema-Generator-Compiler.md
+|  └── INDEX.md
+├── notes
+|  ├── 00_README.md
+|  ├── 01_architecture.md
+|  ├── 02_authoring_philosophy.md
+|  ├── 03_ai_compiler_prompt.md
+|  ├── 04_roadmap.md
+|  ├── 05_decision_log.md
+|  ├── ALSAP Overview.md
+|  ├── Development_MVP_Allowed_Forbidden.md
+|  ├── handoff-brief-011425_Ai-Learning-Runtime.md
+|  ├── image.png
+|  ├── INFERENCE-BRIEF.md
+|  ├── outside-analysis_CL.md
+|  ├── PROMPT_Ai-Learning-Runtime_Compiler-mode
+|  ├── PROMPT_Ai-Learning-Runtime_Compiler-mode.md
+|  ├── PROMPT_DevilsAd_Universal.md
+|  ├── REHYDRATION_Compilation_Context-PayTrans_Brunswick.md
+|  └── Useful-Prompt-Frames.txt
+├── README.md
+├── schema
+|  ├── course-primitives.schema.json
+|  ├── course.schema.json
+|  └── script.primitives.v1.json
+├── scripts
+|  ├── build-asset-index.js
+|  ├── canonical_ledger_to_md.py
+|  ├── chunk_project_context.py
+|  ├── CONTEXT.txt
+|  ├── extract_media_pass2.py
+|  ├── file_to_structured_all_md.py
+|  ├── file_to_structured_all_md_hardened.py
+|  ├── file_to_structured_md.py
+|  ├── generate_asset-image_manifests.py
+|  ├── generate_audio_asset_manifests.py
+|  ├── generate_sfx_asset_manifests.py
+|  ├── LEDGER_APPENDIX_README.md
+|  ├── LEDGER_EXTRACTION_MODE_PROMPT_v1.md
+|  ├── media_pass2b_runner.py
+|  ├── merge_ledgers.py
+|  ├── merge_project_context.py
+|  ├── merge_project_context_hardened.py
+|  ├── PROJECT_CONTEXT_INGESTION_PROMPT_LOSSLESS_v3.md
+|  ├── PROMPT-PACK_elearning-scripts.zip
+|  ├── PROMPT-PACK_FRM_.zip
+|  ├── PROMPT_-meeting.md
+|  ├── PROMPT_AMLT-meeting.md
+|  ├── PROMPT_course-json_phase-1.5_compiler.md
+|  ├── PROMPT_course-json_phase-2.0_compiler.md
+|  ├── PROMPT_design_commitment_production_script.md
+|  ├── PROMPT_exploratory_instructional_script.md
+|  ├── PROMPT_ingestion_project-context-md.md
+|  ├── PROMPT_MEDIA_STRUCTURAL_EXTRACTION_MODE_B.md
+|  ├── PROMPT_Optimized-elearning-script.md
+|  ├── PROMPT_PROJECT_CONTEXT_INGESTION_LOSSLESS_v2.md
+|  ├── PROMPT_SYSTEMS_DIAGNOSTIC_MODE_.md
+|  └── tts_module.py
+└── templates

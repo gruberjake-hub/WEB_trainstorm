@@ -1,0 +1,250 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://trainstorm.ai/schema/course.schema.json",
+  "title": "Trainstorm Course Schema",
+  "type": "object",
+  "required": ["module"],
+  "additionalProperties": false,
+  "properties": {
+    "module": {
+      "$ref": "#/definitions/module"
+    }
+  },
+  "definitions": {
+    "style": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "font": { "type": "string" },
+        "size": { "type": "number" },
+        "color": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{6}$"
+        }
+      }
+    },
+
+    "baseElement": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "type": "string" },
+        "intent": { "type": "string" },
+        "text": { "type": "string" },
+        "animation": { "type": "string" },
+        "style": { "$ref": "#/definitions/style" },
+        "id": { "type": "string" }
+      }
+    },
+
+    "head": {
+      "allOf": [
+        { "$ref": "#/definitions/baseElement" },
+        {
+          "properties": {
+            "type": { "const": "Head" },
+            "text": { "type": "string", "minLength": 1 },
+            "intent": { "const": "orient" }
+          },
+          "required": ["type", "text"]
+        }
+      ]
+    },
+
+    "subHead": {
+      "allOf": [
+        { "$ref": "#/definitions/baseElement" },
+        {
+          "properties": {
+            "type": { "const": "SubHead" },
+            "text": { "type": "string", "minLength": 1 },
+            "intent": { "const": "refine" }
+          },
+          "required": ["type", "text"]
+        }
+      ]
+    },
+
+    "contentHead": {
+      "allOf": [
+        { "$ref": "#/definitions/baseElement" },
+        {
+          "properties": {
+            "type": { "const": "ContentHead" },
+            "text": { "type": "string", "minLength": 1 },
+            "intent": { "const": "organize" }
+          },
+          "required": ["type", "text"]
+        }
+      ]
+    },
+
+    "listHead": {
+      "allOf": [
+        { "$ref": "#/definitions/baseElement" },
+        {
+          "properties": {
+            "type": { "const": "ListHead" },
+            "text": { "type": "string", "minLength": 1 },
+            "intent": { "const": "organize" }
+          },
+          "required": ["type", "text"]
+        }
+      ]
+    },
+
+    "statement": {
+      "allOf": [
+        { "$ref": "#/definitions/baseElement" },
+        {
+          "properties": {
+            "type": { "const": "Statement" },
+            "text": { "type": "string", "minLength": 1 },
+            "intent": { "const": "assert" }
+          },
+          "required": ["type", "text"]
+        }
+      ]
+    },
+
+    "paragraph": {
+      "allOf": [
+        { "$ref": "#/definitions/baseElement" },
+        {
+          "properties": {
+            "type": { "const": "Paragraph" },
+            "text": { "type": "string", "minLength": 1 },
+            "intent": { "const": "explain" }
+          },
+          "required": ["type", "text"]
+        }
+      ]
+    },
+
+    "impact": {
+      "allOf": [
+        { "$ref": "#/definitions/baseElement" },
+        {
+          "properties": {
+            "type": { "const": "Impact" },
+            "text": { "type": "string", "minLength": 1 },
+            "intent": { "const": "persuade" }
+          },
+          "required": ["type", "text"]
+        }
+      ]
+    },
+
+    "quote": {
+      "allOf": [
+        { "$ref": "#/definitions/baseElement" },
+        {
+          "properties": {
+            "type": { "const": "Quote" },
+            "text": { "type": "string", "minLength": 1 },
+            "intent": { "const": "contextualize" }
+          },
+          "required": ["type", "text"]
+        }
+      ]
+    },
+
+    "bullet": {
+      "allOf": [
+        { "$ref": "#/definitions/baseElement" },
+        {
+          "properties": {
+            "type": { "const": "Bullet" },
+            "text": { "type": "string", "minLength": 1 },
+            "intent": { "const": "specify" }
+          },
+          "required": ["type", "text"]
+        }
+      ]
+    },
+
+    "list": {
+      "type": "object",
+      "required": ["type", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "List" },
+        "intent": { "const": "structure" },
+        "animation": { "type": "string" },
+        "style": { "$ref": "#/definitions/style" },
+        "id": { "type": "string" },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/bullet" }
+        }
+      }
+    },
+
+    "content": {
+      "type": "object",
+      "required": ["type", "elements"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "Content" },
+        "id": { "type": "string" },
+        "elements": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "$ref": "#/definitions/contentHead" },
+              { "$ref": "#/definitions/listHead" },
+              { "$ref": "#/definitions/list" },
+              { "$ref": "#/definitions/statement" },
+              { "$ref": "#/definitions/paragraph" },
+              { "$ref": "#/definitions/impact" },
+              { "$ref": "#/definitions/quote" }
+            ]
+          }
+        }
+      }
+    },
+
+    "sceneElement": {
+      "oneOf": [
+        { "$ref": "#/definitions/content" },
+        { "$ref": "#/definitions/statement" },
+        { "$ref": "#/definitions/paragraph" },
+        { "$ref": "#/definitions/impact" },
+        { "$ref": "#/definitions/quote" },
+        { "$ref": "#/definitions/list" }
+      ]
+    },
+
+    "scene": {
+      "type": "object",
+      "required": ["scene_id", "head", "elements"],
+      "additionalProperties": false,
+      "properties": {
+        "scene_id": { "type": "string" },
+        "head": { "$ref": "#/definitions/head" },
+        "subhead": { "$ref": "#/definitions/subHead" },
+        "elements": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/sceneElement" }
+        }
+      }
+    },
+
+    "module": {
+      "type": "object",
+      "required": ["id", "title", "scenes"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "scenes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/scene" }
+        }
+      }
+    }
+  }
+}

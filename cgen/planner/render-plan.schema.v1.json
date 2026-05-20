@@ -1,0 +1,1021 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://trainstorm.ai/schema/render-plan.schema.v1.json",
+    "title": "Trainstorm Render Plan Schema v1",
+    "description": "Planning-layer schema that bridges semantic course meaning and runtime-renderable course output.",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+        "meta",
+        "globalDirectives",
+        "scenePlans"
+    ],
+    "properties": {
+        "meta": {
+            "$ref": "#/definitions/meta"
+        },
+        "globalDirectives": {
+            "$ref": "#/definitions/globalDirectives"
+        },
+        "scenePlans": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "$ref": "#/definitions/scenePlan"
+            }
+        }
+    },
+    "definitions": {
+        "visualSupportLevel": {
+            "type": "string",
+            "enum": [
+                "none",
+                "light",
+                "medium",
+                "high"
+            ]
+        },
+        "visualRole": {
+            "type": "string",
+            "enum": [
+                "none",
+                "contextual",
+                "organizational",
+                "explanatory",
+                "emphasis",
+                "contrast",
+                "illustrative"
+            ]
+        },
+        "visualTreatmentHint": {
+            "type": "string",
+            "enum": [
+                "text-only",
+                "supporting-image",
+                "icon-support",
+                "diagram",
+                "structured-cards",
+                "contrast-layout",
+                "hero-visual"
+            ]
+        },
+        "visualIntent": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "supportLevel",
+                "visualRole",
+                "treatmentHint"
+            ],
+            "properties": {
+                "supportLevel": {
+                    "$ref": "#/definitions/visualSupportLevel"
+                },
+                "visualRole": {
+                    "$ref": "#/definitions/visualRole"
+                },
+                "treatmentHint": {
+                    "$ref": "#/definitions/visualTreatmentHint"
+                }
+            }
+        },
+        "semanticRole": {
+            "type": "string",
+            "enum": [
+                "Module",
+                "Scene",
+                "Content",
+                "Head",
+                "SubHead",
+                "ContentHead",
+                "ListHead",
+                "List",
+                "Bullet",
+                "Statement",
+                "Paragraph",
+                "Impact",
+                "Quote",
+                "MCQ"
+            ]
+        },
+        "instructionalIntent": {
+            "type": "string",
+            "enum": [
+                "orient",
+                "refine",
+                "organize",
+                "structure",
+                "specify",
+                "assert",
+                "explain",
+                "persuade",
+                "contextualize",
+                "reinforce",
+                "check",
+                "reflect",
+                "transition"
+            ]
+        },
+        "rhetoricalWeight": {
+            "type": "string",
+            "enum": [
+                "low",
+                "medium",
+                "high",
+                "critical"
+            ]
+        },
+        "treatment": {
+            "type": "string",
+            "enum": [
+                "plain-exposition",
+                "emphasized-assertion",
+                "supporting-detail",
+                "framed-quote",
+                "progressive-reveal",
+                "knowledge-check",
+                "comparison",
+                "summary-highlight",
+                "transition-marker",
+                "reflective-pause"
+            ]
+        },
+        "learnerAction": {
+            "type": "string",
+            "enum": [
+                "notice",
+                "read",
+                "consider",
+                "compare",
+                "explore",
+                "recall",
+                "decide",
+                "respond",
+                "reflect",
+                "retain"
+            ]
+        },
+        "nonEmptyString": {
+            "type": "string",
+            "minLength": 1
+        },
+        "stringArray": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "meta": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "courseId",
+                "version",
+                "plannerVersion"
+            ],
+            "properties": {
+                "courseId": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "version": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "plannerVersion": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "sourceSemanticFile": {
+                    "type": "string"
+                },
+                "brand": {
+                    "type": "string"
+                },
+                "theme": {
+                    "type": "string"
+                },
+                "generatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "globalDirectives": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "density",
+                "tone",
+                "visualStyle",
+                "narrationMode",
+                "motionMode",
+                "interactionMode"
+            ],
+            "properties": {
+                "density": {
+                    "type": "string",
+                    "enum": [
+                        "light",
+                        "medium",
+                        "dense"
+                    ]
+                },
+                "tone": {
+                    "type": "string"
+                },
+                "visualStyle": {
+                    "type": "string"
+                },
+                "narrationMode": {
+                    "type": "string",
+                    "enum": [
+                        "none",
+                        "scene-based",
+                        "unit-based",
+                        "hybrid"
+                    ]
+                },
+                "motionMode": {
+                    "type": "string",
+                    "enum": [
+                        "none",
+                        "html-only",
+                        "ae-only",
+                        "hybrid"
+                    ]
+                },
+                "interactionMode": {
+                    "type": "string",
+                    "enum": [
+                        "none",
+                        "light",
+                        "moderate",
+                        "heavy"
+                    ]
+                }
+            }
+        },
+        "sceneIntent": {
+            "type": "string",
+            "enum": [
+                "orient",
+                "refine",
+                "organize",
+                "explain",
+                "persuade",
+                "contextualize",
+                "reinforce",
+                "check",
+                "reflect",
+                "transition"
+            ]
+        },
+        "learningRole": {
+            "type": "string",
+            "enum": [
+                "title",
+                "concept-introduction",
+                "concept-development",
+                "example",
+                "comparison",
+                "process-walkthrough",
+                "knowledge-check",
+                "summary",
+                "reflection",
+                "transition",
+                "resource",
+                "other"
+            ]
+        },
+        "importance": {
+            "type": "string",
+            "enum": [
+                "low",
+                "medium",
+                "high"
+            ]
+        
+        },
+                "experienceStrategy": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "primaryMove",
+                "secondaryMoves",
+                "pacing",
+                "interactionPattern",
+                "visualDensity",
+                "narrativeEnergy"
+            ],
+            "properties": {
+                "primaryMove": {
+                    "type": "string",
+                    "enum": [
+                        "introduce",
+                        "orient",
+                        "explain",
+                        "explain_then_emphasize",
+                        "contrast",
+                        "progressive_reveal",
+                        "contextualize",
+                        "test_understanding",
+                        "reflective_pause",
+                        "call_to_action"
+                    ]
+                },
+                "secondaryMoves": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "anchor",
+                            "clarify",
+                            "emphasize",
+                            "contrast",
+                            "reinforce",
+                            "summarize",
+                            "contextualize",
+                            "motivate",
+                            "slow_down",
+                            "speed_up"
+                        ]
+                    },
+                    "uniqueItems": true
+                },
+                "pacing": {
+                    "type": "string",
+                    "enum": [
+                        "slow",
+                        "moderate",
+                        "brisk"
+                    ]
+                },
+                "interactionPattern": {
+                    "type": "string",
+                    "enum": [
+                        "passive",
+                        "progressive-disclosure",
+                        "knowledge-check",
+                        "guided-exploration"
+                    ]
+                },
+                "visualDensity": {
+                    "type": "string",
+                    "enum": [
+                        "light",
+                        "medium",
+                        "dense"
+                    ]
+                },
+                "narrativeEnergy": {
+                    "type": "string",
+                    "enum": [
+                        "calm",
+                        "measured",
+                        "elevated"
+                    ]
+                }
+            }
+        },
+        "sourceElement": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "elementId",
+                "type",
+                "intent",
+                "importance"
+            ],
+            "properties": {
+                "elementId": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "Module",
+                        "Scene",
+                        "Content",
+                        "Head",
+                        "SubHead",
+                        "ContentHead",
+                        "ListHead",
+                        "List",
+                        "Bullet",
+                        "Statement",
+                        "Paragraph",
+                        "Impact",
+                        "Quote",
+                        "MCQ"
+                    ]
+                },
+                "intent": {
+                    "type": "string",
+                    "enum": [
+                        "orient",
+                        "refine",
+                        "organize",
+                        "structure",
+                        "specify",
+                        "assert",
+                        "explain",
+                        "persuade",
+                        "contextualize",
+                        "check",
+                        "reflect",
+                        "transition"
+                    ]
+                },
+                "importance": {
+                    "$ref": "#/definitions/importance"
+                },
+                "notes": {
+                    "type": "string"
+                }
+            }
+        },
+        "renderRole": {
+            "type": "string",
+            "enum": [
+                "headline",
+                "subheadline",
+                "exposition",
+                "emphasis",
+                "supporting-detail",
+                "comparison",
+                "quote",
+                "list-intro",
+                "reveal-set",
+                "knowledge-check",
+                "summary",
+                "transition"
+            ]
+        },
+        "renderType": {
+            "type": "string",
+            "enum": [
+                "Heading",
+                "Body",
+                "RevealCards",
+                "MCQ"
+            ]
+        },
+        "styleRef": {
+            "type": "string",
+            "enum": [
+                "head-primary",
+                "subhead-secondary",
+                "content-head",
+                "content-body",
+                "impact-emphasis",
+                "quote-context",
+                "list-head",
+                "list-body",
+                "interaction-primary",
+                "interaction-secondary",
+                "knowledge-check",
+                "summary-emphasis"
+            ]
+        },
+        "primitive": {
+            "type": "string",
+            "enum": [
+                "StaticHead",
+                "BodyFade",
+                "FocusReveal",
+                "GlassReveal",
+                "LineReveal",
+                "BulletReveal",
+                "QuoteFade",
+                "CardReveal",
+                "KnowledgeCheck",
+                "None"
+            ]
+        },
+        "revealCardItem": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "title",
+                "body"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "title": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "body": {
+                    "$ref": "#/definitions/nonEmptyString"
+                }
+            }
+        },
+        "mcqChoice": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "text",
+                "correct"
+            ],
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "text": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "correct": {
+                    "type": "boolean"
+                },
+                "rationale": {
+                    "type": "string"
+                }
+            }
+        },
+        "mcqFeedback": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "correct": {
+                    "type": "string"
+                },
+                "incorrect": {
+                    "type": "string"
+                }
+            }
+        },
+        "headingProps": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "text"
+            ],
+            "properties": {
+                "text": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "level": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 6
+                }
+            }
+        },
+        "bodyProps": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "text"
+            ],
+            "properties": {
+                "text": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "emphasis": {
+                    "type": "string",
+                    "enum": [
+                        "none",
+                        "low",
+                        "medium",
+                        "high"
+                    ]
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        },
+        "revealCardsProps": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "items"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/revealCardItem"
+                    }
+                },
+                "requireAllRevealedToComplete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "mcqProps": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "question",
+                "options"
+            ],
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "question": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "options": {
+                    "type": "array",
+                    "minItems": 2,
+                    "items": {
+                        "$ref": "#/definitions/mcqChoice"
+                    }
+                },
+                "feedback": {
+                    "$ref": "#/definitions/mcqFeedback"
+                },
+                "retry": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "allowed": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        },
+        "renderUnit": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "unitId",
+                "semanticRole",
+                "instructionalIntent",
+                "rhetoricalWeight",
+                "treatment",
+                "learnerAction",
+                "role",
+                "sourceElementIds",
+                "renderType",
+                "props",
+                "styleRef",
+                "primitive",
+                "importance",
+                "visualIntent"
+            ],
+            "properties": {
+                "unitId": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "semanticRole": {
+                    "$ref": "#/definitions/semanticRole"
+                },
+                "instructionalIntent": {
+                    "$ref": "#/definitions/instructionalIntent"
+                },
+                "rhetoricalWeight": {
+                    "$ref": "#/definitions/rhetoricalWeight"
+                },
+                "treatment": {
+                    "$ref": "#/definitions/treatment"
+                },
+                "learnerAction": {
+                    "$ref": "#/definitions/learnerAction"
+                },
+                "role": {
+                    "$ref": "#/definitions/renderRole"
+                },
+                "sourceElementIds": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/nonEmptyString"
+                    }
+                },
+                "renderType": {
+                    "$ref": "#/definitions/renderType"
+                },
+                "props": {},
+                "styleRef": {
+                    "$ref": "#/definitions/styleRef"
+                },
+                "visualIntent": { "$ref": "#/definitions/visualIntent" 
+                },
+                "primitive": {
+                    "$ref": "#/definitions/primitive"
+                },
+                "importance": {
+                    "$ref": "#/definitions/importance"
+                },
+                "notes": {
+                    "type": "string"
+                }
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "renderType": {
+                                "const": "Heading"
+                            }
+                        },
+                        "required": [
+                            "renderType"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "props": {
+                                "$ref": "#/definitions/headingProps"
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "renderType": {
+                                "const": "Body"
+                            }
+                        },
+                        "required": [
+                            "renderType"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "props": {
+                                "$ref": "#/definitions/bodyProps"
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "renderType": {
+                                "const": "RevealCards"
+                            }
+                        },
+                        "required": [
+                            "renderType"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "props": {
+                                "$ref": "#/definitions/revealCardsProps"
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "renderType": {
+                                "const": "MCQ"
+                            }
+                        },
+                        "required": [
+                            "renderType"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "props": {
+                                "$ref": "#/definitions/mcqProps"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "narrationTiming": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "startAfterUnit": {
+                    "type": "string"
+                },
+                "estimatedDurationMs": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
+        },
+        "narrationSegment": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "segmentId",
+                "sourceUnitIds",
+                "text"
+            ],
+            "properties": {
+                "segmentId": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "sourceUnitIds": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/nonEmptyString"
+                    }
+                },
+                "text": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "voiceStyle": {
+                    "type": "string"
+                },
+                "timing": {
+                    "$ref": "#/definitions/narrationTiming"
+                }
+            }
+        },
+        "narrationPlan": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "mode",
+                "segments"
+            ],
+            "properties": {
+                "mode": {
+                    "type": "string",
+                    "enum": [
+                        "none",
+                        "scene-based",
+                        "unit-based",
+                        "hybrid"
+                    ]
+                },
+                "segments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/narrationSegment"
+                    }
+                }
+            }
+        },
+        "motionUnit": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "unitId",
+                "motionPrimitive",
+                "aeEligible"
+            ],
+            "properties": {
+                "unitId": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "motionPrimitive": {
+                    "$ref": "#/definitions/primitive"
+                },
+                "aeEligible": {
+                    "type": "boolean"
+                },
+                "aeTemplate": {
+                    "type": "string"
+                }
+            }
+        },
+        "motionPlan": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "mode",
+                "units"
+            ],
+            "properties": {
+                "mode": {
+                    "type": "string",
+                    "enum": [
+                        "none",
+                        "html-only",
+                        "ae-only",
+                        "hybrid"
+                    ]
+                },
+                "units": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/motionUnit"
+                    }
+                }
+            }
+        },
+        "requiredEvent": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "event",
+                "id"
+            ],
+            "properties": {
+                "event": {
+                    "type": "string",
+                    "enum": [
+                        "REVEALCARDS_COMPLETE",
+                        "MCQ_ANSWERED",
+                        "SCENE_ENTER",
+                        "MEDIA_ENDED"
+                    ]
+                },
+                "id": {
+                    "$ref": "#/definitions/nonEmptyString"
+                }
+            }
+        },
+        "completionPlan": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "completionType",
+                "requiredUnitIds",
+                "requiredEvents"
+            ],
+            "properties": {
+                "completionType": {
+                    "type": "string",
+                    "enum": [
+                        "view",
+                        "event-based",
+                        "hybrid"
+                    ]
+                },
+                "requiredUnitIds": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/nonEmptyString"
+                    }
+                },
+                "requiredEvents": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/requiredEvent"
+                    }
+                }
+            }
+        },
+        "scenePlan": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "sceneId",
+                "sceneIntent",
+                "title",
+                "learningRole",
+                "experienceStrategy",
+                "sourceElements",
+                "renderUnits",
+                "narrationPlan",
+                "motionPlan",
+                "completionPlan",
+                "learnerOutcome"
+            ],
+            "properties": {
+                "sceneId": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "sceneIntent": {
+                    "$ref": "#/definitions/sceneIntent"
+                },
+                "title": {
+                    "$ref": "#/definitions/nonEmptyString"
+                },
+                "learningRole": {
+                    "$ref": "#/definitions/learningRole"
+                },
+                "experienceStrategy": {
+                    "$ref": "#/definitions/experienceStrategy"
+                },
+                "sourceElements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/sourceElement"
+                    }
+                },
+                "renderUnits": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/renderUnit"
+                    }
+                },
+                "narrationPlan": {
+                    "$ref": "#/definitions/narrationPlan"
+                },
+                "motionPlan": {
+                    "$ref": "#/definitions/motionPlan"
+                },
+                "completionPlan": {
+                    "$ref": "#/definitions/completionPlan"
+                },
+                "learnerOutcome": {
+                    "$ref": "#/definitions/nonEmptyString"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,128 @@
+AE Technique: Moving Magnifier / Inspection Lens
+Concept
+
+Create a magnifying glass effect by revealing a scaled duplicate of the scene through a moving mask.
+
+The mask does not magnify anything.
+It simply reveals a slightly enlarged copy of the underlying image.
+
+This creates the illusion of a glass inspection lens moving across the scene.
+
+Visual Stack
+Magnified layer (105% scale)
+    + ellipse mask (Add)
+
+Normal layer (100%)
+
+Background / scene
+
+Inside the ellipse = zoomed view
+Outside the ellipse = normal view
+
+Setup Steps
+1. Duplicate the scene
+
+Duplicate the layers you want to magnify.
+
+Select layers
+Ctrl + D
+
+Move duplicates above originals.
+
+2. Scale the duplicated layer
+
+Apply small zoom:
+
+Scale: 103–108%
+
+Subtle scaling works best.
+
+3. Add ellipse mask
+
+On the zoomed layer:
+
+Ellipse Mask
+Mask Mode: Add
+
+Now only the circle reveals the zoomed version.
+
+4. Feather the mask
+Mask Feather: 80–150 px
+
+Creates soft blending between scales.
+
+5. Animate the lens
+
+Enable animation:
+
+Mask Path stopwatch
+
+Move mask with:
+
+Ctrl + T  (Free Transform)
+
+This moves the entire mask cleanly.
+
+Result
+Outside lens → normal scale
+Inside lens  → magnified scale
+
+Moving the mask creates a magnifying glass inspection effect.
+
+Optional Enhancements
+Glass distortion
+
+Add to zoomed layer:
+
+Effect → CC Lens
+
+Example:
+
+Size: 150–250
+Convergence: 20–30
+
+Creates subtle optical distortion.
+
+Lens shadow
+
+Add subtle shadow:
+
+Drop Shadow
+Opacity: ~20%
+Softness: ~50
+
+Gives lens physical presence.
+
+Performance Tip
+
+Instead of duplicating many layers:
+
+Precompose scene
+Duplicate precomp
+Apply mask to duplicate
+
+This reduces GPU load and improves stability.
+
+Typical Uses
+
+• inspection lens effect
+• highlighting detail in UI animation
+• scanning / analysis visuals
+• spotlight learning interactions
+• transparency / investigation metaphors
+
+Conceptual Use
+
+The lens visually communicates:
+
+focus
+inspection
+analysis
+revealing structure
+
+Which makes it particularly useful in:
+
+• data visualization
+• training
+• systems explanations
+• transparency metaphors

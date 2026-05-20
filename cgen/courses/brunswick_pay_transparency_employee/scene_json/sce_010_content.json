@@ -1,0 +1,66 @@
+{
+  "scene_id": "sce_010",
+  "module": "Conclusion",
+  "title": "You're Informed",
+  "delivery": "ae_render",
+  "elements": {
+    "Head_01": {
+      "type": "Head",
+      "intent": "orient",
+      "text": "You're Informed",
+      "text_primitive": "Headline",
+      "motion_primitive": "GlassReveal",
+      "layout_primitive": "TopTitle",
+      "style_ref": "head-primary"
+    },
+    "List_01": {
+      "type": "List",
+      "intent": "structure",
+      "text": "Why ranges are now visible\\nHow Brunswick's pay philosophy works\\nWhat shapes individual pay within a range\\nHow base pay fits into total rewards\\nHow to start an informed conversation",
+      "text_primitive": "BulletList",
+      "motion_primitive": "MarkerStaggerReveal",
+      "layout_primitive": "RecapList",
+      "style_ref": "content-list"
+    },
+    "Impact_01": {
+      "type": "Impact",
+      "intent": "persuade",
+      "text": "Pay transparency is about giving you the information to understand your compensation and have informed conversations.",
+      "text_primitive": "EmphasisLine",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "CenterEmphasis",
+      "style_ref": "impact-emphasis"
+    },
+    "Callout_01": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "For questions specific to your situation, start with your manager or HR Business Partner.",
+      "text_primitive": "CTA",
+      "motion_primitive": "FadeUp",
+      "layout_primitive": "BottomCTA",
+      "style_ref": "cta-primary"
+    }
+  },
+  "narration": {
+    "text": "You've covered the essentials of pay transparency at Brunswick. You know why ranges are now visible, how Brunswick's pay philosophy works, what shapes individual pay within a range, how base pay fits into your total rewards picture, and how to start a conversation if you want to learn more. Pay transparency isn't about guaranteeing what you're owed—it's about giving you the information to understand your compensation and have informed conversations. If you have questions specific to your situation, your manager and HR Business Partner are your best resources. Thank you for completing this training.",
+    "audio_file": "sce_010_vo.wav"
+  },
+  "visual_notes": [
+    "Dark slide.",
+    "Training complete.",
+    "Five recap bullets.",
+    "HR contact CTA."
+  ],
+  "asset_reuse": [
+    {
+      "source": "Manager module",
+      "scene": "Scene 20",
+      "description": "You're Ready visual treatment adapted for employee framing"
+    }
+  ],
+  "render": {
+    "ae_comp": "sce_010",
+    "output_file": "sce_010.mp4",
+    "review_required": true
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "scene_id": "sce_009",
+  "module": "Module 2: What This Means for You",
+  "title": "Interaction: Starting a Pay Conversation",
+  "delivery": "storyline_interaction",
+  "elements": {
+    "Head_01": {
+      "type": "Head",
+      "intent": "orient",
+      "text": "Starting a Pay Conversation",
+      "text_primitive": "Headline",
+      "motion_primitive": "None",
+      "layout_primitive": "InteractionTitle",
+      "style_ref": "head-primary"
+    },
+    "Statement_01": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "Select each card to reveal a conversation starter you can use.",
+      "text_primitive": "Instruction",
+      "motion_primitive": "None",
+      "layout_primitive": "InstructionText",
+      "style_ref": "statement-primary"
+    }
+  },
+  "narration": {
+    "text": "If you want to have a pay conversation with your manager, here are four ways to get started. Select each card to reveal a conversation starter you can use.",
+    "audio_file": "sce_009_vo.wav"
+  },
+  "visual_notes": [
+    "Four click-to-reveal cards: Your Positioning / Your Factors / Progression Path / Career & Compensation."
+  ],
+  "interaction": {
+    "interaction_primitive": "ClickToRevealConversationStarters",
+    "gating": "continue_after_all_visited",
+    "cards": [
+      {
+        "id": "positioning",
+        "label": "Your Positioning",
+        "reveal_text": "Can you help me understand where I fall within my pay range?"
+      },
+      {
+        "id": "factors",
+        "label": "Your Factors",
+        "reveal_text": "What factors are currently shaping my position in the range?"
+      },
+      {
+        "id": "progression",
+        "label": "Progression Path",
+        "reveal_text": "What development or performance would support progression over time?"
+      },
+      {
+        "id": "career_compensation",
+        "label": "Career & Compensation",
+        "reveal_text": "How should I think about future career growth and compensation together?"
+      }
+    ]
+  },
+  "render": {
+    "storyline_slide": "sce_009",
+    "review_required": true
+  }
+}

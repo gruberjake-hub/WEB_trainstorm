@@ -1,0 +1,1859 @@
+{
+  "meta": {
+    "courseId": "alsap-demo",
+    "version": "1.1",
+    "plannerVersion": "0.1",
+    "sourceSemanticFile": "course.semantic.json",
+    "brand": "astellas",
+    "theme": "default",
+    "generatedAt": "2026-03-27T22:05:37.689Z"
+  },
+  "globalDirectives": {
+    "density": "medium",
+    "tone": "clear-confident-human",
+    "visualStyle": "clean-didactic",
+    "narrationMode": "scene-based",
+    "motionMode": "hybrid",
+    "interactionMode": "light"
+  },
+  "scenePlans": [
+    {
+      "sceneId": "s1",
+      "sceneIntent": "orient",
+      "title": "What Is ALSAP?",
+      "learningRole": "concept-introduction",
+      "learnerOutcome": "Learner understands what ALSAP is and why this course exists.",
+      "sceneSignals": {
+        "elementCount": 4,
+        "hasMCQ": false,
+        "hasImpact": true,
+        "hasList": false,
+        "hasLongList": false,
+        "isSparse": false,
+        "hasContrastSignals": false
+      },
+      "sceneTreatment": "didactic-flow",
+      "experienceStrategy": {
+        "primaryMove": "explain_then_emphasize",
+        "secondaryMoves": [
+          "anchor",
+          "emphasize"
+        ],
+        "pacing": "moderate",
+        "interactionPattern": "passive",
+        "visualDensity": "light",
+        "narrativeEnergy": "elevated"
+      },
+      "sourceElements": [
+        {
+          "elementId": "s1_head_01",
+          "type": "Head",
+          "intent": "orient",
+          "importance": "high"
+        },
+        {
+          "elementId": "s1_para_01",
+          "type": "Paragraph",
+          "intent": "explain",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s1_para_02",
+          "type": "Paragraph",
+          "intent": "explain",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s1_impact_01",
+          "type": "Impact",
+          "intent": "persuade",
+          "importance": "high"
+        }
+      ],
+      "renderUnits": [
+        {
+          "unitId": "s1_u1",
+          "semanticRole": "Head",
+          "instructionalIntent": "orient",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "summary-highlight",
+          "learnerAction": "notice",
+          "role": "headline",
+          "sourceElementIds": [
+            "s1_head_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 2,
+            "text": "What Is ALSAP?"
+          },
+          "styleRef": "head-primary",
+          "primitive": "StaticHead",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "light",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "primary-assertion"
+        },
+        {
+          "unitId": "s1_u2",
+          "semanticRole": "Paragraph",
+          "instructionalIntent": "explain",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "plain-exposition",
+          "learnerAction": "read",
+          "role": "exposition",
+          "sourceElementIds": [
+            "s1_para_01"
+          ],
+          "renderType": "Body",
+          "props": {
+            "text": "ALSAP is a structured way to think about important workplace conversations so that managers can approach them with greater clarity, consistency, and purpose.",
+            "emphasis": "none",
+            "role": "Paragraph"
+          },
+          "styleRef": "content-body",
+          "primitive": "BodyFade",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "none",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "supporting-context"
+        },
+        {
+          "unitId": "s1_u3",
+          "semanticRole": "Paragraph",
+          "instructionalIntent": "explain",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "plain-exposition",
+          "learnerAction": "read",
+          "role": "exposition",
+          "sourceElementIds": [
+            "s1_para_02"
+          ],
+          "renderType": "Body",
+          "props": {
+            "text": "This course introduces the framework, explains what each part is meant to help you do, and gives you a simple way to test your understanding before you apply it in practice.",
+            "emphasis": "none",
+            "role": "Paragraph"
+          },
+          "styleRef": "content-body",
+          "primitive": "BodyFade",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "none",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "supporting-context"
+        },
+        {
+          "unitId": "s1_u4",
+          "semanticRole": "Impact",
+          "instructionalIntent": "persuade",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "emphasized-assertion",
+          "learnerAction": "retain",
+          "role": "emphasis",
+          "sourceElementIds": [
+            "s1_impact_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 3,
+            "text": "This is not just a model to remember. It is a way to handle moments that matter."
+          },
+          "styleRef": "impact-emphasis",
+          "primitive": "FocusReveal",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "medium",
+            "visualRole": "emphasis",
+            "treatmentHint": "hero-visual"
+          },
+          "unitTreatment": "emphasis-beat"
+        }
+      ],
+      "narrationPlan": {
+        "mode": "scene-based",
+        "segments": [
+          {
+            "segmentId": "s1_n1",
+            "sourceUnitIds": [
+              "s1_u1"
+            ],
+            "text": "What Is ALSAP?",
+            "voiceStyle": "clear-warm",
+            "timing": {
+              "estimatedDurationMs": 1241
+            }
+          },
+          {
+            "segmentId": "s1_n2",
+            "sourceUnitIds": [
+              "s1_u2"
+            ],
+            "text": "ALSAP is a structured way to think about important workplace conversations so that managers can approach them with greater clarity, consistency, and purpose.",
+            "voiceStyle": "clear-neutral",
+            "timing": {
+              "startAfterUnit": "s1_u1",
+              "estimatedDurationMs": 9517
+            }
+          },
+          {
+            "segmentId": "s1_n3",
+            "sourceUnitIds": [
+              "s1_u3"
+            ],
+            "text": "This course introduces the framework, explains what each part is meant to help you do, and gives you a simple way to test your understanding before you apply it in practice.",
+            "voiceStyle": "clear-neutral",
+            "timing": {
+              "startAfterUnit": "s1_u2",
+              "estimatedDurationMs": 12828
+            }
+          },
+          {
+            "segmentId": "s1_n4",
+            "sourceUnitIds": [
+              "s1_u4"
+            ],
+            "text": "This is not just a model to remember. It is a way to handle moments that matter.",
+            "voiceStyle": "slight-emphasis",
+            "timing": {
+              "startAfterUnit": "s1_u3",
+              "estimatedDurationMs": 7034
+            }
+          }
+        ]
+      },
+      "motionPlan": {
+        "mode": "hybrid",
+        "units": [
+          {
+            "unitId": "s1_u1",
+            "motionPrimitive": "StaticHead",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s1_u2",
+            "motionPrimitive": "BodyFade",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s1_u3",
+            "motionPrimitive": "BodyFade",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s1_u4",
+            "motionPrimitive": "FocusReveal",
+            "aeEligible": true,
+            "aeTemplate": "impact_focus_reveal"
+          }
+        ]
+      },
+      "completionPlan": {
+        "completionType": "view",
+        "requiredUnitIds": [],
+        "requiredEvents": []
+      }
+    },
+    {
+      "sceneId": "s2",
+      "sceneIntent": "persuade",
+      "title": "Why These Moments Matter",
+      "learningRole": "concept-development",
+      "learnerOutcome": "Learner recognizes that the quality of these conversations affects trust, clarity, and outcomes.",
+      "sceneSignals": {
+        "elementCount": 5,
+        "hasMCQ": false,
+        "hasImpact": true,
+        "hasList": false,
+        "hasLongList": false,
+        "isSparse": false,
+        "hasContrastSignals": false
+      },
+      "sceneTreatment": "didactic-flow",
+      "experienceStrategy": {
+        "primaryMove": "explain_then_emphasize",
+        "secondaryMoves": [
+          "emphasize"
+        ],
+        "pacing": "moderate",
+        "interactionPattern": "passive",
+        "visualDensity": "light",
+        "narrativeEnergy": "elevated"
+      },
+      "sourceElements": [
+        {
+          "elementId": "s2_head_01",
+          "type": "Head",
+          "intent": "orient",
+          "importance": "high"
+        },
+        {
+          "elementId": "s2_para_01",
+          "type": "Paragraph",
+          "intent": "explain",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s2_statement_01",
+          "type": "Statement",
+          "intent": "assert",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s2_para_02",
+          "type": "Paragraph",
+          "intent": "explain",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s2_impact_01",
+          "type": "Impact",
+          "intent": "persuade",
+          "importance": "high"
+        }
+      ],
+      "renderUnits": [
+        {
+          "unitId": "s2_u1",
+          "semanticRole": "Head",
+          "instructionalIntent": "orient",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "summary-highlight",
+          "learnerAction": "notice",
+          "role": "headline",
+          "sourceElementIds": [
+            "s2_head_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Why These Moments Matter"
+          },
+          "styleRef": "head-primary",
+          "primitive": "StaticHead",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "light",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "primary-assertion"
+        },
+        {
+          "unitId": "s2_u2",
+          "semanticRole": "Paragraph",
+          "instructionalIntent": "explain",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "plain-exposition",
+          "learnerAction": "read",
+          "role": "exposition",
+          "sourceElementIds": [
+            "s2_para_01"
+          ],
+          "renderType": "Body",
+          "props": {
+            "text": "Managers are often asked to handle conversations that carry real emotional, professional, and organizational weight. In those moments, a vague or reactive approach can create confusion, defensiveness, or missed opportunities.",
+            "emphasis": "none",
+            "role": "Paragraph"
+          },
+          "styleRef": "content-body",
+          "primitive": "BodyFade",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "none",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "supporting-context"
+        },
+        {
+          "unitId": "s2_u3",
+          "semanticRole": "Statement",
+          "instructionalIntent": "assert",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "emphasized-assertion",
+          "learnerAction": "consider",
+          "role": "supporting-detail",
+          "sourceElementIds": [
+            "s2_statement_01"
+          ],
+          "renderType": "Body",
+          "props": {
+            "text": "The point is not to sound scripted. The point is to think more clearly under pressure.",
+            "emphasis": "medium",
+            "role": "Statement"
+          },
+          "styleRef": "content-body",
+          "primitive": "BodyFade",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "light",
+            "visualRole": "contrast",
+            "treatmentHint": "contrast-layout"
+          },
+          "unitTreatment": "supporting-context"
+        },
+        {
+          "unitId": "s2_u4",
+          "semanticRole": "Paragraph",
+          "instructionalIntent": "explain",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "plain-exposition",
+          "learnerAction": "read",
+          "role": "exposition",
+          "sourceElementIds": [
+            "s2_para_02"
+          ],
+          "renderType": "Body",
+          "props": {
+            "text": "ALSAP gives you a repeatable structure for approaching these moments with more intention, so that the conversation serves both the person and the purpose.",
+            "emphasis": "none",
+            "role": "Paragraph"
+          },
+          "styleRef": "content-body",
+          "primitive": "BodyFade",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "none",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "supporting-context"
+        },
+        {
+          "unitId": "s2_u5",
+          "semanticRole": "Impact",
+          "instructionalIntent": "persuade",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "emphasized-assertion",
+          "learnerAction": "retain",
+          "role": "emphasis",
+          "sourceElementIds": [
+            "s2_impact_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 3,
+            "text": "Handled well, these conversations build trust. Handled poorly, they can quietly erode it."
+          },
+          "styleRef": "impact-emphasis",
+          "primitive": "FocusReveal",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "medium",
+            "visualRole": "emphasis",
+            "treatmentHint": "hero-visual"
+          },
+          "unitTreatment": "emphasis-beat"
+        }
+      ],
+      "narrationPlan": {
+        "mode": "scene-based",
+        "segments": [
+          {
+            "segmentId": "s2_n1",
+            "sourceUnitIds": [
+              "s2_u1"
+            ],
+            "text": "Why These Moments Matter",
+            "voiceStyle": "clear-warm",
+            "timing": {
+              "estimatedDurationMs": 1655
+            }
+          },
+          {
+            "segmentId": "s2_n2",
+            "sourceUnitIds": [
+              "s2_u2"
+            ],
+            "text": "Managers are often asked to handle conversations that carry real emotional, professional, and organizational weight. In those moments, a vague or reactive approach can create confusion, defensiveness, or missed opportunities.",
+            "voiceStyle": "clear-neutral",
+            "timing": {
+              "startAfterUnit": "s2_u1",
+              "estimatedDurationMs": 12414
+            }
+          },
+          {
+            "segmentId": "s2_n3",
+            "sourceUnitIds": [
+              "s2_u3"
+            ],
+            "text": "The point is not to sound scripted. The point is to think more clearly under pressure.",
+            "voiceStyle": "clear-neutral",
+            "timing": {
+              "startAfterUnit": "s2_u2",
+              "estimatedDurationMs": 6621
+            }
+          },
+          {
+            "segmentId": "s2_n4",
+            "sourceUnitIds": [
+              "s2_u4"
+            ],
+            "text": "ALSAP gives you a repeatable structure for approaching these moments with more intention, so that the conversation serves both the person and the purpose.",
+            "voiceStyle": "clear-neutral",
+            "timing": {
+              "startAfterUnit": "s2_u3",
+              "estimatedDurationMs": 9931
+            }
+          },
+          {
+            "segmentId": "s2_n5",
+            "sourceUnitIds": [
+              "s2_u5"
+            ],
+            "text": "Handled well, these conversations build trust. Handled poorly, they can quietly erode it.",
+            "voiceStyle": "slight-emphasis",
+            "timing": {
+              "startAfterUnit": "s2_u4",
+              "estimatedDurationMs": 5379
+            }
+          }
+        ]
+      },
+      "motionPlan": {
+        "mode": "hybrid",
+        "units": [
+          {
+            "unitId": "s2_u1",
+            "motionPrimitive": "StaticHead",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s2_u2",
+            "motionPrimitive": "BodyFade",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s2_u3",
+            "motionPrimitive": "BodyFade",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s2_u4",
+            "motionPrimitive": "BodyFade",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s2_u5",
+            "motionPrimitive": "FocusReveal",
+            "aeEligible": true,
+            "aeTemplate": "impact_focus_reveal"
+          }
+        ]
+      },
+      "completionPlan": {
+        "completionType": "view",
+        "requiredUnitIds": [],
+        "requiredEvents": []
+      }
+    },
+    {
+      "sceneId": "s3",
+      "sceneIntent": "organize",
+      "title": "The ALSAP Framework",
+      "learningRole": "concept-development",
+      "learnerOutcome": "Learner can identify the major parts of the ALSAP framework as a structured sequence.",
+      "sceneSignals": {
+        "elementCount": 4,
+        "hasMCQ": false,
+        "hasImpact": true,
+        "hasList": true,
+        "hasLongList": true,
+        "isSparse": false,
+        "hasContrastSignals": false
+      },
+      "sceneTreatment": "progressive-reveal",
+      "experienceStrategy": {
+        "primaryMove": "progressive_reveal",
+        "secondaryMoves": [
+          "emphasize",
+          "clarify"
+        ],
+        "pacing": "moderate",
+        "interactionPattern": "progressive-disclosure",
+        "visualDensity": "medium",
+        "narrativeEnergy": "elevated"
+      },
+      "sourceElements": [
+        {
+          "elementId": "s3_head_01",
+          "type": "Head",
+          "intent": "orient",
+          "importance": "high"
+        },
+        {
+          "elementId": "s3_para_01",
+          "type": "Paragraph",
+          "intent": "explain",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s3_list_01",
+          "type": "List",
+          "intent": "structure",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s3_impact_01",
+          "type": "Impact",
+          "intent": "persuade",
+          "importance": "high"
+        }
+      ],
+      "renderUnits": [
+        {
+          "unitId": "s3_u1",
+          "semanticRole": "Head",
+          "instructionalIntent": "orient",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "summary-highlight",
+          "learnerAction": "notice",
+          "role": "headline",
+          "sourceElementIds": [
+            "s3_head_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 2,
+            "text": "The ALSAP Framework"
+          },
+          "styleRef": "head-primary",
+          "primitive": "StaticHead",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "light",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "primary-assertion"
+        },
+        {
+          "unitId": "s3_u2",
+          "semanticRole": "Paragraph",
+          "instructionalIntent": "explain",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "plain-exposition",
+          "learnerAction": "read",
+          "role": "exposition",
+          "sourceElementIds": [
+            "s3_para_01"
+          ],
+          "renderType": "Body",
+          "props": {
+            "text": "ALSAP is easier to use when you see it as a sequence of moves rather than as a list of abstract terms. Each part plays a different role in helping a conversation move forward productively.",
+            "emphasis": "none",
+            "role": "Paragraph"
+          },
+          "styleRef": "content-body",
+          "primitive": "BodyFade",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "none",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "progressive-step"
+        },
+        {
+          "unitId": "s3_u3",
+          "semanticRole": "List",
+          "instructionalIntent": "structure",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "progressive-reveal",
+          "learnerAction": "explore",
+          "role": "reveal-set",
+          "sourceElementIds": [
+            "s3_list_01"
+          ],
+          "renderType": "RevealCards",
+          "props": {
+            "id": "s3_list_01",
+            "items": [
+              {
+                "id": "s3_item_01",
+                "title": "A — Assess",
+                "body": "Take stock of the situation before reacting. What is happening, what is at stake, and what context matters?"
+              },
+              {
+                "id": "s3_item_02",
+                "title": "L — Listen",
+                "body": "Make space to understand the other person's perspective rather than rushing to your own conclusion."
+              },
+              {
+                "id": "s3_item_03",
+                "title": "S — Specify",
+                "body": "Clarify the issue, expectation, or concern in concrete terms so the conversation stays grounded."
+              },
+              {
+                "id": "s3_item_04",
+                "title": "A — Align",
+                "body": "Create shared understanding around what matters, what good looks like, and what both parties are working toward."
+              },
+              {
+                "id": "s3_item_05",
+                "title": "P — Proceed",
+                "body": "Move toward the next right action so the conversation leads somewhere useful rather than ending as vague discussion."
+              }
+            ],
+            "requireAllRevealedToComplete": true
+          },
+          "styleRef": "list-body",
+          "primitive": "CardReveal",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "high",
+            "visualRole": "organizational",
+            "treatmentHint": "structured-cards"
+          },
+          "unitTreatment": "progressive-step"
+        },
+        {
+          "unitId": "s3_u4",
+          "semanticRole": "Impact",
+          "instructionalIntent": "persuade",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "emphasized-assertion",
+          "learnerAction": "retain",
+          "role": "emphasis",
+          "sourceElementIds": [
+            "s3_impact_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 3,
+            "text": "The value of ALSAP is not in memorizing the letters. It is in using the sequence to think and act with greater intention."
+          },
+          "styleRef": "impact-emphasis",
+          "primitive": "FocusReveal",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "medium",
+            "visualRole": "emphasis",
+            "treatmentHint": "hero-visual"
+          },
+          "unitTreatment": "emphasis-beat"
+        }
+      ],
+      "narrationPlan": {
+        "mode": "scene-based",
+        "segments": [
+          {
+            "segmentId": "s3_n1",
+            "sourceUnitIds": [
+              "s3_u1"
+            ],
+            "text": "The ALSAP Framework",
+            "voiceStyle": "clear-warm",
+            "timing": {
+              "estimatedDurationMs": 1241
+            }
+          },
+          {
+            "segmentId": "s3_n2",
+            "sourceUnitIds": [
+              "s3_u2"
+            ],
+            "text": "ALSAP is easier to use when you see it as a sequence of moves rather than as a list of abstract terms. Each part plays a different role in helping a conversation move forward productively.",
+            "voiceStyle": "clear-neutral",
+            "timing": {
+              "startAfterUnit": "s3_u1",
+              "estimatedDurationMs": 14483
+            }
+          },
+          {
+            "segmentId": "s3_n3",
+            "sourceUnitIds": [
+              "s3_u4"
+            ],
+            "text": "The value of ALSAP is not in memorizing the letters. It is in using the sequence to think and act with greater intention.",
+            "voiceStyle": "slight-emphasis",
+            "timing": {
+              "startAfterUnit": "s3_u2",
+              "estimatedDurationMs": 9517
+            }
+          }
+        ]
+      },
+      "motionPlan": {
+        "mode": "hybrid",
+        "units": [
+          {
+            "unitId": "s3_u1",
+            "motionPrimitive": "StaticHead",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s3_u2",
+            "motionPrimitive": "BodyFade",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s3_u3",
+            "motionPrimitive": "CardReveal",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s3_u4",
+            "motionPrimitive": "FocusReveal",
+            "aeEligible": true,
+            "aeTemplate": "impact_focus_reveal"
+          }
+        ]
+      },
+      "completionPlan": {
+        "completionType": "event-based",
+        "requiredUnitIds": [],
+        "requiredEvents": [
+          {
+            "event": "REVEALCARDS_COMPLETE",
+            "id": "s3_list_01"
+          }
+        ]
+      }
+    },
+    {
+      "sceneId": "s4",
+      "sceneIntent": "explain",
+      "title": "What Each Part Helps You Do",
+      "learningRole": "concept-development",
+      "learnerOutcome": "Learner understands the practical function of each ALSAP step.",
+      "sceneSignals": {
+        "elementCount": 4,
+        "hasMCQ": false,
+        "hasImpact": true,
+        "hasList": true,
+        "hasLongList": true,
+        "isSparse": false,
+        "hasContrastSignals": false
+      },
+      "sceneTreatment": "progressive-reveal",
+      "experienceStrategy": {
+        "primaryMove": "progressive_reveal",
+        "secondaryMoves": [
+          "emphasize",
+          "clarify"
+        ],
+        "pacing": "moderate",
+        "interactionPattern": "progressive-disclosure",
+        "visualDensity": "medium",
+        "narrativeEnergy": "elevated"
+      },
+      "sourceElements": [
+        {
+          "elementId": "s4_head_01",
+          "type": "Head",
+          "intent": "orient",
+          "importance": "high"
+        },
+        {
+          "elementId": "s4_para_01",
+          "type": "Paragraph",
+          "intent": "explain",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s4_list_01",
+          "type": "List",
+          "intent": "structure",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s4_impact_01",
+          "type": "Impact",
+          "intent": "persuade",
+          "importance": "high"
+        }
+      ],
+      "renderUnits": [
+        {
+          "unitId": "s4_u1",
+          "semanticRole": "Head",
+          "instructionalIntent": "orient",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "summary-highlight",
+          "learnerAction": "notice",
+          "role": "headline",
+          "sourceElementIds": [
+            "s4_head_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 2,
+            "text": "What Each Part Helps You Do"
+          },
+          "styleRef": "head-primary",
+          "primitive": "StaticHead",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "light",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "primary-assertion"
+        },
+        {
+          "unitId": "s4_u2",
+          "semanticRole": "Paragraph",
+          "instructionalIntent": "explain",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "plain-exposition",
+          "learnerAction": "read",
+          "role": "exposition",
+          "sourceElementIds": [
+            "s4_para_01"
+          ],
+          "renderType": "Body",
+          "props": {
+            "text": "ALSAP is most useful when you understand what each part is helping you do in the moment, not just what each letter stands for.",
+            "emphasis": "none",
+            "role": "Paragraph"
+          },
+          "styleRef": "content-body",
+          "primitive": "BodyFade",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "none",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "progressive-step"
+        },
+        {
+          "unitId": "s4_u3",
+          "semanticRole": "List",
+          "instructionalIntent": "structure",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "progressive-reveal",
+          "learnerAction": "explore",
+          "role": "reveal-set",
+          "sourceElementIds": [
+            "s4_list_01"
+          ],
+          "renderType": "RevealCards",
+          "props": {
+            "id": "s4_list_01",
+            "items": [
+              {
+                "id": "s4_item_01",
+                "title": "Assess",
+                "body": "Helps you slow down and understand the situation before reacting."
+              },
+              {
+                "id": "s4_item_02",
+                "title": "Listen",
+                "body": "Helps you understand the other person’s perspective more fully."
+              },
+              {
+                "id": "s4_item_03",
+                "title": "Specify",
+                "body": "Helps you clarify what matters so the conversation stays focused."
+              },
+              {
+                "id": "s4_item_04",
+                "title": "Align",
+                "body": "Helps you build shared understanding around expectations and outcomes."
+              },
+              {
+                "id": "s4_item_05",
+                "title": "Proceed",
+                "body": "Helps you move toward a clear next step instead of leaving things unresolved."
+              }
+            ],
+            "requireAllRevealedToComplete": true
+          },
+          "styleRef": "list-body",
+          "primitive": "CardReveal",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "high",
+            "visualRole": "organizational",
+            "treatmentHint": "structured-cards"
+          },
+          "unitTreatment": "progressive-step"
+        },
+        {
+          "unitId": "s4_u4",
+          "semanticRole": "Impact",
+          "instructionalIntent": "persuade",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "emphasized-assertion",
+          "learnerAction": "retain",
+          "role": "emphasis",
+          "sourceElementIds": [
+            "s4_impact_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 3,
+            "text": "Each step is a way of thinking, not just a step to complete."
+          },
+          "styleRef": "impact-emphasis",
+          "primitive": "FocusReveal",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "medium",
+            "visualRole": "emphasis",
+            "treatmentHint": "hero-visual"
+          },
+          "unitTreatment": "emphasis-beat"
+        }
+      ],
+      "narrationPlan": {
+        "mode": "scene-based",
+        "segments": [
+          {
+            "segmentId": "s4_n1",
+            "sourceUnitIds": [
+              "s4_u1"
+            ],
+            "text": "What Each Part Helps You Do",
+            "voiceStyle": "clear-warm",
+            "timing": {
+              "estimatedDurationMs": 2483
+            }
+          },
+          {
+            "segmentId": "s4_n2",
+            "sourceUnitIds": [
+              "s4_u2"
+            ],
+            "text": "ALSAP is most useful when you understand what each part is helping you do in the moment, not just what each letter stands for.",
+            "voiceStyle": "clear-neutral",
+            "timing": {
+              "startAfterUnit": "s4_u1",
+              "estimatedDurationMs": 9931
+            }
+          },
+          {
+            "segmentId": "s4_n3",
+            "sourceUnitIds": [
+              "s4_u4"
+            ],
+            "text": "Each step is a way of thinking, not just a step to complete.",
+            "voiceStyle": "slight-emphasis",
+            "timing": {
+              "startAfterUnit": "s4_u2",
+              "estimatedDurationMs": 5379
+            }
+          }
+        ]
+      },
+      "motionPlan": {
+        "mode": "hybrid",
+        "units": [
+          {
+            "unitId": "s4_u1",
+            "motionPrimitive": "StaticHead",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s4_u2",
+            "motionPrimitive": "BodyFade",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s4_u3",
+            "motionPrimitive": "CardReveal",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s4_u4",
+            "motionPrimitive": "FocusReveal",
+            "aeEligible": true,
+            "aeTemplate": "impact_focus_reveal"
+          }
+        ]
+      },
+      "completionPlan": {
+        "completionType": "event-based",
+        "requiredUnitIds": [],
+        "requiredEvents": [
+          {
+            "event": "REVEALCARDS_COMPLETE",
+            "id": "s4_list_01"
+          }
+        ]
+      }
+    },
+    {
+      "sceneId": "s5",
+      "sceneIntent": "contextualize",
+      "title": "What Good Use Looks Like",
+      "learningRole": "application-framing",
+      "learnerOutcome": "Learner can distinguish between thoughtful and superficial use of ALSAP.",
+      "sceneSignals": {
+        "elementCount": 5,
+        "hasMCQ": false,
+        "hasImpact": true,
+        "hasList": false,
+        "hasLongList": false,
+        "isSparse": false,
+        "hasContrastSignals": false
+      },
+      "sceneTreatment": "didactic-flow",
+      "experienceStrategy": {
+        "primaryMove": "explain_then_emphasize",
+        "secondaryMoves": [
+          "emphasize"
+        ],
+        "pacing": "moderate",
+        "interactionPattern": "passive",
+        "visualDensity": "light",
+        "narrativeEnergy": "elevated"
+      },
+      "sourceElements": [
+        {
+          "elementId": "s5_head_01",
+          "type": "Head",
+          "intent": "orient",
+          "importance": "high"
+        },
+        {
+          "elementId": "s5_para_01",
+          "type": "Paragraph",
+          "intent": "explain",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s5_statement_01",
+          "type": "Statement",
+          "intent": "assert",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s5_para_02",
+          "type": "Paragraph",
+          "intent": "explain",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s5_impact_01",
+          "type": "Impact",
+          "intent": "persuade",
+          "importance": "high"
+        }
+      ],
+      "renderUnits": [
+        {
+          "unitId": "s5_u1",
+          "semanticRole": "Head",
+          "instructionalIntent": "orient",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "summary-highlight",
+          "learnerAction": "notice",
+          "role": "headline",
+          "sourceElementIds": [
+            "s5_head_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 2,
+            "text": "What Good Use Looks Like"
+          },
+          "styleRef": "head-primary",
+          "primitive": "StaticHead",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "light",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "primary-assertion"
+        },
+        {
+          "unitId": "s5_u2",
+          "semanticRole": "Paragraph",
+          "instructionalIntent": "explain",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "plain-exposition",
+          "learnerAction": "read",
+          "role": "exposition",
+          "sourceElementIds": [
+            "s5_para_01"
+          ],
+          "renderType": "Body",
+          "props": {
+            "text": "In practice, ALSAP is not something you recite. It is something that shapes how you think and respond during a conversation.",
+            "emphasis": "none",
+            "role": "Paragraph"
+          },
+          "styleRef": "content-body",
+          "primitive": "BodyFade",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "none",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "supporting-context"
+        },
+        {
+          "unitId": "s5_u3",
+          "semanticRole": "Statement",
+          "instructionalIntent": "assert",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "emphasized-assertion",
+          "learnerAction": "consider",
+          "role": "supporting-detail",
+          "sourceElementIds": [
+            "s5_statement_01"
+          ],
+          "renderType": "Body",
+          "props": {
+            "text": "Using ALSAP well means being intentional, not mechanical.",
+            "emphasis": "medium",
+            "role": "Statement"
+          },
+          "styleRef": "content-body",
+          "primitive": "BodyFade",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "light",
+            "visualRole": "contrast",
+            "treatmentHint": "contrast-layout"
+          },
+          "unitTreatment": "supporting-context"
+        },
+        {
+          "unitId": "s5_u4",
+          "semanticRole": "Paragraph",
+          "instructionalIntent": "explain",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "plain-exposition",
+          "learnerAction": "read",
+          "role": "exposition",
+          "sourceElementIds": [
+            "s5_para_02"
+          ],
+          "renderType": "Body",
+          "props": {
+            "text": "A superficial approach treats ALSAP as a checklist. A thoughtful approach uses it to guide judgment in real time, adjusting based on the situation and the person.",
+            "emphasis": "none",
+            "role": "Paragraph"
+          },
+          "styleRef": "content-body",
+          "primitive": "BodyFade",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "none",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "supporting-context"
+        },
+        {
+          "unitId": "s5_u5",
+          "semanticRole": "Impact",
+          "instructionalIntent": "persuade",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "emphasized-assertion",
+          "learnerAction": "retain",
+          "role": "emphasis",
+          "sourceElementIds": [
+            "s5_impact_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 3,
+            "text": "The difference shows up in how the other person experiences the conversation."
+          },
+          "styleRef": "impact-emphasis",
+          "primitive": "FocusReveal",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "medium",
+            "visualRole": "emphasis",
+            "treatmentHint": "hero-visual"
+          },
+          "unitTreatment": "emphasis-beat"
+        }
+      ],
+      "narrationPlan": {
+        "mode": "scene-based",
+        "segments": [
+          {
+            "segmentId": "s5_n1",
+            "sourceUnitIds": [
+              "s5_u1"
+            ],
+            "text": "What Good Use Looks Like",
+            "voiceStyle": "clear-warm",
+            "timing": {
+              "estimatedDurationMs": 2069
+            }
+          },
+          {
+            "segmentId": "s5_n2",
+            "sourceUnitIds": [
+              "s5_u2"
+            ],
+            "text": "In practice, ALSAP is not something you recite. It is something that shapes how you think and respond during a conversation.",
+            "voiceStyle": "clear-neutral",
+            "timing": {
+              "startAfterUnit": "s5_u1",
+              "estimatedDurationMs": 8690
+            }
+          },
+          {
+            "segmentId": "s5_n3",
+            "sourceUnitIds": [
+              "s5_u3"
+            ],
+            "text": "Using ALSAP well means being intentional, not mechanical.",
+            "voiceStyle": "clear-neutral",
+            "timing": {
+              "startAfterUnit": "s5_u2",
+              "estimatedDurationMs": 3310
+            }
+          },
+          {
+            "segmentId": "s5_n4",
+            "sourceUnitIds": [
+              "s5_u4"
+            ],
+            "text": "A superficial approach treats ALSAP as a checklist. A thoughtful approach uses it to guide judgment in real time, adjusting based on the situation and the person.",
+            "voiceStyle": "clear-neutral",
+            "timing": {
+              "startAfterUnit": "s5_u3",
+              "estimatedDurationMs": 11172
+            }
+          },
+          {
+            "segmentId": "s5_n5",
+            "sourceUnitIds": [
+              "s5_u5"
+            ],
+            "text": "The difference shows up in how the other person experiences the conversation.",
+            "voiceStyle": "slight-emphasis",
+            "timing": {
+              "startAfterUnit": "s5_u4",
+              "estimatedDurationMs": 4966
+            }
+          }
+        ]
+      },
+      "motionPlan": {
+        "mode": "hybrid",
+        "units": [
+          {
+            "unitId": "s5_u1",
+            "motionPrimitive": "StaticHead",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s5_u2",
+            "motionPrimitive": "BodyFade",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s5_u3",
+            "motionPrimitive": "BodyFade",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s5_u4",
+            "motionPrimitive": "BodyFade",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s5_u5",
+            "motionPrimitive": "FocusReveal",
+            "aeEligible": true,
+            "aeTemplate": "impact_focus_reveal"
+          }
+        ]
+      },
+      "completionPlan": {
+        "completionType": "view",
+        "requiredUnitIds": [],
+        "requiredEvents": []
+      }
+    },
+    {
+      "sceneId": "s6",
+      "sceneIntent": "check",
+      "title": "Check Your Understanding",
+      "learningRole": "knowledge-check",
+      "learnerOutcome": "Learner can correctly identify the purpose and use of ALSAP.",
+      "sceneSignals": {
+        "elementCount": 3,
+        "hasMCQ": true,
+        "hasImpact": false,
+        "hasList": false,
+        "hasLongList": false,
+        "isSparse": false,
+        "hasContrastSignals": false
+      },
+      "sceneTreatment": "assessment-beat",
+      "experienceStrategy": {
+        "primaryMove": "test_understanding",
+        "secondaryMoves": [],
+        "pacing": "moderate",
+        "interactionPattern": "knowledge-check",
+        "visualDensity": "light",
+        "narrativeEnergy": "measured"
+      },
+      "sourceElements": [
+        {
+          "elementId": "s6_head_01",
+          "type": "Head",
+          "intent": "orient",
+          "importance": "high"
+        },
+        {
+          "elementId": "s6_mcq_01",
+          "type": "MCQ",
+          "intent": "check",
+          "importance": "high"
+        },
+        {
+          "elementId": "s6_mcq_02",
+          "type": "MCQ",
+          "intent": "check",
+          "importance": "high"
+        }
+      ],
+      "renderUnits": [
+        {
+          "unitId": "s6_u1",
+          "semanticRole": "Head",
+          "instructionalIntent": "orient",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "summary-highlight",
+          "learnerAction": "notice",
+          "role": "headline",
+          "sourceElementIds": [
+            "s6_head_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Check Your Understanding"
+          },
+          "styleRef": "head-primary",
+          "primitive": "StaticHead",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "light",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "primary-assertion"
+        },
+        {
+          "unitId": "s6_u2",
+          "semanticRole": "MCQ",
+          "instructionalIntent": "check",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "knowledge-check",
+          "learnerAction": "respond",
+          "role": "knowledge-check",
+          "sourceElementIds": [
+            "s6_mcq_01"
+          ],
+          "renderType": "MCQ",
+          "props": {
+            "id": "s6_mcq_01",
+            "question": "What is the primary purpose of ALSAP?",
+            "options": [
+              {
+                "id": "a",
+                "text": "To provide a script for difficult conversations",
+                "correct": false
+              },
+              {
+                "id": "b",
+                "text": "To guide how you think and respond during important conversations",
+                "correct": true
+              },
+              {
+                "id": "c",
+                "text": "To document conversations for compliance purposes",
+                "correct": false
+              }
+            ],
+            "feedback": {
+              "correct": "Correct. ALSAP is meant to guide thinking, not prescribe exact wording.",
+              "incorrect": "Not quite. ALSAP is about shaping your approach, not scripting your words."
+            },
+            "retry": {
+              "allowed": true
+            }
+          },
+          "styleRef": "knowledge-check",
+          "primitive": "KnowledgeCheck",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "light",
+            "visualRole": "organizational",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "interaction-prompt"
+        },
+        {
+          "unitId": "s6_u3",
+          "semanticRole": "MCQ",
+          "instructionalIntent": "check",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "knowledge-check",
+          "learnerAction": "respond",
+          "role": "knowledge-check",
+          "sourceElementIds": [
+            "s6_mcq_02"
+          ],
+          "renderType": "MCQ",
+          "props": {
+            "id": "s6_mcq_02",
+            "question": "Which of the following reflects strong use of ALSAP?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Following each step exactly as written without adapting",
+                "correct": false
+              },
+              {
+                "id": "b",
+                "text": "Using the structure to guide judgment while adapting to the situation",
+                "correct": true
+              },
+              {
+                "id": "c",
+                "text": "Skipping steps to keep the conversation short",
+                "correct": false
+              }
+            ],
+            "feedback": {
+              "correct": "Correct. Strong use of ALSAP is flexible and responsive.",
+              "incorrect": "Think about how ALSAP supports judgment rather than rigid execution."
+            },
+            "retry": {
+              "allowed": true
+            }
+          },
+          "styleRef": "knowledge-check",
+          "primitive": "KnowledgeCheck",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "light",
+            "visualRole": "organizational",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "interaction-prompt"
+        }
+      ],
+      "narrationPlan": {
+        "mode": "scene-based",
+        "segments": [
+          {
+            "segmentId": "s6_n1",
+            "sourceUnitIds": [
+              "s6_u1"
+            ],
+            "text": "Check Your Understanding",
+            "voiceStyle": "clear-warm",
+            "timing": {
+              "estimatedDurationMs": 1241
+            }
+          }
+        ]
+      },
+      "motionPlan": {
+        "mode": "html-only",
+        "units": [
+          {
+            "unitId": "s6_u1",
+            "motionPrimitive": "StaticHead",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s6_u2",
+            "motionPrimitive": "KnowledgeCheck",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s6_u3",
+            "motionPrimitive": "KnowledgeCheck",
+            "aeEligible": false
+          }
+        ]
+      },
+      "completionPlan": {
+        "completionType": "event-based",
+        "requiredUnitIds": [],
+        "requiredEvents": [
+          {
+            "event": "MCQ_ANSWERED",
+            "id": "s6_mcq_01"
+          },
+          {
+            "event": "MCQ_ANSWERED",
+            "id": "s6_mcq_02"
+          }
+        ]
+      }
+    },
+    {
+      "sceneId": "s7",
+      "sceneIntent": "reinforce",
+      "title": "What to Take Forward",
+      "learningRole": "summary",
+      "learnerOutcome": "Learner leaves with a clear and usable understanding of ALSAP.",
+      "sceneSignals": {
+        "elementCount": 4,
+        "hasMCQ": false,
+        "hasImpact": true,
+        "hasList": true,
+        "hasLongList": true,
+        "isSparse": false,
+        "hasContrastSignals": false
+      },
+      "sceneTreatment": "progressive-reveal",
+      "experienceStrategy": {
+        "primaryMove": "progressive_reveal",
+        "secondaryMoves": [
+          "emphasize",
+          "clarify"
+        ],
+        "pacing": "moderate",
+        "interactionPattern": "progressive-disclosure",
+        "visualDensity": "medium",
+        "narrativeEnergy": "elevated"
+      },
+      "sourceElements": [
+        {
+          "elementId": "s7_head_01",
+          "type": "Head",
+          "intent": "orient",
+          "importance": "high"
+        },
+        {
+          "elementId": "s7_para_01",
+          "type": "Paragraph",
+          "intent": "explain",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s7_list_01",
+          "type": "List",
+          "intent": "structure",
+          "importance": "medium"
+        },
+        {
+          "elementId": "s7_impact_01",
+          "type": "Impact",
+          "intent": "persuade",
+          "importance": "high"
+        }
+      ],
+      "renderUnits": [
+        {
+          "unitId": "s7_u1",
+          "semanticRole": "Head",
+          "instructionalIntent": "orient",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "summary-highlight",
+          "learnerAction": "notice",
+          "role": "headline",
+          "sourceElementIds": [
+            "s7_head_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 2,
+            "text": "What to Take Forward"
+          },
+          "styleRef": "head-primary",
+          "primitive": "StaticHead",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "light",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "primary-assertion"
+        },
+        {
+          "unitId": "s7_u2",
+          "semanticRole": "Paragraph",
+          "instructionalIntent": "explain",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "plain-exposition",
+          "learnerAction": "read",
+          "role": "exposition",
+          "sourceElementIds": [
+            "s7_para_01"
+          ],
+          "renderType": "Body",
+          "props": {
+            "text": "ALSAP is a way to approach conversations with more clarity, intention, and consistency. It helps you think more effectively when the moment matters.",
+            "emphasis": "none",
+            "role": "Paragraph"
+          },
+          "styleRef": "content-body",
+          "primitive": "BodyFade",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "none",
+            "visualRole": "none",
+            "treatmentHint": "text-only"
+          },
+          "unitTreatment": "progressive-step"
+        },
+        {
+          "unitId": "s7_u3",
+          "semanticRole": "List",
+          "instructionalIntent": "structure",
+          "rhetoricalWeight": "medium",
+          "rhetoricalTreatment": "progressive-reveal",
+          "learnerAction": "explore",
+          "role": "reveal-set",
+          "sourceElementIds": [
+            "s7_list_01"
+          ],
+          "renderType": "RevealCards",
+          "props": {
+            "id": "s7_list_01",
+            "items": [
+              {
+                "id": "s7_item_01",
+                "title": "It is a structure",
+                "body": "A sequence that helps organize your thinking."
+              },
+              {
+                "id": "s7_item_02",
+                "title": "It is flexible",
+                "body": "A guide you adapt to the situation, not a script you follow rigidly."
+              },
+              {
+                "id": "s7_item_03",
+                "title": "It is practical",
+                "body": "A tool you can use immediately in real conversations."
+              }
+            ],
+            "requireAllRevealedToComplete": true
+          },
+          "styleRef": "list-body",
+          "primitive": "CardReveal",
+          "importance": "medium",
+          "visualIntent": {
+            "supportLevel": "high",
+            "visualRole": "organizational",
+            "treatmentHint": "structured-cards"
+          },
+          "unitTreatment": "progressive-step"
+        },
+        {
+          "unitId": "s7_u4",
+          "semanticRole": "Impact",
+          "instructionalIntent": "persuade",
+          "rhetoricalWeight": "high",
+          "rhetoricalTreatment": "emphasized-assertion",
+          "learnerAction": "retain",
+          "role": "emphasis",
+          "sourceElementIds": [
+            "s7_impact_01"
+          ],
+          "renderType": "Heading",
+          "props": {
+            "level": 3,
+            "text": "The goal is not to remember ALSAP. The goal is to use it."
+          },
+          "styleRef": "impact-emphasis",
+          "primitive": "FocusReveal",
+          "importance": "high",
+          "visualIntent": {
+            "supportLevel": "medium",
+            "visualRole": "emphasis",
+            "treatmentHint": "hero-visual"
+          },
+          "unitTreatment": "emphasis-beat"
+        }
+      ],
+      "narrationPlan": {
+        "mode": "scene-based",
+        "segments": [
+          {
+            "segmentId": "s7_n1",
+            "sourceUnitIds": [
+              "s7_u1"
+            ],
+            "text": "What to Take Forward",
+            "voiceStyle": "clear-warm",
+            "timing": {
+              "estimatedDurationMs": 1655
+            }
+          },
+          {
+            "segmentId": "s7_n2",
+            "sourceUnitIds": [
+              "s7_u2"
+            ],
+            "text": "ALSAP is a way to approach conversations with more clarity, intention, and consistency. It helps you think more effectively when the moment matters.",
+            "voiceStyle": "clear-neutral",
+            "timing": {
+              "startAfterUnit": "s7_u1",
+              "estimatedDurationMs": 9517
+            }
+          },
+          {
+            "segmentId": "s7_n3",
+            "sourceUnitIds": [
+              "s7_u4"
+            ],
+            "text": "The goal is not to remember ALSAP. The goal is to use it.",
+            "voiceStyle": "slight-emphasis",
+            "timing": {
+              "startAfterUnit": "s7_u2",
+              "estimatedDurationMs": 5379
+            }
+          }
+        ]
+      },
+      "motionPlan": {
+        "mode": "hybrid",
+        "units": [
+          {
+            "unitId": "s7_u1",
+            "motionPrimitive": "StaticHead",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s7_u2",
+            "motionPrimitive": "BodyFade",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s7_u3",
+            "motionPrimitive": "CardReveal",
+            "aeEligible": false
+          },
+          {
+            "unitId": "s7_u4",
+            "motionPrimitive": "FocusReveal",
+            "aeEligible": true,
+            "aeTemplate": "impact_focus_reveal"
+          }
+        ]
+      },
+      "completionPlan": {
+        "completionType": "event-based",
+        "requiredUnitIds": [],
+        "requiredEvents": [
+          {
+            "event": "REVEALCARDS_COMPLETE",
+            "id": "s7_list_01"
+          }
+        ]
+      }
+    }
+  ]
+}

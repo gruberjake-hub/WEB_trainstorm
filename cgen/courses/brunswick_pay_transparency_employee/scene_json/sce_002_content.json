@@ -1,0 +1,64 @@
+{
+  "scene_id": "sce_002",
+  "module": "Module 1: How Pay Works at Brunswick",
+  "title": "What's Changing",
+  "delivery": "ae_render",
+  "elements": {
+    "Head_01": {
+      "type": "Head",
+      "intent": "orient",
+      "text": "What's Changing",
+      "text_primitive": "Headline",
+      "motion_primitive": "LineReveal",
+      "layout_primitive": "TopLeftTitle",
+      "style_ref": "head-primary"
+    },
+    "Callout_01": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "U.S. job postings: January 1, 2025",
+      "text_primitive": "DateCallout",
+      "motion_primitive": "MarkerPop",
+      "layout_primitive": "DateCalloutLeft",
+      "style_ref": "callout-date"
+    },
+    "Callout_02": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "EU transparency changes: June 2026",
+      "text_primitive": "DateCallout",
+      "motion_primitive": "MarkerPop",
+      "layout_primitive": "DateCalloutRight",
+      "style_ref": "callout-date"
+    },
+    "Impact_01": {
+      "type": "Impact",
+      "intent": "persuade",
+      "text": "Brunswick made a consistent business decision: post ranges on all U.S. jobs.",
+      "text_primitive": "EmphasisLine",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "CenterEmphasis",
+      "style_ref": "impact-emphasis"
+    }
+  },
+  "narration": {
+    "text": "Starting January 2025, all U.S. Brunswick job postings include the pay range for that role. This wasn't a surprise decision—multiple states now require it by law. Rather than manage different requirements state by state, Brunswick made a consistent business decision: post ranges on all U.S. jobs. If you work in Europe, there are additional transparency changes coming in June 2026 under the EU Pay Transparency Directive. Your local HR team will share more when that time comes.",
+    "audio_file": "sce_002_vo.wav"
+  },
+  "visual_notes": [
+    "Pay range visibility.",
+    "Two date callouts: Jan 1, 2025 (U.S.) and June 2026 (EU)."
+  ],
+  "asset_reuse": [
+    {
+      "source": "Manager module",
+      "scene": "Scene 7",
+      "description": "The Pay Transparency Landscape visual/VO callout treatment"
+    }
+  ],
+  "render": {
+    "ae_comp": "sce_002",
+    "output_file": "sce_002.mp4",
+    "review_required": true
+  }
+}

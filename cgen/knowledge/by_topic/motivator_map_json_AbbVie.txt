@@ -1,0 +1,504 @@
+{
+  "motivator_map": [
+    {
+      "section_title": "FRM Role Foundations & Compliance Boundaries",
+      "screen_title": "Module Introduction: Your Impact as an FRM",
+      "motivator_type": "carrot",
+      "motivator_category": "intrinsic",
+      "motivator_description": "Connect learner to patient impact mission—FRMs remove access barriers that enable patients to start and stay on life-changing therapies",
+      "target_emotion": "purpose and pride",
+      "desired_behavior": "Engage deeply with compliance training rather than viewing it as bureaucratic burden",
+      "status_quo_contrast": "Replaces view of compliance as restrictive red tape with understanding it as patient protection",
+      "activation_method": {
+        "tone_strategy": "Open with empowering patient impact story—'Last year, FRMs helped remove access barriers for over 50,000 patients. Your expertise directly impacts whether a patient can start therapy this week or waits months in pain.'",
+        "visual_strategy": "Show diverse patient faces with brief access success stories attributed to FRM intervention (PA approval after education, savings card enrollment)",
+        "interaction_strategy": "Ask reflection question: 'Think of a time you helped someone navigate a complex system. How did that feel?' to activate existing helper identity",
+        "narrative_strategy": "Brief vignette of real patient (de-identified) whose treatment was delayed by access barriers, then expedited through FRM education—emphasize transformation moment"
+      },
+      "reinforcement_method": "Reference patient impact throughout compliance sections: 'This guardrail protects patients by...'",
+      "timing_guidance": "Before any compliance rules—establish WHY first to create receptivity to HOW",
+      "intensity": 0.85,
+      "persistence": 0.9,
+      "metadata": {
+        "motivation_score": 0.765,
+        "synergy_with_empathy": 0.95,
+        "risk_of_overuse": 0.15
+      }
+    },
+    {
+      "section_title": "FRM Role Foundations & Compliance Boundaries",
+      "screen_title": "Understanding Non-Promotional Boundaries",
+      "motivator_type": "stick",
+      "motivator_category": "security",
+      "motivator_description": "Fear of compliance violation and career risk from crossing promotional boundaries unknowingly",
+      "target_emotion": "relief through clarity",
+      "desired_behavior": "Actively seek clear boundaries and examples rather than avoiding ambiguous situations",
+      "status_quo_contrast": "Replaces anxious avoidance with confident recognition of compliant vs non-compliant actions",
+      "activation_method": {
+        "tone_strategy": "Acknowledge anxiety directly: 'Many FRMs worry about accidentally crossing lines. This section gives you a clear map.' Use reassuring, non-punitive language",
+        "visual_strategy": "Use green checkmark/red X visual framework to make boundaries explicit. Show side-by-side compliant vs non-compliant dialogue examples",
+        "interaction_strategy": "Scenario-based classification with immediate feedback: 'You're right—this IS compliant because...' Build confidence through repeated correct categorizations",
+        "narrative_strategy": "Show FRM navigating ambiguous request from Sales rep, using decision framework to confidently maintain boundaries while preserving relationship"
+      },
+      "reinforcement_method": "Provide downloadable decision tree job aid: 'Is this in my scope?' flowchart for field reference",
+      "timing_guidance": "After establishing patient impact mission but before complex scenarios",
+      "intensity": 0.75,
+      "persistence": 0.8,
+      "metadata": {
+        "motivation_score": 0.6,
+        "synergy_with_empathy": 0.7,
+        "risk_of_overuse": 0.6
+      }
+    },
+    {
+      "section_title": "FRM Role Foundations & Compliance Boundaries",
+      "screen_title": "PHI/PII Privacy Guardrails",
+      "motivator_type": "stick",
+      "motivator_category": "moral",
+      "motivator_description": "Moral obligation to protect patient privacy and avoid harm through data mishandling",
+      "target_emotion": "protective responsibility",
+      "desired_behavior": "Exercise vigilance in identifying and avoiding PHI/PII exposure situations",
+      "status_quo_contrast": "Replaces casual approach to patient information with intentional privacy consciousness",
+      "activation_method": {
+        "tone_strategy": "Frame as patient advocacy: 'Patients trust us with their most sensitive information. Every privacy decision honors or betrays that trust.'",
+        "visual_strategy": "Use shield icon consistently for privacy protection. Show HCP office layouts with color-coded zones (private/public spaces)",
+        "interaction_strategy": "Situational judgment scenarios where learner identifies privacy risks in realistic office situations (waiting room, hallway conversation, visible computer screens)",
+        "narrative_strategy": "Brief story of privacy breach consequence—not punitive but empathetic to patient vulnerability (insurance discrimination, employment risk, family disclosure)"
+      },
+      "reinforcement_method": "Recurring 'Privacy Check' moments in later scenarios where learner must identify patient information handling",
+      "timing_guidance": "After role scope clarity, when learner understands they WILL encounter patient information",
+      "intensity": 0.8,
+      "persistence": 0.85,
+      "metadata": {
+        "motivation_score": 0.68,
+        "synergy_with_empathy": 0.9,
+        "risk_of_overuse": 0.25
+      }
+    },
+    {
+      "section_title": "FRM Role Foundations & Compliance Boundaries",
+      "screen_title": "Role Clarity: FRM vs Sales vs CSS vs Access Specialist",
+      "motivator_type": "carrot",
+      "motivator_category": "achievement",
+      "motivator_description": "Clarity reduces role ambiguity anxiety and enables confident independent territory management",
+      "target_emotion": "confident competence",
+      "desired_behavior": "Proactively clarify role boundaries in ambiguous situations rather than defaulting to avoidance",
+      "status_quo_contrast": "Replaces uncertainty and defensive posture with empowered collaboration",
+      "activation_method": {
+        "tone_strategy": "Validating: 'Understanding where your expertise begins and others' expertise takes over makes you more effective, not less important.'",
+        "visual_strategy": "Venn diagram showing role overlaps and unique zones. Use character icons for each role with distinct responsibilities listed",
+        "interaction_strategy": "Drag-and-drop activity matching scenarios to appropriate roles. Celebrate correct boundary recognition: 'Exactly—you recognized this needs Access Specialist expertise.'",
+        "narrative_strategy": "Show effective FRM-Sales-AS collaboration on complex case where each contributes unique value. Emphasize synergy over competition"
+      },
+      "reinforcement_method": "Role reference guide with 'Who handles what' matrix as downloadable job aid",
+      "timing_guidance": "After compliance boundaries established, before moving to applied competencies",
+      "intensity": 0.7,
+      "persistence": 0.75,
+      "metadata": {
+        "motivation_score": 0.525,
+        "synergy_with_empathy": 0.8,
+        "risk_of_overuse": 0.2
+      }
+    },
+    {
+      "section_title": "Payer & Benefit Literacy",
+      "screen_title": "Introduction to Payer Landscapes",
+      "motivator_type": "carrot",
+      "motivator_category": "achievement",
+      "motivator_description": "Mastery of payer knowledge establishes FRM as trusted expert and problem-solver for HCP offices",
+      "target_emotion": "professional pride",
+      "desired_behavior": "Invest effort in learning complex payer concepts despite information density",
+      "status_quo_contrast": "Replaces feeling overwhelmed by payer complexity with strategic framework for organizing knowledge",
+      "activation_method": {
+        "tone_strategy": "Empowering: 'Payer literacy is your superpower. When an HCP office is stuck, YOU have the roadmap to access.'",
+        "visual_strategy": "Visual taxonomy of payer types (Commercial, Medicare, Medicaid) with clear categorization. Use progressive disclosure to avoid overwhelming",
+        "interaction_strategy": "Start with high-level framework, then allow learner to explore deeper based on their territory needs. Self-assessment: 'Which payer types are most common in your region?'",
+        "narrative_strategy": "Show FRM earning HCP office's trust through accurate payer education that solves their denial problem—office staff saying 'I'm so glad you know this stuff'"
+      },
+      "reinforcement_method": "Territory-specific payer guide template for learners to populate with their regional policies",
+      "timing_guidance": "After compliance foundation, when learner is ready for applied knowledge",
+      "intensity": 0.75,
+      "persistence": 0.7,
+      "metadata": {
+        "motivation_score": 0.525,
+        "synergy_with_empathy": 0.75,
+        "risk_of_overuse": 0.3
+      }
+    },
+    {
+      "section_title": "Payer & Benefit Literacy",
+      "screen_title": "Prior Authorization Complexity",
+      "motivator_type": "stick",
+      "motivator_category": "security",
+      "motivator_description": "Fear of giving inaccurate payer information that leads to denied claims or delayed patient care",
+      "target_emotion": "responsibility and accuracy drive",
+      "desired_behavior": "Verify payer policy details rather than relying on assumptions or outdated information",
+      "status_quo_contrast": "Replaces guessing or over-confident assumptions with systematic verification approach",
+      "activation_method": {
+        "tone_strategy": "Acknowledging: 'Payer policies change constantly. Even experienced FRMs verify current criteria rather than relying on memory.'",
+        "visual_strategy": "Show payer policy document with 'Updated 2/15/25' timestamp prominently displayed. Visual cue for verification step in workflows",
+        "interaction_strategy": "Scenario where outdated information leads to incorrect HCP guidance—learner sees consequence, then practices using verification resources",
+        "narrative_strategy": "FRM shares experience of policy change catching them off-guard, how they implemented verification checklist—vulnerability modeling"
+      },
+      "reinforcement_method": "Payer policy verification checklist integrated into all future PA education scenarios",
+      "timing_guidance": "When introducing PA processes, before learner practices HCP education",
+      "intensity": 0.65,
+      "persistence": 0.7,
+      "metadata": {
+        "motivation_score": 0.455,
+        "synergy_with_empathy": 0.7,
+        "risk_of_overuse": 0.5
+      }
+    },
+    {
+      "section_title": "Access & Affordability Navigation",
+      "screen_title": "Mapping Barriers to Resources",
+      "motivator_type": "carrot",
+      "motivator_category": "intrinsic",
+      "motivator_description": "Satisfaction of connecting patients with resources that remove financial barriers to therapy",
+      "target_emotion": "problem-solving fulfillment",
+      "desired_behavior": "Actively learn complete resource ecosystem rather than defaulting to familiar programs",
+      "status_quo_contrast": "Replaces narrow awareness of few programs with comprehensive navigation across Complete offerings",
+      "activation_method": {
+        "tone_strategy": "Energizing: 'You're about to become a resource detective. Every barrier has a potential solution—you just need to know where to look.'",
+        "visual_strategy": "Interactive resource map showing patient journey with pop-up resources at each barrier point. Use visual metaphor of keys unlocking doors",
+        "interaction_strategy": "Case-based matching: Given patient barrier (high OOP, insurance change, uninsured), learner selects appropriate Complete resource and sees outcome",
+        "narrative_strategy": "Patient testimonial (text or brief video) thanking Complete support for making therapy affordable—'I couldn't have done this without your help'"
+      },
+      "reinforcement_method": "Resource decision tree as downloadable tool. Success stories shared in each resource category",
+      "timing_guidance": "After payer literacy foundation, when learner understands the barriers",
+      "intensity": 0.8,
+      "persistence": 0.75,
+      "metadata": {
+        "motivation_score": 0.6,
+        "synergy_with_empathy": 0.95,
+        "risk_of_overuse": 0.2
+      }
+    },
+    {
+      "section_title": "Access & Affordability Navigation",
+      "screen_title": "Savings Card Education Without Guarantees",
+      "motivator_type": "stick",
+      "motivator_category": "security",
+      "motivator_description": "Fear of over-promising coverage or reimbursement and creating false expectations for HCP or patient",
+      "target_emotion": "cautious accuracy",
+      "desired_behavior": "Use precise language that educates on possibilities without guaranteeing outcomes",
+      "status_quo_contrast": "Replaces vague promises with specific, conditional education language",
+      "activation_method": {
+        "tone_strategy": "Protective: 'We maintain credibility by being honest about what we know and what we can't predict. HCPs respect that integrity.'",
+        "visual_strategy": "Show dialogue bubbles with compliant phrasing highlighted in green vs non-compliant promises crossed out in red",
+        "interaction_strategy": "Dialogue selection scenarios where learner chooses between over-promising, under-informing, or appropriately conditional language—layered feedback on why each matters",
+        "narrative_strategy": "FRM shares lesson learned from over-promising scenario that damaged HCP relationship when coverage didn't materialize as expected—recovery through honest correction"
+      },
+      "reinforcement_method": "Compliant language bank for common HCP questions as job aid. Practice scenarios throughout",
+      "timing_guidance": "Before any savings card or coverage education content",
+      "intensity": 0.7,
+      "persistence": 0.8,
+      "metadata": {
+        "motivation_score": 0.56,
+        "synergy_with_empathy": 0.75,
+        "risk_of_overuse": 0.4
+      }
+    },
+    {
+      "section_title": "Consultative Communication & HCP Education",
+      "screen_title": "Discovery Through Active Listening",
+      "motivator_type": "carrot",
+      "motivator_category": "social",
+      "motivator_description": "Building authentic relationships with HCP offices through empathetic listening creates partnership rather than transactional interactions",
+      "target_emotion": "connection and rapport",
+      "desired_behavior": "Invest time in discovery questions and active listening rather than rushing to prescriptive solutions",
+      "status_quo_contrast": "Replaces 'pitch and leave' approach with consultative partnership that addresses root causes",
+      "activation_method": {
+        "tone_strategy": "Humanizing: 'HCP office staff are overwhelmed. When they feel truly heard, they see you as an ally, not another vendor.'",
+        "visual_strategy": "Video or animation showing contrast: rushed FRM vs consultative FRM, with office staff body language and receptivity changing",
+        "interaction_strategy": "Conversation simulation where learner selects questions/responses. System tracks whether they discovered the actual barrier or made assumptions",
+        "narrative_strategy": "FRM shares story of discovering real barrier (staff turnover, not payer policy) through asking open-ended questions—solution only possible through listening"
+      },
+      "reinforcement_method": "Discovery question bank for different HCP scenarios. Practice scenarios with increasing complexity",
+      "timing_guidance": "After foundational knowledge, when learner has content expertise to apply consultatively",
+      "intensity": 0.75,
+      "persistence": 0.7,
+      "metadata": {
+        "motivation_score": 0.525,
+        "synergy_with_empathy": 0.9,
+        "risk_of_overuse": 0.25
+      }
+    },
+    {
+      "section_title": "Consultative Communication & HCP Education",
+      "screen_title": "Tailoring Education to Audience",
+      "motivator_type": "carrot",
+      "motivator_category": "achievement",
+      "motivator_description": "Skill in adapting communication demonstrates professional expertise and effectiveness across diverse audiences",
+      "target_emotion": "versatility pride",
+      "desired_behavior": "Assess audience needs and literacy before delivering education, adjusting approach accordingly",
+      "status_quo_contrast": "Replaces one-size-fits-all education with tailored, audience-appropriate communication",
+      "activation_method": {
+        "tone_strategy": "Skill-building: 'Great FRMs are like translators—they deliver the same information in different languages depending on who's listening.'",
+        "visual_strategy": "Show same PA concept explained three ways: to physician, to PA coordinator, to office manager—highlighting different emphasis and terminology",
+        "interaction_strategy": "Adaptive scenario where learner selects communication approach for different HCP roles. Feedback shows impact on comprehension and action",
+        "narrative_strategy": "FRM describes struggling with academic medical center vs small practice communication, breakthrough moment when learned to read audience cues and adapt"
+      },
+      "reinforcement_method": "Audience adaptation matrix with cues to watch for and adjustment strategies",
+      "timing_guidance": "Mid-module, after foundational communication skills established",
+      "intensity": 0.7,
+      "persistence": 0.65,
+      "metadata": {
+        "motivation_score": 0.455,
+        "synergy_with_empathy": 0.85,
+        "risk_of_overuse": 0.3
+      }
+    },
+    {
+      "section_title": "Systems & Process Mastery",
+      "screen_title": "iRep Task Management",
+      "motivator_type": "stick",
+      "motivator_category": "security",
+      "motivator_description": "Meeting 24-48 hour response window prevents escalations and maintains credibility with Sales partners",
+      "target_emotion": "urgency without panic",
+      "desired_behavior": "Prioritize iRep tasks systematically and respond within compliance windows",
+      "status_quo_contrast": "Replaces reactive firefighting with proactive task triage and time management",
+      "activation_method": {
+        "tone_strategy": "Pragmatic: 'Response windows aren't arbitrary—they reflect HCP urgency and Sales partnership commitments. Systematic triage makes them manageable.'",
+        "visual_strategy": "Visual dashboard showing task priorities by urgency and complexity. Traffic light colors for time remaining",
+        "interaction_strategy": "System simulation where learner receives multiple iRep tasks, must prioritize and allocate time. See consequences of different prioritization choices",
+        "narrative_strategy": "FRM shares strategy for managing high-volume weeks without missing response windows—time-blocking, quick assessment framework"
+      },
+      "reinforcement_method": "Task prioritization matrix and time management templates",
+      "timing_guidance": "When introducing system tools, before complex territory management scenarios",
+      "intensity": 0.65,
+      "persistence": 0.7,
+      "metadata": {
+        "motivation_score": 0.455,
+        "synergy_with_empathy": 0.6,
+        "risk_of_overuse": 0.55
+      }
+    },
+    {
+      "section_title": "Systems & Process Mastery",
+      "screen_title": "Complete Pro HCP Education",
+      "motivator_type": "carrot",
+      "motivator_category": "achievement",
+      "motivator_description": "Empowering HCP offices to self-serve through Complete Pro reduces their dependency and FRM workload",
+      "target_emotion": "enablement satisfaction",
+      "desired_behavior": "Invest in thorough Complete Pro training for HCP offices rather than doing tasks for them",
+      "status_quo_contrast": "Replaces being in the urgent-request loop with HCP office independence and efficiency",
+      "activation_method": {
+        "tone_strategy": "Empowering: 'Teaching HCP staff to fish rather than giving them fish. Your best accounts are the ones that rarely need you—because you taught them so well.'",
+        "visual_strategy": "Before/after comparison: HCP office calling FRM for every status check vs independently using Complete Pro, with FRM freed for strategic education",
+        "interaction_strategy": "Role-play where learner educates HCP staff on Complete Pro features. System assesses if they focused on enabling independence vs creating dependency",
+        "narrative_strategy": "FRM describes favorite account where office manager became Complete Pro expert, now trains new staff independently—'That's the win'"
+      },
+      "reinforcement_method": "Complete Pro training scripts and visual job aids to share with HCP offices",
+      "timing_guidance": "After system introduction, when learner understands features",
+      "intensity": 0.7,
+      "persistence": 0.65,
+      "metadata": {
+        "motivation_score": 0.455,
+        "synergy_with_empathy": 0.8,
+        "risk_of_overuse": 0.25
+      }
+    },
+    {
+      "section_title": "Territory Management & Account Prioritization",
+      "screen_title": "ACCE Call List vs Sales Metrics",
+      "motivator_type": "stick",
+      "motivator_category": "moral",
+      "motivator_description": "Using sales data to drive FRM activity violates non-promotional status and puts entire role at compliance risk",
+      "target_emotion": "protective vigilance",
+      "desired_behavior": "Base prioritization exclusively on educational need metrics, resist sales-driven pressure",
+      "status_quo_contrast": "Replaces ambiguity about what drives FRM activity with clear educational-need-only principle",
+      "activation_method": {
+        "tone_strategy": "Protective: 'The ACCE list exists specifically to keep your prioritization clean. Using sales data would compromise the entire FRM model—not just for you, but for all FRMs.'",
+        "visual_strategy": "Side-by-side comparison of ACCE factors (conversion, HCP-led enrollments, patient volume) vs prohibited sales factors (revenue, quota, speaker status) with clear visual distinction",
+        "interaction_strategy": "Scenario where Sales partner requests FRM prioritize certain accounts based on commercial importance. Learner practices appropriate boundary-setting response",
+        "narrative_strategy": "Brief compliance case study (anonymized) showing regulatory scrutiny of field programs that blur promotional/non-promotional lines—stakes framing"
+      },
+      "reinforcement_method": "ACCE prioritization criteria reference card. Compliant language for explaining prioritization to Sales",
+      "timing_guidance": "Before territory planning activities, establishing clear prioritization boundaries",
+      "intensity": 0.8,
+      "persistence": 0.85,
+      "metadata": {
+        "motivation_score": 0.68,
+        "synergy_with_empathy": 0.65,
+        "risk_of_overuse": 0.5
+      }
+    },
+    {
+      "section_title": "Territory Management & Account Prioritization",
+      "screen_title": "Balancing Proactive vs Reactive Engagement",
+      "motivator_type": "carrot",
+      "motivator_category": "autonomy",
+      "motivator_description": "Mastering territory management enables independent, strategic work rather than constant reactivity",
+      "target_emotion": "strategic control",
+      "desired_behavior": "Proactively plan educational outreach while maintaining reactive responsiveness",
+      "status_quo_contrast": "Replaces feeling perpetually behind with sense of strategic territory orchestration",
+      "activation_method": {
+        "tone_strategy": "Empowering: 'Reactive tasks will always exist. Strategic FRMs protect time for proactive education that prevents future emergencies.'",
+        "visual_strategy": "Calendar visualization showing intentional blocking of proactive education time alongside reactive task slots. Show cascading benefit of proactive education reducing future reactive volume",
+        "interaction_strategy": "Time management scenario where learner allocates weekly hours across proactive/reactive activities. See 4-week projection of territory health based on their choices",
+        "narrative_strategy": "Experienced FRM shares evolution from 'always putting out fires' to strategic prevention through proactive education—quality of life and effectiveness both improved"
+      },
+      "reinforcement_method": "Territory planning templates with proactive education time built in. Monthly self-assessment tool",
+      "timing_guidance": "Mid-module, after tools and processes understood, before complex juggling scenarios",
+      "intensity": 0.75,
+      "persistence": 0.7,
+      "metadata": {
+        "motivation_score": 0.525,
+        "synergy_with_empathy": 0.75,
+        "risk_of_overuse": 0.3
+      }
+    },
+    {
+      "section_title": "Cross-Functional Collaboration",
+      "screen_title": "FRM-Sales Ways of Working",
+      "motivator_type": "carrot",
+      "motivator_category": "social",
+      "motivator_description": "Clear boundaries enable stronger partnerships by reducing tension and role confusion",
+      "target_emotion": "collaborative confidence",
+      "desired_behavior": "Proactively communicate boundaries and appropriate collaboration points with Sales",
+      "status_quo_contrast": "Replaces awkward role confusion and resentment with clear, respectful partnership",
+      "activation_method": {
+        "tone_strategy": "Collaborative: 'Sales partners are most effective when they know exactly what you can and can't do. Clarity creates trust, not distance.'",
+        "visual_strategy": "Visual framework of compliant information sharing (logistics, office access) vs prohibited topics (sales data, strategy). Show successful collaboration scenarios",
+        "interaction_strategy": "Communication classification activity where learner sorts FRM-Sales communications into appropriate/inappropriate categories. Celebrate boundary recognition",
+        "narrative_strategy": "FRM and Sales rep dual perspective on how Ways of Working guidance improved their partnership—both feel supported rather than constrained"
+      },
+      "reinforcement_method": "FRM-Sales communication guide with example scripts for common scenarios",
+      "timing_guidance": "After role foundations, before complex cross-functional scenarios",
+      "intensity": 0.7,
+      "persistence": 0.75,
+      "metadata": {
+        "motivation_score": 0.525,
+        "synergy_with_empathy": 0.85,
+        "risk_of_overuse": 0.2
+      }
+    },
+    {
+      "section_title": "Cross-Functional Collaboration",
+      "screen_title": "Point of Contact with Access Specialists",
+      "motivator_type": "carrot",
+      "motivator_category": "achievement",
+      "motivator_description": "Effective FRM-AS partnership multiplies impact on complex access cases beyond what either could achieve alone",
+      "target_emotion": "synergy satisfaction",
+      "desired_behavior": "Proactively coordinate with AS on tiered accounts and complex cases",
+      "status_quo_contrast": "Replaces siloed work and duplicated efforts with orchestrated partnership",
+      "activation_method": {
+        "tone_strategy": "Collaborative: 'Your AS partnership gives you superpowers. Together you cover the full access spectrum—field presence and deep phone/virtual support.'",
+        "visual_strategy": "Case flow diagram showing FRM and AS touchpoints, how information flows, where handoffs occur. Highlight combined coverage advantage",
+        "interaction_strategy": "Collaboration scenario where complex case requires both FRM office education and AS benefit verification/PA support. Learner practices coordination",
+        "narrative_strategy": "FRM-AS pair describes complex case they solved together that neither could have resolved independently—celebrating complementary expertise"
+      },
+      "reinforcement_method": "FRM-AS collaboration protocols and FAST task best practices",
+      "timing_guidance": "After role clarity, when learner understands distinct contributions",
+      "intensity": 0.7,
+      "persistence": 0.7,
+      "metadata": {
+        "motivation_score": 0.49,
+        "synergy_with_empathy": 0.8,
+        "risk_of_overuse": 0.25
+      }
+    },
+    {
+      "section_title": "Stakeholder Engagement & Relationship Building",
+      "screen_title": "Building HCP Office Credibility",
+      "motivator_type": "carrot",
+      "motivator_category": "achievement",
+      "motivator_description": "Becoming the trusted go-to resource for reimbursement questions establishes professional reputation and access",
+      "target_emotion": "respect and trust",
+      "desired_behavior": "Consistently deliver accurate, helpful education that positions FRM as expert advisor",
+      "status_quo_contrast": "Replaces being seen as vendor/sales-adjacent with being valued as specialist consultant",
+      "activation_method": {
+        "tone_strategy": "Aspirational: 'The best FRMs hear office staff say 'Thank goodness you're here' when they walk in. That credibility is earned through reliability and expertise.'",
+        "visual_strategy": "Show progression of relationship: initial skepticism → helpful interaction → repeat requests → trusted advisor status. Visual cues of warmth and welcome",
+        "interaction_strategy": "Relationship-building scenario tracking credibility score across multiple interactions. Learner sees how consistency, accuracy, and follow-through build trust",
+        "narrative_strategy": "FRM describes long-term account relationship evolution, specific moments when they earned trust, how it changed access to decision-makers"
+      },
+      "reinforcement_method": "Relationship development strategies for different account types. Follow-through tracking tools",
+      "timing_guidance": "After foundational skills, when learner has expertise to demonstrate",
+      "intensity": 0.75,
+      "persistence": 0.8,
+      "metadata": {
+        "motivation_score": 0.6,
+        "synergy_with_empathy": 0.85,
+        "risk_of_overuse": 0.2
+      }
+    },
+    {
+      "section_title": "Stakeholder Engagement & Relationship Building",
+      "screen_title": "Empathy in Difficult Conversations",
+      "motivator_type": "carrot",
+      "motivator_category": "social",
+      "motivator_description": "Demonstrating empathy with frustrated HCP staff de-escalates tension and maintains relationship through challenges",
+      "target_emotion": "compassionate connection",
+      "desired_behavior": "Lead with empathy and validation before problem-solving, especially when HCP is frustrated",
+      "status_quo_contrast": "Replaces defensive or solution-forcing responses with empathetic partnership",
+      "activation_method": {
+        "tone_strategy": "Humanizing: 'HCP staff are often overwhelmed and frustrated—not at you, but at the system. Your empathy transforms you from target to ally.'",
+        "visual_strategy": "Video examples showing empathetic vs defensive FRM responses to frustrated HCP staff. Body language and tone modeling",
+        "interaction_strategy": "Dialogue selection in high-emotion scenarios. Learner chooses responses, sees emotional impact on HCP receptivity to solutions",
+        "narrative_strategy": "FRM shares experience of difficult conversation that went well because they validated frustration first—'I know this is incredibly frustrating' opened the door"
+      },
+      "reinforcement_method": "Empathetic response framework for common frustration scenarios. Stress management for FRMs",
+      "timing_guidance": "After basic communication skills, when learner ready for complex interpersonal dynamics",
+      "intensity": 0.7,
+      "persistence": 0.75,
+      "metadata": {
+        "motivation_score": 0.525,
+        "synergy_with_empathy": 0.95,
+        "risk_of_overuse": 0.15
+      }
+    },
+    {
+      "section_title": "Continuous Learning & Professional Development",
+      "screen_title": "Staying Current with Payer Changes",
+      "motivator_type": "stick",
+      "motivator_category": "security",
+      "motivator_description": "Outdated knowledge undermines credibility and can lead to incorrect HCP guidance",
+      "target_emotion": "vigilant responsibility",
+      "desired_behavior": "Regularly access payer update resources and verify current policies before educating",
+      "status_quo_contrast": "Replaces assuming static knowledge with commitment to continuous verification",
+      "activation_method": {
+        "tone_strategy": "Realistic: 'Payer policies change monthly, sometimes weekly. Experts don't memorize everything—they know where to verify current information.'",
+        "visual_strategy": "Show payer policy timeline with multiple updates across a quarter. Visual reminder that outdated information is inevitable without systematic updates",
+        "interaction_strategy": "Scenario where learner's knowledge is outdated—discovers this through HCP feedback or update alert. Practice using verification resources",
+        "narrative_strategy": "FRM shares embarrassing moment of giving outdated information, how they implemented update routine to prevent recurrence—vulnerability and learning"
+      },
+      "reinforcement_method": "Weekly payer update routine template. Resource bookmarks for territory-specific updates",
+      "timing_guidance": "Near module end, establishing ongoing learning habits",
+      "intensity": 0.65,
+      "persistence": 0.85,
+      "metadata": {
+        "motivation_score": 0.5525,
+        "synergy_with_empathy": 0.7,
+        "risk_of_overuse": 0.45
+      }
+    },
+    {
+      "section_title": "Continuous Learning & Professional Development",
+      "screen_title": "Self-Assessment & Growth Planning",
+      "motivator_type": "carrot",
+      "motivator_category": "achievement",
+      "motivator_description": "Mastering FRM competencies opens career advancement opportunities within Patient Services",
+      "target_emotion": "growth aspiration",
+      "desired_behavior": "Engage in reflective self-assessment and create development plans",
+      "status_quo_contrast": "Replaces passive role execution with intentional professional development",
+      "activation_method": {
+        "tone_strategy": "Growth-minded: 'Strong FRMs become team leads, regional coordinators, and Patient Services leaders. This competency model is your roadmap.'",
+        "visual_strategy": "Career pathway visualization showing advancement opportunities. Competency model as scaffold for development",
+        "interaction_strategy": "Self-assessment tool mapping current proficiency against 10 competencies. Learner identifies 2-3 development priorities and creates action plan",
+        "narrative_strategy": "Senior FRM or leader shares their career progression, how competency development opened doors, encouragement for learner's journey"
+      },
+      "reinforcement_method": "Quarterly self-assessment template. Manager discussion guide for development planning",
+      "timing_guidance": "Module conclusion, transitioning from training to ongoing development",
+      "intensity": 0.65,
+      "persistence": 0.6,
+      "metadata": {
+        "motivation_score": 0.39,
+        "synergy_with_empathy": 0.75,
+        "risk_of_overuse": 0.35
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "brand": "astellas",
+
+  "logos": {
+    "primary": {
+      "src": "assets/logo-primary.png",
+      "alt": "Astellas"
+    },
+    "inverse": {
+      "src": "assets/logo-white.svg",
+      "alt": "Astellas"
+    },
+    "mark": {
+      "src": "assets/logo-mark.svg",
+      "alt": "Astellas symbol"
+    }
+  },
+
+  "rules": {
+    "use_mark_only_when_space_limited": true,
+    "minimum_clear_space_px": 24
+  }
+}

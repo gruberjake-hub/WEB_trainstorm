@@ -1,0 +1,420 @@
+{
+  "meta": {
+    "id": "alsap_m1_overview",
+    "title": "ALSAP Overview",
+    "theme": "astellas_default",
+    "client": "Astellas"
+  },
+  "nav": { "startSceneId": "S01" },
+  "scenes": [
+    {
+      "id": "S01",
+      "title": "Title Slide",
+      "components": [
+        { "type": "Heading", "props": { "text": "ALSAP Overview", "level": 2 } },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Asset Level Safety Assessment Plan\n\nUnderstanding Astellas' approach to proactive safety surveillance",
+            "emphasis": "none",
+            "role": "default"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Welcome to this overview of ALSAP, Astellas' Asset Level Safety Assessment Plan. In this module, you'll learn what ALSAP is, why we're implementing it, and how it may connect to your work. This should take about 15 minutes. Let's get started.",
+            "emphasis": "high",
+            "role": "default"
+          }
+        }
+      ],
+      "voiceover": null
+    },
+
+    {
+      "id": "S02",
+      "title": "The Challenge: Why ALSAP Exists",
+      "components": [
+        { "type": "Heading", "props": { "text": "The Challenge", "level": 2 } },
+        {
+          "type": "RevealCards",
+          "props": {
+            "items": [
+              {
+                "title": "Multiple trials run simultaneously",
+                "body": "Multiple trials run simultaneously for the same drug candidate"
+              },
+              {
+                "title": "Safety data accumulates",
+                "body": "Safety data accumulates across these trials"
+              },
+              {
+                "title": "Patterns can be missed",
+                "body": "Without systematic review, patterns might be missed until late in development"
+              }
+            ]
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Here's the situation: When we develop a new drug, we typically run multiple clinical trials at the same time. Each trial monitors safety carefully within its own protocol. But here's what we realized: safety data is accumulating across all these trials, and without a systematic way to look at the complete picture, we might miss important patterns until much later in development. ALSAP is our solution to that challenge.",
+            "emphasis": "none",
+            "role": "default"
+          }
+        }
+      ],
+      "voiceover": null
+    },
+
+    {
+      "id": "S03",
+      "title": "Why ALSAP Changed Now",
+      "components": [
+        { "type": "Heading", "props": { "text": "Why ALSAP Changed Now", "level": 2 } },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Over the past several years, the FDA has issued increasingly clear guidance on how sponsors are expected to manage emerging safety information.\n\nOne message is consistent across that guidance: safety signal evaluation is not optional, informal, or role-dependent—it is a sponsor responsibility.\n\nThat means regulators now expect companies like Astellas to demonstrate—not just state—that potential safety signals are identified, evaluated, escalated, and documented in a consistent, traceable way.",
+            "emphasis": "high",
+            "role": "default"
+          }
+        }
+      ],
+      "voiceover": null
+    },
+
+    {
+      "id": "S04",
+      "title": "What is ALSAP?",
+      "components": [
+        { "type": "Heading", "props": { "text": "What is ALSAP?", "level": 2 } },
+        {
+          "type": "RevealCards",
+          "props": {
+            "items": [
+              {
+                "title": "1. A Plan",
+                "body": "A documented strategy for when and how we'll analyze aggregate safety data for a specific drug candidate (asset)"
+              },
+              {
+                "title": "2. A Team",
+                "body": "Dedicated statistical programmers and statisticians who conduct these analyses"
+              },
+              {
+                "title": "3. A Process",
+                "body": "A systematic approach that connects planning, execution, and decision-making"
+              }
+            ]
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "So what exactly is ALSAP? It's actually three things working together. First, it's a plan—a documented strategy that spells out when and how we'll look at aggregate safety data for each asset. Second, it's a team—we now have dedicated programmers and statisticians whose job is to conduct these analyses. And third, it's a process—standard procedures that connect the planning, execution, and decision-making. Together, these elements give us a proactive, systematic way to understand the safety profile of our drug candidates as data accumulates.",
+            "emphasis": "none",
+            "role": "default"
+          }
+        }
+      ],
+      "voiceover": null
+    },
+
+    {
+      "id": "S05",
+      "title": "ALSAP Bridges Judgment and Defensible Process",
+      "components": [
+        { "type": "Heading", "props": { "text": "From Judgment to Defensible Process", "level": 2 } },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Historically, many safety-related decisions relied on expert judgment, informal consultation, and good intent.\n\nWhile those elements remain essential, the FDA now expects those judgments to be supported by a clear, reviewable process—especially when decisions result in no action being taken.\n\nALSAP bridges that gap. It turns expert thinking into defensible evidence—showing how a conclusion was reached, who was involved, and why it was appropriate at the time.",
+            "emphasis": "high",
+            "role": "default"
+          }
+        }
+      ],
+      "voiceover": null
+    },
+
+    {
+      "id": "S06",
+      "title": "ALSAP vs. Other Safety Processes",
+      "components": [
+        { "type": "Heading", "props": { "text": "ALSAP vs. Other Safety Processes", "level": 2 } },
+        {
+          "type": "RevealCards",
+          "props": {
+            "items": [
+              {
+                "title": "Trial-Level Monitoring",
+                "body": "Real-time safety monitoring within one trial\n\nSingle trial scope, often blinded"
+              },
+              {
+                "title": "SMT",
+                "body": "Strategic safety oversight & decision-making\n\nGovernance, not analysis execution"
+              },
+              {
+                "title": "SAC",
+                "body": "Unblinded review for regulatory decisions\n\nEvent-triggered, not routine"
+              },
+              {
+                "title": "ALSAP",
+                "body": "Systematic analysis of aggregate safety data\n\nProactive, planned analyses\n\nDedicated programmers & statisticians"
+              }
+            ]
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "You might be wondering: how does ALSAP fit with everything else we do for safety? Here's the key distinction. Trial-level monitoring happens in real-time within each study, often with blinded data. The Safety Management Team—or SMT—provides strategic oversight and makes governance decisions. The Safety Assessment Committee—SAC—steps in when we need unblinded review for regulatory decisions. ALSAP is different: it's the systematic, proactive analysis of aggregate data across trials. ALSAP provides the analytical foundation that feeds into SMT discussions and, when needed, SAC reviews. Each plays a distinct role in our overall safety strategy.",
+            "emphasis": "none",
+            "role": "default"
+          }
+        },
+        {
+          "type": "RevealCards",
+          "props": {
+            "items": [
+              {
+                "title": "Phase A",
+                "body": "Plan scope, methods, and timing in FORM-AST-34037."
+              },
+              {
+                "title": "Phase C",
+                "body": "Preparation of analyses and quality checks."
+              },
+              {
+                "title": "Phase D",
+                "body": "Execution—delivery to governance, documentation, and follow-up actions."
+              }
+            ]
+          }
+        }
+      ],
+      "voiceover": null
+    },
+
+    {
+      "id": "S07",
+      "title": "ALSAP Exists for Three Reasons",
+      "components": [
+        { "type": "Heading", "props": { "text": "Why ALSAP Matters", "level": 2 } },
+        {
+          "type": "RevealCards",
+          "props": {
+            "items": [
+              {
+                "title": "Patients",
+                "body": "Ensuring emerging risks are identified before they become harm"
+              },
+              {
+                "title": "Astellas",
+                "body": "Demonstrating regulatory accountability and inspection readiness"
+              },
+              {
+                "title": "You",
+                "body": "Providing clarity on expectations so decisions are supported, not second-guessed"
+              }
+            ]
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "When ALSAP is used as designed, it reduces uncertainty, protects decision-makers, and strengthens trust with regulators—without slowing innovation.",
+            "emphasis": "high",
+            "role": "default"
+          }
+        }
+      ],
+      "voiceover": null
+    },
+
+    {
+      "id": "S08",
+      "title": "Knowledge Check 1",
+      "components": [
+        { "type": "Heading", "props": { "text": "Knowledge Check 1", "level": 2 } },
+        {
+          "type": "MCQ",
+          "props": {
+            "question": "What is the primary purpose of ALSAP?",
+            "options": [
+              { "id": "A", "text": "To replace the Safety Management Team", "correct": false },
+              { "id": "B", "text": "To provide real-time monitoring within individual trials", "correct": false },
+              { "id": "C", "text": "To systematically analyze aggregate safety data across trials", "correct": true },
+              { "id": "D", "text": "To conduct final benefit-risk assessments", "correct": false }
+            ],
+            "feedback": {
+              "correct": "That's right! ALSAP is specifically designed to provide systematic, proactive analysis of aggregate safety data. It complements—but doesn't replace—other safety processes.",
+              "incorrect": "Not quite. ALSAP is specifically designed to provide systematic, proactive analysis of aggregate safety data. It complements—but doesn't replace—other safety processes."
+            },
+            "retry": { "allowed": true }
+          }
+        },
+        {
+          "type": "MCQ",
+          "props": {
+            "question": "Which statement best describes how ALSAP relates to SMT?",
+            "options": [
+              { "id": "A", "text": "ALSAP provides analytical outputs that SMT reviews for decision-making", "correct": true },
+              { "id": "B", "text": "ALSAP and SMT are the same thing with different names", "correct": false },
+              { "id": "C", "text": "SMT conducts the analyses that ALSAP reviews", "correct": false },
+              { "id": "D", "text": "ALSAP operates independently with no connection to SMT", "correct": false }
+            ],
+            "feedback": {
+              "correct": "Exactly. ALSAP does the analytical work; SMT reviews those outputs and makes strategic decisions. They work together as part of our overall safety governance.",
+              "incorrect": "Not quite. ALSAP does the analytical work; SMT reviews those outputs and makes strategic decisions. They work together as part of our overall safety governance."
+            },
+            "retry": { "allowed": true }
+          }
+        }
+      ],
+      "voiceover": null
+    },
+
+    {
+      "id": "S09",
+      "title": "How ALSAP Works: The Basic Flow",
+      "components": [
+        { "type": "Heading", "props": { "text": "The ALSAP Workflow", "level": 2 } },
+        {
+          "type": "RevealCards",
+          "props": {
+            "items": [
+              {
+                "title": "Step 1: Plan",
+                "body": "Asset team determines ALSAP is needed → Drafts an ALSAP Plan (FORM-AST-34037)"
+              },
+              {
+                "title": "Step 2: Assign",
+                "body": "ALSAP programmer/statistician assigned to the asset"
+              },
+              {
+                "title": "Step 3: Execute",
+                "body": "ALSAP team extracts data, performs aggregate analyses per plan"
+              },
+              {
+                "title": "Step 4: Review",
+                "body": "SMT reviews ALSAP outputs → Assesses for safety signals"
+              },
+              {
+                "title": "Step 5: Act",
+                "body": "If findings warrant action: Document, escalate to SAC if needed, implement changes"
+              }
+            ]
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Let's walk through how ALSAP actually works. First, the asset team determines that ALSAP is needed and drafts a plan that defines what analyses will be done and when. Second, an ALSAP programmer or statistician is assigned to execute that plan. Third, the ALSAP team extracts data from multiple trials and performs the aggregate analyses. Fourth, the SMT reviews those outputs and looks for safety signals. And fifth, if the findings warrant action—whether that's documenting the results, escalating to SAC for deeper review, or implementing protocol changes—the appropriate steps are taken. It's a systematic cycle designed to catch signals early.",
+            "emphasis": "none",
+            "role": "default"
+          }
+        }
+      ],
+      "voiceover": null
+    },
+
+    {
+      "id": "S10",
+      "title": "When Might ALSAP Matter to You?",
+      "components": [
+        { "type": "Heading", "props": { "text": "When Might ALSAP Affect Your Work?", "level": 2 } },
+        {
+          "type": "Body",
+          "props": {
+            "text": "You might be thinking: does this actually affect my work? The answer depends on your role. If you're in Clinical Operations, you might help coordinate data access for ALSAP analyses. If you're in Drug Safety, ALSAP findings could inform your signal detection work. Regulatory Affairs colleagues might use ALSAP outputs to support IND safety reports. Biostatistics and programming teams may collaborate on data specifications. And if you serve on a Safety Management Team, you'll be directly reviewing ALSAP outputs and making decisions. The key point: ALSAP isn't happening in isolation—it connects to many functions across the organization.",
+            "emphasis": "none",
+            "role": "default"
+          }
+        }
+      ],
+      "voiceover": null
+    },
+
+    {
+      "id": "S11",
+      "title": "Knowledge Check 2",
+      "components": [
+        { "type": "Heading", "props": { "text": "Knowledge Check 2", "level": 2 } },
+        {
+          "type": "MCQ",
+          "props": {
+            "question": "You're on an asset team and notice that three ongoing trials are all reporting similar unexpected lab abnormalities. What should you consider?",
+            "options": [
+              { "id": "A", "text": "Wait until trials complete before looking at aggregate data", "correct": false },
+              { "id": "B", "text": "This might be a situation where ALSAP could help identify if there's a pattern", "correct": true },
+              { "id": "C", "text": "Report each trial's findings separately and don't combine data", "correct": false },
+              { "id": "D", "text": "Immediately unblind all trials", "correct": false }
+            ],
+            "feedback": {
+              "correct": "Exactly right. When you see potential patterns across multiple trials, that's precisely the kind of situation where ALSAP's systematic aggregate analysis can help determine if there's a real signal that needs attention.",
+              "incorrect": "Not quite. When you see potential patterns across multiple trials, that's precisely the kind of situation where ALSAP's systematic aggregate analysis can help determine if there's a real signal that needs attention."
+            },
+            "retry": { "allowed": true }
+          }
+        },
+        {
+          "type": "MCQ",
+          "props": {
+            "question": "In the ALSAP workflow, who is primarily responsible for executing the aggregate safety analyses?",
+            "options": [
+              { "id": "A", "text": "The Safety Management Team", "correct": false },
+              { "id": "B", "text": "The Safety Assessment Committee", "correct": false },
+              { "id": "C", "text": "Dedicated ALSAP programmers and statisticians", "correct": true },
+              { "id": "D", "text": "Trial-level biostatistics teams", "correct": false }
+            ],
+            "feedback": {
+              "correct": "Correct! We've established a dedicated ALSAP team—programmers and statisticians—whose job is to execute these analyses. SMT reviews the outputs and makes decisions, but the ALSAP team does the analytical work.",
+              "incorrect": "Not quite. We've established a dedicated ALSAP team—programmers and statisticians—whose job is to execute these analyses. SMT reviews the outputs and makes decisions, but the ALSAP team does the analytical work."
+            },
+            "retry": { "allowed": true }
+          }
+        }
+      ],
+      "voiceover": null
+    },
+
+    {
+      "id": "S12",
+      "title": "Resources and Next Steps",
+      "components": [
+        { "type": "Heading", "props": { "text": "Resources & Next Steps", "level": 2 } },
+        {
+          "type": "RevealCards",
+          "props": {
+            "items": [
+              {
+                "title": "Key Documents",
+                "body": "SOP-AST-29080: Plan, Develop and Execute Aggregate Data Analyses\nFORM-AST-34037: Asset Level Safety Assessment Plan Template"
+              },
+              {
+                "title": "Who to Contact",
+                "body": "ALSAP Team questions: [Contact information TBD]\nProcess questions: [Project lead contact TBD]"
+              },
+              {
+                "title": "If Your Role Requires More Detail",
+                "body": "Role-specific training modules are available for ALSAP team members, SMT members, and Asset Leads"
+              }
+            ]
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "That completes our overview of ALSAP. To recap: ALSAP is our systematic approach to analyzing aggregate safety data across trials. It works alongside—not instead of—our existing safety processes. If you need more detailed information, key documents like the ALSAP SOP and plan template are available in our document management system. If you have questions about how ALSAP might affect your work, reach out to the contacts shown here. And if your role requires deeper knowledge—for example, if you're an ALSAP team member, SMT member, or Asset Lead—there are additional role-specific training modules available. Thank you for taking the time to learn about ALSAP.",
+            "emphasis": "high",
+            "role": "default"
+          }
+        }
+      ],
+      "voiceover": null
+    }
+  ],
+  "rules": []
+}

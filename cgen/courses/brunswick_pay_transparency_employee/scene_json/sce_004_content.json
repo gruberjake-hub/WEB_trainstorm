@@ -1,0 +1,63 @@
+{
+  "scene_id": "sce_004",
+  "module": "Module 1: How Pay Works at Brunswick",
+  "title": "How Pay Ranges Are Structured",
+  "delivery": "ae_render",
+  "elements": {
+    "Head_01": {
+      "type": "Head",
+      "intent": "orient",
+      "text": "How Pay Ranges Are Structured",
+      "text_primitive": "Headline",
+      "motion_primitive": "GlassReveal",
+      "layout_primitive": "TopTitle",
+      "style_ref": "head-primary"
+    },
+    "List_01": {
+      "type": "List",
+      "intent": "structure",
+      "text": "Minimum\\nMidpoint\\nMaximum",
+      "text_primitive": "RangeLabels",
+      "motion_primitive": "RangeBarReveal",
+      "layout_primitive": "RangeBar",
+      "style_ref": "range-labels"
+    },
+    "Statement_01": {
+      "type": "Statement",
+      "intent": "assert",
+      "text": "The midpoint represents market-competitive pay for someone performing well in that role.",
+      "text_primitive": "Statement",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "MidpointCallout",
+      "style_ref": "statement-primary"
+    },
+    "Statement_02": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "Being at midpoint means you're paid fairly compared to similar roles at other companies.",
+      "text_primitive": "Statement",
+      "motion_primitive": "FadeUp",
+      "layout_primitive": "BodyCallout",
+      "style_ref": "statement-secondary"
+    }
+  },
+  "narration": {
+    "text": "Every role at Brunswick has a pay range with a minimum, midpoint, and maximum. The midpoint is key: it represents market-competitive pay for someone performing well in that role. Being at midpoint isn't average in a negative sense—it means you're paid fairly compared to what similar roles earn at other companies. People at the lower end of a range are often newer to the role or recently promoted—they're building skills and tenure. People near the top typically have many years of sustained high performance and specialized skills. Ranges also vary by location. Costs of labor differ by geography, so the same grade in an urban area may have a different range than in a rural location. This isn't a fairness question—it's a reflection of different labor markets.",
+    "audio_file": "sce_004_vo.wav"
+  },
+  "visual_notes": [
+    "Three-zone range bar — Minimum / Midpoint / Maximum — with descriptor cards below each zone."
+  ],
+  "asset_reuse": [
+    {
+      "source": "Manager module",
+      "scene": "Scene 4",
+      "description": "How Pay Ranges Are Determined range bar visual/VO"
+    }
+  ],
+  "render": {
+    "ae_comp": "sce_004",
+    "output_file": "sce_004.mp4",
+    "review_required": true
+  }
+}

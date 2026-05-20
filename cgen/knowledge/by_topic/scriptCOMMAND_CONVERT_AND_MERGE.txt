@@ -1,0 +1,1 @@
+ts-build -Path "F:\Dropbox\3a-Brainstorm\_TRAINSTORM-local\PRODUCT-OFFERING_local\_ORCHESTRATOR"

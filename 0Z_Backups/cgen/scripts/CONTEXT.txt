@@ -1,0 +1,1494 @@
+
+
+=== FILE 1: E2E Operating Model Guide_V4 July 25.txt ===
+
+--- Slide 1 ---
+OPERATING MODEL GUIDE
+END TO END 
+ASSET MAXIMIZATION TEAM (AMT)
+V4
+ASTELLAS
+This Photo by Unknown Author is licensed under CC BY
+The information presented is accurate and up to date at the time of publication but may be subject to change as the model evolves
+[Notes]
+Published 20 October
+--- Slide 2 ---
+The E2E Asset Maximization Team (AMT) Operating Model Guide is a PRINCIPLE based model intended to guide AMTs. 
+
+This is a living document, intended to continuously evolve. 
+OBJECTIVES of Guide
+
+This guide is intended to be used by Asset Maximization Teams (AMTs).
+
+
+Introduction
+To the E2E Asset Maximization Team Operating Model Guide
+USERS OF THE GUIDE
+
+--- Slide 3 ---
+Content index
+ 
+INTRO: E2E AMT Operating Model Overview	
+Overview, Purpose & Vision for Maximizing the Value of Assets	5
+Core Elements, Value and Benefits AMT Operating Model	6
+
+1. ONE Team	
+Working as ONE Cohesive & Agile Team	8
+AMT Phase Based Membership E2E	9
+The Asset Maximization Team: 
+    Leadership (AMLT) & Extended (AMET)	10
+AMT Performance and Objectives	11
+
+2. ONE Asset Strategy	
+ONE Asset Strategy & the 5 Pillars of plans	14
+Phasing of Functional Plans, Aligning to ONE Asset Strategy	15
+The Responsibilities of an E2E AMT by Phase	16
+
+2b. Roles and Responsibilities 	
+The Role of Co-leads – Above Function and Functional	18
+Budget Ownership & Flexibility:
+     How Co-leads/AMT manage budgets	21
+Summary - What It Means to Be an AMT Co-Lead	22
+What It Means to Be an AMLT Member	23
+What It Means to Be an AMET Member	24
+ONE TEAM
+01
+02
+ONE ASSET STRATEGY
+02b
+ROLES & RESPONSIBILITIES
+3. Ways of Working	
+Behaviors	26
+Principles	27
+How We Make Decisions	28
+How We Communicate	29
+How We Transition	30
+
+AMT Activation + Tools	
+Activation: Approach and Timing for Appointing AMT Members	32
+AMT Rosters: Tool, Maintenance and access	33
+ONE Asset Strategy & Document	34
+Asset Document HUB:                                                      How to Access the 5 Pillars of Asset Plans 	35
+           APPENDIX	
+36
+
+03
+WAYS OF WORKING
+04
+ACTIVATION + Tools
+[Notes]
+https://pixabay.com/illustrations/ai-generated-women-team-business-7940899/
+--- Slide 4 ---
+END TO ENDAsset Maximization Team (AMT)OPERATING Model overview
+
+
+Intro
+[Notes]
+Image Generated with Ai
+--- Slide 5 ---
+What is an Asset Maximization (AMT) This model enables the winning strategy by driving alignment, agility, and measurable value delivery across the asset lifecycle — empowering AMTs to deliver full asset potential and growth.
+VISION for maximizing the value of assets & brands
+The Asset Maximization Team (AMT) is the end-to-end (E2E) cross-functional team responsible for maximizing the value of an asset across its full lifecycle — from discovery through loss of exclusivity. 
+
+It unites leaders and experts from R&D, Medical, Access, and Commercial into one cohesive and agile team that develops and executes a single, integrated One Asset Strategy.
+   Overview
+To drive enterprise-level decision-making and delivery, ensuring every function contributes to a unified direction that transforms innovative science into value for patients.
+Purpose
+Maximize asset value by empowering ONE Team to partner earlier, move faster, and collaborate end-to-end across an asset's life-cycle to form ONE Asset Strategy, and execute that strategy to turn innovative science into VALUE for patients.”
+--- Slide 6 ---
+Winning Strategy Targets
+Grow Strategic Brands
+Operating Profit Margin 
+is 30% by FY2027
+30%
+R&D Investment
+R&D Investment ratio 
+to revenue is 19%
+19%
+R&D Productivity
+R&D productivity increases, by achieving 9 approvals by FY26
+9
+Core Elements, Value and benefits of the E2E AMT Model
+Enabling the winning strategy
+Elements, Value & Benefits of the Model
+The three elements of the E2E AMT model enable strategic, end-to-end leadership tailored to each asset’s stage – driving alignment, agility, and measurable value delivery.
+ONE TEAM is an integrated Asset Maximization Team empowered to make the right decisions for the asset, with ownership and accountability to deliver full asset potential and growth.
+01
+02
+ONE ASSET STRATEGY provides the ONE Asset maximization team with clear and aligned priorities, enabling aligned planning and execution, faster decision-making focused on delivering asset potential and growth.
+03
+WAYS OF WORKING enables an integrated and more efficient approach to integrating E2E knowledge, to achieve higher quality decisions and Asset Maximization strategies.
+04
+ACTIVATION + Tools enables timely AMT formation & readiness through a structured, phased approach.Supported by tools ensuring teams are aligned, equipped, and ready to deliver the full asset potential.
+--- Slide 7 ---
+One Team – The Asset maximization TeamOne E2E Integrated Team with Ownership & Empowerment
+
+
+01
+The Asset Maximization Team (AMT) is the cross-functional team responsible for driving a unified asset strategy and execution across the lifecycle. 
+This section outlines the AMT’s structure, roles, ways of working, and how extended expertise is integrated.
+--- Slide 8 ---
+The AMT is ONE, cohesive and agile team, composed of *Co-Leads, Leadership Team and Extended Team. The AMT structure is established at the asset level and is accountable for the overall asset and all indications. One AMT will own all formulations and indications of an asset.
+ONE TEAM: Working as one Cohesive & Agile Team
+Asset Maximization Team
+Co Leads
+Have primary accountability for the overall asset. Lead the AMT to plan and execute against the One Asset Strategy 
+Embedded & dedicated to the asset, accountable for maximizing asset potential and achieving full potential.
+Lead independently from line management; Co-leadership changes throughout the asset lifecycle.
+Own the strategic direction of the asset and be accountable for developing the ONE Asset Strategy in alignment with their Co lead and with input from the full AMT.
+Establish and maintain the AMT Roster, identifying expertise required by phase and deliverable. Engage Functional Unit leaders to assign members aligned to needs. The roster should be maintained by Co-Leads and Project Managers to reflect the evolving team structures (see slides 33 for more details).
+Ensure the full AMT is informed and aligned through clear, timely communication of decisions and actions to both Leadership (AMLT) and the Extended Teams (AMET).
+Lead aligned, quality decision-making, and resolve decision conflict, to avoid escalation beyond AMT Co leads. 
+Exercise empowered decision-making within the scope of asset strategy and planning to ensure the asset achieves its full potential and long-term growth, while not assuming functional or tactical responsibilities outside their remit or expertise.
+Responsible for providing functional expertise and ensure alignment with their function
+AMET is defined as both AMET Teams and Functional Roles. 
+AMETs are responsible for contributing functional expertise through input and functional deliverables, enabling the AMLTs to create the ONE Asset Strategy.
+AMETs must remain actively engaged and proactively collaborate with Co Leads & AMLT to align on ONE Asset Strategy.
+Responsible for functional planning, budgeting, execution in alignment with the AMLT and ONE Asset Strategy. 
+Functional alignment is important but final decision-making authority rests with the Co Leads and the AMLT.
+Possess deep knowledge and experience to deliver evidence and insights that inform asset maximization.
+The Project Management function across VC and VD plays a crucial role in leading and facilitating AMT operations.
+Leadership
+Team
+AMLT 
+Extended Team
+AMET 
+Act as the cross-functional leadership team for the asset, co-owning the development of the One Asset Strategy and integrating AMET expertise throughout.
+Serve as both advisors and leaders, removing their “functional hat” to elevate beyond function and lead asset strategy, planning, and execution — while contributing functional expertise where needed.
+Define and prioritize the body of work required to progress the asset, including key deliverables and timelines.
+Use collective AMLT expertise to identify which AMET roles and inputs are needed to inform strategic decisions.
+Engage AMET colleagues from their respective functions to gather timely input and deliverables aligned to strategic needs.
+Involve AMETs early in the process to shape decision-making and ensure alignment for smooth execution.
+Partner with AMT Co-Leads to maintain momentum and ensure delivery of high-value strategic and executional outputs.
+*For detailed Roles, Leadership Expectations, and Selection Criteria for Co-Leads, AMLT, and AMET members, please refer to section 2b – One Asset Strategy: Roles & Responsibilities. 
+--- Slide 9 ---
+ONE Team: AMT PHASE Based Membership 
+The AMT structure is intended to be phase based in principle, by evolving members to align with phase-based needs, instead of standing members E2E
+Appendix: Full list of Acronyms can be found in appendix.
+Asset Maximization Team includes Co Leads, AMLT & AMET. The AMT executes its responsibilities under the strategic governance of the PFLT (pre-POC) and the Post-POC Leadership Teams (Appendix 1).
+Asset Lead (AL) joins ~18 months before CN milestone.
+While AMT roles are not shown by function, AMET’s are aligned to functional areas and bring expertise based on need. Functional structures remain intact and are leveraged by AMT leads.	
+The Project Management function across VC and VD play a crucial role in leading and facilitating AMT operations. Project Management (e.g., Research PM, GPML, GBPM) will transition in alignment with Co-Lead changes. 
+The Patient Axis represents the journey our assets take from early research, through to commercialization. Advancing our assets along the Patient Axis as quickly and efficiently as possible will require us to further embed and strengthen agile operating principles and cross-functional ways of working, in order to provide optimal support along this journey.
+Refer to POL-AST-8472 for guidance related to KACHI.
+Refer to Appendix 1 for Enterprise Governance Flow.
+To understand the flow of information across VD under the new model click here VD Information Flow .	
+Transition Point
+Communication and feedback loop
+Co Leads
+Leadership
+TEAM
+RL & AL 
+AL & GSBL
+GSBL & MA GSBL
+AL & NPL
+Extended Team (AMET)4
+Leveraged for functional  expertise; membership as defined by AMT Leads
+   RL
+Extended 
+TEAM
+AL, GML, GRL, GCMCL, 
+GSBL, MA GSBL, MaX, MA VE
+ 
+AL, GML,GRL, GCMCL, 
+RL, EDTS Lead, 
+NPL, MA NPP, MaX NPP
+Asset Maximization Team1
+ACRONYMS:  RL = Research Lead; AL = Asset Lead; NPL = New Product Lead, GSBL = Global Strategic Brand Lead; MA GSBL = Medical Affairs Global Strategic Brand Lead; GML=Global Medical Lead; GRL= Global Regulatory Lead; GCMCL= Global Controls, Manufacturing & Chemistry Lead; EDTS Lead= Early Development Translational Science Lead; MA NPP= Medical Affairs New Product Planning; MaX NPP= Market Access New Product Planning; MaX= Market Access; MA VE= Medical Affairs Value Evidence. 
+2
+3
+For assets in late-stage (post-POC), the late-stage AMT (co-lead by Asset Lead and GSBL) will own the full scope of the asset—including any additional formulations and all pre- and post-POC indications. While they will collaborate with the Research Lead, EDTS, and other pre-CN contributors, the post-POC AMT Co-Leads will remain accountable for the asset's overall strategy and decisions, even when pre-POC indications are still in development.
+Flexible Transition Window pre-POC to post-POC depending on asset needs
+Patient Axis
+P0
+P1/P2a
+Launch/P-4
+Discovery
+POC
+CN
+After 1st country launch of last indic.
+FSD
+NDA
+P2b/P3
+5
+6
+Clinical Development Authorisation Proposal
+CDAP
+Full Development Authorisation Proposal 
+FDAP
+Step Up Development Authorisation Proposal 
+SDAP
+HTA
+AMET
+AMLT
+--- Slide 10 ---
+ONE TEAM: The Asset Maximization Team (AMT) The AMT is ONE cohesive and agile team, bringing together Co-Leads, the Leadership Team, and Extended Team members to support the Asset as a high-performing cross-functional unit.
+The Asset Maximization Leadership Team (AMLT) drives strategy and execution. 
+It works flexibly and collaboratively, bringing in experts as needed. This set-up supports faster decision making, clear ownership and strong cross-functional coordination.​
+Asset Maximization Extended Teams (AMET)     will be engaged flexibly on a needs-based basis, depending on the topic or expertise required. 
+This ensures that the right capabilities are brought in at the right time to support specific deliverables.​
+AMLT
+AMET
+Click for AMET Roles & Team Overviews
+*Co-Leads and AMLT are active during select phases, see previous slide for details
+** The EDTS Lead may be the GTML, GCPL, or another leadership-nominated role within the EDTS function
+N
+E
+X
+E
+D
+E
+E
+A
+M
+T
+D
+T
+Global 
+PM Leads
+The Programme / Project Management function across VC and VD play a crucial role in leading and facilitating AMT operations.
+AMLT
+AMET
+Leadership Team Leads
+Extended Team Leads
+The AMT executes its responsibilities under the strategic governance of the PFLT (pre-POC) and the Post-POC Leadership Teams (Oncology Development Leadership Team (OLT)/Biopharma & Ophthalmology Development Leadership Team (BOD LT).
+Primary Focus Leadership Team (PFLT)
++ Post - Proof of Concept (POC) Leadership Teams 
+Click for PFLT & Post-POC LT Charters
+--- Slide 11 ---
+ONE TEAM: Performance & ObjectivesRoles and responsibilities of the Line Manager & AMT Co-Lead
+Joint Responsibilities:  
+Enabling High Performance Together
+Clarify Roles and Expectations: Ensure asset success by clearly defining roles, responsibilities, and providing clear guidance.
+Empower Teams: Support and encourage team members to contribute effectively within their asset teams.
+Create a High-Performance Environment: Foster conditions where individuals are enabled to do their best work.
+Remove Barriers: Actively identify and eliminate obstacles that may impact performance or progress.
+Align with AMT Co-Leads: Understand asset priorities and align direct reports’ work accordingly.  Ensure asset work is prioritized. 
+Assign AMT Members (with FUH): Ensure the team member assigned has the necessary skills and experience to support the asset.  
+Set non asset objectives (when applicable): Define functional goals and deliverables beyond the asset scope.
+Feedback: Provide feedback to direct reports on both what and how (values and behaviors) work is being delivered.
+Support Individual Development:  Provide coaching, 1:1 check-ins, and career growth support to build knowledge, skills and experiences.
+   Line Managers: Leadership and Extended 
+Strategic Delivery: Set and drive asset level strategic goals and align cross-functional work toward asset milestones.
+Team Leadership (without formal authority): Build high-performing, collaborative AMT culture and teams through Agile ways of working.
+Outcome Accountability: Lead prioritization based on value creation and impact. Monitor progress and flag risks.
+AMT Co-Leads: Leadership and Extended
+--- Slide 12 ---
+Shared strategic objectives (AMT-Level) that are unified, value-driven goals aligned with asset strategy and include individual key results that define individual contributions based on role and expertise.
+ONE Team: Objectives 
+delivering one integrated strategy
+Align with AMT Strategy - Ensure direct reports' objectives reflect AMT priorities and goals.
+Set Non-AMT Objectives - Define development and functional goals outside of the asset scope.
+Empower AMT Co-Leads & Team Members - Trust AMT decisions and avoid micromanaging team activities; support ownership and accountability within the team; support decision making at the asset team level for speed and efficiency.
+Integrate Feedback from Co-Leads - Include input from AMT Co-Leads in performance reviews using the HR feedback process.
+Line Manager
+Asset Maximization Team
+Primary objectives will focus on AMT priorities, tied to the asset’s strategic goals.
+Secondary objectives may be functional or project-based, set with the Line Manager.
+Weighting of objectives may vary by role and time allocation on the asset.
+Expected to actively contribute to shared outcomes and participate in retrospectives.
+Should incorporate relevant AMT objectives into their individual goals where applicable.
+Additional objectives may remain function - or project-based depending on their primary scope.
+Weighting of AMT vs. non-AMT objectives should reflect their level of engagement with the asset (e.g., 25–50%).
+Set clear, shared objectives for the Asset Maximization Team, with input from the AMLT. 
+Ensure team and individual goals align with asset strategy​.
+Guide aligned objective setting in cross-functional teams.
+Provide performance input to Line Managers based on individual contributions to AMT goals.
+Co Leads
+Leadership
+Team
+AMLT 
+Extended Team
+AMET 
+--- Slide 13 ---
+One Asset strategy & 5 Pillars of PlansAsset-First, Outcomes Focused
+
+
+02
+This section explains what it is, how we work together to deliver it, and how key decisions and deliverables evolve over time.
+--- Slide 14 ---
+How It Works – The 5 Pillars of Plans
+ONE Asset Strategy & the 5 Pillars of plansAnchoring consistent foundations while evolving deliverables across the asset lifecycle
+WHAT is the ONE Asset Strategy?
+A unified, high-level strategic framework guiding asset development, commercialization, and value maximization across the product lifecycle.
+Drives cross-functional alignment and decision-making across AMT, governance bodies, and senior leadership.
+Focuses on integration, not duplication. This is not a substitute for functional team plans.
+Incorporates both existing Astellas asset plans and newly introduced components to align with evolving industry standards, ensuring clear focus on patient needs and the patient journey.
+
+Enduring Pillars — Evolving Deliverables:
+The 5 Pillars of Plans remain constant across all assets and phases.
+Each Pillar of Plans represents a strategic dimension of the One Asset Strategy, ensuring every function contributes to a unified enterprise direction.
+Deliverables within each pillar evolve as the asset matures to reflect changing strategic needs.
+This flexibility ensures alignment, continuity, and scalability across the lifecycle.
+--- Slide 15 ---
+One Asset Strategy: phasing of functional asset plans
+Functional plans are formed in alignment with phase-based needs, aligned to the ONE Asset Strategy
+This is an illustrative representation of E2E functional planning across phases. 
+Click here for more detail in the Asset Strategy Roadmap
+⚠️ Note: This is a directional representation of how functional plans may be developed across phases. It is not definitive, as planning guidance remains flexible and adaptive to asset-specific needs.  Plans should be indexed in the Asset Document Hub for improved visibility and sharing across the AMT. Refer to Appendix 2 for Key Decision Roadmap by phase for more detailed view. 👉 For detailed guidance on how to locate and use the Document Hub, see slide 35 
+					
+					
+					
+					
+					
+
+
+
+
+Evidence / Data
+
+ Pre Clinical / 
+Early Development & Translational Strategy
+Integrated Evidence Generation Plan (iEGP)
+Clinical Trial and Data Package (includes e.g., study results NCSA, SFDG, IB,  protocols) module 5 RA docs, POC Declaration Document, CTDs)
+Public Disclosures
+Integrated Evidence Dissemination Plan (iEDP)
+NCSA / SFDG (Dosing)
+Clinical Development Plan
+Overview of Disease State & Patient Unmet Need
+Target Product Profile
+PQF, PESAP Financial Analysis
+
+
+Patient Need & 
+Product Target
+
+
+
+Value & Access
+
+Core Value Dossiers & Models
+Integrated Global Value Plan (iGVP)
+Launch Readiness (ALeX)
+
+
+
+Brand 
+
+
+External Market Landscape Assessment
+New Product Planning Commercial Asset Strategy
+Integrated Global Brand Plan (iGBP)
+Integrated Global Launch Framework (IGLF)
+Core Medical Plan (CMP)
+Pre POC Medical Affairs Plan
+
+
+
+Regulatory, PV & Manufacturing
+
+Global Regulatory Strategy Document (GRSD), Regulatory Modules/Dossiers, PV documents (Risk Management Plans, DSURs, ICSRs, RSI) 
+ALSAP
+Target Product Label
+Label, NDA/BLA/MAA & Post approval commitment submission documents
+CCDS
+Safety Surveillance and Risk management Activities
+IND /CTA submission documents
+FUNCTIONAL ASSET  PLANS
+Patient Axis
+P0
+P1/P2a
+Launch/P-4
+Discovery
+POC
+CN
+After 1st country launch of last indic.
+FSD
+NDA
+P2b/P3
+--- Slide 16 ---
+PHASE	Discovery
+	Pre Clinical
+	Clinical P1
+	Clinical P2	Clinical P3
+	Regulatory Approval	Commercial Launch	Market Expansion	LOE Management
+Phase Goal	Identify viable drug candidate	Establish safety & biological rationale	Safety, tolerability, PK in humans	Proof of concept and dose selection	Confirm efficacy/safety in pivotal trials	Obtain market approval	Maximize uptake	Maximize 
+global penetration	Maintain cash flow post-patent
+Phase
+Objective	Identify and validate high-value biological targets. Develop initial hits, leads with therapeutic potential.	Demonstrate safety, PK/PD, and mechanism of action.
+Prepare for clinical entry.	Safety, tolerability, PK in humans.
+	Proof of concept and dose selection.	Confirm efficacy/safety in pivotal trials.
+	and other global approvals.
+Prepare for launch readiness.	12–18 months sales velocity.
+Establish brand and market position.	Expand revenue base and extend exclusivity.	Defend revenue and manage generic erosion.
+Key 
+Activities	Target identification & validation.
+Hit discovery (HTS, in silico modeling, AI-based screening).
+Lead optimization (SAR, ADME, early tox screens).
+IP filing (composition of matter patents). 	GLP tox studies in two species.
+Formulation development.
+IND-enabling studies.
+IND submission to FDA/EMA.	Single/multiple ascending dose trials.
+Early biomarker readouts.
+Go/no-go decision based on safety and exposure margins.	Patient trials to confirm efficacy signal.
+Refine formulation and dosing.
+Early regulatory/ scientific advice.	Global, multicenter trials.
+Prepare manufacturing scale-up.
+Begin early market access & health economics work.
+	NDA/BLA submission.
+Advisory committee prep.
+Label negotiation.
+Manufacturing validation (PPQ, tech transfer).
+	Market access & pricing strategy.
+KOL engagement, disease awareness campaigns.
+Salesforce training and digital marketing.
+Post-marketing studies.	Patent extensions (method-of-use, formulation, manufacturing).
+505(b)(2) strategies.
+Brand loyalty programs and patient retention.	Authorized generics strategy.
+Biosimilar partnerships (if biologic).
+Cost optimization in manufacturing.
+
+Asset Value Maximization Levers	Target selection efficiency, early IP protection
+Prioritize high unmet need and first-in-class targets.
+Secure strong, broad patent claims early.
+Implement kill-early strategies to avoid sunk costs.
+	Predictive models, fast fail strategy
+Optimize candidate selection with translational biomarkers.
+Use outsourcing and CRO partnerships to reduce cost.
+Begin CMC process development early to shorten timelines later.	Trial design efficiency, patient selection			Strategic engagement with regulators
+Priority review or accelerated approval programs.
+Early health authority engagement.
+Parallel submission strategies (US/EU/Japan).	Market access, pricing, band differentiation
+Premium pricing justified by value-based evidence.
+Strategic payer contracting.
+Digital omnichannel launch to minimize cost of reach.
+	Lifecycle management, indication expansion
+Patent extensions (method-of-use, formulation, manufacturing).
+505(b)(2) strategies.
+Brand loyalty programs and patient retention	Brand defense, formulation innovation
+Extend cash flows with differentiated versions (OTC switch, new delivery systems).
+Diversify portfolio via business development.
+
+			Adaptive designs, early futility analyses.
+	Enrichment designs, partnering opportunities, data package for out-licensing or co-dev deals.	Efficient trial design, real-world evidence integration, and simultaneous global filings.
+				
+P0
+P1/P2a
+Launch/P-4
+Discovery
+P2b/P3
+POC
+CN
+FSD
+NDA
+After 1st country launch of last indic.
+HTA
+One Asset Strategy: the responsibilities of an e2e amt BY PHASE
+--- Slide 17 ---
+Roles and responsibilities 
+
+
+02b
+This section outlines the key R&R within the AMT. It clarifies how co-leads, core members, and extended contributors collaborate to drive the One Asset Strategy. 
+--- Slide 18 ---
+Roles & responsibilities: The role of co-leads 
+AMT Co-Leads Operate in Dual Roles Balancing Strategic and Functional Leadership
+AMT Co-Leads are accountable for more than their functional expertise. To be effective, they must balance functional responsibilities with above-function strategic leadership. Recognizing and bringing both perspectives to the table ensures strong execution, enterprise alignment, and maximum value creation for each asset.
+Functional responsibilities anchor co-leads in their core expertise such as Research, Clinical Development or Brand Leadership; ensuring clinical, regulatory, medical and commercial deliverables are executed with depth, rigor, and accountability throughout the asset lifecycle.
+Functional Responsibilities
+Above Function Responsibilities
+Above function responsibilities elevate Co-Leads into a strategic role, aligning to enterprise priorities & owning the One Asset Strategy. They set long-term asset & brand plans, define objectives and budget, integrate cross-functional perspectives, & remain ultimately accountable for asset success, supported by the AMLT and AMET.
+--- Slide 19 ---
+Roles & responsibilities: Shared Accountabilities of AMT Co-Leads Clarity on above function responsibilities across the 5 pillars, reinforcing equal partnership in leading the One Asset Strategy
+AMT Co Leads
+Shared Accountabilities
+Align to Enterprise strategy.
+Engage with stakeholders and gain senior sponsorship.
+Own the One Asset Strategy.
+Ensure inclusion and integration of cross-functional perspectives, balancing VC, VD, and other functions.
+Set annual asset objectives and budget.
+Exercise empowered decision-making within the scope of asset strategy and planning to ensure the asset achieves its full potential and long-term growth, while not assuming functional or tactical responsibilities outside their remit or expertise.
+Orchestrate team execution including operational cadence.
+Drive shared accountability across functions through objective setting and clearly defining expectations.
+Clearly define roles and responsibilities for AMLT in leading AMET and ensure responsibilities are fulfilled.
+Fully empowered as leaders to give direct and timely feedback to AMT members and line managers if progress feels off track.
+Engage and inform AMT through strong communication and knowledge sharing practices.
+Define and align the overall asset plan roadmap (what’s needed at each phase).
+Ensure the asset is on track to hit target milestones
+Endorse deliverables.
+Co-lead CxO presentations/discussions.
+Strategic Focus 
+Executing Focus 
+PILLAR	Patient Need & Product Target	Evidence / Data 	Regulatory, PV & Manufacturing	Brand	Value & Access
+AMLT Pillar Owners 	NPP Lead (owns TPP)	AL (owns CDP) 
+MA GSBL (owns iEGP))
+RL	GRL
+GCMCL	GSBL (co-owns IGBP)
+MA GSBL (co-owns IGBP)	MAx Lead
+	Deliverable: Manage planning, resourcing, and execution of all deliverables within the pillar.
+Core activities: Coordinate SMEs and ensure alignment to the One Asset Strategy.
+Co-Leads are accountable for ensuring AMLT members take ownership of leading AMET responsibilities. 				
+--- Slide 20 ---
+Accountabilities	
+Research Lead – RL
+Early clinical strategy & biomarker planning
+Dose selection, protocol design & regulatory document preparation
+Non-clinical strategy from Phase 0 to PoC, incl. safety assessments & submissions
+Cross-functional collaboration & communication of non-clinical insights	Asset Lead – AL
+Pre-IND enabling studies & biomarker planning
+CMC readiness & clinical supply preparation
+FIH clinical trial design & planning
+Regulatory strategy & IND submissions
+Roles & responsibilities: AMT Co-Lead Functional Responsibilities by Phase Illustrates how functional accountabilities (Research, Asset, NPL, GSBL, MA GSBL) evolve across the asset lifecycle (not exhaustive)For shared accountabilities, see previous slide
+RL
+AL
+Co Leads
+AL
+NPL
+AL
+GSBL
+GSBL
+MA
+GSBL
+RL
+Patient Axis
+P0
+P1/P2a
+Launch/P-4
+Discovery
+POC
+CN
+After 1st country launch of last indic.
+FSD
+NDA
+P2b/P3
+CDAP
+SDAP
+FDAP
+Co Leads
+Flexible Transition Window
+pre-POC to post-POC depending on asset needs
+Accountabilities	
+Asset Lead – AL
+Preclinical development & safety assessment
+Clinical trial planning & execution
+Regulatory strategy & submissions
+Clinical data management & analysis
+Manuf. & supply chain considerations (clinical)
+Safety & efficacy evaluations
+Go/no-go decision support & PoC readiness 	New Product Lead - NPL
+Market Insight Generation
+Forecasting
+Commercial investment
+Payer market access strategy 
+Early launch planning
+Country Launch and Sequencing 
+Global Brand Plan
+Supply chain & Distribution(Comm)
+Accountabilities	
+Asset Lead – AL
+Late-stage clinical development & trial execution
+Regulatory strategy, submissions & health authority interactions
+Safety monitoring, risk management & benefit–risk assessment
+Commercial strategy alignment & launch readiness planning
+Manufacturing scale-up & supply chain coordination
+Data integration, analysis & publication strategy
+Lifecycle management, label expansion & post-marketing commitments	Global Strategic Brand Lead – GSBL
+Global brand strategy development & positioning
+Market insights, competitive intelligence & opportunity assessment
+Commercial strategy alignment with cross-functional partners
+Launch planning, readiness & execution across regions
+Pricing, access & reimbursement strategy development/refinement
+Stakeholder engagement & external partnership management
+Life cycle management, label expansion & portfolio optimization
+Post-launch brand performance tracking & optimization
+Life cycle management & label expansion planning
+Competitive intelligence & market defense strategies
+Accountabilities	
+Global Strategic Brand Lead – GSBL
+Post-launch brand performance tracking 
+Cross-functional coordination with regional and local teams
+Brand sunset planning & transition strategy approaching LoE	Medical Affairs Global Strategic Brand Lead – MA GSBL
+Post-marketing evidence generation & RWE studies
+Scientific communication strategy & publication planning
+KOL engagement & medical education initiatives
+Safety surveillance, signal detection & benefit-risk monitoring
+Support for payer, HTA & formulary evidence needs
+Medical strategy for LoE transition
+Note: This slide shows functional / role-specific responsibilities of AMT Co-Leads across phases. Shared accountabilities are captured separately on slide the previous slide.
+HTA
+[Notes]
+`
+--- Slide 21 ---
+Overall budget accountability is given to AMT co-leads for the approved AMT annual budget* i.e. direct cost for research, development, T&M, medical affairs, marketing, access, etc​.
+During annual budget process each function is responsible to align on budget with AMT (co-leads) and once approved through budget process* each function is responsible to execute on the budget.
+AMT Co Leads & AMLT Team is expected to carefully review the progress of AMT budget and achieve the objective within their approved annual budget.
+If necessary, AMT co-leads are empowered to reallocate budget to the most important priority even between VC and VD (e.g. let’s say it is in development vs marketing) The AMT discusses together, and co-leads take the decision on prioritisation and shifting the budget to the most important activity that drives the best impact.
+If Budget Transfer is required from VC to VD, or VD to VC, SWIFT Approval is required. 
+Step 1: AMT co-Leads to contact their Finance BP Business Partner (FBP) and inform the transfer plan with its background.
+Step 2: FBP to contact Enterprise Finance (EF).
+Step 3: EF to submit approval request in SWIFT and obtain approval. (quarterly basis & retrospectively).
+Step 4: EF to inform the SWIFT decision to FBP (and FBP to AMT co-leads).
+AMT co-leads are empowered to flexibly reallocate their budget only within the asset. If additional budget is required, please follow the existing governance process.
+
+To deliver the ONE Asset Strategy, AMTs have clear budget accountability and flexibility within the asset. 
+This approach ensures aligned investment decisions and agile resource shifts to maximize strategic impact.
+Establishing & Managing AMT Budget
+Budget Transfer Steps
+*Annual Budget is approved  by EC for each CxO and delegated to Functional Unit Head (e.g. PFL for PF related budget) then to AMT co-leads.
+Roles & responsibilities: BUDGET ownership & FlexibilityHOW AMT CO-LEADS MANAGE THE ANNUAL BUDGET: PRINCIPLES FOR ACCOUNTABILITY & FLEXIBILITY
+--- Slide 22 ---
+Roles & responsibilities: Summary - What It Means to Be an AMT Co-LeadDefines the roles, expectations, and selection criteria for AMT Co-Leads, ensuring clarity on how they drive the One Asset Strategy.
+Responsibilities - What Co-Leads members do	Leadership Expectations – How Co lead	Selection Criteria for AMLT Membership -
+Who should be an AMT Co-Lead
+Have primary accountability for the overall asset: lead planning & execution against the One Asset Strategy
+Own the strategic direction of the asset: accountable for maximizing potential
+Establish & maintain the AMT Roster: align expertise by phase and deliverable
+Ensure the full AMT is informed and aligned: through clear and consistent communication
+Lead aligned, quality decision-making: resolve conflicts to avoid escalation
+Represent asset strategy externally: with senior leadership and governance committees
+	Lead independently of line management: act as enterprise asset leaders
+Model enterprise-first mindset by balancing asset, enterprise, and function priorities
+Shape strategy and direction by providing clarity and vision across the team
+Empower AMLT & AMET members by respecting expertise, delegate effectively, and build accountability
+Operate decisively by taking timely decisions, balancing imperfect data and urgency
+Foster “One Team” culture by promoting cohesion, agility, and collaboration
+Communicate with impact: articulate strategy, progress, and challenges to leadership
+Model transparency, urgency, and outcome-focus: in all leadership actions
+	Enterprise mindset: ability to balance asset, enterprise, and functional needs
+Proven leadership: track record in cross-functional program delivery
+Strategic acumen: ability to shape direction and manage complexity
+Influential communicator: effective at senior leadership levels
+Strong decision-making capability: under pressure and with imperfect information
+Endorsed by Enterprise Leadership: as accountable owner of the asset
+
+--- Slide 23 ---
+Roles and responsibilities: What It Means to Be an AMLT MemberThis slide defines the roles, expectations, and selection criteria for AMLT members, ensuring clarity on how they contribute to advancing the One Asset Strategy.
+Responsibilities - What AMLT members do	Leadership Expectations - How AMLT members' lead	Selection Criteria for AMLT Membership -
+Who should be an AMLT member
+Co-own the One Asset Strategy with the Co-Leads 
+Define & prioritize the body of work/timelines to progress the asset 
+Engage & integrate AMET expertise into decision-making 
+Use collective expertise to drive cross-functional solutions 
+Partner with Co-Leads and AMET members to deliver high-value output	Act as advisor & leader beyond function, remove the “functional hat” to focus on enterprise/asset needs 
+Work with SMEs to shape solutions, then present data-backed recommendations that reflect what the AMLT member believes is the best choice, based on the data, their functional expertise, and their knowledge of the asset strategy — rather than simply providing a list of options.for AMLT approval 
+Bring forward risks, key challenges, and mitigation plans not just problems 
+Respect SME/AMET expertise & delegate by topic to avoid involvement just for transparency 
+Operate flexibly, adapt membership & meeting scope by stage/issues to balance capacity 
+Decide pragmatically:  decisions should not rely on perfect consensus or perfect data 
+Pressure-test solutions & surface trade-offs early 
+Contribute functional expertise where needed to enable informed decisions 
+Promote One Team mindset: cohesive, agile, collaborative 
+Encourage early AMET involvement & maintain transparency	Recognized subject matter expertise with enterprise mindset 
+Strong ability to influence & collaborate across functions 
+Skilled decision-making under aggressive timelines 
+Demonstrates commitment to program strategy over functional silos 
+Endorsed by Function Head/Leadership as an enterprise contributor
+--- Slide 24 ---
+Roles and responsibilities: What It Means to Be an AMET MemberDefines the roles, expectations, and selection criteria for AMT Extended Team members, ensuring clarity on how they contribute to advancing the One Asset Strategy
+Responsibilities - What AMET members do	Engagement Expectations - How AMET members’ operate	Selection Criteria for AMET Membership - 
+Who should be an AMET member
+Provide functional expertise & deliverables aligned to asset needs
+Remain actively engaged: proactively collaborate with Co-Leads & AMLT
+Ensure functional planning, budgeting, and execution reflect the needs of the assets you support
+Deliver evidence and insights to inform asset maximization
+Support project management activities across VC & VD & VE to facilitate AMT operations
+Proactively engage with Co-Leads and Leadership Team, no need to wait for permission
+Represent your function with confidence; share expertise to inform trade-offs and decisions
+Take initiative, don’t wait for direction; actively contribute to team progress
+Build understanding across the team by educating others on your functional area	Partner with AMLT and Co-Leads: collaborate closely to shape solutions with Leadership Team members, ensuring functional insights are integrated and enabling well-informed AMT decision-making and efficient execution 
+Stay engaged and accountable: Contribute within your extended teams by proactively fulfilling the requirements your function is responsible for to support the execution of the One Asset Strategy. Be proactive in reviewing AMT meeting minutes and materials, even if you are not invited to the meeting. Regularly review the One Asset Strategy document to stay aligned.
+Share knowledge and insights to strengthen evidence-based strategy
+Challenge constructively: refine solutions and highlight risks with mitigations
+Operate transparently: surface dependencies, constraints, and progress
+Flex with priorities: adapt support based on stage and asset requirements	Recognized functional expertise with deep knowledge in domain area
+Experience in delivering evidence/insights relevant to asset strategy
+Ability to collaborate cross-functionally beyond silo boundaries
+Commitment to proactive engagement not just providing inputs on request
+Endorsed by Function Lead: identified as contributor to asset success
+
+--- Slide 25 ---
+Ways of workingIntegrated & Agile
+This section outlines the expectations and guiding principles that shape how AMTs lead, engage, decide, communicate, and transition across the asset lifecycle.
+03
+Leadership 
+Behaviors
+The expectation is that all leaders at Astellas will strive to exhibit the Organizational Values and Behaviors defined for leaders—demonstrating accountability, courage, urgency, innovation, and outcome focus.
+These principles reinforce how AMTs operate with clarity, urgency, and accountability—maximizing impact by focusing on what matters most, enabling lean decision-making, and staying aligned on strategic priorities.
+Principles for Engaging Extended Members
+Decision Making Principles
+To deliver impact, AMTs operate with shared expectations—agile, collaborative, and cross-functional—ensuring decisions are purposeful, timely, and aligned to evolving strategy.
+Communications Mgmt.
+Seamless communication and documentation ensure clarity, speed, and alignment, enabling informed decisions and faster onboarding.
+How we transition
+Clear guidance supports smooth transitions across key milestones, ensuring continuity of leadership, accountability, and effective handoffs between Co-Leads and teams.
+--- Slide 26 ---
+Encourages Ownership
+Builds High Performing Teams
+Empowers Employees
+Removes Obstacles
+Encourages Decisive Actions
+Builds Engagement
+Builds Psychological Safety
+Encourages Ethical Decision-Making
+Leads through Change
+Promotes Cross-Functional Work
+Resolves Conflict
+Encourages Diverse Perspectives
+Prioritizes Team Actions
+Sets Clear Expectations
+Develops Employees
+Click here for Organizational Values & Behaviors site
+The expectation is that all leaders at Astellas will strive to exhibit the Astellas Organizational Values and Behaviors defined for leaders. 
+LEADERSHIP
+EXPECTATIONS
+Ways of working: behaviorswith Astellas Values and Behaviors at the core 
+Placeholder
+Placeholder
+Courage
+One Astellas
+Outcome 
+Focus
+Accountability
+Sense of Urgency
+--- Slide 27 ---
+These Principles for Engaging the Extended Teams reflect our Organizational Values & Behaviors. They reinforce how AMTs operate with clarity, urgency,   and accountability to maximize impact on what matters most, enable lean decision-making, and stay aligned on strategic priorities.
+Note: The Project Management function across VC and VD play a crucial role in leading and facilitating AMT operations.
+More information on the PM Model can be found here .
+Ways of working: Principles
+Empowerment starts with clarity; two-way communication ensures AMLT and AMET Co-Leads / AMLT share context on strategy and decisions to ensure meaningful AMET member contribution.
+Co-Leads aren’t expected to know everything; they unlock value by activating functional expertise
+By promoting open communication and swift action, this principle reflects Accountability and Sense of Urgency in driving informed, timely decisions.
+AMETs are empowered to provide input and recommendations that inform decision-making in alignment with Co-Leads and the AMLT.
+Co-Leads and AMLT engage AMETs early, sharing  context to support confident, aligned execution.
+Engagement is mutual collaboration strengthens recommendations and drives timely, informed decisions.
+This inclusive approach reflects One Astellas and Innovation, embracing diverse perspectives to deliver creative, enterprise-wide solutions.
+Rosters enable transparency, continuity, and alignment across the asset lifecycle, while remaining flexible to evolving needs.
+Co-Leads shape the AMT roster at KACHI checkpoints, assigning leadership teams (AMLT) and extended teams (AMET) as needed to meet strategic priorities.
+This structure demonstrates Accountability and Outcome Focus, balancing ownership with the agility to scale and adapt membership over time. 
+Co-Leads empower AMLT and AMET by fostering trust and collaboration ensuring their expertise shapes the direction of the AMT
+Trust is reciprocal: Co-Leads value AMLT and AMET input; AMET rely on Co Lead & AMLT guidance.
+Co-Leads leverage both AMLT and AMET expertise to guide strategy and realise VALUE.
+This approach embodies Integrity and Courage, creating psychological safety and open dialogue that drive stronger collective outcomes.
+Transparent Communication & Alignment
+Dynamic AMT Rosters
+Inclusive Decision Flow
+Trust-Based Relationships
+--- Slide 28 ---
+To deliver impact, AMTs must operate with shared expectations—agile, collaborative, and cross-functional;  
+ensuring decisions are purposeful, timely, and aligned to evolving strategy.
+What are the Guiding Principles
+Focus: Maximize asset value for patients
+Decisions Evolve: Start early, revisit with insights, and translate into action
+Data-Driven: Grounded in evidence. Revisit as new data, risks or assumptions emerges
+Collaboration: Cross-functional and cross-market to anticipate interdependencies
+Document & Cascade: Capture rationale with identified potential risk/benefit, and cascade for aligned execution
+Mindset Shift: Lift out of function. Think holistically, including local perspectives
+
+How We Apply These Principles
+Work agile, collaboratively, and efficiently
+Develop one integrated asset strategy
+Think beyond function, value diverse viewpoints, be objective, have courage
+Proactively tackle critical topics
+Co-Leads empowered to make timely decisions, without requiring all AMLT members present (time-zone sensitivity).
+Final decisions made by AMT Co-Leads, with AMLT input wherever feasible.
+PM’s catalogue decisions centrally and ensure regular communication to the full AMLT
+AMETs provide input, proposals, and functional/local insights
+The AMLT ensures Asset Deliverables are aligned with the ONE asset strategy and aimed at unlocking full potential.
+
+How We Escalate When Needed
+The AMLT are expected to make decisions for the asset 
+PMs document and communicate decisions to keep AMLT aligned
+Where the AMLT have not been able to reach a decision → Co-Leads have final decision authority
+Co-Leads can escalate to PFLT/Post POC LT if they are unable to align. However, the expectation is that the Co-Leads find resolution together, and escalation should be the exception that rarely occurs
+
+Ways of Working: Effective decision making How We Decide: *Principles to Guide Decision making
+--- Slide 29 ---
+Ways of working: Communication Responsibilitieshow we communicate: Driving Alignment Through Seamless Information Flow
+Engage regularly with the AMETs to align on objectives, flag risks early, and manage delivery expectations.
+Proactively communicate capacity and constraints to enable prioritisation.
+Ensure AMETs know where to access key documents and information, using agreed storage locations (e.g., SharePoint)
+Model effective KM and WoW behaviours to promote a transparent and enterprise-focused culture.
+Review governance processes to ensure they support agility, clarity, and fit-for-purpose delivery.
+Engage regularly with the AMLTs to align on objectives, flag risks early, and manage delivery expectations
+Proactively provide input and engage early with the AMLT to shape direction and delivery expectations. 
+Share key information with AMETs (e.g., strategy, decision context, priorities) so they can plan and deliver effectively.
+Clearly define the purpose, success criteria, and timelines for all requests.
+Request AMLT to Stay flexible and collaborative, acknowledging that AMETs often serve multiple assets or functions.
+The way AMLTs want to engage:
+The way AMETs want to be engaged:
+To deliver value, AMLTs and AMETs must work in sync; sharing information early, escalating smartly, and maintaining role clarity. 
+These responsibilities enable speed and cohesion across the AMT.
+Reminder: Use the Asset Document Hub as the single source of truth for key documents and planning materials. AMT Project Managers are responsible for keeping the hub current and accessible. 
+Refer to Appendix 3 for Guidance on Knowledge Management
+--- Slide 30 ---
+Patient Axis
+P0
+P1/P2a
+Launch/P-4
+Discovery
+POC
+CN
+After 1st country launch of last indic.
+FSD
+NDA
+P2b/P3
+5
+6
+HTA
+	Asset Lead (Pre-CN)	New Product Planning Lead (FSD)	 Marketing GSBL (POC)	MA GSBL (Post Launch)
+Transition Principles What should the transition look like?	Align with Research Lead on TPP 
+Onboard select AMLT members early to support NPP	Already part of AMLT before transition 
+Remain well informed on context	Transition may occur pre- or post-POC depending on asset need
+Extended soft transition encouraged (avoid abrupt handover).
+NPL partners with Brand Team until GSBL onboarded 
+Consult AMLT and track decisions	Transition registrational trial design/protocol lock-down 
+MA/Commercial take heavier lift 
+Leverage continuity of AL & MA Lead to reduce learning curve
+Onboarding Guidance How to onboard new Co-Leads & AMLT members	Provide onboarding pack (TPP, roster, decision log, risks) 
+Hold kick-off call for AMLT members 
+	Deliver formal onboarding on strategy & prior decisions 
+
+
+	Ensure AMLT have access to Asset Doc. Hub & decision log 
+Conduct joint onboarding led by NPL + GSBL 
+Adopt soft transition approach	Cover launch readiness & MA/Commercial integration 
+Build on continuity of AL & MA Lead involvement
+Ways of working: AMT Co lead Transition ExpectationsHow We Transition: Ensuring Seamless Handoffs as Assets Progress
+To ensure focus and continuity across the lifecycle, Co-Lead responsibilities transition at defined milestones. 
+This guidance enables smooth handoffs and reinforces clear accountability between Co-Leads and key team members.
+At the POC transition, the Research Lead (RL) and Early Development Translational Science Lead (EDTS) exit the AMT.
+Up to POC, the AMT team remains fairly stable. 
+Refer to Appendix 4 on Workstream Value Delivery Approach and How We Work Together to Integrate Asset Deliverables.
+Transition Point
+Flexible Transition Window pre-POC to post-POC depending on asset needs
+--- Slide 31 ---
+AMT Activation + ToolsEmpowered by Insight, Driven by Action
+
+
+04
+This section defines timely AMT formation & readiness through a structured, phased approach.Supported by tools ensuring teams are aligned, equipped, and ready to deliver.
+--- Slide 32 ---
+1AMT formation is flexible, Co-Lead assignment at the discretion of PFLT, while AMLT and AMET member assignments at the discretion of Co-Leads. For earlier collaboration during DC stage, refer to the CN reference guide. For assets acquired via BD activity, AMT formation follows the same process. The designated AMT is established based on the asset’s current stage. 
+2 Refer to POL-AST-8472 for Kachi Committee policy.
+3 An AMET member Structure is populated by AMT Co Leads & Project Managers, as project needs evolve. The complete roster does not need to be defined upon AMT formation. Roster maintenance and access is supported via the AMT Roster Tool (see next slide).
+01
+02
+03
+04
+05
+Initiation1 & Transition
+Member Request
+Joint Assignment
+Roster Formed
+Activation 
+&
+Kick-off
+Co-Leads notify Functional Heads that KC milestone has been achieved and request new members be nominated in alignment with E2E AMT Operating Model
+
+The AMT is initiated prior to manufacturing funding decision. Full AMLT members and required SMEs will be assigned before Manufacturing Funding Proposal. 
+Team member transitions are triggered at KACHI2 milestones
+Co-Leads and Functional Heads (FUHs) collaborate to assign AMLT roles and members. Assignments are based on strategic needs, functional expertise, and resourcing.
+Line Managers engaged to ensure balance with workload and development needs.
+
+A working AMT roster is initiated3 early and evolves over time. It is updated at each milestone to reflect changing strategic and resourcing needs
+Project Managers establish recurring touchpoints between Co-Leads and FUH functions to calibrate expectations for AMLT members and surface issues early.
+
+AMT Activation: APPROACH & TIMING FOR APPOINTING AMT MEMBERS
+A clear, phased approach ensures timely and strategic formation of the AMT, with Co-Leads accountable for building the roster in alignment with functional needs and key milestones.
+Activate team members as needed; some may be assigned early but engaged later.
+Host the AMT kick-off with all members.
+Set AMT objectives to guide priorities and performance goals.
+Establish AMT Ways of Working.
+Onboard members to the Asset Document Hub and ONE Asset Strategy.
+--- Slide 33 ---
+AMT Roster Membership – this list is not exhaustive 
+
+AMT Tools: AMT Rosters How AMT members are tracked
+AMT roster Approach and Ownership:
+AMT Project Management functions are responsible for maintaining the AMT Roster.
+The roster is updated monthly. 
+
+
+Purpose of the Roster Tool
+To operationalize the AMT model by providing a list of AMLT members and key points of contact for extended teams across all assets.. 
+This roster is not intended to cover all Asset Maximization Team members.
+In case additional information (PJ related, membership etc.) is necessary, please contact PJ manager or relevant members listed in the roster.
+Scope of the Roster
+Assets after manufacturing funding decision in DC stage or later.
+Terminated asset is removed triggered by governance approval (KC/EC).  
+Where to Access
+Available via the E2E Community of PracticeAccess the AMT Roster here
+Asset Maximization Leadership Team (AMLT)
+Research Lead
+Asset Lead
+NPP Commercial Lead
+Global Strategic Brand Lead
+MA Global Strategic Brand Lead
+NPP Medical Lead 
+Market Access Lead
+Value Evidence Lead
+Global Regulatory Lead
+Global Medical Lead
+CMC Lead
+Asset Maximization Extended Team (AMET)	
+Project Management	Medical Affairs
+Research Project Manager	Local Value Evidence Lead
+Development Project Manager	Med Comms Product Team Lead
+Marketing Brand Project Manager	Global & Regional Medical Directors
+MA Brand Program Manager	Global & Local Medical Affairs Lead(s)
+	NPP Ops Lead
+R&D , QA	Commercial
+Global Clinical Pharmacology Lead	Local Market Access Leads
+Global Translational Medicine Lead	GAVP HE Lead
+Global Regulatory Affairs CMC Lead	Global Marketing Lead (Strategy)
+Global Safety Officer	Global Marketing Lead (Operations)
+Clinical Operations Lead	Strategic Insights & Analytics Lead
+Global Statistics Lead	
+Global Medical Writing Lead	
+Global Quality Lead	
+DC stage: Discovery Stage, KC: Kachi Committee, EC: Executive Committee
+[Notes]
+AMT Rosters – How AMT members are tracked
+--- Slide 34 ---
+AMT Tools: ONE Asset Strategy & Document Structure, Governance & use
+Cohesive asset planning
+ENABLES 
+Agile decision-making
+Seamless integration of cross-functional contributions
+Clear line-of-sight to patient and business value
+Ownership	Asset Maximization Leadership Team (AMLT)
+Initiated	At AMT formation
+Structure	Includes strategic intent, priorities, value proposition, investment
+rationale, and mitigation strategy
+Document	Captured in a living document maintained in the Asset Document Hub.   
+Ensures alignment across the team and visibility to senior governance. 
+Updates	Updated annually (Q1 FY) and on an ad-hoc basis as strategy evolves, until Loss of Exclusivity (LOE). 
+All versions must be dated. 
+The AMT must be informed of any changes to enable cascading updates across the 5 pillars of the plan.
+Audience	AMT, senior leadership, asset governance, and cross-functional 
+partners
+Initiation, Ownership, Maintenance, Storage:
+Initiated at AMT activation
+Owned by AMLT
+Maintained as living document through LOE
+Stored in Asset Document Hub
+
+Summary of Content Within:
+Asset Overview
+Strategic Intent & Value Proposition
+Strategic Landscape Assessment
+Asset Objectives & Success Metrics
+SWOT & Gap Analysis
+Near term Priorities and Action Plan – for 5 strategic pillars
+Portfolio & Investment Rationale
+Enterprise-Level Risk & Mitigation Strategy
+Governance & Decision-Making Framework
+Strategic Integration Points
+Long-Range Planning (LRP) Assumptions
+Appendices (Optional)
+The One Asset Strategy Document is used to document the “One Asset Strategy”
+This document should be co-created by AMT members and reviewed at major governance or investment milestones.
+34
+--- Slide 35 ---
+Benefits
+Improves knowledge sharing across AMT members
+Enables efficient access to asset planning documents
+Supports aligned planning and coordinated execution
+Maximizes asset value through transparency and collaboration
+Enhances readiness for governance and milestone reviews
+AMT Tools: Asset Document HUBHow to Access the 5 Pillars of Asset Plans
+How to Use the Hub
+Navigate to the Asset Document Hub
+Enter the asset area relevant to your work
+Review the indexed list of final planning documents (or click “supplemental documents” to access supporting documents) 
+Click the link to open the final document
+Request access if needed (AMT PMs maintain the index and access permissions, contact your AMT PM to update the index
+✳ If documents are missing or out of date
+What is This Hub?
+The Asset Document Hub offers one centralized place to locate and access asset planning documents. 
+It is organized by asset and strategic pillar and enables a more consistent and efficient approach to planning.
+This Hub operationalizes the One Asset Strategy by serving as the central location for final asset planning documents.
+ *AMT Document Index Hub
+Document Index Structure
+35
+How to Maintain the Hub
+Owner - PM
+Navigate to the Asset Document Hub
+Enter the asset area relevant to your work
+Link final documents in the indexed list 
+Upload “supplemental documents” and meeting notes in “supporting documents” 
+Maintain access: grant View access to all AMT members on the AMT Roster
+*Excludes any documents stored in Veeva
+Sub folders for archived, current, work in progress versions
+--- Slide 36 ---
+APPENDIX
+--- Slide 37 ---
+PFLT
+Primary Focus area
+Post-POC LT’s (OLT / BOD LT)
+Multi-Asset Teams
+KACHI
+37
+Co Leads
+Leadership
+TEAM
+RL & AL 
+AL & GSBL
+GSBL & MA GSBL
+AL & NPL
+Extended Team (AMET) 
+Leveraged for functional  expertise; membership as defined by AMT Leads
+   RL
+Extended 
+TEAM
+AL, GML, GRL, GCMCL, 
+GSBL, MA GSBL, MaX, MA VE
+ 
+AL, GML,GRL, GCMCL, 
+RL, EDTS Lead, 
+NPL, MA NPP, MaX NPP
+AMLT
+Asset Maximization Team1
+For assets in late-stage (post-POC), the late-stage AMT (co-lead by Asset Lead and GSBL) will own the full scope of the asset—including any additional formulations and all pre- and post-POC indications. While they will collaborate with the Research Lead, EDTS, and other pre-CN contributors, the post-POC AMT Co-Leads will remain accountable for the asset's overall strategy and decisions, even when pre-POC indications are still in development.
+AMET
+Patient Axis
+P0
+P1/P2a
+Launch/P-4
+Discovery
+POC
+CN
+After 1st country launch of last indic.
+FSD
+NDA
+P2b/P3
+5
+Clinical Development Authorisation Proposal
+CDAP
+Full Development Authorisation Proposal 
+FDAP
+Step Up Development Authorisation Proposal 
+SDAP
+HTA
+Transition Point
+Communication and feedback loop
+Flexible Transition Window pre-POC to post-POC depending on asset needs
+Two-way strategic information flow
+Appendix 1
+Enterprise Governance FlowAMTs and senior governance bodies (PFLT / Post-POC LTs) collaborate across assets to align and form enterprise strategy.
+--- Slide 38 ---
+5 Pillars of Plans: Key Decision Roadmap
+The Key Decision Roadmap is a guide for AMT cross-functional alignment, not a full checklist, and will vary by asset and therapeutic area.
+POC
+CN
+After 1st country launch of last indic.
+FSD
+NDA
+Appendix 2
+HTA
+Functional Asset Plans	Discovery		P0	P1/P2a	P2b/P3	Launch/P-4
+Patient Need & Product Target	Patient Need- External Landscape & Patient Needs		Refresh Decisions Based on Emerging Data- External Landscape & Patient Needs- Target Product Profile
+	Refresh Decisions Based on Emerging Data- External Landscape & Patient Needs- Target Product Profile 
+	Refresh Decisions Based on Emerging Data- External Landscape & Patient Needs- Patient Journey- Target Product Profile
+	
+	Target Product Profile					
+	- MOA, Target Biology- Indication, Launch regions, timeline- Target Population- Clinical efficacy (endpoints)	-Safety & Tolerability- POC criteria- Route of Admin- Dosing Form & Strength- Stability- Benefit/Risk target				
+Evidence / Data	New Decisions- Epidemiology- Pre-clinical studies- Translational plan- Do we have an appropriate candidate   
+  based on nonclinical efficacy/AME/eff 
+  assessment?- Is there enough data to support the MOA 
+  therapeutic hypothesis, patient selection, 
+  Indication
+		Refresh Decisions- Translational plan- Clinical Trial Outline (CDP)New Decisions- Do we have sufficient safety 
+  demonstrated in the nonclinical program 
+  to proceed to next phase?- Clinical Trial Outline (CDP)- P1/P2a Study requirements- P1/P2a Protocol Design	Refresh Decisions- Translational plan- Clinical Trial Outline (CDP)New Decisions- Registrational trial design requirements- Registrational Protocol Design- Total Evidence needs beyond  
+  registrational trial & action plan to deliver 
+  (IEGP)- Do we have a safe & effective drug?- Did POC study results meet POC criteria?	Refresh Decisions- Registrational trial design requirements- Registrational Protocol Design- Total Evidence needs beyond 
+  registrational trial & action plan to deliver 
+  (IEGP)New Decisions- Statistical modelling of endpoints- Subgroup analysis and other analysis- Is the drug safe and effective?- Did the product offer treatment benefit to 
+  specific populations?	Refresh Decisions- Total Evidence needs beyond 
+  registrational trial & action plan to deliver 
+  (IEGP)
+
+Regulatory, PV & Manufacturing	New Decisions- Dose formulation- Regulatory pathway- Manufacturing pathway		Refresh Decisions Based on Emerging Data - Dose formulation - Regulatory pathway - Manufacturing pathway	Refresh Decisions Based on Emerging Data - Dose formulation - Regulatory pathway - Manufacturing pathway New Decisions - Target Product Label (TLP)	New Decisions - Label / SmPC optimized for Access - NDA/BLA strategy	
+Brand	New Decisions: Product Positioning & Forecast- Product Differentiation- Monotherapy/combination- Access & Price Targets- Forecast: Patient, Volume, P&L		Refresh Decisions Based on Emerging Data- Product Positioning & ForecastNew Decisions- LCM Plan: Indication sequence/timing- Patient Reported Outcome Plan- Precision Medicine Plan- Paediatric Plan	Refresh Decisions Based on Emerging Data- Product Positioning & Forecast- Product Positioning & Differentiation- LCM Plan- PRO Plan- Precision medicine planNew Decisions- Launch Countries	Refresh Decisions Based on Emerging Data- Product Positioning & Forecast- Product Positioning & Differentiation- LCM Plan- PRO Plan- Precision medicine plan- Launch CountriesNew Decisions- Payer/HTA strategy/PICOs- Access/pricing strategy including EJP- Country / Launch sequence- Are we ready for launch (Astellas LEx)	Refresh Decisions Based on Emerging Data- Product Positioning & Forecast- Product Positioning & Differentiation- LCM Plan- PRO Plan- Precision medicine plan- Launch CountriesNew Decisions- Patient Advocacy- Patient Selection → CDx campaign- PASS requirements- Rapid Response for Payer/HTA agencies
+Value & Access	New Decisions- Access & Price Targets- Integrated Target Product Profile			New Decisions- Payer Evidence needs	New Decisions- Economic Models- Core Value Dossiers- Do we have sufficient data to demonstrate value to Payers/HTA?	
+--- Slide 39 ---
+Knowledge Management (KM) is not optional. With frequent transitions and cross-functional contributors, KM ensures access to the right information at the right time, no matter when someone joins the AMT. It enables faster onboarding, stronger decisions, and sustained team alignment.
+Ways of working: Communication & Knowledge Mgmt.Connect the Dots of knowledge: Share Knowledge, Enable Decisions
+Documented & Centrally Accessible
+Expectation: AMTs must document decisions with clear context, assumptions, rationale, data and trade-offs.
+Store documents in shared, version-controlled platforms* (e.g., AMT SharePoint)**.
+Maintain a single, unified ***“ONE Asset Strategy” document per asset.
+Well-managed knowledge removes confusion and supports fast, confident decisions.
+Ensure all teams know where to find and store information, using agreed tools and locations.                                           
+Tools: SharePoint, decision logs, etc.
+Transparent & 
+Open Communication
+Expectation: AMT Co Leads and AMLT are accountable for ensuring all teams (incl. AMET) are kept informed of key decisions.
+Use consistent communication channels (e.g., newsletters, townhalls, F2F).
+Explain when and why feedback is not adopted.
+Transparency isn’t optional — it supports trust and alignment.
+
+Tools: Townhalls, newsletters, tiered email lists
+Timely & Concise
+Expectation: Meeting outputs must be shared promptly in a usable, concise format.
+Avoid over-documenting — focus on what’s essential and actionable.
+Use AI and templates to reduce admin burden and ensure consistency.
+Tools: AI copilots, note-taking tools, KM templates
+Enabled by Consistent Format, Tools, & Use of Technology Across Assets
+*In alignment with Records retention policies
+**Exceptions made for critically sensitive information for legal purposes
+***The term “ONE Strategy document” reflects the intention to maintain a central, unified reference point per asset. This does not require copying or duplicating all content; a curated pointer document with links to approved materials can fulfil this expectation.
+39
+Appendix 3
+--- Slide 40 ---
+Ways of working*WORKSTREAM VALUE DELIVERY APPROACH: Organizing Workstreams to Deliver ONE Asset Strategy
+This represents a Way of Working (WoW) to support delivery of the ONE Asset Strategy. 
+*Workstreams are asset-specific, cross-functional groups activated to deliver strategic components. While not mandated or formally structured as Agile Value Teams, they apply Agile-inspired practices such as clear ownership, iterative delivery, and alignment to value
+  The AMLT develop ONE Asset Strategy by:
+Defining critical needs, priorities and deliverables for the asset based on lifecycle stage and strategic priorities
+(accountable: Co-Leads)
+1
+2
+Assigning appropriate resources:
+An AMLT Member Leads Workstream
+AMLT and AMETs partner to form strategy and plans (accountable: AMLT)
+3
+EXAMPLE: Actual structure will vary based on asset needs and phase.
+AMT Deliverable 1
+Target 
+Product Profile
+NPL
+Workstream Team
+AMT Deliverable 2
+AL
+Clinical Development Plan
+Workstream Team
+Illustrative Deliverable
+Illustrative Example
+Assigned Lead
+Example Workstream Team
+Activating focused workstreams to deliver those components, comprised of cross-functional members
+(accountable: AMLT)
+ONE ASSET STRATEGY
+**Workstreams reflect a flexible, Agile-inspired approach to support OKR delivery—designed to accommodate different stages of Agile adoption across teams. They apply key principles such as ownership, iteration, and value focus without requiring formal Agile structures.
+
+40
+Appendix 4
+--- Slide 41 ---
+Ways of workingHow We Work Together to Integrate Asset Deliverables: Activating and Aligning Workstreams to Inform Strategy
+1 - Patient Safety Decisions Must Be Made by Medically Qualified Individuals free from commercial bias to protect patients and maintain regulatory compliance
+Workstreams are not standalone. The Asset Deliverables co created in each workstream need to be integrated and aligned, to enable Assess Success
+Finalization & Integration
+Workstream deliverables are reviewed and endorsed by AMLT for alignment with the ONE Asset Strategy. Once approved, they are integrated into the overall plan to inform execution.
+Needs Are Prioritized
+The AMLT prioritize asset needs, form workstreams to deliver asset needs
+Workstream Co-Creation
+The Workstream team creates asset deliverables 
+Define Asset Needs & Expectations
+AMLT, with input from AMETs, define the One Asset Strategy and Asset Deliverables needed, 
+based on phase
+Resourcing
+AMT members are selected to work on select workstreams, based on expertise needed for the deliverable 
+Inform & Align
+Final Workstream deliverables and decisions are shared with full AMT, including AMLT and AMET
+1
+5
+2
+3
+4
+Feedback informs next cycle
+6
+41
+Appendix 5
+--- Slide 42 ---
+Quick Reference: Tools Supporting AMT Execution
+Tool	Purpose	Where to Use	Owner(s)	Update Cadence	Value / Benefit	Link 
+(click on image to access)
+E2E Community of Practice Site (COP)	Central hub for AMT model resources, tools, training materials, and updates	General reference across all AMT training and execution	E2E AMT Central Team	Reviewed quarterly; updated as needed to reflect latest materials	Provides easy access to all E2E materials in one place; supports onboarding, alignment, and self-service	
+AMT Roster	Tracks assigned AMT members by phase and function	AMT Activation: 
+Team Structure & Formation	AMT Co-Leads & Project Managers (in consultation with Functional Unit Leaders)	Updated at each phase transition or milestone	Ensures the right expertise is engaged at the right time; supports resourcing transparency and accountability	
+One Asset Strategy Document	Captures the overarching strategic framework for the asset	AMT Activation	AMT Leadership Team	Initiated at AMT formation; refreshed regularly through LOE	Aligns cross-functional planning and decision-making; communicates unified strategic intent	
+Asset Document Hub	Central access point for finalized planning documents	AMT Activation	Project Managers (maintenance); Co-Leads (oversight)	Ongoing updates; quarterly reviews or milestone-driven	Enables shared visibility and faster onboarding; promotes alignment and knowledge continuity	[Insert link]
+42
+Appendix 6
+--- Slide 43 ---
+List of AcronymsThis list of acronyms reflects terminology and definitions accurate at the time of publication. Users are advised to consult the most recent documentation or functional guidance for any updates or revisions.
+Acronym	Full Title
+ADME	Absorption / Distribution / Metabolism / Excretion
+AL	Asset Lead
+ALeX	Astellas Launch Excellence
+ALSAP	Asset Level Safety Assessment Plan
+AMT	Asset Maximization Team
+AMLT	Asset Maximization Leadership Team
+AMET	Asset Maximization Extended Team
+BD	Business Development
+BLA	Biologics License Application
+BOD	Biopharma & Ophthalmology Development 
+BP	Business Partner
+BRT	Benefit Risk Team
+CCDS	Core Company Data Sheet
+CDAP 	Clinical Development Authorisation Proposal
+CDP	Clinical Development Plan
+CMC	Chemistry, Manufacturing and Controls
+CMC-RA	Chemistry, Manufacturing & Controls Regulatory Affairs
+CMP	Core Medical Plan
+CN	Candidate Nomination
+CSR	Clinical Study Report
+CTD	Common Technical Document
+DCN	Development Compound Number
+DSUR	Development Safety Update Report
+EDTS	Early Development Translational Science
+EDTSL	Early Development Translational Science Lead
+E&C	Ethics and Compliance
+FiH	First in Human
+FDAP	Full Development Authorisation Proposal 
+FSD	First Subject Dosed
+GAVP HE	Global Access Value & Public Policies Health Economics
+GCMCL	Global Chemistry, Manufacturing & Controls Lead
+GCPL	Global Clinical Pharmacology Lead
+GDP	Global Development Plan
+GPML	Global Project Management Lead (Value Creation)
+Acronym	Full Title
+GML	Global Medical Lead
+GRL	Global Regulatory Lead
+GRSD	Global Regulatory Strategy Document
+GSBL	Global Strategic Brand Lead (Value Delivery)
+GTML	Global Translational Medicine Lead
+HCP	Healthcare Professional
+HTA	Health Technology Assessment
+iEGP	Integrated Evidence Generation Plan
+iEDP	Integrated Evidence Dissemination Plan
+iGBP	Integrated Global Brand Plan
+iGLF	Integrated Global Launch Framework
+IB	Investigator’s Brochure
+ICSR	Individual Case Safety Report
+IP	Intellectual Property
+KC	Kachi Committee
+LCM	Lifecycle Maintenance 
+MAA	Marketing Authorization Application
+MA-GSBL	Medical Affairs Global Strategic Brand Lead
+MA-NPP	Medical Affairs New Product Planning
+MA-VE	Medical Affairs Value Evidence
+MaX	Market Access
+MaX-NPP	Market Access New Product Planning
+NCSA	Non-Clinical Safety Assessment
+NDA	New Drug Application
+NPL	New Product Lead
+NPV	Net Present Value
+OD	Oncology Development
+PESAP	Product Evaluation System in Astellas Pharma
+PFLT	Primary Focus Leadership Team
+POC	Proof of Concept
+PQF	Project Quality Framework
+PV	Pharmacovigilance 
+QA	Quality Assurance
+RA	Regulatory Affairs
+Acronym	Full Title
+RL	Research Lead
+RSI	Reference Safety Information
+RWE	Real World Evidence
+RWDSL	Real-World Data Science Lead
+SDAP	Step Up Development Authorisation Proposal
+SFDG	Safe First Dosing Guidance
+SMT	Safety Management Team
+TPP	Target Product Profile
+TPL	Target Product Label
+VC	Value Creation
+VD	Value Delivery
+VE	Value Enablement
+43
+Appendix 7
+
+=== FILE 2: EDTSL Scenario Worksheet.txt ===
+
+Setting Expectations for Co-Leads and AMLT Members
+
+In this new model, Co-Lead and AMLT roles extend beyond tactical, function-specific responsibilities. These roles require an asset-first mindset and strategic forward thinking—proactively identifying opportunities, anticipating challenges, and driving recommendations rather than waiting for direction. 
+
+While AMLT members continue to bring deep functional expertise, they are now expected to elevate their perspective and represent the overall asset strategy, not just their individual functional priorities. Both Co-Leads and AMLT members should consistently consider “what’s next” and “how to maximize value for the asset”—without relying on task assignments or direction. 
+
+ 
+
+What This Means 
+
+AMLT Members 
+
+Translate functional strategies, opportunities, risks, and changes into clear implications for the asset, considering impacts on timelines, budgets, launch strategies, and clinical execution. 
+
+Collaborate across functions to ensure recommendations are informed by broader asset needs and aligned with the One Asset Strategy. 
+
+Co-Leads 
+
+Provide strategic leadership across the asset lifecycle by integrating inputs from AMLT members, extended teams, and stakeholders. 
+
+Ensure cross-functional alignment, facilitate decision-making, and maintain clarity on priorities and trade-offs. 
+
+Act as mentors and enablers to AMLT members, supporting their development into confident, enterprise-minded leaders. 
+
+ 
+
+Expectations When Bringing Recommendations 
+
+Recommendations presented to the AMLT should: 
+
+Reflect Collaboration 
+Impacts and options have already been discussed and aligned with relevant functions. 
+
+Demonstrate Integration 
+The recommendation clearly connects functional insights to the broader asset strategy and enterprise priorities. 
+
+Enable Decision-Making 
+Instead of presenting multiple options for the AMLT to choose from, recommendations should propose a well-considered, data-driven path forward, informed by cross-functional inputs and extended team contributions. 
+
+ 
+
+The Goal of the Model 
+
+This model empowers Co-Leads and AMLT members to act as strategic leaders, balancing deep functional expertise with an enterprise-wide, asset-focused view. By fostering proactive, integrated leadership, teams can drive asset success more effectively and deliver greater value across the organization. 
+
+
+
+
+Scenario for AMLT Training: Translating Functional Insight into Asset-Level Impact — Global Translational Medicine Lead (EDTS) 
+
+Context: 
+The Global Translational Medicine Lead (GTML) is a core member of the Asset Maximization Leadership Team (AMLT), responsible for integrating early clinical and biomarker insights and the translational medicine strategy into the asset strategy.  The translational medicine strategy focuses on informing and supporting clinical development by addressing key knowledge and data gaps identified in Product Quality Framework (PQF) assessments to improve the quality and speed of development. The GTML ensures that translational data not only advances scientific understanding but also informs trial design, dose selection, indication selection, regulatory strategy, and long-term asset differentiation. 
+
+Example Scenario: 
+During an EDTS Extended Team meeting, the GTML reviews interim biomarker data from an ongoing Phase 2 trial of Product AST-456, a small-molecule oncology therapy. Results show that a subset of patients with a specific genomic signature (high expression of Gene X) demonstrates markedly better response rates and progression-free survival compared to the overall trial population. 
+
+At the same time, exploratory safety biomarkers suggest that patients with a different profile (low Gene Y expression) may be at higher risk for hepatotoxicity, raising potential safety signal concerns. 
+
+
+
+GTML Role in the AMT Meeting: 
+The GTML comes to the AMLT prepared not just to present the biomarker findings, but to translate them into cross-functional asset-level implications. They should engage with relevant cross-functional teams beforehand to anticipate potential impacts and inform the discussion or contribute to recommendations — while recognizing that full cross-functional alignment may only be reached during the AMLT meeting, when all stakeholders are present and can weigh in together. See additional details below.  
+
+Clinical Development Strategy: Trial design may need to be adapted to stratify by Gene X expression, or to incorporate biomarker-based enrichment in upcoming Phase 3 studies, with the GTML partnering with Precision Medicine group to execute the gene signature as a diagnostic assay. 
+
+Regulatory Strategy: Regulators may expect companion diagnostic development or enrichment designs to substantiate claims of efficacy in biomarker-defined populations making close partnerships with Regulatory Affairs and Program Management critical. 
+
+Safety Monitoring: Additional risk-mitigation strategies may be needed for patients with low Gene Y expression, requiring closer collaboration with Safety and Clinical Operations. 
+
+Commercial & Medical Affairs: Targeted biomarker strategy may support differentiation versus competitors and inform early payer discussions, while also raising educational needs for clinicians. 
+
+Cross-Functional Dependencies: 
+
+		Clinical Operations: Adjust inclusion/exclusion criteria and site readiness for biomarker testing. 
+
+		Medical Writing, Clinical Operations, Pharmacovigilance:  Engage to update the Investigator’s Brochure (IB) 
+
+		Regulatory: Engage health authorities early on biomarker-driven strategy. 
+
+		Commercial: Revisit patient population assumptions and refine launch forecasts. 
+
+		Diagnostics/Partnerships: Explore feasibility of developing a companion diagnostic with external partners. 
+
+		Intellectual Property (IP) / Legal: secure freedom to operate, protect biomarker and assay innovations, and manage IP. 
+
+Strategic Decision Point: The AMT may need to decide whether to pivot to a biomarker-driven strategy, balancing risks (narrower patient pool, diagnostic development costs) against potential benefits (higher efficacy signal, competitive differentiation, regulatory advantage). 
+
+
+
+Why It Matters: 
+This scenario highlights the importance of the GTML not just as a generator of scientific data, but as a strategic partner who translates complex biomarker findings into decisions that directly shape asset strategy. By framing the scientific insights in terms of development design, regulatory impact, market differentiation, and cross-functional implications, the GTML enables the AMT to make informed, high-value choices about the future of the asset 
+
+
+
+Group Discussion Questions: 
+
+		What is your initial response to the scenario and expectations of the EDTSL? Is there anything that stands out? If yes, please provide details. 
+
+		How should the EDTSL engage with AMETs, Co-Leads and other AMLT members? What communication strategies can the Research Lead implement to ensure cross-functional collaboration? 
+
+		What challenges could the EDTSL potentially face in this scenario? What can be done to address those challenges (e.g., leadership support, identifying team members etc.)? 
+
+		How is this way of working different than what was done in the old model?
+
+=== FILE 3: Research Lead Scenario Worksheet.txt ===
+
+Setting Expectations for Co-Leads and AMLT Members
+
+In this new model, Co-Lead and AMLT roles extend beyond tactical, function-specific responsibilities. These roles require an asset-first mindset and strategic forward thinking—proactively identifying opportunities, anticipating challenges, and driving recommendations rather than waiting for direction.
+
+While AMLT members continue to bring deep functional expertise, they are now expected to elevate their perspective and represent the overall asset strategy, not just their individual functional priorities. Both Co-Leads and AMLT members should consistently consider “what’s next” and “how to maximize value for the asset”—without relying on task assignments or direction.
+
+
+
+What This Means
+
+AMLT Members
+
+Translate functional strategies, opportunities, risks, and changes into clear implications for the asset, considering impacts on timelines, budgets, launch strategies, and clinical execution.
+
+Collaborate across functions to ensure recommendations are informed by broader asset needs and aligned with the One Asset Strategy.
+
+Co-Leads
+
+Provide strategic leadership across the asset lifecycle by integrating inputs from AMLT members, extended teams, and stakeholders.
+
+Ensure cross-functional alignment, facilitate decision-making, and maintain clarity on priorities and trade-offs.
+
+Act as mentors and enablers to AMLT members, supporting their development into confident, enterprise-minded leaders.
+
+
+
+Expectations When Bringing Recommendations
+
+Recommendations presented to the AMLT should:
+
+Reflect Collaboration
+Impacts and options have already been discussed and aligned with relevant functions.
+
+Demonstrate Integration
+The recommendation clearly connects functional insights to the broader asset strategy and enterprise priorities.
+
+Enable Decision-Making
+Instead of presenting multiple options for the AMLT to choose from, recommendations should propose a well-considered, data-driven path forward, informed by cross-functional inputs and extended team contributions.
+
+
+
+The Goal of the Model
+
+This model empowers Co-Leads and AMLT members to act as strategic leaders, balancing deep functional expertise with an enterprise-wide, asset-focused view. By fostering proactive, integrated leadership, teams can drive asset success more effectively and deliver greater value across the organization.
+
+
+
+
+Scenario-1 for AMLT Training: Translating Functional Insight into Asset-Level Impact — Research Lead
+
+Context:
+The Research Lead (RL) is a core member of the Asset Maximization Leadership Team (AMLT), responsible for bringing forward preclinical and discovery-stage insights that inform the clinical development path, target validation, and long-term differentiation strategy for the asset. The Research Lead is an AMT Co-Lead from Asset Maximization Team (AMT) formation until First-Subject Dosed (FSD) and then transitions to an AMLT member.
+
+Example Scenario:
+During a Research Extended Team (RET) meeting, the RL reviews newly generated preclinical data on Product AST-789, a novel immunotherapy currently transitioning from Phase 1 to Phase 2 development. Data from in vivo models show a strong synergistic effect when AST-789 is combined with an existing checkpoint inhibitor. However, the same studies also reveal an unexpected dose-dependent cytokine release profile in non-human primates, suggesting potential safety risks at higher exposures.
+
+Product AST-789 has multiple tumor-type indications under consideration, with high expectations to become a backbone therapy in immuno-oncology. The asset is also under external scrutiny due to competitive programs advancing rapidly with similar mechanisms of action.
+
+Research Lead Role in the AMT Meeting:
+The RL comes to the AMLT prepared not only to share data but to frame its asset-level implications. They should engage with relevant cross-functional teams beforehand to anticipate potential impacts and inform the discussion or contribute to recommendations — while recognizing that full cross-functional alignment may only be reached during the AMLT meeting, when all stakeholders are present and can weigh in together. See additional details below. 
+
+Clinical Development Strategy: Should Phase 2 trial designs incorporate the combination strategy earlier to maximize differentiation?
+
+Safety Considerations: Translational safety signals may require tighter dose-escalation and monitoring in clinical protocols, impacting trial timelines and design.
+
+Competitive Landscape: Early synergy data may provide a unique competitive edge if leveraged quickly in trial planning.
+
+Cross-Functional Dependencies:
+
+Development: Protocols would need to be adapted to include combination cohorts or stratified dosing. 
+
+Regulatory: Need to engage regulators early on rationale for combination and dose monitoring.
+
+Commercial: Reassess target product profile (TPP) positioning versus competitors.
+
+Medical Affairs: Prepare external engagement strategy highlighting novel biology and differentiation.
+
+Translational Medicine: determine if the biomarker plan should be modified to monitor cytokine production 
+
+Strategic Decision Point: The AMT may need to decide whether to prioritize combination studies despite added complexity and cost or continue with monotherapy to accelerate timelines and reduce risk. 
+
+Why It Matters:
+This scenario illustrates how the Research Lead must bridge early scientific insights with asset strategy. By translating preclinical opportunities and risks into clinical, regulatory, and commercial terms, the RL helps the AMT make informed choices that balance innovation, safety, competitive positioning, and asset value.
+
+Group Discussion Questions: 
+
+		What is your initial response to the scenario and expectations of the Research Lead? Is there anything that stands out? If yes, please provide details. 
+
+		How should the Research Lead engage with AMETs, Co-Leads and other AMLT members? What communication strategies can the Research Lead implement to ensure cross-functional collaboration? 
+
+		What challenges could the Research Lead potentially face in this scenario? What can be done to address those challenges (e.g., leadership support, identifying team members, etc.)? 
+
+		How is this way of working different than what was done in the old model?

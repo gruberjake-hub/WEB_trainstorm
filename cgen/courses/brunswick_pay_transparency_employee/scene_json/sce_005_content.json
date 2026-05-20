@@ -1,0 +1,58 @@
+{
+  "scene_id": "sce_005",
+  "module": "Module 1: How Pay Works at Brunswick",
+  "title": "Interaction: Where Might You Be in Your Range?",
+  "delivery": "storyline_interaction",
+  "elements": {
+    "Head_01": {
+      "type": "Head",
+      "intent": "orient",
+      "text": "Where Might You Be in Your Range?",
+      "text_primitive": "Headline",
+      "motion_primitive": "None",
+      "layout_primitive": "InteractionTitle",
+      "style_ref": "head-primary"
+    },
+    "Statement_01": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "Each zone reflects different circumstances—there's no wrong place to be.",
+      "text_primitive": "Statement",
+      "motion_primitive": "None",
+      "layout_primitive": "InstructionText",
+      "style_ref": "statement-primary"
+    }
+  },
+  "narration": {
+    "text": "Take a moment to think about where you might be in your pay range. Each zone reflects different circumstances—there's no wrong place to be. Select each card to explore what it typically reflects, then continue when you're ready.",
+    "audio_file": "sce_005_vo.wav"
+  },
+  "visual_notes": [
+    "Three click-to-reveal zone cards: Lower Range / Midpoint / Upper Range."
+  ],
+  "interaction": {
+    "interaction_primitive": "ClickToRevealCards",
+    "gating": "continue_after_all_visited",
+    "cards": [
+      {
+        "id": "lower_range",
+        "label": "Lower Range",
+        "reveal_text": "Often reflects someone newer to the role, recently promoted, or still building skills and tenure."
+      },
+      {
+        "id": "midpoint",
+        "label": "Midpoint",
+        "reveal_text": "Represents market-competitive pay for someone performing well in the role."
+      },
+      {
+        "id": "upper_range",
+        "label": "Upper Range",
+        "reveal_text": "Typically reflects sustained high performance, specialized skills, and deeper tenure in the role."
+      }
+    ]
+  },
+  "render": {
+    "storyline_slide": "sce_005",
+    "review_required": true
+  }
+}

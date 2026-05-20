@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "courseId": "alsap-demo",
+    "version": "1.1",
+    "brand": "astellas",
+    "theme": "default",
+    "tone": "clear-confident-human",
+    "density": "medium",
+    "visualStyle": "clean-didactic",
+    "narrationMode": "scene-based",
+    "motionMode": "hybrid",
+    "interactionMode": "light"
+  },
+  "scenes": [
+    {
+      "id": "s1",
+      "title": "What Is ALSAP?",
+      "sceneIntent": "orient",
+      "learningRole": "concept-introduction",
+      "learnerOutcome": "Learner understands what ALSAP is and why this course exists.",
+      "elements": [
+        {
+          "id": "s1_head_01",
+          "type": "Head",
+          "text": "What Is ALSAP?",
+          "modalityHint": "text-only"
+        },
+        {
+          "id": "s1_para_01",
+          "type": "Paragraph",
+          "text": "ALSAP is a structured way to think about important workplace conversations so that managers can approach them with greater clarity, consistency, and purpose.",
+          "modalityHint": "text-only"
+        },
+        {
+          "id": "s1_para_02",
+          "type": "Paragraph",
+          "text": "This course introduces the framework, explains what each part is meant to help you do, and gives you a simple way to test your understanding before you apply it in practice.",
+          "modalityHint": "text-only"
+        },
+        {
+          "id": "s1_impact_01",
+          "type": "Impact",
+          "text": "This is not just a model to remember. It is a way to handle moments that matter.",
+          "modalityHint": "emphasis-possible"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "title": "Why These Moments Matter",
+      "sceneIntent": "persuade",
+      "learningRole": "concept-development",
+      "learnerOutcome": "Learner recognizes that the quality of these conversations affects trust, clarity, and outcomes.",
+      "elements": [
+        {
+          "id": "s2_head_01",
+          "type": "Head",
+          "text": "Why These Moments Matter",
+          "modalityHint": "text-only"
+        },
+        {
+          "id": "s2_para_01",
+          "type": "Paragraph",
+          "text": "Managers are often asked to handle conversations that carry real emotional, professional, and organizational weight. In those moments, a vague or reactive approach can create confusion, defensiveness, or missed opportunities.",
+          "modalityHint": "text-only"
+        },
+        {
+          "id": "s2_statement_01",
+          "type": "Statement",
+          "text": "The point is not to sound scripted. The point is to think more clearly under pressure.",
+          "modalityHint": "contrast-possible"
+        },
+        {
+          "id": "s2_para_02",
+          "type": "Paragraph",
+          "text": "ALSAP gives you a repeatable structure for approaching these moments with more intention, so that the conversation serves both the person and the purpose.",
+          "modalityHint": "text-only"
+        },
+        {
+          "id": "s2_impact_01",
+          "type": "Impact",
+          "text": "Handled well, these conversations build trust. Handled poorly, they can quietly erode it.",
+          "modalityHint": "emphasis-possible"
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "title": "The ALSAP Framework",
+      "sceneIntent": "organize",
+      "learningRole": "concept-development",
+      "learnerOutcome": "Learner can identify the major parts of the ALSAP framework as a structured sequence.",
+      "elements": [
+        {
+          "id": "s3_head_01",
+          "type": "Head",
+          "text": "The ALSAP Framework",
+          "modalityHint": "text-only"
+        },
+        {
+          "id": "s3_para_01",
+          "type": "Paragraph",
+          "text": "ALSAP is easier to use when you see it as a sequence of moves rather than as a list of abstract terms. Each part plays a different role in helping a conversation move forward productively.",
+          "modalityHint": "diagram-possible"
+        },
+        {
+          "id": "s3_list_01",
+          "type": "List",
+          "modalityHint": "structured-visual-possible",
+          "items": [
+            {
+              "id": "s3_item_01",
+              "title": "A — Assess",
+              "body": "Take stock of the situation before reacting. What is happening, what is at stake, and what context matters?"
+            },
+            {
+              "id": "s3_item_02",
+              "title": "L — Listen",
+              "body": "Make space to understand the other person's perspective rather than rushing to your own conclusion."
+            },
+            {
+              "id": "s3_item_03",
+              "title": "S — Specify",
+              "body": "Clarify the issue, expectation, or concern in concrete terms so the conversation stays grounded."
+            },
+            {
+              "id": "s3_item_04",
+              "title": "A — Align",
+              "body": "Create shared understanding around what matters, what good looks like, and what both parties are working toward."
+            },
+            {
+              "id": "s3_item_05",
+              "title": "P — Proceed",
+              "body": "Move toward the next right action so the conversation leads somewhere useful rather than ending as vague discussion."
+            }
+          ]
+        },
+        {
+          "id": "s3_impact_01",
+          "type": "Impact",
+          "text": "The value of ALSAP is not in memorizing the letters. It is in using the sequence to think and act with greater intention.",
+          "modalityHint": "emphasis-possible"
+        }
+      ]
+    },
+{
+  "id": "s4",
+  "title": "What Each Part Helps You Do",
+  "sceneIntent": "explain",
+  "learningRole": "concept-development",
+  "learnerOutcome": "Learner understands the practical function of each ALSAP step.",
+  "elements": [
+    {
+      "id": "s4_head_01",
+      "type": "Head",
+      "text": "What Each Part Helps You Do",
+      "modalityHint": "text-only"
+    },
+    {
+      "id": "s4_para_01",
+      "type": "Paragraph",
+      "text": "ALSAP is most useful when you understand what each part is helping you do in the moment, not just what each letter stands for.",
+      "modalityHint": "text-only"
+    },
+    {
+      "id": "s4_list_01",
+      "type": "List",
+      "modalityHint": "structured-visual-possible",
+      "items": [
+        {
+          "id": "s4_item_01",
+          "title": "Assess",
+          "body": "Helps you slow down and understand the situation before reacting."
+        },
+        {
+          "id": "s4_item_02",
+          "title": "Listen",
+          "body": "Helps you understand the other person’s perspective more fully."
+        },
+        {
+          "id": "s4_item_03",
+          "title": "Specify",
+          "body": "Helps you clarify what matters so the conversation stays focused."
+        },
+        {
+          "id": "s4_item_04",
+          "title": "Align",
+          "body": "Helps you build shared understanding around expectations and outcomes."
+        },
+        {
+          "id": "s4_item_05",
+          "title": "Proceed",
+          "body": "Helps you move toward a clear next step instead of leaving things unresolved."
+        }
+      ]
+    },
+    {
+      "id": "s4_impact_01",
+      "type": "Impact",
+      "text": "Each step is a way of thinking, not just a step to complete.",
+      "modalityHint": "emphasis-possible"
+    }
+  ]
+},
+{
+  "id": "s5",
+  "title": "What Good Use Looks Like",
+  "sceneIntent": "contextualize",
+  "learningRole": "application-framing",
+  "learnerOutcome": "Learner can distinguish between thoughtful and superficial use of ALSAP.",
+  "elements": [
+    {
+      "id": "s5_head_01",
+      "type": "Head",
+      "text": "What Good Use Looks Like",
+      "modalityHint": "text-only"
+    },
+    {
+      "id": "s5_para_01",
+      "type": "Paragraph",
+      "text": "In practice, ALSAP is not something you recite. It is something that shapes how you think and respond during a conversation.",
+      "modalityHint": "text-only"
+    },
+    {
+      "id": "s5_statement_01",
+      "type": "Statement",
+      "text": "Using ALSAP well means being intentional, not mechanical.",
+      "modalityHint": "contrast-possible"
+    },
+    {
+      "id": "s5_para_02",
+      "type": "Paragraph",
+      "text": "A superficial approach treats ALSAP as a checklist. A thoughtful approach uses it to guide judgment in real time, adjusting based on the situation and the person.",
+      "modalityHint": "text-only"
+    },
+    {
+      "id": "s5_impact_01",
+      "type": "Impact",
+      "text": "The difference shows up in how the other person experiences the conversation.",
+      "modalityHint": "emphasis-possible"
+    }
+  ]
+},
+{
+  "id": "s6",
+  "title": "Check Your Understanding",
+  "sceneIntent": "check",
+  "learningRole": "knowledge-check",
+  "learnerOutcome": "Learner can correctly identify the purpose and use of ALSAP.",
+  "elements": [
+    {
+      "id": "s6_head_01",
+      "type": "Head",
+      "text": "Check Your Understanding",
+      "modalityHint": "text-only"
+    },
+    {
+      "id": "s6_mcq_01",
+      "type": "MCQ",
+      "question": "What is the primary purpose of ALSAP?",
+      "options": [
+        {
+          "id": "a",
+          "text": "To provide a script for difficult conversations",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "To guide how you think and respond during important conversations",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "To document conversations for compliance purposes",
+          "correct": false
+        }
+      ],
+      "feedback": {
+        "correct": "Correct. ALSAP is meant to guide thinking, not prescribe exact wording.",
+        "incorrect": "Not quite. ALSAP is about shaping your approach, not scripting your words."
+      },
+      "modalityHint": "text-only"
+    },
+    {
+      "id": "s6_mcq_02",
+      "type": "MCQ",
+      "question": "Which of the following reflects strong use of ALSAP?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Following each step exactly as written without adapting",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Using the structure to guide judgment while adapting to the situation",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Skipping steps to keep the conversation short",
+          "correct": false
+        }
+      ],
+      "feedback": {
+        "correct": "Correct. Strong use of ALSAP is flexible and responsive.",
+        "incorrect": "Think about how ALSAP supports judgment rather than rigid execution."
+      },
+      "modalityHint": "text-only"
+    }
+  ]
+},
+{
+  "id": "s7",
+  "title": "What to Take Forward",
+  "sceneIntent": "reinforce",
+  "learningRole": "summary",
+  "learnerOutcome": "Learner leaves with a clear and usable understanding of ALSAP.",
+  "elements": [
+    {
+      "id": "s7_head_01",
+      "type": "Head",
+      "text": "What to Take Forward",
+      "modalityHint": "text-only"
+    },
+    {
+      "id": "s7_para_01",
+      "type": "Paragraph",
+      "text": "ALSAP is a way to approach conversations with more clarity, intention, and consistency. It helps you think more effectively when the moment matters.",
+      "modalityHint": "text-only"
+    },
+    {
+      "id": "s7_list_01",
+      "type": "List",
+      "modalityHint": "structured-visual-possible",
+      "items": [
+        {
+          "id": "s7_item_01",
+          "title": "It is a structure",
+          "body": "A sequence that helps organize your thinking."
+        },
+        {
+          "id": "s7_item_02",
+          "title": "It is flexible",
+          "body": "A guide you adapt to the situation, not a script you follow rigidly."
+        },
+        {
+          "id": "s7_item_03",
+          "title": "It is practical",
+          "body": "A tool you can use immediately in real conversations."
+        }
+      ]
+    },
+    {
+      "id": "s7_impact_01",
+      "type": "Impact",
+      "text": "The goal is not to remember ALSAP. The goal is to use it.",
+      "modalityHint": "emphasis-possible"
+    }
+  ]
+}
+  ]
+}

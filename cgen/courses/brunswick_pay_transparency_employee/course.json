@@ -1,0 +1,726 @@
+{
+  "course_id": "brunswick_pay_transparency_employee_awareness",
+  "schema_version": "course.v0.2",
+  "title": "Pay Transparency at Brunswick: What It Means for You",
+  "status": "draft_pending_sme_review",
+  "audience": "All Employees — U.S. and EU",
+  "duration_estimate_min": 12,
+  "source_reference": "Adapted from Pay Transparency Education — Manager & HR eLearning Script",
+  "learning_objectives": [
+    "Describe Brunswick's compensation philosophy and the three principles behind pay decisions.",
+    "Understand how pay ranges are structured and what their position within a range reflects.",
+    "Identify the individual factors that shape their pay within a range.",
+    "Explain how base pay fits within the full scope of their total rewards.",
+    "Name specific questions they can bring to their manager or HR about their own pay situation."
+  ],
+  "build_strategy": {
+    "presentation_renderer": "After Effects",
+    "interaction_shell": "Storyline",
+    "ae_render_policy": "Render didactic/presentation scenes as video segments. Build interaction and quiz scenes directly in Storyline for now.",
+    "storyline_only_scene_ids": [
+      "sce_005",
+      "sce_009",
+      "knowledge_check"
+    ],
+    "scene_file_contract": {
+      "ae_comp_name_pattern": "sce_###",
+      "scene_json_pattern": "sce_###_content.json",
+      "vo_audio_pattern": "sce_###_vo.wav",
+      "render_output_pattern": "sce_###.mp4"
+    }
+  },
+  "scenes": [
+    {
+      "scene_id": "sce_001",
+      "module": "Introduction",
+      "title": "Welcome",
+      "delivery": "ae_render",
+      "elements": {
+        "Head_01": {
+          "type": "Head",
+          "intent": "orient",
+          "text": "Pay Transparency at Brunswick",
+          "text_primitive": "Headline",
+          "motion_primitive": "GlassReveal",
+          "layout_primitive": "TitleCard",
+          "style_ref": "head-primary"
+        },
+        "SubHead_01": {
+          "type": "SubHead",
+          "intent": "refine",
+          "text": "What It Means for You",
+          "text_primitive": "Subheadline",
+          "motion_primitive": "FadeUp",
+          "layout_primitive": "UnderHead",
+          "style_ref": "subhead-primary"
+        },
+        "Statement_01": {
+          "type": "Statement",
+          "intent": "assert",
+          "text": "Pay ranges now appear on all U.S. job postings.",
+          "text_primitive": "Statement",
+          "motion_primitive": "GlassReveal",
+          "layout_primitive": "CenterStatement",
+          "style_ref": "statement-primary"
+        }
+      },
+      "narration": {
+        "text": "Welcome. Brunswick has made changes to how we share information about pay. Starting January 1, 2025, pay ranges now appear on all U.S. job postings. Whether you've already noticed this or you're hearing about it for the first time, this short module explains what it means—and what you can do with that information.",
+        "audio_file": "sce_001_vo.wav"
+      },
+      "visual_notes": [
+        "Module title card.",
+        "~10-minute badge."
+      ],
+      "render": {
+        "ae_comp": "sce_001",
+        "output_file": "sce_001.mp4",
+        "review_required": true
+      }
+    },
+    {
+      "scene_id": "sce_002",
+      "module": "Module 1: How Pay Works at Brunswick",
+      "title": "What's Changing",
+      "delivery": "ae_render",
+      "elements": {
+        "Head_01": {
+          "type": "Head",
+          "intent": "orient",
+          "text": "What's Changing",
+          "text_primitive": "Headline",
+          "motion_primitive": "LineReveal",
+          "layout_primitive": "TopLeftTitle",
+          "style_ref": "head-primary"
+        },
+        "Callout_01": {
+          "type": "Statement",
+          "intent": "support",
+          "text": "U.S. job postings: January 1, 2025",
+          "text_primitive": "DateCallout",
+          "motion_primitive": "MarkerPop",
+          "layout_primitive": "DateCalloutLeft",
+          "style_ref": "callout-date"
+        },
+        "Callout_02": {
+          "type": "Statement",
+          "intent": "support",
+          "text": "EU transparency changes: June 2026",
+          "text_primitive": "DateCallout",
+          "motion_primitive": "MarkerPop",
+          "layout_primitive": "DateCalloutRight",
+          "style_ref": "callout-date"
+        },
+        "Impact_01": {
+          "type": "Impact",
+          "intent": "persuade",
+          "text": "Brunswick made a consistent business decision: post ranges on all U.S. jobs.",
+          "text_primitive": "EmphasisLine",
+          "motion_primitive": "FocusReveal",
+          "layout_primitive": "CenterEmphasis",
+          "style_ref": "impact-emphasis"
+        }
+      },
+      "narration": {
+        "text": "Starting January 2025, all U.S. Brunswick job postings include the pay range for that role. This wasn't a surprise decision—multiple states now require it by law. Rather than manage different requirements state by state, Brunswick made a consistent business decision: post ranges on all U.S. jobs. If you work in Europe, there are additional transparency changes coming in June 2026 under the EU Pay Transparency Directive. Your local HR team will share more when that time comes.",
+        "audio_file": "sce_002_vo.wav"
+      },
+      "visual_notes": [
+        "Pay range visibility.",
+        "Two date callouts: Jan 1, 2025 (U.S.) and June 2026 (EU)."
+      ],
+      "asset_reuse": [
+        {
+          "source": "Manager module",
+          "scene": "Scene 7",
+          "description": "The Pay Transparency Landscape visual/VO callout treatment"
+        }
+      ],
+      "render": {
+        "ae_comp": "sce_002",
+        "output_file": "sce_002.mp4",
+        "review_required": true
+      }
+    },
+    {
+      "scene_id": "sce_003",
+      "module": "Module 1: How Pay Works at Brunswick",
+      "title": "Three Principles Behind Every Pay Decision",
+      "delivery": "ae_render",
+      "elements": {
+        "Head_01": {
+          "type": "Head",
+          "intent": "orient",
+          "text": "Three Principles Behind Every Pay Decision",
+          "text_primitive": "Headline",
+          "motion_primitive": "GlassReveal",
+          "layout_primitive": "TopTitle",
+          "style_ref": "head-primary"
+        },
+        "List_01": {
+          "type": "List",
+          "intent": "structure",
+          "text": "Market-Competitive Benchmarking\\nExternal & Internal Equity\\nPay Linked to Performance",
+          "text_primitive": "NumberedList",
+          "motion_primitive": "MarkerStaggerReveal",
+          "layout_primitive": "ThreePillarCards",
+          "style_ref": "content-list"
+        },
+        "Impact_01": {
+          "type": "Impact",
+          "intent": "persuade",
+          "text": "No single factor determines your pay.",
+          "text_primitive": "EmphasisLine",
+          "motion_primitive": "FocusReveal",
+          "layout_primitive": "BottomEmphasis",
+          "style_ref": "impact-emphasis"
+        }
+      },
+      "narration": {
+        "text": "Before we look at what these changes mean for you, it helps to understand how Brunswick sets pay in the first place. Every compensation decision is guided by three principles. First: We benchmark against real market data from reputable third-party surveys in which we participate along with hundreds of other companies—not guesswork, not arbitrary numbers. Second: We balance what the market pays with fairness inside Brunswick, so people doing similar work are compensated similarly. Third: Pay is connected to performance. Your ratings and contributions influence how you progress through your pay range over time. These three principles work together. No single factor determines your pay.",
+        "audio_file": "sce_003_vo.wav"
+      },
+      "visual_notes": [
+        "Three numbered pillar cards: 01 Market-Competitive Benchmarking / 02 External & Internal Equity / 03 Pay Linked to Performance."
+      ],
+      "asset_reuse": [
+        {
+          "source": "Manager module",
+          "scene": "Scene 3",
+          "description": "Compensation Philosophy Overview visual/VO"
+        }
+      ],
+      "render": {
+        "ae_comp": "sce_003",
+        "output_file": "sce_003.mp4",
+        "review_required": true
+      }
+    },
+    {
+      "scene_id": "sce_004",
+      "module": "Module 1: How Pay Works at Brunswick",
+      "title": "How Pay Ranges Are Structured",
+      "delivery": "ae_render",
+      "elements": {
+        "Head_01": {
+          "type": "Head",
+          "intent": "orient",
+          "text": "How Pay Ranges Are Structured",
+          "text_primitive": "Headline",
+          "motion_primitive": "GlassReveal",
+          "layout_primitive": "TopTitle",
+          "style_ref": "head-primary"
+        },
+        "List_01": {
+          "type": "List",
+          "intent": "structure",
+          "text": "Minimum\\nMidpoint\\nMaximum",
+          "text_primitive": "RangeLabels",
+          "motion_primitive": "RangeBarReveal",
+          "layout_primitive": "RangeBar",
+          "style_ref": "range-labels"
+        },
+        "Statement_01": {
+          "type": "Statement",
+          "intent": "assert",
+          "text": "The midpoint represents market-competitive pay for someone performing well in that role.",
+          "text_primitive": "Statement",
+          "motion_primitive": "FocusReveal",
+          "layout_primitive": "MidpointCallout",
+          "style_ref": "statement-primary"
+        },
+        "Statement_02": {
+          "type": "Statement",
+          "intent": "support",
+          "text": "Being at midpoint means you're paid fairly compared to similar roles at other companies.",
+          "text_primitive": "Statement",
+          "motion_primitive": "FadeUp",
+          "layout_primitive": "BodyCallout",
+          "style_ref": "statement-secondary"
+        }
+      },
+      "narration": {
+        "text": "Every role at Brunswick has a pay range with a minimum, midpoint, and maximum. The midpoint is key: it represents market-competitive pay for someone performing well in that role. Being at midpoint isn't average in a negative sense—it means you're paid fairly compared to what similar roles earn at other companies. People at the lower end of a range are often newer to the role or recently promoted—they're building skills and tenure. People near the top typically have many years of sustained high performance and specialized skills. Ranges also vary by location. Costs of labor differ by geography, so the same grade in an urban area may have a different range than in a rural location. This isn't a fairness question—it's a reflection of different labor markets.",
+        "audio_file": "sce_004_vo.wav"
+      },
+      "visual_notes": [
+        "Three-zone range bar — Minimum / Midpoint / Maximum — with descriptor cards below each zone."
+      ],
+      "asset_reuse": [
+        {
+          "source": "Manager module",
+          "scene": "Scene 4",
+          "description": "How Pay Ranges Are Determined range bar visual/VO"
+        }
+      ],
+      "render": {
+        "ae_comp": "sce_004",
+        "output_file": "sce_004.mp4",
+        "review_required": true
+      }
+    },
+    {
+      "scene_id": "sce_005",
+      "module": "Module 1: How Pay Works at Brunswick",
+      "title": "Interaction: Where Might You Be in Your Range?",
+      "delivery": "storyline_interaction",
+      "elements": {
+        "Head_01": {
+          "type": "Head",
+          "intent": "orient",
+          "text": "Where Might You Be in Your Range?",
+          "text_primitive": "Headline",
+          "motion_primitive": "None",
+          "layout_primitive": "InteractionTitle",
+          "style_ref": "head-primary"
+        },
+        "Statement_01": {
+          "type": "Statement",
+          "intent": "support",
+          "text": "Each zone reflects different circumstances—there's no wrong place to be.",
+          "text_primitive": "Statement",
+          "motion_primitive": "None",
+          "layout_primitive": "InstructionText",
+          "style_ref": "statement-primary"
+        }
+      },
+      "narration": {
+        "text": "Take a moment to think about where you might be in your pay range. Each zone reflects different circumstances—there's no wrong place to be. Select each card to explore what it typically reflects, then continue when you're ready.",
+        "audio_file": "sce_005_vo.wav"
+      },
+      "visual_notes": [
+        "Three click-to-reveal zone cards: Lower Range / Midpoint / Upper Range."
+      ],
+      "interaction": {
+        "interaction_primitive": "ClickToRevealCards",
+        "gating": "continue_after_all_visited",
+        "cards": [
+          {
+            "id": "lower_range",
+            "label": "Lower Range",
+            "reveal_text": "Often reflects someone newer to the role, recently promoted, or still building skills and tenure."
+          },
+          {
+            "id": "midpoint",
+            "label": "Midpoint",
+            "reveal_text": "Represents market-competitive pay for someone performing well in the role."
+          },
+          {
+            "id": "upper_range",
+            "label": "Upper Range",
+            "reveal_text": "Typically reflects sustained high performance, specialized skills, and deeper tenure in the role."
+          }
+        ]
+      },
+      "render": {
+        "storyline_slide": "sce_005",
+        "review_required": true
+      }
+    },
+    {
+      "scene_id": "sce_006",
+      "module": "Module 1: How Pay Works at Brunswick",
+      "title": "What Shapes Where You Fall in Your Range",
+      "delivery": "ae_render",
+      "elements": {
+        "Head_01": {
+          "type": "Head",
+          "intent": "orient",
+          "text": "What Shapes Where You Fall in Your Range",
+          "text_primitive": "Headline",
+          "motion_primitive": "GlassReveal",
+          "layout_primitive": "TopTitle",
+          "style_ref": "head-primary"
+        },
+        "List_01": {
+          "type": "List",
+          "intent": "structure",
+          "text": "Performance\\nSkills & Experience\\nEducation\\nRole Complexity\\nGeographic Location\\nTenure in Role",
+          "text_primitive": "GridList",
+          "motion_primitive": "MarkerStaggerReveal",
+          "layout_primitive": "SixFactorGrid",
+          "style_ref": "content-grid"
+        },
+        "Impact_01": {
+          "type": "Impact",
+          "intent": "persuade",
+          "text": "A posted range tells you where the role sits. Your individual factors determine where you are within that range.",
+          "text_primitive": "EmphasisLine",
+          "motion_primitive": "FocusReveal",
+          "layout_primitive": "BottomEmphasis",
+          "style_ref": "impact-emphasis"
+        }
+      },
+      "narration": {
+        "text": "Within your pay range, several factors shape exactly where you fall. Performance matters—but it's not the only factor. Two people in the same role can have different pay for entirely legitimate reasons. One may have been hired when market rates were different. One may have specialized certifications the other doesn't. One may have more years in the role with a sustained track record of strong performance. This is why seeing a pay range on a job posting doesn't tell you whether you personally are paid fairly—it tells you the range your role sits in. Your individual factors determine where you are within that range.",
+        "audio_file": "sce_006_vo.wav"
+      },
+      "visual_notes": [
+        "Six-factor grid: Performance / Skills & Experience / Education / Role Complexity / Geographic Location / Tenure in Role."
+      ],
+      "asset_reuse": [
+        {
+          "source": "Manager module",
+          "scene": "Scene 5",
+          "description": "What Determines Individual Pay factors visual/VO"
+        }
+      ],
+      "render": {
+        "ae_comp": "sce_006",
+        "output_file": "sce_006.mp4",
+        "review_required": true
+      }
+    },
+    {
+      "scene_id": "sce_007",
+      "module": "Module 1: How Pay Works at Brunswick",
+      "title": "Base Pay and Your Total Rewards",
+      "delivery": "ae_render",
+      "elements": {
+        "Head_01": {
+          "type": "Head",
+          "intent": "orient",
+          "text": "Base Pay and Your Total Rewards",
+          "text_primitive": "Headline",
+          "motion_primitive": "GlassReveal",
+          "layout_primitive": "TopTitle",
+          "style_ref": "head-primary"
+        },
+        "Statement_01": {
+          "type": "Statement",
+          "intent": "assert",
+          "text": "Base pay is only one part of how Brunswick compensates you.",
+          "text_primitive": "Statement",
+          "motion_primitive": "FocusReveal",
+          "layout_primitive": "CenterStatement",
+          "style_ref": "statement-primary"
+        },
+        "List_01": {
+          "type": "List",
+          "intent": "structure",
+          "text": "Base salary\\nIncentive compensation\\nHealth, dental, and vision benefits\\nLife insurance\\nRetirement contributions and 401(k) matching\\nWellness, EAP, paid time off, and other offerings",
+          "text_primitive": "BulletList",
+          "motion_primitive": "MarkerStaggerReveal",
+          "layout_primitive": "TotalRewardsWheel",
+          "style_ref": "content-list"
+        },
+        "Impact_01": {
+          "type": "Impact",
+          "intent": "persuade",
+          "text": "A posted range reflects base pay only. It is useful—but incomplete—when thinking about full compensation.",
+          "text_primitive": "EmphasisLine",
+          "motion_primitive": "FocusReveal",
+          "layout_primitive": "BottomEmphasis",
+          "style_ref": "impact-emphasis"
+        },
+        "Callout_01": {
+          "type": "Statement",
+          "intent": "support",
+          "text": "View your Total Rewards Statement in Workday under Benefits and Pay.",
+          "text_primitive": "SystemCallout",
+          "motion_primitive": "MarkerPop",
+          "layout_primitive": "WorkdayCallout",
+          "style_ref": "callout-system"
+        }
+      },
+      "narration": {
+        "text": "Base pay is the number that gets talked about most in pay transparency conversations—and that makes sense. It's what shows on your paycheck, and it's what you see posted on job listings. But base pay is only one part of how Brunswick compensates you. Your total rewards picture includes several other components. In addition to your base salary, you may receive incentive compensation—bonuses or other variable pay tied to your performance, your role, and company results. Brunswick also invests significantly in your benefits: health, dental, and vision coverage, life insurance, and retirement contributions including 401(k) matching. Wellness programs, employee assistance resources, paid time off, and other company-provided offerings round out the picture. Together, these components represent the full value of your employment relationship with Brunswick. The gap between what appears on your paycheck and what Brunswick invests in you is often larger than people realize. Why does this matter for pay transparency? Because when you see a pay range on a job posting—at Brunswick or anywhere else—that range reflects base pay only. It's a useful reference point for understanding where a role sits in the market. But it's an incomplete comparison if you're thinking about your full compensation. You can view your Total Rewards Statement in Workday, under the Benefits and Pay app. It's worth taking a look. Understanding the full picture gives you a more accurate foundation for any conversation about your compensation.",
+        "audio_file": "sce_007_vo.wav"
+      },
+      "visual_notes": [
+        "Visual showing base pay as one component within a larger total rewards picture.",
+        "Workday callout for Total Rewards Statement."
+      ],
+      "asset_reuse": [
+        {
+          "source": "Manager module",
+          "scene": "Scene 6",
+          "description": "Base Pay vs. Total Rewards adapted for employee framing"
+        }
+      ],
+      "render": {
+        "ae_comp": "sce_007",
+        "output_file": "sce_007.mp4",
+        "review_required": true
+      }
+    },
+    {
+      "scene_id": "sce_008",
+      "module": "Module 2: What This Means for You",
+      "title": "You Have Every Right to Understand Your Pay",
+      "delivery": "ae_render",
+      "elements": {
+        "Head_01": {
+          "type": "Head",
+          "intent": "orient",
+          "text": "You Have Every Right to Understand Your Pay",
+          "text_primitive": "Headline",
+          "motion_primitive": "GlassReveal",
+          "layout_primitive": "TopTitle",
+          "style_ref": "head-primary"
+        },
+        "List_01": {
+          "type": "List",
+          "intent": "structure",
+          "text": "Ask your manager where you fall in your pay range.\\nUnderstand which factors are shaping your current position.\\nDiscuss what development would support your progression over time.\\nReach out to HR with questions your manager can't answer.",
+          "text_primitive": "NumberedList",
+          "motion_primitive": "MarkerStaggerReveal",
+          "layout_primitive": "ActionList",
+          "style_ref": "content-list"
+        },
+        "Quote_01": {
+          "type": "Quote",
+          "intent": "contextualize",
+          "text": "These aren't uncomfortable questions—they're reasonable ones.",
+          "text_primitive": "PullQuote",
+          "motion_primitive": "QuoteFade",
+          "layout_primitive": "PullQuoteRight",
+          "style_ref": "quote-primary"
+        }
+      },
+      "narration": {
+        "text": "Pay transparency gives you more visibility—and with that comes the opportunity to have better conversations. You have the right to understand your pay positioning. If you're curious about where you fall in your range, or what it would take to progress, your manager is the right starting point. HR is also available if you have more detailed questions or concerns. Here are four things you can do right now: Ask your manager where you fall in your pay range. Understand which factors are shaping your current position. Discuss what development would support your progression over time. Reach out to HR with questions your manager can't answer. These aren't uncomfortable questions—they're reasonable ones, and Brunswick encourages them.",
+        "audio_file": "sce_008_vo.wav"
+      },
+      "visual_notes": [
+        "Dark slide.",
+        "Four action bullets.",
+        "Pull quote."
+      ],
+      "render": {
+        "ae_comp": "sce_008",
+        "output_file": "sce_008.mp4",
+        "review_required": true
+      }
+    },
+    {
+      "scene_id": "sce_009",
+      "module": "Module 2: What This Means for You",
+      "title": "Interaction: Starting a Pay Conversation",
+      "delivery": "storyline_interaction",
+      "elements": {
+        "Head_01": {
+          "type": "Head",
+          "intent": "orient",
+          "text": "Starting a Pay Conversation",
+          "text_primitive": "Headline",
+          "motion_primitive": "None",
+          "layout_primitive": "InteractionTitle",
+          "style_ref": "head-primary"
+        },
+        "Statement_01": {
+          "type": "Statement",
+          "intent": "support",
+          "text": "Select each card to reveal a conversation starter you can use.",
+          "text_primitive": "Instruction",
+          "motion_primitive": "None",
+          "layout_primitive": "InstructionText",
+          "style_ref": "statement-primary"
+        }
+      },
+      "narration": {
+        "text": "If you want to have a pay conversation with your manager, here are four ways to get started. Select each card to reveal a conversation starter you can use.",
+        "audio_file": "sce_009_vo.wav"
+      },
+      "visual_notes": [
+        "Four click-to-reveal cards: Your Positioning / Your Factors / Progression Path / Career & Compensation."
+      ],
+      "interaction": {
+        "interaction_primitive": "ClickToRevealConversationStarters",
+        "gating": "continue_after_all_visited",
+        "cards": [
+          {
+            "id": "positioning",
+            "label": "Your Positioning",
+            "reveal_text": "Can you help me understand where I fall within my pay range?"
+          },
+          {
+            "id": "factors",
+            "label": "Your Factors",
+            "reveal_text": "What factors are currently shaping my position in the range?"
+          },
+          {
+            "id": "progression",
+            "label": "Progression Path",
+            "reveal_text": "What development or performance would support progression over time?"
+          },
+          {
+            "id": "career_compensation",
+            "label": "Career & Compensation",
+            "reveal_text": "How should I think about future career growth and compensation together?"
+          }
+        ]
+      },
+      "render": {
+        "storyline_slide": "sce_009",
+        "review_required": true
+      }
+    },
+    {
+      "scene_id": "sce_010",
+      "module": "Conclusion",
+      "title": "You're Informed",
+      "delivery": "ae_render",
+      "elements": {
+        "Head_01": {
+          "type": "Head",
+          "intent": "orient",
+          "text": "You're Informed",
+          "text_primitive": "Headline",
+          "motion_primitive": "GlassReveal",
+          "layout_primitive": "TopTitle",
+          "style_ref": "head-primary"
+        },
+        "List_01": {
+          "type": "List",
+          "intent": "structure",
+          "text": "Why ranges are now visible\\nHow Brunswick's pay philosophy works\\nWhat shapes individual pay within a range\\nHow base pay fits into total rewards\\nHow to start an informed conversation",
+          "text_primitive": "BulletList",
+          "motion_primitive": "MarkerStaggerReveal",
+          "layout_primitive": "RecapList",
+          "style_ref": "content-list"
+        },
+        "Impact_01": {
+          "type": "Impact",
+          "intent": "persuade",
+          "text": "Pay transparency is about giving you the information to understand your compensation and have informed conversations.",
+          "text_primitive": "EmphasisLine",
+          "motion_primitive": "FocusReveal",
+          "layout_primitive": "CenterEmphasis",
+          "style_ref": "impact-emphasis"
+        },
+        "Callout_01": {
+          "type": "Statement",
+          "intent": "support",
+          "text": "For questions specific to your situation, start with your manager or HR Business Partner.",
+          "text_primitive": "CTA",
+          "motion_primitive": "FadeUp",
+          "layout_primitive": "BottomCTA",
+          "style_ref": "cta-primary"
+        }
+      },
+      "narration": {
+        "text": "You've covered the essentials of pay transparency at Brunswick. You know why ranges are now visible, how Brunswick's pay philosophy works, what shapes individual pay within a range, how base pay fits into your total rewards picture, and how to start a conversation if you want to learn more. Pay transparency isn't about guaranteeing what you're owed—it's about giving you the information to understand your compensation and have informed conversations. If you have questions specific to your situation, your manager and HR Business Partner are your best resources. Thank you for completing this training.",
+        "audio_file": "sce_010_vo.wav"
+      },
+      "visual_notes": [
+        "Dark slide.",
+        "Training complete.",
+        "Five recap bullets.",
+        "HR contact CTA."
+      ],
+      "asset_reuse": [
+        {
+          "source": "Manager module",
+          "scene": "Scene 20",
+          "description": "You're Ready visual treatment adapted for employee framing"
+        }
+      ],
+      "render": {
+        "ae_comp": "sce_010",
+        "output_file": "sce_010.mp4",
+        "review_required": true
+      }
+    }
+  ],
+  "assessment": {
+    "section_id": "knowledge_check",
+    "delivery": "storyline_quiz",
+    "intro_text": "Three questions follow the content. No trick questions—each tests a key concept from the module.",
+    "questions": [
+      {
+        "question_id": "q001",
+        "type": "multiple_choice",
+        "prompt": "What does being at the midpoint of your pay range indicate?",
+        "choices": [
+          {
+            "id": "A",
+            "text": "You are performing below expectations",
+            "correct": false
+          },
+          {
+            "id": "B",
+            "text": "You are paid fairly for a fully competent performer in the role",
+            "correct": true
+          },
+          {
+            "id": "C",
+            "text": "You have been in your role for many years",
+            "correct": false
+          },
+          {
+            "id": "D",
+            "text": "You should expect a significant pay increase soon",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "correct": "Right. Midpoint represents market-competitive pay for someone performing well in the role. It's a solid, positive place to be.",
+          "incorrect": "Midpoint represents market-competitive pay for a fully capable performer—not a sign of underperformance or concern."
+        }
+      },
+      {
+        "question_id": "q002",
+        "type": "multiple_choice",
+        "prompt": "Two employees have the same job title but different pay levels. Which of the following is a legitimate reason?",
+        "choices": [
+          {
+            "id": "A",
+            "text": "One negotiated harder when they were first hired",
+            "correct": false
+          },
+          {
+            "id": "B",
+            "text": "One has more specialized skills, longer tenure, and a stronger performance track record",
+            "correct": true
+          },
+          {
+            "id": "C",
+            "text": "One has a better personal relationship with their manager",
+            "correct": false
+          },
+          {
+            "id": "D",
+            "text": "Pay differences within the same role are never legitimate",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "correct": "Exactly. Skills, tenure, and sustained performance are among the legitimate factors that can create pay differences within the same role.",
+          "incorrect": "Individual factors—skills, performance, tenure, location—create legitimate pay differences within the same role. It's a system, not a judgment."
+        }
+      },
+      {
+        "question_id": "q003",
+        "type": "multiple_choice",
+        "prompt": "You want to understand your pay positioning and what it would take to progress. What's the best first step?",
+        "choices": [
+          {
+            "id": "A",
+            "text": "Search job boards to estimate what you should earn",
+            "correct": false
+          },
+          {
+            "id": "B",
+            "text": "Ask a colleague what they make",
+            "correct": false
+          },
+          {
+            "id": "C",
+            "text": "Have a direct conversation with your manager or HR",
+            "correct": true
+          },
+          {
+            "id": "D",
+            "text": "Wait until your annual performance review",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "correct": "Your manager and HR are your best resources—they can speak to your specific situation with accurate data and context.",
+          "incorrect": "The best move is a direct conversation with your manager or HR. They have the tools and data to give you an accurate, personalized answer."
+        }
+      }
+    ]
+  }
+}
