@@ -66,7 +66,7 @@
       },
       "narration": {
         "text": "Welcome. Brunswick has made changes to how we share information about pay. Starting January 1, 2025, pay ranges now appear on all U.S. job postings. Whether you've already noticed this or you're hearing about it for the first time, this short module explains what it means—and what you can do with that information.",
-        "audio_file": "sce_001_vo.wav"
+        "audio_file": "sce_001_vo.mp3"
       },
       "visual_notes": [
         "Module title card.",
@@ -123,7 +123,7 @@
       },
       "narration": {
         "text": "Starting January 2025, all U.S. Brunswick job postings include the pay range for that role. This wasn't a surprise decision—multiple states now require it by law. Rather than manage different requirements state by state, Brunswick made a consistent business decision: post ranges on all U.S. jobs. If you work in Europe, there are additional transparency changes coming in June 2026 under the EU Pay Transparency Directive. Your local HR team will share more when that time comes.",
-        "audio_file": "sce_002_vo.wav"
+        "audio_file": "sce_002_vo.mp3"
       },
       "visual_notes": [
         "Pay range visibility.",
@@ -178,7 +178,7 @@
       },
       "narration": {
         "text": "Before we look at what these changes mean for you, it helps to understand how Brunswick sets pay in the first place. Every compensation decision is guided by three principles. First: We benchmark against real market data from reputable third-party surveys in which we participate along with hundreds of other companies—not guesswork, not arbitrary numbers. Second: We balance what the market pays with fairness inside Brunswick, so people doing similar work are compensated similarly. Third: Pay is connected to performance. Your ratings and contributions influence how you progress through your pay range over time. These three principles work together. No single factor determines your pay.",
-        "audio_file": "sce_003_vo.wav"
+        "audio_file": "sce_003_vo.mp3"
       },
       "visual_notes": [
         "Three numbered pillar cards: 01 Market-Competitive Benchmarking / 02 External & Internal Equity / 03 Pay Linked to Performance."
@@ -241,7 +241,7 @@
       },
       "narration": {
         "text": "Every role at Brunswick has a pay range with a minimum, midpoint, and maximum. The midpoint is key: it represents market-competitive pay for someone performing well in that role. Being at midpoint isn't average in a negative sense—it means you're paid fairly compared to what similar roles earn at other companies. People at the lower end of a range are often newer to the role or recently promoted—they're building skills and tenure. People near the top typically have many years of sustained high performance and specialized skills. Ranges also vary by location. Costs of labor differ by geography, so the same grade in an urban area may have a different range than in a rural location. This isn't a fairness question—it's a reflection of different labor markets.",
-        "audio_file": "sce_004_vo.wav"
+        "audio_file": "sce_004_vo.mp3"
       },
       "visual_notes": [
         "Three-zone range bar — Minimum / Midpoint / Maximum — with descriptor cards below each zone."
@@ -353,7 +353,7 @@
       },
       "narration": {
         "text": "Within your pay range, several factors shape exactly where you fall. Performance matters—but it's not the only factor. Two people in the same role can have different pay for entirely legitimate reasons. One may have been hired when market rates were different. One may have specialized certifications the other doesn't. One may have more years in the role with a sustained track record of strong performance. This is why seeing a pay range on a job posting doesn't tell you whether you personally are paid fairly—it tells you the range your role sits in. Your individual factors determine where you are within that range.",
-        "audio_file": "sce_006_vo.wav"
+        "audio_file": "sce_006_vo.mp3"
       },
       "visual_notes": [
         "Six-factor grid: Performance / Skills & Experience / Education / Role Complexity / Geographic Location / Tenure in Role."
@@ -425,7 +425,7 @@
       },
       "narration": {
         "text": "Base pay is the number that gets talked about most in pay transparency conversations—and that makes sense. It's what shows on your paycheck, and it's what you see posted on job listings. But base pay is only one part of how Brunswick compensates you. Your total rewards picture includes several other components. In addition to your base salary, you may receive incentive compensation—bonuses or other variable pay tied to your performance, your role, and company results. Brunswick also invests significantly in your benefits: health, dental, and vision coverage, life insurance, and retirement contributions including 401(k) matching. Wellness programs, employee assistance resources, paid time off, and other company-provided offerings round out the picture. Together, these components represent the full value of your employment relationship with Brunswick. The gap between what appears on your paycheck and what Brunswick invests in you is often larger than people realize. Why does this matter for pay transparency? Because when you see a pay range on a job posting—at Brunswick or anywhere else—that range reflects base pay only. It's a useful reference point for understanding where a role sits in the market. But it's an incomplete comparison if you're thinking about your full compensation. You can view your Total Rewards Statement in Workday, under the Benefits and Pay app. It's worth taking a look. Understanding the full picture gives you a more accurate foundation for any conversation about your compensation.",
-        "audio_file": "sce_007_vo.wav"
+        "audio_file": "sce_007_vo.mp3"
       },
       "visual_notes": [
         "Visual showing base pay as one component within a larger total rewards picture.",
@@ -480,7 +480,7 @@
       },
       "narration": {
         "text": "Pay transparency gives you more visibility—and with that comes the opportunity to have better conversations. You have the right to understand your pay positioning. If you're curious about where you fall in your range, or what it would take to progress, your manager is the right starting point. HR is also available if you have more detailed questions or concerns. Here are four things you can do right now: Ask your manager where you fall in your pay range. Understand which factors are shaping your current position. Discuss what development would support your progression over time. Reach out to HR with questions your manager can't answer. These aren't uncomfortable questions—they're reasonable ones, and Brunswick encourages them.",
-        "audio_file": "sce_008_vo.wav"
+        "audio_file": "sce_008_vo.mp3"
       },
       "visual_notes": [
         "Dark slide.",
@@ -520,7 +520,7 @@
       },
       "narration": {
         "text": "If you want to have a pay conversation with your manager, here are four ways to get started. Select each card to reveal a conversation starter you can use.",
-        "audio_file": "sce_009_vo.wav"
+        "audio_file": "sce_009_vo.mp3"
       },
       "visual_notes": [
         "Four click-to-reveal cards: Your Positioning / Your Factors / Progression Path / Career & Compensation."
@@ -601,7 +601,7 @@
       },
       "narration": {
         "text": "You've covered the essentials of pay transparency at Brunswick. You know why ranges are now visible, how Brunswick's pay philosophy works, what shapes individual pay within a range, how base pay fits into your total rewards picture, and how to start a conversation if you want to learn more. Pay transparency isn't about guaranteeing what you're owed—it's about giving you the information to understand your compensation and have informed conversations. If you have questions specific to your situation, your manager and HR Business Partner are your best resources. Thank you for completing this training.",
-        "audio_file": "sce_010_vo.wav"
+        "audio_file": "sce_010_vo.mp3"
       },
       "visual_notes": [
         "Dark slide.",
