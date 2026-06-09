@@ -29,30 +29,25 @@ layout: none
     font-weight: 400;
     color: var(--ink);
     min-height: 100vh;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 24px 16px 48px;
+    padding: 24px 16px 64px;
   }
 
-  .card {
-    background: var(--light);
-    max-width: 480px;
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 24px rgba(30,74,99,0.12);
+  .page {
+    max-width: 520px;
+    margin: 0 auto;
   }
 
-  /* TOP BAR */
-  .top-bar {
+  /* HEADER */
+  .site-header {
     background: var(--deep);
-    padding: 20px 28px 18px;
+    border-radius: 8px 8px 0 0;
+    padding: 24px 28px 20px;
+    margin-bottom: 0;
   }
 
   .greeting {
     font-family: 'Lora', Georgia, serif;
-    font-size: clamp(26px, 6vw, 34px);
+    font-size: clamp(26px, 6vw, 36px);
     font-weight: 400;
     color: white;
     line-height: 1.2;
@@ -65,392 +60,329 @@ layout: none
 
   .location-line {
     font-size: 13px;
-    color: rgba(255,255,255,0.55);
+    color: rgba(255,255,255,0.5);
     margin-top: 6px;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
   }
 
-  /* DATE BLOCK */
-  .date-block {
+  /* WHO STRIP */
+  .who-strip {
     background: var(--water);
-    padding: 16px 28px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    padding: 14px 28px;
+    margin-bottom: 32px;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 16px rgba(30,74,99,0.12);
   }
 
-  .date-label {
-    font-size: 10px;
-    letter-spacing: 0.2em;
+  .who-label {
+    font-size: 9px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 4px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 8px;
   }
 
-  .date-value {
-    font-family: 'Lora', Georgia, serif;
-    font-size: 22px;
+  .who-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .who-pill {
+    background: rgba(255,255,255,0.12);
+    border-radius: 4px;
+    padding: 5px 10px;
+  }
+
+  .who-name {
+    font-size: 13px;
     color: white;
     font-weight: 600;
   }
 
-  .date-divider {
-    width: 1px;
-    height: 36px;
-    background: rgba(255,255,255,0.2);
-    flex-shrink: 0;
-  }
-
-  .day-number-block { flex: 1; }
-  .day-label-block { flex: 1; }
-
-  /* BODY */
-  .body {
-    padding: 24px 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  /* INFO ROWS */
-  .info-block {
-    border-left: 3px solid var(--border);
-    padding-left: 14px;
-  }
-
-  .info-block.highlight {
-    border-color: var(--warm);
-  }
-
-  .info-label {
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 5px;
-  }
-
-  .info-value {
-    font-size: 16px;
-    color: var(--ink);
-    line-height: 1.5;
-    font-weight: 400;
-  }
-
-  .info-value strong {
-    font-weight: 600;
-  }
-
-  .info-note {
-    font-size: 13px;
-    color: var(--mid);
-    margin-top: 3px;
-    line-height: 1.6;
-    font-style: italic;
-  }
-
-  /* WHO'S HERE */
-  .who-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .who-pill {
-    background: var(--sky);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 10px 12px;
-  }
-
-  .who-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--ink);
-  }
-
   .who-rel {
-    font-size: 11px;
-    color: var(--mid);
-    margin-top: 2px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 1px;
   }
 
-  /* TODAY'S PLAN */
+  /* DAY CARD */
+  .day-card {
+    background: var(--light);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(30,74,99,0.08);
+  }
+
+  .day-header {
+    background: var(--deep);
+    padding: 14px 22px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .day-number {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 36px;
+    font-style: italic;
+    color: rgba(255,255,255,0.18);
+    line-height: 1;
+    min-width: 32px;
+  }
+
+  .day-meta { flex: 1; }
+
+  .day-date {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 18px;
+    color: white;
+    font-weight: 600;
+  }
+
+  .day-theme {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-top: 3px;
+  }
+
+  .day-num-badge {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    align-self: flex-start;
+    padding-top: 4px;
+  }
+
+  /* PLAN LIST */
   .plan-list {
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    padding: 8px 0;
   }
 
   .plan-item {
     display: flex;
-    gap: 12px;
-    padding: 10px 0;
+    gap: 14px;
+    padding: 10px 22px;
     border-bottom: 1px solid var(--border);
-    align-items: flex-start;
   }
 
   .plan-item:last-child { border-bottom: none; }
 
   .plan-time {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--mid);
-    min-width: 64px;
-    padding-top: 2px;
+    min-width: 66px;
     flex-shrink: 0;
+    padding-top: 2px;
     letter-spacing: 0.04em;
   }
 
   .plan-text {
     font-size: 14px;
     color: var(--ink);
-    line-height: 1.5;
-  }
-
-  /* DIVIDER */
-  .section-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 0 -28px;
+    line-height: 1.55;
   }
 
   /* BOTTOM NOTE */
-  .bottom-note {
+  .day-note {
     background: var(--sand);
-    padding: 18px 28px;
     border-top: 1px solid var(--border);
+    padding: 12px 22px;
   }
 
-  .bottom-note p {
+  .day-note p {
     font-family: 'Lora', Georgia, serif;
-    font-size: 14px;
+    font-size: 13px;
     font-style: italic;
     color: var(--mid);
-    line-height: 1.7;
+    line-height: 1.65;
   }
 
-  .bottom-note p strong {
+  .day-note p strong {
     font-style: normal;
     font-weight: 600;
     color: var(--ink);
   }
 
-  /* DAY SELECTOR */
-  .day-tabs {
-    display: flex;
-    gap: 0;
-    border-bottom: 1px solid var(--border);
-    background: white;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+  /* TODAY highlight */
+  .day-card.today .day-header {
+    background: var(--water);
   }
 
-  .day-tabs::-webkit-scrollbar { display: none; }
+  .day-card.today .day-header .day-number {
+    color: rgba(255,255,255,0.25);
+  }
 
-  .day-tab {
-    flex: 1;
-    min-width: 64px;
-    padding: 10px 4px;
-    text-align: center;
-    font-size: 10px;
-    letter-spacing: 0.1em;
+  /* WHERE */
+  .where-strip {
+    padding: 12px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .where-label {
+    font-size: 9px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--mid);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.15s;
-    user-select: none;
-    white-space: nowrap;
+    min-width: 80px;
+    padding-top: 3px;
+    flex-shrink: 0;
   }
 
-  .day-tab:hover { color: var(--water); }
-
-  .day-tab.active {
-    color: var(--deep);
-    border-bottom-color: var(--water);
-    font-weight: 600;
+  .where-value {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.5;
   }
 
-  .day-tab .tab-date {
-    display: block;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 0;
-    margin-bottom: 1px;
-    font-family: 'Lora', Georgia, serif;
-  }
+  .where-value strong { font-weight: 600; }
 
-  /* Responsive */
   @media (max-width: 400px) {
-    .top-bar, .body, .bottom-note { padding-left: 20px; padding-right: 20px; }
-    .date-block { padding-left: 20px; padding-right: 20px; }
-    .section-divider { margin: 0 -20px; }
+    .site-header, .who-strip { padding-left: 18px; padding-right: 18px; }
+    .day-header, .plan-item, .day-note, .where-strip { padding-left: 16px; padding-right: 16px; }
   }
 </style>
 </head>
 <body>
+<div class="page">
 
-<div class="card">
-
-  <!-- TOP -->
-  <div class="top-bar">
+  <!-- HEADER -->
+  <div class="site-header">
     <div class="greeting">Good morning, <em>Alan.</em></div>
-    <div class="location-line">Key Largo, Florida · Rock Reef Resort</div>
+    <div class="location-line">Key Largo, Florida &nbsp;·&nbsp; Rock Reef Resort &nbsp;·&nbsp; June 17–21, 2026</div>
   </div>
 
-  <!-- DAY TABS -->
-  <div class="day-tabs" id="dayTabs">
-    <div class="day-tab active" data-day="0"><span class="tab-date">17</span>Wed</div>
-    <div class="day-tab" data-day="1"><span class="tab-date">18</span>Thu</div>
-    <div class="day-tab" data-day="2"><span class="tab-date">19</span>Fri</div>
-    <div class="day-tab" data-day="3"><span class="tab-date">20</span>Sat</div>
-    <div class="day-tab" data-day="4"><span class="tab-date">21</span>Sun</div>
-  </div>
-
-  <!-- DATE -->
-  <div class="date-block" id="dateBlock">
-    <div class="day-number-block">
-      <div class="date-label">Today</div>
-      <div class="date-value" id="dateValue">Wednesday, June 17</div>
-    </div>
-    <div class="date-divider"></div>
-    <div class="day-label-block">
-      <div class="date-label">Day</div>
-      <div class="date-value" id="dayLabel">1 of 5 · Arrival</div>
+  <!-- WHO'S HERE -->
+  <div class="who-strip">
+    <div class="who-label">Who's with you on this trip</div>
+    <div class="who-row">
+      <div class="who-pill"><div class="who-name">Jake</div><div class="who-rel">Your son</div></div>
+      <div class="who-pill"><div class="who-name">Kaleb</div><div class="who-rel">Your grandson</div></div>
+      <div class="who-pill"><div class="who-name">Katelynn</div><div class="who-rel">Kaleb's girlfriend</div></div>
     </div>
   </div>
 
-  <!-- BODY -->
-  <div class="body">
-
-    <!-- WHERE YOU ARE -->
-    <div class="info-block">
-      <div class="info-label">Where You Are</div>
-      <div class="info-value"><strong>Rock Reef Resort</strong>, Key Largo, Florida</div>
-      <div class="info-note">On the water, Florida Bay. About 60 miles south of Miami.</div>
-    </div>
-
-    <!-- WHO'S HERE -->
-    <div class="info-block">
-      <div class="info-label">Who's With You</div>
-      <div class="who-grid">
-        <div class="who-pill">
-          <div class="who-name">Jake</div>
-          <div class="who-rel">Your son</div>
-        </div>
-        <div class="who-pill">
-          <div class="who-name">Kaleb</div>
-          <div class="who-rel">Your grandson</div>
-        </div>
-        <div class="who-pill">
-          <div class="who-name">Katelynn</div>
-          <div class="who-rel">Kaleb's girlfriend</div>
-        </div>
+  <!-- DAY 1 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-number">1</div>
+      <div class="day-meta">
+        <div class="day-date">Wednesday, June 17</div>
+        <div class="day-theme">Arrival Day</div>
       </div>
+      <div class="day-num-badge">Day 1 of 5</div>
     </div>
-
-    <!-- TODAY -->
-    <div class="info-block highlight">
-      <div class="info-label">Today's Plan</div>
-      <ul class="plan-list" id="planList">
-        <!-- filled by JS -->
-      </ul>
+    <div class="where-strip">
+      <div class="where-label">Where you are</div>
+      <div class="where-value">Traveling today — flying into <strong>Miami</strong>, then driving to Key Largo (about 1.5 hours).</div>
     </div>
-
+    <ul class="plan-list">
+      <li class="plan-item"><div class="plan-time">Evening</div><div class="plan-text">Fly into Miami, drive to Key Largo.</div></li>
+      <li class="plan-item"><div class="plan-time">Tonight</div><div class="plan-text">Check in to Rock Reef Resort. Dinner at Mrs. Mac's Kitchen — a Keys institution, just a few minutes away.</div></li>
+      <li class="plan-item"><div class="plan-time">Tonight</div><div class="plan-text">Get settled. Rest. The Keys are in no hurry.</div></li>
+    </ul>
+    <div class="day-note"><p>Today is a travel day. If anything feels uncertain, <strong>ask Jake.</strong> He has all the details.</p></div>
   </div>
 
-  <!-- BOTTOM NOTE -->
-  <div class="bottom-note">
-    <p id="bottomNote">If anything feels uncertain, <strong>ask Jake.</strong> He has all the details and knows what's happening. You don't need to keep track of anything — that's his job on this trip.</p>
+  <!-- DAY 2 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-number">2</div>
+      <div class="day-meta">
+        <div class="day-date">Thursday, June 18</div>
+        <div class="day-theme">Glass Bottom Boat</div>
+      </div>
+      <div class="day-num-badge">Day 2 of 5</div>
+    </div>
+    <div class="where-strip">
+      <div class="where-label">Where you are</div>
+      <div class="where-value"><strong>Rock Reef Resort</strong>, Key Largo, Florida. On the water, Florida Bay.</div>
+    </div>
+    <ul class="plan-list">
+      <li class="plan-item"><div class="plan-time">Morning</div><div class="plan-text">Slow start. Coffee, dock, take your time.</div></li>
+      <li class="plan-item"><div class="plan-time">12:15 PM</div><div class="plan-text">Glass bottom boat at John Pennekamp State Park — a 2.5-hour tour over the coral reef. You stay in the air-conditioned cabin and watch the reef through large windows in the hull. No swimming required. One of the great reefs in North America.</div></li>
+      <li class="plan-item"><div class="plan-time">~3 PM</div><div class="plan-text">Back to the resort. Rest, sit by the water. The park also has a 30,000-gallon aquarium on-site if you'd like a look.</div></li>
+      <li class="plan-item"><div class="plan-time">Dinner</div><div class="plan-text">The Fish House — fresh local seafood, one of the best in the Keys.</div></li>
+    </ul>
+    <div class="day-note"><p>Today's main event is the boat. Jake will get everyone there and back. You don't need to arrange anything — just enjoy it.</p></div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-number">3</div>
+      <div class="day-meta">
+        <div class="day-date">Friday, June 19</div>
+        <div class="day-theme">Open Day</div>
+      </div>
+      <div class="day-num-badge">Day 3 of 5</div>
+    </div>
+    <div class="where-strip">
+      <div class="where-label">Where you are</div>
+      <div class="where-value"><strong>Rock Reef Resort</strong>, Key Largo, Florida. On the water, Florida Bay.</div>
+    </div>
+    <ul class="plan-list">
+      <li class="plan-item"><div class="plan-time">Morning</div><div class="plan-text">No schedule. Sit outside, walk the resort grounds, enjoy the water view.</div></li>
+      <li class="plan-item"><div class="plan-time">Midday</div><div class="plan-text">Kayaks and paddle boats are available at the resort if you'd like to be on the water.</div></li>
+      <li class="plan-item"><div class="plan-time">Afternoon</div><div class="plan-text">Harry Harris Park is nearby — a quiet county beach, good for sitting and watching the ocean.</div></li>
+      <li class="plan-item"><div class="plan-time">Dinner</div><div class="plan-text">Tacos Jalisco — a beloved local food truck, casual outdoor seating, excellent food. Located next to an ice cream shop.</div></li>
+    </ul>
+    <div class="day-note"><p>Today has no fixed agenda. If anything feels uncertain, <strong>ask Jake.</strong></p></div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-number">4</div>
+      <div class="day-meta">
+        <div class="day-date">Saturday, June 20</div>
+        <div class="day-theme">Last Full Day</div>
+      </div>
+      <div class="day-num-badge">Day 4 of 5</div>
+    </div>
+    <div class="where-strip">
+      <div class="where-label">Where you are</div>
+      <div class="where-value"><strong>Rock Reef Resort</strong>, Key Largo, Florida. On the water, Florida Bay.</div>
+    </div>
+    <ul class="plan-list">
+      <li class="plan-item"><div class="plan-time">Day</div><div class="plan-text">Open — do whatever felt best earlier in the trip. The dock, the water, the hammocks.</div></li>
+      <li class="plan-item"><div class="plan-time">Evening</div><div class="plan-text">Watch the sunset from the pier. Key Largo sunsets over the bay are genuinely beautiful.</div></li>
+      <li class="plan-item"><div class="plan-time">Dinner</div><div class="plan-text">A nice waterfront dinner — Jake will have the details.</div></li>
+    </ul>
+    <div class="day-note"><p>Last full day. A good day to move slowly. If anything feels uncertain, <strong>ask Jake.</strong></p></div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-number">5</div>
+      <div class="day-meta">
+        <div class="day-date">Sunday, June 21</div>
+        <div class="day-theme">Going Home</div>
+      </div>
+      <div class="day-num-badge">Day 5 of 5</div>
+    </div>
+    <div class="where-strip">
+      <div class="where-label">Where you are</div>
+      <div class="where-value"><strong>Rock Reef Resort</strong>, Key Largo — then driving back to Miami airport.</div>
+    </div>
+    <ul class="plan-list">
+      <li class="plan-item"><div class="plan-time">Morning</div><div class="plan-text">Breakfast at Harriette's Restaurant — famous for their enormous homemade muffins. A proper send-off.</div></li>
+      <li class="plan-item"><div class="plan-time">Mid-Morning</div><div class="plan-text">Pack up and check out of the resort.</div></li>
+      <li class="plan-item"><div class="plan-time">Drive</div><div class="plan-text">Drive back to Miami airport — about 1.5 hours. Jake will coordinate the timing.</div></li>
+      <li class="plan-item"><div class="plan-time">Flight</div><div class="plan-text">Fly home to Chicago.</div></li>
+    </ul>
+    <div class="day-note"><p>Heading home today. Jake handles all the logistics — flights, timing, bags. Your job is to enjoy the last morning.</p></div>
   </div>
 
 </div>
-
-<script>
-  const days = [
-    {
-      date: "Wednesday, June 17",
-      label: "1 of 5 · Arrival",
-      plan: [
-        { time: "Evening", text: "Fly into Miami, drive to Key Largo — about 1.5 hours." },
-        { time: "Tonight", text: "Check in to Rock Reef Resort. Dinner at Mrs. Mac's Kitchen, a classic Keys restaurant nearby." },
-        { time: "Tonight", text: "Get settled. Rest. The Keys are in no hurry." }
-      ],
-      note: "Today is a travel day. If anything feels uncertain, <strong>ask Jake.</strong> He has all the details and knows what's happening."
-    },
-    {
-      date: "Thursday, June 18",
-      label: "2 of 5 · Glass Bottom Boat",
-      plan: [
-        { time: "Morning", text: "Slow start. Coffee, dock, take your time." },
-        { time: "12:15 PM", text: "Glass bottom boat at John Pennekamp State Park — a 2.5-hour tour over the coral reef. You stay in the comfortable air-conditioned cabin and watch the reef through large windows. No swimming required." },
-        { time: "~3 PM", text: "Back to the resort. Rest, sit by the water. The aquarium at Pennekamp is also worth a quick look if there's energy for it." },
-        { time: "Dinner", text: "The Fish House — fresh local seafood, one of the best in the Keys." }
-      ],
-      note: "Today's main event is the glass bottom boat. Jake will get everyone there and back. You don't need to arrange anything — just enjoy it."
-    },
-    {
-      date: "Friday, June 19",
-      label: "3 of 5 · Open Day",
-      plan: [
-        { time: "Morning", text: "Open — no schedule. Sit outside, walk the resort grounds, enjoy the water view." },
-        { time: "Midday", text: "Kayaks and paddle boats are available at the resort if you'd like to be on the water." },
-        { time: "Afternoon", text: "Harry Harris Park is nearby — a quiet beach, good for sitting and watching the ocean." },
-        { time: "Dinner", text: "Tacos Jalisco — a beloved local food truck, casual outdoor setting, great food." }
-      ],
-      note: "Today has no fixed agenda. If anything feels uncertain, <strong>ask Jake.</strong> He has all the details."
-    },
-    {
-      date: "Saturday, June 20",
-      label: "4 of 5 · Last Full Day",
-      plan: [
-        { time: "Day", text: "Open — do whatever felt best earlier in the trip. The dock, the water, the hammocks." },
-        { time: "Evening", text: "Watch the sunset from the pier. Key Largo sunsets over the bay are genuinely beautiful." },
-        { time: "Dinner", text: "A nice waterfront dinner — Jake will have the details." }
-      ],
-      note: "Last full day. A good day to enjoy things slowly. If anything feels uncertain, <strong>ask Jake.</strong>"
-    },
-    {
-      date: "Sunday, June 21",
-      label: "5 of 5 · Going Home",
-      plan: [
-        { time: "Morning", text: "Breakfast at Harriette's Restaurant — famous for their enormous homemade muffins. A great send-off." },
-        { time: "Mid-Morning", text: "Pack up, check out of the resort." },
-        { time: "Drive", text: "Drive back to Miami airport, about 1.5 hours. Jake will coordinate the timing." },
-        { time: "Flight", text: "Fly home to Chicago." }
-      ],
-      note: "Heading home today. Jake will handle all the logistics — flights, timing, bags. Your job is just to enjoy the last morning."
-    }
-  ];
-
-  function setDay(i) {
-    const d = days[i];
-    document.getElementById('dateValue').textContent = d.date;
-    document.getElementById('dayLabel').textContent = d.label;
-
-    const list = document.getElementById('planList');
-    list.innerHTML = d.plan.map(function(p) {
-      return '<li class="plan-item"><div class="plan-time">' + p.time + '</div><div class="plan-text">' + p.text + '</div></li>';
-    }).join('');
-
-    document.getElementById('bottomNote').innerHTML = d.note;
-
-    document.querySelectorAll('.day-tab').forEach(function(t, idx) {
-      t.classList.toggle('active', idx === i);
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.day-tab').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        setDay(parseInt(tab.getAttribute('data-day'), 10));
-      });
-    });
-    setDay(0);
-  });
-</script>
-
 </body>
 </html>
