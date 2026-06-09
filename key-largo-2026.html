@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Key Largo · June 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ocean: #0a4a5e;
+    --foam: #e8f4f0;
+    --sand: #f2e8d5;
+    --coral: #c8614a;
+    --teal: #2d8a7a;
+    --gold: #c9a84c;
+    --deep: #061e28;
+    --text: #1a2e35;
+    --muted: #6b8a94;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--deep);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(45,138,122,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(10,74,94,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 80%, rgba(200,97,74,0.04) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(6,30,40,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(232,244,240,0.07);
+    padding: 0 20px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 0;
+    max-width: 860px;
+    margin: 0 auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  nav ul::-webkit-scrollbar { display: none; }
+
+  nav ul li a {
+    display: block;
+    padding: 14px 14px;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  nav ul li a:hover { color: var(--foam); }
+  nav ul li a.active { color: var(--teal); }
+
+  /* LAYOUT */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 56px 0 40px;
+    border-bottom: 1px solid rgba(232,244,240,0.08);
+    margin-bottom: 48px;
+  }
+
+  .header-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(40px, 9vw, 64px);
+    font-weight: 700;
+    color: var(--foam);
+    line-height: 1.05;
+    margin-bottom: 8px;
+  }
+
+  .header h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .header-sub {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    margin-top: 18px;
+    line-height: 1.8;
+  }
+
+  .crew-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .crew-pill {
+    padding: 6px 14px;
+    border: 1px solid rgba(232,244,240,0.15);
+    border-radius: 24px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(232,244,240,0.6);
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 64px;
+    scroll-margin-top: 56px;
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(45,138,122,0.18);
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(232,244,240,0.07), transparent);
+    margin: 56px 0;
+  }
+
+  /* ALERT */
+  .alert-strip {
+    background: rgba(201,168,76,0.08);
+    border-left: 3px solid var(--gold);
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .alert-strip .alert-label {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 5px;
+  }
+
+  .alert-strip p {
+    font-size: 12px;
+    color: rgba(232,244,240,0.78);
+    line-height: 1.65;
+  }
+
+  .alert-strip a { color: var(--teal); text-decoration: underline; }
+
+  /* DAY BLOCKS */
+  .day-block {
+    margin-bottom: 36px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .day-block:nth-child(1) { animation-delay: 0.05s; }
+  .day-block:nth-child(2) { animation-delay: 0.1s; }
+  .day-block:nth-child(3) { animation-delay: 0.15s; }
+  .day-block:nth-child(4) { animation-delay: 0.2s; }
+  .day-block:nth-child(5) { animation-delay: 0.25s; }
+
+  .day-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .day-number {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 44px;
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(232,244,240,0.1);
+    line-height: 1;
+    min-width: 44px;
+  }
+
+  .day-date {
+    font-size: 13px;
+    color: var(--foam);
+    letter-spacing: 0.04em;
+    font-weight: 400;
+  }
+
+  .day-theme {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+    text-transform: uppercase;
+  }
+
+  .timeline {
+    padding-left: 14px;
+    border-left: 1px solid rgba(232,244,240,0.07);
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(232,244,240,0.04);
+    position: relative;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -17px;
+    top: 17px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(232,244,240,0.12);
+  }
+
+  .timeline-item.anchor::before { background: var(--gold); }
+  .timeline-item.dinner::before { background: var(--coral); }
+
+  .time-col {
+    font-size: 10px;
+    color: var(--muted);
+    min-width: 74px;
+    padding-top: 2px;
+    letter-spacing: 0.07em;
+    flex-shrink: 0;
+  }
+
+  .item-content { flex: 1; }
+
+  .item-title {
+    font-size: 13px;
+    color: var(--foam);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.45;
+  }
+
+  .item-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.6;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 8px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .badge-dinner  { background: rgba(200,97,74,0.15); color: var(--coral); }
+  .badge-book    { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .badge-anchor  { background: rgba(45,138,122,0.15); color: var(--teal); }
+
+  /* DIRECTORY */
+  .dir-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 560px) {
+    .dir-grid { grid-template-columns: 1fr; }
+  }
+
+  .dir-card {
+    background: rgba(232,244,240,0.03);
+    border: 1px solid rgba(232,244,240,0.07);
+    border-radius: 4px;
+    padding: 16px;
+    text-decoration: none;
+    display: block;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .dir-card:hover {
+    border-color: rgba(45,138,122,0.3);
+    background: rgba(45,138,122,0.05);
+  }
+
+  .dir-category {
+    font-size: 8px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 6px;
+  }
+
+  .dir-name {
+    font-size: 13px;
+    color: var(--foam);
+    font-weight: 400;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .dir-detail {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .dir-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .dir-link:hover { text-decoration: underline; }
+
+  /* DINING */
+  .restaurant-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .restaurant-card {
+    background: rgba(232,244,240,0.03);
+    border: 1px solid rgba(232,244,240,0.07);
+    border-radius: 4px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .r-initial {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 30px;
+    font-style: italic;
+    color: rgba(232,244,240,0.1);
+    line-height: 1;
+    min-width: 26px;
+    text-align: center;
+    padding-top: 2px;
+  }
+
+  .r-info { flex: 1; }
+
+  .r-name {
+    font-size: 13px;
+    color: var(--foam);
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .r-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .r-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 7px;
+  }
+
+  .r-tag {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    border: 1px solid rgba(232,244,240,0.09);
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+
+  /* PACKING LIST */
+  .packing-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 560px) {
+    .packing-cols { grid-template-columns: 1fr; }
+  }
+
+  .pack-card {
+    background: rgba(232,244,240,0.03);
+    border: 1px solid rgba(232,244,240,0.07);
+    border-radius: 4px;
+    padding: 18px;
+  }
+
+  .pack-card h3 {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(45,138,122,0.15);
+  }
+
+  .pack-card.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .checklist { list-style: none; }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 7px 0;
+    font-size: 11px;
+    color: rgba(232,244,240,0.7);
+    border-bottom: 1px solid rgba(232,244,240,0.04);
+    line-height: 1.5;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li:hover { color: var(--foam); }
+
+  .check-box {
+    width: 14px;
+    height: 14px;
+    border: 1px solid rgba(232,244,240,0.18);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.18s;
+  }
+
+  .checklist li.done .check-box {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+
+  .checklist li.done .check-box::after {
+    content: '✓';
+    font-size: 9px;
+    color: white;
+  }
+
+  .checklist li.done > span {
+    text-decoration: line-through;
+    opacity: 0.35;
+  }
+
+  /* HINTS */
+  .hints-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hint-item {
+    background: rgba(232,244,240,0.03);
+    border: 1px solid rgba(232,244,240,0.07);
+    border-radius: 4px;
+    padding: 14px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .hint-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    padding-top: 1px;
+    opacity: 0.75;
+  }
+
+  .hint-body { flex: 1; }
+
+  .hint-title {
+    font-size: 12px;
+    color: var(--foam);
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .hint-text {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* EMERGENCY */
+  .em-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  @media (max-width: 480px) { .em-grid { grid-template-columns: 1fr; } }
+
+  .em-card {
+    background: rgba(200,97,74,0.06);
+    border: 1px solid rgba(200,97,74,0.18);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+
+  .em-label {
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 5px;
+  }
+
+  .em-value {
+    font-size: 13px;
+    color: var(--foam);
+    font-weight: 400;
+    margin-bottom: 3px;
+  }
+
+  .em-sub {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid rgba(232,244,240,0.06);
+    padding-top: 24px;
+    font-size: 10px;
+    color: rgba(107,138,148,0.4);
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .time-col { min-width: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <ul>
+    <li><a href="#itinerary">Itinerary</a></li>
+    <li><a href="#dining">Dining</a></li>
+    <li><a href="#directory">Directory</a></li>
+    <li><a href="#packing">Packing</a></li>
+    <li><a href="#hints">Tips</a></li>
+    <li><a href="#emergency">Emergency</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">Family Trip · Florida Keys</div>
+    <h1>Key <em>Largo</em></h1>
+    <div class="header-sub">
+      June 17 – 21, 2026 &nbsp;·&nbsp; Rock Reef Resort &nbsp;·&nbsp; Key Largo, Florida
+    </div>
+    <div class="crew-row">
+      <span class="crew-pill">Jake</span>
+      <span class="crew-pill">Dad</span>
+      <span class="crew-pill">Kaleb</span>
+      <span class="crew-pill">Katelyn</span>
+    </div>
+  </div>
+
+  <!-- IMPORTANT NOTES -->
+  <div class="section">
+    <div class="section-label">Before You Go</div>
+
+    <div class="alert-strip" style="margin-bottom:12px;">
+      <div class="alert-label">📍 Glass Bottom Boat — Book Ahead</div>
+      <p>The glass bottom boat at John Pennekamp State Park is the trip's centerpiece and it sells out. Reservations at <a href="https://pennekamppark.com" target="_blank">pennekamppark.com</a> or call (305) 451-6300. We're targeting the morning of June 18th.</p>
+    </div>
+
+    <div class="alert-strip" style="border-color:var(--teal); background:rgba(45,138,122,0.07); margin-bottom:12px;">
+      <div class="alert-label" style="color:var(--teal)">✈ Katelyn — First Flight</div>
+      <p>BRING HEADPHONES and make sure to have your list DOWNLOADED TO YOUR PHONE. Good music is essential for a nervous flier. Bring valid government-issued photo ID (driver's license, state ID, or passport) to get through airport security. Make sure it's REAL ID compliant (look for a star in the upper corner) or bring your passport. Arrive at OHARE at least 2 hours before departure. Jake will walk everyone through security.</p>
+    </div>
+
+    <div class="alert-strip" style="border-color:rgba(232,244,240,0.15); background:rgba(232,244,240,0.03);">
+      <div class="alert-label" style="color:rgba(232,244,240,0.5)">🌡 Weather</div>
+      <p>Key Largo in June is warm and humid — mid-to-upper 80s during the day, low 80s at night. Afternoon rain showers are common but brief. Mornings are usually beautiful. Sunscreen is non-negotiable. SHORT are non-negotiable.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ITINERARY -->
+  <div class="section" id="itinerary">
+    <div class="section-label">Itinerary</div>
+
+    <!-- Day 1 -->
+    <div class="day-block">
+      <div class="day-header">
+        <div class="day-number">1</div>
+        <div class="day-info">
+          <div class="day-date">Wednesday, June 17</div>
+          <div class="day-theme">Arrival · Get Settled</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="time-col">Evening</div>
+          <div class="item-content">
+            <div class="item-title">Land at Miami International, drive to Key Largo</div>
+            <div class="item-note">About 1.5 hours from MIA to the resort via Florida's Turnpike and US-1. Consider a quick stop near Homestead for snacks — options get sparse on US-1 heading into the Keys.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-col">Check-in</div>
+          <div class="item-content">
+            <div class="item-title">Rock Reef Resort</div>
+            <div class="item-note">Get settled, unpack, breathe. The Keys are not in a hurry and neither are we.</div>
+          </div>
+        </div>
+        <div class="timeline-item dinner">
+          <div class="time-col">Dinner</div>
+          <div class="item-content">
+            <div class="item-title">Mrs. Mac's Kitchen <span class="badge badge-dinner">Dinner</span></div>
+            <div class="item-note">5 minutes from the resort. A Keys institution since 1976 — license plates on the walls, big menu, great Key Lime Pie. Perfect low-key first night. Seafood, burgers, comfort food, happy hour 3–6pm.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="day-block">
+      <div class="day-header">
+        <div class="day-number">2</div>
+        <div class="day-info">
+          <div class="day-date">Thursday, June 18</div>
+          <div class="day-theme">Glass Bottom Boat · Open Afternoon</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="time-col">Morning</div>
+          <div class="item-content">
+            <div class="item-title">Slow start — coffee, dock time</div>
+            <div class="item-note">No alarm clocks. Rock Reef has great spots to sit on the water. Let the morning happen.</div>
+          </div>
+        </div>
+        <div class="timeline-item anchor">
+          <div class="time-col">10 – 12:30</div>
+          <div class="item-content">
+            <div class="item-title">Glass Bottom Boat, John Pennekamp State Park <span class="badge badge-anchor">Main Event</span> <span class="badge badge-book">Pre-Booked</span></div>
+            <div class="item-note">A 2.5-hour tour to Molasses Reef aboard the Spirit of Pennekamp — a 65-ft catamaran. You'll see the coral reef, tropical fish, and marine life through large glass panels in the hull without getting wet. Air-conditioned cabin plus open sun deck. One of the best living coral reefs in North America. Take Dramamine if you're prone to motion sickness.  COULD MOVE TO EVENING if booked.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-col">Midday</div>
+          <div class="item-content">
+            <div class="item-title">Pennekamp Visitor Center aquarium</div>
+            <div class="item-note">Free after the boat — 30,000-gallon saltwater aquarium on-site. Worth a quick walk through.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-col">Afternoon</div>
+          <div class="item-content">
+            <div class="item-title">Resort — dock, pool, or snorkeling</div>
+            <div class="item-note">Rock Reef has calm, shallow water right off the dock — great for a first snorkel if anyone's interested. Gear can be rented at Pennekamp. Completely optional.</div>
+          </div>
+        </div>
+        <div class="timeline-item dinner">
+          <div class="time-col">Dinner</div>
+          <div class="item-content">
+            <div class="item-title">The Fish House <span class="badge badge-dinner">Dinner</span></div>
+            <div class="item-note">Local institution — whole fish purchased directly from commercial fishermen, prepared your way. One of the best seafood dinners in the Keys. Call ahead for a table.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="day-block">
+      <div class="day-header">
+        <div class="day-number">3</div>
+        <div class="day-info">
+          <div class="day-date">Friday, June 19</div>
+          <div class="day-theme">Open Day · Explore</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="time-col">Morning</div>
+          <div class="item-content">
+            <div class="item-title">Snorkeling at Pennekamp (optional) or resort morning</div>
+            <div class="item-note">Pennekamp runs snorkel tours departing 9am — 2.5 hrs, about 1.5 hrs of water time at the reef. Great visibility in the morning. No prior experience needed. Equipment provided.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-col">Midday</div>
+          <div class="item-content">
+            <div class="item-title">Kayak or paddleboard (optional)</div>
+            <div class="item-note">Pennekamp has rentals and 50+ miles of mangrove trails. Calm, beautiful, and easy — good for any fitness level. Or just stay at the resort and do nothing, which is also correct.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-col">Afternoon</div>
+          <div class="item-content">
+            <div class="item-title">Harry Harris Park</div>
+            <div class="item-note">County beach park a few minutes away. Small beach, picnic area, calm ocean water. Good option for a low-key afternoon swim without any agenda.</div>
+          </div>
+        </div>
+        <div class="timeline-item dinner">
+          <div class="time-col">Dinner</div>
+          <div class="item-content">
+            <div class="item-title">Tacos Jalisco <span class="badge badge-dinner">Dinner</span></div>
+            <div class="item-note">Food truck at mile marker 100.5. Highly rated (4.8★), casual outdoor seating, great tacos, burritos, and quesadillas. Located right next to Key Largo Chocolates and Ice Cream — dessert is built in. No reservation needed.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 4 -->
+    <div class="day-block">
+      <div class="day-header">
+        <div class="day-number">4</div>
+        <div class="day-info">
+          <div class="day-date">Saturday, June 20</div>
+          <div class="day-theme">Last Full Day · Nice Dinner</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="time-col">Day</div>
+          <div class="item-content">
+            <div class="item-title">Your call — do what worked</div>
+            <div class="item-note">By now we'll know what everyone actually enjoyed. Repeat the hits. Dock, water, or wandering.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-col">Late PM</div>
+          <div class="item-content">
+            <div class="item-title">Sunset from the dock</div>
+            <div class="item-note">Keys sunsets are genuinely special. No plan needed — just be outside.</div>
+          </div>
+        </div>
+        <div class="timeline-item dinner">
+          <div class="time-col">Dinner</div>
+          <div class="item-content">
+            <div class="item-title">Skipper's Dockside or Sol by the Sea <span class="badge badge-dinner">Dinner</span></div>
+            <div class="item-note">Skipper's: waterfront, relaxed, great fish dip and casual Keys energy. Sol by the Sea (Playa Largo Resort): more elevated, beautiful setting, good for a celebratory last dinner. Jake will confirm which one. Either way, call ahead.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 5 -->
+    <div class="day-block">
+      <div class="day-header">
+        <div class="day-number">5</div>
+        <div class="day-info">
+          <div class="day-date">Sunday, June 21</div>
+          <div class="day-theme">Departure</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="time-col">Morning</div>
+          <div class="item-content">
+            <div class="item-title">Breakfast — Harriette's Restaurant</div>
+            <div class="item-note">Local legend for breakfast. Classic diner, no frills, great food. A proper Keys send-off.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-col">Mid-AM</div>
+          <div class="item-content">
+            <div class="item-title">Check out, load up, drive to MIA</div>
+            <div class="item-note">About 1.5 hours from Key Largo. Build in extra time — arrive at least 2.5 hours before your flight. Jake will coordinate departure time based on flight schedule.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DINING GUIDE -->
+  <div class="section" id="dining">
+    <div class="section-label">Dining Guide</div>
+    <div class="restaurant-list">
+
+      <div class="restaurant-card">
+        <div class="r-initial">T</div>
+        <div class="r-info">
+          <div class="r-name">Tacos Jalisco</div>
+          <div class="r-desc">Food truck at mile marker 100.5, next to Key Largo Chocolates. Authentic Mexican — tacos, burritos, quesadillas (steak and shrimp), fresh salsas. 4.8 stars. Outdoor covered seating.</div>
+          <div class="r-tags">
+            <span class="r-tag">Mexican</span>
+            <span class="r-tag">Casual</span>
+            <span class="r-tag">No Reservation</span>
+            <span class="r-tag">MM 100.5</span>
+            <span class="r-tag">(305) 804-3289</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-card">
+        <div class="r-initial">F</div>
+        <div class="r-info">
+          <div class="r-name">The Fish House</div>
+          <div class="r-desc">Keys institution — whole fish straight from commercial fishermen, prepared your way. The real Keys seafood experience. Call ahead for a table.</div>
+          <div class="r-tags">
+            <span class="r-tag">Seafood</span>
+            <span class="r-tag">Dinner</span>
+            <span class="r-tag">Reservation Recommended</span>
+            <span class="r-tag">(305) 451-4665</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-card">
+        <div class="r-initial">M</div>
+        <div class="r-info">
+          <div class="r-name">Mrs. Mac's Kitchen</div>
+          <div class="r-desc">Keys comfort food since 1976. Seafood, burgers, American classics. License plates on every wall. Famous Key Lime Pie. Happy hour 3–6pm daily. Two locations on US-1.</div>
+          <div class="r-tags">
+            <span class="r-tag">American</span>
+            <span class="r-tag">Breakfast / Lunch / Dinner</span>
+            <span class="r-tag">Happy Hour</span>
+            <span class="r-tag">(305) 451-6227</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-card">
+        <div class="r-initial">S</div>
+        <div class="r-info">
+          <div class="r-name">Skipper's Dockside</div>
+          <div class="r-desc">Relaxed waterfront restaurant. Great fish dip, cold drinks, casual dock energy. Outdoor seating on the water. Good for a last evening dinner.</div>
+          <div class="r-tags">
+            <span class="r-tag">Waterfront</span>
+            <span class="r-tag">Seafood</span>
+            <span class="r-tag">Casual</span>
+            <span class="r-tag">(305) 453-9794</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-card">
+        <div class="r-initial">S</div>
+        <div class="r-info">
+          <div class="r-name">Sol by the Sea</div>
+          <div class="r-desc">At Playa Largo Resort — elevated seaside setting, bohemian atmosphere, thoughtful menu. The nice-dinner option if we want to mark the last night properly.</div>
+          <div class="r-tags">
+            <span class="r-tag">Upscale</span>
+            <span class="r-tag">Waterfront</span>
+            <span class="r-tag">Reservation Required</span>
+            <span class="r-tag">(305) 853-1001</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-card">
+        <div class="r-initial">H</div>
+        <div class="r-info">
+          <div class="r-name">Harriette's Restaurant</div>
+          <div class="r-desc">Best breakfast in Key Largo. Small, classic diner, fast service, locals' staple. Perfect departure morning fuel before the drive to MIA.</div>
+          <div class="r-tags">
+            <span class="r-tag">Breakfast</span>
+            <span class="r-tag">Diner</span>
+            <span class="r-tag">Cash + Card</span>
+            <span class="r-tag">(305) 852-8689</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DIRECTORY -->
+  <div class="section" id="directory">
+    <div class="section-label">Places Directory</div>
+    <div class="dir-grid">
+
+      <div class="dir-card">
+        <div class="dir-category">🏨 Where We're Staying</div>
+        <div class="dir-name">Rock Reef Resort</div>
+        <div class="dir-detail">98880 Overseas Hwy, Key Largo, FL 33037<br>Direct on the water, private docks.</div>
+        <a class="dir-link" href="https://maps.google.com/?q=Rock+Reef+Resort+Key+Largo" target="_blank">Open in Maps →</a>
+      </div>
+
+      <div class="dir-card">
+        <div class="dir-category">🐠 Main Activity</div>
+        <div class="dir-name">John Pennekamp Coral Reef State Park</div>
+        <div class="dir-detail">MM 102.5 Overseas Hwy, Key Largo<br>Glass bottom boat, snorkel tours, kayak rentals, aquarium.<br>(305) 451-6300</div>
+        <a class="dir-link" href="https://pennekamppark.com" target="_blank">pennekamppark.com →</a>
+      </div>
+
+      <div class="dir-card">
+        <div class="dir-category">✈ Airport</div>
+        <div class="dir-name">Miami International Airport (MIA)</div>
+        <div class="dir-detail">2100 NW 42nd Ave, Miami, FL 33126<br>~1.5 hrs from Key Largo via FL Turnpike + US-1.</div>
+        <a class="dir-link" href="https://maps.google.com/?q=Miami+International+Airport" target="_blank">Open in Maps →</a>
+      </div>
+
+      <div class="dir-card">
+        <div class="dir-category">🌊 Beach Day</div>
+        <div class="dir-name">Harry Harris Park</div>
+        <div class="dir-detail">E Beach Rd, Tavernier, FL 33070<br>County park with beach, picnic area, calm swimming. Free and low-key.</div>
+        <a class="dir-link" href="https://maps.google.com/?q=Harry+Harris+Park+Tavernier+FL" target="_blank">Open in Maps →</a>
+      </div>
+
+      <div class="dir-card">
+        <div class="dir-category">🌮 Dinner — Day 3</div>
+        <div class="dir-name">Tacos Jalisco</div>
+        <div class="dir-detail">100470 Overseas Hwy, Key Largo (MM 100.5)<br>Next to Key Largo Chocolates & Ice Cream.<br>(305) 804-3289</div>
+        <a class="dir-link" href="https://maps.google.com/?q=Tacos+Jalisco+Key+Largo" target="_blank">Open in Maps →</a>
+      </div>
+
+      <div class="dir-card">
+        <div class="dir-category">🐟 Dinner — Day 2</div>
+        <div class="dir-name">The Fish House</div>
+        <div class="dir-detail">102341 Overseas Hwy, Key Largo, FL<br>(305) 451-4665</div>
+        <a class="dir-link" href="https://maps.google.com/?q=The+Fish+House+Key+Largo" target="_blank">Open in Maps →</a>
+      </div>
+
+      <div class="dir-card">
+        <div class="dir-category">🍳 Departure Breakfast</div>
+        <div class="dir-name">Harriette's Restaurant</div>
+        <div class="dir-detail">95710 Overseas Hwy, Key Largo, FL<br>Opens early. Small, cash-friendly, get there before a line forms.<br>(305) 852-8689</div>
+        <a class="dir-link" href="https://maps.google.com/?q=Harriette%27s+Restaurant+Key+Largo" target="_blank">Open in Maps →</a>
+      </div>
+
+      <div class="dir-card">
+        <div class="dir-category">⚕️ Nearest Urgent Care</div>
+        <div class="dir-name">Mariners Hospital</div>
+        <div class="dir-detail">91500 Overseas Hwy, Tavernier, FL 33070<br>(305) 434-3000 — about 10 min south of Key Largo.</div>
+        <a class="dir-link" href="https://maps.google.com/?q=Mariners+Hospital+Tavernier+FL" target="_blank">Open in Maps →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PACKING LIST -->
+  <div class="section" id="packing">
+    <div class="section-label">Packing List</div>
+    <div class="packing-cols">
+
+      <!-- Shared essentials -->
+      <div class="pack-card full-width">
+        <h3>Everyone Needs This</h3>
+        <ul class="checklist">
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Valid photo ID (REAL ID driver's license or passport)</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Travel insurance info / insurer phone number</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Sunscreen — SPF 50+, reef-safe ideally</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Sunglasses + hat or cap</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Swimsuit (at least two)</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Light layers for evenings (it cools off on the water)</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Flip flops + one pair of closed-toe shoes</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Insect repellent (mangrove areas at dusk)</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Dramamine or motion sickness med (glass bottom boat)</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Reusable water bottle</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Phone charger + portable battery pack</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Cash — smaller spots prefer it</span></li>
+        </ul>
+      </div>
+
+      <!-- Jake -->
+      <div class="pack-card">
+        <h3>Jake</h3>
+        <ul class="checklist">
+          <li onclick="toggle(this)"><div class="check-box"></div><span>All travel documents for group</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Confirmation numbers (hotel, boat, flights)</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Snorkel mask + fins (or rent at Pennekamp)</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Rash guard or UV swim shirt</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Waterproof phone case or bag</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>First aid basics</span></li>
+        </ul>
+      </div>
+
+      <!-- Dad -->
+      <div class="pack-card">
+        <h3>Dad</h3>
+        <ul class="checklist">
+          <li onclick="toggle(this)"><div class="check-box"></div><span>All medications — in carry-on, not checked</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Medication list / doctor contact info</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Comfortable walking shoes</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Light, breathable clothing (linen / cotton)</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Wide-brim hat — sun is intense in the Keys</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Any assistive devices / hearing aids if applicable</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Insurance card + ID in easily accessible pocket</span></li>
+        </ul>
+      </div>
+
+      <!-- Kaleb and Katelyn -->
+      <div class="pack-card">
+        <h3>Kaleb &amp; Katelyn</h3>
+        <ul class="checklist">
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Valid REAL ID or passport — confirm before leaving home</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Katelyn: arrive at MKE 2 hrs early, Jake will meet you</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Snorkel mask — rent at Pennekamp or bring your own</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Water shoes for reef snorkeling (protect feet)</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Small dry bag for phones on the water</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Casual dinner outfit for nicer nights out</span></li>
+          <li onclick="toggle(this)"><div class="check-box"></div><span>Any personal medications / allergy meds</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- HELPFUL HINTS -->
+  <div class="section" id="hints">
+    <div class="section-label">Helpful Hints</div>
+    <div class="hints-list">
+
+      <div class="hint-item">
+        <div class="hint-icon">☀️</div>
+        <div class="hint-body">
+          <div class="hint-title">The sun is serious</div>
+          <div class="hint-text">Key Largo is at 25° latitude — the UV index is high year-round and brutal in June. Reapply sunscreen every 90 minutes on the water and especially on the boat. A hat and UV shirt will save you from a miserable sunburned second day.</div>
+        </div>
+      </div>
+
+      <div class="hint-item">
+        <div class="hint-icon">⛵</div>
+        <div class="hint-body">
+          <div class="hint-title">Glass bottom boat motion</div>
+          <div class="hint-text">When the boat anchors over the reef, it rocks with the current while you're looking down through the glass. Some people who aren't normally motion-sick still feel it. Take Dramamine 30–60 minutes before boarding, not after. The sun deck is better than the cabin if you feel queasy — look at the horizon.</div>
+        </div>
+      </div>
+
+      <div class="hint-item">
+        <div class="hint-icon">🌧️</div>
+        <div class="hint-body">
+          <div class="hint-title">Afternoon showers are normal</div>
+          <div class="hint-text">June is the start of rainy season in the Keys. Afternoon showers usually roll through fast — 20–30 minutes and it's over. Don't cancel plans for a 40% chance of rain. Just know it might happen and roll with it.</div>
+        </div>
+      </div>
+
+      <div class="hint-item">
+        <div class="hint-icon">🐟</div>
+        <div class="hint-body">
+          <div class="hint-title">Snorkeling etiquette</div>
+          <div class="hint-text">Don't touch the coral — it's alive and very fragile, and it's also illegal in the sanctuary. Don't stand on the reef. Don't feed the fish. Look, float, enjoy. The reef does all the work.</div>
+        </div>
+      </div>
+
+      <div class="hint-item">
+        <div class="hint-icon">🦟</div>
+        <div class="hint-body">
+          <div class="hint-title">Bugs at dusk near the mangroves</div>
+          <div class="hint-text">No-see-ums (tiny biting midges) come out at dusk near mangrove areas. They're small enough to go through standard screens. Bring bug spray if you're sitting outside at golden hour — it's worth it.</div>
+        </div>
+      </div>
+
+      <div class="hint-item">
+        <div class="hint-icon">🚗</div>
+        <div class="hint-body">
+          <div class="hint-title">The drive on US-1</div>
+          <div class="hint-text">US-1 through the Keys is a two-lane road with lots of traffic lights and slow zones. Don't expect to drive fast — that's not the point. Allow extra time for every trip, especially heading back to MIA on departure day. The scenery is worth it anyway.</div>
+        </div>
+      </div>
+
+      <div class="hint-item">
+        <div class="hint-icon">💵</div>
+        <div class="hint-body">
+          <div class="hint-title">Bring some cash</div>
+          <div class="hint-text">Tacos Jalisco and Harriette's are easier with cash. Several smaller spots along US-1 prefer it or have card minimums. $60–80 cash per person for the trip should cover it.</div>
+        </div>
+      </div>
+
+      <div class="hint-item">
+        <div class="hint-icon">📵</div>
+        <div class="hint-body">
+          <div class="hint-title">Cell service is fine, but put the phones down</div>
+          <div class="hint-text">You'll have service throughout Key Largo. The Keys have a way of making the phone feel irrelevant. Let it.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- EMERGENCY INFO -->
+  <div class="section" id="emergency">
+    <div class="section-label">Emergency &amp; Important Numbers</div>
+    <div class="em-grid">
+
+      <div class="em-card">
+        <div class="em-label">Emergency</div>
+        <div class="em-value">911</div>
+        <div class="em-sub">Fire, police, medical emergency</div>
+      </div>
+
+      <div class="em-card">
+        <div class="em-label">Nearest Hospital</div>
+        <div class="em-value">Mariners Hospital</div>
+        <div class="em-sub">91500 Overseas Hwy, Tavernier<br>(305) 434-3000 · ~10 min south</div>
+      </div>
+
+      <div class="em-card">
+        <div class="em-label">Rock Reef Resort</div>
+        <div class="em-value">98880 Overseas Hwy</div>
+        <div class="em-sub">Key Largo, FL 33037<br>Give this address to anyone who needs to reach you.</div>
+      </div>
+
+      <div class="em-card">
+        <div class="em-label">Pennekamp Park</div>
+        <div class="em-value">(305) 451-6300</div>
+        <div class="em-sub">Tour reservations and park info</div>
+      </div>
+
+      <div class="em-card">
+        <div class="em-label">Monroe County Non-Emergency</div>
+        <div class="em-value">(305) 289-6010</div>
+        <div class="em-sub">Non-urgent police matters</div>
+      </div>
+
+      <div class="em-card">
+        <div class="em-label">Poison Control</div>
+        <div class="em-value">1-800-222-1222</div>
+        <div class="em-sub">National Poison Control Center — also covers marine contact (sea creatures, coral)</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    Key Largo, Florida &nbsp;·&nbsp; June 17–21, 2026 &nbsp;·&nbsp; Rock Reef Resort
+  </div>
+
+</div>
+
+<script>
+  function toggle(el) {
+    el.classList.toggle('done');
+  }
+
+  // Sticky nav highlight
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
