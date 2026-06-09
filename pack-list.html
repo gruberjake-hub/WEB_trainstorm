@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Key Largo · Kaleb & Katelyn Prep List</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=Syne+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --card: #faf7f2;
+    --ink: #1c1a16;
+    --mid: #6b6456;
+    --accent: #d4541a;
+    --teal: #1e7a6e;
+    --gold: #c4952a;
+    --border: #ddd8ce;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Syne', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    padding: 32px 16px 60px;
+  }
+
+  .page {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .header {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .eyebrow {
+    font-family: 'Syne Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .header h1 {
+    font-size: clamp(28px, 7vw, 40px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .header-sub {
+    font-family: 'Syne Mono', monospace;
+    font-size: 11px;
+    color: var(--mid);
+    margin-top: 10px;
+    letter-spacing: 0.06em;
+    line-height: 1.7;
+  }
+
+  /* ALERT BOX */
+  .alert {
+    background: var(--accent);
+    color: white;
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin-bottom: 28px;
+    font-size: 13px;
+    line-height: 1.6;
+    font-weight: 600;
+  }
+
+  .alert span {
+    font-weight: 400;
+    opacity: 0.92;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 28px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .section-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .section-note {
+    font-family: 'Syne Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    margin-left: auto;
+    letter-spacing: 0.06em;
+  }
+
+  /* CHECKLIST */
+  .checklist {
+    list-style: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--card);
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li:hover { background: #f0ebe0; }
+
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    background: white;
+  }
+
+  li.done .check-box {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+
+  li.done .check-box::after {
+    content: '✓';
+    font-size: 11px;
+    color: white;
+    font-weight: 700;
+  }
+
+  li.done .item-text {
+    text-decoration: line-through;
+    opacity: 0.4;
+  }
+
+  .item-text { flex: 1; }
+
+  .item-sub {
+    display: block;
+    font-family: 'Syne Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    margin-top: 2px;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+
+  .flag {
+    font-family: 'Syne Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    text-transform: uppercase;
+  }
+
+  .flag-red { background: rgba(212,84,26,0.12); color: var(--accent); }
+  .flag-green { background: rgba(30,122,110,0.12); color: var(--teal); }
+
+  /* DEADLINE BOX */
+  .deadline {
+    background: var(--ink);
+    color: white;
+    border-radius: 6px;
+    padding: 18px 20px;
+    margin-bottom: 28px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .deadline-date {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .deadline-info { flex: 1; }
+
+  .deadline-label {
+    font-family: 'Syne Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 4px;
+  }
+
+  .deadline-text {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .deadline-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    font-family: 'Syne Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: 0.06em;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="eyebrow">Key Largo · June 17–21, 2026</div>
+    <h1>Kaleb &amp; Katelyn<br>Pre-Trip Checklist</h1>
+    <div class="header-sub">
+      Four nights · American Airlines out of MKE · One checked bag between all four of us<br>
+      Read this. Do the things. In order. Before Wednesday.
+    </div>
+  </div>
+
+  <!-- DEADLINE -->
+  <div class="deadline">
+    <div class="deadline-date">Wed</div>
+    <div class="deadline-info">
+      <div class="deadline-label">Hard Deadline</div>
+      <div class="deadline-text">June 17 — bags packed, IDs in hand, ready to leave for the airport.</div>
+      <div class="deadline-sub">Everything on this list needs to be done before that morning. Not that morning.</div>
+    </div>
+  </div>
+
+  <!-- ALERT -->
+  <div class="alert">
+    ✈ Katelyn — first flight! <span>Jake will walk you through everything at the airport. You just need to show up with your ID and your bag. It's going to be fine.</span>
+  </div>
+
+  <!-- DO THIS FIRST -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">⚡</div>
+      <div class="section-title">Do This First</div>
+      <div class="section-note">blockers — don't skip</div>
+    </div>
+    <ul class="checklist">
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Find your driver's license or state ID — right now, today
+          <span class="item-sub">Must be REAL ID compliant (star in the upper corner) or you need your passport. No ID = no flight. Check your wallet.</span>
+        </div>
+        <span class="flag flag-red">Required</span>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Get laundry soap and do laundry
+          <span class="item-sub">You need 4 nights of clothes, clean. Do this as soon as possible — don't leave it for Tuesday night.</span>
+        </div>
+        <span class="flag flag-red">Required</span>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Download music to your phone — Spotify or Apple Music
+          <span class="item-sub">Airplane wifi is expensive and unreliable. Download playlists NOW while you're on wifi so they play offline. Great for takeoff if you're nervous. Bring headphones.</span>
+        </div>
+        <span class="flag flag-green">Smart</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- WHAT TO PACK -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🎒</div>
+      <div class="section-title">What to Pack</div>
+      <div class="section-note">per person, in a backpack</div>
+    </div>
+    <ul class="checklist">
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          4 days of casual clothes — shorts, t-shirts, one light layer
+          <span class="item-sub">Key Largo is hot. You do not need much. It's shorts weather the whole time.</span>
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          One nicer outfit for dinner (one night we're going somewhere decent)
+          <span class="item-sub">Nothing formal — just not a tank top and basketball shorts. One outfit between your four days of clothes is fine.</span>
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          2 swimsuits each
+          <span class="item-sub">You'll be in the water. One wet swimsuit is miserable. Two means you always have a dry one.</span>
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Flip flops + one pair of closed-toe shoes
+          <span class="item-sub">Flip flops for everything. Closed-toe for the boat and walking on uneven surfaces.</span>
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Underwear and socks (4–5 days worth)
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Sunscreen — SPF 50, a big bottle
+          <span class="item-sub">The Keys sun will destroy you. This is not optional. Reapply constantly on the water.</span>
+        </div>
+        <span class="flag flag-red">Important</span>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Sunglasses + hat or cap
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Headphones
+          <span class="item-sub">For the flight. Download your music before you go.</span>
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Phone charger + portable battery pack if you have one
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Any personal medications — in your backpack, not checked
+          <span class="item-sub">If you take anything regularly, it goes in your carry-on. Checked bags can get lost.</span>
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Dramamine (motion sickness) — one each
+          <span class="item-sub">We're doing a glass bottom boat over the reef. Take it 30–60 min before boarding, not after. Available at any drugstore.</span>
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Cash — about $60–80
+          <span class="item-sub">A few places work better with cash. ATMs in the Keys are sparse.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- GOES IN THE CHECKED BAG -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🧳</div>
+      <div class="section-title">Goes in the Shared Checked Bag</div>
+      <div class="section-note">coordinate with Jake</div>
+    </div>
+    <ul class="checklist">
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Toiletries over 3oz — shampoo, conditioner, body wash, etc.
+          <span class="item-sub">Liquids over 3oz can't go through security in a carry-on. Consolidate into the checked bag.</span>
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Bug spray
+          <span class="item-sub">Mangroves at dusk = no-see-ums. Bring it.</span>
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Water shoes (if bringing — optional, can rent snorkel gear at the park)
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- LEAVE AT HOME -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🚫</div>
+      <div class="section-title">Leave at Home</div>
+    </div>
+    <ul class="checklist" style="pointer-events:none;">
+      <li style="cursor:default;">
+        <div class="check-box" style="border-color:#e0d9cf; background:#f5f0e8;"></div>
+        <div class="item-text" style="color:var(--mid);">
+          Heavy snorkel gear — we can rent it at Pennekamp for cheap
+        </div>
+      </li>
+      <li style="cursor:default;">
+        <div class="check-box" style="border-color:#e0d9cf; background:#f5f0e8;"></div>
+        <div class="item-text" style="color:var(--mid);">
+          More than one pair of nice shoes — you won't wear them
+        </div>
+      </li>
+      <li style="cursor:default;">
+        <div class="check-box" style="border-color:#e0d9cf; background:#f5f0e8;"></div>
+        <div class="item-text" style="color:var(--mid);">
+          Jeans or anything heavy — it's 88° and humid the whole time
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- AT THE AIRPORT -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">✈</div>
+      <div class="section-title">At the Airport</div>
+      <div class="section-note">Wednesday morning</div>
+    </div>
+    <ul class="checklist">
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Arrive at MKE at least 2 hours before departure
+          <span class="item-sub">Jake will confirm the exact meet time. Don't be late — this one actually matters.</span>
+        </div>
+        <span class="flag flag-red">Don't be late</span>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Have your ID out and ready before you get to security
+          <span class="item-sub">TSA will ask for it. Phone out of pocket, shoes off, laptop out if you have one. Jake will walk Katelyn through all of this.</span>
+        </div>
+      </li>
+      <li onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="item-text">
+          Headphones on, music playing before takeoff if needed
+          <span class="item-sub">Totally normal and recommended. The noise of the engines is the worst part — music helps a lot.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Key Largo · June 17–21, 2026 · Questions? Ask Jake.
+  </div>
+
+</div>
+
+<script>
+  function toggle(el) {
+    el.classList.toggle('done');
+  }
+</script>
+</body>
+</html>
