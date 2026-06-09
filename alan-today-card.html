@@ -299,11 +299,11 @@
 
   <!-- DAY TABS -->
   <div class="day-tabs" id="dayTabs">
-    <div class="day-tab active" onclick="setDay(0)"><span class="tab-date">17</span>Wed</div>
-    <div class="day-tab" onclick="setDay(1)"><span class="tab-date">18</span>Thu</div>
-    <div class="day-tab" onclick="setDay(2)"><span class="tab-date">19</span>Fri</div>
-    <div class="day-tab" onclick="setDay(3)"><span class="tab-date">20</span>Sat</div>
-    <div class="day-tab" onclick="setDay(4)"><span class="tab-date">21</span>Sun</div>
+    <div class="day-tab active" data-day="0"><span class="tab-date">17</span>Wed</div>
+    <div class="day-tab" data-day="1"><span class="tab-date">18</span>Thu</div>
+    <div class="day-tab" data-day="2"><span class="tab-date">19</span>Fri</div>
+    <div class="day-tab" data-day="3"><span class="tab-date">20</span>Sat</div>
+    <div class="day-tab" data-day="4"><span class="tab-date">21</span>Sun</div>
   </div>
 
   <!-- DATE -->
@@ -428,22 +428,25 @@
     document.getElementById('dayLabel').textContent = d.label;
 
     const list = document.getElementById('planList');
-    list.innerHTML = d.plan.map(p =>
-      `<li class="plan-item">
-        <div class="plan-time">${p.time}</div>
-        <div class="plan-text">${p.text}</div>
-      </li>`
-    ).join('');
+    list.innerHTML = d.plan.map(function(p) {
+      return '<li class="plan-item"><div class="plan-time">' + p.time + '</div><div class="plan-text">' + p.text + '</div></li>';
+    }).join('');
 
     document.getElementById('bottomNote').innerHTML = d.note;
 
-    document.querySelectorAll('.day-tab').forEach((t, idx) => {
+    document.querySelectorAll('.day-tab').forEach(function(t, idx) {
       t.classList.toggle('active', idx === i);
     });
   }
 
-  // Initialize
-  setDay(0);
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.day-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        setDay(parseInt(tab.getAttribute('data-day'), 10));
+      });
+    });
+    setDay(0);
+  });
 </script>
 
 </body>
