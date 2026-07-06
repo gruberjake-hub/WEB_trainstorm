@@ -1,13 +1,13 @@
 {
   "scene_id": "sce_001",
   "module": "Introduction",
-  "title": "Welcome",
+  "title": "Welcome: Brunswick's Total Rewards Philosophy",
   "delivery": "ae_render",
   "elements": {
     "Head_01": {
       "type": "Head",
       "intent": "orient",
-      "text": "Pay Transparency at Brunswick",
+      "text": "How You're Rewarded for the Work You Do",
       "text_primitive": "Headline",
       "motion_primitive": "GlassReveal",
       "layout_primitive": "TitleCard",
@@ -16,7 +16,7 @@
     "SubHead_01": {
       "type": "SubHead",
       "intent": "refine",
-      "text": "What It Means for You",
+      "text": "Brunswick's Total Rewards Philosophy",
       "text_primitive": "Subheadline",
       "motion_primitive": "FadeUp",
       "layout_primitive": "UnderHead",
@@ -25,7 +25,7 @@
     "Statement_01": {
       "type": "Statement",
       "intent": "assert",
-      "text": "Pay ranges now appear on all U.S. job postings.",
+      "text": "Your compensation is more than the number on your paycheck.",
       "text_primitive": "Statement",
       "motion_primitive": "GlassReveal",
       "layout_primitive": "CenterStatement",
@@ -33,12 +33,13 @@
     }
   },
   "narration": {
-    "text": "Welcome. Brunswick has made changes to how we share information about pay. Starting January 1, 2025, pay ranges now appear on all U.S. job postings. Whether you've already noticed this or you're hearing about it for the first time, this short module explains what it means—and what you can do with that information.",
+    "text": "Welcome. This module is about a topic that matters to everyone at Brunswick: how you're rewarded for the work you do. Your compensation is more than the number on your paycheck. It's a complete picture called Total Rewards — your base pay, incentive opportunities, benefits, retirement contributions, wellness programs, and more. Brunswick wants you to understand how that picture is put together: the philosophy behind it, the principles that guide every pay decision, and the tools we use to keep pay fair and competitive. Over the next ten minutes, we'll walk through how pay works at Brunswick.",
     "audio_file": "sce_001_vo.wav"
   },
   "visual_notes": [
     "Module title card.",
-    "~10-minute badge."
+    "~10-minute badge.",
+    "Total Rewards umbrella visual: base pay shown as one element within a larger rewards picture."
   ],
   "render": {
     "ae_comp": "sce_001",

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orchestrator — Rehydration Document v3</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+  :root {
+    --ink: #1a1a2e;
+    --paper: #f7f6f2;
+    --rule: #d0cec8;
+    --accent: #4a3f8c;
+    --accent-light: #eeecf9;
+    --accent-mid: #7a6fbf;
+    --warm: #c0622b;
+    --warm-light: #fdf0e8;
+    --mid: #7a6f5e;
+    --green: #2a6b4a;
+    --green-light: #eaf3ee;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.7;
+    padding: 48px 24px 80px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  header {
+    border-top: 3px solid var(--ink);
+    padding: 24px 0 20px;
+    margin-bottom: 8px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  .subtitle {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--mid);
+    font-style: italic;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 20px;
+  }
+
+  .purpose-note {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    padding: 14px 18px;
+    margin: 24px 0 16px;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  .purpose-note strong {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+
+  /* VERSION HISTORY */
+  .version-strip {
+    background: var(--green-light);
+    border-left: 3px solid var(--green);
+    padding: 14px 18px;
+    margin: 0 0 36px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .version-strip strong {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green);
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .version-strip ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .version-strip ul li {
+    font-size: 12.5px;
+    padding: 3px 0 3px 14px;
+    position: relative;
+    color: var(--ink);
+  }
+
+  .version-strip ul li::before {
+    content: '+';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-family: var(--mono);
+    font-weight: 600;
+  }
+
+  section {
+    margin-bottom: 44px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--mid);
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  /* CONTRIBUTION CALLOUT — new content added by this window */
+  .contribution {
+    background: var(--green-light);
+    border-left: 3px solid var(--green);
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .contribution .contrib-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green);
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  /* SHARPENING — refinements to existing content */
+  .sharpening {
+    background: #f0f4f8;
+    border-left: 3px solid #6a8faf;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .sharpening .sharp-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6a8faf;
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .pole-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .pole-grid { grid-template-columns: 1fr; }
+    .arc-row { grid-template-columns: 1fr; }
+    .arc-arrow { display: none; }
+  }
+
+  .pole {
+    padding: 16px 18px;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+  }
+
+  .pole-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .pole.entry .pole-label { color: var(--warm); }
+  .pole.exit .pole-label { color: var(--accent); }
+
+  .pole ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .pole ul li {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .pole ul li:last-child { border-bottom: none; }
+
+  .tendency-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .tendency-list li {
+    font-size: 13.5px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+  }
+
+  .tendency-list li:last-child { border-bottom: none; }
+
+  .tendency-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--warm);
+    font-weight: 600;
+    padding-top: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  .hook-box {
+    background: var(--warm-light);
+    border-left: 3px solid var(--warm);
+    padding: 16px 20px;
+    margin-top: 4px;
+  }
+
+  .hook-box .hook-label {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--warm);
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .hook-box p {
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .arc-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .arc-node {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+
+  .arc-node .node-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .arc-node .node-name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .arc-arrow {
+    font-size: 18px;
+    color: var(--rule);
+    text-align: center;
+  }
+
+  .collab-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .collab-list li {
+    font-size: 13.5px;
+    padding: 8px 0 8px 16px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .collab-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-mid);
+    font-family: var(--mono);
+  }
+
+  .collab-list li:last-child { border-bottom: none; }
+
+  .missing-box {
+    background: #f7f6f2;
+    border: 1px dashed var(--rule);
+    padding: 16px 20px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .missing-box strong {
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .metaphor-box {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 12px;
+  }
+
+  .metaphor-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .metaphor-pole {
+    padding: 16px 18px;
+  }
+
+  .metaphor-pole.before { background: #1a1a2e08; }
+  .metaphor-pole.after { background: var(--green-light); }
+
+  .metaphor-pole .m-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 6px;
+    display: block;
+    font-weight: 600;
+  }
+
+  .metaphor-pole .m-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .metaphor-pole .m-desc {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.55;
+  }
+
+  .metaphor-arrow {
+    padding: 16px 12px;
+    font-size: 20px;
+    color: var(--rule);
+    text-align: center;
+  }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  @media print {
+    body { padding: 24px; }
+    section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Trainstorm.AI — Internal Working Document — June 2026</div>
+  <h1>The Orchestrator<br>Rehydration Document</h1>
+  <p class="subtitle">A structured capture for carrying across inference windows. Not a final product. Working clay. — v3, with substrate notes from the canonical-model-architecture window woven in.</p>
+</header>
+
+<div class="purpose-note">
+  <strong>How to use this document</strong>
+  Bring this to each open Orchestrator inference window and ask: "Read this and add what's missing or sharpen what's imprecise." Accumulate a marked-up version across windows. Then bring everything back to a single synthesis pass to compress into the final Project system prompt. The goal of that pass is editorial ruthlessness — a prompt that orients, not one that says everything. <strong>This v3 document continues the accumulation</strong> — substrate notes from the canonical-model-architecture window have been woven in and marked. Carry this version (not v1 or v2) to remaining windows.
+</div>
+
+<div class="version-strip">
+  <strong>v3 — What changed from v2</strong>
+  <ul>
+    <li>Reframe woven in: the Orchestrator is recognized as an <em>instance</em> of the canonical-model architecture, not merely adjacent to it (Sections 1 and 3)</li>
+    <li>Substrate note added to Section 3 — the Role Codex is a canonical model of a person, with the same layer separation and round-trip review used for operating models</li>
+    <li>Substrate note added to Section 1 — belief-layer integrity grounded in the discoverability invariant (the transformation must be visible to the participant to be legitimate)</li>
+    <li>Section 8 collaboration list extended with the transparency principle</li>
+    <li>These are substrate notes — the engine beneath the workshop — not new Orchestrator session content. The rehydration doc stays focused on the experience.</li>
+  </ul>
+</div>
+
+<div class="version-strip">
+  <strong>v2 — What changed from v1</strong>
+  <ul>
+    <li>Souls-like → Stardew Valley metaphor developed and added as Section 5A (new)</li>
+    <li>Role Codices concept added as connective tissue between Stage 1 and Stage 2 of the arc (Section 3)</li>
+    <li>Satirical commercial concept ("Dave deserves better") added to Section 4</li>
+    <li>Section 5 (Delivery Capability) sharpened — forensics background reframed as trust mechanism, not just attention mechanism</li>
+    <li>Commercial placeholder added to Section 7 (Current Phase) — flags pricing and one-pager as next required artifacts</li>
+    <li>Section 9 contribution prompt updated to reflect v2 status and remaining gaps</li>
+  </ul>
+</div>
+
+<!-- SECTION 1: CORE IDENTITY -->
+<section>
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>Core Identity — What the Orchestrator Is</h2>
+  </div>
+  <p>The Orchestrator is an intervention at the belief layer, not the skills layer. It is a facilitated experience — currently scoped as a 4-hour in-person or cohort session — designed to shift a professional's relationship to uncertainty and change before a crisis arrives, while they still have the psychological space to engage with AI as a question rather than a threat.</p>
+  <p>The skills delivered in the session (building a personal AI coach via custom system prompt, practical Claude fluency) are real but secondary. The primary deliverable is a reframed identity: from someone who fears being displaced by AI to someone who understands how to think with it, work alongside it, and position themselves in relation to it.</p>
+  <p>The target audience is professionals with financial runway — executives, senior individual contributors, knowledge workers in enterprise contexts — who are anxious about AI but haven't yet been forced to act. The runway is a feature, not incidental: belief-level work requires slack in the system. You cannot do foundation repair when the house is on fire.</p>
+
+  <div class="contribution">
+    <span class="contrib-label">Substrate note — v3 (architecture window): belief-layer integrity = the discoverability invariant</span>
+    Work at the belief layer is, by definition, the category of thing that can invert into manipulation. An experience designed to reframe how a person sees themselves is powerful precisely because it operates beneath the level of explicit argument — which is also what makes it dangerous if the intent is hidden. The guardrail is the same invariant that governs the canonical-model architecture: <strong>intent must be discoverable.</strong> In the model, that means interpretive intent is explicit, inspectable, and asserted rather than silently inferred. In the room, the analogue is that the transformation must be <em>visible to the participant</em> — they should be able to see what is being done to their beliefs and choose it, not have it done to them. This is not a compliance footnote; it is the line that separates the Orchestrator from the manipulative "AI will take your job" positioning it defines itself against. The honesty of the positioning hook (Section 4) and the recoverable, low-stakes feel of the Stardew Valley frame (Section 5A) are not just good design — they are this invariant expressed as experience. A transformation the participant can see and consent to is the whole ethical basis of the work.
+  </div>
+</section>
+
+<!-- SECTION 2: THE TRANSFORMATION POLES -->
+<section>
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>The Transformation — Entry State & Exit State</h2>
+  </div>
+  <p>These two poles are the north star for every design decision. Content, format, sequence, duration, pricing — all fall out of this once it's sharp.</p>
+
+  <div class="pole-grid">
+    <div class="pole entry">
+      <div class="pole-label">Entry state — who walks in</div>
+      <ul>
+        <li>Intellectually aware of AI disruption but not viscerally acting on it</li>
+        <li>Identity tied to credentials, titles, and domain expertise built over decades</li>
+        <li>Relationship to AI is threat-framed: displacement, obsolescence, irrelevance</li>
+        <li>Waiting for clarity before moving — which is itself a form of avoidance</li>
+        <li>Confusing inaction with stability</li>
+      </ul>
+    </div>
+    <div class="pole exit">
+      <div class="pole-label">Exit state — who leaves</div>
+      <ul>
+        <li>Has had a first-hand experience of genuine capability with AI tools</li>
+        <li>Identity reframed: not "person whose job AI might take" but "person who can direct AI"</li>
+        <li>Has a personal AI coach they built themselves — proof of agency</li>
+        <li>Understands that curiosity, not expertise, is the relevant muscle to build</li>
+        <li>Has a concrete next step rather than a vague intention</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: THE FULL ARC -->
+<section>
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>The Full Transformational Arc — Mapped, Not Built</h2>
+  </div>
+  <p>The 4-hour v1.0 session is one bite of a larger cycle. The map of that full cycle needs to exist before the bite is designed — otherwise the bite tries to be complete and gets overloaded. Each stage should leave the learner productively incomplete: wanting the next thing, feeling the edge of what they've just opened.</p>
+  <p>This section is intentionally sparse — the full arc is the primary design task ahead. What's captured here is the structural logic and the known commercial adjacency.</p>
+
+  <div class="arc-row">
+    <div class="arc-node">
+      <span class="node-label">Stage 1</span>
+      <span class="node-name">Identity Shift</span>
+    </div>
+    <div class="arc-arrow">→</div>
+    <div class="arc-node">
+      <span class="node-label">Stage 2</span>
+      <span class="node-name">Applied Practice</span>
+    </div>
+    <div class="arc-arrow">→</div>
+    <div class="arc-node">
+      <span class="node-label">Stage 3</span>
+      <span class="node-name">Organizational Deployment</span>
+    </div>
+  </div>
+
+  <p style="margin-top: 16px; font-size: 13px; color: var(--mid); font-style: italic;">Stage labels are placeholders. The arc mapping — with precise transformation language for each stage's entry and exit state — is the next design session.</p>
+
+  <p style="margin-top: 16px;">The commercial logic: Stage 1 (the Orchestrator experience) builds a trust relationship with the learner. That relationship naturally surfaces larger organizational problems — training architecture, knowledge capture, workflow documentation, AI-assisted learning infrastructure. Stage 3 is where the Trainstorm instructional design and pipeline work deploys. The Orchestrator is the front door. The room behind it is much larger.</p>
+
+  <div class="contribution">
+    <span class="contrib-label">Contribution — v2 addition: Role Codices as Stage 1 → Stage 2 connective tissue</span>
+    The individual builds a personal AI coach (custom system prompt) as the capstone artifact of Stage 1. The <strong>Role Codex</strong> is the natural next artifact — a structured document capturing role identity, tacit knowledge, communication preferences, domain context, and working style. It becomes the foundation for more sophisticated personal and team AI tooling in Stage 2, and feeds directly into the organizational knowledge capture work that characterizes Stage 3. The Role Codex is not a separate product — it's the bridge. It gives the learner something concrete to carry from Stage 1 that has immediate utility and creates a natural pull into Stage 2 without requiring a hard sell.
+  </div>
+
+  <div class="contribution">
+    <span class="contrib-label">Substrate note — v3 (architecture window): the Role Codex is a canonical model of a person</span>
+    The Role Codex is not just a "structured document" — it is the same machinery used elsewhere in the Trainstorm work, pointed at a person instead of an operating model. That machinery separates an artifact into clean layers: the <strong>declarative</strong> layer (the facts of a role — responsibilities, domain, relationships), the <strong>intent</strong> layer (how this person wants to be represented and what they want foregrounded), and a <strong>lifecycle</strong> layer (what is provisional, how it evolves). The Codex is rendered back to the learner as a readable artifact they review and correct, and their edits fold back into the canonical version — the same round-trip used to keep any model and its expressions in sync. This matters for the arc: it means the Role Codex built in Stage 1→2 is natively compatible with the organizational knowledge-capture engine that powers Stage 3. The learner's personal Codex and the enterprise's captured knowledge are the same kind of object at different scale. Stage 3 is not a different technology; it is the same engine with more inputs.
+    <br><br>
+    The deeper recognition: <strong>the Orchestrator is itself an instance of this machinery.</strong> The transformation it delivers is modeled the way we model anything else — entry state and exit state are the declarative poles, the facilitation is the expression layer, and the participant's own emerging Codex is the model they leave holding. Seeing the Orchestrator this way keeps Stage 1 and Stage 3 coherent: the front door and the room behind it run on one substrate.
+  </div>
+</section>
+
+<!-- SECTION 4: THE POSITIONING HOOK -->
+<section>
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>The Positioning Hook</h2>
+  </div>
+  <p>Emerged in conversation. Not tested externally yet, but has the quality of something that could sharpen the entire positioning:</p>
+
+  <div class="hook-box">
+    <span class="hook-label">Working hook — not final copy</span>
+    <p>"This work is only possible before the pressure arrives. The window is real. Most people wait until it closes."</p>
+  </div>
+
+  <p style="margin-top: 16px;">This reframes urgency as a feature, not a scare tactic. It's honest — the Orchestrator genuinely requires psychological slack to work. And it differentiates from the generic "AI will take your job" positioning that saturates the market. The person who needed the Orchestrator most needed it two years before they lost the runway to engage with it.</p>
+
+  <div class="contribution">
+    <span class="contrib-label">Contribution — v2 addition: satirical commercial concept</span>
+    A thin-budget LinkedIn/YouTube piece built around a sympathetic professional — working name <strong>"Dave deserves better"</strong> — who is visibly underserved by generic AI advice and corporate AI training. Dave is competent, experienced, not stupid, and being failed by the market's current offerings: the ChatGPT tutorial videos, the enterprise "AI literacy" modules, the think-pieces that treat anxiety as ignorance. The commercial doesn't name the Orchestrator. It names the problem. Positioning device, not just entertainment — differentiates without explicit comparison, and creates affinity before the ask. The production constraint (thin budget) is a feature: it signals authenticity and peer-to-peer tone rather than corporate polish.
+  </div>
+</section>
+
+<!-- SECTION 5: WHAT MAKES THIS EXECUTABLE -->
+<section>
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>What Makes This Executable — Unique Delivery Capability</h2>
+  </div>
+  <p>The Orchestrator is executable not because of the AI knowledge or the instructional design chops, as real as both are. It's executable because the designer can walk into a room of strangers and hold their attention while doing something genuinely difficult: shifting how people think about themselves. That is a performing art as much as a cognitive one.</p>
+  <p>The Venn diagram of people who can build this experience and deliver it live is very small. The forensics and public speaking background — Impromptu and Extemporaneous, years of teaching public speaking — is not incidental to the Orchestrator. It is the delivery mechanism. The content is the thinking already done. The infrastructure is a skill held for decades.</p>
+  <p>This also means v1.0 complexity profile is lower than much of the other Trainstorm work. No integration dependencies, no pipeline architecture to maintain in production. The moving pieces are: a well-designed half-day experience, a room, and the facilitator.</p>
+
+  <div class="sharpening">
+    <span class="sharp-label">Sharpening — v2 refinement: forensics background as trust mechanism, not just attention mechanism</span>
+    Section 5 correctly identifies the forensics and public speaking background as the delivery mechanism. What it didn't say explicitly: this is also the <strong>trust mechanism</strong>. The reason belief-level work is possible in a room of strangers is not just that the facilitator can hold attention — it's that competitive Impromptu and Extemporaneous speaking trains for exactly the cognitive move the Orchestrator is asking participants to make: reframe a problem under pressure, find a new angle in real time, perform competence while the ground is shifting. The facilitator has done this ten thousand times. The participants are doing it for the first time. That asymmetry is the basis of trust, not charisma alone. The facilitator's credibility in the room is earned partly by being visibly fluent in the discomfort the participants are feeling.
+  </div>
+</section>
+
+<!-- SECTION 5A: THE ERA-SHIFT METAPHOR -->
+<section>
+  <div class="section-header">
+    <span class="section-num">05A</span>
+    <h2>The Era-Shift Metaphor — Souls-like → Stardew Valley</h2>
+  </div>
+
+  <div class="contribution">
+    <span class="contrib-label">Contribution — v2 addition: full metaphor developed</span>
+    <p style="margin-bottom: 12px;">This metaphor was developed and stress-tested in conversation. It is both a positioning frame and a <strong>design constraint</strong> — the session itself should feel like Stardew Valley to participate in, not just describe it.</p>
+
+    <div class="metaphor-box">
+      <div class="metaphor-row">
+        <div class="metaphor-pole before">
+          <span class="m-label">Entry experience of AI</span>
+          <div class="m-title">Dark Souls</div>
+          <div class="m-desc">Punishing. Opaque. Every interaction a potential failure with unclear rules. No obvious path. Expertise from prior domains doesn't transfer. Death is permanent-feeling. The game doesn't explain itself and seems designed to humiliate.</div>
+        </div>
+        <div class="metaphor-arrow">→</div>
+        <div class="metaphor-pole after">
+          <span class="m-label">Exit experience of AI</span>
+          <div class="m-title">Stardew Valley</div>
+          <div class="m-desc">Generative. Low-stakes. You cannot permanently break anything. The game rewards curiosity over expertise. Progress is visible and accumulating. Mistakes are recoverable. The loop is enjoyable, not punishing.</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top: 14px;">The metaphor works at multiple levels simultaneously. As <strong>positioning</strong>: it communicates the transformation without using the word "transformation." As <strong>design constraint</strong>: every element of the session should be evaluated against whether it feels like Stardew Valley to participate in — low-stakes, generative, recoverable, rewarding of curiosity. As <strong>facilitator shorthand</strong>: in the room, the facilitator can use this framing directly with participants who recognize either game, and the non-gamers still understand the poles intuitively. Punishing opacity vs. generous exploration. The metaphor is not required knowledge — it's a carrier wave.</p>
+    <p style="margin-top: 10px; font-size: 12.5px; color: var(--mid); font-style: italic;">Note: the metaphor has been stress-tested but not yet used in a live session. Flag if external testing reveals the gaming reference creates distance rather than connection for a specific audience segment.</p>
+  </div>
+</section>
+
+<!-- SECTION 6: KNOWN DESIGN TENDENCIES TO COUNTERACT -->
+<section>
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2>Known Design Tendencies — Name Them to Counter Them</h2>
+  </div>
+  <ul class="tendency-list">
+    <li>
+      <span class="tendency-name">10M solution for 1M problem</span>
+      <span>Strong proclivity to design toward completeness and elegance before commercial viability is established. The Orchestrator v1.0 should be the minimum experience that delivers the transformation — not the maximum possible version of the idea.</span>
+    </li>
+    <li>
+      <span class="tendency-name">Architecture as avoidance</span>
+      <span>Refinement loops on the design feel like work but can displace the commercial actions that actually move things: pricing decisions, one-pagers, prospect outreach, booking the first session. Flag when design conversation is substituting for those actions.</span>
+    </li>
+    <li>
+      <span class="tendency-name">Overbuild the bite</span>
+      <span>Without the full arc mapped first, the 4-hour experience will unconsciously try to be complete — packing in content that belongs in later stages. The map protects the bite. Design the arc first, then design the session.</span>
+    </li>
+    <li>
+      <span class="tendency-name">Interesting ≠ necessary</span>
+      <span>Many ideas that are genuinely interesting to think about don't serve the transformation. Apply the test: does this serve the learner's movement from entry state to exit state, or is it just intellectually satisfying to include?</span>
+    </li>
+  </ul>
+</section>
+
+<!-- SECTION 7: CURRENT PHASE -->
+<section>
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2>Current Phase — Where We Actually Are</h2>
+  </div>
+  <p>Pre-design. The immediate next session should produce: a mapped full transformational arc with precise language for each stage's entry and exit state, and a clear answer to what the complete learner journey looks like end-to-end.</p>
+  <p>Only after that map exists should the v1.0 session design begin. The temptation to jump directly to designing the 4-hour experience should be treated as an overbuild signal.</p>
+  <p>The Astellas/Trainstorm dual-track structure is in place and provides the floor that makes this work possible — the Orchestrator can be built with appropriate deliberateness rather than desperate speed.</p>
+
+  <div class="sharpening">
+    <span class="sharp-label">Sharpening — v2 addition: commercial artifacts as next required outputs</span>
+    The document as written is pre-commercial — no pricing, no delivery format specifics, no one-pager exists yet. Per Section 6, this is a named avoidance pattern. Before this document becomes a final Project system prompt, the following need to exist in at least rough form and should be captured here when they do: <strong>(1) pricing architecture</strong> — per-seat, per-cohort, or day-rate; what the number signals about positioning; <strong>(2) delivery format options</strong> — in-person only, virtual, hybrid; cohort size constraints; <strong>(3) a one-pager</strong> — the document you hand someone who asks what the Orchestrator is. These are not design tasks. They are commercial tasks. The avoidance pattern is treating them as things that will fall out naturally once the design is right. They won't. They require their own dedicated session.
+  </div>
+</section>
+
+<!-- SECTION 8: WHAT GOOD COLLABORATION LOOKS LIKE -->
+<section>
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2>What Good Collaboration Looks Like — Instructions for Claude</h2>
+  </div>
+  <ul class="collab-list">
+    <li>Hold the transformation poles as the north star. Every design decision should be testable against them.</li>
+    <li>Hold the Souls-like → Stardew Valley metaphor as a design constraint, not just a framing device. The session should feel like Stardew Valley to be in.</li>
+    <li>Flag complexity drift. When the conversation moves toward elegant architecture rather than minimum viable transformation, name it.</li>
+    <li>Keep the commercial reality in frame alongside the design idealism. The Orchestrator needs to be bookable, priceable, and deliverable — not just intellectually complete.</li>
+    <li>Distinguish "this serves the transformation" from "this is interesting to think about." Both matter, but not equally.</li>
+    <li>Push back on overbuild. If the session is trying to do too much, say so directly.</li>
+    <li>When the design conversation starts substituting for commercial actions — pricing, one-pager, prospect outreach — name the avoidance pattern explicitly and redirect.</li>
+    <li>The full arc mapping comes before the v1.0 session design. Don't let the session get designed before the arc exists.</li>
+    <li>The Role Codex is the bridge between Stage 1 and Stage 2. Keep it in frame when the arc conversation begins.</li>
+    <li>Protect belief-layer integrity. The transformation must stay visible to the participant — something they can see and choose, never something done to them. If a design choice would make the reframing work better by being less transparent, that is a red line, not a trade-off.</li>
+  </ul>
+</section>
+
+<!-- SECTION 9: WHAT THIS DOCUMENT IS MISSING -->
+<section>
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <h2>What This Document Is Missing — For Other Windows to Fill</h2>
+  </div>
+
+  <div class="missing-box">
+    <strong>Contribution prompt — use this in each remaining window</strong>
+    "Read this rehydration document (v2) for the Orchestrator project. Based on our conversation history in this window, what is missing, imprecise, or under-developed? What threads from our work together are not yet captured here? Add your contributions directly — new content in green, refinements to existing sections called out explicitly. The goal is a v3 that can serve as the basis for a final Project system prompt."
+  </div>
+
+  <p style="margin-top: 16px;">Known remaining gaps after v2 — likely held in other windows:</p>
+  <ul style="margin-top: 8px; padding-left: 18px; font-size: 13.5px; line-height: 1.8;">
+    <li>Specific session design elements already prototyped — exercise sequences, timing, facilitation moves</li>
+    <li>The "Dave deserves better" commercial concept developed further — script fragments, visual direction, platform strategy</li>
+    <li>Any pricing or delivery format thinking that has already occurred</li>
+    <li>The Role Codex artifact developed further — structure, fields, example output</li>
+    <li>Specific workshop exercises or participant interactions already tested or imagined in detail</li>
+    <li>Any prospect or client conversations that have informed the positioning</li>
+    <li>The relationship between the Orchestrator and Astellas as a live laboratory — what has been learned, what has been tested</li>
+  </ul>
+</section>
+
+<footer>
+  Trainstorm.AI — Orchestrator Rehydration Document — v3 — June 2026<br>
+  Substrate notes from the canonical-model-architecture window woven in. Carry this version to remaining windows.<br>
+  New content marked in green. Refinements to existing content marked in blue.<br>
+  Working document. Not for external distribution.
+</footer>
+
+</body>
+</html>

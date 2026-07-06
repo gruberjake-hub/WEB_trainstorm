@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Plan — Prepared for Alan</title>
+<style>
+  :root {
+    --paper: #F7F5F0;
+    --ink: #1B2433;
+    --muted: #5D6B77;
+    --service: #4A6741;
+    --service-light: #EDF2E8;
+    --concept: #4A5F6E;
+    --concept-light: #EDF0F5;
+    --rule: #C8C3B8;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 17px;
+    line-height: 1.75;
+    padding: 48px 20px 72px;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding-left: 28px;
+    border-left: 4px solid var(--service);
+  }
+
+  /* ---------- Header ---------- */
+  .doc-header { margin-bottom: 44px; }
+
+  .prepared-for {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--service);
+    margin-bottom: 10px;
+  }
+
+  .doc-title {
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .doc-meta {
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+    border-top: 1px solid var(--rule);
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+
+  /* ---------- Sections ---------- */
+  .section { margin-bottom: 40px; }
+
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--service);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  p { margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ---------- Goal callout (green) ---------- */
+  .callout-goal {
+    background: var(--service-light);
+    border-left: 3px solid var(--service);
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 16px;
+  }
+  .callout-goal .label {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--service);
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Concept callout (slate) ---------- */
+  .callout-concept {
+    background: var(--concept-light);
+    border-left: 3px solid var(--concept);
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 16px;
+  }
+  .callout-concept .label {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--concept);
+    margin-bottom: 6px;
+  }
+  .callout-concept p { margin-bottom: 10px; }
+  .callout-concept p:last-child { margin-bottom: 0; }
+
+  /* ---------- Tool cards ---------- */
+  .tool {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .tool-name {
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .tool p { font-size: 16px; }
+
+  /* ---------- Timeline ---------- */
+  .timeline { margin: 20px 0; }
+  .tl-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 18px;
+  }
+  .tl-marker { flex-shrink: 0; width: 52px; text-align: center; }
+  .tl-dot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--service);
+    margin: 4px auto 0;
+  }
+  .tl-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--service);
+    text-align: center;
+    margin-bottom: 2px;
+  }
+  .tl-content { font-size: 16px; padding-top: 2px; }
+  .tl-content strong { display: block; margin-bottom: 4px; }
+
+  /* ---------- Action list ---------- */
+  .alan-list { list-style: none; margin-top: 10px; }
+  .alan-list li {
+    padding: 10px 14px;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    margin-bottom: 8px;
+    font-size: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .alan-list li::before {
+    content: "→";
+    color: var(--service);
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ---------- Footer ---------- */
+  .doc-footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  /* ---------- Print ---------- */
+  @media print {
+    body { background: #fff; padding: 20px 10px 40px; font-size: 14px; }
+    .page { border-left-color: #4A6741; }
+    .tool { border-color: #bbb; }
+    h2 { color: #4A6741; border-bottom-color: #ccc; }
+    .callout-goal { background: #f0f5ee; }
+    .callout-concept { background: #edf0f5; }
+    .section { break-inside: avoid; }
+    .tool { break-inside: avoid; }
+    .callout-goal { break-inside: avoid; }
+    .callout-concept { break-inside: avoid; }
+  }
+
+  @media (max-width: 540px) {
+    body { font-size: 16px; padding: 24px 12px 48px; }
+    .page { padding-left: 16px; border-left-width: 3px; }
+    .doc-title { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="prepared-for">Prepared for</div>
+    <div class="doc-title">Alan's Plan</div>
+    <div class="doc-meta">A plain-English overview of the legal and financial steps underway &mdash; no jargon. Prepared by Jake &middot; July 2026.</div>
+  </div>
+
+  <!-- What this is -->
+  <div class="section">
+    <h2>What this document is</h2>
+    <p>Jake has been working with an elder law attorney to protect your estate and make sure your affairs are structured correctly. This document explains what the plan does, why each piece is in place, and what you'll be asked to sign. It covers everything in one place so you can refer back to it.</p>
+    <p>Nothing gets signed until you've reviewed it with Jake and the attorney. Every step requires your agreement.</p>
+  </div>
+
+  <!-- Goal -->
+  <div class="section">
+    <h2>The goal</h2>
+    <p>You have roughly $1.2 million in assets — your home in DuPage County plus investments. Without planning, long-term care costs (which can exceed $10,000 a month) could consume most of that before anything reaches your family.</p>
+    <p>The plan is not to avoid paying for your care. It's to structure things so that whatever is left passes to Kaleb or Jake rather than being exhausted entirely by care expenses or claimed by the state.</p>
+
+    <div class="callout-goal">
+      <div class="label">The Core Goal</div>
+      You receive the care you need. What remains of your estate passes to Kaleb or Jake. Your military service is put to work through benefits you've already earned. All of this is legal, straightforward, and exactly what these programs are designed for.
+    </div>
+  </div>
+
+  <!-- VA Service -->
+  <div class="section">
+    <h2>Your military service</h2>
+    <p>You served in the Army during the Vietnam era, stationed in Utah. Stateside service during the wartime period (August 1964 – May 1975) qualifies you for veterans' benefits that most people never claim. Your service record matters here in a concrete, financial way.</p>
+
+    <div class="tool">
+      <div class="tool-name">VA health care (already active)</div>
+      <p>You're enrolled, which is the hardest step. That enrollment opens access to programs that bring medical care and home assistance to you directly — regardless of your asset level. Jake is in the process of getting those programs activated.</p>
+    </div>
+
+    <div class="tool">
+      <div class="tool-name">Aid &amp; Attendance — a monthly benefit you've earned</div>
+      <p>This VA benefit pays up to approximately $2,300 a month to help cover care costs at home or in a facility. Your asset level currently puts you above the eligibility threshold, but the plan is structured so that threshold is met in about three years — right when additional income for care is most likely to be useful.</p>
+    </div>
+  </div>
+
+  <!-- Powers of attorney - standalone, before tiers -->
+  <div class="section">
+    <h2>First: Powers of attorney</h2>
+    <p>Before any asset moves, these get signed. A durable power of attorney (financial) and a healthcare power of attorney authorize Jake to act on your behalf if there is ever a point when you cannot. You remain in full control as long as you are able. These come first because every step that follows depends on them being in place.</p>
+  </div>
+
+  <!-- Three tiers -->
+  <div class="section">
+    <h2>How your assets are structured — three tiers</h2>
+    <p>Not all of your assets are in the same situation, so they're handled three different ways. The sorting logic comes down to one question: how much tax does a transfer create, and what's the best legal container for each type of asset?</p>
+
+    <div class="tool">
+      <div class="tool-name">Tier 1 — Protective Trust (your home and select investments)</div>
+      <p>Your home and any investment positions that have been held long enough to grow significantly go into a Medicaid Asset Protection Trust (MAPT). These assets carry the most tax sensitivity — if they were simply transferred as a direct gift, the recipient would owe capital gains tax on all of that accumulated growth. The trust holds them in a way that sidesteps that problem: when you pass, Kaleb and Jake inherit at the current value, and the tax on prior gains disappears.</p>
+      <p>Assets in the trust are also not counted against you if you later need Medicaid to help pay for care. The five-year protection clock starts the day the trust is funded.</p>
+
+      <div class="callout-concept">
+        <div class="label">What "step-up in basis" means</div>
+        <p>When you buy an investment for, say, $20,000 and it grows to $200,000, the $180,000 difference is a gain. If you gift it directly to someone, they inherit your original $20,000 starting point — and owe tax on that $180,000 when they sell.</p>
+        <p>When an asset is inherited through an estate rather than given as a gift, tax law resets the starting point to whatever the investment is worth at the time of inheritance. That $180,000 in gains effectively disappears for tax purposes. The trust is drafted specifically to preserve this reset. On the right assets, this is worth tens of thousands of dollars or more.</p>
+      </div>
+    </div>
+
+    <div class="tool">
+      <div class="tool-name">Tier 2 — Immediate Direct Transfer (actively traded stocks)</div>
+      <p>You've been an active trader. Because you've regularly bought and sold positions — realizing gains along the way — most of your stock portfolio doesn't carry large embedded gains. The gap between what you originally paid and what the positions are worth today is relatively small.</p>
+      <p>This changes what makes sense for those assets. Without a big tax concern, there's no reason to run them through the more complex trust structure. They can be transferred directly to Jake and Kaleb now — cleanly and simply. The Medicaid lookback clock starts the same day regardless of whether an asset goes into a trust or transfers directly. So the simpler path gets the same result.</p>
+
+      <div class="callout-concept">
+        <div class="label">Why active trading works in your favor here</div>
+        <p>Every time you sell a position and rebuy, you've effectively reset the tax clock on that investment — you've already paid tax on whatever gain existed, and the new position starts fresh at its current value. For estate planning purposes, this means those positions aren't sitting on decades of untaxed growth. They can move to the next generation without a large, hidden tax bill attached.</p>
+        <p>This is the asset category where moving quickly makes the most sense. The sooner these transfer, the sooner the Medicaid lookback clock starts on them.</p>
+      </div>
+
+      <p>Once transferred, these funds are in Jake's and Kaleb's names. Practically, they remain available to cover your private care costs if needed — especially during the first five years while the trust's Medicaid protection matures. They're not going anywhere; they're in legally safer hands.</p>
+    </div>
+
+    <div class="tool">
+      <div class="tool-name">Tier 3 — Personal Care Agreement (Kaleb's compensation)</div>
+      <p>This is the most important piece to understand, because it works differently from the other two tiers. It is not a transfer at all. It is a wage.</p>
+      <p>Kaleb lives with you and provides around-the-clock in-home oversight and care — managing your daily needs, coordinating appointments, and ensuring you're safe and supported. A formal written Personal Care Agreement establishes that this is compensated work, paid at fair market rates. The going rate for that level of 24/7 non-medical in-home care in Illinois is approximately $80,000 per year.</p>
+      <p>Illinois Medicaid's audit standards distinguish clearly between gifts — which trigger the five-year lookback — and compensation for genuine services, which do not. Kaleb is doing real work. He gets paid for it. The money stays in the family, and it does not count against you for Medicaid purposes.</p>
+
+      <div class="callout-concept">
+        <div class="label">What makes the care agreement defensible</div>
+        <p>For this arrangement to hold up under state scrutiny, three things must be in place. First, the agreement must be signed before the work it covers — not retroactively. Second, the rate must match what you'd pay an outside professional for the same services. Third, the work must be documented: Kaleb maintains daily care logs describing what he did, when, and for how long. A physician's statement confirming your care needs is also part of the record.</p>
+        <p>These aren't bureaucratic hurdles — they're what separates a legitimate employment arrangement from a disguised gift. The attorney will draft the agreement specifically to meet Illinois HFS audit standards.</p>
+      </div>
+
+      <p><strong>What happens to Kaleb's earnings.</strong> The compensation Kaleb receives doesn't simply flow into his checking account without structure. His earnings will be directed into a Restricted Management Trust — a separate legal account overseen by Jake — designed to preserve that money for Kaleb's long-term benefit rather than be consumed in the short term. This protects Kaleb from himself (he's 22), and it ensures the funds serve the purpose they're meant to serve.</p>
+      <p><strong>Tax treatment.</strong> Kaleb pays income tax on these earnings like any other employment income. That's the trade-off for the arrangement being legitimate compensation rather than a gift.</p>
+      <p><strong>Duration.</strong> The agreement is structured to run for several years. At roughly $80,000 per year, it moves a meaningful portion of the estate to Kaleb in a fully defensible, lookback-exempt way over time.</p>
+
+      <div class="callout-concept">
+        <div class="label">A potential additional layer: VA Veteran-Directed Care</div>
+        <p>Separately from the personal care agreement funded by your own assets, there is a VA program called Veteran-Directed Care that provides veterans with a monthly budget to hire caregivers of their choosing — including family members. If the local VA medical center participates, this program could pay Kaleb directly for a portion of his caregiving work using VA funds rather than your estate. That would stack on top of the personal care agreement, or reduce how much of your own assets need to flow through it. Jake is looking into whether Hines VA participates.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="section">
+    <h2>How the timing works</h2>
+    <p>All three tiers launch at roughly the same time, but they operate on different clocks. The personal care agreement (Tier 3) runs continuously and doesn't add to the lookback at all — it's compensation, not a transfer. The stock transfers (Tier 2) and the trust (Tier 1) both start the same five-year Medicaid lookback clock the day they're executed. The VA runs a separate, shorter three-year review.</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-marker">
+          <div class="tl-label">Now</div>
+          <div class="tl-dot"></div>
+        </div>
+        <div class="tl-content">
+          <strong>All three tiers activated simultaneously.</strong>
+          Trust funded (Tier 1). Low-basis stocks transferred to Jake and Kaleb (Tier 2). Personal care agreement with Kaleb begins (Tier 3). Both the Medicaid and VA lookback clocks start.
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-marker">
+          <div class="tl-label">Ongoing</div>
+          <div class="tl-dot" style="opacity: 0.8;"></div>
+        </div>
+        <div class="tl-content">
+          <strong>Kaleb receives ~$80,000/year under the care agreement.</strong>
+          This continues regardless of where the Medicaid or VA clocks stand. It is not a gift and does not affect either lookback period. Earnings go into Kaleb's Restricted Management Trust.
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-marker">
+          <div class="tl-label">Year 3</div>
+          <div class="tl-dot" style="opacity: 0.65;"></div>
+        </div>
+        <div class="tl-content">
+          <strong>VA Aid &amp; Attendance becomes claimable (~$2,300/month).</strong>
+          The VA's three-year lookback has cleared. Restructured asset level now qualifies. This benefit covers ongoing care costs while the Medicaid clock finishes running.
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-marker">
+          <div class="tl-label">Year 5</div>
+          <div class="tl-dot" style="opacity: 0.35;"></div>
+        </div>
+        <div class="tl-content">
+          <strong>Full Medicaid protection in place.</strong>
+          Five-year lookback cleared on both the trust assets and the direct stock transfers. The estate is fully structured. Care can be funded by Medicaid without depleting what remains for Kaleb and Jake.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout-concept">
+      <div class="label">What the Medicaid lookback period is</div>
+      <p>When someone applies for Medicaid long-term care benefits, the state reviews every asset transfer made during the previous five years. Any transfer that looks like a gift — moving money or property out of your name — can result in a penalty: a delay in when benefits begin, calculated based on the value of what was transferred.</p>
+      <p>The trust is not a workaround for the lookback — assets put into the trust are subject to the same five-year review. What the trust does is start that clock intentionally, on a known date, with a clear legal structure. Once five years pass, those assets are fully protected. Every week of delay is a week added to the wait.</p>
+    </div>
+
+    <div class="callout-concept">
+      <div class="label">What the VA lookback period is</div>
+      <p>The VA runs a parallel review, but shorter: three years. When you apply for Aid &amp; Attendance, the VA checks whether any assets were transferred out of your name in the previous three years. Transfers during that window can delay the benefit.</p>
+      <p>Because the trust funds both clocks on the same day, the VA lookback clears two years before the Medicaid lookback does. That gap is intentional — Aid &amp; Attendance income bridges years three through five, covering care costs while the Medicaid protection finishes maturing.</p>
+    </div>
+  </div>
+
+  <!-- What to sign -->
+  <div class="section">
+    <h2>Documents you'll be asked to sign</h2>
+    <p>These will be reviewed with you at the attorney's office. Jake attends every appointment.</p>
+    <ul class="alan-list">
+      <li>Durable power of attorney (financial) and healthcare power of attorney — comes first, before anything else moves</li>
+      <li>Advance directive — your medical wishes on file</li>
+      <li>Medicaid Asset Protection Trust (Tier 1) — holds your home and any high-gain investment positions; starts the five-year protection clock</li>
+      <li>Transfer on Death Instrument and updated account beneficiary designations — backstop layer ensuring non-trust assets pass directly to Kaleb or Jake outside of probate</li>
+      <li>Personal Care Agreement (Tier 3) — formal written compensation agreement with Kaleb, signed before the work it covers begins; attorney drafts to Illinois HFS audit standards</li>
+      <li>Restricted Management Trust for Kaleb — the receiving account for his caregiving earnings, overseen by Jake</li>
+    </ul>
+    <p style="margin-top:16px;">The Tier 2 direct stock transfers do not require a signed agreement — they are account transfers executed by the brokerage. However, they will require gift tax reporting (IRS Form 709) filed by Jake for any amounts above the annual exclusion. The attorney will coordinate the timing and documentation.</p>
+    <p>Before any of the above is signed, your physician will provide a letter confirming you have the clarity to make these decisions. The attorney may supply preferred language for that appointment. This protects you and the documents from any future challenge.</p>
+  </div>
+
+  <!-- Kaleb and Jake -->
+  <div class="section">
+    <h2>Who the estate passes to</h2>
+    <p>The estate is structured to pass to Kaleb or Jake — whichever makes sense at the time, or split between them as directed. Kaleb's share will be held in a discretionary trust with a successor trustee, which protects the money without restricting his life. Jake's share passes directly. The point is that the assets stay in the family and are not consumed by the process of settling the estate.</p>
+    <p>Kaleb's role is also recognized while you're living — the caregiving agreement compensates him fairly for work he's doing now. The inheritance and the caregiving compensation are separate arrangements.</p>
+  </div>
+
+  <!-- What you need to do -->
+  <div class="section">
+    <h2>What you need to do</h2>
+    <p>Jake handles the coordination with the attorney and the VA. Your role is straightforward:</p>
+    <ul class="alan-list">
+      <li>Attend the physician appointment for the capacity letter. Jake will be there.</li>
+      <li>Attend the attorney signing appointments. Jake will be there.</li>
+      <li>Ask any questions before you sign anything. Nothing is final until you say so.</li>
+    </ul>
+
+    <div class="callout-goal" style="margin-top: 20px;">
+      <div class="label">One thing to do now</div>
+      If you have your Army discharge papers (DD-214), let Jake know where they are. That document is required to start the VA benefit process. If it's lost, Jake can request a copy — but having the original saves several weeks.
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="doc-footer">
+    This document was prepared for Alan as a plain-English overview of the planning work underway. It is not a legal document and does not constitute legal or financial advice. All decisions are made in coordination with a licensed elder law attorney. Figures referenced (benefit amounts, asset limits, income thresholds) are current as of July 2026 and subject to change. This document may be shared with your attorney.
+  </div>
+
+</div>
+</body>
+</html>

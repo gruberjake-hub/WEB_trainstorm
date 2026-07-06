@@ -1,13 +1,13 @@
 {
   "scene_id": "sce_004",
   "module": "Module 1: How Pay Works at Brunswick",
-  "title": "How Pay Ranges Are Structured",
+  "title": "How Pay Ranges Are Built",
   "delivery": "ae_render",
   "elements": {
     "Head_01": {
       "type": "Head",
       "intent": "orient",
-      "text": "How Pay Ranges Are Structured",
+      "text": "How Pay Ranges Are Built",
       "text_primitive": "Headline",
       "motion_primitive": "GlassReveal",
       "layout_primitive": "TopTitle",
@@ -16,16 +16,72 @@
     "List_01": {
       "type": "List",
       "intent": "structure",
-      "text": "Minimum\\nMidpoint\\nMaximum",
-      "text_primitive": "RangeLabels",
-      "motion_primitive": "RangeBarReveal",
+      "item_count": 4,
+      "layout_primitive": "ProcessFlowHorizontal",
+      "motion_primitive": "MarkerStaggerReveal",
+      "style_ref": "content-list"
+    },
+    "List_01_1": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Job Description",
+      "text_primitive": "ProcessFlow",
+      "style_ref": "content-list"
+    },
+    "List_01_2": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Market Benchmarking",
+      "text_primitive": "ProcessFlow",
+      "style_ref": "content-list"
+    },
+    "List_01_3": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Grade",
+      "text_primitive": "ProcessFlow",
+      "style_ref": "content-list"
+    },
+    "List_01_4": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Range",
+      "text_primitive": "ProcessFlow",
+      "style_ref": "content-list"
+    },
+    "List_02": {
+      "type": "List",
+      "intent": "structure",
+      "item_count": 3,
       "layout_primitive": "RangeBar",
+      "motion_primitive": "RangeBarReveal",
+      "style_ref": "range-labels"
+    },
+    "List_02_1": {
+      "type": "ListItem",
+      "parent": "List_02",
+      "text": "Minimum",
+      "text_primitive": "RangeLabels",
+      "style_ref": "range-labels"
+    },
+    "List_02_2": {
+      "type": "ListItem",
+      "parent": "List_02",
+      "text": "Midpoint",
+      "text_primitive": "RangeLabels",
+      "style_ref": "range-labels"
+    },
+    "List_02_3": {
+      "type": "ListItem",
+      "parent": "List_02",
+      "text": "Maximum",
+      "text_primitive": "RangeLabels",
       "style_ref": "range-labels"
     },
     "Statement_01": {
       "type": "Statement",
       "intent": "assert",
-      "text": "The midpoint represents market-competitive pay for someone performing well in that role.",
+      "text": "The midpoint represents market-competitive pay for someone performing well in the role.",
       "text_primitive": "Statement",
       "motion_primitive": "FocusReveal",
       "layout_primitive": "MidpointCallout",
@@ -33,26 +89,45 @@
     },
     "Statement_02": {
       "type": "Statement",
-      "intent": "support",
-      "text": "Being at midpoint means you're paid fairly compared to similar roles at other companies.",
+      "intent": "assert",
+      "text": "People near the top of a range typically have many years of sustained high performance and specialized skills.",
       "text_primitive": "Statement",
-      "motion_primitive": "FadeUp",
-      "layout_primitive": "BodyCallout",
-      "style_ref": "statement-secondary"
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "MidpointCallout",
+      "style_ref": "statement-primary"
+    },
+    "Statement_03": {
+      "type": "Statement",
+      "intent": "assert",
+      "text": "Ranges also vary by location — across countries, and across zones within the U.S.",
+      "text_primitive": "Statement",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "MidpointCallout",
+      "style_ref": "statement-primary"
+    },
+    "Impact_01": {
+      "type": "Impact",
+      "intent": "persuade",
+      "text": "Being below midpoint is not a signal that something is wrong.",
+      "text_primitive": "EmphasisLine",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "BottomEmphasis",
+      "style_ref": "impact-emphasis"
     }
   },
   "narration": {
-    "text": "Every role at Brunswick has a pay range with a minimum, midpoint, and maximum. The midpoint is key: it represents market-competitive pay for someone performing well in that role. Being at midpoint isn't average in a negative sense—it means you're paid fairly compared to what similar roles earn at other companies. People at the lower end of a range are often newer to the role or recently promoted—they're building skills and tenure. People near the top typically have many years of sustained high performance and specialized skills. Ranges also vary by location. Costs of labor differ by geography, so the same grade in an urban area may have a different range than in a rural location. This isn't a fairness question—it's a reflection of different labor markets.",
+    "text": "So where does a pay range come from? It's not invented — it's built, using a consistent process. The process starts with a job description outlining the role's responsibilities, required skills, and expected contributions. That description is used to benchmark against similar roles in the compensation surveys previously referenced — the same surveys used by hundreds of other companies. Based on this benchmarking exercise, the role is assigned a grade, and each grade has a defined pay range — a minimum, midpoint, and maximum — built from the combined market value of the roles in the grade for that country or location. The midpoint represents market-competitive pay for someone performing well in the role. And it's worth knowing that market-competitive pay isn't a single point — it's a range around the midpoint, which means competitive positioning can sit below the midpoint as well as above it. Being below midpoint is not a signal that something is wrong; it most often reflects someone newer to the role or still building skills and tenure. People near the top of a range typically have many years of sustained high performance and specialized skills. Ranges also vary by location, because costs of labor differ by geography — across countries, and across zones within the U.S. The same grade in an urban area may carry a different pay range than in a rural location. That's not a fairness question — it's a reflection of different labor markets.",
     "audio_file": "sce_004_vo.wav"
   },
   "visual_notes": [
-    "Three-zone range bar — Minimum / Midpoint / Maximum — with descriptor cards below each zone."
+    "Process flow: Job Description → Market Benchmarking → Grade → Range.",
+    "Three-zone range bar — Minimum / Midpoint / Maximum — with descriptor cards."
   ],
   "asset_reuse": [
     {
       "source": "Manager module",
       "scene": "Scene 4",
-      "description": "How Pay Ranges Are Determined range bar visual/VO"
+      "description": "How Pay Ranges Are Determined — range bar visual and VO; process-flow framing added"
     }
   ],
   "render": {

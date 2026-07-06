@@ -1,59 +1,69 @@
 {
   "scene_id": "sce_002",
   "module": "Module 1: How Pay Works at Brunswick",
-  "title": "What's Changing",
+  "title": "Three Principles Behind Every Pay Decision",
   "delivery": "ae_render",
   "elements": {
     "Head_01": {
       "type": "Head",
       "intent": "orient",
-      "text": "What's Changing",
+      "text": "Three Principles Behind Every Pay Decision",
       "text_primitive": "Headline",
-      "motion_primitive": "LineReveal",
-      "layout_primitive": "TopLeftTitle",
+      "motion_primitive": "GlassReveal",
+      "layout_primitive": "TopTitle",
       "style_ref": "head-primary"
     },
-    "Callout_01": {
-      "type": "Statement",
-      "intent": "support",
-      "text": "U.S. job postings: January 1, 2025",
-      "text_primitive": "DateCallout",
-      "motion_primitive": "MarkerPop",
-      "layout_primitive": "DateCalloutLeft",
-      "style_ref": "callout-date"
+    "List_01": {
+      "type": "List",
+      "intent": "structure",
+      "item_count": 3,
+      "layout_primitive": "ThreePillarCards",
+      "motion_primitive": "MarkerStaggerReveal",
+      "style_ref": "content-list"
     },
-    "Callout_02": {
-      "type": "Statement",
-      "intent": "support",
-      "text": "EU transparency changes: June 2026",
-      "text_primitive": "DateCallout",
-      "motion_primitive": "MarkerPop",
-      "layout_primitive": "DateCalloutRight",
-      "style_ref": "callout-date"
+    "List_01_1": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Market-Competitive Benchmarking",
+      "text_primitive": "NumberedList",
+      "style_ref": "content-list"
+    },
+    "List_01_2": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "External & Internal Equity",
+      "text_primitive": "NumberedList",
+      "style_ref": "content-list"
+    },
+    "List_01_3": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Pay Linked to Performance",
+      "text_primitive": "NumberedList",
+      "style_ref": "content-list"
     },
     "Impact_01": {
       "type": "Impact",
       "intent": "persuade",
-      "text": "Brunswick made a consistent business decision: post ranges on all U.S. jobs.",
+      "text": "No single factor determines your pay — it's a system.",
       "text_primitive": "EmphasisLine",
       "motion_primitive": "FocusReveal",
-      "layout_primitive": "CenterEmphasis",
+      "layout_primitive": "BottomEmphasis",
       "style_ref": "impact-emphasis"
     }
   },
   "narration": {
-    "text": "Starting January 2025, all U.S. Brunswick job postings include the pay range for that role. This wasn't a surprise decision—multiple states now require it by law. Rather than manage different requirements state by state, Brunswick made a consistent business decision: post ranges on all U.S. jobs. If you work in Europe, there are additional transparency changes coming in June 2026 under the EU Pay Transparency Directive. Your local HR team will share more when that time comes.",
+    "text": "Before we look at any of the specifics, it helps to understand how Brunswick sets pay. Every compensation decision — every offer, every increase, every pay range — is guided by the same three principles. First: We benchmark against market data compiled by reputable, third-party compensation surveys in which we participate along with hundreds of other companies. Not guesswork, not arbitrary numbers — real data for how similar roles are paid in the broader labor market. Second: We balance external competitiveness with internal equity. What the market pays matters, and so does fairness within Brunswick — people doing similar work with similar performance should be compensated similarly. Third: Pay is linked to performance. Your ratings and contributions influence how you progress through your pay range over time. These three principles work together. No single factor determines your pay — it's a system.",
     "audio_file": "sce_002_vo.wav"
   },
   "visual_notes": [
-    "Pay range visibility.",
-    "Two date callouts: Jan 1, 2025 (U.S.) and June 2026 (EU)."
+    "Three numbered pillar cards: 01 Market-Competitive Benchmarking / 02 External & Internal Equity / 03 Pay Linked to Performance."
   ],
   "asset_reuse": [
     {
       "source": "Manager module",
-      "scene": "Scene 7",
-      "description": "The Pay Transparency Landscape visual/VO callout treatment"
+      "scene": "Scene 3",
+      "description": "Compensation Philosophy Overview — direct reuse of visual and VO"
     }
   ],
   "render": {

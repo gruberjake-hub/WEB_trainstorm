@@ -1,49 +1,78 @@
 {
   "scene_id": "sce_008",
-  "module": "Module 2: What This Means for You",
-  "title": "You Have Every Right to Understand Your Pay",
-  "delivery": "ae_render",
+  "module": "Knowledge Check",
+  "title": "Knowledge Check",
+  "delivery": "storyline_interaction",
   "elements": {
     "Head_01": {
       "type": "Head",
       "intent": "orient",
-      "text": "You Have Every Right to Understand Your Pay",
+      "text": "Knowledge Check",
       "text_primitive": "Headline",
-      "motion_primitive": "GlassReveal",
-      "layout_primitive": "TopTitle",
+      "motion_primitive": "None",
+      "layout_primitive": "SectionDivider",
       "style_ref": "head-primary"
     },
-    "List_01": {
-      "type": "List",
-      "intent": "structure",
-      "text": "Ask your manager where you fall in your pay range.\\nUnderstand which factors are shaping your current position.\\nDiscuss what development would support your progression over time.\\nReach out to HR with questions your manager can't answer.",
-      "text_primitive": "NumberedList",
-      "motion_primitive": "MarkerStaggerReveal",
-      "layout_primitive": "ActionList",
-      "style_ref": "content-list"
-    },
-    "Quote_01": {
-      "type": "Quote",
-      "intent": "contextualize",
-      "text": "These aren't uncomfortable questions—they're reasonable ones.",
-      "text_primitive": "PullQuote",
-      "motion_primitive": "QuoteFade",
-      "layout_primitive": "PullQuoteRight",
-      "style_ref": "quote-primary"
+    "Statement_01": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "Three questions follow the content. No trick questions — each tests a key concept from the module.",
+      "text_primitive": "Instruction",
+      "motion_primitive": "None",
+      "layout_primitive": "InstructionText",
+      "style_ref": "statement-primary"
     }
   },
   "narration": {
-    "text": "Pay transparency gives you more visibility—and with that comes the opportunity to have better conversations. You have the right to understand your pay positioning. If you're curious about where you fall in your range, or what it would take to progress, your manager is the right starting point. HR is also available if you have more detailed questions or concerns. Here are four things you can do right now: Ask your manager where you fall in your pay range. Understand which factors are shaping your current position. Discuss what development would support your progression over time. Reach out to HR with questions your manager can't answer. These aren't uncomfortable questions—they're reasonable ones, and Brunswick encourages them.",
-    "audio_file": "sce_008_vo.wav"
+    "text": "",
+    "audio_file": null
   },
   "visual_notes": [
-    "Dark slide.",
-    "Four action bullets.",
-    "Pull quote."
+    "Section divider, then 3 MC questions. No narration on divider. Questions are stand-alone interactive screens."
   ],
+  "interaction": {
+    "interaction_primitive": "MultipleChoice",
+    "questions": [
+      {
+        "id": "q1",
+        "question": "What does being at the midpoint of your pay range indicate?",
+        "options": [
+          { "id": "a", "text": "You are performing below expectations" },
+          { "id": "b", "text": "You are paid fairly for a fully competent performer in the role", "correct": true },
+          { "id": "c", "text": "You have been in your role for many years" },
+          { "id": "d", "text": "You should expect a significant pay increase soon" }
+        ],
+        "feedback_correct": "Right. Midpoint represents market-competitive pay for someone performing well in the role — and remember, the market range extends around the midpoint, not just above it.",
+        "feedback_incorrect": "Midpoint represents market-competitive pay for a fully capable performer — not a sign of underperformance or concern."
+      },
+      {
+        "id": "q2",
+        "question": "Two employees have the same job title but different pay levels. Which of the following is a legitimate reason?",
+        "options": [
+          { "id": "a", "text": "One negotiated harder when they were first hired" },
+          { "id": "b", "text": "One has more specialized skills, longer tenure, and a stronger performance track record", "correct": true },
+          { "id": "c", "text": "One has a better personal relationship with their manager" },
+          { "id": "d", "text": "Pay differences within the same role are never legitimate" }
+        ],
+        "feedback_correct": "Exactly. Skills, tenure, and sustained performance are among the legitimate factors that can create pay differences within the same role.",
+        "feedback_incorrect": "Individual factors — skills, performance, tenure, location — create legitimate pay differences within the same role."
+      },
+      {
+        "id": "q3",
+        "question": "Beyond base pay, which of the following is part of your total rewards at Brunswick?",
+        "options": [
+          { "id": "a", "text": "Nothing — base pay is your total compensation" },
+          { "id": "b", "text": "Only your annual bonus, if you receive one" },
+          { "id": "c", "text": "Benefits, paid time off (PTO), retirement contributions, incentive compensation, and wellness programs", "correct": true },
+          { "id": "d", "text": "Pay ranges listed on job listings" }
+        ],
+        "feedback_correct": "Right. Base pay is one component — benefits, retirement contributions, incentive compensation, and wellness programs are all part of the full value Brunswick provides.",
+        "feedback_incorrect": "Base pay is only one component of total rewards. Benefits, retirement contributions, incentive compensation, and wellness programs are all part of the full picture."
+      }
+    ]
+  },
   "render": {
-    "ae_comp": "sce_008",
-    "output_file": "sce_008.mp4",
+    "storyline_slide": "sce_008",
     "review_required": true
   }
 }

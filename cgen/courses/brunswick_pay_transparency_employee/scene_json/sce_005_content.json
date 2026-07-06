@@ -1,58 +1,114 @@
 {
   "scene_id": "sce_005",
   "module": "Module 1: How Pay Works at Brunswick",
-  "title": "Interaction: Where Might You Be in Your Range?",
-  "delivery": "storyline_interaction",
+  "title": "What Shapes Pay Within a Range",
+  "delivery": "ae_render",
   "elements": {
     "Head_01": {
       "type": "Head",
       "intent": "orient",
-      "text": "Where Might You Be in Your Range?",
+      "text": "What Shapes Pay Within a Range",
       "text_primitive": "Headline",
-      "motion_primitive": "None",
-      "layout_primitive": "InteractionTitle",
+      "motion_primitive": "GlassReveal",
+      "layout_primitive": "TopTitle",
       "style_ref": "head-primary"
     },
-    "Statement_01": {
-      "type": "Statement",
-      "intent": "support",
-      "text": "Each zone reflects different circumstances—there's no wrong place to be.",
-      "text_primitive": "Statement",
-      "motion_primitive": "None",
-      "layout_primitive": "InstructionText",
-      "style_ref": "statement-primary"
-    }
+    "List_01": {
+      "type": "List",
+      "intent": "structure",
+      "item_count": 6,
+      "layout_primitive": "SixFactorGrid",
+      "motion_primitive": "MarkerStaggerReveal",
+      "style_ref": "content-grid"
+    },
+    "List_01_1": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Performance",
+      "text_primitive": "GridList",
+      "style_ref": "content-grid"
+    },
+    "List_01_2": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Skills & Experience",
+      "text_primitive": "GridList",
+      "style_ref": "content-grid"
+    },
+    "List_01_3": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Education",
+      "text_primitive": "GridList",
+      "style_ref": "content-grid"
+    },
+    "List_01_4": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Role Complexity",
+      "text_primitive": "GridList",
+      "style_ref": "content-grid"
+    },
+    "List_01_5": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Geographic Location",
+      "text_primitive": "GridList",
+      "style_ref": "content-grid"
+    },
+    "List_01_6": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Tenure in Role",
+      "text_primitive": "GridList",
+      "style_ref": "content-grid"
+    },
+    "Impact_01": {
+      "type": "Impact",
+      "intent": "persuade",
+      "text": "Two people in the same role can have different pay for entirely legitimate reasons",
+      "text_primitive": "EmphasisLine",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "BottomEmphasis",
+      "style_ref": "impact-emphasis"
+    },
+     "Impact_02": {
+      "type": "Impact",
+      "intent": "persuade",
+      "text": "The range tells you about the role - not the person.",
+      "text_primitive": "EmphasisLine",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "BottomEmphasis",
+      "style_ref": "impact-emphasis"
+     },
+      "Impact_03": {
+      "type": "Impact",
+      "intent": "persuade",
+      "text": "Individual factors determine where each person sits within it.",
+      "text_primitive": "EmphasisLine",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "BottomEmphasis",
+      "style_ref": "impact-emphasis"
+     }
+    
   },
   "narration": {
-    "text": "Take a moment to think about where you might be in your pay range. Each zone reflects different circumstances—there's no wrong place to be. Select each card to explore what it typically reflects, then continue when you're ready.",
+    "text": "Within a pay range, several factors shape exactly where an individual falls. Performance matters — but it's not the only factor. Two people in the same role can have different pay for entirely legitimate reasons. One may have been hired when market rates were different. One may have specialized skills the other doesn't have or may be working towards acquiring. One may have more years in the role with a sustained track record of strong performance. This is why a pay range tells you about the role, not the person. The range reflects where the role sits in the market; individual factors determine where each person sits within it.",
     "audio_file": "sce_005_vo.wav"
   },
   "visual_notes": [
-    "Three click-to-reveal zone cards: Lower Range / Midpoint / Upper Range."
+    "Six-factor grid: Performance / Skills & Experience / Education / Role Complexity / Geographic Location / Tenure in Role."
   ],
-  "interaction": {
-    "interaction_primitive": "ClickToRevealCards",
-    "gating": "continue_after_all_visited",
-    "cards": [
-      {
-        "id": "lower_range",
-        "label": "Lower Range",
-        "reveal_text": "Often reflects someone newer to the role, recently promoted, or still building skills and tenure."
-      },
-      {
-        "id": "midpoint",
-        "label": "Midpoint",
-        "reveal_text": "Represents market-competitive pay for someone performing well in the role."
-      },
-      {
-        "id": "upper_range",
-        "label": "Upper Range",
-        "reveal_text": "Typically reflects sustained high performance, specialized skills, and deeper tenure in the role."
-      }
-    ]
-  },
+  "asset_reuse": [
+    {
+      "source": "Manager module",
+      "scene": "Scene 5",
+      "description": "What Determines Individual Pay — direct reuse of factors visual and VO"
+    }
+  ],
   "render": {
-    "storyline_slide": "sce_005",
+    "ae_comp": "sce_005",
+    "output_file": "sce_005.mp4",
     "review_required": true
   }
 }

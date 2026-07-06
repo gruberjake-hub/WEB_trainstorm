@@ -1,31 +1,124 @@
 {
   "scene_id": "sce_003",
   "module": "Module 1: How Pay Works at Brunswick",
-  "title": "Three Principles Behind Every Pay Decision",
+  "title": "Your Total Rewards Picture",
   "delivery": "ae_render",
   "elements": {
     "Head_01": {
       "type": "Head",
       "intent": "orient",
-      "text": "Three Principles Behind Every Pay Decision",
+      "text": "Your Total Rewards Picture",
       "text_primitive": "Headline",
       "motion_primitive": "GlassReveal",
       "layout_primitive": "TopTitle",
       "style_ref": "head-primary"
     },
+    "Statement_01": {
+      "type": "Statement",
+      "intent": "assert",
+      "text": "Base pay is the most visible component — but only one component.",
+      "text_primitive": "Statement",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "CenterStatement",
+      "style_ref": "statement-primary"
+    },
+     "Statement_02": {
+      "type": "Statement",
+      "intent": "complete",
+      "text": "...and other offerings",
+      "text_primitive": "Statement",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "CenterStatement",
+      "style_ref": "statement-primary"
+    },
     "List_01": {
       "type": "List",
       "intent": "structure",
-      "text": "Market-Competitive Benchmarking\\nExternal & Internal Equity\\nPay Linked to Performance",
-      "text_primitive": "NumberedList",
+      "item_count": 6,
+      "layout_primitive": "TotalRewardsWheel",
       "motion_primitive": "MarkerStaggerReveal",
-      "layout_primitive": "ThreePillarCards",
       "style_ref": "content-list"
+    },
+    "List_01_1": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Base salary",
+      "text_primitive": "BulletList",
+      "style_ref": "content-list"
+    },
+    "List_01_2": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Incentive Compensation",
+      "text_primitive": "BulletList",
+      "style_ref": "content-list"
+    },
+    "List_01_3": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Health and Well-Being Support",
+      "text_primitive": "BulletList",
+      "style_ref": "content-list"
+    },
+    "List_01_4": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Retirement Programs",
+      "text_primitive": "BulletList",
+      "style_ref": "content-list"
+    },
+    "List_01_5": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Paid Time Off",
+      "text_primitive": "BulletList",
+      "style_ref": "content-list"
+    },
+    "List_01_6": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Employee Assistance Resources",
+      "text_primitive": "BulletList",
+      "style_ref": "content-list"
+       },
+    "List_01_7": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "...and other offerings",
+      "text_primitive": "BulletList",
+      "style_ref": "content-list"
+    },
+    "Callout_01": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "U.S. employees: view your Total Rewards Statement in Workday under Benefits and Pay.",
+      "text_primitive": "SystemCallout",
+      "motion_primitive": "MarkerPop",
+      "layout_primitive": "WorkdayCallout",
+      "style_ref": "callout-system"
+    },
+    "Callout_02": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "We are working to improve access to Total Rewards information in other locations.",
+      "text_primitive": "SystemCallout",
+      "motion_primitive": "MarkerPop",
+      "layout_primitive": "WorkdayCallout",
+      "style_ref": "callout-system"
+    },
+    "Callout_03": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "Contact Your local HR team for questions.",
+      "text_primitive": "SystemCallout",
+      "motion_primitive": "MarkerPop",
+      "layout_primitive": "WorkdayCallout",
+      "style_ref": "callout-system"
     },
     "Impact_01": {
       "type": "Impact",
       "intent": "persuade",
-      "text": "No single factor determines your pay.",
+      "text": "The gap between what appears on your paycheck and what Brunswick invests in you is often larger than people realize.",
       "text_primitive": "EmphasisLine",
       "motion_primitive": "FocusReveal",
       "layout_primitive": "BottomEmphasis",
@@ -33,17 +126,18 @@
     }
   },
   "narration": {
-    "text": "Before we look at what these changes mean for you, it helps to understand how Brunswick sets pay in the first place. Every compensation decision is guided by three principles. First: We benchmark against real market data from reputable third-party surveys in which we participate along with hundreds of other companies—not guesswork, not arbitrary numbers. Second: We balance what the market pays with fairness inside Brunswick, so people doing similar work are compensated similarly. Third: Pay is connected to performance. Your ratings and contributions influence how you progress through your pay range over time. These three principles work together. No single factor determines your pay.",
+    "text": "Base pay is the most visible component of your total rewards — it's what shows on your paycheck. But it's only one component of how Brunswick compensates you for your work. Your total rewards picture includes several other components. In addition to your base salary, you may receive incentive compensation — bonuses or other variable pay tied to your performance, role, and company results. Brunswick also offers benefits and programs that complement pay, but these vary based on location and local practices, so they're not the same everywhere. Depending on where you work, they may include health and wellbeing support, retirement programs, paid time off, employee assistance resources, and other company-provided offerings. Brunswick also invests significantly in your benefits: health, dental, and vision coverage, life insurance, and retirement plans including company contributions. Wellness programs, employee assistance resources, paid time off, and other company-provided offerings round out the picture. Together, these components represent the full value of your employment relationship with Brunswick — and the gap between what appears on your paycheck and what Brunswick invests in you is often larger than people realize. If you're in the U.S., you can view your Total Rewards Statement in Workday, under the Benefits and Pay app. It's worth taking a look — understanding the full picture is the foundation for understanding your compensation. In other locations, while a Total Rewards Statement may not currently be available, we're working to improve access to total rewards information. In the meantime, your local HR team can help answer questions about your pay, benefits, and other rewards programs.",
     "audio_file": "sce_003_vo.wav"
   },
   "visual_notes": [
-    "Three numbered pillar cards: 01 Market-Competitive Benchmarking / 02 External & Internal Equity / 03 Pay Linked to Performance."
+    "Visual showing base pay as one component within the larger total rewards picture.",
+    "Workday callout for Total Rewards Statement (U.S.)."
   ],
   "asset_reuse": [
     {
       "source": "Manager module",
-      "scene": "Scene 3",
-      "description": "Compensation Philosophy Overview visual/VO"
+      "scene": "Scene 6",
+      "description": "Base Pay vs. Total Rewards visual, adapted for employee framing"
     }
   ],
   "render": {

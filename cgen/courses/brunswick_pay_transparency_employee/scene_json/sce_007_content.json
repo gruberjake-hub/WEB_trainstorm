@@ -1,13 +1,13 @@
 {
   "scene_id": "sce_007",
-  "module": "Module 1: How Pay Works at Brunswick",
-  "title": "Base Pay and Your Total Rewards",
+  "module": "Module 2: Transparency Around the World",
+  "title": "Pay Visibility Is Increasing",
   "delivery": "ae_render",
   "elements": {
     "Head_01": {
       "type": "Head",
       "intent": "orient",
-      "text": "Base Pay and Your Total Rewards",
+      "text": "Pay Visibility Is Increasing",
       "text_primitive": "Headline",
       "motion_primitive": "GlassReveal",
       "layout_primitive": "TopTitle",
@@ -16,54 +16,70 @@
     "Statement_01": {
       "type": "Statement",
       "intent": "assert",
-      "text": "Base pay is only one part of how Brunswick compensates you.",
+      "text": "We are confident in our pay practices.",
       "text_primitive": "Statement",
       "motion_primitive": "FocusReveal",
       "layout_primitive": "CenterStatement",
       "style_ref": "statement-primary"
     },
-    "List_01": {
-      "type": "List",
-      "intent": "structure",
-      "text": "Base salary\\nIncentive compensation\\nHealth, dental, and vision benefits\\nLife insurance\\nRetirement contributions and 401(k) matching\\nWellness, EAP, paid time off, and other offerings",
+     "Statement_02": {
+      "type": "Statement",
+      "intent": "assert",
+      "text": "Timing and details may differ from country to country.",
+      "text_primitive": "Statement",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "CenterStatement",
+      "style_ref": "statement-primary"
+    },
+     "List_01_1": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Base salary",
       "text_primitive": "BulletList",
-      "motion_primitive": "MarkerStaggerReveal",
-      "layout_primitive": "TotalRewardsWheel",
       "style_ref": "content-list"
     },
-    "Impact_01": {
-      "type": "Impact",
-      "intent": "persuade",
-      "text": "A posted range reflects base pay only. It is useful—but incomplete—when thinking about full compensation.",
-      "text_primitive": "EmphasisLine",
-      "motion_primitive": "FocusReveal",
-      "layout_primitive": "BottomEmphasis",
-      "style_ref": "impact-emphasis"
+    "List_01_2": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "Incentive Compensation",
+      "text_primitive": "BulletList",
+      "style_ref": "content-list"
     },
     "Callout_01": {
       "type": "Statement",
       "intent": "support",
-      "text": "View your Total Rewards Statement in Workday under Benefits and Pay.",
+      "text": "U.S. & Europe: Brunswick includes pay ranges on all job postings as a consistent, company-wide practice.",
       "text_primitive": "SystemCallout",
       "motion_primitive": "MarkerPop",
-      "layout_primitive": "WorkdayCallout",
+      "layout_primitive": "CalloutLeft",
       "style_ref": "callout-system"
+    },
+    "Callout_02": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "The EU Pay Transparency Directive is introducing new pay transparency requirements across EU countries.",
+      "text_primitive": "DateCallout",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "CenterStatement",
+      "style_ref": "statement-primary"
+    },
+     "Impact_01": {
+      "type": "Impact",
+      "intent": "assist",
+      "text": "Your local HR team will share more information about any changes relevant to your location.",
+      "text_primitive": "EmphasisLine",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "BottomEmphasis",
+      "style_ref": "impact-emphasis"
     }
   },
   "narration": {
-    "text": "Base pay is the number that gets talked about most in pay transparency conversations—and that makes sense. It's what shows on your paycheck, and it's what you see posted on job listings. But base pay is only one part of how Brunswick compensates you. Your total rewards picture includes several other components. In addition to your base salary, you may receive incentive compensation—bonuses or other variable pay tied to your performance, your role, and company results. Brunswick also invests significantly in your benefits: health, dental, and vision coverage, life insurance, and retirement contributions including 401(k) matching. Wellness programs, employee assistance resources, paid time off, and other company-provided offerings round out the picture. Together, these components represent the full value of your employment relationship with Brunswick. The gap between what appears on your paycheck and what Brunswick invests in you is often larger than people realize. Why does this matter for pay transparency? Because when you see a pay range on a job posting—at Brunswick or anywhere else—that range reflects base pay only. It's a useful reference point for understanding where a role sits in the market. But it's an incomplete comparison if you're thinking about your full compensation. You can view your Total Rewards Statement in Workday, under the Benefits and Pay app. It's worth taking a look. Understanding the full picture gives you a more accurate foundation for any conversation about your compensation.",
+    "text": "Around the world, compensation practices are becoming more visible — and Brunswick supports that direction, because we are confident in our pay practices. In the U.S. and Europe, Brunswick includes pay ranges on all job postings as a consistent, company-wide practice. If you work in Europe, the EU Pay Transparency Directive took effect in June 2026. At a high level, it gives employees the right to request information about their pay, average pay levels for comparable roles broken down by gender, and the criteria used for pay progression. Your local HR team will share specifics as the requirements take effect in your country.",
     "audio_file": "sce_007_vo.wav"
   },
   "visual_notes": [
-    "Visual showing base pay as one component within a larger total rewards picture.",
-    "Workday callout for Total Rewards Statement."
-  ],
-  "asset_reuse": [
-    {
-      "source": "Manager module",
-      "scene": "Scene 6",
-      "description": "Base Pay vs. Total Rewards adapted for employee framing"
-    }
+    "Calm world-context visual.",
+    "EU callout: June 2026, EU Pay Transparency Directive."
   ],
   "render": {
     "ae_comp": "sce_007",
