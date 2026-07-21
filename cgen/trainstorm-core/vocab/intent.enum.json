@@ -1,0 +1,123 @@
+{
+  "vocabulary_version": "intent.v0.1",
+  "status": "draft_for_reconciliation",
+  "owner": "instructional_design",
+  "description": "Governed intent vocabulary for Trainstorm elements. TWO orthogonal dimensions: 'rhetorical' (what the element does communicatively — settled, from the existing schemas) and 'pedagogical' (the instructional job it does in the learning process — NEW, proposed here). These are independent of each other and of Bloom's cognitive level (a separate `bloom` field). An element may carry one of each.",
+  "governance": {
+    "closed_list": true,
+    "rule": "Elements may only use ids defined here. New values require a version bump and an entry — the validator rejects anything else (this is how 'complete' got caught in the Brunswick review).",
+    "supplants": "Prior scattered pedagogical-intent lists. Reconcile those into this file, then retire them."
+  },
+
+  "dimensions": {
+
+    "rhetorical": {
+      "description": "What the element does on the page. Carried today in your course/scene JSON as `intent`. Listed here for completeness; treat as settled.",
+      "values": [
+        { "id": "orient",        "label": "Orient",        "definition": "Situates the reader; a heading or title that says what this is." },
+        { "id": "refine",        "label": "Refine",        "definition": "Narrows or qualifies the orienting frame (subheads)." },
+        { "id": "organize",      "label": "Organize",      "definition": "Groups or labels a set (content/list heads)." },
+        { "id": "structure",     "label": "Structure",     "definition": "Arranges items into an ordered/parallel set (a list)." },
+        { "id": "specify",       "label": "Specify",       "definition": "A single concrete item within a set (a bullet)." },
+        { "id": "assert",        "label": "Assert",        "definition": "States a fact or claim plainly (a statement)." },
+        { "id": "explain",       "label": "Explain",       "definition": "Develops or reasons through an idea (a paragraph)." },
+        { "id": "persuade",      "label": "Persuade",      "definition": "Lands an emphatic, affect-carrying point (an impact line)." },
+        { "id": "contextualize", "label": "Contextualize", "definition": "Frames with an external voice or perspective (a quote)." },
+        { "id": "transition",    "label": "Transition",    "definition": "Bridges between sections or ideas." },
+        { "id": "support",       "label": "Support",       "definition": "A subordinate aid — a callout, date, system note." }
+      ]
+    },
+
+    "pedagogical": {
+      "description": "The instructional job the element (or scene) does in the learner's journey. Grounded in Gagné's Nine Events of Instruction, condensed for practical tagging. This is the proposed NEW dimension — the one to reconcile against your existing versions.",
+      "grounding": "Gagné's Nine Events of Instruction (with Bloom/Merrill alignment noted per entry).",
+      "field": "Proposed as element.intent.pedagogical (enum) — a small addition to element.schema.json.",
+      "render_routing_note": "Pedagogical intent is a strong predictor of the `delivery` render target: `practice`/`feedback`/`assess` want behavior-driven (Storyline interaction); the rest are didactic and suit a true-timeline render (AE/Lottie). This lets `delivery` be derived, not hand-set.",
+      "values": [
+        {
+          "id": "hook",
+          "label": "Hook",
+          "definition": "Gain attention and establish relevance — why this matters to the learner now.",
+          "gagne_event": "1 · Gain attention",
+          "typical_render": "didactic_timeline",
+          "brunswick_example": "sce_001 Welcome — 'pay ranges now appear on all U.S. job postings.'"
+        },
+        {
+          "id": "objective",
+          "label": "Objective",
+          "definition": "State the goal / set expectations for what the learner will be able to do.",
+          "gagne_event": "2 · Inform learners of objectives",
+          "typical_render": "didactic_timeline",
+          "brunswick_example": "course learning_objectives; scene intros."
+        },
+        {
+          "id": "activate",
+          "label": "Activate",
+          "definition": "Surface and connect to prior knowledge before introducing the new.",
+          "gagne_event": "3 · Stimulate recall of prior learning",
+          "typical_render": "didactic_timeline",
+          "brunswick_example": "sce_003 opener — 'it helps to understand how Brunswick sets pay in the first place.'"
+        },
+        {
+          "id": "present",
+          "label": "Present",
+          "definition": "Deliver the new information or concept.",
+          "gagne_event": "4 · Present the content",
+          "typical_render": "didactic_timeline",
+          "typical_bloom": "remember / understand",
+          "brunswick_example": "sce_003 Three Principles; sce_004 how ranges are structured."
+        },
+        {
+          "id": "exemplify",
+          "label": "Exemplify",
+          "definition": "Demonstrate, model, or illustrate with an example, analogy, or visual — the guidance that makes the concept concrete. (Where motion earns its keep.)",
+          "gagne_event": "5 · Provide learning guidance",
+          "typical_render": "didactic_timeline",
+          "brunswick_example": "sce_004 the min/midpoint/max range bar; sce_007 the total-rewards wheel."
+        },
+        {
+          "id": "practice",
+          "label": "Practice",
+          "definition": "Elicit performance — let the learner do, choose, or explore.",
+          "gagne_event": "6 · Elicit performance",
+          "typical_render": "interactive",
+          "typical_bloom": "apply / analyze",
+          "brunswick_example": "sce_005 click-to-reveal range zones; sce_009 conversation-starter cards."
+        },
+        {
+          "id": "feedback",
+          "label": "Feedback",
+          "definition": "Respond to the learner's performance — confirm, correct, or deepen.",
+          "gagne_event": "7 · Provide feedback",
+          "typical_render": "interactive",
+          "brunswick_example": "knowledge_check correct/incorrect feedback."
+        },
+        {
+          "id": "assess",
+          "label": "Assess",
+          "definition": "Measure mastery — a graded or gating check of understanding.",
+          "gagne_event": "8 · Assess performance",
+          "typical_render": "interactive",
+          "typical_bloom": "apply / evaluate",
+          "brunswick_example": "the knowledge_check quiz."
+        },
+        {
+          "id": "reinforce",
+          "label": "Reinforce",
+          "definition": "Summarize and consolidate to aid retention.",
+          "gagne_event": "9a · Enhance retention",
+          "typical_render": "didactic_timeline",
+          "brunswick_example": "sce_010 'You're Informed' recap."
+        },
+        {
+          "id": "transfer",
+          "label": "Transfer",
+          "definition": "Connect to real-world application or next action — the bridge from course to job.",
+          "gagne_event": "9b · Enhance transfer",
+          "typical_render": "either",
+          "brunswick_example": "sce_008 'four things you can do right now'; the conversation starters as a job aid."
+        }
+      ]
+    }
+  }
+}

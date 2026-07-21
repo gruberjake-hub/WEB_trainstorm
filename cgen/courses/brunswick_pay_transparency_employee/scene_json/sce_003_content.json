@@ -31,6 +31,15 @@
       "layout_primitive": "CenterStatement",
       "style_ref": "statement-primary"
     },
+    "Statement_03":{
+      "type": "Statement",
+      "intent": "complete",
+      "text": "Benefits and programs are not the same everywhere. They differ based on location and local practices.",
+      "text_primitive": "Statement",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "CenterStatement",
+      "style_ref": "statement-primary"
+    },
     "List_01": {
       "type": "List",
       "intent": "structure",
@@ -70,7 +79,7 @@
     "List_01_5": {
       "type": "ListItem",
       "parent": "List_01",
-      "text": "Paid Time Off",
+      "text": "Paid Time Off (PTO)",
       "text_primitive": "BulletList",
       "style_ref": "content-list"
     },

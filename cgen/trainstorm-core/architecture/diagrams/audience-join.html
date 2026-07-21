@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Audience Axis — Content Meets Learner at the Join</title>
+<style>
+  :root{
+    --page:#f4f3f1; --surface:#ffffff; --surface-2:#fbfbfa;
+    --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+    --line:rgba(11,11,11,0.10); --grid:#d9d8d2;
+    --accent:#c8102e; --accent-deep:#9e0c24; --accent-tint:rgba(200,16,46,0.08);
+    --object:#2a78d6; --intent:#4a3aa7; --express:#eb6834; --audience:#0f9d76; --good:#006300;
+    --radius:14px; --maxw:1040px;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --page:#0d0d0d; --surface:#1a1a19; --surface-2:#161615;
+      --ink:#ffffff; --ink-2:#c3c2b7; --muted:#8f8e87;
+      --line:rgba(255,255,255,0.12); --grid:#33332f;
+      --accent:#f0576f; --accent-deep:#e4556b; --accent-tint:rgba(240,87,111,0.12);
+      --object:#3987e5; --intent:#9085e9; --express:#eb6834; --audience:#1cb98a; --good:#0ca30c;
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--page);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:40px 26px 60px}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
+  h1{font-size:clamp(26px,3.8vw,40px);line-height:1.06;margin:0 0 10px;letter-spacing:-.02em}
+  .sub{font-size:clamp(14.5px,1.7vw,17px);color:var(--ink-2);margin:0 0 4px;max-width:66ch}
+  .sec-label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:26px 0 12px}
+
+  /* triad strip */
+  .triad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:720px){.triad{grid-template-columns:1fr}}
+  .tr{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .tr .from{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .tr .to{font-size:15px;font-weight:700;margin-top:3px}
+  .tr .d{font-size:12.5px;color:var(--ink-2);margin-top:3px}
+  .tr.a{border-top:3px solid var(--intent)}
+  .tr.b{border-top:3px solid var(--object)}
+  .tr.c{border-top:3px solid var(--audience)}
+  .tr.c .to{color:var(--audience)}
+
+  .mapcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+  svg{width:100%;height:auto;display:block}
+  svg text{font-family:var(--sans)}
+  .panel{fill:var(--surface-2);stroke:var(--line);stroke-width:1.5}
+  .sub-b{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+  .lnode{fill:var(--surface);stroke:var(--audience);stroke-width:1.4}
+  .seg{fill:var(--surface);stroke:var(--audience);stroke-width:1.4}
+  .join{fill:var(--accent-tint);stroke:var(--accent);stroke-width:2}
+  .outbar{fill:var(--accent-tint);stroke:var(--accent);stroke-width:1.6}
+  .flow{stroke:var(--muted);stroke-width:1.8;fill:none}
+  .flow-d{stroke:var(--audience);stroke-width:1.6;fill:none;stroke-dasharray:5 4}
+  .edge{stroke:var(--grid);stroke-width:1.3;fill:none}
+  .ah{fill:var(--muted)} .aha{fill:var(--audience)}
+  .t-h{fill:var(--ink);font-weight:700}
+  .t-s{fill:var(--muted)}
+  .t-n{fill:var(--ink)}
+  .t-a{fill:var(--accent-deep);font-weight:700}
+  .t-au{fill:var(--audience);font-weight:700}
+  .lblbg{fill:var(--surface)}
+  .lbl{fill:var(--ink-2);font-weight:600}
+  .mapcaption{font-size:12.5px;color:var(--ink-2);text-align:center;margin:8px 8px 0}
+  .mapcaption b{color:var(--ink)}
+
+  /* static vs responsive */
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.vs{grid-template-columns:1fr}}
+  .vcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .vcard.static{border-top:3px solid var(--muted)}
+  .vcard.resp{border-top:3px solid var(--accent)}
+  .vcard .h{font-size:15px;font-weight:700;margin-bottom:4px}
+  .vcard .d{font-size:13.5px;color:var(--ink-2)}
+  .vcard .d b{color:var(--ink)}
+  .vsnote{margin-top:12px;font-size:13.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:12px 15px}
+  .vsnote b{color:var(--accent-deep)}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.two{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card .top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .card .dot{width:10px;height:10px;border-radius:50%;flex:none}
+  .card .nm{font-size:15px;font-weight:700}
+  .card .row{font-size:12.7px;margin-top:5px;display:flex;gap:7px}
+  .card .row .k{color:var(--muted);font-weight:600;min-width:60px;flex:none}
+  .card .row .v{color:var(--ink)}
+  .card p{margin:0;font-size:13px;color:var(--ink-2)}
+
+  .foot{margin-top:26px;background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:15px 18px}
+  .foot h4{margin:0 0 6px;font-size:14px}
+  .foot p{margin:0;font-size:13px;color:var(--ink-2)}
+  .credit{margin-top:22px;font-size:11.5px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Completing the manifold · the fourth axis</p>
+  <h1>The Audience Axis</h1>
+  <p class="sub">Your triad — <b>outcome · audience · tools/content</b> — has three legs, but two of them are content and one isn’t. Outcome and content are authored into the substrate, audience-agnostic. <b>Audience is a separate model</b>, and the responsive engine is the operator that joins them.</p>
+
+  <!-- TRIAD MAPPING -->
+  <p class="sec-label">Your triad, mapped</p>
+  <div class="triad">
+    <div class="tr a"><div class="from">Outcome →</div><div class="to">Intent model</div><div class="d">Why it exists · the objective. Inside the content.</div></div>
+    <div class="tr b"><div class="from">Tools / Content →</div><div class="to">Object + Expression</div><div class="d">What exists + how it’s formed. Inside the content.</div></div>
+    <div class="tr c"><div class="from">Audience →</div><div class="to">Learner model</div><div class="d">Who it’s for. <b>Outside</b> the content — a sibling graph.</div></div>
+  </div>
+
+  <!-- JOIN DIAGRAM -->
+  <p class="sec-label">Two graphs, joined by the responsive engine</p>
+  <div class="mapcard">
+    <svg viewBox="0 0 920 500" role="img" aria-label="The content substrate on the left and the learner/audience model on the right are two separate graphs. The responsive engine in the middle reads both and renders a delivered experience tailored to the individual learner, then the learner's response updates the learner model.">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+        <marker id="ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="aha" d="M0,0 L10,5 L0,10 z"/></marker>
+        <marker id="ars" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+      </defs>
+
+      <!-- CONTENT SUBSTRATE (left) -->
+      <rect class="panel" x="24" y="60" width="252" height="320" rx="12"/>
+      <text class="t-h" x="40" y="88" font-size="14">CONTENT SUBSTRATE</text>
+      <text class="t-s" x="40" y="106" font-size="11">audience-agnostic · authored once</text>
+      <g>
+        <rect class="sub-b" x="44" y="126" width="212" height="46" rx="9"/><circle cx="62" cy="149" r="5" fill="var(--object)"/><text class="t-n" x="76" y="153" font-size="12.5">Object · structure</text>
+        <rect class="sub-b" x="44" y="186" width="212" height="46" rx="9"/><circle cx="62" cy="209" r="5" fill="var(--intent)"/><text class="t-n" x="76" y="213" font-size="12.5">Intent · outcome</text>
+        <rect class="sub-b" x="44" y="246" width="212" height="46" rx="9"/><circle cx="62" cy="269" r="5" fill="var(--express)"/><text class="t-n" x="76" y="273" font-size="12.5">Expression · form</text>
+      </g>
+      <text class="t-s" x="40" y="352" font-size="11">= outcome + tools/content · for no one in particular</text>
+
+      <!-- LEARNER / AUDIENCE MODEL (right) -->
+      <rect class="panel" x="644" y="60" width="252" height="320" rx="12"/>
+      <text class="t-h" x="660" y="88" font-size="14">LEARNER / AUDIENCE MODEL</text>
+      <text class="t-s" x="660" y="106" font-size="11">who it’s for · a sibling graph, not content</text>
+      <rect class="seg" x="690" y="126" width="160" height="34" rx="9"/><text class="t-au" x="770" y="147" text-anchor="middle" font-size="12">Segment · Commercial</text>
+      <path class="edge" marker-end="url(#ars)" d="M740,160 L710,196"/>
+      <path class="edge" marker-end="url(#ars)" d="M800,160 L832,196"/>
+      <g font-size="11">
+        <rect class="lnode" x="664" y="196" width="104" height="70" rx="9"/>
+        <text class="t-n" x="716" y="216" text-anchor="middle" font-weight="700">Field rep</text>
+        <text class="t-s" x="716" y="234" text-anchor="middle">Tier 1</text>
+        <text class="t-s" x="716" y="250" text-anchor="middle">novice · 40%</text>
+        <rect class="lnode" x="784" y="196" width="104" height="70" rx="9"/>
+        <text class="t-n" x="836" y="216" text-anchor="middle" font-weight="700">MSL</text>
+        <text class="t-s" x="836" y="234" text-anchor="middle">Tier 2</text>
+        <text class="t-s" x="836" y="250" text-anchor="middle">expert · 90%</text>
+      </g>
+      <text class="t-s" x="660" y="352" font-size="11">= audience · role · tier · mastery state</text>
+
+      <!-- JOIN -->
+      <rect class="join" x="388" y="196" width="144" height="96" rx="14"/>
+      <text class="t-a" x="460" y="234" text-anchor="middle" font-size="14">RESPONSIVE</text>
+      <text class="t-a" x="460" y="252" text-anchor="middle" font-size="14">ENGINE</text>
+      <text class="t-s" x="460" y="272" text-anchor="middle" font-size="10.5">the join · content × audience</text>
+
+      <!-- flows in -->
+      <path class="flow" marker-end="url(#ar)" d="M276,240 L384,240"/>
+      <rect class="lblbg" x="300" y="222" width="56" height="16" rx="4"/><text class="lbl" x="328" y="234" text-anchor="middle" font-size="10.5">reads</text>
+      <path class="flow" marker-end="url(#ar)" d="M644,240 L536,240"/>
+      <rect class="lblbg" x="562" y="222" width="56" height="16" rx="4"/><text class="lbl" x="590" y="234" text-anchor="middle" font-size="10.5">reads</text>
+
+      <!-- flow out -->
+      <path class="flow" marker-end="url(#ar)" d="M460,292 L460,406"/>
+      <rect class="lblbg" x="472" y="342" width="78" height="16" rx="4"/><text class="lbl" x="511" y="354" text-anchor="middle" font-size="10.5">renders for</text>
+
+      <!-- OUTPUT -->
+      <rect class="outbar" x="336" y="410" width="248" height="56" rx="12"/>
+      <text class="t-a" x="460" y="434" text-anchor="middle" font-size="13">Delivered experience</text>
+      <text class="t-n" x="460" y="452" text-anchor="middle" font-size="11.5">tailored for THIS learner</text>
+
+      <!-- feedback loop -->
+      <path class="flow-d" marker-end="url(#ara)" d="M584,438 C700,438 770,410 812,272"/>
+      <rect class="lblbg" x="686" y="392" width="150" height="16" rx="4"/><text class="lbl" x="761" y="404" text-anchor="middle" font-size="10.5">response updates the model</text>
+    </svg>
+    <p class="mapcaption">The two graphs never merge. The responsive engine <b>reads both and resolves the fit</b> — then the learner’s response flows back to update the model. That loop is what makes learning <b>responsive</b> instead of static.</p>
+  </div>
+
+  <!-- STATIC vs RESPONSIVE -->
+  <p class="sec-label">The join is the whole difference</p>
+  <div class="vs">
+    <div class="vcard static">
+      <div class="h">Static course (today)</div>
+      <div class="d">The join is resolved <b>once, at authoring</b>. You pick one assumed audience and <b>bake the fit in</b> — forever. Every learner gets the same render, whether it fits them or not.</div>
+    </div>
+    <div class="vcard resp">
+      <div class="h">Responsive engine (the manifold)</div>
+      <div class="d">The join is <b>deferred to runtime</b> and resolved <b>per learner</b>. Content stays audience-agnostic; the fit is computed live from the learner model, and updated as they respond.</div>
+    </div>
+  </div>
+  <div class="vsnote">The only thing that changes is <b>where you resolve the join.</b> Your framework has always resolved it statically, at design time — because that was the only place you could. The manifold lets you defer it. Audience is precisely the axis that separates a static course from a responsive one.</div>
+
+  <!-- LEARNER MODEL + PRIVACY -->
+  <p class="sec-label">The new model, and one caution</p>
+  <div class="two">
+    <div class="card">
+      <div class="top"><span class="dot" style="background:var(--audience)"></span><span class="nm">Learner / audience model</span></div>
+      <div class="row"><span class="k">is</span><span class="v">a sibling graph — people, not content</span></div>
+      <div class="row"><span class="k">holds</span><span class="v">role · risk tier · prior knowledge · live mastery / adaptivity state</span></div>
+      <div class="row"><span class="k">two forms</span><span class="v">design-time segments (your RBT tiers) + runtime individual learners</span></div>
+      <div class="row"><span class="k">read/written by</span><span class="v">the responsive engine (the only agent touching both graphs)</span></div>
+    </div>
+    <div class="card">
+      <div class="top"><span class="dot" style="background:var(--accent)"></span><span class="nm">The caution: this is personal data</span></div>
+      <p>The content graph held no PII — the reason the reference site was easy on Legal. The <b>learner model does</b> (identity, performance, mastery). It carries a data-privacy and access-control burden the content side never did, and it belongs to a different owner (Data Privacy / DPO) than the content facets. Keep the two graphs — and their governance — cleanly separate.</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <h4>How this completes the picture</h4>
+    <p>Back on the system map, the Responsive Runtime agent was the only one that read a facet <i>and</i> a live signal. This is why: it’s the only agent that spans <b>both graphs</b> — content and learner — and closes a loop with the person. Outcome and content are authored once; audience is modeled separately; and design, which you’ve always done by hand at authoring time, becomes a join the engine can resolve live. That’s the whole triad, finally drawn.</p>
+  </div>
+
+  <p class="credit">The Audience Axis · content substrate × learner model, joined by the responsive engine · completing outcome / audience / tools</p>
+
+</div>
+</body>
+</html>

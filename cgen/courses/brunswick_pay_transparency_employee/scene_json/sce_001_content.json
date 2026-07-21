@@ -22,10 +22,47 @@
       "layout_primitive": "UnderHead",
       "style_ref": "subhead-primary"
     },
+    "List_01_1": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "The Philosophy behind pay at Brunswick",
+      "text_primitive": "BulletList",
+      "style_ref": "content-list"
+    },
+    "List_01_2": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "The Three Principles behind every pay decision",
+      "text_primitive": "BulletList",
+      "style_ref": "content-list"
+    },
+    "List_01_3": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "How pay ranges are built from real market data",
+      "text_primitive": "BulletList",
+      "style_ref": "content-list"
+    },
+    "List_01_4": {
+      "type": "ListItem",
+      "parent": "List_01",
+      "text": "The legitimate factors that shape pay within a range",
+      "text_primitive": "BulletList",
+      "style_ref": "content-list"
+      },
     "Statement_01": {
       "type": "Statement",
       "intent": "assert",
       "text": "Your compensation is more than the number on your paycheck.",
+      "text_primitive": "Statement",
+      "motion_primitive": "GlassReveal",
+      "layout_primitive": "CenterStatement",
+      "style_ref": "statement-primary"
+    },
+     "Statement_02": {
+      "type": "Statement",
+      "intent": "assert",
+      "text": "Estimated time: 10 minutes. This course contains audio",
       "text_primitive": "Statement",
       "motion_primitive": "GlassReveal",
       "layout_primitive": "CenterStatement",

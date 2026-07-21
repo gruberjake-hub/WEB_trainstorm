@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astellas.example/schemas/content-atom.schema.json",
+  "title": "Content Atom",
+  "description": "A thin content atom: stable identity + the invariant meaning payload + keyed bindings (references) into the sub-models. Renderings (translations, visual treatment, adaptive variants) are NOT stored here; they live in external stores keyed by atom_id. One agent owns each binding (single-writer).",
+  "type": "object",
+  "required": ["atom_id", "meaning", "bindings", "governance"],
+  "additionalProperties": false,
+  "properties": {
+    "atom_id": {
+      "type": "string",
+      "description": "Stable, opaque, durable identity. The single join key across the object graph, every locale pack, the registries, and the learner model. Never reused, never edited.",
+      "pattern": "^atom_[A-Za-z0-9_-]+$"
+    },
+    "content_hash": {
+      "type": "string",
+      "description": "Hash of the meaning payload. Lets the system detect when meaning actually changed (invalidating downstream renderings) versus when only structure moved. Used to preserve identity across re-export.",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "meaning": {
+      "type": "object",
+      "description": "The invariant truth the atom owns. The ONLY embedded payload. Everything else is a reference.",
+      "required": ["source_locale", "source_text"],
+      "additionalProperties": false,
+      "properties": {
+        "source_locale": { "type": "string", "description": "BCP-47 tag of the canonical source language.", "examples": ["en"] },
+        "source_text": { "type": "string", "description": "The canonical source-language string. Audience-agnostic. Translations live in locale packs keyed by atom_id — not here." },
+        "kind": { "type": "string", "description": "Semantic kind of the meaning (NOT its visual type — that is an expression key).", "examples": ["objective_statement", "scenario_prompt", "definition", "ui_label", "assessment_stem"] }
+      }
+    },
+    "bindings": {
+      "type": "object",
+      "description": "Keyed references into the sub-models. Extensible: new facet types may be added as agents need them. Each binding is owned (written) by exactly one agent; others read only.",
+      "additionalProperties": { "type": "object" },
+      "properties": {
+        "object": {
+          "type": "object",
+          "description": "Structure. Owner: Content Architecture. The atom's place in the object graph — carried as references to other atom_ids.",
+          "additionalProperties": false,
+          "properties": {
+            "belongs_to": { "type": "string", "description": "Parent container atom_id (module/slide/section).", "pattern": "^atom_[A-Za-z0-9_-]+$" },
+            "order": { "type": "integer", "minimum": 0, "description": "Sequence position within the parent." },
+            "prerequisites": { "type": "array", "items": { "type": "string", "pattern": "^atom_[A-Za-z0-9_-]+$" }, "description": "atom_ids that must precede this one." }
+          }
+        },
+        "intent": {
+          "type": "object",
+          "description": "Meaning/purpose. Owner: L&D / Instructional Design. References into the intent ontology — the atom points into it, it does not contain it.",
+          "additionalProperties": false,
+          "properties": {
+            "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids in the intent ontology this atom serves." },
+            "intended_response": { "type": "string", "description": "The cognitive/affective response the atom is designed to elicit." },
+            "bloom": { "type": "string", "enum": ["remember", "understand", "apply", "analyze", "evaluate", "create"] }
+          }
+        },
+        "expression": {
+          "type": "object",
+          "description": "Form. Owner: Brand + Localization. KEYS into the expression registries (visual, glossary, motion) — never the rendered styles or translations themselves.",
+          "additionalProperties": false,
+          "properties": {
+            "content_type": { "type": "string", "description": "Key into the visual registry → motion/typography/brand tokens.", "examples": ["instructional.objective", "assessment.item", "ui.chrome"] },
+            "register": { "type": "string", "enum": ["formal", "neutral", "plain"], "description": "Tone/register key." },
+            "term_refs": { "type": "array", "items": { "type": "string", "pattern": "^term_[A-Za-z0-9_-]+$" }, "description": "Glossary-registry term_ids present in this atom (locked terminology)." }
+          }
+        },
+        "audience": {
+          "type": "object",
+          "description": "Fit hooks. Owner: L&D Adaptivity. Design-time targeting + adaptivity metadata the responsive engine matches against the live learner model. Holds NO learner PII or runtime state — that lives in the separate learner model.",
+          "additionalProperties": false,
+          "properties": {
+            "segment_scope": { "type": "array", "items": { "type": "string" }, "description": "Design-time audience segments / RBT tiers this atom targets.", "examples": [["tier1_field", "tier2_msl"]] },
+            "difficulty": { "type": "number", "minimum": 0, "maximum": 1, "description": "Relative difficulty, for matching to learner mastery." },
+            "variant_group": { "type": "string", "description": "Group id of interchangeable adaptive variants; the engine picks one per learner." }
+          }
+        }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "description": "Provenance/authority. Owner: Governance / Quality. Makes the atom auditable and reconstructable.",
+      "required": ["version", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "version": { "type": "integer", "minimum": 1 },
+        "status": { "type": "string", "enum": ["draft", "in_review", "approved", "retired"] },
+        "regulatory_binding": { "type": "string", "enum": ["none", "regulatory"], "description": "Whether the meaning is regulatory-bound (drives controlled translation + review lane)." },
+        "owner": { "type": "string", "description": "Accountable owner id." },
+        "approved_by": { "type": "array", "items": { "type": "string" } },
+        "effective_date": { "type": "string", "format": "date" }
+      }
+    }
+  }
+}

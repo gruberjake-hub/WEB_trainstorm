@@ -27,13 +27,33 @@
       "text": "Market-Competitive Benchmarking",
       "text_primitive": "NumberedList",
       "style_ref": "content-list"
+      },
+      "Statement_01": {
+      "type": "Statement",
+      "intent": "assert",
+      "text": "Not guesswork, not arbitrary numbers — real data for how similar roles are paid in the broader labor marketmarkets where those job are located",
+      "text_primitive": "Statement",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "CenterStatement",
+      "style_ref": "statement-primary"
+    
     },
     "List_01_2": {
       "type": "ListItem",
       "parent": "List_01",
-      "text": "External & Internal Equity",
+      "text": "Balance External & Internal Equity",
       "text_primitive": "NumberedList",
       "style_ref": "content-list"
+    },
+    "Statement_02": {
+      "type": "Statement",
+      "intent": "assert",
+      "text": "People doing similar work with similar comparable performance are compensated similarly.",
+      "text_primitive": "Statement",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "CenterStatement",
+      "style_ref": "statement-primary"
+    
     },
     "List_01_3": {
       "type": "ListItem",
@@ -41,6 +61,17 @@
       "text": "Pay Linked to Performance",
       "text_primitive": "NumberedList",
       "style_ref": "content-list"
+    },
+
+    "Statement_03": {
+      "type": "Statement",
+      "intent": "assert",
+      "text": "Ratings and contributions influence progress through your pay range over time.",
+      "text_primitive": "Statement",
+      "motion_primitive": "FocusReveal",
+      "layout_primitive": "CenterStatement",
+      "style_ref": "statement-primary"
+    
     },
     "Impact_01": {
       "type": "Impact",

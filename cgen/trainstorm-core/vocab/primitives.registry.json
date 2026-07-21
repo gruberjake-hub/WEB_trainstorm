@@ -1,0 +1,10 @@
+{
+  "registry_version": "primitives.v0.1",
+  "status": "todo",
+  "note": "Governed keys referenced by element.expression. Fill from your primitive library.",
+  "text_primitive": [],
+  "motion_primitive": [],
+  "layout_primitive": [],
+  "interaction_primitive": [],
+  "style_ref": []
+}

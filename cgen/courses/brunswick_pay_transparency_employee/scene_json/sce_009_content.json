@@ -52,7 +52,7 @@
     "Impact_01": {
       "type": "Impact",
       "intent": "persuade",
-      "text": "Pay at Brunswick isn't arbitrary. It's a system — built on market data, internal fairness, and performance.",
+      "text": "Pay at Brunswick is a system built on market data, internal fairness, and performance.",
       "text_primitive": "EmphasisLine",
       "motion_primitive": "FocusReveal",
       "layout_primitive": "CenterEmphasis",
@@ -61,7 +61,7 @@
     "Callout_01": {
       "type": "Statement",
       "intent": "support",
-      "text": "For questions specific to your situation, your manager and HR Business Partner are your best resources.",
+      "text": "Contact your manager and/or HR Business Partner for questions specific to your situation.",
       "text_primitive": "CTA",
       "motion_primitive": "FadeUp",
       "layout_primitive": "BottomCTA",

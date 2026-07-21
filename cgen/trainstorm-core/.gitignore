@@ -1,0 +1,4 @@
+# local render output / scratch
+*.mp4
+*.png.tmp
+__pycache__/

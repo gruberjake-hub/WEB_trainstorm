@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/element.schema.json",
+  "title": "Trainstorm Element (Unified)",
+  "description": "The reconciled Trainstorm element: one flat, ID-keyed node that unifies course.schema (authoring), scene.schema (render), and course-primitives (substrate). A node is thin — it owns its SOURCE meaning and carries keyed references (facets) into the sub-models. Translations live in external locale packs keyed by element_id; visual/motion/interaction primitives live in registries; objectives live in the intent ontology. One agent owns each facet (single-writer). Containers (Course/Module/Section/Scene) and leaf elements (Head/Statement/…) are both nodes here, related by structure.parent_id.",
+  "type": "object",
+  "required": ["element_id", "type", "content", "governance"],
+  "additionalProperties": false,
+  "properties": {
+    "element_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable, opaque, durable identity — the single join key across the object graph, every locale pack, the registries, and the learner model. Never reused or edited. Recommended prefix convention, e.g. ele_… / sce_… / mod_…"
+    },
+    "source_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Hash of the content payload. Detects a real change of meaning (invalidating downstream renderings / translations) versus a node that merely moved. This is the cure for 'which version is this?'."
+    },
+    "type": {
+      "type": "string",
+      "description": "What this node IS. Containers and leaf elements share the array; parent/child is expressed via structure.parent_id.",
+      "enum": [
+        "Course", "Module", "Section", "Scene", "Scenario",
+        "KnowledgeCheck", "Assessment", "JobAid", "Resource", "Conclusion",
+        "Meta", "Informational", "Optional",
+        "Head", "SubHead", "ContentHead", "ListHead", "List", "Bullet",
+        "Statement", "Paragraph", "Impact", "Quote", "Callout"
+      ]
+    },
+    "content": {
+      "type": "object",
+      "description": "The invariant meaning — SOURCE LOCALE ONLY. Do not embed other languages here; translations live in locales/<lang>.json keyed by element_id. (This is the fix for the AST009 drift.) Containers may omit text.",
+      "required": ["locale"],
+      "additionalProperties": false,
+      "properties": {
+        "locale": { "type": "string", "description": "BCP-47 tag of the source language.", "examples": ["en"] },
+        "text": { "type": "string", "description": "The canonical source string." }
+      }
+    },
+    "structure": {
+      "type": "object",
+      "description": "Object facet — the node's place in the graph. Owner: Content Architecture.",
+      "additionalProperties": false,
+      "properties": {
+        "section_id": { "type": "string" },
+        "slide_id": { "type": "string" },
+        "parent_id": { "type": "string" },
+        "group_id": { "type": "string" },
+        "sequence_index": { "type": "integer", "minimum": 0 },
+        "prerequisites": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "intent": {
+      "type": "object",
+      "description": "Two distinct senses of intent, deliberately separated. Owner: L&D / Instructional Design.",
+      "additionalProperties": false,
+      "properties": {
+        "rhetorical": {
+          "type": "string",
+          "description": "What the element does on the page (from scene.schema). A lint rule may default this from `type` (e.g. Head→orient) — not enforced here so reuse stays legal.",
+          "enum": ["orient", "refine", "organize", "structure", "specify", "assert", "explain", "persuade", "contextualize", "transition", "support"]
+        },
+        "teaches": { "type": "array", "items": { "type": "string" }, "description": "objective_ids in the intent ontology this element serves (the pedagogical add)." },
+        "intended_response": { "type": "string" },
+        "bloom": { "type": "string", "enum": ["remember", "understand", "apply", "analyze", "evaluate", "create"] }
+      }
+    },
+    "expression": {
+      "type": "object",
+      "description": "Form — KEYS into the expression registries (from scene.schema's primitive refs). Never embedded styles or translations. Owner: Brand + Localization.",
+      "additionalProperties": false,
+      "properties": {
+        "text_primitive": { "type": "string" },
+        "motion_primitive": { "type": "string" },
+        "layout_primitive": { "type": "string" },
+        "interaction_primitive": { "type": ["string", "null"] },
+        "style_ref": { "type": "string" },
+        "content_role": { "type": "string", "description": "Finer role of this element within its primitive (from course-primitives)." },
+        "layout_hint": { "type": "string" }
+      }
+    },
+    "audience": {
+      "type": "object",
+      "description": "Fit hooks for the responsive engine (the manifold add). Design-time targeting + adaptivity metadata; holds NO learner PII — that lives in the separate learner model. Owner: L&D Adaptivity.",
+      "additionalProperties": false,
+      "properties": {
+        "segment_scope": { "type": "array", "items": { "type": "string" }, "description": "Design-time audience segments / RBT tiers." },
+        "difficulty": { "type": "number", "minimum": 0, "maximum": 1 },
+        "variant_group": { "type": "string", "description": "Group of interchangeable variants; the engine picks one per learner." }
+      }
+    },
+    "assessment": {
+      "type": "object",
+      "description": "Assessment facet (from course-primitives.relationships). Present on interactive/assessment nodes.",
+      "additionalProperties": false,
+      "properties": {
+        "feedback_for": { "type": ["string", "null"], "description": "element_id this feedback responds to." },
+        "correct_option": { "type": ["string", "null"] },
+        "options": { "type": "array", "items": { "type": "string" }, "description": "option element_ids or labels." }
+      }
+    },
+    "narration": {
+      "type": "object",
+      "description": "Voice facet (from scene.narration + course-primitives.speaker). Owner: Narration/Audio.",
+      "additionalProperties": false,
+      "properties": {
+        "speaker": { "type": ["string", "null"] },
+        "voice_id": { "type": "string" },
+        "voice_name": { "type": "string" },
+        "voice_text": { "type": "string", "description": "Spoken variant of the on-screen text, source locale." },
+        "voiceover_ref": { "type": "string" },
+        "duration_estimate_sec": { "type": "number", "minimum": 0 }
+      }
+    },
+    "render": {
+      "type": "object",
+      "description": "Render-target facet — inputs to the render agents (from scene.render + course-primitives.render). Downstream of expression.",
+      "additionalProperties": false,
+      "properties": {
+        "animation_tag": { "type": "string" },
+        "asset_ref": { "type": ["string", "null"] },
+        "layout_variant": { "type": "string" },
+        "ae_comp": { "type": "string", "description": "After Effects composition." },
+        "template": { "type": "string" },
+        "output_file": { "type": "string" },
+        "review_required": { "type": "boolean" }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "description": "Provenance/authority — per element, not just per course. This is what ends the 'too much generated, which is current?' problem. Owner: Governance / Quality.",
+      "required": ["version", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "version": { "type": "integer", "minimum": 1 },
+        "status": { "type": "string", "enum": ["draft", "in_review", "approved", "retired"] },
+        "regulatory_binding": { "type": "string", "enum": ["none", "regulatory"] },
+        "owner": { "type": "string" },
+        "approved_by": { "type": "array", "items": { "type": "string" } },
+        "effective_date": { "type": "string", "format": "date" }
+      }
+    },
+    "ext": {
+      "type": "object",
+      "description": "Sanctioned extension point. New/experimental facets go here so they can accrete without a breaking schema change; promote to a first-class facet once stable.",
+      "additionalProperties": true
+    }
+  }
+}

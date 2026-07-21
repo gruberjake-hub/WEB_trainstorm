@@ -13,6 +13,15 @@
       "layout_primitive": "TopTitle",
       "style_ref": "head-primary"
     },
+    "Callout_01": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "Pay ranges are built using a consistent process.",
+      "text_primitive": "SystemCallout",
+      "motion_primitive": "MarkerPop",
+      "layout_primitive": "WorkdayCallout",
+      "style_ref": "callout-system"
+    },
     "List_01": {
       "type": "List",
       "intent": "structure",
@@ -81,7 +90,7 @@
     "Statement_01": {
       "type": "Statement",
       "intent": "assert",
-      "text": "The midpoint represents market-competitive pay for someone performing well in the role.",
+      "text": "Ranges vary by location because costs of labor differ by geography.",
       "text_primitive": "Statement",
       "motion_primitive": "FocusReveal",
       "layout_primitive": "MidpointCallout",
@@ -105,6 +114,15 @@
       "layout_primitive": "MidpointCallout",
       "style_ref": "statement-primary"
     },
+     "Callout_02": {
+      "type": "Statement",
+      "intent": "support",
+      "text": "Pay Ranges are a reflection of different labor markets.",
+      "text_primitive": "SystemCallout",
+      "motion_primitive": "MarkerPop",
+      "layout_primitive": "WorkdayCallout",
+      "style_ref": "callout-system"
+    },
     "Impact_01": {
       "type": "Impact",
       "intent": "persuade",
@@ -113,6 +131,7 @@
       "motion_primitive": "FocusReveal",
       "layout_primitive": "BottomEmphasis",
       "style_ref": "impact-emphasis"
+      
     }
   },
   "narration": {

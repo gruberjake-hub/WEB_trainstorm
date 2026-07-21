@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Learning Content Manifold — System Map</title>
+<style>
+  :root{
+    --page:#f4f3f1; --surface:#ffffff; --surface-2:#fbfbfa;
+    --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+    --line:rgba(11,11,11,0.10); --grid:#e6e5e0;
+    --accent:#c8102e; --accent-deep:#9e0c24; --accent-tint:rgba(200,16,46,0.07);
+    --authoring:#2a78d6; --transform:#c8102e; --render:#eb6834; --runtime:#4a3aa7; --govern:#008300;
+    --radius:14px; --maxw:1060px;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --page:#0d0d0d; --surface:#1a1a19; --surface-2:#161615;
+      --ink:#ffffff; --ink-2:#c3c2b7; --muted:#8f8e87;
+      --line:rgba(255,255,255,0.12); --grid:#2c2c2a;
+      --accent:#f0576f; --accent-deep:#e4556b; --accent-tint:rgba(240,87,111,0.10);
+      --authoring:#3987e5; --transform:#f0576f; --render:#eb6834; --runtime:#9085e9; --govern:#0ca30c;
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--page);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:40px 26px 60px}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
+  h1{font-size:clamp(28px,4vw,42px);line-height:1.06;margin:0 0 10px;letter-spacing:-.02em}
+  .sub{font-size:clamp(14.5px,1.7vw,17px);color:var(--ink-2);margin:0 0 4px;max-width:64ch}
+  .sec-label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0 0 12px}
+  section{margin-top:34px}
+
+  /* planes strip */
+  .planes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:720px){.planes{grid-template-columns:1fr}}
+  .plane{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .plane .h{font-size:14px;font-weight:700;margin-bottom:3px}
+  .plane .d{font-size:12.5px;color:var(--ink-2)}
+  .plane.c{border-top:3px solid var(--accent)}
+  .plane.a{border-top:3px solid var(--authoring)}
+  .plane.o{border-top:3px solid var(--govern)}
+
+  /* map */
+  .mapcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 14px 18px}
+  .mapcard svg{width:100%;height:auto;display:block}
+  .g-node{fill:var(--surface)}
+  .g-spoke{stroke:var(--grid);stroke-width:2}
+  .hub{fill:var(--accent-tint);stroke:var(--accent);stroke-width:2}
+  .a-node{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+  .t-name{fill:var(--ink);font-weight:700}
+  .t-sub{fill:var(--muted)}
+  .t-hub{fill:var(--accent-deep);font-weight:700}
+  .t-hub2{fill:var(--ink-2)}
+  svg text{font-family:var(--sans)}
+  .mapcaption{font-size:12.5px;color:var(--ink-2);text-align:center;margin:6px 0 0}
+  .mapcaption b{color:var(--ink)}
+  .facetlegend{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .chip{font-size:11.5px;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+  .chip b{color:var(--ink)}
+
+  /* agent cards */
+  .agents{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:860px){.agents{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.agents{grid-template-columns:1fr}}
+  .agent{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px 16px}
+  .agent .top{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+  .agent .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .agent .nm{font-size:14.5px;font-weight:700;letter-spacing:-.01em}
+  .agent .badge{margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:.03em;padding:3px 8px;border-radius:999px;white-space:nowrap}
+  .badge.proven{color:#fff;background:var(--accent)}
+  .badge.dev{color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line)}
+  .agent .row{font-size:12.5px;margin-top:5px;display:flex;gap:7px}
+  .agent .row .k{color:var(--muted);font-weight:600;min-width:58px;flex:none}
+  .agent .row .v{color:var(--ink)}
+  .agent .v code{background:var(--accent-tint);color:var(--accent-deep);padding:0 5px;border-radius:4px;font-size:12px}
+
+  /* invariants */
+  .inv{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px}
+  @media(max-width:640px){.inv{grid-template-columns:1fr}}
+  .inv .i{font-size:13.5px;padding-left:20px;position:relative;color:var(--ink)}
+  .inv .i::before{content:"";position:absolute;left:2px;top:8px;width:7px;height:7px;border-radius:2px;background:var(--accent)}
+  .inv .i b{font-weight:700}
+
+  .foot{margin-top:30px;background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:15px 18px}
+  .foot h4{margin:0 0 6px;font-size:14px}
+  .foot p{margin:0;font-size:13px;color:var(--ink-2)}
+  .credit{margin-top:22px;font-size:11.5px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Learning Systems Architecture · framework map</p>
+  <h1>The Learning Content Manifold</h1>
+  <p class="sub">One shared content substrate; many agents, each a “local chart” that reads and writes its own facet. They coordinate through the graph — never through each other. AST009 is the first proven agent on it.</p>
+
+  <!-- THREE PLANES -->
+  <section>
+    <p class="sec-label">The whole, in three planes</p>
+    <div class="planes">
+      <div class="plane c"><div class="h">Content plane</div><div class="d">The graph / manifold — atoms, typed relationships, layered facets. The single source of truth. Passive.</div></div>
+      <div class="plane a"><div class="h">Agent plane</div><div class="d">The engines. Each owns one facet, reads others, wakes on a graph state. Code, LLM, or human behind the contract.</div></div>
+      <div class="plane o"><div class="h">Coordination plane</div><div class="d">Mostly the graph itself as a blackboard — agents react to state. A thin layer adds ordering and human gates.</div></div>
+    </div>
+  </section>
+
+  <!-- SYSTEM MAP -->
+  <section>
+    <p class="sec-label">The map — agents as charts over one graph</p>
+    <div class="mapcard">
+      <svg viewBox="0 0 900 560" role="img" aria-label="Hub-and-spoke system map: a central content graph with six agents around it. Every agent connects only to the central graph, never to another agent.">
+        <!-- spokes (drawn first, hidden under nodes so they read as edge-to-edge) -->
+        <g class="g-spoke">
+          <line x1="450" y1="280" x2="450" y2="78"/>
+          <line x1="450" y1="280" x2="632" y2="175"/>
+          <line x1="450" y1="280" x2="632" y2="385"/>
+          <line x1="450" y1="280" x2="450" y2="482"/>
+          <line x1="450" y1="280" x2="268" y2="385"/>
+          <line x1="450" y1="280" x2="268" y2="175"/>
+        </g>
+        <!-- HUB -->
+        <rect class="hub" x="336" y="232" width="228" height="96" rx="14"/>
+        <text class="t-hub" x="450" y="270" text-anchor="middle" font-size="16">THE CONTENT GRAPH</text>
+        <text class="t-hub2" x="450" y="292" text-anchor="middle" font-size="11.5">atoms · relationships · facets</text>
+        <text class="t-hub2" x="450" y="309" text-anchor="middle" font-size="10.5">the single source of truth</text>
+
+        <!-- AGENT: Course Generator (top) -->
+        <rect class="a-node" x="373" y="51" width="154" height="54" rx="11"/>
+        <circle cx="391" cy="78" r="5" fill="var(--authoring)"/>
+        <text class="t-name" x="404" y="74" font-size="13">Course-Generator</text>
+        <text class="t-sub" x="404" y="91" font-size="10">authoring · writes atoms</text>
+
+        <!-- AGENT: Presentation (upper right) -->
+        <rect class="a-node" x="555" y="148" width="154" height="54" rx="11"/>
+        <circle cx="573" cy="175" r="5" fill="var(--render)"/>
+        <text class="t-name" x="586" y="171" font-size="13">Presentation</text>
+        <text class="t-sub" x="586" y="188" font-size="10">render · brand tokens</text>
+
+        <!-- AGENT: Pedagogy/Adaptivity (lower right) -->
+        <rect class="a-node" x="555" y="358" width="154" height="54" rx="11"/>
+        <circle cx="573" cy="385" r="5" fill="var(--authoring)"/>
+        <text class="t-name" x="586" y="381" font-size="13">Pedagogy</text>
+        <text class="t-sub" x="586" y="398" font-size="10">objectives · response</text>
+
+        <!-- AGENT: Responsive Runtime (bottom) -->
+        <rect class="a-node" x="373" y="455" width="154" height="54" rx="11"/>
+        <circle cx="391" cy="482" r="5" fill="var(--runtime)"/>
+        <text class="t-name" x="404" y="478" font-size="13">Responsive</text>
+        <text class="t-sub" x="404" y="495" font-size="10">runtime · adapts live</text>
+
+        <!-- AGENT: Localization (lower left) — AST009 -->
+        <rect class="a-node" x="191" y="358" width="154" height="54" rx="11" stroke="var(--accent)"/>
+        <circle cx="209" cy="385" r="5" fill="var(--transform)"/>
+        <text class="t-name" x="222" y="381" font-size="13">Localization</text>
+        <text x="222" y="398" font-size="10" fill="var(--accent-deep)" font-weight="700">transform · AST009 ✓</text>
+
+        <!-- AGENT: Validation/Governance (upper left) -->
+        <rect class="a-node" x="191" y="148" width="154" height="54" rx="11"/>
+        <circle cx="209" cy="175" r="5" fill="var(--govern)"/>
+        <text class="t-name" x="222" y="171" font-size="13">Governance</text>
+        <text class="t-sub" x="222" y="188" font-size="10">validate · provenance</text>
+      </svg>
+      <p class="mapcaption">No lines run between agents — only to the hub. <b>That absence is the design:</b> agents coordinate through the graph, never each other.</p>
+      <div class="facetlegend">
+        <span class="chip">Each atom carries facets:</span>
+        <span class="chip"><b>presentation</b></span>
+        <span class="chip"><b>pedagogy</b></span>
+        <span class="chip"><b>adaptivity</b></span>
+        <span class="chip"><b>localization</b></span>
+        <span class="chip"><b>assessment</b></span>
+        <span class="chip"><b>governance</b></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGENT DETAIL -->
+  <section>
+    <p class="sec-label">The agents — one facet each, one contract</p>
+    <div class="agents">
+
+      <div class="agent">
+        <div class="top"><span class="dot" style="background:var(--authoring)"></span><span class="nm">Course-Generator</span><span class="badge dev">your other work</span></div>
+        <div class="row"><span class="k">writes</span><span class="v">new atoms + structure &amp; pedagogy facets</span></div>
+        <div class="row"><span class="k">reads</span><span class="v">briefs, templates, competency model</span></div>
+        <div class="row"><span class="k">wakes on</span><span class="v">a new course request (ADDIE: Design/Develop)</span></div>
+        <div class="row"><span class="k">is a</span><span class="v">LLM + human</span></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="dot" style="background:var(--transform)"></span><span class="nm">Localization</span><span class="badge proven">AST009 · proven</span></div>
+        <div class="row"><span class="k">writes</span><span class="v">the <code>localization</code> facet (locale packs)</span></div>
+        <div class="row"><span class="k">reads</span><span class="v">source, glossary, regulatory + tier facets, exemplars</span></div>
+        <div class="row"><span class="k">wakes on</span><span class="v">atom classified &amp; missing a validated locale</span></div>
+        <div class="row"><span class="k">is a</span><span class="v">LLM draft + code QE + human validate</span></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="dot" style="background:var(--render)"></span><span class="nm">Presentation</span><span class="badge dev">slot</span></div>
+        <div class="row"><span class="k">writes</span><span class="v">the <code>presentation</code> facet (motion, type, brand tokens)</span></div>
+        <div class="row"><span class="k">reads</span><span class="v">content_type, tier</span></div>
+        <div class="row"><span class="k">wakes on</span><span class="v">atom ready to render / publish</span></div>
+        <div class="row"><span class="k">is a</span><span class="v">code (token binding) + human design</span></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="dot" style="background:var(--authoring)"></span><span class="nm">Pedagogy</span><span class="badge dev">your other work</span></div>
+        <div class="row"><span class="k">writes</span><span class="v">objective, Bloom level, intended response, prerequisites</span></div>
+        <div class="row"><span class="k">reads</span><span class="v">structure facet, assessment results</span></div>
+        <div class="row"><span class="k">wakes on</span><span class="v">atom authored / objective defined</span></div>
+        <div class="row"><span class="k">is a</span><span class="v">human (ID) + LLM assist</span></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="dot" style="background:var(--runtime)"></span><span class="nm">Responsive Runtime</span><span class="badge dev">your other work</span></div>
+        <div class="row"><span class="k">writes</span><span class="v">mastery / adaptivity state facet</span></div>
+        <div class="row"><span class="k">reads</span><span class="v">pedagogy + adaptivity facets, live learner signal (xAPI)</span></div>
+        <div class="row"><span class="k">wakes on</span><span class="v">a learner interaction, at runtime</span></div>
+        <div class="row"><span class="k">is a</span><span class="v">code (rules) + LLM (dynamic)</span></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="dot" style="background:var(--govern)"></span><span class="nm">Governance</span><span class="badge dev">cross-cutting</span></div>
+        <div class="row"><span class="k">writes</span><span class="v">the <code>governance</code> facet (approvals, provenance, version)</span></div>
+        <div class="row"><span class="k">reads</span><span class="v">every facet</span></div>
+        <div class="row"><span class="k">wakes on</span><span class="v">any facet write / pre-publish</span></div>
+        <div class="row"><span class="k">is a</span><span class="v">code checks + human sign-off</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INVARIANTS -->
+  <section>
+    <p class="sec-label">The invariants that keep it from tangling</p>
+    <div class="inv">
+      <div class="i"><b>Single-writer per facet.</b> One agent owns each facet — no write conflicts, and ownership maps straight to governance.</div>
+      <div class="i"><b>Read anyone’s facet; write only your own.</b> Agents share by reading, not by reaching in.</div>
+      <div class="i"><b>The graph is the only contract.</b> Atom ID is the sole coupling — no agent calls another directly.</div>
+      <div class="i"><b>Choreography over orchestration.</b> Agents react to graph state; add explicit sequencing only for gates.</div>
+      <div class="i"><b>Implementation varies behind the contract.</b> Code, LLM, or human — swappable without touching the graph.</div>
+      <div class="i"><b>The graph is queryable.</b> “Which regulatory atoms lack a validated JA locale?” is one traversal — the same walk the runtime uses to adapt.</div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <h4>How to hold this while you build pieces</h4>
+    <p>Build one agent at a time against the graph — never against another agent. Localization (AST009) is real; the generator, pedagogy, presentation, and responsive agents can stay notional and still compose later, because they only ever meet on the shared substrate. The manifold is the thing you keep whole; the agents are how you ship it in parts.</p>
+  </div>
+
+  <p class="credit">The Learning Content Manifold · framework map · agents = local charts over one content graph · slots ready for your generator &amp; responsive-engine schemas</p>
+
+</div>
+</body>
+</html>

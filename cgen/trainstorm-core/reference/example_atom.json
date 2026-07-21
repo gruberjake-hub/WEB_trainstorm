@@ -1,0 +1,39 @@
+{
+  "atom_id": "atom_ast009_recognize_psi",
+  "content_hash": "sha256:3b7e9a1c4d2f8065a1be47c0d9f2e6a5b8c31d0e7f4a29b6c5d8e1f0a2b3c4d5",
+  "meaning": {
+    "source_locale": "en",
+    "source_text": "Recognize product safety information",
+    "kind": "objective_statement"
+  },
+  "bindings": {
+    "object": {
+      "belongs_to": "atom_ast009_slide_1_3",
+      "order": 4,
+      "prerequisites": ["atom_ast009_def_psi"]
+    },
+    "intent": {
+      "teaches": ["obj_recognize_psi"],
+      "intended_response": "discriminate reportable from non-reportable safety information",
+      "bloom": "analyze"
+    },
+    "expression": {
+      "content_type": "instructional.objective",
+      "register": "formal",
+      "term_refs": ["term_safety_mgmt_info"]
+    },
+    "audience": {
+      "segment_scope": ["tier1_field", "tier1_psp", "tier2_msl"],
+      "difficulty": 0.3,
+      "variant_group": "vg_recognize_psi"
+    }
+  },
+  "governance": {
+    "version": 3,
+    "status": "approved",
+    "regulatory_binding": "regulatory",
+    "owner": "pv_content",
+    "approved_by": ["qa_jsmith"],
+    "effective_date": "2026-07-15"
+  }
+}
