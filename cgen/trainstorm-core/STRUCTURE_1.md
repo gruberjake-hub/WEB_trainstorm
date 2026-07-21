@@ -10,12 +10,15 @@ The cure for getting sideways: **don't decide file-by-file. Follow one rule and 
 |---|---|
 | a **data contract** you validate against | `schemas/` |
 | a **closed list of allowed values** | `vocab/` |
-| **brand/visual assets, templates, locked terms** | `registry/` |
+| an **agent's instruction/prompt** (its governed behavior contract) | `agents/<agent>/` |
+| **brand/visual assets, templates, locked terms, retrieval corpora** | `registry/` |
 | a **translation** | `locales/` |
 | a **doc that explains or decides** | `architecture/` |
 | a **worked example** | `reference/` |
-| **code that transforms or checks** | `tools/` |
+| **code that transforms, checks, or runs an agent** | `tools/` |
 | a **client's actual course** | **not here** → separate `trainstorm-courses/` repo |
+
+An **agent is three kinds, not one** — so it lives in three places, never one feature folder: its **prompt** (a governed contract, like a schema) → `agents/<agent>/`; the **code** that runs it → `tools/<agent>/`; the **memory** it retrieves from (glossary, exemplar corpus) → `registry/`. That's why the localization agent's prompt is not in `tools/` next to its scripts — the prompt and the plumbing have different lifecycles, editors, and sync rules.
 
 That single question answers ~95% of "where does this file go." Note it's *kind*, not *topic*: a Brunswick example course is a "worked example" (→ `reference/`), not a "Brunswick thing."
 
@@ -35,10 +38,19 @@ trainstorm-core/
 │   ├── intent.enum.json                  ✅ rhetorical + pedagogical intents
 │   └── primitives.registry.json          ⬜ text/motion/layout/interaction/style keys
 │
-├── registry/                            # the expression backing store (git-only, not synced)
+├── agents/                              # the agents' GOVERNED PROMPTS (contracts, not code) — these sync
+│   └── localize/
+│       ├── system.md                     ✅ the translation agent's prompt (loc-agent.v0.1)
+│       └── README.md                     ✅ manifest: I/O contract + how to run
+│       # generator/ realizer/ render/    ⬜ same shape when those agents get prompts
+│
+├── registry/                            # backing store + retrieval memory (git-only, not synced)
 │   ├── brands/<brand>/                   ⬜ tokens.css · fonts/ · logos/
 │   ├── templates/                        ⬜ HTML/CSS layout templates per layout_primitive
-│   └── glossary/<domain>.json            ⬜ locked terminology (localization registry)
+│   ├── glossary/
+│   │   └── astellas-pv.candidates.csv    ✅ locked-term seed (→ .json once reviewer confirms)
+│   └── corpus/
+│       └── astellas-pv.ja.jsonl          ✅ 1,164-pair exemplar corpus — fed to the retriever, NEVER synced
 │
 ├── locales/                             # externalized translations, keyed by element_id
 │   └── <bcp47>.json                      ⬜ e.g. ja.json, fr-CA.json
@@ -61,8 +73,11 @@ trainstorm-core/
 │   ├── sample_script.json                ✅
 │   └── brunswick.reference.course.json   ⬜ gold-standard course (fix the sce_003 collision first)
 │
-├── tools/                               # the agents & utilities (code)
-│   ├── lint.py                           ⬜ the drift/vocab linter
+├── tools/                               # the agents' runtime code & utilities
+│   ├── lint.py                           ✅ the drift/vocab linter
+│   ├── localize/                         # the translation agent's runtime (reads agents/localize/system.md)
+│   │   ├── build_agent_call.py           ✅ assembles the [system,user] call from registry memory
+│   │   └── verify_agent_output.py        ✅ QE gate + locale-pack mapping check
 │   ├── realize.py                        ⬜ (later) primitives → elements
 │   └── render/                           ⬜ (later) element → HTML → PNG
 │
@@ -85,10 +100,10 @@ trainstorm-core/
 
 Keep the knowledge base **lean**. Configure `.claudesync` (or your Drive mirror) to include only:
 
-- **SYNC:** `schemas/`, `vocab/`, `architecture/*.md` (not `diagrams/`), `reference/*.json`, `project/`
-- **GIT-ONLY (don't sync):** `registry/` assets (fonts/logos/templates), `locales/` packs, `architecture/diagrams/` (HTML), `tools/` code, and anything under a client courses repo.
+- **SYNC:** `schemas/`, `vocab/`, `agents/**/*.md` (the prompts — you refine these *in* the Project), `architecture/*.md` (not `diagrams/`), `reference/*.json`, `project/`
+- **GIT-ONLY (don't sync):** `registry/` assets and **especially `registry/corpus/`** (fed to the retriever, never loaded into context — a 600 KB corpus in the knowledge base would wreck it), `locales/` packs, `architecture/diagrams/` (HTML), `tools/` code, and anything under a client courses repo.
 
-Reason: fonts, HTML diagrams, and code bloat retrieval and don't help the model reason. The canon (schemas + vocab + prose docs + one example) is what belongs in the model's context.
+Reason: the agent prompts are governed contracts you reason about, so they belong in context — but the corpus is *retrieval fuel*, not reading material. The retriever pulls 3 exemplars per string at runtime; the model never needs all 1,164 in its context. Fonts, HTML diagrams, and code likewise bloat retrieval without helping the model reason.
 
 ## Where the rest lives (deliberately NOT in core)
 

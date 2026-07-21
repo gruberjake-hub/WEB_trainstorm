@@ -1,0 +1,6 @@
+preferred_term(good),avoid(bad),category,rule_note,observed_count
+安全管理情報,製品安全情報 / 製品安全に関する情報,terminology-regulatory,Official Japan GVP (Ord.135) term for 'safety management information'. LOCK. Vendor used literal calque.,220
+アステラス,"Astellas (Latin, in running JP text)",terminology-brand,Company name in katakana within Japanese prose. Keep Latin ONLY inside official English document titles.,197
+Product Safety Awareness,製品安全に関する啓発 / 製品安全啓発,terminology-defined-name,Keep the defined program name in English. Do not descriptively translate.,70
+患者さん,"患者 (bare, when referring to patients)",register-honorific,Respectful honorific for patients in JP healthcare register. Bare 患者 reads clinical/cold.,63
+イントロダクション,はじめに (as a section heading),style-heading,"House style: section headings mirror the English via katakana. CONFIRM with in-country owner (preference, not correctness).",21
