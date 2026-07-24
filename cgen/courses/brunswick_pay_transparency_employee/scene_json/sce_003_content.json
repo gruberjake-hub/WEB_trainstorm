@@ -34,7 +34,7 @@
     "Statement_03":{
       "type": "Statement",
       "intent": "complete",
-      "text": "Benefits and programs are not the same everywhere. They differ based on location and local practices.",
+      "text": "Because our workforce spans different locations and employment groups, some benefits may differ based on location and local requirements.",
       "text_primitive": "Statement",
       "motion_primitive": "FocusReveal",
       "layout_primitive": "CenterStatement",
@@ -79,7 +79,7 @@
     "List_01_5": {
       "type": "ListItem",
       "parent": "List_01",
-      "text": "Paid Time Off (PTO)",
+      "text": "Paid Time Off",
       "text_primitive": "BulletList",
       "style_ref": "content-list"
     },

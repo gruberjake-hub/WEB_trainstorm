@@ -1,0 +1,21 @@
+<assumptions>
+use the trainstorm-core architecture separating content from expression
+
+effective content-expression renders are intended to induce some delta in some audience using some set of tools/content and working within some set of constraints. It's always this: outcome, audience, tool (content, modalities, etc), and constraints. 
+	The "course generation" engine seeks to measure these deltas in a more traditional sense, such as KC and quiz. Expression render is largely fixed once at runtime. 
+	The "responsive engine" takes this to another level, measuring receiver deltas scene to scene and serving moves to drive objective completion. Expression render changes based on Bayesian movement.
+
+the process proceeds from high temperature to cool to deterministic, but there are loops involved. For instance: learning objectives are outcomes specifically scoped per constraints, audience, etc to meet business outcomes. So the right mode might be an early objective tracing, and deeper analysis of audience, tools, constraints, and a refinement.
+
+At certain check points, there is some "mind" (whether it be Ai, human, both, etc) that's deciding the NATURE of the expression based on the deltas: the business deltas, learning objectives, and all the Bayesian changes that are needed of the receiver to reliably produce the overall delta. The nature of the expression is one place that determines which agent is called. For instance, if the delta between status quo and status novus is especially large, or there are unique and potent emotional inhibitors in the audience, then the nature of expression might be persuasive and the "persuasive agent" gets called to run the "psykido prompts" to more deeply map audience globally, audience in context, inhibitors, motivators, objections, aligners, etc, etc. Whereas is the gap is more technically based, perhaps a different agent gets called with a different prompt string -- a tutor or clarity agent, something.
+	This will likely also proceed in loops. For example: a certain level of audience analysis is needed to determine the nature of expression, and that decision drives a deeper layer of analysis. (No reason to go all the way and burn the tokens if it's not needed.) 
+	I run into sequencing questions here. For example: what output is the "persuasive agent" producing and two which agent? I think the analysis of audience/outcome/tool is UPSTREAM of a script (actually, it probably has to be given the content vs expression model here), but I suspect there's another pass later that conforms the OBSERVATIONS of that analysis into actionable language. I need some help on this one. 
+
+The workflow begins, usually with the user accessing a large corpus of project files from sharepoint or other repo. This is largely unstructured data. 
+
+Ingestion workflow starts. 
+	Py files run first to extract all media, file formats, tables, etc, etc into parseable md. Next py runs to merge the entire corpus. 
+
+User submits corpus to a high temperature, high thinking business analysis strategist who runs a complete analysis of the project, opportunities, threats, likely kpis, likely attack surface for training, roi analysis, political considerations, possible modalities. The analysis is talked through with a HITL and key decisions are made, at which point strategist creates the structured output for the first instructional design agent to take over.  
+
+First instructional designer is focused on the "analysis" and early "design" components of ADDIE. This is still relatively high temperature. 

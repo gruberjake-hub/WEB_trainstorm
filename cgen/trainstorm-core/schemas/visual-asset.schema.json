@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/visual-asset.schema.json",
+  "title": "Trainstorm Visual Asset",
+  "description": "One entry in the visual asset registry: a reference to an image file plus governed metadata. Elements resolve this via render.asset_ref. The registry holds the reference and metadata only — never the image bytes. Owner: Brand + Localization (the same facet-owner as expression, per system-map.html).",
+  "type": "object",
+  "required": [
+    "asset_id",
+    "file",
+    "media_type",
+    "role",
+    "scope",
+    "content_hash",
+    "governance"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "asset_id": {
+      "type": "string",
+      "pattern": "^asset_[a-z0-9_]+$",
+      "description": "Stable identity, minted once, never reused or edited — the join key render.asset_ref points at. Human-legible slug (matches the atom_id/element_id convention), not positional. Do not rename even if content_hash later changes."
+    },
+    "file": {
+      "type": "string",
+      "description": "Path to the image file, relative to the registry. The ONLY embedded thing on this record is this reference — never the image bytes."
+    },
+    "root": {
+      "type": "string",
+      "description": "Which entry in the registry's `asset_roots` map this file resolves against. Absent means 'library' — the default bulk store. Deliberately a free string, not an enum: the roots are declared in the registry header, and duplicating that list here would be a second source of truth that drifts. A linter checks that every `root` names a declared root."
+    },
+    "media_type": {
+      "type": "string",
+      "enum": [
+        "svg",
+        "png",
+        "jpg",
+        "jpeg",
+        "webp",
+        "gif"
+      ],
+      "description": "svg/png are render-pipeline-native (HTML/CSS -> headless render). Anything else should be converted on ingest, not at render time."
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "signature",
+        "motif",
+        "chrome"
+      ],
+      "description": "Governed, closed list — v0.1, draft. signature = rare/high-specificity brand asset, reserve for hero placements. motif = general-purpose illustrative asset tied to a recurring content concept, swappable within a family. chrome = decorative background/divider/texture, no semantic specificity, freely swappable. Unrecognized values are a schema violation, not a silent pass-through."
+    },
+    "scope": {
+      "type": "object",
+      "required": [
+        "industries",
+        "clients"
+      ],
+      "additionalProperties": false,
+      "description": "Reuse breadth — orthogonal to role (a signature asset can be universal; a motif can be client-locked). Derived, not labeled: both empty = universal. industries non-empty, clients empty = usable by any client tagged with that industry. clients non-empty = restricted to exactly those clients, and wins over industries when both are set (narrowest scope binds). Not governed yet — industries/clients are free strings until a client/industry roster exists; typos won't be caught.",
+      "properties": {
+        "industries": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "e.g. ['pharma']. A client belonging to this industry may use the asset even if not individually listed in clients."
+        },
+        "clients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "e.g. ['astellas']. Non-empty means restricted to exactly these named clients, regardless of industry — the most restrictive setting."
+        }
+      }
+    },
+    "mark_class": {
+      "type": "string",
+      "enum": [
+        "identity",
+        "sub_brand",
+        "program",
+        "third_party"
+      ],
+      "description": "Governed, closed list — v0.1, draft. What KIND of mark this is, which `role: signature` alone cannot express. identity = the client's own corporate mark, governed by their brand team, outlives every engagement. sub_brand = a company or division they own (its own brand system; NOT interchangeable with the parent). program = an initiative/engagement mark, created for a project and retired with it. third_party = an external organisation's mark (regulatory agency, partner, standards body) — neither ours nor the client's, and carries its own usage restrictions. Required when role is 'signature'; meaningless otherwise. Absent is NOT the same as 'identity' — treat absent as unknown.",
+      "$comment": "Deliberately not named *_tier: the manifold already uses 'tier' for audience segments (tier1_field, tier2_msl) and the collision would mislead."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Free-form descriptive tags for retrieval (subject, style, mood). Ungoverned — grows organically, unlike role."
+    },
+    "content_type_hints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional: expression.content_type keys (from vocab/primitives.registry.json once populated) this asset pairs well with. Advisory and many-to-many — not a single-writer binding the way an atom's own expression facet is."
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Hash of the file's bytes. Flags when the underlying image actually changed (re-export, recolor, crop) versus when only metadata moved — same discipline as an atom's content_hash guarding its meaning."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "native_dimensions_px": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "aspect_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "alt_text": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        }
+      }
+    },
+    "usage_rights": {
+      "type": "string",
+      "description": "e.g. 'original', 'licensed-stock', 'internal-generated'. Worth stating plainly before this becomes a shared library other agents pull from."
+    },
+    "provenance": {
+      "type": "string",
+      "description": "Where this came from, and how it was made or sourced."
+    },
+    "governance": {
+      "type": "object",
+      "required": [
+        "version",
+        "status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "in_review",
+            "approved",
+            "retired"
+          ]
+        },
+        "owner": {
+          "type": "string"
+        },
+        "approved_by": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "effective_date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "role": {
+            "const": "signature"
+          }
+        },
+        "required": [
+          "role"
+        ]
+      },
+      "then": {
+        "required": [
+          "mark_class"
+        ],
+        "$comment": "A signature with no mark_class is exactly the ambiguity this field exists to remove — a program mark passing as the corporate identity."
+      }
+    }
+  ]
+}

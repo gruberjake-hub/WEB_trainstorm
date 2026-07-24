@@ -1,0 +1,3 @@
+# tools/visual-assets/.gitignore
+staging*.json
+unresolved.json

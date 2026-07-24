@@ -1,0 +1,8 @@
+# tools/assets/ — visual asset registry pipeline
+pillow>=10.0        # image open, dimensions, format handling
+imagehash>=4.3      # perceptual hashing for near-duplicate clustering
+jsonschema>=4.20     # validate entries against visual-asset.schema.json
+pytesseract>=0.3.10  # OCR — ALSO needs the system binary, pip will not install it:
+                     #   Windows : https://github.com/UB-Mannheim/tesseract/wiki
+                     #   macOS   : brew install tesseract
+                     #   Debian  : apt-get install tesseract-ocr
