@@ -1,0 +1,53 @@
+[
+  { "type": "context_frame", "id": "p001",
+    "problem": "Pay ranges now appear on all U.S. job postings, and employees are unsure what that means for them.",
+    "risk": "Without context, visible ranges create anxiety instead of understanding.",
+    "pedagogical_intent": "hook" },
+  { "type": "decomposition", "id": "p002",
+    "whole": "How Brunswick sets pay",
+    "parts": [
+      { "label": "Market-Competitive Benchmarking", "description": "Real third-party survey data." },
+      { "label": "External & Internal Equity", "description": "Fair vs. market and vs. peers." },
+      { "label": "Pay Linked to Performance", "description": "Ratings influence range progression." }
+    ],
+    "pedagogical_intent": "present" },
+  { "type": "definition", "id": "p003",
+    "term": "Midpoint",
+    "meaning": "Market-competitive pay for someone performing well in the role.",
+    "pedagogical_intent": "present" },
+  { "type": "distinction", "id": "p004",
+    "distinguishes": [
+      { "label": "At midpoint", "description": "Paid fairly vs. similar roles elsewhere." },
+      { "label": "Below average", "description": "A negative signal — which midpoint is NOT." }
+    ],
+    "common_confusion": "That being at midpoint means underperformance.",
+    "pedagogical_intent": "exemplify" },
+  { "type": "knowledge_check", "id": "p005",
+    "prompt": "What does being at the midpoint of your range indicate?",
+    "check_type": "recall",
+    "expected_response_features": [
+      "identifies midpoint as market-competitive pay for a fully competent performer",
+      "does not interpret midpoint as a performance signal"
+    ],
+    "misconception_predictions": [
+      { "id": "mc_midpoint_underperformance",
+        "claim": "Learners read 'middle of the range' as 'middle of the pack' — a performance judgment rather than a market anchor.",
+        "confidence": 0.7,
+        "source": "distinction p004 common_confusion; segment × objective entry pending audience model",
+        "feedback": "Midpoint isn't a performance rating — it's the market anchor for a fully competent performer in the role." }
+    ],
+    "feedback_correct": "Right — market-competitive pay.",
+    "feedback_incorrect": "Midpoint describes your pay's position against the market, not your performance.",
+    "source_reference": "Brunswick pay-transparency source deck, ranges section",
+    "pedagogical_intent": "assess" },
+  { "type": "resource_pointer", "id": "p006",
+    "resource": "Total Rewards Statement",
+    "location": "Workday → Benefits and Pay",
+    "purpose": "See your full compensation beyond base pay.",
+    "pedagogical_intent": "transfer" },
+  { "type": "closure", "id": "p007",
+    "takeaway": "Pay transparency gives you information to have informed conversations.",
+    "recap": ["Why ranges are visible", "How pay is set", "What shapes your position", "Total rewards", "How to start a conversation"],
+    "call_to_action": "Start with your manager or HR Business Partner.",
+    "pedagogical_intent": "reinforce" }
+]

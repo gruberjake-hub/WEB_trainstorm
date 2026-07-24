@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/script.primitives.v2.json",
+  "title": "Trainstorm Script Primitives (Generation IR) — v2",
+  "description": "The SEMANTIC generation layer: an ordered array of didactic moves emitted from source material, BEFORE presentation. Each primitive is a typed knowledge structure. Primitives are realized DOWNSTREAM into presentation elements. Governed, closed vocabulary — a new primitive type requires a version bump. V2 CHANGE (ratified 2026-07-24, unification-map §4 / CONFLICT-01): knowledge_check moves from enumerated options to RESPONSE-FEATURE form — it describes what a correct response must CONTAIN (expected_response_features) and what learners are predicted to get wrong (misconception_predictions, structured with IDs and confidence). MC/MR/TF/matching/sequence become RENDERS of it: the realizer generates options at realization time — the key from expected_response_features, distractors from misconception_predictions via a divergent pass. The 11 primitive types are unchanged from v1.",
+  "type": "array",
+  "items": { "$ref": "#/$defs/primitive" },
+  "$defs": {
+    "primitive": {
+      "oneOf": [
+        { "$ref": "#/$defs/orientation" },
+        { "$ref": "#/$defs/context_frame" },
+        { "$ref": "#/$defs/definition" },
+        { "$ref": "#/$defs/decomposition" },
+        { "$ref": "#/$defs/distinction" },
+        { "$ref": "#/$defs/process_flow" },
+        { "$ref": "#/$defs/role_relevance" },
+        { "$ref": "#/$defs/knowledge_check" },
+        { "$ref": "#/$defs/boundary_statement" },
+        { "$ref": "#/$defs/resource_pointer" },
+        { "$ref": "#/$defs/closure" }
+      ]
+    },
+
+    "labeledPart": {
+      "type": "object",
+      "required": ["label"],
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+
+    "misconceptionPrediction": {
+      "type": "object",
+      "description": "A falsifiable prior about learner error, stated before any learner is observed. IDs are stable (mc_ prefix, minted at generation, never positional) so the Responsive Engine can later place posteriors over them and the realizer can trace each rendered distractor to the misconception it operationalizes.",
+      "required": ["id", "claim"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^mc_[A-Za-z0-9_-]+$" },
+        "claim": { "type": "string", "description": "What learners are predicted to wrongly believe or do, stated as a claim about cognition — not as answer-option text." },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1, "description": "Prior confidence that this misconception is prevalent in the target segment. Seeds the evidence loop." },
+        "source": { "type": "string", "description": "Where the prediction comes from: audience-model entry (segment × objective), SME input, or observed data." },
+        "feedback": { "type": "string", "description": "Remediation shown when a learner's response evidences THIS misconception. Realizes into per-distractor feedback." }
+      }
+    },
+
+    "orientation": {
+      "type": "object",
+      "description": "Situates the learner: what this is / what's ahead.",
+      "required": ["type", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "orientation" },
+        "text": { "type": "string" },
+        "id": { "type": "string" },
+        "pedagogical_intent": { "type": "string", "description": "Value from intent.enum.json (pedagogical). Default: objective. Enforced by the linter." },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "context_frame": {
+      "type": "object",
+      "description": "Establishes the problem/stakes that motivate the content.",
+      "required": ["type", "problem"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "context_frame" },
+        "problem": { "type": "string" },
+        "risk": { "type": "string", "description": "What's at stake if unaddressed." },
+        "id": { "type": "string" },
+        "pedagogical_intent": { "type": "string", "description": "Default: hook (or activate)." },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "definition": {
+      "type": "object",
+      "description": "Names and explains a term.",
+      "required": ["type", "term", "meaning"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "definition" },
+        "term": { "type": "string" },
+        "meaning": { "type": "string" },
+        "example": { "type": "string" },
+        "id": { "type": "string" },
+        "pedagogical_intent": { "type": "string", "description": "Default: present." },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "decomposition": {
+      "type": "object",
+      "description": "Breaks a whole into its constituent parts.",
+      "required": ["type", "whole", "parts"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "decomposition" },
+        "whole": { "type": "string", "description": "The thing being broken down." },
+        "parts": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/labeledPart" } },
+        "id": { "type": "string" },
+        "pedagogical_intent": { "type": "string", "description": "Default: present (or exemplify)." },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "distinction": {
+      "type": "object",
+      "description": "Contrasts two or more things; often corrects a common confusion.",
+      "required": ["type", "distinguishes"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "distinction" },
+        "distinguishes": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/labeledPart" } },
+        "basis": { "type": "string", "description": "The dimension along which they differ." },
+        "common_confusion": { "type": "string", "description": "The misconception this corrects." },
+        "id": { "type": "string" },
+        "pedagogical_intent": { "type": "string", "description": "Default: exemplify." },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "process_flow": {
+      "type": "object",
+      "description": "An ordered sequence of steps or stages.",
+      "required": ["type", "steps"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "process_flow" },
+        "steps": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/labeledPart" } },
+        "cyclical": { "type": "boolean", "default": false },
+        "trigger": { "type": "string", "description": "What starts the process." },
+        "outcome": { "type": "string", "description": "What the process produces." },
+        "id": { "type": "string" },
+        "pedagogical_intent": { "type": "string", "description": "Default: exemplify." },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "role_relevance": {
+      "type": "object",
+      "description": "Why this matters to the learner's specific role or situation.",
+      "required": ["type", "relevance"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "role_relevance" },
+        "relevance": { "type": "string", "description": "Why it matters to the learner." },
+        "role": { "type": "string", "description": "Optional target role/segment (may map to audience.segment_scope)." },
+        "example": { "type": "string", "description": "A concrete 'for you, this means…' instance." },
+        "id": { "type": "string" },
+        "pedagogical_intent": { "type": "string", "description": "Default: activate (or transfer)." },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "knowledge_check": {
+      "type": "object",
+      "description": "V2 FORM — a check for understanding in RESPONSE-FEATURE form. Describes what a correct response must contain, not lettered options. Options are a RENDER: the realizer generates them at realization time (key from expected_response_features; distractors from misconception_predictions via the Generator's divergent pass, with parity constraints — vocabulary, register, length). Render targets choose form (MC/MR/TF/matching/sequence) and capacity (Storyline supports up to 10 choices) as render parameters, not schema facts. If a client or SME mandates fixed verbatim options, that is a render-time constraint recorded against the render target — the primitive stays semantic. Migration from v1: each v1 options[correct=true] label maps into expected_response_features; each incorrect label is restated as the misconception it evidences.",
+      "required": ["type", "prompt", "expected_response_features"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "knowledge_check" },
+        "prompt": { "type": "string", "description": "The question or task, semantically stated. Single-concept; the realizer enforces form rules per target." },
+        "check_type": { "type": "string", "enum": ["recall", "application", "scenario"] },
+        "expected_response_features": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "description": "What a correct response must contain or demonstrate — competency-aligned features, not option text. The semantic key."
+        },
+        "misconception_predictions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/misconceptionPrediction" },
+          "description": "Structured priors about learner error. Distractors are generated FROM these — never invented alongside the key."
+        },
+        "feedback_correct": { "type": "string", "description": "Shown on a correct response." },
+        "feedback_incorrect": { "type": "string", "description": "Default remediation when no specific misconception is matched. Misconception-specific feedback lives on each prediction." },
+        "source_reference": { "type": "string", "description": "Citation into the source store (authoritative band) grounding this check. Provenance per check — the profiles' discipline, kept." },
+        "id": { "type": "string" },
+        "pedagogical_intent": { "type": "string", "description": "Default: practice (or assess)." },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "boundary_statement": {
+      "type": "object",
+      "description": "Scope, limits, caveats, or edge cases — what this does or does NOT cover.",
+      "required": ["type", "boundary"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "boundary_statement" },
+        "boundary": { "type": "string", "description": "The limit or caveat." },
+        "applies_when": { "type": "string" },
+        "excludes": { "type": "string" },
+        "id": { "type": "string" },
+        "pedagogical_intent": { "type": "string", "description": "Default: present." },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "resource_pointer": {
+      "type": "object",
+      "description": "Points to an external resource, system, or job aid.",
+      "required": ["type", "resource"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "resource_pointer" },
+        "resource": { "type": "string", "description": "The resource / system name." },
+        "location": { "type": "string", "description": "Where to find it (portal, URL, system path)." },
+        "purpose": { "type": "string", "description": "What to use it for." },
+        "id": { "type": "string" },
+        "pedagogical_intent": { "type": "string", "description": "Default: transfer." },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "closure": {
+      "type": "object",
+      "description": "Wraps up: recap, key takeaway, and/or call to action.",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "closure" },
+        "takeaway": { "type": "string", "description": "The one thing to remember." },
+        "recap": { "type": "array", "items": { "type": "string" } },
+        "call_to_action": { "type": "string" },
+        "id": { "type": "string" },
+        "pedagogical_intent": { "type": "string", "description": "Default: reinforce." },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}
