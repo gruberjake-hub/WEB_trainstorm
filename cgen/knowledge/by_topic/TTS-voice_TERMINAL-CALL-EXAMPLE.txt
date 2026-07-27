@@ -1,1 +1,4 @@
 python scripts/tts_module.py --file "courses/brunswick/module_01.txt" --output "courses/brunswick/audio/module_01.mp3" --format mp3 --voice am_michael --speed 0.95
+
+python tts_module.py --list-voices
+python tts_module.py --paste --output test_michael.mp3 --format mp3 --voice am_michael

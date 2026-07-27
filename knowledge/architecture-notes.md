@@ -23,14 +23,13 @@
    2. I run into sequencing questions here. For example: what output is the "persuasive agent" producing and two which agent? I think the analysis of audience/outcome/tool is UPSTREAM of a script (actually, it probably has to be given the content vs expression model here), but I suspect there's another pass later that conforms the OBSERVATIONS of that analysis into actionable language. 
 
       1. &#x20;I need some help untangling this one, because it gets pretty complex and there are different ways it can go. For example, the agents are generally flowing from a business architecture agent to a designer agent to a developer agent in typical ADDIE fashion. But based on this discussion of expression "nature", (there will be others) there are very likely to be different sub-agents called. What are the outputs for each? 
+2. There are competing structures here that I've developed over time, but they all do tend to converge. There are some structures that focus on instructional design principles first, and there are some (like the manifold) that take the object/expression duality a little deeper. There are basically three current layers flowing like archeological dig. 
+
+   1. In Octoberish 2025, I was thinking about how to simply generate courses. This evolved into a prompt chain (not entirely successful, and not wired) that proceeds from beginning to end, takes an audience analysis detour, and tries to compile a ppt that can be imported into Storyline. This effort was sidelined 1 because only generated courses isn't ambitious enough and also because the primitives weren't there to generate ppt effectively.
+   2. The next layer was developed in Azure Studio, which essentially sets down "agents" (although they, too, are basically prompts) that work through ADDI with HITL -- the "Leader" that works through business outcomes, project analysis, the Designer that starts to build learning objectives, the Developer who scripts, etc and the Generator who compiles the render contract. The "Thinker" piece is HIGHLY effective, but it loses coherence a bit moving through Designer to Generator. Still useful, but still incomplete. So in terms of organizing the total architecture, it's a question. You can see more about these agents in the document I'm attaching.
+   3. The third layer now is the Manifold, which is quite ambitious. It takes the object/expression duality to its heart, creates object models, intent models, etc that all downstream expression renderers can reason against. It also uses that infrastructure for driving translations (as they're just another render contract, in the end.) 
 
 
-
-2\. there are competing structures here that I've developed over time, but they all do tend to converge. There are some structures that focus on instructional design principles first, and there are some (like the manifold) that take the object/expression duality a little deeper. There are basically three current layers flowing like archeological dig. 
-
-In Octoberish 2025, I was thinking about how to simply generate courses. This evolved into a prompt chain (not entirely successful, and not wired) that proceeds from beginning to end, takes an audience analysis detour, and tries to compile a ppt that can be imported into Storyline. This effort was sidelined 1 because only generated courses isn't ambitious enough and also because the primitives weren't there to generate ppt effectively.
-
-The next layer was developed in Azure Studio, which essentially sets down "agents" (although they, too, are basically prompts) that work through ADDI with HITL -- the "Thinker" that works through business outcomes, project analysis, the Designer that starts to build learning objectives, the Developer who scripts, etc and the Generator who compiles the render contract. The "Thinker" piece is HIGHLY effective, but it loses coherence a bit moving through Designer to Generator. Still useful, but still incomplete. So in terms of organizing the total architecture, it's a question
 
 
 
@@ -42,7 +41,7 @@ The next layer was developed in Azure Studio, which essentially sets down "agent
 
 &#x09;Developer: likely a series of tools, skills, sub-agents, whatever works best. 
 
-
+&#x09;What others? 
 
 #### </general thoughts>
 

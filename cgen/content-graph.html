@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside the Content Graph — Object · Intent · Expression</title>
+<style>
+  :root{
+    /* ===== Astellas theme tokens (from astellastokens.css v1) ===== */
+    --astellas-red:#D91E49; --astellas-dark-red:#A62B4E;
+    --astellas-gray:#939597; --astellas-extra-dark-gray:#4D4D4F;
+    --astellas-blue:#004C97; --astellas-green:#658D1B; --astellas-purple:#A20067; --astellas-yellow:#F0B323;
+    --color-bg:#FFFFFF; --color-surface:#F7F8F9; --color-panel:#FFFFFF;
+    --color-text:#4D4D4F; --color-text-muted:#6F7072;
+    --color-border:#E3E5E8; --color-border-strong:#C9CDD2;
+    --color-accent:var(--astellas-red); --color-accent-strong:var(--astellas-dark-red);
+    --color-link:var(--astellas-blue);
+    --font-body:Arial,Helvetica,sans-serif; --font-heading:Arial,Helvetica,sans-serif;
+    --font-weight-bold:700; --shadow-sm:0 1px 2px rgba(0,0,0,0.06);
+    --dur-fast:120ms;
+
+    /* ===== page theme, derived from the Astellas tokens ===== */
+    --page:var(--color-bg); --surface:var(--color-panel); --surface-2:var(--color-surface);
+    --ink:var(--color-text); --ink-2:var(--color-text-muted); --muted:var(--astellas-gray);
+    --line:var(--color-border); --grid:#D7DBDF;
+    --accent:var(--color-accent); --accent-deep:var(--color-accent-strong); --accent-tint:rgba(217,30,73,0.08);
+    --object:var(--astellas-blue); --intent:var(--astellas-purple); --express:var(--astellas-yellow); --good:var(--astellas-green);
+    --radius:14px; --maxw:1040px;
+    --sans:var(--font-body);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --color-bg:#141618; --color-surface:#1C1F22; --color-panel:#1A1D20;
+      --color-text:#F2F3F4; --color-text-muted:#B9BCC0;
+      --color-border:rgba(255,255,255,0.12); --color-border-strong:rgba(255,255,255,0.22);
+      --color-accent:#F2547A; --color-accent-strong:#F26A8A;
+      --astellas-blue:#4C93DA; --astellas-purple:#D45DAE; --astellas-yellow:#F0B323; --astellas-green:#8CBF3F; --astellas-gray:#9A9DA1;
+      --page:var(--color-bg); --surface:var(--color-panel); --surface-2:var(--color-surface);
+      --ink:var(--color-text); --ink-2:var(--color-text-muted); --muted:var(--astellas-gray);
+      --line:var(--color-border); --grid:#33373B;
+      --accent:var(--color-accent); --accent-deep:var(--color-accent-strong); --accent-tint:rgba(242,84,122,0.14);
+      --object:var(--astellas-blue); --intent:var(--astellas-purple); --express:var(--astellas-yellow); --good:var(--astellas-green);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--page);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+
+  /* ===== Astellas branded shell (header · nav · pager) ===== */
+  .site-header{max-width:var(--maxw);margin:0 auto;padding:20px 26px 0;display:flex;align-items:baseline;gap:14px 20px;flex-wrap:wrap}
+  .brand{display:flex;align-items:baseline;gap:11px;text-decoration:none;line-height:1}
+  .brand-mark{font-weight:700;font-size:22px;letter-spacing:-.02em;color:var(--color-accent);font-family:var(--font-heading)}
+  .brand-sub{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .site-nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .site-nav a{font-size:13px;font-weight:700;color:var(--ink-2);text-decoration:none;padding:8px 13px;border-radius:8px;border:1px solid transparent;transition:background var(--dur-fast),color var(--dur-fast),border-color var(--dur-fast)}
+  .site-nav a:hover{color:var(--ink);background:var(--surface-2);border-color:var(--line)}
+  .site-nav a[aria-current="page"]{color:var(--color-accent);background:var(--accent-tint);border-color:color-mix(in srgb,var(--color-accent),transparent 62%)}
+  .site-nav a:focus-visible{outline:3px solid color-mix(in srgb,var(--color-accent),white 35%);outline-offset:2px}
+  .brand-rule{max-width:var(--maxw);margin:13px auto 0;height:4px;background:var(--color-accent);border-radius:999px}
+
+  .pager{margin:34px 0 6px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .pager a{display:block;font-size:13.5px;font-weight:700;color:var(--ink);text-decoration:none;padding:13px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow-sm);flex:1;min-width:220px;transition:border-color var(--dur-fast)}
+  .pager a:hover{border-color:var(--color-accent)}
+  .pager a:focus-visible{outline:3px solid color-mix(in srgb,var(--color-accent),white 35%);outline-offset:2px}
+  .pager .lab{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:3px}
+  .pager .nx{text-align:right}
+  @media(max-width:560px){.brand-sub{display:none}.site-nav{margin-left:0;width:100%}}
+  @media (prefers-reduced-motion: reduce){*{transition-duration:1ms !important;animation-duration:1ms !important}}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:26px 26px 60px}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
+  h1{font-size:clamp(26px,3.8vw,40px);line-height:1.06;margin:0 0 10px;letter-spacing:-.02em}
+  .sub{font-size:clamp(14.5px,1.7vw,17px);color:var(--ink-2);margin:0 0 4px;max-width:66ch}
+  .sec-label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:26px 0 12px}
+
+  .mapcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow-sm)}
+  svg{width:100%;height:auto;display:block}
+  svg text{font-family:var(--sans)}
+  .atom{fill:var(--accent-tint);stroke:var(--accent);stroke-width:2}
+  .panel{fill:var(--surface-2);stroke:var(--line);stroke-width:1.5}
+  .node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+  .node-hi{fill:var(--accent-tint);stroke:var(--accent);stroke-width:1.5}
+  .ah{fill:var(--muted)}
+  .ahs{fill:var(--grid)}
+  .bind{stroke:var(--muted);stroke-width:1.6;fill:none}
+  .edge{stroke:var(--grid);stroke-width:1.4;fill:none}
+  .edge-d{stroke:var(--muted);stroke-width:1.4;stroke-dasharray:4 4;fill:none}
+  .t-h{fill:var(--ink);font-weight:700}
+  .t-s{fill:var(--muted)}
+  .t-n{fill:var(--ink)}
+  .t-a{fill:var(--accent-deep);font-weight:700}
+  .lblbg{fill:var(--surface)}
+  .lbl{fill:var(--ink-2);font-weight:600}
+  .ring-o{fill:none;stroke:var(--object);stroke-width:1.6}
+  .ring-i{fill:none;stroke:var(--intent);stroke-width:1.6}
+  .ring-e{fill:none;stroke:var(--express);stroke-width:1.6}
+  .mapcaption{font-size:12.5px;color:var(--ink-2);text-align:center;margin:8px 8px 0}
+  .mapcaption b{color:var(--ink)}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:820px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 17px;box-shadow:var(--shadow-sm)}
+  .card .top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .card .dot{width:10px;height:10px;border-radius:50%;flex:none}
+  .card .nm{font-size:15px;font-weight:700}
+  .card .row{font-size:12.7px;margin-top:5px;display:flex;gap:7px}
+  .card .row .k{color:var(--muted);font-weight:600;min-width:52px;flex:none}
+  .card .row .v{color:var(--ink)}
+  .card .v code{background:var(--accent-tint);color:var(--accent-deep);padding:0 5px;border-radius:4px;font-size:12px}
+
+  .payoff{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--good);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow-sm)}
+  .payoff h3{margin:0 0 4px;font-size:16px}
+  .payoff .lead{margin:0 0 12px;font-size:13.5px;color:var(--ink-2)}
+  .payoff .g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  @media(max-width:720px){.payoff .g{grid-template-columns:1fr}}
+  .payoff .item{font-size:13px}
+  .payoff .item .chg{font-weight:700;color:var(--ink)}
+  .payoff .item .arw{color:var(--good);font-weight:700}
+  .payoff .item .res{color:var(--ink-2)}
+
+  .mapstrip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  @media(max-width:720px){.mapstrip{grid-template-columns:1fr}}
+  .ms{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-sm)}
+  .ms .h{font-size:13px;font-weight:700;margin-bottom:3px}
+  .ms .d{font-size:12.5px;color:var(--ink-2)}
+  .ms.content{border-top:3px solid var(--object)}
+  .ms.express{border-top:3px solid var(--express)}
+  .ms.wire{border-top:3px solid var(--accent)}
+
+  .foot{margin-top:26px;background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:15px 18px}
+  .foot h4{margin:0 0 6px;font-size:14px}
+  .foot p{margin:0;font-size:13px;color:var(--ink-2)}
+  .credit{margin-top:22px;font-size:11.5px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="brand" href="./system-map.html">
+      <span class="brand-mark">astellas</span>
+      <span class="brand-sub">Course Engine</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="./system-map.html">System Map</a>
+      <a href="./content-graph.html" aria-current="page">Content Graph</a>
+      <a href="./audience-axis.html">Audience Axis</a>
+    </nav>
+  </header>
+  <div class="brand-rule"></div>
+
+<div class="wrap">
+
+  <p class="eyebrow">Content architecture · the layer beneath the system map</p>
+  <h1>Inside the Content Graph</h1>
+  <p class="sub">Zoom into the hub. The atom is <b>thin</b> — it holds meaning and <i>keys</i>. Three distinct sub-models hold the substance, and the atom binds to each a different way. Facets are wires, not copies — which is exactly why the whole thing propagates.</p>
+
+  <p class="sec-label">One thin atom, bound to three sub-models</p>
+  <div class="mapcard">
+    <svg viewBox="0 0 920 500" role="img" aria-label="A central thin atom binds to three sub-models: it is a node in the object (structure) model, points into the intent (objectives) model, and references the expression registries by key.">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+        <marker id="arrowSm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ahs" d="M0,0 L10,5 L0,10 z"/></marker>
+      </defs>
+
+      <!-- bindings (behind everything) -->
+      <path class="bind" marker-end="url(#arrow)" d="M250,250 C360,250 360,104 462,104"/>
+      <path class="bind" marker-end="url(#arrow)" d="M250,250 L462,250"/>
+      <path class="bind" marker-end="url(#arrow)" d="M250,250 C360,250 360,396 462,396"/>
+      <!-- binding labels -->
+      <g>
+        <rect class="lblbg" x="300" y="150" width="86" height="18" rx="4"/><text class="lbl" x="343" y="163" text-anchor="middle" font-size="11">is a node in</text>
+        <rect class="lblbg" x="305" y="238" width="80" height="18" rx="4"/><text class="lbl" x="345" y="251" text-anchor="middle" font-size="11">points into</text>
+        <rect class="lblbg" x="292" y="333" width="102" height="18" rx="4"/><text class="lbl" x="343" y="346" text-anchor="middle" font-size="11">references by key</text>
+      </g>
+
+      <!-- THE ATOM -->
+      <rect class="atom" x="46" y="150" width="200" height="200" rx="14"/>
+      <text class="t-a" x="146" y="182" text-anchor="middle" font-size="15">THE ATOM</text>
+      <text class="t-s" x="146" y="200" text-anchor="middle" font-size="11">thin — meaning + keys</text>
+      <g font-size="12">
+        <text class="t-n" x="66" y="230">id · stable</text>
+        <text class="t-n" x="66" y="254">meaning (payload)</text>
+        <text class="t-n" x="66" y="278">→ structure ref</text>
+        <text class="t-n" x="66" y="302">→ intent refs</text>
+        <text class="t-n" x="66" y="326">→ expression keys</text>
+      </g>
+
+      <!-- PANEL 1: OBJECT MODEL -->
+      <rect class="panel" x="462" y="40" width="418" height="128" rx="12"/>
+      <circle cx="480" cy="60" r="4" fill="var(--object)"/>
+      <text class="t-h" x="492" y="64" font-size="13.5">OBJECT MODEL</text>
+      <text class="t-s" x="492" y="82" font-size="11">structure — what exists &amp; how it composes</text>
+      <g font-size="10.5">
+        <rect class="node" x="486" y="100" width="86" height="26" rx="7"/><text class="t-n" x="529" y="117" text-anchor="middle">Module</text>
+        <line class="edge" marker-end="url(#arrowSm)" x1="572" y1="113" x2="596" y2="113"/>
+        <rect class="node" x="600" y="100" width="72" height="26" rx="7"/><text class="t-n" x="636" y="117" text-anchor="middle">Slide</text>
+        <line class="edge" marker-end="url(#arrowSm)" x1="672" y1="113" x2="696" y2="113"/>
+        <rect class="node-hi" x="700" y="100" width="96" height="26" rx="7"/><text class="t-a" x="748" y="117" text-anchor="middle">Atom (this)</text>
+      </g>
+      <text class="t-s" x="486" y="152" font-size="10.5">belongs-to · sequence · prerequisite</text>
+
+      <!-- PANEL 2: INTENT MODEL -->
+      <rect class="panel" x="462" y="196" width="418" height="108" rx="12"/>
+      <circle cx="480" cy="216" r="4" fill="var(--intent)"/>
+      <text class="t-h" x="492" y="220" font-size="13.5">INTENT MODEL</text>
+      <text class="t-s" x="492" y="238" font-size="11">meaning — its own objective / competency ontology</text>
+      <g>
+        <circle cx="512" cy="272" r="6" class="node-hi"/>
+        <path class="edge-d" d="M519,272 L556,272"/>
+        <text class="lbl" x="536" y="264" text-anchor="middle" font-size="9.5">teaches</text>
+        <circle cx="582" cy="272" r="22" class="ring-i"/><text class="t-n" x="582" y="276" text-anchor="middle" font-size="10">Obj</text>
+        <line class="edge" x1="604" y1="272" x2="656" y2="272"/>
+        <text class="lbl" x="630" y="264" text-anchor="middle" font-size="9.5">requires</text>
+        <circle cx="682" cy="272" r="22" class="ring-i"/><text class="t-n" x="682" y="276" text-anchor="middle" font-size="10">Comp</text>
+      </g>
+
+      <!-- PANEL 3: EXPRESSION REGISTRIES -->
+      <rect class="panel" x="462" y="332" width="418" height="128" rx="12"/>
+      <circle cx="480" cy="352" r="4" fill="var(--express)"/>
+      <text class="t-h" x="492" y="356" font-size="13.5">EXPRESSION REGISTRIES</text>
+      <text class="t-s" x="492" y="374" font-size="11">rules the atom references by key — stored once, shared</text>
+      <g font-size="10">
+        <rect class="node" x="486" y="390" width="176" height="24" rx="6"/><text class="t-n" x="496" y="406">content_type: instructional</text>
+        <line class="edge" marker-end="url(#arrowSm)" x1="666" y1="402" x2="690" y2="402"/>
+        <rect class="node-hi" x="694" y="390" width="176" height="24" rx="6"/><text class="t-a" x="704" y="406">motion + type tokens</text>
+        <rect class="node" x="486" y="422" width="176" height="24" rx="6"/><text class="t-n" x="496" y="438">term: 安全管理情報</text>
+        <line class="edge" marker-end="url(#arrowSm)" x1="666" y1="434" x2="690" y2="434"/>
+        <rect class="node-hi" x="694" y="422" width="176" height="24" rx="6"/><text class="t-a" x="704" y="438">locked JA rendering</text>
+      </g>
+    </svg>
+    <p class="mapcaption">Three sub-models, three <b>different shapes</b> — a structure graph, a linked ontology, and shared registries. The atom is small; it carries <b>keys</b> into each, not copies of them.</p>
+  </div>
+
+  <!-- DETAIL CARDS -->
+  <p class="sec-label">The three sub-models</p>
+  <div class="cards">
+    <div class="card">
+      <div class="top"><span class="dot" style="background:var(--object)"></span><span class="nm">Object model</span></div>
+      <div class="row"><span class="k">is</span><span class="v">the graph’s own skeleton</span></div>
+      <div class="row"><span class="k">holds</span><span class="v">atoms + structural edges: <code>belongs-to</code>, <code>sequence</code>, <code>prerequisite</code></span></div>
+      <div class="row"><span class="k">binding</span><span class="v">the atom <b>is a node in</b> it</span></div>
+      <div class="row"><span class="k">owner</span><span class="v">content architecture</span></div>
+    </div>
+    <div class="card">
+      <div class="top"><span class="dot" style="background:var(--intent)"></span><span class="nm">Intent model</span></div>
+      <div class="row"><span class="k">is</span><span class="v">a parallel ontology (own nodes)</span></div>
+      <div class="row"><span class="k">holds</span><span class="v">objectives, competencies + their links; intended response</span></div>
+      <div class="row"><span class="k">binding</span><span class="v">the atom <b>points into</b> it (<code>teaches</code>)</span></div>
+      <div class="row"><span class="k">owner</span><span class="v">L&amp;D / ID · (CASE standard)</span></div>
+    </div>
+    <div class="card">
+      <div class="top"><span class="dot" style="background:var(--express)"></span><span class="nm">Expression registries</span></div>
+      <div class="row"><span class="k">is</span><span class="v">shared lookups, not per-atom data</span></div>
+      <div class="row"><span class="k">holds</span><span class="v">visual tokens · glossary · motion · brand — keyed</span></div>
+      <div class="row"><span class="k">binding</span><span class="v">the atom <b>references by key</b></span></div>
+      <div class="row"><span class="k">owner</span><span class="v">Brand + Localization</span></div>
+    </div>
+  </div>
+
+  <!-- PAYOFF -->
+  <p class="sec-label">Why it’s “reference,” not “embed”</p>
+  <div class="payoff">
+    <h3>Change once — propagate everywhere</h3>
+    <p class="lead">Because the atom holds <i>keys</i> into these models instead of copies of them, one edit updates every atom that points there. This is the mechanism under the compounding.</p>
+    <div class="g">
+      <div class="item"><span class="chg">Fix a glossary term once</span> <span class="arw">→</span> <span class="res">every localization updates</span></div>
+      <div class="item"><span class="chg">Change a visual token once</span> <span class="arw">→</span> <span class="res">every atom of that type re-renders</span></div>
+      <div class="item"><span class="chg">Revise an objective once</span> <span class="arw">→</span> <span class="res">everything mapped to it re-aligns</span></div>
+    </div>
+  </div>
+
+  <!-- CONTENT vs EXPRESSION -->
+  <p class="sec-label">…and it lands your principle exactly</p>
+  <div class="mapstrip">
+    <div class="ms content"><div class="h">Content = object + intent</div><div class="d">Structure and meaning — the invariant truth. What exists, and what it’s for.</div></div>
+    <div class="ms express"><div class="h">Expression = registries + render agents</div><div class="d">The form — how the truth is shown, in language, layout, motion.</div></div>
+    <div class="ms wire"><div class="h">Facets = the wires</div><div class="d">Keyed bindings from a thin atom to all three. The atom holds meaning; the models hold substance; facets connect them.</div></div>
+  </div>
+
+  <div class="foot">
+    <h4>How this sits under the system map</h4>
+    <p>This is the inside of the hub. Build the object model + identity first — that’s the spine, and you already have it. Intent and the registries accrete as the pedagogy and presentation agents need them. Binding-by-key is the invariant that keeps all three decoupled, so no model has to know another’s internals.</p>
+  </div>
+
+  <nav class="pager" aria-label="Page navigation">
+    <a class="pv" href="./system-map.html"><span class="lab">← Previous</span>The Learning Content Manifold — System Map</a>
+    <a class="nx" href="./audience-axis.html"><span class="lab">Next →</span>The Audience Axis</a>
+  </nav>
+
+  <p class="credit">Inside the Content Graph · object · intent · expression · a thin atom bound to three sub-models by key</p>
+
+</div>
+</body>
+</html>
