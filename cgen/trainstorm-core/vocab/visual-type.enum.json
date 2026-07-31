@@ -1,0 +1,21 @@
+{
+  "vocabulary_version": "visual-type.v0.1",
+  "status": "draft_for_reconciliation",
+  "owner": "brand_localization",
+  "description": "Governed VISUAL-TREATMENT class an element/scene wants — the KIND of visual, not a specific asset. Promoted from the layout engine's Script_Normalizer `suggested_visual_type` axis. This is ADVISORY and upstream: a hint about desired treatment that the realizer reads to help pick a layout, and the asset/render layer reads to pick a concrete asset. It is deliberately distinct from two neighbors it must not duplicate: (1) visual-asset `role` (signature/motif/chrome) in visual-asset.schema.json, which classifies an asset's brand specificity; and (2) `render.asset_ref`, which points at the resolved concrete asset_id. A visual_type says 'this screen wants a diagram'; the visual-assets registry's `content_type_hints` say which assets suit that; render.asset_ref records which asset was actually chosen.",
+  "governance": {
+    "closed_list": true,
+    "rule": "Elements may only use ids defined here. A new value requires a version bump and an entry — the validator rejects anything else.",
+    "supplants": "The inline `suggested_visual_type` enum in layout-engine intent_sidecar.schema.json (retired in favor of this governed list). Note the id `data_graphic` normalizes the layout engine's 'data graphic' (space) to a valid key."
+  },
+  "field": "element.expression.visual_type (proposed small addition to element.schema.json, advisory — sits next to the existing advisory expression.layout_hint).",
+  "pairs_with": "visual-assets.registry.json `content_type_hints` (many-to-many, advisory) and render.asset_ref (the resolved asset).",
+  "values": [
+    { "id": "photo",        "label": "Photo",        "definition": "A photographic image." },
+    { "id": "icon",         "label": "Icon",         "definition": "A small symbolic mark standing in for a concept." },
+    { "id": "animation",    "label": "Animation",    "definition": "Motion treatment (Lottie/AE) where movement carries meaning." },
+    { "id": "diagram",      "label": "Diagram",      "definition": "A structured figure showing relationships (venn, flow, model)." },
+    { "id": "quote",        "label": "Quote",        "definition": "A set-apart external voice or attributed statement." },
+    { "id": "data_graphic", "label": "Data graphic", "definition": "A chart or data visualization." }
+  ]
+}

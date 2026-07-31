@@ -1,0 +1,115 @@
+{
+  "template_ref": {
+    "file": "templates/astellas/astellas_v1.potx",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "version": "1.0",
+    "extracted_utc": "2026-07-31T00:00:00Z"
+  },
+  "theme": {
+    "colors": {
+      "dk1": "#4D4D4F",
+      "lt1": "#FFFFFF",
+      "dk2": "#A62B4E",
+      "lt2": "#F7F8F9",
+      "accent1": "#D91E49",
+      "accent2": "#004C97",
+      "accent3": "#658D1B",
+      "accent4": "#A20067",
+      "accent5": "#F0B323",
+      "accent6": "#939597",
+      "hlink": "#004C97",
+      "folHlink": "#A20067"
+    },
+    "fonts": { "major": "Arial", "minor": "Arial" },
+    "named_palette": {
+      "astellas-red": "#D91E49",
+      "astellas-dark-red": "#A62B4E",
+      "astellas-blue": "#004C97",
+      "astellas-green": "#658D1B",
+      "astellas-purple": "#A20067",
+      "text": "#4D4D4F",
+      "surface": "#F7F8F9"
+    }
+  },
+  "canvas": { "width_in": 13.333, "height_in": 7.5, "aspect": "16:9" },
+  "layouts": [
+    {
+      "id": "TITLE_BODY",
+      "source_layout_name": "AST_TitleBody",
+      "description": "Static title + prose/bulleted body. The workhorse for low-complexity awareness screens.",
+      "render_strategy": "native",
+      "slots": [
+        { "name": "Title", "type": "title", "geometry": { "x_in": 0.7, "y_in": 0.4, "w_in": 11.9, "h_in": 0.7 }, "constraints": { "max_lines": 2, "font_size_pt": 30 } },
+        { "name": "Body", "type": "body", "geometry": { "x_in": 0.72, "y_in": 1.4, "w_in": 11.9, "h_in": 5.4 }, "constraints": { "max_lines": 12, "font_size_pt": 16 } }
+      ]
+    },
+    {
+      "id": "STATIC_CARDS_3",
+      "source_layout_name": "AST_StaticCards3",
+      "description": "Title + intro + three peer cards, all visible. Used for the Equipment & Facility Controls slide.",
+      "render_strategy": "programmatic",
+      "slots": [
+        { "name": "Title", "type": "title", "geometry": { "x_in": 0.7, "y_in": 0.4, "w_in": 11.9, "h_in": 0.7 } },
+        { "name": "Intro", "type": "body", "geometry": { "x_in": 0.72, "y_in": 1.4, "w_in": 11.9, "h_in": 1.2 } },
+        { "name": "Card", "type": "card", "geometry": { "x_in": 0.72, "y_in": 2.82, "w_in": 3.83, "h_in": 3.5 }, "repeatable": true },
+        { "name": "StandardsNote", "type": "standards_note", "geometry": { "x_in": 0.72, "y_in": 6.5, "w_in": 11.9, "h_in": 0.5 } }
+      ],
+      "exemplar": { "of_slot": "Card", "geometry": { "x_in": 0.72, "y_in": 2.82, "w_in": 3.83, "h_in": 3.5 }, "gutter_in": 0.36, "grid": "3-up" }
+    },
+    {
+      "id": "REVEAL_GRID",
+      "source_layout_name": "AST_RevealGrid",
+      "description": "Prompt + grid of click-to-reveal cards, gated Continue. Each card lifts to a Storyline layer. Used for Production & Process Controls.",
+      "render_strategy": "programmatic",
+      "slots": [
+        { "name": "Prompt", "type": "body", "geometry": { "x_in": 0.72, "y_in": 1.4, "w_in": 11.7, "h_in": 1.2 } },
+        { "name": "Title", "type": "title", "geometry": { "x_in": 0.7, "y_in": 0.4, "w_in": 11.9, "h_in": 0.7 } },
+        { "name": "Card", "type": "card", "geometry": { "x_in": 1.07, "y_in": 3.28, "w_in": 5.4, "h_in": 1.28 }, "repeatable": true },
+        { "name": "Continue", "type": "control", "geometry": { "x_in": 11.05, "y_in": 6.74, "w_in": 1.55, "h_in": 0.52 },
+          "storyline": { "shape_name": "btn_continue", "role": "button", "alt_text_template": "SL_CONTROL:{\"type\":\"button\",\"gated\":true}" } },
+        { "name": "StandardsNote", "type": "standards_note", "geometry": { "x_in": 0.72, "y_in": 6.72, "w_in": 8.6, "h_in": 0.5 } }
+      ],
+      "exemplar": { "of_slot": "Card", "geometry": { "x_in": 1.07, "y_in": 3.28, "w_in": 5.4, "h_in": 1.28 }, "gutter_in": 0.4, "grid": "2x2" }
+    },
+    {
+      "id": "SCENARIO_SORT",
+      "source_layout_name": "AST_ScenarioSort",
+      "description": "Stem + selectable option cards with per-choice feedback layers. Used for the Combination Products sort.",
+      "render_strategy": "programmatic",
+      "slots": [
+        { "name": "Title", "type": "title", "geometry": { "x_in": 0.7, "y_in": 0.42, "w_in": 11.82, "h_in": 0.7 } },
+        { "name": "Stem", "type": "body", "geometry": { "x_in": 0.72, "y_in": 1.45, "w_in": 11.6, "h_in": 0.7 } },
+        { "name": "Option", "type": "card", "geometry": { "x_in": 0.92, "y_in": 2.55, "w_in": 3.6, "h_in": 1.85 }, "repeatable": true,
+          "storyline": { "shape_name": "opt", "role": "layer_target" } }
+      ],
+      "exemplar": { "of_slot": "Option", "geometry": { "x_in": 0.92, "y_in": 2.55, "w_in": 3.6, "h_in": 1.85 }, "gutter_in": 0.35, "grid": "3-up" }
+    },
+    {
+      "id": "DIAGRAM_VENN",
+      "source_layout_name": "AST_DiagramVenn",
+      "description": "Why-panel + 3-set venn + callouts. The combination-products convergence beat.",
+      "render_strategy": "programmatic",
+      "slots": [
+        { "name": "WhyPanel", "type": "body", "geometry": { "x_in": 0.5, "y_in": 1.3, "w_in": 3.95, "h_in": 4.85 } },
+        { "name": "Diagram", "type": "freeform", "geometry": { "x_in": 5.5, "y_in": 1.6, "w_in": 5.0, "h_in": 5.0 } },
+        { "name": "Callout", "type": "card", "geometry": { "x_in": 10.75, "y_in": 1.35, "w_in": 2.4, "h_in": 1.35 }, "repeatable": true }
+      ],
+      "exemplar": { "of_slot": "Callout", "geometry": { "x_in": 10.75, "y_in": 1.35, "w_in": 2.4, "h_in": 1.35 }, "gutter_in": 0.32, "grid": "single-column" }
+    },
+    {
+      "id": "KC_SINGLE",
+      "source_layout_name": "AST_KCSingle",
+      "description": "Single-best multiple-choice knowledge check; correct answer sets the section advancement variable.",
+      "render_strategy": "programmatic",
+      "slots": [
+        { "name": "Title", "type": "title", "geometry": { "x_in": 0.7, "y_in": 0.4, "w_in": 11.9, "h_in": 0.7 } },
+        { "name": "Stem", "type": "body", "geometry": { "x_in": 0.72, "y_in": 1.4, "w_in": 11.9, "h_in": 1.2 } },
+        { "name": "Choice", "type": "card", "geometry": { "x_in": 1.0, "y_in": 2.8, "w_in": 11.3, "h_in": 0.7 }, "repeatable": true,
+          "storyline": { "shape_name": "choice", "role": "variable_source" } },
+        { "name": "Submit", "type": "control", "geometry": { "x_in": 11.05, "y_in": 6.74, "w_in": 1.55, "h_in": 0.52 },
+          "storyline": { "shape_name": "btn_submit", "role": "button" } }
+      ],
+      "exemplar": { "of_slot": "Choice", "geometry": { "x_in": 1.0, "y_in": 2.8, "w_in": 11.3, "h_in": 0.7 }, "gutter_in": 0.2, "grid": "single-column" }
+    }
+  ]
+}

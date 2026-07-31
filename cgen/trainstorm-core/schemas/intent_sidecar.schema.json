@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/intent_sidecar.schema.json",
+  "title": "Intent Sidecar (Manifold-conformant)",
+  "description": "Human-authored policy layer over a template manifest. It is the layout-engine's instance of the Manifold realizer contract: it selects a layout_primitive for a scene from GOVERNED intent signals, and binds that scene's ELEMENTS (by element_id) into the layout's slots. TEXT, git-hosted; many sidecars can target one .potx. Bounded three ways by CI: (1) it may only reference layouts/slots the .potx manifest provides; (2) every selection value must be a member of a governed Manifold vocabulary (intent.enum, tone.enum, complexity.enum, visual-type.enum, primitives.registry); (3) every layout it uses must be a registered layout_primitive. Conformance change 2026-07-31: selection no longer fires on ungoverned Script_Normalizer enums, and bindings no longer interpolate free storyboard fields — they select elements, so every filled slot is traceable to an element_id and the render record is keyed by it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sidecar_id", "template_ref", "selection", "bindings"],
+  "properties": {
+    "sidecar_id": { "type": "string", "description": "e.g. astellas.awareness, astellas.compliance." },
+    "description": { "type": "string" },
+    "template_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manifest", "sha256"],
+      "description": "Pins this sidecar to a specific template manifest / .potx build. sha256 must equal the manifest's template_ref.sha256 — CI fails the PR otherwise.",
+      "properties": {
+        "manifest": { "type": "string", "description": "Path to the template_manifest.json this policy targets." },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "token_overrides": {
+      "type": "object",
+      "description": "Optional re-skin over the manifest theme. One .potx yields different expressions per sidecar without a new shell. Keys are theme slots or named_palette aliases. (This is the layout-engine's expression.style_ref override channel.)",
+      "additionalProperties": false,
+      "properties": {
+        "colors": { "type": "object", "additionalProperties": { "$ref": "#/$defs/hex" } },
+        "fonts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": { "major": { "type": "string" }, "minor": { "type": "string" } }
+        }
+      }
+    },
+    "interaction_defaults": {
+      "type": "object",
+      "description": "Applied to any layout whose registered layout_primitive carries an interaction_primitive.",
+      "additionalProperties": false,
+      "properties": {
+        "button_labels": { "type": "object", "additionalProperties": { "type": "string" } },
+        "attempts": { "type": "integer", "minimum": 1 },
+        "gating": { "type": "boolean", "description": "Whether progression waits until all reveal/visited conditions are met." }
+      }
+    },
+    "selection": {
+      "type": "array",
+      "description": "Ordered rules, FIRST MATCH WINS. Each rule is a predicate over a scene's GOVERNED upstream intent signals -> a layout id (which must be a registered layout_primitive). This is the sidecar's realizer routing; it is the same decision the Manifold realization table encodes, expressed as data for one brand shell.",
+      "items": { "$ref": "#/$defs/rule" }
+    },
+    "default_layout": {
+      "type": "string",
+      "description": "Layout id used when no selection rule matches. Keeps the engine total (never fails to place a scene)."
+    },
+    "bindings": {
+      "type": "object",
+      "description": "Keyed by layout id (must exist in the manifest and be a registered layout_primitive). Each binding maps the layout's slots to ELEMENT SELECTORS over the scene's element graph. Filling a slot resolves to exactly one (or, for repeat, N) element_ids; the render record records slot -> element_id, so every pixel is traceable and stale-detectable via source_hash. Bindings never interpolate raw storyboard strings.",
+      "additionalProperties": { "$ref": "#/$defs/binding" }
+    }
+  },
+  "$defs": {
+    "hex": { "type": "string", "pattern": "^#?[0-9A-Fa-f]{6}$" },
+
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "use"],
+      "properties": {
+        "id": { "type": "string" },
+        "when": {
+          "type": "object",
+          "description": "All present conditions AND together; omit a field to ignore it. Arrays mean 'value in set'. Every value here is validated against a governed Manifold vocabulary by ci/validate_sidecar.py.",
+          "additionalProperties": false,
+          "properties": {
+            "script_primitive": {
+              "type": "array",
+              "description": "Governed by script.primitives.v1.json (the 11 knowledge-move types). The realizer's primary routing signal.",
+              "items": { "type": "string" }
+            },
+            "rhetorical": {
+              "type": "array",
+              "description": "Governed by intent.enum.json > rhetorical.",
+              "items": { "type": "string" }
+            },
+            "pedagogical": {
+              "type": "array",
+              "description": "Governed by intent.enum.json > pedagogical. practice/assess/feedback imply an interactive delivery.",
+              "items": { "type": "string" }
+            },
+            "tone": {
+              "type": "array",
+              "description": "Governed by tone.enum.json.",
+              "items": { "type": "string" }
+            },
+            "complexity": {
+              "type": "array",
+              "description": "Governed by complexity.enum.json.",
+              "items": { "type": "string" }
+            },
+            "visual_type": {
+              "type": "array",
+              "description": "Governed by visual-type.enum.json (advisory).",
+              "items": { "type": "string" }
+            },
+            "requested_interaction": {
+              "type": "array",
+              "description": "Governed by primitives.registry.json > interaction_primitive keys. Replaces the old free 'potential_interaction' enum.",
+              "items": { "type": "string" }
+            },
+            "child_count": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "Structural predicate over the scene's child elements (e.g. ListItem count). Replaces the old 'key_concepts_count'.",
+              "properties": { "min": { "type": "integer" }, "max": { "type": "integer" } }
+            },
+            "flags": {
+              "type": "array",
+              "description": "UNGOVERNED escape hatch for semantics the governed axes don't yet capture. CI emits a WARNING for any non-empty flags, and treats a rule that matches ONLY on flags as provisional — the correct fix is to promote a recurring flag into a governed vocabulary.",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "use": { "type": "string", "description": "Layout id from the manifest (must be a registered layout_primitive) to render this scene with." },
+        "note": { "type": "string" }
+      }
+    },
+
+    "selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Selects element(s) from the scene's element graph to fill a slot. Resolves to element_id(s); the taken value is read from the element's source content, never authored inline here.",
+      "required": ["scope"],
+      "properties": {
+        "scope": {
+          "type": "string",
+          "enum": ["self", "child", "children", "descendant", "descendants"],
+          "description": "self = the scene node; child/children = direct children; descendant(s) = anywhere beneath. Singular scopes must resolve to exactly one element (CI/runtime error otherwise)."
+        },
+        "where": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Filter on governed element facets. All present conditions AND together.",
+          "properties": {
+            "type": { "type": "array", "items": { "type": "string" }, "description": "element.type enum values." },
+            "rhetorical": { "type": "array", "items": { "type": "string" }, "description": "element.intent.rhetorical values." },
+            "pedagogical": { "type": "array", "items": { "type": "string" }, "description": "element.intent.pedagogical values." },
+            "content_role": { "type": "array", "items": { "type": "string" }, "description": "element.expression.content_role values." }
+          }
+        },
+        "take": {
+          "type": "string",
+          "default": "content.text",
+          "description": "Dotted path into the selected element to render into the slot. Defaults to the source meaning (content.text). The resolved element_id is always recorded alongside, regardless of take."
+        },
+        "order_by": {
+          "type": "string",
+          "description": "For plural scopes: element facet to order by (default structure.sequence_index)."
+        }
+      }
+    },
+
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "map": {
+          "type": "object",
+          "description": "slot name -> element selector. Each entry resolves a slot to exactly one element_id.",
+          "additionalProperties": { "$ref": "#/$defs/selector" }
+        },
+        "repeat": {
+          "type": "object",
+          "description": "For a repeatable slot: bind a set of sibling elements across N instances of the exemplar. `source` selects the collection (plural scope); `item_map` maps each sub-slot to a selector evaluated relative to each selected element (scope 'self' = that element).",
+          "additionalProperties": false,
+          "required": ["slot", "source"],
+          "properties": {
+            "slot": { "type": "string" },
+            "source": { "$ref": "#/$defs/selector" },
+            "item_map": {
+              "type": "object",
+              "additionalProperties": { "$ref": "#/$defs/selector" }
+            },
+            "min": { "type": "integer" },
+            "max": { "type": "integer" }
+          }
+        },
+        "overflow": {
+          "type": "string",
+          "enum": ["shrink", "truncate_flag", "split_slide", "paginate"],
+          "description": "What to do when content exceeds slot constraints. truncate_flag = cut and surface a QA flag rather than silently overflow."
+        }
+      }
+    }
+  }
+}

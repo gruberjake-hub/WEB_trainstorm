@@ -31,7 +31,7 @@
       "Statement_01": {
       "type": "Statement",
       "intent": "assert",
-      "text": "Not guesswork, not arbitrary numbers — real data for how similar roles are paid in the broader labor markets where those job are located",
+      "text": "Not guesswork, not arbitrary numbers — real data for how similar roles are paid in the broader labor markets where those jobs are located",
       "text_primitive": "Statement",
       "motion_primitive": "FocusReveal",
       "layout_primitive": "CenterStatement",

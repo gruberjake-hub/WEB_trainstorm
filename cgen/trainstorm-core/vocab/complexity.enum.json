@@ -1,0 +1,17 @@
+{
+  "vocabulary_version": "complexity.v0.1",
+  "status": "draft_for_reconciliation",
+  "owner": "ld_adaptivity",
+  "description": "Governed authored COMPLEXITY band of an element or scene — a design-time judgment of how much cognitive load the content carries. Promoted from the layout engine's Script_Normalizer `complexity_level` axis. This is a DESIGN-TIME content property (set once by the author/generator), distinct from `audience.difficulty`, which is a continuous 0..1 per-learner targeting knob the responsive engine tunes. Complexity is READ by the realizer to inform layout selection (e.g. high-complexity content favors reveal/segmented layouts over a single dense body).",
+  "governance": {
+    "closed_list": true,
+    "rule": "Elements may only use ids defined here. A new value requires a version bump and an entry — the validator rejects anything else.",
+    "supplants": "The inline `complexity_level` enum in layout-engine intent_sidecar.schema.json (retired in favor of this governed list)."
+  },
+  "field": "element.audience.complexity (proposed small addition to element.schema.json). Complements, does not replace, audience.difficulty.",
+  "values": [
+    { "id": "low",    "label": "Low",    "definition": "Single idea or a small set of peers; low cognitive load." },
+    { "id": "medium", "label": "Medium", "definition": "Several related ideas or a short process; moderate load." },
+    { "id": "high",   "label": "High",   "definition": "Many interacting ideas, conditionals, or a dense model; high load — segment or stage it." }
+  ]
+}

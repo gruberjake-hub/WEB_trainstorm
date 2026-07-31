@@ -1,10 +1,98 @@
 {
-  "registry_version": "primitives.v0.1",
-  "status": "todo",
-  "note": "Governed keys referenced by element.expression. Fill from your primitive library.",
+  "registry_version": "primitives.v0.2",
+  "status": "partial",
+  "note": "Governed keys referenced by element.expression. layout_primitive and interaction_primitive are now seeded from the layout engine's first real .potx (astellas_v1, GEN607). text_primitive / motion_primitive / style_ref remain to be filled. A registered key is the value an element carries in expression.layout_primitive / expression.interaction_primitive, AND (for layouts) the id a layout-engine template_manifest layout uses — one name across the manifold and the deliverable pipeline.",
+  "governance": {
+    "closed_list": true,
+    "rule": "element.expression.* may only reference keys defined here. New keys require a version bump and an entry — the validator rejects anything else.",
+    "naming": "layout_primitive keys are UPPER_SNAKE and equal the layout-engine template_manifest layout id (decision 2026-07-31: layout-engine ids are canonical). interaction_primitive keys are lower_snake behavior names."
+  },
   "text_primitive": [],
   "motion_primitive": [],
-  "layout_primitive": [],
-  "interaction_primitive": [],
+  "layout_primitive": [
+    {
+      "key": "TITLE_BODY",
+      "label": "Title + Body",
+      "description": "Static title with a prose/bulleted body. Workhorse for low-complexity screens.",
+      "render_strategy": "native",
+      "interaction_primitive": null,
+      "status": "approved",
+      "derived_from": "layout-engine/templates/astellas/astellas_v1.potx#AST_TitleBody"
+    },
+    {
+      "key": "STATIC_CARDS_3",
+      "label": "Static 3-Card Set",
+      "description": "Title + intro + three peer cards, all visible. For a three-element peer set with no interaction.",
+      "render_strategy": "programmatic",
+      "interaction_primitive": null,
+      "status": "approved",
+      "derived_from": "layout-engine/templates/astellas/astellas_v1.potx#AST_StaticCards3"
+    },
+    {
+      "key": "REVEAL_GRID",
+      "label": "Click-to-Reveal Grid",
+      "description": "Prompt + grid of click-to-reveal cards with a gated Continue; each card lifts to a Storyline layer.",
+      "render_strategy": "programmatic",
+      "interaction_primitive": "click_reveal",
+      "status": "approved",
+      "derived_from": "layout-engine/templates/astellas/astellas_v1.potx#AST_RevealGrid"
+    },
+    {
+      "key": "SCENARIO_SORT",
+      "label": "Scenario Sort",
+      "description": "Stem + selectable option cards with per-choice feedback layers.",
+      "render_strategy": "programmatic",
+      "interaction_primitive": "scenario_select",
+      "status": "approved",
+      "derived_from": "layout-engine/templates/astellas/astellas_v1.potx#AST_ScenarioSort"
+    },
+    {
+      "key": "DIAGRAM_VENN",
+      "label": "Venn Diagram + Callouts",
+      "description": "Why-panel + 3-set venn + callouts. A convergence/overlap beat.",
+      "render_strategy": "programmatic",
+      "interaction_primitive": null,
+      "status": "approved",
+      "derived_from": "layout-engine/templates/astellas/astellas_v1.potx#AST_DiagramVenn"
+    },
+    {
+      "key": "KC_SINGLE",
+      "label": "Single-Best Knowledge Check",
+      "description": "Single-best multiple-choice knowledge check; the correct answer sets the section advancement variable.",
+      "render_strategy": "programmatic",
+      "interaction_primitive": "mcq_single",
+      "status": "approved",
+      "derived_from": "layout-engine/templates/astellas/astellas_v1.potx#AST_KCSingle"
+    }
+  ],
+  "interaction_primitive": [
+    {
+      "key": "click_reveal",
+      "label": "Click to Reveal",
+      "description": "Learner clicks each of N items to reveal its detail on a layer; progression may be gated until all are visited.",
+      "delivery": "behavior-driven",
+      "storyline_controls": ["btn_continue"],
+      "status": "approved",
+      "derived_from": "REVEAL_GRID"
+    },
+    {
+      "key": "scenario_select",
+      "label": "Scenario Select",
+      "description": "Learner selects one or more option cards; each choice surfaces a per-choice feedback layer.",
+      "delivery": "behavior-driven",
+      "storyline_controls": ["opt"],
+      "status": "approved",
+      "derived_from": "SCENARIO_SORT"
+    },
+    {
+      "key": "mcq_single",
+      "label": "Single-Best MCQ",
+      "description": "Single-best-answer multiple choice; the correct choice sets an advancement variable.",
+      "delivery": "behavior-driven",
+      "storyline_controls": ["choice", "btn_submit"],
+      "status": "approved",
+      "derived_from": "KC_SINGLE"
+    }
+  ],
   "style_ref": []
 }

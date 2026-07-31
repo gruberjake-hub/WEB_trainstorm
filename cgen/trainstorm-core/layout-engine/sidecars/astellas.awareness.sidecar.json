@@ -1,0 +1,81 @@
+{
+  "sidecar_id": "astellas.awareness",
+  "description": "Intent policy for high-level 'awareness' courses on the Astellas shell (e.g. GEN607 Intro to Medical Device QMS). Favors light treatments; reserves interactions for genuine reveals/decisions.",
+  "template_ref": {
+    "manifest": "templates/astellas/template_manifest.example.json",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "token_overrides": {},
+  "interaction_defaults": {
+    "button_labels": { "continue": "Continue", "submit": "Submit" },
+    "attempts": 2,
+    "gating": true
+  },
+  "selection": [
+    {
+      "id": "assessment_to_kc",
+      "when": { "flags": ["assessment"] },
+      "use": "KC_SINGLE",
+      "note": "Any segment tagged as a knowledge check routes to the single-best KC."
+    },
+    {
+      "id": "convergence_to_venn",
+      "when": { "suggested_visual_type": ["diagram"], "flags": ["convergence"] },
+      "use": "DIAGRAM_VENN",
+      "note": "Set-overlap / convergence semantics (e.g. combination products)."
+    },
+    {
+      "id": "decision_to_scenario",
+      "when": { "potential_interaction": ["decision", "drag"] },
+      "use": "SCENARIO_SORT",
+      "note": "Choose/sort tasks become the scenario-sort freeform."
+    },
+    {
+      "id": "reveal_to_grid",
+      "when": { "potential_interaction": ["reveal", "click"], "key_concepts_count": { "min": 2, "max": 4 } },
+      "use": "REVEAL_GRID",
+      "note": "2-4 explorable items become a click-to-reveal grid."
+    },
+    {
+      "id": "peer_set_to_static_cards",
+      "when": { "potential_interaction": ["none"], "key_concepts_count": { "min": 3, "max": 3 } },
+      "use": "STATIC_CARDS_3",
+      "note": "Three peer elements with no interaction: show them all, statically."
+    }
+  ],
+  "default_layout": "TITLE_BODY",
+  "bindings": {
+    "TITLE_BODY": {
+      "map": {
+        "Title": "{screen_title}",
+        "Body": "{on_screen_text}"
+      },
+      "overflow": "split_slide"
+    },
+    "STATIC_CARDS_3": {
+      "map": { "Title": "{screen_title}", "Intro": "{intro_text}", "StandardsNote": "{standards_note}" },
+      "repeat": { "slot": "Card", "source": "key_concepts", "item_map": { "label": "{term}", "body": "{detail}" }, "min": 3, "max": 3 },
+      "overflow": "shrink"
+    },
+    "REVEAL_GRID": {
+      "map": { "Title": "{screen_title}", "Prompt": "{prompt}", "StandardsNote": "{standards_note}" },
+      "repeat": { "slot": "Card", "source": "reveal_cards", "item_map": { "front": "{label}", "body": "{detail}" }, "min": 2, "max": 4 },
+      "overflow": "truncate_flag"
+    },
+    "SCENARIO_SORT": {
+      "map": { "Title": "{screen_title}", "Stem": "{stem}" },
+      "repeat": { "slot": "Option", "source": "options", "item_map": { "label": "{label}", "verdict": "{verdict}", "body": "{feedback}" }, "min": 2, "max": 6 },
+      "overflow": "truncate_flag"
+    },
+    "DIAGRAM_VENN": {
+      "map": { "WhyPanel": "{why_text}" },
+      "repeat": { "slot": "Callout", "source": "callouts", "item_map": { "name": "{label}" }, "min": 0, "max": 4 },
+      "overflow": "shrink"
+    },
+    "KC_SINGLE": {
+      "map": { "Title": "{screen_title}", "Stem": "{question}" },
+      "repeat": { "slot": "Choice", "source": "choices", "item_map": { "text": "{text}", "correct": "{is_correct}", "feedback": "{feedback}" }, "min": 3, "max": 4 },
+      "overflow": "shrink"
+    }
+  }
+}

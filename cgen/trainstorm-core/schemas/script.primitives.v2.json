@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://trainstorm.ai/schemas/script.primitives.v2.json",
   "title": "Trainstorm Script Primitives (Generation IR) — v2",
-  "description": "The SEMANTIC generation layer: an ordered array of didactic moves emitted from source material, BEFORE presentation. Each primitive is a typed knowledge structure. Primitives are realized DOWNSTREAM into presentation elements. Governed, closed vocabulary — a new primitive type requires a version bump. V2 CHANGE (ratified 2026-07-24, unification-map §4 / CONFLICT-01): knowledge_check moves from enumerated options to RESPONSE-FEATURE form — it describes what a correct response must CONTAIN (expected_response_features) and what learners are predicted to get wrong (misconception_predictions, structured with IDs and confidence). MC/MR/TF/matching/sequence become RENDERS of it: the realizer generates options at realization time — the key from expected_response_features, distractors from misconception_predictions via a divergent pass. The 11 primitive types are unchanged from v1.",
+  "description": "The SEMANTIC generation layer: an ordered array of didactic moves emitted from source material, BEFORE presentation. Each primitive is a typed knowledge structure. Primitives are realized DOWNSTREAM into presentation elements. Governed, closed vocabulary — a new primitive type requires a version bump. V2 CHANGE (ratified 2026-07-24, unification-map §4 / CONFLICT-01): knowledge_check moves from enumerated options to RESPONSE-FEATURE form — it describes what a correct response must CONTAIN (expected_response_features) and what learners are predicted to get wrong (misconception_predictions, structured with IDs and confidence). MC/MR/TF/matching/sequence become RENDERS of it: the realizer generates options at realization time — the key from expected_response_features, distractors from misconception_predictions via a divergent pass. The 11 primitive types are unchanged from v1. ADDITIVE UPDATE (2026-07-27): every primitive type now carries an optional teaches field. Fixes a real gap: which objective a primitive serves was previously decided twice — once implicitly, when the Generator drafts toward a locked objective, and again explicitly when the realized element's intent.teaches is filled in — with nothing forcing the two to agree. The Generator now stamps teaches once, at draft time; the Realizer relays it forward rather than re-deciding. Optional, not required, because a few types (closure especially) legitimately span more than one objective rather than serving one. This is additive, not breaking — existing v2 instances that omit teaches remain valid — so it ships in place; no v3, no second file. Checking that a primitive's teaches actually matches its realized element's is a tools/lint.py rule, not yet built.",
   "type": "array",
   "items": { "$ref": "#/$defs/primitive" },
   "$defs": {
@@ -56,6 +56,7 @@
         "text": { "type": "string" },
         "id": { "type": "string" },
         "pedagogical_intent": { "type": "string", "description": "Value from intent.enum.json (pedagogical). Default: objective. Enforced by the linter." },
+        "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches." },
         "notes": { "type": "string" }
       }
     },
@@ -71,6 +72,7 @@
         "risk": { "type": "string", "description": "What's at stake if unaddressed." },
         "id": { "type": "string" },
         "pedagogical_intent": { "type": "string", "description": "Default: hook (or activate)." },
+        "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches." },
         "notes": { "type": "string" }
       }
     },
@@ -87,6 +89,7 @@
         "example": { "type": "string" },
         "id": { "type": "string" },
         "pedagogical_intent": { "type": "string", "description": "Default: present." },
+        "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches." },
         "notes": { "type": "string" }
       }
     },
@@ -102,6 +105,7 @@
         "parts": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/labeledPart" } },
         "id": { "type": "string" },
         "pedagogical_intent": { "type": "string", "description": "Default: present (or exemplify)." },
+        "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches." },
         "notes": { "type": "string" }
       }
     },
@@ -118,6 +122,7 @@
         "common_confusion": { "type": "string", "description": "The misconception this corrects." },
         "id": { "type": "string" },
         "pedagogical_intent": { "type": "string", "description": "Default: exemplify." },
+        "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches." },
         "notes": { "type": "string" }
       }
     },
@@ -135,6 +140,7 @@
         "outcome": { "type": "string", "description": "What the process produces." },
         "id": { "type": "string" },
         "pedagogical_intent": { "type": "string", "description": "Default: exemplify." },
+        "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches." },
         "notes": { "type": "string" }
       }
     },
@@ -151,6 +157,7 @@
         "example": { "type": "string", "description": "A concrete 'for you, this means…' instance." },
         "id": { "type": "string" },
         "pedagogical_intent": { "type": "string", "description": "Default: activate (or transfer)." },
+        "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches." },
         "notes": { "type": "string" }
       }
     },
@@ -180,6 +187,7 @@
         "source_reference": { "type": "string", "description": "Citation into the source store (authoritative band) grounding this check. Provenance per check — the profiles' discipline, kept." },
         "id": { "type": "string" },
         "pedagogical_intent": { "type": "string", "description": "Default: practice (or assess)." },
+        "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids this primitive was drafted toward. For knowledge_check especially, this is the field that should have prevented drift: the check's teaches and the realized element's intent.teaches are testing whether the same objective was meant both times." },
         "notes": { "type": "string" }
       }
     },
@@ -196,6 +204,7 @@
         "excludes": { "type": "string" },
         "id": { "type": "string" },
         "pedagogical_intent": { "type": "string", "description": "Default: present." },
+        "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches." },
         "notes": { "type": "string" }
       }
     },
@@ -212,6 +221,7 @@
         "purpose": { "type": "string", "description": "What to use it for." },
         "id": { "type": "string" },
         "pedagogical_intent": { "type": "string", "description": "Default: transfer." },
+        "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches." },
         "notes": { "type": "string" }
       }
     },
@@ -228,6 +238,7 @@
         "call_to_action": { "type": "string" },
         "id": { "type": "string" },
         "pedagogical_intent": { "type": "string", "description": "Default: reinforce." },
+        "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids this primitive was drafted toward. Often legitimately omitted here — a closure typically recaps everything the unit taught, not one objective, so 'spans several' is a valid absence of this field, not a gap to fill in." },
         "notes": { "type": "string" }
       }
     }

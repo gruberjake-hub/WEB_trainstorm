@@ -1,0 +1,20 @@
+{
+  "vocabulary_version": "tone.v0.1",
+  "status": "draft_for_reconciliation",
+  "owner": "instructional_design",
+  "description": "Governed affective TONE of an element or scene — the communicative feeling it should carry. Promoted from the layout engine's Script_Normalizer `emotional_tone` axis (previously an ungoverned inline enum in the sidecar). This is an UPSTREAM signal: set by the generator/normalizer at the intent layer, READ by the realizer to inform expression (skin/style/layout) selection. It is independent of rhetorical intent (what the element does on the page) and pedagogical intent (its job in the learning sequence).",
+  "governance": {
+    "closed_list": true,
+    "rule": "Elements may only use ids defined here. A new value requires a version bump and an entry — the validator rejects anything else. This is the same governance as intent.enum.json and script.primitives.v1.json.",
+    "supplants": "The inline `emotional_tone` enum in layout-engine intent_sidecar.schema.json (retired in favor of this governed list)."
+  },
+  "field": "element.intent.tone (proposed small addition to element.schema.json).",
+  "values": [
+    { "id": "neutral",     "label": "Neutral",     "definition": "Plain, informational register with no particular affective push." },
+    { "id": "pragmatic",   "label": "Pragmatic",   "definition": "Practical, task-focused, get-it-done register." },
+    { "id": "confident",   "label": "Confident",   "definition": "Assured, authoritative register that lands a point firmly." },
+    { "id": "empathetic",  "label": "Empathetic",  "definition": "Warm, perspective-taking register that acknowledges the learner's situation." },
+    { "id": "reflective",  "label": "Reflective",  "definition": "Contemplative register that invites the learner to pause and consider." },
+    { "id": "urgent",      "label": "Urgent",      "definition": "Heightened-stakes register that signals immediacy or risk." }
+  ]
+}

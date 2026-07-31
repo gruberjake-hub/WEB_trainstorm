@@ -57,7 +57,7 @@
     "Callout_02": {
       "type": "Statement",
       "intent": "support",
-      "text": "The EU Pay Transparency Directive is introducing new pay transparency requirements across EU countries.",
+      "text": "The EU Pay Transparency Directive has introduced new pay transparency requirements across EU countries.",
       "text_primitive": "DateCallout",
       "motion_primitive": "FocusReveal",
       "layout_primitive": "CenterStatement",

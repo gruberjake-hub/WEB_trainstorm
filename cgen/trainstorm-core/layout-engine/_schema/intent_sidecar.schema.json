@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cgen.local/schema/intent_sidecar.schema.json",
+  "title": "Intent Sidecar",
+  "description": "Human-authored policy layer over a template manifest. Decides which layout serves which learning/interaction intent, how storyboard fields bind into slots, overflow behavior, optional token re-skin, and interaction defaults. TEXT, git-hosted; many sidecars can target one .potx. Bounded by the manifest: a sidecar can only reference layouts and slots the .potx actually provides (enforced by ci/validate_sidecar).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sidecar_id", "template_ref", "selection", "bindings"],
+  "properties": {
+    "sidecar_id": { "type": "string", "description": "e.g. astellas.awareness, astellas.compliance." },
+    "description": { "type": "string" },
+    "template_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manifest", "sha256"],
+      "description": "Pins this sidecar to a specific template manifest / .potx build. sha256 must equal the manifest's template_ref.sha256 — CI fails the PR otherwise.",
+      "properties": {
+        "manifest": { "type": "string", "description": "Path to the template_manifest.json this policy targets." },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "token_overrides": {
+      "type": "object",
+      "description": "Optional re-skin over the manifest theme. This is how one .potx yields different expressions per sidecar without a new shell. Keys are theme slots or named_palette aliases.",
+      "additionalProperties": false,
+      "properties": {
+        "colors": { "type": "object", "additionalProperties": { "$ref": "#/$defs/hex" } },
+        "fonts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": { "major": { "type": "string" }, "minor": { "type": "string" } }
+        }
+      }
+    },
+    "interaction_defaults": {
+      "type": "object",
+      "description": "Mirrors Context Capsule interaction_defaults; applied to any layout with control/gating slots.",
+      "additionalProperties": false,
+      "properties": {
+        "button_labels": { "type": "object", "additionalProperties": { "type": "string" } },
+        "attempts": { "type": "integer", "minimum": 1 },
+        "gating": { "type": "boolean", "description": "Whether progression waits until all reveal/visited conditions are met." }
+      }
+    },
+    "selection": {
+      "type": "array",
+      "description": "Ordered rules, FIRST MATCH WINS. Each rule is a predicate over the script-segment fields (your Script_Normalizer enums) -> a layout id. This array IS the intent tagging that a .potx can't carry natively.",
+      "items": { "$ref": "#/$defs/rule" }
+    },
+    "default_layout": {
+      "type": "string",
+      "description": "Layout id used when no selection rule matches. Keeps the engine total (never fails to place a screen)."
+    },
+    "bindings": {
+      "type": "object",
+      "description": "Keyed by layout id (must exist in the manifest). Maps storyboard fields into that layout's slots, with repeat + overflow policy.",
+      "additionalProperties": { "$ref": "#/$defs/binding" }
+    }
+  },
+  "$defs": {
+    "hex": { "type": "string", "pattern": "^#?[0-9A-Fa-f]{6}$" },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "use"],
+      "properties": {
+        "id": { "type": "string" },
+        "when": {
+          "type": "object",
+          "description": "All present conditions must hold (AND). Omit a field to ignore it. Arrays mean 'value in set'.",
+          "additionalProperties": false,
+          "properties": {
+            "potential_interaction": {
+              "type": "array",
+              "items": { "enum": ["click", "reveal", "decision", "slider", "drag", "reflection", "none"] }
+            },
+            "suggested_visual_type": {
+              "type": "array",
+              "items": { "enum": ["photo", "icon", "animation", "diagram", "quote", "data graphic"] }
+            },
+            "complexity_level": { "type": "array", "items": { "enum": ["low", "medium", "high"] } },
+            "emotional_tone": {
+              "type": "array",
+              "items": { "enum": ["neutral", "pragmatic", "confident", "empathetic", "reflective", "urgent"] }
+            },
+            "key_concepts_count": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": { "min": { "type": "integer" }, "max": { "type": "integer" } }
+            },
+            "flags": {
+              "type": "array",
+              "description": "Free semantic tags a segment can carry (e.g. 'assessment', 'convergence', 'section_intro') for cases the enums don't capture.",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "use": { "type": "string", "description": "Layout id from the manifest to render this screen with." },
+        "note": { "type": "string" }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "map": {
+          "type": "object",
+          "description": "slot name -> source expression. Expressions interpolate storyboard fields with {field}. Example: 'title': '{section_title} — {screen_title}'.",
+          "additionalProperties": { "type": "string" }
+        },
+        "repeat": {
+          "type": "object",
+          "description": "For repeatable card slots: bind a list source across N instances of the exemplar.",
+          "additionalProperties": false,
+          "required": ["slot", "source"],
+          "properties": {
+            "slot": { "type": "string" },
+            "source": { "type": "string", "description": "List field, e.g. 'key_concepts' or 'reveal_cards'." },
+            "item_map": {
+              "type": "object",
+              "description": "sub-slot -> item expression, e.g. {'front':'{label}','body':'{detail}'}.",
+              "additionalProperties": { "type": "string" }
+            },
+            "min": { "type": "integer" },
+            "max": { "type": "integer" }
+          }
+        },
+        "overflow": {
+          "type": "string",
+          "enum": ["shrink", "truncate_flag", "split_slide", "paginate"],
+          "description": "What to do when content exceeds slot constraints. truncate_flag = cut and surface a QA flag rather than silently overflow."
+        }
+      }
+    }
+  }
+}
