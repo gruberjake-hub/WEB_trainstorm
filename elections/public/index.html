@@ -177,6 +177,14 @@
   <!-- ================= SETUP VIEW ================= -->
   <section id="view-setup" class="view">
     <div class="card">
+      <h2>Your role</h2>
+      <div class="toggle-group" id="roleGroup">
+        <div class="opt sel" data-val="observer" onclick="setRole('observer')">Observer</div>
+        <div class="opt" data-val="drafter" onclick="setRole('drafter')">Drafter</div>
+      </div>
+      <p class="hint" id="roleHint"></p>
+    </div>
+    <div class="card">
       <h2>Observer (source of record)</h2>
       <label>Your full name</label><input id="obsName" oninput="save()">
       <label>Credential / role</label><input id="obsCred" oninput="save()" placeholder="e.g., credentialed election observer">
@@ -197,7 +205,7 @@
         </div>
       </div>
     </div>
-    <div class="card">
+    <div class="card" id="accessCard">
       <h2>Access code</h2>
       <label>Shared access code (if your admin set one)</label>
       <input id="accessCode" oninput="save()" placeholder="leave blank if none">
@@ -268,7 +276,7 @@
 <!-- ================= BOTTOM NAV ================= -->
 <nav class="bottom">
   <button class="active" data-view="log" onclick="show('log')"><span class="ic">📝</span>Log</button>
-  <button data-view="draft" onclick="show('draft')"><span class="ic">⚖</span>Draft</button>
+  <button id="navDraft" data-view="draft" onclick="show('draft')"><span class="ic">⚖</span>Draft</button>
   <button data-view="rules" onclick="show('rules')"><span class="ic">📖</span>Rules</button>
   <button data-view="setup" onclick="show('setup')"><span class="ic">⚙</span>Setup</button>
 </nav>
@@ -333,6 +341,7 @@ function show(v){
 /* ========================= persistence ================================== */
 function blank(){
   return {
+    role:"observer",
     observer:{name:"",credential:"credentialed election observer",organization:"",standing:"Wis. Stat. § 7.41",county:"",locationType:"Central count location"},
     attorney:{party:"",name:"",bar:"",contact:""},
     filingMode:"observer",
@@ -377,7 +386,34 @@ function hydrate(){
   setVal("respondent",state.respondent); setVal("relief",state.relief);
   setVal("filingTarget",state.filingTarget); setVal("accessCode",state.accessCode);
   setFilingMode(state.filingMode, true);
+  setRole(state.role || "observer", true);
   renderLog();
+}
+
+/* ========================= role (UX only) ==============================
+ * This is a display convenience, not the security boundary. The real gate
+ * is the shared access code the SERVER checks before drafting — flipping to
+ * "Drafter" here still gets you nowhere without that code. This just gives
+ * observers a clean, log-only screen instead of a Draft button that errors.
+ * ===================================================================== */
+function setRole(r, silent){
+  state.role = r;
+  document.querySelectorAll("#roleGroup .opt").forEach(o=>o.classList.toggle("sel", o.dataset.val===r));
+  const isDrafter = r==="drafter";
+  const navDraft = document.getElementById("navDraft");
+  const accessCard = document.getElementById("accessCard");
+  if(navDraft) navDraft.style.display = isDrafter ? "" : "none";
+  if(accessCard) accessCard.style.display = isDrafter ? "" : "none";
+  const hint = document.getElementById("roleHint");
+  if(hint) hint.textContent = isDrafter
+    ? "You can log observations and draft complaints. Enter your drafter access code below."
+    : "You log and export observations. Drafting is handled by your team's designated drafter — export your notes (Log tab) and hand them off.";
+  // If an observer is somehow sitting on the Draft view, send them back to Log.
+  if(!isDrafter){
+    const dv=document.getElementById("view-draft");
+    if(dv && dv.classList.contains("active")) show("log");
+  }
+  if(!silent) persist();
 }
 
 /* ========================= filing mode ================================== */
