@@ -128,6 +128,8 @@ In the service's **Environment** section, add:
   below)
 - optionally `MODEL` = `claude-opus-5` for highest quality, or
   `claude-haiku-4-5-20251001` for lowest cost. Default is `claude-sonnet-5`.
+- optionally `SHEET_WEBHOOK_URL` to turn on central collection into a Google
+  Sheet — you set this up later, see "Central collection" below.
 
 Do **not** set `PORT` — Render provides it automatically, and the server reads
 whatever the host gives it.
@@ -141,6 +143,107 @@ it and use **Add to Home Screen** so it behaves like an app.
 If you set `ACCESS_CODE`, each fellow types it once under the app's **Setup**
 tab. Without it, the server refuses to draft. This is what stops a stranger who
 finds the URL from spending your API budget.
+
+---
+
+## Central collection (optional) — observations into a Google Sheet
+
+By default, each observer's notes live only on their own phone. Turning this on
+gives every observer a **Submit to team** button that pushes their observations
+into one **Google Sheet you own**, so you have a live, durable, central record
+without running a database.
+
+How it flows: phone → your server (`/api/submit`) → a tiny Google Apps Script →
+your Sheet. Your server never holds Google credentials; it just forwards to a
+web-app URL that only you can create.
+
+**Step 1 — Make the Sheet.** Create a new blank Google Sheet (sheets.new). Name
+it something like "Observer Field Records". Leave it empty; the script writes
+the header row for you.
+
+**Step 2 — Add the script.** In that Sheet: **Extensions → Apps Script**. Delete
+whatever sample code is there, and paste in the entire contents of
+`google-apps-script.gs` (included in this project). Click the **Save** icon.
+
+**Step 3 — Deploy it as a web app.** Click **Deploy → New deployment**. Click the
+gear next to "Select type" and choose **Web app**. Set:
+
+- **Execute as:** Me (your Google account)
+- **Who has access:** Anyone
+
+Click **Deploy**. Google will ask you to authorize it the first time — approve
+it (it's your own script writing to your own sheet). When it finishes, copy the
+**Web app URL**. It ends in `/exec`.
+
+> Quick test: paste that URL into a browser. You should see
+> `{"ok":true,"service":"observer-central-collection"}`. That means it's live.
+
+**Step 4 — Tell your server about it.** In Render, add one more environment
+variable:
+
+- **Name:** `SHEET_WEBHOOK_URL`
+- **Value:** the `/exec` URL you just copied
+
+Save; Render redeploys. That's it — the **Submit to team** button now writes to
+your Sheet. Confirm with **Setup → Check server status** in the app; it should
+say "central collection on ✅".
+
+**Using it.** Observers tap **Submit to team** on the Log tab. Each unsent
+observation becomes a row in your Sheet (timestamped server-side, with the
+observer's name and organization). The button tracks what's already been sent,
+so tapping it again only sends new observations. Each observation also stays on
+the observer's own phone.
+
+**A few honest limits of the simple version:**
+
+- Submitting is open to anyone who can reach the app (there's no separate submit
+  code — observers don't use the drafter code). If your public URL is a concern,
+  the app's **team-code** option (a future toggle) or host-level password
+  protection would close that. For a link shared only within your team it's a
+  low risk; the worst case is a junk row you can delete.
+- It's one-directional: observations flow *into* the Sheet. The drafter still
+  drafts from observations logged (or imported) in the app. To draft from a
+  submitted observation, copy its details from the Sheet into a log entry. A
+  future "robust" version could let the drafter pull submitted observations
+  straight into the app.
+- If you ever change the script, you must **Deploy → Manage deployments → edit →
+  New version** for the change to take effect (a plain Save isn't enough for the
+  live web app).
+
+---
+
+## Observer rules-check (optional) — "what do you think of this?"
+
+This gives observers a **Check the rules** box on the Log tab: they briefly
+describe what they're seeing, and a model reads it against the loaded EL 4
+corpus and flags — in two or three sentences — whether it might implicate a
+rule, names the provision, marks its confidence, and tells them what facts to
+capture. It's **advisory only**: it never files anything, it always tells the
+observer to log it regardless, and its assessment is **not saved** into the
+record (only the facts the observer enters when logging become the record).
+
+It's a separate, paid AI endpoint, so it's gated by its own **team code** and
+runs on a cheaper model.
+
+**To turn it on**, add these environment variables in Render:
+
+- `TEAM_CODE` = a shared code your members type once under the app's **Setup**
+  tab. Required — without it, the check button won't work. This keeps the
+  endpoint off the open internet.
+- `CHECK_MODEL` = optional. Defaults to `claude-haiku-4-5-20251001` (cheap and
+  fast). Set it to `claude-sonnet-5` to A/B the quality and see real cost — the
+  token counts print with each check in the browser console, and every call
+  shows up in your Anthropic console usage.
+
+That's the whole setup — no new files. Observers enter the team code in Setup,
+type what they see, tap **Check**, and can hit **Log this observation** to carry
+their description straight into a new incident.
+
+**Cost note:** each check sends the corpus plus a short description to the model.
+The corpus is marked for **prompt caching**, so repeated checks in the same
+window are much cheaper than the first. On Haiku this is a fraction of a cent per
+check; on Sonnet it's a few times that. Set a monthly limit in the Anthropic
+console if you want a hard ceiling before the midterm.
 
 ---
 

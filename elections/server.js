@@ -32,7 +32,15 @@ loadDotEnvIfPresent();
 
 const API_KEY = process.env.ANTHROPIC_API_KEY || "";
 const MODEL = process.env.MODEL || "claude-sonnet-5";
-const ACCESS_CODE = process.env.ACCESS_CODE || ""; // optional shared password
+const ACCESS_CODE = process.env.ACCESS_CODE || ""; // drafter code -> /api/draft
+// Observer rules-check: a shared team code gates /api/check, and CHECK_MODEL
+// picks the (cheaper) model for it. Default Haiku for speed/cost; set to
+// claude-sonnet-5 to A/B the quality and see real cost before the midterm.
+const TEAM_CODE = process.env.TEAM_CODE || ""; // team code -> /api/check
+const CHECK_MODEL = process.env.CHECK_MODEL || "claude-haiku-4-5-20251001";
+// Central collection: the URL of your Google Apps Script web app. When set,
+// observers' "Submit to team" pushes rows into your Google Sheet through it.
+const SHEET_WEBHOOK_URL = process.env.SHEET_WEBHOOK_URL || "";
 const PORT = process.env.PORT || 3000;
 const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 const ANTHROPIC_VERSION = "2023-06-01";
@@ -62,12 +70,25 @@ const server = http.createServer(async (req, res) => {
         model: MODEL,
         apiKeyConfigured: Boolean(API_KEY),
         accessCodeRequired: Boolean(ACCESS_CODE),
+        centralCollection: Boolean(SHEET_WEBHOOK_URL),
+        teamCodeRequired: Boolean(TEAM_CODE),
+        checkModel: CHECK_MODEL,
       });
     }
 
     // The drafting endpoint — the reason the server exists.
     if (req.method === "POST" && req.url === "/api/draft") {
       return await handleDraft(req, res);
+    }
+
+    // Observer rules-check: a quick, advisory "what do you think of this?"
+    if (req.method === "POST" && req.url === "/api/check") {
+      return await handleCheck(req, res);
+    }
+
+    // Central collection: forward submitted observations to the Google Sheet.
+    if (req.method === "POST" && req.url === "/api/submit") {
+      return await handleSubmit(req, res);
     }
 
     // Everything else: serve a static file from /public.
@@ -87,7 +108,10 @@ server.listen(PORT, () => {
   console.log(`  Open:   http://localhost:${PORT}`);
   console.log(`  Model:  ${MODEL}`);
   console.log(`  API key configured: ${API_KEY ? "yes" : "NO — set ANTHROPIC_API_KEY"}`);
-  console.log(`  Access code gate:   ${ACCESS_CODE ? "on" : "off"}\n`);
+  console.log(`  Access code gate:   ${ACCESS_CODE ? "on" : "off"}`);
+  console.log(`  Central collection: ${SHEET_WEBHOOK_URL ? "on (Google Sheet)" : "off"}`);
+  console.log(`  Rules-check model:  ${CHECK_MODEL}`);
+  console.log(`  Team code gate:     ${TEAM_CODE ? "on" : "off"}\n`);
 });
 
 // ===========================================================================
@@ -257,6 +281,197 @@ function buildUserMessage(p) {
   );
 
   return lines.join("\n");
+}
+
+// ---------------------------------------------------------------------------
+// Observer rules-check. A tightly scoped, advisory-only assistant. It is NOT
+// the drafting profile — it flags, it never adjudicates, and it always tells
+// the observer to capture facts and log the observation regardless.
+// ---------------------------------------------------------------------------
+const CHECK_INSTRUCTIONS =
+  "You are a field rules-check aid for a credentialed election observer in Wisconsin. " +
+  "An observer will briefly describe something they are seeing at an observable location. " +
+  "Use ONLY the appended rule corpus (Wis. Admin. Code ch. EL 4 and the observer guidance) as authority. " +
+  "Respond in 2–4 short sentences, plain language, for someone standing on the counting floor:\n" +
+  "1) Say whether what is described MAY implicate a rule, appears likely to be a violation, or does not appear to implicate ch. EL 4 — and name the specific provision (e.g., EL 4.03(1)(b)) when one applies.\n" +
+  "2) Open with a confidence tag in brackets: [LIKELY VIOLATION], [POSSIBLE — VERIFY], or [NOT APPARENT], based only on the corpus.\n" +
+  "3) Always tell the observer the specific facts to capture now — exact time, location/table/ward, who by role and description, witnesses — and to log the observation regardless. A drafter, and if needed an attorney, decides later.\n" +
+  "Rules of the road: never adjudicate with certainty; never discourage logging; if the corpus does not address the scenario, say so plainly and still advise capturing the facts. Do not draft a complaint. Keep it terse.";
+
+async function handleCheck(req, res) {
+  if (!API_KEY) {
+    return sendJSON(res, 500, {
+      error: "The server has no ANTHROPIC_API_KEY set.",
+    });
+  }
+
+  const body = await readBody(req);
+  let payload;
+  try {
+    payload = JSON.parse(body || "{}");
+  } catch {
+    return sendJSON(res, 400, { error: "Request body was not valid JSON." });
+  }
+
+  // Team-code gate — keeps this paid endpoint off the open internet.
+  if (TEAM_CODE && payload.teamCode !== TEAM_CODE) {
+    return sendJSON(res, 401, {
+      error: "Wrong or missing team code. Enter it under Setup.",
+    });
+  }
+
+  const text = (payload.text || "").toString().trim();
+  if (!text) {
+    return sendJSON(res, 400, { error: "Describe what you're seeing first." });
+  }
+
+  let apiResponse;
+  try {
+    apiResponse = await fetch(ANTHROPIC_URL, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-api-key": API_KEY,
+        "anthropic-version": ANTHROPIC_VERSION,
+      },
+      body: JSON.stringify({
+        model: CHECK_MODEL,
+        max_tokens: 500,
+        // Corpus is marked for prompt caching so repeated checks are cheap.
+        system: [
+          { type: "text", text: CHECK_INSTRUCTIONS },
+          {
+            type: "text",
+            text:
+              "APPENDED SOURCE OF TRUTH — the loaded rule corpus:\n\n" + CORPUS,
+            cache_control: { type: "ephemeral" },
+          },
+        ],
+        messages: [
+          {
+            role: "user",
+            content: "Observer is seeing this right now:\n\n" + text,
+          },
+        ],
+      }),
+    });
+  } catch (err) {
+    return sendJSON(res, 502, {
+      error: "Could not reach the Anthropic API.",
+      detail: String(err),
+    });
+  }
+
+  if (!apiResponse.ok) {
+    const errText = await apiResponse.text();
+    return sendJSON(res, 502, {
+      error: `Anthropic API returned ${apiResponse.status}.`,
+      detail: safeTrim(errText, 500),
+    });
+  }
+
+  const data = await apiResponse.json();
+  const assessment = (data.content || [])
+    .filter((b) => b.type === "text")
+    .map((b) => b.text)
+    .join("\n")
+    .trim();
+
+  return sendJSON(res, 200, {
+    assessment: assessment || "(No response.)",
+    model: CHECK_MODEL,
+    usage: data.usage || null,
+  });
+}
+
+// The columns written to the Google Sheet, in order. The Apps Script writes
+// this as the header row the first time, then one row per observation.
+const SUBMIT_COLUMNS = [
+  "Submitted (server time)",
+  "Observer",
+  "Organization",
+  "County",
+  "Time observed",
+  "Location",
+  "What observed",
+  "Who (role/name/description)",
+  "Witnesses",
+  "Objection raised",
+  "Objection detail",
+  "Evidence & custody",
+  "EL 104?",
+  "Issue tags",
+  "Suggested citation",
+  "Notes",
+];
+
+// Receives {observer, entries:[...]} from an observer's phone and forwards it,
+// row by row, to your Google Sheet via the Apps Script web app.
+async function handleSubmit(req, res) {
+  if (!SHEET_WEBHOOK_URL) {
+    return sendJSON(res, 501, {
+      error:
+        "Central collection isn't set up yet. The server has no SHEET_WEBHOOK_URL. See the README, 'Central collection'.",
+    });
+  }
+
+  const body = await readBody(req);
+  let payload;
+  try {
+    payload = JSON.parse(body || "{}");
+  } catch {
+    return sendJSON(res, 400, { error: "Request body was not valid JSON." });
+  }
+
+  const entries = Array.isArray(payload.entries) ? payload.entries : [];
+  if (entries.length === 0) {
+    return sendJSON(res, 400, { error: "No observations to submit." });
+  }
+
+  const o = payload.observer || {};
+  const stamp = new Date().toISOString();
+  const rows = entries.map((e) => [
+    stamp,
+    o.name || "",
+    o.organization || "",
+    o.county || "",
+    e.time || "",
+    e.location || "",
+    e.observed || "",
+    e.actor || "",
+    e.witnesses || "",
+    e.objectionRaised || "",
+    e.objectionDetail || "",
+    e.evidence || "",
+    e.el104 || "",
+    Array.isArray(e.issueTags) ? e.issueTags.join("; ") : "",
+    e.suggestedCite || "",
+    e.notes || "",
+  ]);
+
+  let r;
+  try {
+    r = await fetch(SHEET_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ header: SUBMIT_COLUMNS, rows }),
+    });
+  } catch (err) {
+    return sendJSON(res, 502, {
+      error: "Could not reach the Google Sheet web app.",
+      detail: String(err),
+    });
+  }
+
+  if (!r.ok) {
+    const t = await r.text();
+    return sendJSON(res, 502, {
+      error: `The Google Sheet web app returned ${r.status}.`,
+      detail: safeTrim(t, 400),
+    });
+  }
+
+  return sendJSON(res, 200, { ok: true, submitted: rows.length });
 }
 
 // ===========================================================================

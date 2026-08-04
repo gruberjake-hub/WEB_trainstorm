@@ -103,19 +103,31 @@
 <main>
   <!-- ================= LOG VIEW ================= -->
   <section id="view-log" class="view active">
+    <div class="card">
+      <h2>Not sure? Check the rules</h2>
+      <textarea id="checkText" placeholder="Briefly describe what you're seeing, e.g. 'observer area feels more than 8 ft from the check-in table'…"></textarea>
+      <button class="btn" id="checkBtn" onclick="runCheck()">🔎 Check against the rules</button>
+      <div id="checkOut" style="margin-top:10px"></div>
+      <p class="hint">Advisory only — it flags possible rule issues to help you decide what to capture. It never files anything and is not saved to your record. When in doubt, log it.</p>
+    </div>
     <button class="btn" onclick="openEntry()">＋ Add incident</button>
     <div id="logList" style="margin-top:12px"></div>
     <p id="logEmpty" class="muted small" style="text-align:center;margin-top:24px">
       No incidents logged yet. Tap “Add incident” each time you observe something worth recording — time, place, who, and exactly what you saw.
     </p>
     <div class="card" style="margin-top:12px">
-      <h2>Your notes</h2>
+      <h2>Send to team</h2>
+      <button class="btn" id="submitBtn" onclick="submitToTeam()">⬆ Submit to team</button>
+      <p class="hint" id="submitHint">Pushes your new observations to the shared team record. They stay on your phone too.</p>
+    </div>
+    <div class="card">
+      <h2>Your notes (backup)</h2>
       <div class="row">
         <button class="btn ghost small" onclick="exportNotes()">⬇ Export notes (JSON)</button>
         <button class="btn ghost small" onclick="document.getElementById('importFile').click()">⬆ Import notes</button>
       </div>
       <input id="importFile" type="file" accept="application/json" style="display:none" onchange="importNotes(event)">
-      <p class="hint">Export before you leave to hand your record to the team lead. Everything is also saved on this device automatically.</p>
+      <p class="hint">A local backup file, in case you want to hand your full record over directly. Everything is also saved on this device automatically.</p>
     </div>
   </section>
 
@@ -183,6 +195,12 @@
         <div class="opt" data-val="drafter" onclick="setRole('drafter')">Drafter</div>
       </div>
       <p class="hint" id="roleHint"></p>
+    </div>
+    <div class="card">
+      <h2>Team code</h2>
+      <label>Shared team code (for the rules-check)</label>
+      <input id="teamCode" oninput="save()" placeholder="ask your team lead">
+      <p class="hint">Unlocks the “Check the rules” button. Every team member uses the same code.</p>
     </div>
     <div class="card">
       <h2>Observer (source of record)</h2>
@@ -345,7 +363,7 @@ function blank(){
     observer:{name:"",credential:"credentialed election observer",organization:"",standing:"Wis. Stat. § 7.41",county:"",locationType:"Central count location"},
     attorney:{party:"",name:"",bar:"",contact:""},
     filingMode:"observer",
-    respondent:"", relief:"", filingTarget:"", accessCode:"",
+    respondent:"", relief:"", filingTarget:"", accessCode:"", teamCode:"",
     entries:[]
   };
 }
@@ -371,6 +389,7 @@ function save(){
   state.relief = val("relief");
   state.filingTarget = val("filingTarget");
   state.accessCode = val("accessCode");
+  state.teamCode = val("teamCode");
   persist();
 }
 function val(id){ const el=document.getElementById(id); return el?el.value:""; }
@@ -385,6 +404,7 @@ function hydrate(){
   setVal("attBar",state.attorney.bar); setVal("attContact",state.attorney.contact);
   setVal("respondent",state.respondent); setVal("relief",state.relief);
   setVal("filingTarget",state.filingTarget); setVal("accessCode",state.accessCode);
+  setVal("teamCode",state.teamCode);
   setFilingMode(state.filingMode, true);
   setRole(state.role || "observer", true);
   renderLog();
@@ -489,7 +509,9 @@ function saveEntry(){
     actor:val("eActor"), witnesses:val("eWitnesses"),
     objectionRaised:objVal, objectionDetail:val("eObjDetail"),
     evidence:val("eEvidence"), el104:el104Val,
-    issueTags:tags, suggestedCite:cites, notes:val("eNotes")
+    issueTags:tags, suggestedCite:cites, notes:val("eNotes"),
+    // Preserve submitted status when editing; new entries start unsubmitted.
+    submitted: editIndex>=0 ? !!(state.entries[editIndex] && state.entries[editIndex].submitted) : false
   };
   if(!entry.observed.trim()){ alert("Please describe what was observed."); return; }
   if(editIndex>=0) state.entries[editIndex]=entry;
@@ -513,6 +535,9 @@ function renderLog(){
     const flags=[];
     if(e.objectionRaised==="Yes") flags.push("objection raised");
     if(e.issueTags && e.issueTags.length) flags.push(...e.issueTags.slice(0,2));
+    const sent = e.submitted
+      ? '<span class="pill" style="background:rgba(63,176,107,.18);border-color:var(--good);color:#c8f4d8">✓ sent to team</span>'
+      : '<span class="pill" style="border-color:var(--warn);color:#f0cf8f">not yet sent</span>';
     div.innerHTML = `
       <div class="top">
         <div>
@@ -522,9 +547,85 @@ function renderLog(){
         <button class="btn ghost small" onclick="openEntry(${i})">Edit</button>
       </div>
       <div class="obs">${esc(e.observed||"")}</div>
-      <div class="flags">${flags.map(f=>`<span class="pill">${esc(f)}</span>`).join("")}</div>`;
+      <div class="flags">${sent}${flags.map(f=>`<span class="pill">${esc(f)}</span>`).join("")}</div>`;
     list.appendChild(div);
   });
+  refreshSubmitBtn();
+}
+
+// Keep the Submit button label showing how many observations are unsent.
+function refreshSubmitBtn(){
+  const btn=document.getElementById("submitBtn");
+  if(!btn) return;
+  const unsent=state.entries.filter(e=>!e.submitted).length;
+  btn.textContent = unsent ? `⬆ Submit ${unsent} to team` : "✓ All observations sent";
+  btn.disabled = unsent===0;
+}
+
+// Send all unsent observations to the shared team record.
+async function submitToTeam(){
+  save();
+  const unsent=state.entries.filter(e=>!e.submitted);
+  if(!unsent.length){ toast("Nothing new to send"); return; }
+  const btn=document.getElementById("submitBtn");
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span> Sending…';
+  try{
+    const r=await fetch("/api/submit",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({observer:state.observer, entries:unsent})});
+    const data=await r.json();
+    if(!r.ok){
+      toast("Could not send");
+      alert("Could not submit to team:\n\n"+(data.error||("HTTP "+r.status))+(data.detail?"\n\n"+data.detail:""));
+    }else{
+      // Mark the sent ones so we don't send duplicates next time.
+      state.entries.forEach(e=>{ if(unsent.includes(e)) e.submitted=true; });
+      persist(); renderLog();
+      toast(`Sent ${data.submitted||unsent.length} to team`);
+    }
+  }catch(err){
+    toast("Network error");
+    alert("Network error sending to team:\n"+String(err));
+  }finally{
+    refreshSubmitBtn();
+  }
+}
+
+/* ========================= rules-check (advisory) =====================
+ * Calls the cheap model to flag whether something might implicate a rule.
+ * The result is NEVER written into the observation record — it's coaching.
+ * ===================================================================== */
+async function runCheck(){
+  save();
+  const text=(val("checkText")||"").trim();
+  const out=document.getElementById("checkOut");
+  if(!text){ out.innerHTML='<div class="banner err">Describe what you\'re seeing first.</div>'; return; }
+  const btn=document.getElementById("checkBtn");
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span> Checking…';
+  out.innerHTML="";
+  try{
+    const r=await fetch("/api/check",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({text, teamCode:state.teamCode})});
+    const data=await r.json();
+    if(!r.ok){
+      const hint = r.status===401 ? " Enter your team code under the Setup tab." : "";
+      out.innerHTML=`<div class="banner err"><b>Couldn't check.</b> ${esc(data.error||("HTTP "+r.status))}${esc(hint)}</div>`;
+    }else{
+      out.innerHTML=`
+        <div class="drafter-out" style="font-family:inherit">${esc(data.assessment)}</div>
+        <button class="btn small" style="margin-top:10px" onclick="logFromCheck()">＋ Log this observation</button>
+        <p class="hint" style="margin-top:6px">This assessment is advisory and won't be saved — only the facts you enter when logging become your record.</p>`;
+    }
+  }catch(err){
+    out.innerHTML=`<div class="banner err"><b>Network error.</b> ${esc(String(err))}</div>`;
+  }finally{
+    btn.disabled=false; btn.innerHTML="🔎 Check against the rules";
+  }
+}
+// Open a fresh incident pre-filled with what the observer typed into the check.
+function logFromCheck(){
+  const text=val("checkText");
+  openEntry();
+  setVal("eObserved", text);
 }
 
 /* ========================= draft picker & call ========================= */
@@ -623,7 +724,7 @@ function importNotes(ev){
 async function checkHealth(){
   const out=document.getElementById("healthOut"); out.textContent="Checking…";
   try{ const r=await fetch("/health"); const d=await r.json();
-    out.innerHTML=`Server OK · model <b>${esc(d.model)}</b> · API key ${d.apiKeyConfigured?"configured ✅":"MISSING ❌"} · access code ${d.accessCodeRequired?"required":"off"}`;
+    out.innerHTML=`Server OK · draft model <b>${esc(d.model)}</b> · check model <b>${esc(d.checkModel||"—")}</b> · API key ${d.apiKeyConfigured?"configured ✅":"MISSING ❌"} · drafter code ${d.accessCodeRequired?"required":"off"} · team code ${d.teamCodeRequired?"required":"off"} · central collection ${d.centralCollection?"on ✅":"off"}`;
   }catch(e){ out.textContent="Could not reach the server."; }
 }
 function wipe(){ if(confirm("Erase ALL incidents and settings on this device?")){ localStorage.removeItem(KEY); state=blank(); hydrate(); toast("Erased"); } }
