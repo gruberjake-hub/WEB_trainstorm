@@ -6,7 +6,7 @@
 <title>Observer Field Log & Complaint Drafter</title>
 <style>
   :root{
-    --bg:#0f1420; --panel:#161d2e; --panel2:#1e2740; --line:#2a3550;
+    --bg:#070a11; --panel:#171f30; --panel2:#1e2740; --line:#2f3b58;
     --ink:#e8edf7; --muted:#93a0bd; --accent:#4f7cff; --accent2:#3a63e0;
     --good:#3fb06b; --warn:#e0a63a; --bad:#e05a5a; --radius:14px;
   }
@@ -20,24 +20,25 @@
   }
   header{
     position:sticky; top:0; z-index:20;
-    background:linear-gradient(180deg,#131a2b,#0f1420);
+    background:linear-gradient(180deg,#131a2b,#070a11);
     border-bottom:1px solid var(--line);
     padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;
   }
   header h1{font-size:16px;margin:0;font-weight:650;letter-spacing:.2px}
   header .sub{color:var(--muted);font-size:12px;margin-top:2px}
-  main{padding:14px;max-width:760px;margin:0 auto}
+  main{padding:18px 14px;max-width:760px;margin:0 auto}
   .view{display:none}
   .view.active{display:block}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:12px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,.35)}
   .card h2{font-size:14px;margin:0 0 10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600}
   label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
   input,textarea,select{
-    width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);
+    width:100%;background:#e9edf4;border:1px solid #b9c3d6;color:#141821;
     border-radius:10px;padding:11px 12px;font-size:16px;font-family:inherit;
   }
+  input::placeholder,textarea::placeholder{color:#5f6b82;opacity:1}
   textarea{min-height:70px;resize:vertical}
-  input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);border-color:var(--accent)}
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);border-color:var(--accent);background:#fff}
   .row{display:flex;gap:10px}
   .row > *{flex:1}
   .btn{
