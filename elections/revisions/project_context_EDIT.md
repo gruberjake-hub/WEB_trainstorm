@@ -3,6 +3,8 @@
 _This document is the loaded rule corpus. It is the source of truth for all rule citations._
 _Generated from the observer organization's ground documents._
 
+> **REVISION NOTE — 2026-08-04.** This corpus has been conformed to Wisconsin election-count rules current as of August 2026. Substantive edits are confined to the field cheat-sheets **SRC-0003** and **SRC-0005** (witness-address acceptance criteria, missing-address cure procedure, and the new ballot-spoiling prohibition). **SRC-0001, SRC-0002 (EL 4), and SRC-0004 are unchanged.** Two controlling authorities have been added to the manifest — **SRC-0006** (witness-address sufficiency and missing-address cure) and **SRC-0007** (ballot-spoiling prohibition) — so that the corrected citations resolve within this corpus. Every editorial change is flagged inline with a `[REVISED 2026-08-04 …]` or `[ADDED 2026-08-04 …]` marker and is itemized in the CHANGE LOG below. Original field-sheet language that was superseded is preserved in the CHANGE LOG for SME review.
+
 ---
 
 ## CORPUS MANIFEST
@@ -14,8 +16,33 @@ _Generated from the observer organization's ground documents._
 | 3 | `SRC-0003-Info-for-Count-Observers` | `Info-for-Count-Observers_structured.md` |
 | 4 | `SRC-0004-New-Observer` | `New-Observer_structured.md` |
 | 5 | `SRC-0005-Observer-Rules` | `Observer-Rules_structured.md` |
-| 6 | `SRC-0006-Witness-Address-Standard-and-Cure` | `SRC-0006-Witness-Address-Standard-and-Cure.md` |
-| 7 | `SRC-0007-Ballot-Spoiling-Prohibition` | `SRC-0007-Ballot-Spoiling-Prohibition.md` |
+| 6 | `SRC-0006-Witness-Address-Standard-and-Cure` | _(added 2026-08-04 — controlling authority; no source PDF)_ |
+| 7 | `SRC-0007-Ballot-Spoiling-Prohibition` | _(added 2026-08-04 — controlling authority; no source PDF)_ |
+
+---
+
+## CHANGE LOG (2026-08-04)
+
+**#1 — SRC-0003, "IMPORTANT INFO TO CHECK," item 3 (WITNESS ADDRESS): standard loosened to match current law.**
+- _Original text:_ "WITNESS ADDRESS — Did the witness provide their street number and street name, write "same" or ditto marks, or any other indication as to where they live? P.O. Boxes are NOT acceptable. If they did not provide any address, the certificate is incomplete and cannot be processed. If the witness only wrote a city ("Milwaukee, WI") or only a zip code, it cannot be counted, because it does not identify where within that city the person resides."
+- _Reason:_ Overstates the requirement. Under *Rise, Inc. v. WEC* (Wis. Ct. App., July 11, 2024; final circuit order Sept. 17, 2024) and WEC's implementing guidance, an address is sufficient if a municipal clerk, acting reasonably, can identify a place where the witness can be reached. No single element (street number, street name, municipality, ZIP, or state) is individually required, and a certificate should **not** be rejected merely for a missing ZIP or state. A unique, identifiable municipality name can suffice on its own. Sufficiency is a case-by-case clerk judgment, not a bright-line rule. See SRC-0006.
+
+**#2 — SRC-0003, item 3: added the missing-address cure step.**
+- _Reason:_ Where the witness address is entirely blank, the clerk may **not** fill it in (per *White v. WEC*, permanent injunction amended Feb. 8, 2024). The clerk must attempt to have the **voter or witness** cure it; if uncured by the 8:00 p.m. Election Day deadline, the ballot is set aside and not counted. See SRC-0006.
+
+**#3 — SRC-0003, item 3 & P.O. Box line: softened to clerk judgment / verify.**
+- _Reason:_ A flat "P.O. Boxes are NOT acceptable" is inconsistent with the flexible *Rise* "place where the witness may be reached" standard. Treat as a clerk-judgment call; verify against the current WEC absentee-processing manual before relying on it.
+
+**#4 — SRC-0003, "MAIN ISSUES": added ballot-spoiling prohibition.**
+- _Reason:_ New WEC guidance (July 2026) bars a voter who has already returned an absentee ballot from voiding ("spoiling") it to vote again. Not present in the original corpus. See SRC-0007.
+
+**#5 — SRC-0003, "IMPORTANT TO RECORD," missing-areas line: cross-referenced to the cure step.**
+- _Reason:_ The blanket "if required areas are missing … it should be rejected" is qualified for a missing witness address, which triggers voter cure first (Change #2).
+
+**#6 — SRC-0005: added cross-reference note.**
+- _Reason:_ SRC-0005 does not itself restate the witness-address test, but observers use it alongside SRC-0003. Added a note directing observers to the corrected item 3 (Change #1–3) and the ballot-spoiling rule (Change #4).
+
+_Unrelated to accuracy — for SME awareness:_ SRC-0004 is marked "Paid for by the Republican Party of Wisconsin" and is a partisan restatement of EL 4; cite **SRC-0002** (official code text) as authority. Voter-signature (item 1), witness-signature (item 2), and the 8:00 p.m. receipt deadline in SRC-0003 were reviewed and are **correct as written** — no change. The clerk-initials line in SRC-0003 appears consistent with current practice but is flagged for confirmation against the current WEC processing manual.
 
 ---
 
@@ -28,6 +55,8 @@ Observer Record form. Columns: Description of Problem | Time / Incident / Occurr
 # SRC-0002 — Wisconsin Administrative Code ch. EL 4 (ELECTION OBSERVERS)
 
 Source: https://docs.legis.wisconsin.gov/code/admin_code/el/4
+
+_[Editorial note, 2026-08-04: Chapter EL 4 was created by CR 24-032, Register July 2025 No. 835, effective 8-1-25, and remains in force unamended as of August 2026. The rule text below is reproduced verbatim and is unchanged.]_
 
 Chapter EL 4 — ELECTION OBSERVERS
 - EL 4.01  Right to vote.
@@ -146,6 +175,8 @@ History: CR 24-032: cr. Register July 2025 No. 835, eff. 8-1-25.
 
 # SRC-0003 — Info-for-Count-Observers.pdf (Central Count observer guidance)
 
+_[REVISED 2026-08-04 — see CHANGE LOG #1–5. Substantive edits are limited to the witness-address item, the missing-areas line, and the addition of a ballot-spoiling note; all other text is reproduced as in the original field sheet.]_
+
 **THE BASICS**
 - Check in with the team lead.
 - Record the times of when you arrive at Milwaukee Central Count and when you leave. Record either on an observer form or by taking screenshots when you arrive and leave.
@@ -158,12 +189,12 @@ History: CR 24-032: cr. Register July 2025 No. 835, eff. 8-1-25.
 **IMPORTANT TO RECORD**
 - List time, names, and detailed notes of the issues/situations that you encounter on the OBSERVER FORM or TABULATOR FORM (VERY IMPORTANT).
 - Record the time; the Election Workers/Inspectors; inspectors' names, if possible, and the color of their wristbands.
-- IMPORTANT: If required areas are missing on the ballot envelope, it should be rejected. A missing witness signature or printed name makes the certificate incomplete. A missing witness address does not lead to immediate rejection — it triggers voter cure first; see item 3 below and SRC-0006.
+- IMPORTANT: If required areas are missing on the ballot envelope, it should be rejected. _[REVISED 2026-08-04 — CHANGE LOG #5: This applies to a missing **witness signature/printed name**. A missing **witness address** does not lead to immediate rejection — it triggers voter cure first; see item 3 below and SRC-0006.]_
 - Number of reconstructions and reason for remake; verify the remake # on both ballots and that 2 inspectors are doing the reconstruction.
 - Correct name / wrong ward.
 - Rejected ballot envelopes (may be separated & on top of the pack, but some may still have been missed).
 - Names added to voter list (this should not be done; if it is, contact the team lead).
-- If the clerk initials are not on the ballot envelope, the ballot will still be counted but the incident must be recorded in the EL 104 by the team counting. Record on your notes.
+- If the clerk initials are not on the ballot envelope, the ballot will still be counted but the incident must be recorded in the EL 104 by the team counting. Record on your notes. _[FLAG 2026-08-04: consistent with current practice, but confirm against the current WEC absentee-processing manual.]_
 
 **MAIN ISSUES WE ARE LOOKING FOR:**
 - No absentee ballots should be received after 8:00pm.
@@ -171,7 +202,7 @@ History: CR 24-032: cr. Register July 2025 No. 835, eff. 8-1-25.
 - Missing information on the certificate envelope: voter or witness signatures/addresses.
 - The ballot envelope should NOT BE COUNTED if the Name or address on the Absentee Certificate Envelope is not on the Voter List.
 - Record the time you observe ballots being distributed to the tables by an official.
-- BALLOT SPOILING: A voter who has already returned an absentee ballot may not void ("spoil") that ballot to vote again, even if it is well before Election Day or their candidate has dropped out. If you see a voter or official attempting to spoil or replace an already-returned absentee ballot, record it and notify the team lead. (See SRC-0007.)
+- **BALLOT SPOILING — [ADDED 2026-08-04, CHANGE LOG #4]:** A voter who has ALREADY returned an absentee ballot may NOT void ("spoil") that ballot to vote again, even if it is well before Election Day or their candidate has dropped out. If you see a voter or official attempting to spoil/replace a already-returned absentee ballot, record it and notify the team lead. (Authority: WEC Updated Ballot Spoiling Guidance, July 2026; see SRC-0007.)
 - IF YOU SEE ANY OF THE MAIN ISSUES OR ANYTHING MAJOR, FIND A TEAM LEADER! Otherwise record as much information as possible: Time; Names of people involved (if you can't get names, step back and take a photo discreetly); Issue/problem and was it recorded on an EL 104 form?
 
 Hotline Phone Number [text/call]: (608) 699-6950
@@ -179,13 +210,13 @@ Hotline Phone Number [text/call]: (608) 699-6950
 **IMPORTANT INFO TO CHECK (certificate envelope):**
 1. VOTER SIGNATURE — Any type of mark is acceptable. Legibility is NOT in question. The voter may write an X or other scribble, may print their name, or may have a fully legible signature. A date is NOT required.
 2. WITNESS SIGNATURE AND PRINTED NAME — Required. If the witness did not print or sign their name, the certificate is incomplete and cannot be processed. If the witness signed OR printed their name (cursive or not), the certificate is in compliance. Both are NOT required.
-3. WITNESS ADDRESS — A witness address is sufficient if it contains enough information for the municipal clerk, acting reasonably, to identify a place where the witness can be reached. No single element is required on its own: a certificate should NOT be rejected merely because it lacks a ZIP code or a state, and the clerk may rely on information appearing anywhere on the face of the certificate, not only on the address line. Commonly sufficient entries include a street number and street name; "same" or ditto marks referring to the voter's address; or a unique, identifiable municipality name. An entry that identifies no locatable place — for example, a ZIP code standing alone, or a large municipality name alone with nothing else to place the witness within it — may be insufficient, but this is a case-by-case clerk judgment, not an automatic rejection. A P.O. Box is likewise a clerk-judgment call, not an automatic rejection. If the certificate has NO witness address at all, it is incomplete — but the clerk may not fill it in; the voter or witness must cure it, and if it is not cured by the 8:00 p.m. Election Day deadline, the ballot is set aside and not counted. If you see a ballot rejected for a witness-address defect that appears locatable under this standard — or set aside for a blank address with no cure attempted — record it and notify the team lead. (See SRC-0006.)
+3. WITNESS ADDRESS — _[REVISED 2026-08-04 — CHANGE LOG #1–3; authority: Rise, Inc. v. WEC (Wis. Ct. App. July 11, 2024) and WEC guidance; White v. WEC on cure. See SRC-0006. Original language preserved in CHANGE LOG #1.]_ A witness address is sufficient if it contains **enough information for the municipal clerk, acting reasonably, to identify a place where the witness can be reached.** No single element is required on its own: a certificate should **NOT** be rejected merely because it lacks a ZIP code or a state, and the clerk may rely on information appearing **anywhere on the face of the certificate**, not only on the address line. Commonly sufficient entries include a street number and street name; "same" or ditto marks referring to the voter's address; or a **unique, identifiable municipality name**. An entry that identifies no locatable place — for example, a ZIP code standing alone, or a large municipality name alone with nothing else to place the witness within it — **may** be insufficient, but treat this as a **case-by-case clerk judgment, not an automatic rejection.** (P.O. boxes: flag for clerk judgment rather than automatic rejection; verify against the current WEC processing manual.) If the certificate has **NO witness address at all**, it is incomplete — but the clerk may **not** fill it in. The clerk must attempt to have the **voter or witness** cure it; if it is not cured by the 8:00 p.m. Election Day deadline, the ballot is set aside and not counted. If you see a ballot rejected for a witness-address defect that appears locatable under this standard — or set aside for a blank address with no cure attempted — record it and notify the team lead.
 
 ---
 
 # SRC-0004 — New-Observer.pdf (Wisconsin Election Observer Guide, EL 4 restatement)
 
-A structured restatement of Wisconsin Administrative Code ch. EL 4 covering the Right to Vote principle (EL 4.01), key definitions (EL 4.02), observation and election-official procedures including the 3–8 foot observation-area rule and 60-day WEC reporting (EL 4.03(1)-(5)), observer log and identification requirements (EL 4.04(1)), additional observer access to chairs and restrooms and the uniform-limit rule (EL 4.03), materials that may and may not be observed (EL 4.03(6)-(10)), enforcement and removal via one-warning rule (EL 4.03(11)), observer conduct requirements (EL 4.04(3)-(15)), and location-specific observation rules (EL 4.05). This document notes it is a structured restatement and does not replace the text of the rule. Because it is a partisan restatement (marked "Paid for by the Republican Party of Wisconsin"), cite SRC-0002 (the official code text) as authority.
+A structured restatement of Wisconsin Administrative Code ch. EL 4 covering the Right to Vote principle (EL 4.01), key definitions (EL 4.02), observation and election-official procedures including the 3–8 foot observation-area rule and 60-day WEC reporting (EL 4.03(1)-(5)), observer log and identification requirements (EL 4.04(1)), additional observer access to chairs and restrooms and the uniform-limit rule (EL 4.03), materials that may and may not be observed (EL 4.03(6)-(10)), enforcement and removal via one-warning rule (EL 4.03(11)), observer conduct requirements (EL 4.04(3)-(15)), and location-specific observation rules (EL 4.05). This document notes it is a structured restatement and does not replace the text of the rule. (Marked "Paid for by the Republican Party of Wisconsin.") _[Editorial note, 2026-08-04: unchanged; because this is a partisan restatement, cite SRC-0002 (official code text) as authority.]_
 
 ---
 
@@ -212,32 +243,34 @@ A structured restatement of Wisconsin Administrative Code ch. EL 4 covering the 
 - Respect requests of inspectors and election workers. Do not wear campaign materials in/around the central counting location. Do not engage in discussions with voters, inspectors (except allowed questions), or unfamiliar observers. Do not speak to the press.
 - You are OBSERVING the process to make sure Election Laws are followed. Trust, BUT VERIFY.
 
-**CERTIFICATE-ENVELOPE CHECKS**
-- Apply the witness-address standard in SRC-0003 item 3 (and SRC-0006): a witness address is sufficient if the clerk can reasonably identify a place to reach the witness. A missing ZIP or state, a unique municipality name, or a P.O. Box is not an automatic rejection, and a blank witness address requires voter cure, not clerk fill-in.
-- A voter may not void ("spoil") an already-returned absentee ballot to vote again (SRC-0007).
+_[NOTE — ADDED 2026-08-04, CHANGE LOG #6: When checking absentee certificate envelopes, apply the corrected witness-address standard in SRC-0003 item 3 (and SRC-0006): sufficiency is whether the clerk can reasonably identify a place to reach the witness — do not treat a missing ZIP/state, a unique municipality name, or a P.O. box as an automatic rejection, and a blank witness address requires voter cure, not clerk fill-in. Also note the ballot-spoiling prohibition (SRC-0007): a voter may not void an already-returned absentee ballot to vote again.]_
 
 Hotline Phone Number [text/call]: (608) 699-6950
 
 ---
 
-# SRC-0006 — Witness-Address Sufficiency and Missing-Address Cure
+# SRC-0006 — Witness-Address Sufficiency and Missing-Address Cure (controlling authority; added 2026-08-04)
 
-Controlling authority governing when an absentee certificate envelope may be rejected for a witness-address defect. Current as of August 2026.
+_Not a field PDF. Added so the corrected SRC-0003/SRC-0005 witness-address citations resolve within this corpus. Current as of August 2026._
 
-**Sufficiency standard (partial or unconventional address).** *Rise, Inc. v. Wisconsin Elections Commission*, Wis. Ct. App. (decided July 11, 2024; final Dane County Circuit Court order Sept. 17, 2024). A witness "address" means enough information for a municipal clerk, acting reasonably, to identify a place where the witness can be reached. The court rejected a rigid "street number + street name + municipality" test, and judged sufficiency from the clerk's viewpoint rather than that of a general community member. No individual component is mandatory, and the clerk may use information appearing anywhere on the face of the certificate. The Wisconsin Elections Commission's implementing guidance ("Missing or Insufficient Witness Address on Absentee Certificate Envelopes") directs clerks not to reject a certificate solely for a missing state or ZIP code, and confirms that a unique, identifiable municipality name can suffice on its own. An entry that locates no place (for example, a ZIP code alone, or a large-city name alone) may be insufficient on a case-by-case basis.
+**Sufficiency standard (partial or unconventional address).** *Rise, Inc. v. Wisconsin Elections Commission*, Wis. Ct. App. (decided July 11, 2024; final Dane County Circuit Court order Sept. 17, 2024). A witness "address" means enough information for a **municipal clerk, acting reasonably, to identify a place where the witness can be reached.** The court rejected a rigid "street number + street name + municipality" test and rejected a "reasonable person in the community" viewpoint in favor of the **clerk's** viewpoint. No individual component is mandatory, and the clerk may use information appearing **anywhere on the face of the certificate.** WEC's implementing guidance ("Amended: Missing or Insufficient Witness Address on Absentee Certificate Envelopes") directs clerks **not** to reject solely for a missing **state or ZIP code**, and confirms a **unique/identifiable municipality name can suffice**; an entry that locates no place (e.g., a ZIP alone, or a large-city name alone) may be insufficient on a case-by-case basis.
 
-**Missing (blank) address — cure.** *White v. Wisconsin Elections Commission*, Dane County Circuit Court (Case No. 2022-CV-001008; permanent injunction, amended Feb. 8, 2024). The Commission is enjoined from advising clerks that they may add or correct witness-address information themselves. A clerk therefore cannot fill in a blank witness address; the voter or witness must cure it. If it is not cured by the 8:00 p.m. Election Day receipt deadline (Wis. Stat. §§6.87–6.88), the ballot is set aside and not counted.
+**Missing (blank) address — cure.** *White v. Wisconsin Elections Commission*, Dane County Circuit Court (2022-CV-001008; permanent injunction, amended Feb. 8, 2024). WEC is enjoined from advising clerks that they may **add or correct** witness-address information themselves. Practical rule: a clerk **cannot** fill in a blank witness address; the **voter or witness** must cure it. If it is not cured by the 8:00 p.m. Election Day receipt deadline (Wis. Stat. §§6.87–6.88), the ballot is set aside and not counted.
 
-**Legislative note.** AB 1037 / SB 966, which would have required a seven-component witness address (printed first and last name, house or apartment number, street name, municipality, state, ZIP) and barred third-party correction, failed and did not become law. The *Rise*/WEC standard controls.
+**Note on legislation.** AB 1037 / SB 966, which would have required a seven-component witness address (printed first and last name, house/apartment number, street name, municipality, state, ZIP) and barred third-party correction, **failed** and did **not** become law. The lenient *Rise*/WEC standard therefore controls.
 
 ---
 
-# SRC-0007 — Ballot-Spoiling Prohibition
+# SRC-0007 — Ballot-Spoiling Prohibition (controlling authority; added 2026-08-04)
 
-Controlling authority on whether a voter may void a returned absentee ballot. Current as of August 2026; this guidance is being litigated, so confirm its posture before each election.
+_Not a field PDF. Added to reflect a July 2026 count-rule change absent from the original corpus. Current as of August 2026; note the guidance is being litigated._
 
-**Rule.** On July 9, 2026, the Wisconsin Elections Commission adopted updated ballot-spoiling guidance providing that a voter who has already returned an absentee ballot may not void ("spoil") it to receive and vote a replacement — even weeks before Election Day, and even if a candidate has withdrawn. This differs from in-person voters, who may obtain replacement ballots at the polls.
+**Rule.** On July 9, 2026, the Wisconsin Elections Commission adopted (4–2) **updated ballot-spoiling guidance**: a voter who has **already returned** an absentee ballot may **not** void ("spoil") it in order to receive and vote a replacement — even weeks before Election Day, and even if a candidate has withdrawn. (This differs from in-person voters, who may obtain replacement ballots at the polls.)
 
-**Status.** A Dane County Circuit Court upheld the guidance on July 29, 2026 (*Kormanik v. Wisconsin Elections Commission*). Litigation is ongoing.
+**Status.** A Dane County Circuit Court **upheld** the guidance on July 29, 2026 (*Kormanik v. WEC*). Litigation is ongoing; verify the current posture before each election.
 
 **Observer relevance.** At a clerk's office, alternate absentee site, or central count, observers may witness voters attempting to spoil already-returned ballots. Record any such attempt and notify the team lead.
+
+---
+
+_End of corpus. For the full research memo and source hyperlinks supporting SRC-0006 and SRC-0007 and the SRC-0003/0005 revisions, see the companion vetting report (2026-08-04)._
