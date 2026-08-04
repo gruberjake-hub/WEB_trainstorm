@@ -1,3 +1,13 @@
+> **Manifold conformance banner (2026-07-31).** This architecture record is the ORIGINAL
+> deliverable-side design. It has since been reconciled to the Manifold as the single source of
+> truth. Where this doc says selection fires on *Script_Normalizer enums*, that is superseded:
+> selection now fires on the Manifold's governed vocabularies, and bindings select elements by
+> `element_id` rather than interpolating storyboard fields. See `README.md` (Manifold conformance)
+> and the repo-root `RECONCILIATION.md` for the diff and rationale. The three-orthogonal-concerns
+> model below is unchanged and is exactly what carried over.
+
+---
+
 # Layout Engine — architecture record
 
 _Captured 2026-07-31 from a Course_Builder implementation session (GEN607 work). This
@@ -110,7 +120,6 @@ layout-engine/
 ├── ci/validate_sidecar.py                              # schema + sha256 pin + refs/slots
 └── README.md
 ```
-
 Six seed layouts (from real GEN607 slides): `TITLE_BODY`, `STATIC_CARDS_3`,
 `REVEAL_GRID`, `SCENARIO_SORT`, `DIAGRAM_VENN`, `KC_SINGLE`.
 

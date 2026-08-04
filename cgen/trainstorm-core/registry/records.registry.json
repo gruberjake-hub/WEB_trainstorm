@@ -1,0 +1,10 @@
+{
+  "registry_version": "records.v0.1",
+  "status": "draft",
+  "owner": "quality",
+  "description": "Governed record/evidence types referenced by bindings.procedure.produces_records — the GxP proof a step happened. Id prefix rec_. Seed set; extend via version bump.",
+  "governance": { "closed_list": true, "rule": "produces_records may only reference record keys defined here. New record types require an entry + version bump." },
+  "records": [
+    { "key": "rec_complaint_form", "label": "Product Complaint Form", "definition": "The controlled intake record capturing complaint product, lot, and reporter details." }
+  ]
+}

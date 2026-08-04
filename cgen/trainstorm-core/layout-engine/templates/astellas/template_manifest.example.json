@@ -37,6 +37,7 @@
       "id": "TITLE_BODY",
       "source_layout_name": "AST_TitleBody",
       "description": "Static title + prose/bulleted body. The workhorse for low-complexity awareness screens.",
+      "interaction_primitive": null,
       "render_strategy": "native",
       "slots": [
         { "name": "Title", "type": "title", "geometry": { "x_in": 0.7, "y_in": 0.4, "w_in": 11.9, "h_in": 0.7 }, "constraints": { "max_lines": 2, "font_size_pt": 30 } },
@@ -47,6 +48,7 @@
       "id": "STATIC_CARDS_3",
       "source_layout_name": "AST_StaticCards3",
       "description": "Title + intro + three peer cards, all visible. Used for the Equipment & Facility Controls slide.",
+      "interaction_primitive": null,
       "render_strategy": "programmatic",
       "slots": [
         { "name": "Title", "type": "title", "geometry": { "x_in": 0.7, "y_in": 0.4, "w_in": 11.9, "h_in": 0.7 } },
@@ -60,6 +62,7 @@
       "id": "REVEAL_GRID",
       "source_layout_name": "AST_RevealGrid",
       "description": "Prompt + grid of click-to-reveal cards, gated Continue. Each card lifts to a Storyline layer. Used for Production & Process Controls.",
+      "interaction_primitive": "click_reveal",
       "render_strategy": "programmatic",
       "slots": [
         { "name": "Prompt", "type": "body", "geometry": { "x_in": 0.72, "y_in": 1.4, "w_in": 11.7, "h_in": 1.2 } },
@@ -74,7 +77,8 @@
     {
       "id": "SCENARIO_SORT",
       "source_layout_name": "AST_ScenarioSort",
-      "description": "Stem + selectable option cards with per-choice feedback layers. Used for the Combination Products sort.",
+      "description": "Stem + selectable option cards with per-choice feedback layers. Used for the Combination Products sort. NOTE: exemplar grid normalized to 2x2 (max 4) to match the binding's repeat max — the prior '3-up' vs up-to-6 mismatch was a drift flagged in reconciliation.",
+      "interaction_primitive": "scenario_select",
       "render_strategy": "programmatic",
       "slots": [
         { "name": "Title", "type": "title", "geometry": { "x_in": 0.7, "y_in": 0.42, "w_in": 11.82, "h_in": 0.7 } },
@@ -82,12 +86,13 @@
         { "name": "Option", "type": "card", "geometry": { "x_in": 0.92, "y_in": 2.55, "w_in": 3.6, "h_in": 1.85 }, "repeatable": true,
           "storyline": { "shape_name": "opt", "role": "layer_target" } }
       ],
-      "exemplar": { "of_slot": "Option", "geometry": { "x_in": 0.92, "y_in": 2.55, "w_in": 3.6, "h_in": 1.85 }, "gutter_in": 0.35, "grid": "3-up" }
+      "exemplar": { "of_slot": "Option", "geometry": { "x_in": 0.92, "y_in": 2.55, "w_in": 3.6, "h_in": 1.85 }, "gutter_in": 0.35, "grid": "2x2" }
     },
     {
       "id": "DIAGRAM_VENN",
       "source_layout_name": "AST_DiagramVenn",
       "description": "Why-panel + 3-set venn + callouts. The combination-products convergence beat.",
+      "interaction_primitive": null,
       "render_strategy": "programmatic",
       "slots": [
         { "name": "WhyPanel", "type": "body", "geometry": { "x_in": 0.5, "y_in": 1.3, "w_in": 3.95, "h_in": 4.85 } },
@@ -100,6 +105,7 @@
       "id": "KC_SINGLE",
       "source_layout_name": "AST_KCSingle",
       "description": "Single-best multiple-choice knowledge check; correct answer sets the section advancement variable.",
+      "interaction_primitive": "mcq_single",
       "render_strategy": "programmatic",
       "slots": [
         { "name": "Title", "type": "title", "geometry": { "x_in": 0.7, "y_in": 0.4, "w_in": 11.9, "h_in": 0.7 } },

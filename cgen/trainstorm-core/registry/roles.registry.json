@@ -1,0 +1,13 @@
+{
+  "registry_version": "roles.v0.1",
+  "status": "draft",
+  "owner": "quality",
+  "description": "Governed roles referenced by bindings.procedure.performed_by. Roles, NEVER people — no PII; the id prefix is role_. Seed set; extend via version bump.",
+  "governance": { "closed_list": true, "rule": "performed_by may only reference role keys defined here. New roles require an entry + version bump." },
+  "roles": [
+    { "key": "role_qa_intake",   "label": "QA Intake",             "definition": "Quality staff who receive and log incoming complaints/records." },
+    { "key": "role_pv_reviewer", "label": "Pharmacovigilance Reviewer", "definition": "PV staff who assess safety relevance of a complaint or signal." },
+    { "key": "role_qa_reviewer", "label": "QA Reviewer",           "definition": "Quality reviewer who verifies and approves procedural records." },
+    { "key": "role_sme_author",  "label": "SME Author",            "definition": "Subject-matter expert who authors/validates procedural content (the reconciliation-loop human)." }
+  ]
+}

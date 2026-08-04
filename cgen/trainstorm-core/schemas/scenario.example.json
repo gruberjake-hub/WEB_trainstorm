@@ -1,0 +1,18 @@
+{
+  "type": "scenario",
+  "situation": "A colleague sees the new posted pay range for their own role and asks what it means for their salary.",
+  "role": "people_manager",
+  "decision_points": [
+    { "id": "dp1", "prompt": "How do you respond?",
+      "branches": [
+        { "label": "Explain the range describes the role's market, not a raise entitlement.", "quality": "optimal", "consequence": "The colleague feels informed and calm.", "feedback": "Right — ranges describe the role, and position within them is earned.", "leads_to": "dp2" },
+        { "label": "Tell them they should be at the top of the range.", "quality": "incorrect", "consequence": "You've set an expectation you can't keep.", "feedback": "Range position depends on experience and performance, not posting alone." }
+      ] },
+    { "id": "dp2", "prompt": "They ask how their position in the range is set. What do you point to?",
+      "branches": [
+        { "label": "Experience, performance, and internal equity.", "quality": "optimal", "feedback": "Correct — the three principles." },
+        { "label": "Tenure alone.", "quality": "suboptimal", "feedback": "Tenure is a factor, but not the whole story." }
+      ] }
+  ],
+  "pedagogical_intent": "practice"
+}
