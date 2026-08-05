@@ -376,8 +376,24 @@ function blank(){
     entries:[]
   };
 }
+function newId(){
+  // Stable per-observation id. crypto.randomUUID when available; fallback otherwise.
+  if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return "obs-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2,8);
+}
 function load(){
-  try{ const s=JSON.parse(localStorage.getItem(KEY)); return s && s.entries ? s : blank(); }
+  try{
+    const s=JSON.parse(localStorage.getItem(KEY));
+    if(!(s && s.entries)) return blank();
+    // Migrate older records to the versioned model.
+    s.entries.forEach(e=>{
+      if(!e.id) e.id = newId();
+      if(e.rev == null) e.rev = 1;
+      if(e.sentRev === undefined) e.sentRev = e.submitted ? 1 : null; // honor old flag
+      delete e.submitted;
+    });
+    return s;
+  }
   catch{ return blank(); }
 }
 function persist(){ localStorage.setItem(KEY, JSON.stringify(state)); }
@@ -513,20 +529,31 @@ function closeEntry(){ document.getElementById("entryModal").classList.remove("o
 function saveEntry(){
   const tags=[...selectedTags].map(i=>ISSUES[i].t);
   const cites=[...new Set([...selectedTags].map(i=>ISSUES[i].c).filter(Boolean))].join(" • ");
+  const prev = editIndex>=0 ? state.entries[editIndex] : null;
   const entry={
+    id: prev ? prev.id : newId(),
+    rev: prev ? (prev.rev||1) : 1,
+    sentRev: prev ? (prev.sentRev ?? null) : null,
     time:val("eTime"), location:val("eLocation"), observed:val("eObserved"),
     actor:val("eActor"), witnesses:val("eWitnesses"),
     objectionRaised:objVal, objectionDetail:val("eObjDetail"),
     evidence:val("eEvidence"), el104:el104Val,
-    issueTags:tags, suggestedCite:cites, notes:val("eNotes"),
-    // Preserve submitted status when editing; new entries start unsubmitted.
-    submitted: editIndex>=0 ? !!(state.entries[editIndex] && state.entries[editIndex].submitted) : false
+    issueTags:tags, suggestedCite:cites, notes:val("eNotes")
   };
   if(!entry.observed.trim()){ alert("Please describe what was observed."); return; }
+  // Append-only rule: if this observation was already sent centrally, an edit
+  // becomes a NEW revision. Bumping rev makes the next submit APPEND a linked
+  // record to the Sheet instead of the edit being lost.
+  if(prev && entry.sentRev != null && entry.rev === entry.sentRev){
+    entry.rev = entry.sentRev + 1;
+  }
   if(editIndex>=0) state.entries[editIndex]=entry;
   else state.entries.unshift(entry);
   persist(); renderLog(); closeEntry();
 }
+// An entry needs sending if it has never been sent, or its current revision
+// (after an edit) hasn't been sent yet.
+function needsSend(e){ return e.sentRev == null || e.rev !== e.sentRev; }
 function deleteEntry(){
   if(editIndex<0) return;
   if(!confirm("Delete this incident?")) return;
@@ -544,9 +571,14 @@ function renderLog(){
     const flags=[];
     if(e.objectionRaised==="Yes") flags.push("objection raised");
     if(e.issueTags && e.issueTags.length) flags.push(...e.issueTags.slice(0,2));
-    const sent = e.submitted
-      ? '<span class="pill" style="background:rgba(63,176,107,.18);border-color:var(--good);color:#c8f4d8">✓ sent to team</span>'
-      : '<span class="pill" style="border-color:var(--warn);color:#f0cf8f">not yet sent</span>';
+    let sent;
+    if(e.sentRev == null){
+      sent = '<span class="pill" style="border-color:var(--warn);color:#f0cf8f">not yet sent</span>';
+    } else if(e.rev !== e.sentRev){
+      sent = '<span class="pill" style="border-color:var(--warn);color:#f0cf8f">edited — not yet sent</span>';
+    } else {
+      sent = `<span class="pill" style="background:rgba(63,176,107,.18);border-color:var(--good);color:#c8f4d8">✓ sent (v${e.rev})</span>`;
+    }
     div.innerHTML = `
       <div class="top">
         <div>
@@ -566,7 +598,7 @@ function renderLog(){
 function refreshSubmitBtn(){
   const btn=document.getElementById("submitBtn");
   if(!btn) return;
-  const unsent=state.entries.filter(e=>!e.submitted).length;
+  const unsent=state.entries.filter(needsSend).length;
   btn.textContent = unsent ? `⬆ Submit ${unsent} to team` : "✓ All observations sent";
   btn.disabled = unsent===0;
 }
@@ -574,7 +606,7 @@ function refreshSubmitBtn(){
 // Send all unsent observations to the shared team record.
 async function submitToTeam(){
   save();
-  const unsent=state.entries.filter(e=>!e.submitted);
+  const unsent=state.entries.filter(needsSend);
   if(!unsent.length){ toast("Nothing new to send"); return; }
   const btn=document.getElementById("submitBtn");
   btn.disabled=true; btn.innerHTML='<span class="spin"></span> Sending…';
@@ -586,8 +618,8 @@ async function submitToTeam(){
       toast("Could not send");
       alert("Could not submit to team:\n\n"+(data.error||("HTTP "+r.status))+(data.detail?"\n\n"+data.detail:""));
     }else{
-      // Mark the sent ones so we don't send duplicates next time.
-      state.entries.forEach(e=>{ if(unsent.includes(e)) e.submitted=true; });
+      // Record which revision was sent, so future edits append a new record.
+      state.entries.forEach(e=>{ if(unsent.includes(e)) e.sentRev = e.rev; });
       persist(); renderLog();
       toast(`Sent ${data.submitted||unsent.length} to team`);
     }

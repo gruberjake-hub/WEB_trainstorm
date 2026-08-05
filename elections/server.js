@@ -387,6 +387,9 @@ async function handleCheck(req, res) {
 // The columns written to the Google Sheet, in order. The Apps Script writes
 // this as the header row the first time, then one row per observation.
 const SUBMIT_COLUMNS = [
+  "Record ID",
+  "Revision",
+  "Status",
   "Submitted (server time)",
   "Observer",
   "Organization",
@@ -430,7 +433,13 @@ async function handleSubmit(req, res) {
 
   const o = payload.observer || {};
   const stamp = new Date().toISOString();
-  const rows = entries.map((e) => [
+  const rows = entries.map((e) => {
+    const rev = Number(e.rev) || 1;
+    const status = rev > 1 ? `Edit — supersedes v${rev - 1}` : "Original";
+    return [
+    e.id || "",
+    `v${rev}`,
+    status,
     stamp,
     o.name || "",
     o.organization || "",
@@ -447,7 +456,8 @@ async function handleSubmit(req, res) {
     Array.isArray(e.issueTags) ? e.issueTags.join("; ") : "",
     e.suggestedCite || "",
     e.notes || "",
-  ]);
+    ];
+  });
 
   let r;
   try {
