@@ -16,6 +16,7 @@ _Generated from the observer organization's ground documents._
 | 5 | `SRC-0005-Observer-Rules` | `Observer-Rules_structured.md` |
 | 6 | `SRC-0006-Witness-Address-Standard-and-Cure` | `SRC-0006-Witness-Address-Standard-and-Cure.md` |
 | 7 | `SRC-0007-Ballot-Spoiling-Prohibition` | `SRC-0007-Ballot-Spoiling-Prohibition.md` |
+| 8 | `SRC-0008-Referenced-Statutes` | `SRC-0008-Referenced-Statutes.md` |
 
 ---
 
@@ -60,7 +61,7 @@ History: CR 24-032: cr. Register July 2025 No. 835, eff. 8-1-25.
 (16) "Public aspects of the voting process" means the election activities that take place at an observable location during those hours specified in this chapter as permitting observation, except for inspection of confidential information.
 (17) "Representing the same organization" means individuals who were deployed, assigned, or who identify as representing the same organization.
 (18) "Voting area" is that area at an observable location where voters receive, prepare, or deposit their ballots, or where voters cast their votes on a voting machine.
-History: CR 24-032: cr. Register July 2025 No. 835, eff. 8-1-25.
+History: CR 24-032: cr. Register July 2025 No. 835, eff. 8-1-25; correction in (8) made under s. 13.92 (4) (b) 7., Stats., correction in (13) made under s. 35.17, Stats., and correction in (16) made under ss. 13.92 (4) (b) 12. and 35.17, Stats., Register July 2025 No. 835.
 
 **EL 4.03 Procedures for election officials.**
 (1) The designated election official shall do all of the following:
@@ -87,7 +88,7 @@ History: CR 24-032: cr. Register July 2025 No. 835, eff. 8-1-25.
 (b) If the offending observer who is ordered to depart under par. (a) declines or otherwise fails to comply with the designated election official's order to depart, the official may summon law enforcement to remove the offending observer consistent with s. 7.37 (2), Stats. The designated election official shall provide a written order to the observer which includes the reason for the order and the signature of the designated election official.
 (c) If the designated election official who has issued an order to an observer to depart has been appointed from a list provided by a political party under s. 7.30 (4), Stats., the designated election official shall offer an election official representing the opposite political party than the designated election official, if he or she is available on a timely basis, the opportunity to sign the written order and to note any concurrence or disagreement with that order. Failure of that election official to sign the written order, or the unavailability of that official to review the order in a timely fashion, does not affect the enforceability of that order.
 (d) If an observer is ordered to leave an observable location, an election official shall record the incident and the designated election official shall, within 60 days of the incident, provide to the commission a copy of the order and any other documentation of the incident. The designated official may use a copy of an inspectors' statement or other incident log to comply with this subsection.
-History: CR 24-032: cr. Register July 2025 No. 835, eff. 8-1-25.
+History: CR 24-032: cr. Register July 2025 No. 835, eff. 8-1-25; (2) title repealed under s. 13.92 (4) (b) 2., Stats., Register July 2025 No. 835.
 
 **EL 4.04 Conduct of observers.**
 (1) A member of the public intending to exercise the right to observe an election under s. 7.41, Stats., shall notify the designated election official of that intent upon entering the observable location and shall sign the election observer log acknowledging that the observer understands the applicable rules and will abide by them. An observer shall present photo identification showing the observer's name to the designated election official and shall legibly print the observer's full name, street address and municipality, and the name of the organization the observer represents, if any, on the observer log. An observer is not required to be affiliated with or represent an organization. The photo identification does not need to conform to the requirements of s. 5.02 (6m), Stats.
@@ -105,7 +106,7 @@ History: CR 24-032: cr. Register July 2025 No. 835, eff. 8-1-25.
 (13) No observer may initiate a conversation with a voter. If a voter initiates a conversation with an observer inside an observable location, except as allowed by sub. (15), the observer may briefly respond to the voter if such response does not disturb other voters or the orderly administration of the election. The observer may also refer the voter to an election official for any election related questions, and briefly explain to the voter that the observer is observing the election and is not an election official. A brief wave or greeting to an individual known to the observer does not constitute a violation of this subsection.
 (14) An observer may communicate with the designated election official and any other election officials at the discretion of the designated election official.
 (15) Nothing in this chapter shall be construed to prevent an observer from assisting a voter in accordance with s. 6.82, 6.87 (5), or 6.875 (6) (c) 1., Stats., provided that the voter requests the observer's assistance.
-History: CR 24-032: cr. Register July 2025 No. 835, eff. 8-1-25.
+History: CR 24-032: cr. Register July 2025 No. 835, eff. 8-1-25; correction in (2), (4), (13) made under s. 13.92 (4) (b) 7., Stats., Register July 2025 No. 835.
 
 **EL 4.05 Location specific requirements.**
 (1) Polling place.
@@ -241,3 +242,255 @@ Controlling authority on whether a voter may void a returned absentee ballot. Cu
 **Status.** A Dane County Circuit Court upheld the guidance on July 29, 2026 (*Kormanik v. Wisconsin Elections Commission*). Litigation is ongoing.
 
 **Observer relevance.** At a clerk's office, alternate absentee site, or central count, observers may witness voters attempting to spoil already-returned ballots. Record any such attempt and notify the team lead.
+
+---
+
+# SRC-0008 — Referenced Wisconsin Statutes (text behind the citations)
+
+This appendix reproduces the current text of the Wisconsin Statutes sections that ch. EL 4 and the field guidance in this corpus cite. It is included so that citations resolve to their actual statutory language rather than a bare section number. Scope is curated: only the sections the corpus references are included (chapters 5, 6, 7, 9, and 12), and for a few very long sections only the cited subsections are reproduced (marked "excerpt"). Chapter EL 9 of the Administrative Code (challenges) is referenced by EL 4.04(5) but is administrative code, not statute; see the official code for its text.
+
+Currency note: text reflects the Wisconsin Statutes as published for 2025. The 2024–2026 developments captured in SRC-0006 and SRC-0007 changed the interpretation and administration of some of these sections (notably s. 6.87), not the statutory words themselves. Verify against the official source before final adoption: https://docs.legis.wisconsin.gov/statutes/statutes.
+
+## § 5.02 — Definitions (excerpt: subs. (4e), (6m), (10))
+Behind: EL 4.02(2) "clerk", 4.02(5) confidential information / photo ID, 4.02(8) "election official", 4.04(1) photo identification.
+
+(4e) "Election official" means an individual who is charged with any duties relating to the conduct of an election.
+
+(6m) "Identification" means any of the following documents issued to an individual: (a) One of the following documents that is unexpired or if expired has expired after the date of the most recent general election: 1. An operator's license issued under ch. 343. 2. An identification card issued under s. 343.50. 3. An identification card issued by a U.S. uniformed service. 4. A U.S. passport. (b) A certificate of U.S. naturalization that was issued not earlier than 2 years before the date of an election at which it is presented. (c) An unexpired driving receipt under s. 343.11. (d) An unexpired identification card receipt issued under s. 343.50. (e) An identification card issued by a federally recognized Indian tribe in this state. (f) An unexpired identification card issued by a university or college in this state that is accredited, as defined in s. 39.30 (1) (d), or by a technical college in this state that is a member of and governed by the technical college system under ch. 38, that contains the date of issuance and signature of the individual to whom it is issued and that contains an expiration date indicating that the card expires no later than 2 years after the date of issuance if the individual establishes that he or she is enrolled as a student at the university or college on the date that the card is presented. (g) An unexpired veterans identification card issued by the veterans health administration of the federal department of veterans affairs.
+
+(10) "Municipal clerk" means the city clerk, town clerk, village clerk and the executive director of the city election commission and their authorized representatives. Where applicable, "municipal clerk" also includes the clerk of a school district.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/5/02
+
+## § 5.25 — Polling places (excerpt: sub. (4)(a))
+Behind: EL 4.02(13) accessibility reviewer (monitors compliance with s. 5.25 (4) (a)); EL 4.03(1)(c) accessible observation area.
+
+(4)(a) Each polling place shall be accessible to all individuals with disabilities. The commission shall ensure that the voting system used at each polling place will permit all individuals with disabilities to vote without the need for assistance and with the same degree of privacy that is accorded to nondisabled electors voting at the same polling place. This paragraph does not apply to any individual who is disqualified from voting under s. 6.03 (1) (a).
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/5/25
+
+## § 5.35 — Polling place requirements (excerpt: subs. (4), (5))
+Behind: EL 4.03(8) (observing poll lists without interfering under s. 5.35 (5)); the voting-area limits observers must respect.
+
+(4) Layout; organization. All voting booths and machines shall be placed apart from other activities in the polling place, with their exteriors in full view of the election officials. Only the proper election officials, persons observing the proceedings under s. 7.41, persons assisting voters under s. 6.82 (2) and electors receiving, preparing or depositing their ballots or casting their votes on the machines are permitted in the voting area. Except where assistance is authorized, only one elector at a time is permitted in a voting booth or machine.
+
+(5) Activities restricted. No polling place may be situated so as to interfere with or distract election officials from carrying out their duties. The municipal clerk and election inspectors shall prevent interference with and distraction of electors at polling places.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/5/35
+
+## § 6.34 — Proof of residence required (excerpt: sub. (3))
+Behind: EL 4.02(5) ("proof of residency as defined by s. 6.34 (3)").
+
+(3)(a) An identifying document used to establish proof of an elector's residence under sub. (2) shall contain the information required under par. (b) and is limited to one of the following: 1. A current and valid operator's license issued under ch. 343. 2. A current and valid identification card issued under s. 343.50. 3. Subject to s. 66.0438, any other official identification card or license issued by a Wisconsin governmental body or unit. 4. An official identification card or license issued by an employer in the normal course of business that contains a photograph of the cardholder or license holder, but not including a business card. 5. A real property tax bill or receipt for the current year or the year preceding the date of the election. 6. Except as provided in sub. (2), a residential lease. 7. Any of the following documents without the address specified in par. (b): a. A university, college, or technical college identification card that contains a photograph of the cardholder together with a fee payment receipt issued to the cardholder by the university, college, or technical college dated no earlier than 9 months before the date of the election at which the receipt is presented. b. An identification card issued by a university, college, or technical college that contains a photograph of the cardholder if the university, college, or technical college that issued the card provides a certified and current list of students who reside in housing sponsored by the university, college, or technical college and who are U.S. citizens to the municipal clerk prior to the election showing the current address of the students and if the municipal clerk, election registration official, or inspector verifies that the student presenting the card is included on the list. 8. A utility bill for the period commencing not earlier than 90 days before the day registration is made. 9. A bank statement. 10. A paycheck. 11. A check or other document issued by a unit of government. 12. For an occupant of a residential care facility, as defined in s. 6.875 (1) (bm), for the purpose of registering at the facility, a contract or intake document prepared by the residential care facility that specifies that the occupant currently resides in the facility. The contract or intake document may also identify the room or unit in which the occupant resides. 13. An identification card issued by a federally recognized Indian tribe in this state.
+
+(3)(b) Except as provided in par. (a) 7., the identifying documents prescribed in par. (a) shall contain all of the following in order to be considered proof of residence: 1. A current and complete name, including both the given and family name. 2. A current and complete residential address, including a numbered street address, if any, and the name of a municipality.
+
+(3)(c) Identifying documents specified in par. (a) which are valid for use during a specified period must be valid on the day that an elector makes application for registration in order to constitute proof of residence.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/34
+
+## § 6.36 — Official registration list (excerpt: sub. (4))
+Behind: EL 4.03(8) (observer may observe poll lists "excluding the confidential portions of the lists maintained under ss. 6.36 (4) and 6.79 (6)").
+
+(4) The names and identification serial numbers of electors who have obtained a confidential listing under s. 6.47 (2) shall appear separately after the remainder of the list. These names and serial numbers shall be arranged alphabetically by last name.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/36
+
+## § 6.45 — Access to registration list (excerpt: sub. (1m))
+Behind: observers' access to the registration list at the polling place (see s. 7.41 (4); EL 4.03(8)).
+
+(1m) The registration list and any supplemental lists which are prepared at polling places or other registration locations under s. 6.55, shall be open to public inspection. Under the regulations prescribed by the municipal clerk, any person may copy the registration list at the office of the clerk. A registration list maintained at a polling place may be examined by any person who is observing the proceedings under s. 7.41 when such use does not interfere with the conduct of the election. This subsection does not apply to information that is confidential under s. 6.47.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/45
+
+## § 6.79 — Recording electors (excerpt: sub. (6))
+Behind: EL 4.03(8) (confidential portions of poll lists maintained under s. 6.79 (6)).
+
+(6) Confidential names and addresses. An elector who has a confidential listing under s. 6.47 (2) may present his or her identification card issued under s. 6.47 (3), or give his or her name and identification serial number issued under s. 6.47 (3), in lieu of stating his or her name and address and presenting proof of identification under sub. (2). If the elector's name and identification serial number appear on the confidential portion of the list, the inspectors shall issue a voting serial number to the elector, record that number on the poll list and permit the elector to vote.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/79
+
+## § 6.82 — Assisting electors
+Behind: EL 4.02(5) and 4.04(15) (observer may assist a voter under s. 6.82 when requested); s. 5.35 (4) permits persons assisting under s. 6.82 (2) in the voting area.
+
+(1) Receipt of ballot at poll entrance. (a) When any inspectors are informed that an eligible elector is at the entrance to the polling place who as a result of disability is unable to enter the polling place, they shall permit the elector to be assisted in marking a ballot by any individual selected by the elector, except the elector's employer or an agent of that employer or an officer or agent of a labor organization which represents the elector. Except as authorized in s. 6.79 (6) and (7), the individual selected by the elector shall present to the inspectors proof of identification and, if the proof of identification does not constitute proof of residence under s. 6.34, shall also provide proof of residence under s. 6.34 for the assisted elector and all other information necessary for the elector to obtain a ballot under s. 6.79 (2). The inspectors shall verify that the name on the proof of identification presented by the person assisting the elector conforms to the elector's name on the poll list or separate list, shall verify that any photograph appearing on that document reasonably resembles the elector, and shall enter both the type of identifying document submitted by the assisted elector as proof of residence and the name of the entity or institution that issued the identifying document in the space provided on the poll list or separate list. The inspectors shall then issue a ballot to the individual selected by the elector and shall accompany the individual to the polling place entrance where the assistance is to be given. If the ballot is a paper ballot, the assisting individual shall fold the ballot after the ballot is marked by the assisting individual. The assisting individual shall then immediately take the ballot into the polling place and give the ballot to an inspector. The inspector shall distinctly announce that he or she has "a ballot offered by .... (stating person's name), an elector who, as a result of disability, is unable to enter the polling place without assistance". The inspector shall then ask, "Does anyone object to the reception of this ballot?" If no objection is made, the inspectors shall record the elector's name under s. 6.79 and deposit the ballot in the ballot box, and shall make a notation on the poll list: "Ballot received at poll entrance". (b) If objection to receiving the ballot is made by any qualified elector present, the inspectors shall receive the ballot under s. 6.95.
+
+(2) Aid in marking ballot. (a) If an elector declares to the presiding election official that he or she cannot read or write, or has difficulty in reading, writing or understanding English or that due to disability is unable to mark a ballot or depress a button or lever on a voting machine, the elector shall be informed by the officials that he or she may have assistance. When assistance is requested, the elector may select any individual to assist in casting his or her vote. The selected individual rendering assistance may not be the elector's employer or an agent of that employer or an officer or agent of a labor organization which represents the elector. The selected individual shall certify on the back of the ballot that it was marked with his or her assistance. Where voting machines are used, certification shall be made on the registration list. (b) The individual chosen shall enter the voting booth or machine with the elector and shall read the names of all candidates on the ballot for each office, and ask, "For which one do you vote?". The ballot shall be marked or the lever or button depressed according to the elector's expressed preference. The individual selected to assist may not disclose to anyone how the elector voted. (c) Intoxication shall not be regarded as a disability. (d) The election officials shall enter upon the poll list after the name of any elector who had assistance in voting the word "assisted". The officials shall also record on the poll list the full name and address of the individual who renders assistance.
+
+(3) Use of paper ballots. Whenever, in a municipality in which voting machines are used, an elector declares to the chief inspector that, due to physical disability, the elector is unable to depress a button or lever on a voting machine, the inspectors shall permit the elector to vote using a paper ballot and voting booth.
+
+(4) Solicitation prohibited. No election official or other person assisting an elector under this section or s. 5.79 may request, suggest or seek to persuade an elector to cast a vote for or against any candidate, party or question.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/82
+
+## § 6.855 — Alternate absentee ballot site
+Behind: EL 4.02(11) "observable location"; EL 4.05(2) (municipal clerk office or alternate site).
+
+(1) The governing body of a municipality may elect to designate a site other than the office of the municipal clerk or board of election commissioners as the location from which electors of the municipality may request and vote absentee ballots and to which voted absentee ballots shall be returned by electors for any election. The designated site shall be located as near as practicable to the office of the municipal clerk or board of election commissioners and no site may be designated that affords an advantage to any political party. An election by a governing body to designate an alternate site under this section shall be made no fewer than 14 days prior to the time that absentee ballots are available for the primary under s. 7.15 (1) (cm), if a primary is scheduled to be held, or at least 14 days prior to the time that absentee ballots are available for the election under s. 7.15 (1) (cm), if a primary is not scheduled to be held, and shall remain in effect until at least the day after the election. If the governing body of a municipality makes an election under this section, no function related to voting and return of absentee ballots that is to be conducted at the alternate site may be conducted in the office of the municipal clerk or board of election commissioners.
+
+(2) The municipal clerk or board of election commissioners shall prominently display a notice of the designation of the alternate site selected under sub. (1) in the office of the municipal clerk or board of election commissioners beginning on the date that the site is designated under sub. (1) and continuing through the period that absentee ballots are available for the election and for any primary under s. 7.15 (1) (cm). If the municipal clerk or board of election commissioners maintains a website on the Internet, the clerk or board of election commissioners shall post a notice of the designation of the alternate site selected under sub. (1) on the website during the same period that notice is displayed in the office of the clerk or board of election commissioners.
+
+(3) An alternate site under sub. (1) shall be staffed by the municipal clerk or the executive director of the board of election commissioners, or employees of the clerk or the board of election commissioners.
+
+(4) An alternate site under sub. (1) shall be accessible to all individuals with disabilities.
+
+(5) A governing body may designate more than one alternate site under sub. (1).
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/855
+
+## § 6.86 — Methods for obtaining an absentee ballot (excerpt: sub. (1)(a), (ar), (b))
+Behind: EL 4.05(2)(a) (observing in-person issuing and voting of absentee ballots under s. 6.86 (1) (b)). Note: sub. (1)(ar) is the source of the clerk's proof-of-identification initials on the certificate envelope referenced in SRC-0003's clerk-initials line.
+
+(1)(a) Any elector of a municipality who is registered to vote whenever required and who qualifies under ss. 6.20 and 6.85 as an absent elector may make written application to the municipal clerk of that municipality for an official ballot by one of the following methods: 1. By mail. 2. In person at the office of the municipal clerk or at an alternate site under s. 6.855, if applicable. 3. By signing a statement and filing a request to receive absentee ballots under sub. (2) or (2m) (a) or s. 6.22 (4), 6.24 (4), or 6.25 (1) (c). 4. By agent as provided in sub. (3). 5. By delivering an application to a special voting deputy under s. 6.875 (6). 6. By electronic mail or facsimile transmission as provided in par. (ac).
+
+(1)(ar) Except as authorized in s. 6.875 (6), the municipal clerk shall not issue an absentee ballot unless the clerk receives a written application therefor from a qualified elector of the municipality. The clerk shall retain each absentee ballot application until destruction is authorized under s. 7.23 (1). Except as authorized in s. 6.79 (6) and (7), if a qualified elector applies for an absentee ballot in person at the clerk's office, the clerk shall not issue the elector an absentee ballot unless the elector presents proof of identification. The clerk shall verify that the name on the proof of identification presented by the elector conforms to the name on the elector's application and shall verify that any photograph appearing on that document reasonably resembles the elector. The clerk shall then enter his or her initials on the certificate envelope indicating that the absentee elector presented proof of identification to the clerk.
+
+(1)(b) Except as provided in this section, if application is made by mail, the application shall be received no later than 5 p.m. on the 5th day immediately preceding the election. If application is made in person, the application shall be made no earlier than 14 days preceding the election and no later than the Sunday preceding the election. No application may be received on a legal holiday. [Remaining text of (1)(b) addresses military/sequestered-juror timing; see source.]
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/86
+
+## § 6.87 — Absent voting procedure
+Behind: EL 4.02(5), EL 4.05(2)(b); SRC-0003 certificate-envelope checks; SRC-0006 (witness address). Key subsections for count observers: (1) clerk endorsement/initials on the official ballot; (2) certificate form (voter and witness certifications); (6) the 8 p.m. Election Day delivery deadline; (6d) missing witness address; (9) return-to-cure a defective or missing certificate. Read (6d) together with SRC-0006: the statute says a ballot with a certificate missing the witness address may not be counted, while Rise v. WEC governs what counts as a sufficient (present) address and White v. WEC bars the clerk from supplying a missing one.
+
+(1) Upon proper request made within the period prescribed in s. 6.86, the municipal clerk or a deputy clerk authorized by the municipal clerk shall write on the official ballot, in the space for official endorsement, the clerk's initials and official title. Unless application is made in person under s. 6.86 (1) (ar), the absent elector is exempted from providing proof of identification under sub. (4) (b) 2. or 3., or the applicant is a military or overseas elector, the absent elector shall enclose a copy of his or her proof of identification or any authorized substitute document with his or her application. The municipal clerk shall verify that the name on the proof of identification conforms to the name on the application. The clerk shall not issue an absentee ballot to an elector who is required to enclose a copy of proof of identification or an authorized substitute document with his or her application unless the copy is enclosed and the proof is verified by the clerk.
+
+(2) Except as authorized under sub. (3) (d), the municipal clerk shall place the ballot in an unsealed envelope furnished by the clerk. The envelope shall have the name, official title and post-office address of the clerk upon its face. The other side of the envelope shall have a printed certificate which shall include a space for the municipal clerk or deputy clerk to enter his or her initials indicating that if the absentee elector voted in person under s. 6.86 (1) (ar), the elector presented proof of identification to the clerk and the clerk verified the proof presented. The certificate shall also include a space for the municipal clerk or deputy clerk to enter his or her initials indicating that the elector is exempt from providing proof of identification because the individual is a military elector or an overseas elector who does not qualify as a resident of this state under s. 6.10 or is exempted from providing proof of identification under sub. (4) (b) 2. or 3. The certificate shall be in substantially the following form: [the statutory elector certification and the witness certification follow; the witness certification requires the printed name and address of an adult U.S. citizen witness who is not a candidate and did not solicit or advise the elector's vote. A footnote provides that an elector who provides an identification serial number issued under s. 6.47 (3) need not provide a street address, and that a witness for a military or overseas elector need not be a U.S. citizen but must be 18 or older. See source for the full certificate text.]
+
+(3)(a) Except as authorized under par. (d) and as otherwise provided in s. 6.875, the municipal clerk shall mail the absentee ballot to the elector's residence unless otherwise directed by the elector, or shall deliver it to the elector personally at the clerk's office or at an alternate site under s. 6.855. ... If the ballot is delivered to the elector at the clerk's office, or an alternate site under s. 6.855, the ballot shall be voted at the office or alternate site and may not be removed by the elector therefrom. [Paragraphs (b) and (d) address address restrictions and electronic transmission to military/overseas electors; see source.]
+
+(4)(b)1. Except as otherwise provided in s. 6.875, an elector voting absentee, other than a military elector or an overseas elector, shall make and subscribe to the certification before one witness who is an adult U.S. citizen. ... The absent elector, in the presence of the witness, shall mark the ballot in a manner that will not disclose how the elector's vote is cast. The elector shall then, still in the presence of the witness, fold the ballots ... and deposit them in the proper envelope. ... The witness may not be a candidate. The envelope shall be mailed by the elector, or delivered in person, to the municipal clerk issuing the ballot or ballots. ... [Subdivisions 2.–5. provide alternatives to enclosing proof of identification in specified circumstances; see source.]
+
+(5) If the absent elector declares that he or she is unable to read, has difficulty in reading, writing or understanding English or due to disability is unable to mark his or her ballot, the elector may select any individual, except the elector's employer or an agent of that employer or an officer or agent of a labor organization which represents the elector, to assist in marking the ballot, and the assistant shall then sign his or her name to a certification on the back of the ballot, as provided under s. 5.55.
+
+(6) The ballot shall be returned so it is delivered to the polling place no later than 8 p.m. on election day. Except in municipalities where absentee ballots are canvassed under s. 7.52, if the municipal clerk receives an absentee ballot on election day, the clerk shall secure the ballot and cause the ballot to be delivered to the polling place serving the elector's residence before 8 p.m. Any ballot not mailed or delivered as provided in this subsection may not be counted.
+
+(6d) If a certificate is missing the address of a witness, the ballot may not be counted.
+
+(6m) Except as authorized in s. 6.47 (8), the municipal clerk shall withhold from public inspection under s. 19.35 (1) the name and address of any absent elector who obtains a confidential listing under s. 6.47 (2).
+
+(7) No individual who is a candidate at the election in which absentee ballots are cast may serve as a witness. Any candidate who serves as a witness shall be penalized by the discounting of a number of votes for his or her candidacy equal to the number of certificate envelopes bearing his or her signature.
+
+(8) The provisions of this section which prohibit candidates from serving as a witness for absentee electors shall not apply to the municipal clerk in the performance of the clerk's official duties.
+
+(9) If a municipal clerk receives an absentee ballot with an improperly completed certificate or with no certificate, the clerk may return the ballot to the elector, inside the sealed envelope when an envelope is received, together with a new envelope if necessary, whenever time permits the elector to correct the defect and return the ballot within the period authorized under sub. (6).
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/87
+
+## § 6.875 — Absentee voting in certain residential care facilities and retirement homes (excerpt: definitions and observer-relevant subs.)
+Behind: EL 4.02(6) "designated election official" at facilities served by special voting deputies; EL 4.05(4) (absentee voting in residential care facilities and retirement homes).
+
+(1)(bm) "Residential care facility" means an adult family home, community-based residential facility, nursing home, or residential care apartment complex. (at) "Qualified retirement home" means a retirement home that qualifies under sub. (2) (c) to utilize the procedures under this section.
+
+(6)(b) The municipal clerk or executive director of the board of election commissioners shall issue a supply of absentee ballots to the deputies sufficient to provide for the number of valid applications for an absentee ballot received by the clerk, and a reasonable additional number of ballots. The deputies may exercise the authority granted to the chief inspector under s. 7.41 to regulate the conduct of observers. For purposes of the application of s. 7.41, the home or facility shall be treated as a polling place. The municipal clerk or executive director shall keep a careful record of all ballots issued to the deputies and shall require the deputies to return every ballot issued to them.
+
+(6)(c)1. Upon their visit to the home or facility under par. (a), the deputies shall personally offer each elector who has filed a proper application for an absentee ballot the opportunity to cast his or her absentee ballot. ... The deputies shall each witness the certification and may, upon request of the elector, assist the elector in marking the elector's ballot. ... All voting shall be conducted in the presence of the deputies. Upon request of the elector, a relative of the elector who is present in the room may assist the elector in marking the elector's ballot. No individual other than a deputy may witness the certification and no individual other than a deputy or relative of an elector may render voting assistance to the elector.
+
+(7) One observer from each of the 2 recognized political parties whose candidate for governor or president received the greatest number of votes in the municipality at the most recent general election may accompany the deputies to each home or facility where absentee voting will take place under this section. The observers may observe the process of absentee ballot distribution in the common areas of the home or facility. Each party wishing to have an observer present shall submit the name of the observer to the clerk or board of election commissioners no later than the close of business on the last business day prior to the visit.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/875
+
+## § 6.88 — Voting and recording the absentee ballot
+Behind: EL 4.05(2)(b) (observing the initial enclosing and securing of an absentee ballot under s. 6.88); SRC-0003 rejection procedures. Subsection (3)(a) governs opening/counting a valid absentee ballot; (3)(b) governs when the inspectors must NOT count a ballot and how rejected ballots are endorsed and preserved.
+
+(1) When an absentee ballot arrives at the office of the municipal clerk, or at an alternate site under s. 6.855, if applicable, the clerk shall enclose it, unopened, in a carrier envelope which shall be securely sealed and endorsed with the name and official title of the clerk, and the words "This envelope contains the ballot of an absent elector and must be opened in the same room where votes are being cast at the polls during polling hours on election day or, in municipalities where absentee ballots are canvassed under s. 7.52, stats., at a meeting of the municipal board of absentee ballot canvassers under s. 7.52, stats." ... The clerk shall keep the ballot in the clerk's office or at the alternate site, if applicable until delivered, as required in sub. (2).
+
+(2) When an absentee ballot is received by the municipal clerk prior to the delivery of the official ballots to the election officials of the ward in which the elector resides or, where absentee ballots are canvassed under s. 7.52, to the municipal board of absentee ballot canvassers, the municipal clerk shall seal the ballot envelope in the carrier envelope as provided under sub. (1), and shall enclose the envelope in a package and deliver the package to the election inspectors of the proper ward or election district or, in municipalities where absentee ballots are canvassed under s. 7.52, to the municipal board of absentee ballot canvassers when it convenes under s. 7.52 (1). When the official ballots for the ward or election district have been delivered to the election inspectors before the receipt of an absentee ballot, the clerk shall immediately enclose the envelope containing the absentee ballot in a carrier envelope as provided under sub. (1) and deliver it in person to the proper election officials.
+
+(3)(a) Except in municipalities where absentee ballots are canvassed under s. 7.52, at any time between the opening and closing of the polls on election day, the inspectors shall, in the same room where votes are being cast, in such a manner that members of the public can hear and see the procedures, open the carrier envelope only, and announce the name of the absent elector or the identification serial number of the absent elector if the elector has a confidential listing under s. 6.47 (2). When the inspectors find that the certification has been properly executed, the applicant is a qualified elector of the ward or election district, and the applicant has not voted in the election, they shall enter an indication on the poll list next to the applicant's name indicating an absentee ballot is cast by the elector. They shall then open the envelope containing the ballot in a manner so as not to deface or destroy the certification thereon. The inspectors shall take out the ballot without unfolding it or permitting it to be unfolded or examined. Unless the ballot is cast under s. 6.95, the inspectors shall verify that the ballot has been endorsed by the issuing clerk. If the poll list indicates that proof of residence under s. 6.34 is required and proof of residence is enclosed, the inspectors shall enter both the type of identifying document submitted by the absent elector and the name of the entity or institution that issued the identifying document on the poll list in the space provided. If the poll list indicates that proof of residence under s. 6.34 is required and no proof of residence is enclosed or the name or address on the document that is provided is not the same as the name and address shown on the poll list, the inspectors shall proceed as provided under s. 6.97 (2). The inspectors shall then deposit the ballot into the proper ballot box and enter the absent elector's name or voting number after his or her name on the poll list in the same manner as if the elector had been present and voted in person.
+
+(3)(b) When the inspectors find that a certification is insufficient, that the applicant is not a qualified elector in the ward or election district, that the ballot envelope is open or has been opened and resealed, that the ballot envelope contains more than one ballot of any one kind or, except in municipalities where absentee ballots are canvassed under s. 7.52, that the certificate of a military or overseas elector who received an absentee ballot by facsimile transmission or electronic mail is missing, or if proof is submitted to the inspectors that an elector voting an absentee ballot has since died, the inspectors shall not count the ballot. The inspectors shall endorse every ballot not counted on the back, "rejected (giving the reason)". The inspectors shall reinsert each rejected ballot into the certificate envelope in which it was delivered and enclose the certificate envelopes and ballots, and securely seal the ballots and envelopes in an envelope marked for rejected absentee ballots. The inspectors shall endorse the envelope, "rejected ballots" with a statement of the ward or election district and date of the election, signed by the chief inspector and one of the inspectors representing each of the 2 major political parties and returned to the municipal clerk in the same manner as official ballots voted at the election.
+
+(3)(c) The inspectors shall review each certificate envelope to determine whether any absentee ballot is cast by an elector whose name appears on the poll list as ineligible to vote at the election by reason of a felony conviction. If the inspectors receive an absentee ballot that has been cast by an elector whose name appears on the poll list as ineligible for that reason, the inspectors shall challenge the ballot as provided in s. 6.92 and treat the ballot in the manner provided in s. 6.95.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/88
+
+## § 6.925 — Elector making challenge in person
+Behind: EL 4.04(5) (an observer who is an elector directs challenges for cause in accordance with ss. 6.925, 6.93, and 6.935).
+
+Any elector may challenge for cause any person offering to vote whom the elector knows or suspects is not a qualified elector. If a person is challenged as unqualified by an elector, one of the inspectors may administer the oath or affirmation to the challenged elector under s. 6.92 and ask the challenged elector the questions under that section which are appropriate to test the elector's qualifications. In addition, one of the inspectors shall administer the following oath or affirmation to the challenging elector: "You do solemnly swear (or affirm) that you will fully and truly answer all questions put to you regarding the challenged person's place of residence and qualifications as an elector of this election"; and shall then ask questions which are appropriate as determined by the commission, by rule, to test the qualifications of the challenged elector.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/925
+
+## § 6.93 — Challenging the absent elector
+Behind: EL 4.04(5).
+
+The vote of any absent elector may be challenged for cause and the inspectors of election shall have all the power and authority given them to hear and determine the legality of the ballot the same as if the ballot had been voted in person. In municipalities where absentee ballots are canvassed under s. 7.52, the vote of an absentee elector may be challenged as provided in s. 7.52 (5).
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/93
+
+## § 6.935 — Challenge based on incompetency
+Behind: EL 4.04(5).
+
+Section 6.03 (3) applies to any challenge of a person's right to vote under s. 6.92, 6.925, 6.93, or 7.52 (5) based on an allegation that an elector is incapable of understanding the objective of the elective process and thereby ineligible to vote.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/6/935
+
+## § 7.30 — Appointment of officials (excerpt: sub. (4) intro & (a); sub. (6)(b))
+Behind: EL 4.02(1) chief inspector "appointed pursuant to s. 7.30 (6) (b)"; EL 4.03(11)(c) (designated election official appointed from a party list under s. 7.30 (4)).
+
+(4) Appointments. (a) Except in cities where there is a board of election commissioners, the mayor, president or board chairperson of each municipality shall nominate to the governing body no later than their last regular meeting in December of each odd-numbered year the necessary election officials for each polling place and any election officials required under s. 7.52 (1) (b). If no regular meeting is scheduled, the mayor, president or chairperson shall call a special meeting for the purpose of considering nominations no later than December 31. [Remaining paragraphs of sub. (4) govern selection from lists submitted by the two major political parties; see source.]
+
+(6)(b) Prior to the first election following the appointment of the inspectors, the municipal clerk shall appoint one of the inspectors at each polling place, other than an inspector who is appointed under sub. (1) (b), to serve as chief inspector. No person may serve as chief inspector at any election who is not certified by the commission under s. 7.31 at the time of the election. The chief inspector shall hold the position for the remainder of the term unless the inspector is removed by the clerk or the inspector ceases to be certified under s. 7.31, except that whenever wards are combined or separated under s. 5.15 (6) (b), the municipal clerk shall appoint another inspector who is certified under s. 7.31 to serve as chief inspector at each polling place designated under s. 5.15 (6) (b). If a vacancy occurs in the position of chief inspector at any polling place, the municipal clerk shall appoint one of the other inspectors who is certified under s. 7.31 to fill the vacancy.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/7/30
+
+## § 7.37 — Inspectors' duties (excerpt: subs. (1), (2))
+Behind: EL 4.03(11)(b) (summoning law enforcement to remove an observer "consistent with s. 7.37 (2)"); s. 5.25 (3) (d) references s. 7.37 (1).
+
+(1) Adjourn to another location. "Whenever it becomes impossible or inconvenient to hold an election at the designated location, the inspectors, after assembling at or as near the designated polling place as practicable and before receiving any votes, may adjourn to the nearest convenient place for holding the election." [The remainder of sub. (1) requires announcing the relocation and stationing a person at the original location to direct voters; see source.]
+
+(2) Preserve order. The inspectors shall possess full authority to maintain order and to enforce obedience to their lawful commands during the election and the canvass of the votes. They shall permit only one person in a voting booth at a time and shall prevent any person from taking notice of how another person has voted, except when assistance is given under s. 6.82. They shall enforce s. 5.35 (5) and prevent electioneering and distribution of election-related material from taking place in violation of ss. 12.03 and 12.035. If any person refuses to obey the lawful commands of an inspector, or is disorderly in the presence or hearing of the inspectors, interrupts or disturbs the proceedings, they may order any law enforcement officer to remove the person from the voting area or to take the person into custody.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/7/37
+
+## § 7.41 — Public's right to access
+Behind: the statutory basis for election observation; referenced throughout EL 4 (e.g., 4.03(2), 4.04(1)). Note that EL 4 was promulgated under the rulemaking directive in sub. (5).
+
+(1) Any member of the public may be present at any polling place, in the office of any municipal clerk whose office is located in a public building on any day that absentee ballots may be cast in that office, or at an alternate site under s. 6.855 on any day that absentee ballots may be cast at that site for the purpose of observation of an election and the absentee ballot voting process, except a candidate whose name appears on the ballot at the polling place or on an absentee ballot to be cast at the clerk's office or alternate site at that election. The chief inspector or municipal clerk may reasonably limit the number of persons representing the same organization who are permitted to observe under this subsection at the same time. Each person permitted to observe under this subsection shall print his or her name in and sign and date a log maintained by the chief inspector or municipal clerk for that polling place, office, or alternate site.
+
+(2) The chief inspector or municipal clerk may restrict the location of any individual exercising the right under sub. (1) to certain areas within a polling place, the clerk's office, or alternate site under s. 6.855. The chief inspector or municipal clerk shall clearly designate observation areas for election observers under sub. (1). The observation areas shall be not less than 3 feet from nor more than 8 feet from the table at which electors announce their name and address to be issued a voter number at the polling place, office, or alternate site and not less than 3 feet from nor more than 8 feet from the table at which a person may register to vote at the polling place, office, or alternate site. The observation areas shall be so positioned to permit any election observer to readily observe all public aspects of the voting process.
+
+(3) The chief inspector or municipal clerk may order the removal of any individual exercising the right under sub. (1) if that individual commits an overt act which does any of the following: (a) Disrupts the operation of the polling place, clerk's office, or alternate site under s. 6.855. (b) Violates s. 12.03 (2) or 12.035.
+
+(4) No individual exercising the right under sub. (1) may view the confidential portion of a registration list maintained under s. 6.36 (4) or a poll list maintained under s. 6.79 (6). However, the inspectors or municipal clerk shall disclose to such an individual, upon request, the existence of such a list, the number of electors whose names appear on the list, and the number of those electors who have voted at any point in the proceedings. No such individual may view the certificate of an absent elector who obtains a confidential listing under s. 6.47 (2).
+
+(5) The commission shall promulgate rules that are consistent with the requirements of sub. (2) regarding the proper conduct of individuals exercising the right under sub. (1), including the interaction of those individuals with inspectors and other election officials.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/7/41
+
+## § 9.01 — Recounts (excerpt: sub. (3))
+Behind: EL 4.05(5)(b) (at a recount, the petitioner, opposing candidates, interested persons and counsel under s. 9.01 (3) are not subject to ch. EL 4).
+
+(3) Representation and observation. The petitioner, all opposing candidates and interested persons shall be entitled to be present in person and by counsel to observe the proceedings.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/9/01
+
+## § 12.03 — Campaigning restricted
+Behind: EL 4.02(7) "electioneering" (s. 12.03 (4)); EL 4.04(9) (no observer may engage in electioneering as defined in s. 12.03).
+
+(1) No election official may engage in electioneering on election day. No municipal clerk or employee of the clerk may engage in electioneering in the clerk's office or at the alternate site under s. 6.855 during the hours that ballots may be cast at those locations.
+
+(2)(a)1. No person may engage in electioneering during polling hours on election day at a polling place. 2. No person may engage in electioneering in the municipal clerk's office or at an alternate site under s. 6.855 during the hours that absentee ballots may be cast. (b)1. No person may engage in electioneering during polling hours on any public property on election day within 100 feet of an entrance to a building containing a polling place. 2. No person may engage in electioneering during the hours that absentee ballots may be cast on any public property within 100 feet of an entrance to a building containing the municipal clerk's office or an alternate site under s. 6.855. 3. No person may engage in electioneering within 100 feet of an entrance to or within a qualified retirement home or residential care facility while special voting deputies are present at the home or facility under s. 6.875 (6). (d) This subsection does not apply to the placement of any material on the bumper of a motor vehicle that is parked or operated at a place and time where electioneering is prohibited under this subsection.
+
+(3) A municipal clerk, election inspector or law enforcement officer may remove posters or other advertising which is placed in violation of this section.
+
+(4) In this section, "electioneering" means any activity which is intended to influence voting at an election.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/12/03
+
+## § 12.035 — Posting and distribution of election-related material
+Behind: EL 4.02(15) "posting and distribution of election-related material" (s. 12.035); EL 4.04(9).
+
+(1) In this section, "election-related material" means any written matter which describes, or purports to describe, the rights or responsibilities of individuals voting or registering to vote at a polling place or voting an absentee ballot at the office of the municipal clerk or an alternate site under s. 6.855.
+
+(2) The legislature finds that posting or distributing election-related material at the polling place, at locations where absentee ballots may be cast, or near the entrance to such locations when voting is taking place may mislead and confuse electors about their rights and responsibilities regarding the exercise of the franchise and tends to disrupt the flow of voting activities at such locations. The legislature finds that the restrictions imposed by this section on the posting or distribution of election-related material are necessary to protect the compelling governmental interest in orderly and fair elections.
+
+(3)(a) No person may post or distribute any election-related material during polling hours on election day at a polling place. (b) No person may post or distribute any election-related material during polling hours on any public property on election day within 100 feet of an entrance to a building containing a polling place. (c) No person may post or distribute any election-related material at the office of the municipal clerk or at an alternate site under s. 6.855 during hours that absentee ballots may be cast. (d) No person may post or distribute election-related material during the hours that absentee ballots may be cast on any public property within 100 feet of an entrance to a building containing the office of the municipal clerk or an alternate site under s. 6.855.
+
+(4) Subsection (3) does not apply to any of the following: (a) The posting or distribution of election-related material posted or distributed by the municipal clerk or other election officials. (b) The placement of any material on the bumper of a motor vehicle located on public property.
+
+(5) A municipal clerk, election inspector, or law enforcement officer may remove election-related material posted in violation of sub. (3) and may confiscate election-related material distributed in violation of sub. (3).
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/12/035
+
+_End of SRC-0008._
