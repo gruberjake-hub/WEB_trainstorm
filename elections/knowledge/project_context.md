@@ -17,6 +17,7 @@ _Generated from the observer organization's ground documents._
 | 6 | `SRC-0006-Witness-Address-Standard-and-Cure` | `SRC-0006-Witness-Address-Standard-and-Cure.md` |
 | 7 | `SRC-0007-Ballot-Spoiling-Prohibition` | `SRC-0007-Ballot-Spoiling-Prohibition.md` |
 | 8 | `SRC-0008-Referenced-Statutes` | `SRC-0008-Referenced-Statutes.md` |
+| 9 | `SRC-0009-Central-Count-Canvassing` | `SRC-0009-Central-Count-Canvassing.md` |
 
 ---
 
@@ -494,3 +495,86 @@ Behind: EL 4.02(15) "posting and distribution of election-related material" (s. 
 Source: https://docs.legis.wisconsin.gov/statutes/statutes/12/035
 
 _End of SRC-0008._
+---
+
+# SRC-0009 — Central Count and Canvassing Procedure (statutes behind central-count observation)
+
+Curated, observer-relevant subsections of the Wisconsin Statutes governing central counting locations and absentee-ballot central count. Chapter EL 4 makes a central count location an "observable location" (EL 4.02(11)) and gives observers the right to observe all counting there (EL 4.05(6)), but EL 4 does not itself reproduce the procedure these sections govern. This source supplies that procedure so central-count observations resolve to statutory text rather than a bare section number. Scope is deliberately limited to observation, public access, staffing, security, and timing; non-observer mechanics are omitted.
+
+**Currency and sourcing caveat (read first).** The subsections below were verified in August 2026 against the published 2023-24 Wisconsin Statutes compilation. The official site (https://docs.legis.wisconsin.gov) blocks automated retrieval, so text was confirmed through a statutory mirror of the 2023-24 compilation and cross-checked; it is **[INFERRED]** to be current. It is **not confirmed** whether any 2025 Wisconsin Act amended these sections. Re-verify every quotation against the official source before adopting it in a filing: https://docs.legis.wisconsin.gov/statutes/statutes. Passages shown in brackets are paraphrase or elision, not verbatim text.
+
+**Observer note — photography/recording authority at central count.** An observer's right to create or transmit photographs, videos, or audio recordings at a central count location comes from **s. EL 4.05 (6) (b)** [DIRECT CITATION to SRC-0002], not from s. 5.87. Section 5.87 (1) makes proceedings "open to the public" and bars anyone not authorized from touching ballots or equipment; it does **not** grant a recording right. Cite EL 4.05 (6) (b) for the recording right; cite s. 5.87 (1) only for the open-proceedings / no-touching rule. (A secondary summary reviewed for this corpus miscited s. 5.87 (1) as the source of the recording right; that attribution is incorrect.)
+
+## § 5.84 — Testing of tabulating equipment (excerpt: subs. (1), (2))
+Behind: the pre-election public test and the witnessed zero-count test at central counting locations.
+
+(1) Where any municipality employs an electronic voting system which utilizes automatic tabulating equipment, either at the polling place or at a central counting location, the municipal clerk shall, on any day not more than 10 days prior to the election day on which the equipment is to be utilized, have the equipment tested to ascertain that it will correctly count the votes cast for all offices and on all measures. [The remainder of sub. (1) requires public notice at least 48 hours in advance by Class 1 notice, an open test using preaudited ballots, a test that the equipment rejects votes not permitted, and an errorless count before the equipment is approved; see source.]
+
+(2) Before beginning the ballot count at each polling place or at the central counting location, the election officials shall witness a test of the automatic tabulating equipment by engaging the printing mechanism and securing a printed result showing a zero count for every candidate and referendum. [Sub. (2) further addresses sealing and retaining the ballots and programs in the clerk's custody after the count; see source.]
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/5/iii/84
+
+## § 5.85 — Receiving, counting, tallying and return of ballots (excerpt)
+Behind: the limit on counting at the polling place when a central location is designated, and secure sealing/transport of containers to central count.
+
+(1) [When a central counting location is designated] ... no count of the ballots, except write-in votes and paper ballots used for absentee voting and other purposes authorized by law, may be performed at a polling place if a central counting location is designated ... the municipal clerk shall provide a secure container for each polling place ...
+
+(5) [Sealing and transport] ... seal the container with an adhesive seal provided by the municipal clerk for the purpose in such manner that the seal completely covers the opening in the container, and each of the inspectors shall sign the seal ... the municipal clerk or 2 of the election officials shall forthwith and by the most direct route transport the container and envelopes to the central counting location designated by the municipal clerk.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/5/iii/85
+
+## § 5.86 — Proceedings at central counting locations (subs. (1), (2))
+Behind: who directs central count, the bipartisan-staffing requirement, and the seal / inspectors'-slip / ballot-reconciliation check that observers watch for.
+
+(1) All proceedings at each central counting location shall be under the direction of the municipal clerk or an election official designated by the clerk unless the central counting location is at the county seat and the municipal clerk delegates the responsibility to supervise the location to the county clerk, in which case the proceedings shall be under the direction of the county clerk or an election official designated by the county clerk. Unless election officials are selected under s. 7.30 (4) (c) without regard to party affiliation, the employees at each central counting location, other than any specially trained technicians who are required for the operation of the automatic tabulating equipment, shall be equally divided between members of the 2 major political parties under s. 7.30 (2) (a) and all duties performed by the employees shall be by teams consisting of an equal number of members of each political party whenever sufficient persons from each party are available.
+
+(2) At each central counting location, a team of election officials designated by the clerk or other election official having charge of the location under sub. (1) shall check the container returned containing the ballots to determine that all seals are intact, and thereupon shall open the container, check the inspectors' slip and compare the number of ballots so delivered against the total number of electors of each ward served by the polling place who voted, remove the ballots or record of the votes cast and deliver them to the technicians operating the automatic tabulating equipment. Any discrepancies between the number of ballots and total number of electors shall be noted on a sheet furnished for that purpose and signed by the election officials.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/5/iii/86
+
+## § 5.87 — Proceedings open to the public; no touching (sub. (1))
+Behind: the public-openness of central count and the no-touching rule. NOTE: this section does NOT authorize observer photography or recording — that authority is EL 4.05 (6) (b) (see observer note above).
+
+(1) All proceedings at the polling place and at any central counting location shall be open to the public, but no person, except those employed and authorized for the purpose, may touch any ballot, container, envelope, return or equipment.
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/5/iii/87
+
+## § 7.51 — Local board of canvassers (excerpt: sub. (1))
+Behind: authority to adjourn the canvass to central counting locations, and the continuous-canvass rule.
+
+(1) In any municipality where an electronic voting system is used, the municipal governing body or board of election commissioners may provide or authorize the municipal clerk or executive director of the board of election commissioners to provide for the adjournment of the canvass to one or more central counting locations for specified polling places in the manner prescribed in subch. III of ch. 5. ... The canvass, whether conducted at the polling place or at a central counting location, shall continue without adjournment until the canvass of all ballots cast and received on or before election day is completed and the return statement is made ...
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/7/ii/51
+
+## § 7.52 — Canvassing of absentee ballots (central count for absentees) (excerpt)
+Behind: EL 4.05(6) observation of the absentee central-count canvass; the ordinance option, WEC notice, public access, audible announcement of names, posting, and timing. This is the municipal "central count" that Milwaukee and other large municipalities use for absentee ballots.
+
+[Under s. 7.52 (1), a municipal governing body may by ordinance elect to have all absentee ballots for the municipality's electors canvassed by a municipal board of absentee ballot canvassers, instead of the canvass otherwise conducted at the polling places under s. 6.88.]
+
+(1)(a) [Prior WEC notice and consultation] Prior to enacting an ordinance under this subsection, the municipal clerk or board of election commissioners of the municipality shall notify the elections commission in writing of the proposed enactment and shall consult with the elections commission concerning administration of this section. [Convening] ... The board may, any time after the opening of the polls and before 10 p.m. on election day, publicly convene to count the absentee ballots ... [Observer access] Any member of the public has the same right of access to a meeting of the municipal board of absentee ballot canvassers under this subsection that the individual would have under s. 7.41 to observe the proceedings at a polling place.
+
+(1)(c) [Posting] ... the municipal clerk shall post ... no later than the closing hour of the polls, a statement of the number of absentee ballots that the clerk has mailed or transmitted to electors and that have been returned by the closing hour on election day. [No names or addresses are posted.]
+
+(3)(a) [Audible announcement] ... the board shall announce the name of the absent elector, or the identification serial number of the absent elector if the elector has a confidential listing under s. 6.47 (2) ... in such a manner that a member of the public, if he or she desired, could hear ...
+
+(3)(b) [Rejected ballots] Each member of the board of absentee ballot canvassers shall endorse every ballot not counted on the back as "rejected (giving the reason)."
+
+**Timing note for observers.** Absentee ballots must be received under the s. 6.87 (6) 8 p.m. election-day deadline, and are not opened before the polls open. Polls open at 7 a.m. and close at 8 p.m. under **s. 6.78** — those numerals are set by s. 6.78, not stated inside s. 7.52, which uses "after the opening of the polls" and "before 10 p.m." Do not attribute the 7 a.m. / 8 p.m. figures to s. 7.52 itself, and do not treat "before 10 p.m." as a deadline for receipt of ballots (it bounds when the board may convene). The continuous-canvass command is expressed in s. 7.51 (1).
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/7/ii/52
+
+## § 7.53 — Boards of canvassers (excerpt: sub. (2m))
+Behind: establishment and composition of the municipal board of absentee ballot canvassers referenced by s. 7.52.
+
+(2m)(a) If a municipality elects to count absentee ballots in the manner provided for in s. 7.52, the municipality shall establish a board of absentee ballot canvassers as provided in par. (b).
+
+(2m)(b) Except as provided in par. (c), the municipal board of absentee ballot canvassers shall be composed of the municipal clerk, or a qualified elector of the municipality designated by the clerk, and 2 other qualified electors of the municipality appointed by the clerk. [Members serve 2-year terms commencing January 1 of even-numbered years, with provisions for vacancies and for clerk/candidate conflicts; see source.]
+
+Source: https://docs.legis.wisconsin.gov/statutes/statutes/7/ii/53
+
+## WEC reference — Central Count Absentee Ballot Municipalities
+The Wisconsin Elections Commission maintains a public list of municipalities authorized to use central count for absentee ballots, organized by county, municipality, and year implemented, and restates the s. 7.52 posting requirement. Membership changes over time; verify a specific municipality's status before relying on it.
+Source: https://elections.wi.gov/central-count-absentee-ballot-municipalities
+
+_End of SRC-0009._
+
