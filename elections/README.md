@@ -212,6 +212,39 @@ the observer's own phone.
 
 ---
 
+## Drafter read-back (optional) — draft from the whole team's repo
+
+Central collection sends observations *into* the Sheet. This lets a drafter pull
+them back *out*, straight into the Draft tab — so a drafter can build a complaint
+from everyone's submissions without any file hand-off. It reads the **latest
+revision** of each observation (respecting the append-only history) and
+attributes each incident to the observer who logged it.
+
+Because this turns the repo from write-only into readable, it's protected by a
+**shared secret** so the data can't be pulled by anyone who finds the URL.
+
+**Setup:**
+
+1. In your Apps Script (the `google-apps-script.gs` you already pasted), set the
+   `READ_TOKEN` value near the top to any random secret string, then
+   **Deploy → Manage deployments → edit → New version → Deploy** so the change
+   goes live.
+2. In Render, add an environment variable **`SHEET_READ_TOKEN`** set to the
+   *exact same* value. (`SHEET_WEBHOOK_URL` must already be set.)
+3. Redeploy. Confirm with **Setup → Check server status** — it should show
+   "drafter read-back on ✅".
+
+**Using it:** on the Draft tab, a drafter taps **Load team observations**, checks
+the ones to include (they can mix in incidents logged on their own device too),
+and drafts. Each pulled observation carries its observer's name into the
+Statement of Facts. The button is gated by the **drafter code**.
+
+If the token doesn't match on both sides, the load fails with a clear message —
+that mismatch is the most common snag, so double-check `READ_TOKEN` (Apps Script)
+equals `SHEET_READ_TOKEN` (Render).
+
+---
+
 ## Observer rules-check (optional) — "what do you think of this?"
 
 This gives observers a **Check the rules** box on the Log tab: they briefly

@@ -41,6 +41,9 @@ const CHECK_MODEL = process.env.CHECK_MODEL || "claude-haiku-4-5-20251001";
 // Central collection: the URL of your Google Apps Script web app. When set,
 // observers' "Submit to team" pushes rows into your Google Sheet through it.
 const SHEET_WEBHOOK_URL = process.env.SHEET_WEBHOOK_URL || "";
+// Drafter read-back: shared secret that must match READ_TOKEN in the Apps
+// Script. Lets a drafter pull the team's observations back out of the Sheet.
+const SHEET_READ_TOKEN = process.env.SHEET_READ_TOKEN || "";
 const PORT = process.env.PORT || 3000;
 const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 const ANTHROPIC_VERSION = "2023-06-01";
@@ -73,6 +76,7 @@ const server = http.createServer(async (req, res) => {
         centralCollection: Boolean(SHEET_WEBHOOK_URL),
         teamCodeRequired: Boolean(TEAM_CODE),
         checkModel: CHECK_MODEL,
+        readBack: Boolean(SHEET_WEBHOOK_URL && SHEET_READ_TOKEN),
       });
     }
 
@@ -89,6 +93,11 @@ const server = http.createServer(async (req, res) => {
     // Central collection: forward submitted observations to the Google Sheet.
     if (req.method === "POST" && req.url === "/api/submit") {
       return await handleSubmit(req, res);
+    }
+
+    // Drafter read-back: pull the team's observations out of the Sheet.
+    if (req.method === "POST" && req.url === "/api/records") {
+      return await handleRecords(req, res);
     }
 
     // Everything else: serve a static file from /public.
@@ -110,6 +119,7 @@ server.listen(PORT, () => {
   console.log(`  API key configured: ${API_KEY ? "yes" : "NO — set ANTHROPIC_API_KEY"}`);
   console.log(`  Access code gate:   ${ACCESS_CODE ? "on" : "off"}`);
   console.log(`  Central collection: ${SHEET_WEBHOOK_URL ? "on (Google Sheet)" : "off"}`);
+  console.log(`  Drafter read-back:  ${SHEET_WEBHOOK_URL && SHEET_READ_TOKEN ? "on" : "off"}`);
   console.log(`  Rules-check model:  ${CHECK_MODEL}`);
   console.log(`  Team code gate:     ${TEAM_CODE ? "on" : "off"}\n`);
 });
@@ -248,6 +258,7 @@ function buildUserMessage(p) {
   entries.forEach((e, i) => {
     lines.push("");
     lines.push(`--- Incident ${i + 1} ---`);
+    if (e.observerName) lines.push(`Observed by: ${e.observerName}`);
     lines.push(`Date/time observed: ${orTBD(e.time)}`);
     lines.push(`Location (station/table/ward): ${orTBD(e.location)}`);
     lines.push(`What was observed (actions): ${orTBD(e.observed)}`);
@@ -482,6 +493,109 @@ async function handleSubmit(req, res) {
   }
 
   return sendJSON(res, 200, { ok: true, submitted: rows.length });
+}
+
+// Drafter read-back: fetch the sheet via the Apps Script (token-protected),
+// collapse to the latest revision per Record ID, return a clean list.
+async function handleRecords(req, res) {
+  if (!SHEET_WEBHOOK_URL || !SHEET_READ_TOKEN) {
+    return sendJSON(res, 501, {
+      error:
+        "Drafter read-back isn't set up. The server needs SHEET_WEBHOOK_URL and SHEET_READ_TOKEN, and the Apps Script needs a matching READ_TOKEN.",
+    });
+  }
+
+  const body = await readBody(req);
+  let payload;
+  try {
+    payload = JSON.parse(body || "{}");
+  } catch {
+    return sendJSON(res, 400, { error: "Request body was not valid JSON." });
+  }
+
+  // Reading the whole repo is a drafter action — gate it with the drafter code.
+  if (ACCESS_CODE && payload.accessCode !== ACCESS_CODE) {
+    return sendJSON(res, 401, { error: "Wrong or missing drafter code." });
+  }
+
+  const url =
+    SHEET_WEBHOOK_URL +
+    (SHEET_WEBHOOK_URL.includes("?") ? "&" : "?") +
+    "action=records&token=" +
+    encodeURIComponent(SHEET_READ_TOKEN);
+
+  let r;
+  try {
+    r = await fetch(url, { method: "GET" });
+  } catch (err) {
+    return sendJSON(res, 502, {
+      error: "Could not reach the Google Sheet web app.",
+      detail: String(err),
+    });
+  }
+  if (!r.ok) {
+    const t = await r.text();
+    return sendJSON(res, 502, {
+      error: `The Google Sheet web app returned ${r.status}.`,
+      detail: safeTrim(t, 300),
+    });
+  }
+
+  let data;
+  try {
+    data = await r.json();
+  } catch {
+    return sendJSON(res, 502, {
+      error:
+        "The Sheet web app did not return JSON — check that the deployment is current and Web app access is 'Anyone'.",
+    });
+  }
+  if (!data.ok) {
+    return sendJSON(res, 502, {
+      error:
+        "Sheet read failed (" +
+        (data.error || "unknown") +
+        "). Check that READ_TOKEN in the Apps Script matches SHEET_READ_TOKEN.",
+    });
+  }
+
+  const latest = collapseLatest(data.records || []);
+  return sendJSON(res, 200, { ok: true, count: latest.length, records: latest });
+}
+
+// Group raw sheet rows by Record ID, keep the highest revision, map to the
+// shape the drafting UI uses.
+function collapseLatest(rows) {
+  const byId = new Map();
+  for (const row of rows) {
+    const id = row["Record ID"] || "";
+    if (!id) continue;
+    const rev =
+      parseInt(String(row["Revision"] || "v1").replace(/[^0-9]/g, ""), 10) || 1;
+    const prev = byId.get(id);
+    if (!prev || rev > prev._rev) byId.set(id, { _rev: rev, row });
+  }
+  return [...byId.values()].map(({ _rev, row }) => ({
+    id: row["Record ID"] || "",
+    rev: _rev,
+    status: row["Status"] || "",
+    observer: row["Observer"] || "",
+    time: row["Time observed"] || "",
+    location: row["Location"] || "",
+    observed: row["What observed"] || "",
+    actor: row["Who (role/name/description)"] || "",
+    witnesses: row["Witnesses"] || "",
+    objectionRaised: row["Objection raised"] || "",
+    objectionDetail: row["Objection detail"] || "",
+    evidence: row["Evidence & custody"] || "",
+    el104: row["EL 104?"] || "",
+    issueTags: String(row["Issue tags"] || "")
+      .split(";")
+      .map((s) => s.trim())
+      .filter(Boolean),
+    suggestedCite: row["Suggested citation"] || "",
+    notes: row["Notes"] || "",
+  }));
 }
 
 // ===========================================================================

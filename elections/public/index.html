@@ -164,8 +164,15 @@
     </div>
 
     <div class="card">
-      <h2>Include which incidents?</h2>
-      <div id="draftEntryPicker"><p class="muted small">No incidents to include yet — log some first.</p></div>
+      <h2>Include which incidents? (this device)</h2>
+      <div id="draftEntryPicker"><p class="muted small">No incidents on this device — pull from the team repo below, or log some first.</p></div>
+    </div>
+
+    <div class="card">
+      <h2>From the team repo</h2>
+      <button class="btn ghost" id="loadRepoBtn" onclick="loadTeamRepo()">⤓ Load team observations</button>
+      <div id="centralPicker" style="margin-top:10px"></div>
+      <p class="hint">Pulls everyone's submitted observations from the shared record (latest version of each). Requires your drafter code in Setup.</p>
     </div>
 
     <button class="btn" id="draftBtn" onclick="generateDraft()">⚖ Draft complaint</button>
@@ -687,10 +694,57 @@ function selectedEntries(){
   });
 }
 
+/* ---- Team repo read-back (drafter) ---- */
+let centralRecords = [];
+async function loadTeamRepo(){
+  save();
+  const btn=document.getElementById("loadRepoBtn");
+  const box=document.getElementById("centralPicker");
+  const orig=btn.innerHTML;
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span> Loading…';
+  try{
+    const r=await fetch("/api/records",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({accessCode:state.accessCode})});
+    const data=await r.json();
+    if(!r.ok){
+      const hint = r.status===401 ? " Enter your drafter code under Setup." : "";
+      box.innerHTML=`<div class="banner err">${esc(data.error||("HTTP "+r.status))}${esc(hint)}</div>`;
+      centralRecords=[];
+    } else {
+      centralRecords = data.records||[];
+      renderCentralPicker();
+    }
+  }catch(err){
+    box.innerHTML=`<div class="banner err">Network error: ${esc(String(err))}</div>`;
+  }finally{
+    btn.disabled=false; btn.innerHTML=orig;
+  }
+}
+function renderCentralPicker(){
+  const box=document.getElementById("centralPicker");
+  if(!centralRecords.length){ box.innerHTML='<p class="muted small">No observations in the team repo yet.</p>'; return; }
+  box.innerHTML = `<p class="hint" style="margin-top:0">${centralRecords.length} observation(s) — check the ones to include:</p>` +
+    centralRecords.map((rec,i)=>{
+      const who = rec.observer ? esc(rec.observer)+" · " : "";
+      const label = `${who}${esc(rec.time||"")} — ${esc((rec.observed||"").slice(0,60))}${rec.rev>1?` (v${rec.rev})`:""}`;
+      return `<div class="chk"><input type="checkbox" id="cpick${i}"><label for="cpick${i}">${label}</label></div>`;
+    }).join("");
+}
+function selectedCentral(){
+  return centralRecords.filter((_,i)=>{
+    const c=document.getElementById("cpick"+i); return c && c.checked;
+  }).map(rec=>({
+    time:rec.time, location:rec.location, observed:rec.observed, actor:rec.actor,
+    witnesses:rec.witnesses, objectionRaised:rec.objectionRaised, objectionDetail:rec.objectionDetail,
+    evidence:rec.evidence, el104:rec.el104, issueTags:rec.issueTags||[], suggestedCite:rec.suggestedCite,
+    notes:rec.notes, observerName:rec.observer||""
+  }));
+}
+
 async function generateDraft(){
   save();
-  const entries=selectedEntries();
-  if(!entries.length){ alert("Select at least one incident to include."); return; }
+  const entries=[...selectedEntries(), ...selectedCentral()];
+  if(!entries.length){ alert("Select at least one incident to include (from this device or the team repo)."); return; }
   const btn=document.getElementById("draftBtn");
   const out=document.getElementById("draftResult");
   btn.disabled=true; btn.innerHTML='<span class="spin"></span> Drafting…';
@@ -765,7 +819,7 @@ function importNotes(ev){
 async function checkHealth(){
   const out=document.getElementById("healthOut"); out.textContent="Checking…";
   try{ const r=await fetch("/health"); const d=await r.json();
-    out.innerHTML=`Server OK · draft model <b>${esc(d.model)}</b> · check model <b>${esc(d.checkModel||"—")}</b> · API key ${d.apiKeyConfigured?"configured ✅":"MISSING ❌"} · drafter code ${d.accessCodeRequired?"required":"off"} · team code ${d.teamCodeRequired?"required":"off"} · central collection ${d.centralCollection?"on ✅":"off"}`;
+    out.innerHTML=`Server OK · draft model <b>${esc(d.model)}</b> · check model <b>${esc(d.checkModel||"—")}</b> · API key ${d.apiKeyConfigured?"configured ✅":"MISSING ❌"} · drafter code ${d.accessCodeRequired?"required":"off"} · team code ${d.teamCodeRequired?"required":"off"} · central collection ${d.centralCollection?"on ✅":"off"} · drafter read-back ${d.readBack?"on ✅":"off"}`;
   }catch(e){ out.textContent="Could not reach the server."; }
 }
 function wipe(){ if(confirm("Erase ALL incidents and settings on this device?")){ localStorage.removeItem(KEY); state=blank(); hydrate(); toast("Erased"); } }
