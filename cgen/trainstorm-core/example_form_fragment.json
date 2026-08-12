@@ -1,0 +1,171 @@
+{
+  "_comment": "Worked fragment: the ALSAP form (FORM-AST-34037) decomposed onto the unmodified atom spine + the new form facet. Demonstrates container/section/field decomposition, the governed field_type primitives, the content_disposition lifecycle, registry reuse (roles/records), and the DECOMPOSE-COMPOSITE move (the bundle's 'controlled_choice_plus_rationale' and 'boolean_plus_note' become two atoms each). Not the whole form — a representative slice that exercises every mechanism.",
+  "atoms": [
+    {
+      "atom_id": "atom_form_alsap",
+      "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000001",
+      "meaning": {
+        "source_locale": "en",
+        "source_text": "Asset Level Safety Assessment Plan (ALSAP)",
+        "kind": "form"
+      },
+      "bindings": {
+        "object": { "order": 0 },
+        "form": {
+          "captures_record": "rec_alsap",
+          "performed_by": ["role_alsap_lead"]
+        }
+      },
+      "governance": {
+        "version": 1,
+        "status": "draft",
+        "regulatory_binding": "regulatory",
+        "owner": "content_architecture",
+        "approved_by": [],
+        "effective_date": "2026-08-10"
+      }
+    },
+    {
+      "atom_id": "atom_form_alsap_sec000_cover",
+      "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000002",
+      "meaning": {
+        "source_locale": "en",
+        "source_text": "Cover / Document Metadata",
+        "kind": "form_section"
+      },
+      "bindings": {
+        "object": { "belongs_to": "atom_form_alsap", "order": 0 },
+        "form": { "performed_by": ["role_alsap_lead"] }
+      },
+      "governance": { "version": 1, "status": "draft", "regulatory_binding": "regulatory", "owner": "content_architecture" }
+    },
+    {
+      "atom_id": "atom_form_alsap_f_version_date",
+      "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000003",
+      "meaning": {
+        "source_locale": "en",
+        "source_text": "Version Date",
+        "kind": "form_field"
+      },
+      "bindings": {
+        "object": { "belongs_to": "atom_form_alsap_sec000_cover", "order": 1 },
+        "form": {
+          "field_type": "date",
+          "content_disposition": "authorable",
+          "constraints": { "required": true, "format": "DD-MMM-YYYY" }
+        }
+      },
+      "governance": { "version": 1, "status": "draft", "regulatory_binding": "regulatory", "owner": "content_architecture" }
+    },
+    {
+      "atom_id": "atom_form_alsap_f_approved_by",
+      "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000004",
+      "meaning": {
+        "source_locale": "en",
+        "source_text": "Approved by",
+        "kind": "form_field"
+      },
+      "bindings": {
+        "object": { "belongs_to": "atom_form_alsap_sec000_cover", "order": 5 },
+        "form": {
+          "field_type": "signature",
+          "content_disposition": "controlled_standard",
+          "constraints": { "required": true },
+          "performed_by": ["role_gso", "role_medical_lead", "role_alsap_lead"]
+        }
+      },
+      "governance": { "version": 1, "status": "draft", "regulatory_binding": "regulatory", "owner": "governance_quality" }
+    },
+    {
+      "atom_id": "atom_form_alsap_f_br_profile",
+      "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000005",
+      "meaning": {
+        "source_locale": "en",
+        "source_text": "Benefit-Risk Profile",
+        "kind": "form_field"
+      },
+      "bindings": {
+        "object": { "belongs_to": "atom_form_alsap", "order": 15 },
+        "form": {
+          "field_type": "select_one",
+          "content_disposition": "controlled_standard",
+          "constraints": { "required": true },
+          "options_ref": "reg_benefit_risk_profile"
+        }
+      },
+      "governance": { "version": 1, "status": "draft", "regulatory_binding": "regulatory", "owner": "content_architecture" }
+    },
+    {
+      "atom_id": "atom_form_alsap_f_br_rationale",
+      "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000006",
+      "meaning": {
+        "source_locale": "en",
+        "source_text": "Benefit-Risk Rationale",
+        "kind": "form_field"
+      },
+      "bindings": {
+        "object": { "belongs_to": "atom_form_alsap", "order": 16 },
+        "form": {
+          "field_type": "text_long",
+          "content_disposition": "authorable",
+          "conditional_on": [{ "field": "atom_form_alsap_f_br_profile" }]
+        }
+      },
+      "governance": { "version": 1, "status": "draft", "regulatory_binding": "regulatory", "owner": "content_architecture" }
+    },
+    {
+      "atom_id": "atom_form_alsap_f_event_adjudication",
+      "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000007",
+      "meaning": {
+        "source_locale": "en",
+        "source_text": "Event Adjudication",
+        "kind": "form_field"
+      },
+      "bindings": {
+        "object": { "belongs_to": "atom_form_alsap", "order": 30 },
+        "form": {
+          "field_type": "boolean",
+          "content_disposition": "authorable",
+          "constraints": { "required": true }
+        }
+      },
+      "governance": { "version": 1, "status": "draft", "regulatory_binding": "regulatory", "owner": "content_architecture" }
+    },
+    {
+      "atom_id": "atom_form_alsap_f_event_adjudication_note",
+      "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000008",
+      "meaning": {
+        "source_locale": "en",
+        "source_text": "Event Adjudication Detail",
+        "kind": "form_field"
+      },
+      "bindings": {
+        "object": { "belongs_to": "atom_form_alsap", "order": 31 },
+        "form": {
+          "field_type": "text_long",
+          "content_disposition": "authorable",
+          "conditional_on": [{ "field": "atom_form_alsap_f_event_adjudication", "equals": "true" }]
+        }
+      },
+      "governance": { "version": 1, "status": "draft", "regulatory_binding": "regulatory", "owner": "content_architecture" }
+    },
+    {
+      "atom_id": "atom_form_alsap_f_agg_data_table",
+      "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000009",
+      "meaning": {
+        "source_locale": "en",
+        "source_text": "Source of Aggregated Data",
+        "kind": "form_field"
+      },
+      "bindings": {
+        "object": { "belongs_to": "atom_form_alsap", "order": 20 },
+        "form": {
+          "field_type": "table",
+          "content_disposition": "authorable",
+          "constraints": { "repeatable": true }
+        }
+      },
+      "governance": { "version": 1, "status": "draft", "regulatory_binding": "regulatory", "owner": "content_architecture" }
+    }
+  ]
+}

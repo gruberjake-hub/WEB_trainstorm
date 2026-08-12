@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/objectives.schema.json",
+  "title": "Trainstorm Intent Ontology — Objective Store",
+  "description": "The governed store of learning-objective nodes (obj_...). Owner: L&D / Instructional Design. The intent facet's teaches[] on an atom references obj_ ids in this store. Governed like the roles/records registries: closed for USE (an ungoverned obj_ reference is flagged, never silently accepted), grown only by entry + version bump. Canonical home: cgen/trainstorm-core/ontology/objectives.json. Objectives point SIDEWAYS (requires = prerequisite objectives) and OUTWARD (framework = external competency standard). An UPWARD serves:[goal_id] link is a designed-later additive field, gated on the not-yet-designed goal/outcome node; adding it is a version bump, not a rewrite.",
+  "type": "object",
+  "required": ["store", "version", "status", "closed_list", "objectives"],
+  "additionalProperties": false,
+  "properties": {
+    "store": { "const": "ontology/objectives" },
+    "version": { "type": "integer", "minimum": 1 },
+    "status": { "enum": ["draft", "seeded", "validated"] },
+    "closed_list": { "const": true },
+    "owner": { "type": "string" },
+    "objectives": {
+      "type": "object",
+      "description": "Map of obj_ id -> objective node. propertyNames enforce the governed obj_ prefix.",
+      "propertyNames": { "pattern": "^obj_[a-z0-9_]+$" },
+      "additionalProperties": { "$ref": "#/$defs/objective" }
+    }
+  },
+  "$defs": {
+    "objective": {
+      "type": "object",
+      "required": ["label", "requires", "framework"],
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "requires": {
+          "type": "array",
+          "description": "Prerequisite objectives — obj_ ids that must resolve within this store. Empty for a root objective. Referential integrity (every id exists) is checked outside the schema.",
+          "items": { "type": "string", "pattern": "^obj_[a-z0-9_]+$" },
+          "uniqueItems": true
+        },
+        "framework": {
+          "type": "string",
+          "description": "External competency-standard reference (e.g. CASE). Use 'none' if unmapped.",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "example", "validated"],
+          "description": "Node-level lifecycle. Optional; provenance-bearing."
+        },
+        "derived_from": {
+          "type": "string",
+          "description": "Provenance pointer to the source this objective was distilled from."
+        }
+      }
+    }
+  }
+}

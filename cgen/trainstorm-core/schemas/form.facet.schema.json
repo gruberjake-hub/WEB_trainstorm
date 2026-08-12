@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/form.facet.schema.json",
+  "title": "Form Facet",
+  "description": "Accreted binding facet for form/template source, sibling to the procedure facet. Single-writer: the headwater authoring agent (form-specialized). Models a form TEMPLATE (a blank instrument) — never a submission. A filled-in form is an instance with real data (potential PII); it is a record/learner-model object under separate governance and is NOT modeled here. The action/label text lives in meaning.source_text; structure (sections, order) lives in the object facet; provenance lives in governance. This facet holds only what is irreducibly about capturing structured input. field_type and content_disposition are MIRRORS of vocab/form.enum.json (vocab wins; a conformance check asserts schema enum == vocab ids). performed_by reuses roles.registry and captures_record reuses records.registry — the SAME registries the procedure facet uses; no form-specific copy.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "field_type": {
+      "type": "string",
+      "description": "Governed input primitive. Present on form_field leaves; omitted on form/form_section containers. MIRROR of vocab/form.enum.json field_type ids.",
+      "enum": [
+        "text_short",
+        "text_long",
+        "date",
+        "number",
+        "boolean",
+        "select_one",
+        "select_many",
+        "person",
+        "signature",
+        "table",
+        "group",
+        "rule",
+        "matrix"
+      ]
+    },
+    "content_disposition": {
+      "type": "string",
+      "description": "Authoring lifecycle of this field's standard/source text, from the form template's own rules. MIRROR of vocab/form.enum.json content_disposition ids.",
+      "enum": [
+        "controlled_standard",
+        "authorable",
+        "example",
+        "instructional_transient"
+      ]
+    },
+    "constraints": {
+      "type": "object",
+      "description": "Validation/integrity rules on the accepted value. Embedded (they ARE part of the field's invariant truth), not a reference.",
+      "additionalProperties": false,
+      "properties": {
+        "required": { "type": "boolean" },
+        "format": { "type": "string", "description": "Format hint, e.g. 'DD-MMM-YYYY' or 'X.0'." },
+        "pattern": { "type": "string", "description": "Regex the value must match." },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "max_length": { "type": "integer", "minimum": 1 },
+        "repeatable": { "type": "boolean", "description": "For table/group: rows/clusters repeat." }
+      }
+    },
+    "options_ref": {
+      "type": "string",
+      "description": "Registry id of the controlled value set for select_one/select_many. Reference the option set; never embed it.",
+      "pattern": "^reg_[A-Za-z0-9_-]+$"
+    },
+    "captures_record": {
+      "type": "string",
+      "description": "records.registry id (rec_...) this field/form populates — the GxP evidence link. SAME registry as procedure.produces_records.",
+      "pattern": "^rec_[A-Za-z0-9_-]+$"
+    },
+    "performed_by": {
+      "type": "array",
+      "description": "roles.registry ids (role_...) accountable to complete/sign this field. Roles, never people (no PII). SAME registry as procedure.performed_by.",
+      "items": { "type": "string", "pattern": "^role_[A-Za-z0-9_-]+$" }
+    },
+    "conditional_on": {
+      "type": "array",
+      "description": "Show/require logic: this field applies only when the referenced field-atom holds the given value. Mirrors procedure.branches at the field level.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field"],
+        "properties": {
+          "field": { "type": "string", "pattern": "^atom_[A-Za-z0-9_-]+$" },
+          "equals": { "type": "string" }
+        }
+      }
+    }
+  }
+}

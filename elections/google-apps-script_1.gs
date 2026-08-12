@@ -30,9 +30,30 @@ function doPost(e) {
     var data = JSON.parse(e.postData.contents);
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
 
-    // Write the header row once, the first time anything is submitted.
     if (sheet.getLastRow() === 0 && data.header) {
+      // Empty sheet: write the header row once.
       sheet.appendRow(data.header);
+    } else if (data.header) {
+      // Schema guard. The sheet already has a header, so it must match the one
+      // the server is sending. A mismatch means the column schema changed (for
+      // example, the signal-capture v2 columns were appended) but this sheet
+      // still carries the OLD header — appending 24-column rows under a
+      // 19-column header would silently misalign every new row and quietly
+      // corrupt the record. Refuse loudly instead, and tell the operator to
+      // rotate the sheet. (This is the append-only integrity rule applied to
+      // the schema itself: never let the record be silently changed.)
+      var existing = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+      if (!headersMatch(existing, data.header)) {
+        return json({
+          ok: false,
+          error:
+            "schema mismatch: this sheet's header has " + existing.length +
+            " columns but the server sent " + data.header.length +
+            ". Archive the current data to a new tab, clear the FIRST sheet so " +
+            "the new header can be written, then resubmit. (Signal-capture v2 " +
+            "adds 5 columns: 19 -> 24.)"
+        });
+      }
     }
 
     // Append one row per observation.
@@ -72,6 +93,16 @@ function doGet(e) {
 
   // Default: a simple liveness check you can open in a browser.
   return json({ ok: true, service: "observer-central-collection" });
+}
+
+// True only if two header rows have the same length and the same trimmed cell
+// values in the same order. Used by the doPost schema guard above.
+function headersMatch(a, b) {
+  if (!a || !b || a.length !== b.length) return false;
+  for (var i = 0; i < a.length; i++) {
+    if (String(a[i]).trim() !== String(b[i]).trim()) return false;
+  }
+  return true;
 }
 
 function json(o) {

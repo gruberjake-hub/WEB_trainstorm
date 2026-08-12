@@ -111,7 +111,7 @@
       <div id="checkOut" style="margin-top:10px"></div>
       <p class="hint">Advisory only — it flags possible rule issues to help you decide what to capture. It never files anything and is not saved to your record. When in doubt, log it.</p>
     </div>
-    <button class="btn" onclick="openEntry()">＋ Add incident</button>
+    <button class="btn" onclick="openEntry()">＋ Add observation</button>
     <div id="logList" style="margin-top:12px"></div>
     <p id="logEmpty" class="muted small" style="text-align:center;margin-top:24px">
       No incidents logged yet. Tap “Add incident” each time you observe something worth recording — time, place, who, and exactly what you saw.
@@ -261,49 +261,84 @@
 <!-- ================= ENTRY MODAL ================= -->
 <div class="modal-back" id="entryModal">
   <div class="modal">
-    <h3 id="entryTitle">New incident</h3>
+    <h3 id="entryTitle">New observation</h3>
+
+    <label>Observation type</label>
+    <div class="toggle-group" id="obsTypeGroup">
+      <div class="opt sel" data-val="anomaly" onclick="setObsType('anomaly')">⚠ Anomaly</div>
+      <div class="opt" data-val="attestation" onclick="setObsType('attestation')">✓ Attestation</div>
+      <div class="opt" data-val="gap" onclick="setObsType('gap')">○ Coverage gap</div>
+    </div>
+    <div class="hint" id="obsTypeHint">Something that may violate a rule — capture it as fact.</div>
+
     <label>Date &amp; time observed</label>
     <input id="eTime" type="text" placeholder="auto-filled; edit if needed">
-    <label>Location — station / table / ward</label>
-    <input id="eLocation" placeholder="e.g., Table 7, Ward 214">
-    <label>What was observed — actions, not characterizations</label>
+
+    <label id="eControlLabel">Control point <span id="cpReq" style="display:none;color:var(--warn)">— required</span></label>
+    <select id="eControlPoint"></select>
+    <div class="hint" id="cpHint">Which documented control this is about. Required for attestations and gaps; optional for an anomaly that doesn't map to one.</div>
+
+    <label>Location — area / ward</label>
+    <input id="eLocation" placeholder="e.g., Ward 214, absentee tables">
+    <label>Station — exact physical position</label>
+    <input id="eStation" placeholder="e.g., Export station / Tabulator 3 / Table 7">
+    <div class="hint">The precise spot, so the same station recurring across nights becomes visible.</div>
+
+    <label id="eObservedLabel">What was observed — actions, not characterizations</label>
     <textarea id="eObserved" placeholder="e.g., Absentee certificate envelope with no witness address was placed in the counted stack."></textarea>
-    <div class="hint">Write only what you saw or heard. No conclusions.</div>
-    <label>Who performed it — role / name / description / wristband color / badge</label>
-    <input id="eActor" placeholder="e.g., Inspector, red wristband, tall, name unknown">
+    <div class="hint" id="eObservedHint">Write only what you saw or heard. No conclusions.</div>
+
     <label>Witnesses present</label>
     <input id="eWitnesses" placeholder="names or descriptions">
-
-    <label>On-site objection raised?</label>
-    <div class="toggle-group" id="objGroup">
-      <div class="opt sel" data-val="No" onclick="setObj('No')">No</div>
-      <div class="opt" data-val="Yes" onclick="setObj('Yes')">Yes</div>
-    </div>
-    <label>Objection statement / to whom / response received</label>
-    <input id="eObjDetail" placeholder="if raised: what you said, to whom, and their response">
 
     <label>Physical evidence &amp; current custody</label>
     <input id="eEvidence" placeholder="e.g., photo on my phone; note on observer sheet held by me">
 
-    <label>Recorded by counting team on EL 104?</label>
-    <div class="toggle-group" id="el104Group">
-      <div class="opt sel" data-val="Unknown" onclick="setEl104('Unknown')">Unknown</div>
-      <div class="opt" data-val="Yes" onclick="setEl104('Yes')">Yes</div>
-      <div class="opt" data-val="No" onclick="setEl104('No')">No</div>
+    <!-- Anomaly-only fields. Hidden for attestations and coverage gaps, which
+         are not allegations and don't have an actor, objection, or EL 104 line. -->
+    <div id="anomalyFields">
+      <label>Who performed it — role / name / description / wristband color / badge</label>
+      <input id="eActor" placeholder="e.g., Inspector, red wristband, tall, name unknown">
+
+      <label>On-site objection raised?</label>
+      <div class="toggle-group" id="objGroup">
+        <div class="opt sel" data-val="No" onclick="setObj('No')">No</div>
+        <div class="opt" data-val="Yes" onclick="setObj('Yes')">Yes</div>
+      </div>
+      <label>Objection statement / to whom / response received</label>
+      <input id="eObjDetail" placeholder="if raised: what you said, to whom, and their response">
+
+      <label>Recorded by counting team on EL 104?</label>
+      <div class="toggle-group" id="el104Group">
+        <div class="opt sel" data-val="Unknown" onclick="setEl104('Unknown')">Unknown</div>
+        <div class="opt" data-val="Yes" onclick="setEl104('Yes')">Yes</div>
+        <div class="opt" data-val="No" onclick="setEl104('No')">No</div>
+      </div>
+
+      <label>Issue category (helps suggest a citation)</label>
+      <div id="issueTags" style="margin-top:4px"></div>
+      <div class="hint" id="citeHint"></div>
     </div>
 
-    <label>Issue category (helps suggest a citation)</label>
-    <div id="issueTags" style="margin-top:4px"></div>
-    <div class="hint" id="citeHint"></div>
+    <!-- Coverage state travels with EVERY observation type — it is the signal
+         that lets "concentrate where coverage is lowest" be measured later. -->
+    <label>Observers present at this control, at the time</label>
+    <input id="eObserversPresent" placeholder="count or estimate, e.g., 2 (or 0 for a gap)">
+    <label>Continuously observed?</label>
+    <div class="toggle-group" id="contGroup">
+      <div class="opt sel" data-val="Yes" onclick="setCont('Yes')">Yes</div>
+      <div class="opt" data-val="Partial" onclick="setCont('Partial')">Partial</div>
+      <div class="opt" data-val="No" onclick="setCont('No')">No</div>
+    </div>
 
     <label>Additional notes</label>
     <textarea id="eNotes" placeholder="anything else"></textarea>
 
     <div class="row" style="margin-top:14px">
       <button class="btn ghost" onclick="closeEntry()">Cancel</button>
-      <button class="btn" onclick="saveEntry()">Save incident</button>
+      <button class="btn" onclick="saveEntry()">Save observation</button>
     </div>
-    <button class="btn bad small" id="deleteEntryBtn" style="margin-top:10px;display:none" onclick="deleteEntry()">Delete this incident</button>
+    <button class="btn bad small" id="deleteEntryBtn" style="margin-top:10px;display:none" onclick="deleteEntry()">Delete this observation</button>
   </div>
 </div>
 
@@ -339,6 +374,27 @@ const ISSUES = [
   { t:"Org observer limits not applied uniformly / not documented", c:"EL 4.03(4)" },
   { t:"Confidential info exposed / passwords recorded", c:"EL 4.03(10); EL 4.04(7); Observer-Rules" },
   { t:"Other", c:"" },
+];
+
+/* ---- Integrity control points (central count) --------------------------
+ * The documented moments where a control is supposed to be exercised. An
+ * observation attaches to one of these so a CLEAN watch (attestation) and a
+ * BLIND SPOT (gap) become recordable facts, not just violations. Order/labels
+ * mirror the server + the corpus anchors noted in comments. */
+const CONTROL_POINTS = [
+  "Pre-count public test / zero-count",                       // § 5.84(1),(2)
+  "Container seal integrity",                                 // § 5.85(5), § 5.86(2)
+  "Inspectors' slip / ballot-to-poll-list reconciliation",   // § 5.86(2)
+  "Absentee certificate-envelope review",                    // § 6.87, § 6.88(3)
+  "Rejected-envelope handling & endorsement",                // § 6.88(3)(b)
+  "Ballot reconstruction (bipartisan pair)",                 // EL 4.03(1)(b)3; SRC-0003
+  "Bipartisan-team staffing of the count",                   // § 5.86(1)
+  "Tabulator\u2192media export & upload",                    // § 5.87(1) + reconcile to tapes
+  "8 p.m. deadline / late-ballot enforcement",               // § 6.87(6)
+  "Names added to poll list at count time",                  // SRC-0003
+  "Ballot-spoiling attempt",                                 // SRC-0007
+  "End-of-night results handoff / transport",                // operational
+  "Other",
 ];
 
 /* ---- Compact EL 4 quick reference -------------------------------------- */
@@ -398,6 +454,19 @@ function load(){
       if(e.rev == null) e.rev = 1;
       if(e.sentRev === undefined) e.sentRev = e.submitted ? 1 : null; // honor old flag
       delete e.submitted;
+      // Signal-capture v2 fields, added PURELY ADDITIVELY. Default obsType to
+      // "anomaly" (every legacy entry was an incident) and leave the rest blank
+      // — we don't know the coverage state of a past observation, and asserting
+      // one would be inventing a fact. CRITICAL: do NOT touch e.rev or e.sentRev
+      // here. Bumping rev would re-mark the whole log as "edited — not yet sent"
+      // and re-submit everything as false revisions; flipping a sent-flag would
+      // show "✓ all sent" with no network call. The whole record's integrity
+      // depends on this migration being read-only w.r.t. the versioning fields.
+      if(e.obsType == null) e.obsType = "anomaly";
+      if(e.controlPoint == null) e.controlPoint = "";
+      if(e.station == null) e.station = "";
+      if(e.observersPresent == null) e.observersPresent = "";
+      if(e.continuouslyObserved == null) e.continuouslyObserved = "";
     });
     return s;
   }
@@ -482,7 +551,50 @@ function setFilingMode(m, silent){
 /* ========================= entry modal ================================== */
 let editIndex = -1;
 let objVal = "No", el104Val = "Unknown";
+let obsTypeVal = "anomaly", contVal = "Yes";
 let selectedTags = new Set();
+
+// Build the control-point dropdown from CONTROL_POINTS (idempotent: safe to
+// call every time the modal opens). A leading blank option means "none / not
+// about a specific control", which is allowed for an anomaly.
+function populateControlPoints(){
+  const sel = document.getElementById("eControlPoint");
+  if(!sel) return;
+  sel.innerHTML = '<option value="">— none / not about a specific control —</option>' +
+    CONTROL_POINTS.map(cp=>`<option value="${esc(cp)}">${esc(cp)}</option>`).join("");
+}
+
+// Switch the observation type. Reshapes the form: anomaly shows the
+// violation-specific fields; attestation and gap hide them (they are not
+// allegations) and relabel the narrative field to match their meaning.
+function setObsType(v){
+  obsTypeVal = v;
+  document.querySelectorAll("#obsTypeGroup .opt").forEach(o=>o.classList.toggle("sel", o.dataset.val===v));
+  const isAnomaly = v==="anomaly";
+  document.getElementById("anomalyFields").style.display = isAnomaly ? "block" : "none";
+  document.getElementById("cpReq").style.display = isAnomaly ? "none" : "inline";
+
+  const hint = document.getElementById("obsTypeHint");
+  const oLabel = document.getElementById("eObservedLabel");
+  const oHint = document.getElementById("eObservedHint");
+  if(v==="attestation"){
+    hint.textContent = "A control you watched happen correctly — affirmative evidence the system worked. Not an allegation.";
+    oLabel.textContent = "What confirmed the control was properly exercised";
+    oHint.textContent = "State what you saw that shows it happened right — in public view, reconciled to the tapes, bipartisan pair, etc. Fact, not opinion.";
+  } else if(v==="gap"){
+    hint.textContent = "A control point that mattered but couldn't be seen. Not an accusation — a coverage record for next time.";
+    oLabel.textContent = "What control occurred, and why it couldn't be observed";
+    oHint.textContent = "e.g., the re-download happened after observers had left; the reconciliation wasn't done in public view.";
+    // A gap means it wasn't watched; default the coverage answer accordingly
+    // (the observer can still override).
+    setCont("No");
+  } else {
+    hint.textContent = "Something that may violate a rule — capture it as fact.";
+    oLabel.textContent = "What was observed — actions, not characterizations";
+    oHint.textContent = "Write only what you saw or heard. No conclusions.";
+  }
+}
+function setCont(v){ contVal=v; document.querySelectorAll("#contGroup .opt").forEach(o=>o.classList.toggle("sel",o.dataset.val===v)); }
 
 function nowStamp(){
   const d = new Date();
@@ -514,10 +626,16 @@ function openEntry(index){
   editIndex = (typeof index==="number") ? index : -1;
   selectedTags = new Set();
   const e = editIndex>=0 ? state.entries[editIndex] : null;
-  document.getElementById("entryTitle").textContent = e ? "Edit incident" : "New incident";
+  document.getElementById("entryTitle").textContent = e ? "Edit observation" : "New observation";
   setVal("eTime", e ? e.time : nowStamp());
-  setVal("eLocation", e ? e.location : state.observer.county ? "" : "");
-  if(!e && state.observer.locationType) { /* keep location free text */ }
+  populateControlPoints();
+  // Set the type first (it reshapes the form and applies the gap coverage
+  // default), THEN restore the stored coverage value so an explicit stored
+  // answer isn't overwritten by that default.
+  setObsType(e ? (e.obsType||"anomaly") : "anomaly");
+  setVal("eControlPoint", e ? (e.controlPoint||"") : "");
+  setVal("eLocation", e ? e.location : "");
+  setVal("eStation", e ? (e.station||"") : "");
   setVal("eObserved", e?e.observed:"");
   setVal("eActor", e?e.actor:"");
   setVal("eWitnesses", e?e.witnesses:"");
@@ -525,6 +643,8 @@ function openEntry(index){
   setVal("eObjDetail", e?e.objectionDetail:"");
   setVal("eEvidence", e?e.evidence:"");
   setEl104(e?e.el104:"Unknown");
+  setVal("eObserversPresent", e ? (e.observersPresent||"") : "");
+  setCont(e ? (e.continuouslyObserved || (e.obsType==="gap"?"No":"Yes")) : "Yes");
   setVal("eNotes", e?e.notes:"");
   if(e && e.issueTags){ ISSUES.forEach((iss,i)=>{ if(e.issueTags.includes(iss.t)) selectedTags.add(i); }); }
   renderTags(); updateCiteHint();
@@ -534,23 +654,47 @@ function openEntry(index){
 function closeEntry(){ document.getElementById("entryModal").classList.remove("open"); }
 
 function saveEntry(){
-  const tags=[...selectedTags].map(i=>ISSUES[i].t);
-  const cites=[...new Set([...selectedTags].map(i=>ISSUES[i].c).filter(Boolean))].join(" • ");
+  const isAnomaly = obsTypeVal==="anomaly";
+  const controlPoint = val("eControlPoint");
+  // Control point is required for attestations and gaps (they are ABOUT a
+  // control by definition); optional for an anomaly that maps to none.
+  if(!isAnomaly && !controlPoint){
+    alert("Pick the control point this " + (obsTypeVal==="gap"?"coverage gap":"attestation") + " is about.");
+    return;
+  }
+  const tags = isAnomaly ? [...selectedTags].map(i=>ISSUES[i].t) : [];
+  const cites = isAnomaly ? [...new Set([...selectedTags].map(i=>ISSUES[i].c).filter(Boolean))].join(" • ") : "";
   const prev = editIndex>=0 ? state.entries[editIndex] : null;
   const entry={
     id: prev ? prev.id : newId(),
     rev: prev ? (prev.rev||1) : 1,
     sentRev: prev ? (prev.sentRev ?? null) : null,
-    time:val("eTime"), location:val("eLocation"), observed:val("eObserved"),
-    actor:val("eActor"), witnesses:val("eWitnesses"),
-    objectionRaised:objVal, objectionDetail:val("eObjDetail"),
-    evidence:val("eEvidence"), el104:el104Val,
-    issueTags:tags, suggestedCite:cites, notes:val("eNotes")
+    obsType: obsTypeVal,
+    controlPoint: controlPoint,
+    time:val("eTime"), location:val("eLocation"), station:val("eStation"),
+    observed:val("eObserved"), witnesses:val("eWitnesses"),
+    evidence:val("eEvidence"),
+    // Anomaly-only fields are forced blank for attestations/gaps so a value
+    // left in a hidden field can never leak into a non-anomaly record.
+    actor: isAnomaly ? val("eActor") : "",
+    objectionRaised: isAnomaly ? objVal : "",
+    objectionDetail: isAnomaly ? val("eObjDetail") : "",
+    el104: isAnomaly ? el104Val : "",
+    issueTags: tags, suggestedCite: cites,
+    observersPresent: val("eObserversPresent"),
+    continuouslyObserved: contVal,
+    notes:val("eNotes")
   };
-  if(!entry.observed.trim()){ alert("Please describe what was observed."); return; }
+  if(!entry.observed.trim()){
+    alert(obsTypeVal==="gap"
+      ? "Describe what control occurred and why it couldn't be observed."
+      : "Please describe what you observed.");
+    return;
+  }
   // Append-only rule: if this observation was already sent centrally, an edit
   // becomes a NEW revision. Bumping rev makes the next submit APPEND a linked
-  // record to the Sheet instead of the edit being lost.
+  // record to the Sheet instead of the edit being lost. (Unchanged by v2 —
+  // editing any field, including the new ones, on a sent entry appends.)
   if(prev && entry.sentRev != null && entry.rev === entry.sentRev){
     entry.rev = entry.sentRev + 1;
   }
@@ -575,9 +719,20 @@ function renderLog(){
   empty.style.display = state.entries.length ? "none":"block";
   state.entries.forEach((e,i)=>{
     const div=document.createElement("div"); div.className="entry";
+    const type = e.obsType || "anomaly";
+    let typePill;
+    if(type==="attestation"){
+      typePill = '<span class="pill" style="background:rgba(63,176,107,.18);border-color:var(--good);color:#c8f4d8">✓ attestation</span>';
+    } else if(type==="gap"){
+      typePill = '<span class="pill" style="border-color:var(--warn);color:#f0cf8f">○ coverage gap</span>';
+    } else {
+      typePill = '<span class="pill" style="border-color:var(--accent);color:#cbd6ff">⚠ anomaly</span>';
+    }
     const flags=[];
-    if(e.objectionRaised==="Yes") flags.push("objection raised");
-    if(e.issueTags && e.issueTags.length) flags.push(...e.issueTags.slice(0,2));
+    if(e.controlPoint) flags.push(e.controlPoint);
+    if(type==="anomaly" && e.objectionRaised==="Yes") flags.push("objection raised");
+    if(type==="anomaly" && e.issueTags && e.issueTags.length) flags.push(...e.issueTags.slice(0,2));
+    if(e.continuouslyObserved && e.continuouslyObserved!=="Yes") flags.push("coverage: "+e.continuouslyObserved.toLowerCase());
     let sent;
     if(e.sentRev == null){
       sent = '<span class="pill" style="border-color:var(--warn);color:#f0cf8f">not yet sent</span>';
@@ -590,12 +745,12 @@ function renderLog(){
       <div class="top">
         <div>
           <div class="time">${esc(e.time||"(no time)")}</div>
-          <div class="loc">${esc(e.location||"—")}</div>
+          <div class="loc">${esc(e.location||"—")}${e.station?" · "+esc(e.station):""}</div>
         </div>
         <button class="btn ghost small" onclick="openEntry(${i})">Edit</button>
       </div>
       <div class="obs">${esc(e.observed||"")}</div>
-      <div class="flags">${sent}${flags.map(f=>`<span class="pill">${esc(f)}</span>`).join("")}</div>`;
+      <div class="flags">${typePill}${sent}${flags.map(f=>`<span class="pill">${esc(f)}</span>`).join("")}</div>`;
     list.appendChild(div);
   });
   refreshSubmitBtn();
@@ -726,7 +881,9 @@ function renderCentralPicker(){
   box.innerHTML = `<p class="hint" style="margin-top:0">${centralRecords.length} observation(s) — check the ones to include:</p>` +
     centralRecords.map((rec,i)=>{
       const who = rec.observer ? esc(rec.observer)+" · " : "";
-      const label = `${who}${esc(rec.time||"")} — ${esc((rec.observed||"").slice(0,60))}${rec.rev>1?` (v${rec.rev})`:""}`;
+      const t = rec.obsType||"anomaly";
+      const tag = t==="attestation" ? "✓ " : t==="gap" ? "○ " : "";
+      const label = `${tag}${who}${esc(rec.time||"")} — ${esc((rec.observed||"").slice(0,60))}${rec.rev>1?` (v${rec.rev})`:""}`;
       return `<div class="chk"><input type="checkbox" id="cpick${i}"><label for="cpick${i}">${label}</label></div>`;
     }).join("");
 }
@@ -734,9 +891,12 @@ function selectedCentral(){
   return centralRecords.filter((_,i)=>{
     const c=document.getElementById("cpick"+i); return c && c.checked;
   }).map(rec=>({
-    time:rec.time, location:rec.location, observed:rec.observed, actor:rec.actor,
+    obsType:rec.obsType||"anomaly", controlPoint:rec.controlPoint||"",
+    time:rec.time, location:rec.location, station:rec.station||"",
+    observed:rec.observed, actor:rec.actor,
     witnesses:rec.witnesses, objectionRaised:rec.objectionRaised, objectionDetail:rec.objectionDetail,
     evidence:rec.evidence, el104:rec.el104, issueTags:rec.issueTags||[], suggestedCite:rec.suggestedCite,
+    observersPresent:rec.observersPresent||"", continuouslyObserved:rec.continuouslyObserved||"",
     notes:rec.notes, observerName:rec.observer||""
   }));
 }

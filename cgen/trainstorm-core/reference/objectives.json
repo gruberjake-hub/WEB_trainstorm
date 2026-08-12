@@ -1,0 +1,23 @@
+{
+  "store": "ontology/objectives",
+  "version": 1,
+  "status": "seeded",
+  "closed_list": true,
+  "owner": "L&D / Instructional Design",
+  "objectives": {
+    "obj_define_psi": {
+      "label": "Define product safety information",
+      "requires": [],
+      "framework": "CASE",
+      "status": "example",
+      "derived_from": "AST009 reference course; the prerequisite named (but not defined) by atom-spec §4's example"
+    },
+    "obj_recognize_psi": {
+      "label": "Recognize PSI",
+      "requires": ["obj_define_psi"],
+      "framework": "CASE",
+      "status": "example",
+      "derived_from": "atom-spec §4 canonical example objective (obj_recognize_psi)"
+    }
+  }
+}

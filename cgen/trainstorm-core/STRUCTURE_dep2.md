@@ -13,7 +13,6 @@ The cure for getting sideways: **don't decide file-by-file. Follow one rule and 
 | an **agent's instruction/prompt** (its governed behavior contract) | `agents/<agent>/` |
 | **brand/visual assets, templates, locked terms, retrieval corpora** | `registry/` |
 | a **translation** | `locales/` |
-| a **governed graph of learning objectives / competencies** | `ontology/` |
 | a **doc that explains or decides** | `architecture/` |
 | a **worked example** | `reference/` |
 | **code that transforms, checks, or runs an agent** | `tools/` |
@@ -45,8 +44,7 @@ trainstorm-core/
 │   ├── element.schema.json               ✅ presentation unit (HOW shown)
 │   ├── atom.schema.json                  ✅ conceptual node (the manifold)
 │   ├── script.primitives.v1.json         ✅ generation IR (WHAT knowledge)
-│   ├── visual-asset.schema.json          ✅ one visual asset registry entry
-│   └── objectives.schema.json            ✅ intent ontology — objective node contract
+│   └── visual-asset.schema.json          ✅ one visual asset registry entry
 │
 ├── vocab/                                # governed, closed vocabularies
 │   ├── intent.enum.json                  ✅ rhetorical + pedagogical intents
@@ -68,9 +66,6 @@ trainstorm-core/
 │
 ├── locales/                             # externalized translations, keyed by element_id
 │   └── <bcp47>.json                      ⬜ e.g. ja.json, fr-CA.json
-│
-├── ontology/                            # the intent ontology — objective/competency graph, keyed by obj_
-│   └── objectives.json                   ✅ obj_ objective nodes (owner: L&D) — teaches[] resolves here
 │
 ├── architecture/                        # docs of record (the .md files sync to Project knowledge)
 │   ├── manifold.md                       ⬜ system map + content graph + audience/join, as TEXT
@@ -125,7 +120,7 @@ trainstorm-core/
 
 Keep the knowledge base **lean**. Configure `.claudesync` (or your Drive mirror) to include only:
 
-- **SYNC:** `schemas/`, `vocab/`, `ontology/*.json`, `agents/**/*.md` (the prompts — you refine these *in* the Project), `architecture/*.md` (not `diagrams/`), `reference/*.json`, `project/`
+- **SYNC:** `schemas/`, `vocab/`, `agents/**/*.md` (the prompts — you refine these *in* the Project), `architecture/*.md` (not `diagrams/`), `reference/*.json`, `project/`
 - **GIT-ONLY (don't sync):** `registry/` assets and **especially `registry/corpus/`** (fed to the retriever, never loaded into context — a 600 KB corpus in the knowledge base would wreck it), `locales/` packs, `architecture/diagrams/` (HTML), `tools/` code, and anything under a client courses repo.
 
 The visual asset registry follows that split exactly, and it's the clearest illustration of why the rule is *kind*, not *topic*: `schemas/visual-asset.schema.json` **syncs** (it's a contract you reason about — 5 KB), while `registry/visual-assets.registry.json` **does not** (273 KB of keyed lookup data the compiler queries at runtime; the model never needs all 255 records in context). Same subject, opposite sides of the line.
