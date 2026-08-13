@@ -2,3 +2,6 @@
 *.mp4
 *.png.tmp
 __pycache__/
+
+# Local ChatGPT conversation intake (may contain private/client material)
+.chat-capture/

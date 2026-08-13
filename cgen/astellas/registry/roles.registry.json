@@ -1,0 +1,77 @@
+{
+  "_note": "Astellas client registry — governed. v3: entries enriched from bare ids to {id, label, description}. The governed SET is unchanged from v2; on adoption the proposal's id + label are promoted in, the review-only `note` is dropped.",
+  "closed_list": true,
+  "version": 3,
+  "roles": [
+    {
+      "id": "role_alsap_approver",
+      "label": "ALSAP Approver",
+      "description": "Approves initial ALSAP content and any updates. Minimum: GSO, Medical Lead, ALSAP Lead."
+    },
+    {
+      "id": "role_alsap_contributing_author",
+      "label": "ALSAP Contributing Author",
+      "description": "Provides functional content to the asset's ALSAP."
+    },
+    {
+      "id": "role_alsap_lead",
+      "label": "ALSAP Lead",
+      "description": "Safety Statistician (QSEG) responsible for development and maintenance of the ALSAP."
+    },
+    {
+      "id": "role_alsap_reviewer",
+      "label": "ALSAP Reviewer",
+      "description": "Cross-functional reviewer of the draft ALSAP for adequacy and accuracy."
+    },
+    {
+      "id": "role_gso",
+      "label": "Global Safety Officer (GSO)",
+      "description": "Accountable safety officer for the asset."
+    },
+    {
+      "id": "role_medical_lead",
+      "label": "Medical Lead (ML)",
+      "description": "Medical lead; an ALSAP approver."
+    },
+    {
+      "id": "role_pv_reviewer",
+      "label": "PV Reviewer",
+      "description": "Pre-existing registry seed (2026-07-31, complaint-intake domain)."
+    },
+    {
+      "id": "role_qa_intake",
+      "label": "QA Intake",
+      "description": "Pre-existing registry seed (2026-07-31, complaint-intake domain)."
+    },
+    {
+      "id": "role_qa_reviewer",
+      "label": "QA Reviewer",
+      "description": "Pre-existing registry seed (2026-07-31, complaint-intake domain)."
+    },
+    {
+      "id": "role_sac_chair",
+      "label": "SAC Chair",
+      "description": "Leads the Safety Assessment Committee (SAC); typically Global Medical Safety Head or designee, per SOP-AST-28304."
+    },
+    {
+      "id": "role_safety_programmer",
+      "label": "Safety Programmer",
+      "description": "QSEG programmer who develops and/or validates datasets and statistical outputs. Developer vs. Validator is a per-step duty attribute, not a separate role."
+    },
+    {
+      "id": "role_sme_author",
+      "label": "SME Author",
+      "description": "Pre-existing registry seed (2026-07-31, complaint-intake domain)."
+    },
+    {
+      "id": "role_smt",
+      "label": "Safety Management Team (SMT)",
+      "description": "Cross-functional safety governance body; reviews ALSAP outputs and owns ongoing safety decisions. (A committee, not an individual.)"
+    },
+    {
+      "id": "role_smt_cochair",
+      "label": "SMT Co-Chair",
+      "description": "Co-chairs the Safety Management Team; aligns on TLF TOC and shells."
+    }
+  ]
+}

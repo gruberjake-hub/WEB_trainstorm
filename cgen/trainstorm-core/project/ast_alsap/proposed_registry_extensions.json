@@ -1,0 +1,142 @@
+{
+  "_note": "Headwater flagged these: every value resolves to a PROPOSED registry entry because none exist in the current governed seeds. Adopt into the repo registries by entry + version bump before this SOP's atoms can pass a governed-vocab gate at status>draft.",
+  "corpus": "SOP-AST-29080 v1 — ALSAP SOP (docx)",
+  "roles": [
+    {
+      "id": "role_alsap_lead",
+      "label": "ALSAP Lead",
+      "note": "Safety Statistician (QSEG) responsible for ALSAP development & maintenance. OWED SEED (2026-08-10)."
+    },
+    {
+      "id": "role_alsap_reviewer",
+      "label": "ALSAP Reviewer",
+      "note": "Cross-functional reviewer group (incl. Contributing Authors, SMT Co-chairs, BRT Chair, Asset/Research Lead, GCPL, GSTATL, RAPV Epidemiologist, Safety Programmer, EDTS Safety Rep). Group role — see open question on committee vs individual roles."
+    },
+    {
+      "id": "role_alsap_approver",
+      "label": "ALSAP Approver",
+      "note": "Minimum: GSO, Medical Lead, ALSAP Lead."
+    },
+    {
+      "id": "role_alsap_contributing_author",
+      "label": "ALSAP Contributing Author"
+    },
+    {
+      "id": "role_sac_chair",
+      "label": "SAC Chair",
+      "note": "Leads the Safety Assessment Committee; typically Global Medical Safety Head (or designee) per SOP-AST-28304."
+    },
+    {
+      "id": "role_safety_programmer",
+      "label": "Safety Programmer",
+      "note": "QSEG. Doc splits Developer vs Validator (segregation of duties). OPEN: two roles vs a duty attribute? Modeled as one role for the beta."
+    },
+    {
+      "id": "role_gso",
+      "label": "Global Safety Officer (GSO)"
+    },
+    {
+      "id": "role_medical_lead",
+      "label": "Medical Lead (ML)"
+    },
+    {
+      "id": "role_smt",
+      "label": "Safety Management Team (SMT)",
+      "note": "A committee/body, not an individual. Same committee-vs-individual open question."
+    },
+    {
+      "id": "role_smt_cochair",
+      "label": "SMT Co-Chair"
+    }
+  ],
+  "records": [
+    {
+      "id": "rec_alsap",
+      "label": "Asset Level Safety Assessment Plan (ALSAP)",
+      "note": "The controlled plan itself; template FORM-AST-34037. OWED SEED (2026-08-10)."
+    },
+    {
+      "id": "rec_tlf_toc_shells",
+      "label": "TLF Table of Contents and Shells"
+    },
+    {
+      "id": "rec_analysis_datasets",
+      "label": "Analysis Datasets (SDTM / ADaM / non-CDISC derived)"
+    },
+    {
+      "id": "rec_tlf_outputs",
+      "label": "TLF Programs and Outputs"
+    }
+  ],
+  "docs": [
+    {
+      "id": "doc_form_ast_34037",
+      "source_number": "FORM-AST-34037",
+      "label": "ALSAP Template"
+    },
+    {
+      "id": "doc_sop_1798",
+      "source_number": "SOP-1798",
+      "label": "Plan and Implement a Safety Management Team"
+    },
+    {
+      "id": "doc_sop_1683",
+      "source_number": "SOP-1683",
+      "label": "Development of Safe First Dosing Guidance"
+    },
+    {
+      "id": "doc_sop_1450",
+      "source_number": "SOP-1450",
+      "label": "Creation of Development Risk Management Plan"
+    },
+    {
+      "id": "doc_sop_1773",
+      "source_number": "SOP-1773",
+      "label": "Develop, Update, and Distribute Investigator's Brochure"
+    },
+    {
+      "id": "doc_sop_480",
+      "source_number": "SOP-480",
+      "label": "Astellas Good Documentation Practices"
+    },
+    {
+      "id": "doc_sop_ast_28304",
+      "source_number": "SOP-AST-28304",
+      "label": "Plan and Implement a Safety Assessment Committee"
+    },
+    {
+      "id": "doc_stl_4899",
+      "source_number": "STL-4899",
+      "label": "Medical Monitoring Plan Template"
+    },
+    {
+      "id": "doc_wpd_981",
+      "source_number": "WPD-981",
+      "label": "Tables, Listings, and Figures Specifications"
+    },
+    {
+      "id": "doc_wpd_970",
+      "source_number": "WPD-970",
+      "label": "Specify, Create and Review Statistical Output"
+    },
+    {
+      "id": "doc_wpd_982",
+      "source_number": "WPD-982",
+      "label": "Performing Statistical Analysis"
+    },
+    {
+      "id": "doc_stl_3884",
+      "source_number": "STL-3884",
+      "label": "Creating Analysis Plans, TLF Specifications and Data Derivations"
+    },
+    {
+      "id": "doc_stl_969",
+      "source_number": "STL-969",
+      "label": "Data Element and Data Presentation Table"
+    }
+  ],
+  "docs_note": "The real procedure facet requires references to be doc_/atom_ ids (not raw numbers). These are PROPOSED doc_ entries for a controlled-doc registry (doc_). Classic client-level vocab — the same doc_sop_1798 is cited across many Astellas SOPs, so it should be governed once in the Astellas namespace, not per-project.",
+  "still_owed_not_instantiated_by_this_sop": {
+    "reg_benefit_risk_profile": "Owed controlled value set (2026-08-10). The BRT (Benefit Risk Team) appears here only as a reviewer role, not as a value set, so this SOP does not force it. Left owed; do not invent."
+  }
+}

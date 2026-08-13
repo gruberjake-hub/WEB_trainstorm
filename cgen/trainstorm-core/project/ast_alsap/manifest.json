@@ -1,0 +1,18 @@
+{
+  "project": "ast_alsap",
+  "corpus_derived_from": "SOP-AST-29080 v1 — ALSAP SOP (docx)",
+  "headwater_mode": "direct",
+  "atom_count": 35,
+  "written_facets": [
+    "meaning",
+    "bindings.object",
+    "bindings.procedure"
+  ],
+  "read_only_facets": [
+    "intent",
+    "expression",
+    "audience",
+    "render"
+  ],
+  "generated_by": "tools/headwater_ingest.py"
+}

@@ -1,0 +1,987 @@
+[
+  {
+    "atom_id": "atom_sop_ast29080",
+    "content_hash": "sha256:397184964f19791a660ad944b325829613d0f28f40f2166d9888e6dd1d93abeb",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "SOP-AST-29080 — Plan, Develop, Execute, Maintain, and Archive the Asset Level Safety Assessment Plan (ALSAP).",
+      "kind": "procedure"
+    },
+    "bindings": {},
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_purpose",
+    "content_hash": "sha256:0f12058f6f9dad4d1a7c7bcbb33ab9d0e60bd2683081e69b75cd20aa19bb81f1",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "The purpose of this SOP is to define the process for planning, developing, executing, maintaining, and archiving the Asset Level Safety Assessment Plan (ALSAP) for use in asset-level safety monitoring during clinical development.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_scope",
+    "content_hash": "sha256:61d67f6f334d1e267434c651139b77c4d7726ef4395278c7995e6e33bcfa0d29",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "This SOP applies to all Astellas and non-Astellas employees responsible for supporting ALSAP throughout its lifecycle. In-scope organizations: BOD, COQS, EDTS, MA, OD, RAPV. [Headwater flag: the in-scope-organizations list is currently embedded prose; it should be decomposed into a List container + ListItem children, but procedure.enum has no 'list'/'list_item' kind — surfaced as an open vocab question, not smashed and not invented.]",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_definitions",
+    "content_hash": "sha256:c7fdd207e73bb0f64b7d49776eedc96e165d05310fa7dcb0f71b0d7b5e6cf37e",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "For definitions, refer to Vault Quality Glossary, or directly in Vault Quality. [Headwater note: definitions are an external reference; no embedded meaning to atomise here.]",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080",
+        "order": 2
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_general",
+    "content_hash": "sha256:e350e2216dc48d9ef992fe2c2b8ccfadafee1743cda05764bc2d51056bd39156",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "The ALSAP is the central cross-functional framework for ongoing identification, evaluation, and communication of emerging safety risks at the asset level. It operationalizes existing safety governance documents (SFDG, DRMP, IB, SMT minutes), integrating them into an actionable, data-driven plan for aggregate monitoring across all relevant clinical trials. Only one ALSAP exists per asset. It must meet ALCOA+ standards and is reviewed annually by the SMT, with ad hoc updates triggered by emerging signals, regulatory changes, milestones, data-quality concerns, or external safety events. [Headwater flag: the governing-documents bullet list (SFDG/DRMP/IB/SMT) is embedded prose; same open List/ListItem vocab question as scope.]",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080",
+        "order": 3
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_roles",
+    "content_hash": "sha256:d96fd12809f665acfa6a76a7b9a31bc77c23fd098cddc97d912b1686dad5d361",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Roles and Responsibilities. [Headwater note: the roles table defines the actors referenced by performed_by throughout Section VI. Every role resolves to a PROPOSED registry entry — none are in the current governed roles.registry seed.]",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080",
+        "order": 4
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_procedures",
+    "content_hash": "sha256:cd09f99aeeaa900641561bb6e29f03858e9ca8382cc7ef7c3f6ab39b839d7bd7",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Procedures.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080",
+        "order": 5
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_a",
+    "content_hash": "sha256:3268e454c7e7572e7cb62d5713a041b87a1ae6892347d6785c448c25993c0bb1",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "A. Plan Development of ALSAP.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_procedures",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_b",
+    "content_hash": "sha256:ebfc66d0d48a3c3f42220fa43bec9911a46ce69cc374de37056f4ad5a6fe0d09",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "B. Develop and Maintain ALSAP.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_procedures",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c",
+    "content_hash": "sha256:c338cad5bf9cb540a2f696e4836c16bb021e704468f2f0c5388186fbabfaf43f",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "C. Develop Analysis Datasets and TLFs.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_procedures",
+        "order": 2
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_a_s1",
+    "content_hash": "sha256:f293586f0a9e70e0e44fab098c8464183ae1835947c9f4e970159eadda0663fe",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Notify a member of Safety Data Science in QSEG of the need for an ALSAP and request an ALSAP Lead.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_a",
+        "order": 0
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_gso"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_a_s2",
+    "content_hash": "sha256:418368a1b021955941f8add57b19c21adaa2d4154e3d37e99eab19dc0aff69b3",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Collaborate with SMT to identify contributing authors and reviewers.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_a",
+        "order": 1,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_a_s1"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_a_s3",
+    "content_hash": "sha256:ee4dc184bc9f5aaf69775d8a346232de3decb1f81d495cb14803bcb26327f999",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Schedule and conduct ALSAP Kick-Off Meeting.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_a",
+        "order": 2,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_a_s2"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_a_s4",
+    "content_hash": "sha256:d87bceded535952aa9eec8ae1ca98d864aafdaf3da9607193b7a0adff03381be",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Collaborate with contributing authors and confirm alignment on section deliverables and target dates.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_a",
+        "order": 3,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_a_s3"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_b_s1",
+    "content_hash": "sha256:7c4f73437e1d2636246790da6047f4526e7ac7cc9d2401db06907f8ba1a9c060",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Provide the ALSAP Lead with contributions to the ALSAP within the agreed-upon timeframe.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_b",
+        "order": 0
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_contributing_author"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_b_s2",
+    "content_hash": "sha256:610b77a80259244f2b1261aef96421b36f680c65df8d58265b3d1d83e7ab454f",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Draft the ALSAP using FORM-AST-34037 (ALSAP Template), with the support of the Contributing Authors. If the asset already has an approved ALSAP, obtain the most current version from the EDMS to make the updates. [Headwater flag: embedded conditional — candidate to split into a decision step; kept atomic for the beta and flagged.]",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_b",
+        "order": 1,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_b_s1"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead"
+        ],
+        "produces_records": [
+          "rec_alsap"
+        ],
+        "references": [
+          "doc_form_ast_34037"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_b_s3",
+    "content_hash": "sha256:b7797a6b45fddc4129566c839f3121982f480fcce211060f96652acae2996007",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Distribute the draft ALSAP for review to the ALSAP Reviewers.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_b",
+        "order": 2,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_b_s2"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_b_s4",
+    "content_hash": "sha256:a7b4564a5ca9e87dc40c1590886f85dda98b8e76db07198a10ecba5974e00eed",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Review draft ALSAP to ensure alignment in approach for the asset and provide feedback to the ALSAP Lead.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_b",
+        "order": 3,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_b_s3"
+        ]
+      },
+      "procedure": {
+        "step_type": "verification",
+        "performed_by": [
+          "role_alsap_reviewer"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_b_s5",
+    "content_hash": "sha256:28b905a007e09643d8992bb6b0971a84c9e7bd391bea4d16bf29537f2662f4f9",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Reconcile comments/edits in consultation with the ALSAP Contributing Authors, follow up on any comments/edits, and repeat steps 2-4 until all comments/edits are addressed.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_b",
+        "order": 4,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_b_s4"
+        ]
+      },
+      "procedure": {
+        "step_type": "decision",
+        "performed_by": [
+          "role_alsap_lead"
+        ],
+        "branches": [
+          {
+            "on": "comments_or_edits_remaining",
+            "leads_to": "atom_sop_ast29080_proc_b_s3"
+          }
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_b_s6",
+    "content_hash": "sha256:67cd8bbfd27bb4b400c77f1877c425786cca494814b882b429b2df53823823a4",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Finalize the ALSAP and route for approvals in the EDMS.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_b",
+        "order": 5,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_b_s5"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_b_s7",
+    "content_hash": "sha256:f9a86b34c96ddecd5d48393d68e8ab8171578f4036c6747fcd5690aff9149ced",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Review and approve the ALSAP in EDMS.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_b",
+        "order": 6,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_b_s6"
+        ]
+      },
+      "procedure": {
+        "step_type": "verification",
+        "performed_by": [
+          "role_alsap_approver"
+        ],
+        "produces_records": [
+          "rec_alsap"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_b_s8",
+    "content_hash": "sha256:854825a9c7d502f6ee818656888d6f94a9f248edaea838e11e8d8daac1f34398",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Notify the ALSAP Contributing Authors, Reviewers, Approvers, and the SAC Chair of the approval of the ALSAP.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_b",
+        "order": 7,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_b_s7"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s1",
+    "content_hash": "sha256:80333f87cbbc6e86f9c1920b2d1d66b925cee57dc56287d706285a18d18a7c83",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Develop the Tables, Listings, and Figures (TLF) Table of Contents (TOC) and Shells per the asset's ALSAP.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 0
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead"
+        ],
+        "produces_records": [
+          "rec_tlf_toc_shells"
+        ],
+        "references": [
+          "doc_wpd_981",
+          "doc_stl_3884",
+          "doc_stl_969"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s2",
+    "content_hash": "sha256:e7db53767e3e392f157ca9c7fe552d58a1150af7df74224aefd7f32cd09862ea",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Distribute the TLF TOC and Shells to the SMT Co-Chairs.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 1,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_c_s1"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s3",
+    "content_hash": "sha256:6d954287700b787410f6559a188e601f1e36886efda490f52e8dd4867d419ac0",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Reach alignment with SMT Co-Chairs on TLF TOC and Shells.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 2,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_c_s2"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s4",
+    "content_hash": "sha256:88fa5adaefb2182a89c289c998e4f7407d7f2e87a86fbfe0b9004c0c5cb08d7d",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "File the ALSAP TLF TOC and Shells in the assigned asset folder in the Statistical Computing Environment (SCE).",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 3,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_c_s3"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s5",
+    "content_hash": "sha256:fb868dc96392a97287703dd797c447199e779c0d5b15b6d8249afa8d72f5417b",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "In collaboration with the Safety Programmer, prepare the plan for development of statistical outputs based on the asset's SMT schedule.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 4,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_c_s4"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead",
+          "role_safety_programmer"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s6",
+    "content_hash": "sha256:3c834cfafab7b2e2f6e5e7cfe333006c6070411118f8cc7ec7cf1d477874ed50",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Develop Dataset and TLF programming specifications.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 5,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_c_s5"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_safety_programmer"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s7",
+    "content_hash": "sha256:f37a9610043eec1dfb96bfe4b452e8c2061d6d9847fe62f76a5bc20fe08a78c7",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Review Dataset and TLF programming specifications and provide feedback.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 6,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_c_s6"
+        ]
+      },
+      "procedure": {
+        "step_type": "verification",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s8",
+    "content_hash": "sha256:6ab2802085ece7fe3ec354c1b44c90967c4b3dbcb92f44df27bc9794212f185d",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Develop the datasets (SDTM, ADaM, and non-CDISC derived) and specifications. Note: development programs and output must reside in the PV restricted-access folder of the SCE to protect the blind.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 7,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_c_s7"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_safety_programmer"
+        ],
+        "produces_records": [
+          "rec_analysis_datasets"
+        ],
+        "references": [
+          "doc_wpd_970"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s9",
+    "content_hash": "sha256:52c757fd6e98ffb05d96587ebcece3a4ec7bb2d7fc7a71859f0142a865b01f5e",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Create TLF programs and outputs.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 8,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_c_s8"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_safety_programmer"
+        ],
+        "produces_records": [
+          "rec_tlf_outputs"
+        ],
+        "references": [
+          "doc_wpd_982"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s10",
+    "content_hash": "sha256:1f99d9fec417f92494d5d4472c595082fb34e296ac60e5478a3f21a7e69ecfac",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Validate TLF programs and outputs.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 9,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_c_s9"
+        ]
+      },
+      "procedure": {
+        "step_type": "verification",
+        "performed_by": [
+          "role_safety_programmer"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s11",
+    "content_hash": "sha256:ef8e0ff9f6d5ad8ab1fa2684331f96ba6b2e4b059019e08ad37682da467ac22c",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Review the TLF outputs.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 10,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_c_s10"
+        ]
+      },
+      "procedure": {
+        "step_type": "verification",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s12",
+    "content_hash": "sha256:e9cec302d8e09f82066e715e26678ff27e8dbf4dee2750bb3a3b788f3e5792ea",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Provide TLF outputs to the SMT per the agreed-upon cycles and timeframes. Note: unblinded data must not be provided to the members of the SMT to protect the blind.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 11,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_c_s11"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_proc_c_s13",
+    "content_hash": "sha256:52ef9653f33d080ded1c95515c960b8340e66cb9d884728e36c3aea06a8597aa",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Review ALSAP outputs per SOP-1798.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_proc_c",
+        "order": 12,
+        "prerequisites": [
+          "atom_sop_ast29080_proc_c_s12"
+        ]
+      },
+      "procedure": {
+        "step_type": "verification",
+        "performed_by": [
+          "role_smt"
+        ],
+        "references": [
+          "doc_sop_1798"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  }
+]

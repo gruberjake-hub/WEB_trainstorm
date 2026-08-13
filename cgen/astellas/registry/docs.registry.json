@@ -1,0 +1,72 @@
+{
+  "_note": "Astellas client registry (controlled documents) — governed. v3: entries enriched to {id, source_number, label}. Governed SET unchanged from v2.",
+  "closed_list": true,
+  "version": 3,
+  "docs": [
+    {
+      "id": "doc_form_ast_34037",
+      "source_number": "FORM-AST-34037",
+      "label": "ALSAP Template"
+    },
+    {
+      "id": "doc_sop_1450",
+      "source_number": "SOP-1450",
+      "label": "Creation of Development Risk Management Plan"
+    },
+    {
+      "id": "doc_sop_1683",
+      "source_number": "SOP-1683",
+      "label": "Development of Safe First Dosing Guidance"
+    },
+    {
+      "id": "doc_sop_1773",
+      "source_number": "SOP-1773",
+      "label": "Develop, Update, and Distribute Investigator's Brochure"
+    },
+    {
+      "id": "doc_sop_1798",
+      "source_number": "SOP-1798",
+      "label": "Plan and Implement a Safety Management Team"
+    },
+    {
+      "id": "doc_sop_480",
+      "source_number": "SOP-480",
+      "label": "Astellas Good Documentation Practices"
+    },
+    {
+      "id": "doc_sop_ast_28304",
+      "source_number": "SOP-AST-28304",
+      "label": "Plan and Implement a Safety Assessment Committee"
+    },
+    {
+      "id": "doc_stl_3884",
+      "source_number": "STL-3884",
+      "label": "Creating Analysis Plans, TLF Specifications and Data Derivations"
+    },
+    {
+      "id": "doc_stl_4899",
+      "source_number": "STL-4899",
+      "label": "Medical Monitoring Plan Template"
+    },
+    {
+      "id": "doc_stl_969",
+      "source_number": "STL-969",
+      "label": "Data Element and Data Presentation Table"
+    },
+    {
+      "id": "doc_wpd_970",
+      "source_number": "WPD-970",
+      "label": "Specify, Create and Review Statistical Output"
+    },
+    {
+      "id": "doc_wpd_981",
+      "source_number": "WPD-981",
+      "label": "Tables, Listings, and Figures Specifications"
+    },
+    {
+      "id": "doc_wpd_982",
+      "source_number": "WPD-982",
+      "label": "Performing Statistical Analysis"
+    }
+  ]
+}

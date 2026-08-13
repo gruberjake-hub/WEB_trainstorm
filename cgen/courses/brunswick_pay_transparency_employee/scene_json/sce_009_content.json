@@ -61,7 +61,7 @@
     "Callout_01": {
       "type": "Statement",
       "intent": "support",
-      "text": "Contact your manager and/or HR Business Partner for questions specific to your situation.",
+      "text": "Contact your manager and/or HR Business Partner with questions.",
       "text_primitive": "CTA",
       "motion_primitive": "FadeUp",
       "layout_primitive": "BottomCTA",

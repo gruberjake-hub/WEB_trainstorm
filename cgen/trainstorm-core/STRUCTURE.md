@@ -76,6 +76,7 @@ trainstorm-core/
 │   ├── manifold.md                       ⬜ system map + content graph + audience/join, as TEXT
 │   ├── conventions.md                    ⬜ the constitution, expanded
 │   ├── reconciliation.md                 ✅ schema reconciliation decisions
+│   ├── conversation-reconciliation.md    ✅ chat evidence → candidate → canonical decision
 │   ├── script-generation-layer.md        ✅ generation-layer placement + realization table
 │   ├── atom-spec.md                      ✅ the atom, annotated
 │   ├── localization-agent.md             ✅ the RAG localization pipeline
@@ -95,6 +96,8 @@ trainstorm-core/
 │   ├── localize/                         # the translation agent's runtime (reads agents/localize/system.md)
 │   │   ├── build_agent_call.py           ✅ assembles the [system,user] call from registry memory
 │   │   └── verify_agent_output.py        ✅ QE gate + locale-pack mapping check
+│   ├── chat-capture/                      # ChatGPT export → provenance-preserving inventory
+│   │   └── extract_chatgpt.py             ✅ local evidence intake; never promotes decisions
 │   ├── assets/                           # the visual-asset pipeline: ingest → promote → approve
 │   │   ├── ingest_images.py              ✅ mechanical tier: hash · dims · OCR · perceptual dedup
 │   │   ├── promote.py                    ✅ staging → registry entries (idempotent; preserves approvals)

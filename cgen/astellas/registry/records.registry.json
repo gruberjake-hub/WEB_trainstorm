@@ -1,0 +1,32 @@
+{
+  "_note": "Astellas client registry — governed. v3: entries enriched to {id, label, description}. Governed SET unchanged from v2.",
+  "closed_list": true,
+  "version": 3,
+  "records": [
+    {
+      "id": "rec_alsap",
+      "label": "Asset Level Safety Assessment Plan (ALSAP)",
+      "description": "The controlled safety plan produced/maintained per this SOP; template FORM-AST-34037."
+    },
+    {
+      "id": "rec_analysis_datasets",
+      "label": "Analysis Datasets",
+      "description": "SDTM / ADaM / non-CDISC derived datasets and specifications."
+    },
+    {
+      "id": "rec_complaint_form",
+      "label": "Complaint Form",
+      "description": "Pre-existing registry seed (2026-07-31, complaint-intake domain)."
+    },
+    {
+      "id": "rec_tlf_outputs",
+      "label": "TLF Programs and Outputs",
+      "description": "Tables, listings, and figures programs and their outputs."
+    },
+    {
+      "id": "rec_tlf_toc_shells",
+      "label": "TLF Table of Contents and Shells",
+      "description": "The TLF TOC and shell templates per the asset's ALSAP."
+    }
+  ]
+}

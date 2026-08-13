@@ -1,0 +1,13 @@
+{
+  "_note": "Gaps where the source is silent or defers elsewhere. Named, not invented.",
+  "corpus": "SOP-AST-29080 v1 — ALSAP SOP (docx)",
+  "gaps": [
+    "governance.owner — no accountable content owner id stated in the doc; inferred 'team_qseg_safety_data_science' and flagged.",
+    "governance.effective_date — v1 'New SOP', no effective date in extracted text; omitted (optional).",
+    "governance.approved_by — approver roles are named but no signatory ids; left empty.",
+    "DEFINITIONS — deferred to external Vault Quality Glossary; no embedded meaning atomised.",
+    "Safety Programmer Developer/Validator — segregation of duties present in the table but modeled as one role; open.",
+    "Embedded conditional in B.s2 ('if an approved ALSAP exists') — candidate decision step; kept atomic + flagged.",
+    "Narrative lists (in-scope orgs; governing docs; notify recipients) — want List/ListItem decomposition, but procedure.enum lacks those kinds."
+  ]
+}

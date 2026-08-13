@@ -34,7 +34,7 @@
     "Statement_03":{
       "type": "Statement",
       "intent": "complete",
-      "text": "Because our workforce spans different locations and employment groups, some benefits may differ based on location and local requirements.",
+      "text": "Because our workforce spans different countries and employment groups, some benefits may differ based on location and local requirements.",
       "text_primitive": "Statement",
       "motion_primitive": "FocusReveal",
       "layout_primitive": "CenterStatement",
