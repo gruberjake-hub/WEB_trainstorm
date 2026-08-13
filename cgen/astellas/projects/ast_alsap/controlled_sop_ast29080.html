@@ -1,0 +1,126 @@
+<!doctype html><html lang=en><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>SOP-AST-29080 — ALSAP (controlled projection)</title>
+<style>
+:root{--ink:#0f172a;--mut:#64748b;--line:#e2e8f0;--bg:#f8fafc;--accent:#1e3a8a}
+*{box-sizing:border-box}
+body{font:15px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);
+ margin:0;background:var(--bg)}
+.page{max-width:900px;margin:0 auto;background:#fff;padding:48px 56px;
+ box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.ctrl{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--accent);
+ padding-bottom:14px;margin-bottom:8px}
+.ctrl .doc{font-weight:700;font-size:19px;color:var(--accent)}
+.ctrl .meta{text-align:right;font-size:12.5px;color:var(--mut)}
+.banner{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 14px;
+ font-size:12.5px;color:#92400e;margin:14px 0 26px}
+h1{font-size:20px;margin:6px 0 2px}
+h2{font-size:16px;margin:30px 0 8px;color:var(--accent);border-bottom:1px solid var(--line);padding-bottom:4px}
+h3{font-size:14px;margin:20px 0 6px;color:#334155}
+p{margin:8px 0}
+table{border-collapse:collapse;width:100%;margin:8px 0 4px;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:#475569}
+.steps .num{width:34px;text-align:center;color:var(--mut)}
+.who{white-space:nowrap;font-weight:600;color:#334155;width:1%}
+.badge{color:#fff;border-radius:4px;padding:1px 7px;font-size:11px;text-transform:uppercase;letter-spacing:.02em}
+.ex{color:var(--mut);font-size:12px;margin-top:4px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--mut)}
+details{margin-top:34px;border-top:1px dashed var(--line);padding-top:14px}
+summary{cursor:pointer;color:var(--mut);font-size:12.5px}
+.foot{margin-top:30px;font-size:11.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:12px}
+</style></head><body><div class=page>
+<div class=ctrl>
+ <div><div class=doc>SOP-AST-29080</div>
+ <div style="font-size:12.5px;color:var(--mut)">Asset Level Safety Assessment Plan (ALSAP)</div></div>
+ <div class=meta>Version 1 · Status: DRAFT<br>Regulatory-bound · GxP controlled<br>
+ Projection generated from atom store</div>
+</div>
+<h1>SOP-AST-29080 — Plan, Develop, Execute, Maintain, and Archive the Asset Level Safety Assessment Plan (ALSAP).</h1>
+<div class=banner><b>Controlled projection.</b> This document is a deterministic projection of
+35 content atoms (the engineering source of truth). Every clause traces back to a stable
+<span class=mono>atom_id</span> and <span class=mono>content_hash</span> — see the traceability
+appendix. Roles/records shown in italics-by-label are <b>proposed</b> registry entries pending
+adoption; this SOP is at status <b>draft</b> accordingly.</div>
+<h2>I. Purpose</h2><p>The purpose of this SOP is to define the process for planning, developing, executing, maintaining, and archiving the Asset Level Safety Assessment Plan (ALSAP) for use in asset-level safety monitoring during clinical development.</p><h2>II. Scope</h2><p>This SOP applies to all Astellas and non-Astellas employees responsible for supporting ALSAP throughout its lifecycle. In-scope organizations: BOD, COQS, EDTS, MA, OD, RAPV.</p><h2>III. Definitions</h2><p>For definitions, refer to Vault Quality Glossary, or directly in Vault Quality.</p><h2>IV. General</h2><p>The ALSAP is the central cross-functional framework for ongoing identification, evaluation, and communication of emerging safety risks at the asset level. It operationalizes existing safety governance documents (SFDG, DRMP, IB, SMT minutes), integrating them into an actionable, data-driven plan for aggregate monitoring across all relevant clinical trials. Only one ALSAP exists per asset. It must meet ALCOA+ standards and is reviewed annually by the SMT, with ad hoc updates triggered by emerging signals, regulatory changes, milestones, data-quality concerns, or external safety events.</p><h2>V. Roles and Responsibilities</h2><table class='roles'><thead><tr><th>Role</th><th>Responsibility (summary)</th></tr></thead><tbody><tr><td class='who'>ALSAP Lead</td><td>Safety Statistician (QSEG) responsible for ALSAP development &amp; maintenance. OWED SEED (2026-08-10).</td></tr><tr><td class='who'>ALSAP Reviewer</td><td>Cross-functional reviewer group (incl. Contributing Authors, SMT Co-chairs, BRT Chair, Asset/Research Lead, GCPL, GSTATL, RAPV Epidemiologist, Safety Programmer, EDTS Safety Rep). Group role — see open question on committee vs individual roles.</td></tr><tr><td class='who'>ALSAP Approver</td><td>Minimum: GSO, Medical Lead, ALSAP Lead.</td></tr><tr><td class='who'>ALSAP Contributing Author</td><td></td></tr><tr><td class='who'>SAC Chair</td><td>Leads the Safety Assessment Committee; typically Global Medical Safety Head (or designee) per SOP-AST-28304.</td></tr><tr><td class='who'>Safety Programmer</td><td>QSEG. Doc splits Developer vs Validator (segregation of duties). OPEN: two roles vs a duty attribute? Modeled as one role for the beta.</td></tr><tr><td class='who'>Global Safety Officer (GSO)</td><td></td></tr><tr><td class='who'>Medical Lead (ML)</td><td></td></tr><tr><td class='who'>Safety Management Team (SMT)</td><td>A committee/body, not an individual. Same committee-vs-individual open question.</td></tr><tr><td class='who'>SMT Co-Chair</td><td></td></tr></tbody></table><h2>VI. Procedures</h2><h3>A. Plan Development of ALSAP</h3><table class="steps"><thead><tr><th>#</th><th>Responsibility</th><th>Action</th><th>Type</th></tr></thead><tbody>
+<tr><td class='num'>1</td><td class='who'>Global Safety Officer (GSO)</td><td>Notify a member of Safety Data Science in QSEG of the need for an ALSAP and request an ALSAP Lead.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>2</td><td class='who'>ALSAP Lead</td><td>Collaborate with SMT to identify contributing authors and reviewers.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>3</td><td class='who'>ALSAP Lead</td><td>Schedule and conduct ALSAP Kick-Off Meeting.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>4</td><td class='who'>ALSAP Lead</td><td>Collaborate with contributing authors and confirm alignment on section deliverables and target dates.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+</tbody></table><h3>B. Develop and Maintain ALSAP</h3><table class="steps"><thead><tr><th>#</th><th>Responsibility</th><th>Action</th><th>Type</th></tr></thead><tbody>
+<tr><td class='num'>1</td><td class='who'>ALSAP Contributing Author</td><td>Provide the ALSAP Lead with contributions to the ALSAP within the agreed-upon timeframe.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>2</td><td class='who'>ALSAP Lead</td><td>Draft the ALSAP using FORM-AST-34037 (ALSAP Template), with the support of the Contributing Authors. If the asset already has an approved ALSAP, obtain the most current version from the EDMS to make the updates.<div class='ex'>Produces: Asset Level Safety Assessment Plan (ALSAP) &nbsp;·&nbsp; References: FORM-AST-34037</div></td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>3</td><td class='who'>ALSAP Lead</td><td>Distribute the draft ALSAP for review to the ALSAP Reviewers.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>4</td><td class='who'>ALSAP Reviewer</td><td>Review draft ALSAP to ensure alignment in approach for the asset and provide feedback to the ALSAP Lead.</td><td><span class='badge' style='background:#047857'>verification</span></td></tr>
+<tr><td class='num'>5</td><td class='who'>ALSAP Lead</td><td>Reconcile comments/edits in consultation with the ALSAP Contributing Authors, follow up on any comments/edits, and repeat steps 2-4 until all comments/edits are addressed.<div class='ex'>Loop: repeat until comments_or_edits_remaining</div></td><td><span class='badge' style='background:#b45309'>decision</span></td></tr>
+<tr><td class='num'>6</td><td class='who'>ALSAP Lead</td><td>Finalize the ALSAP and route for approvals in the EDMS.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>7</td><td class='who'>ALSAP Approver</td><td>Review and approve the ALSAP in EDMS.<div class='ex'>Produces: Asset Level Safety Assessment Plan (ALSAP)</div></td><td><span class='badge' style='background:#047857'>verification</span></td></tr>
+<tr><td class='num'>8</td><td class='who'>ALSAP Lead</td><td>Notify the ALSAP Contributing Authors, Reviewers, Approvers, and the SAC Chair of the approval of the ALSAP.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+</tbody></table><h3>C. Develop Analysis Datasets and TLFs</h3><table class="steps"><thead><tr><th>#</th><th>Responsibility</th><th>Action</th><th>Type</th></tr></thead><tbody>
+<tr><td class='num'>1</td><td class='who'>ALSAP Lead</td><td>Develop the Tables, Listings, and Figures (TLF) Table of Contents (TOC) and Shells per the asset&#x27;s ALSAP.<div class='ex'>Produces: TLF Table of Contents and Shells &nbsp;·&nbsp; References: WPD-981, STL-3884, STL-969</div></td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>2</td><td class='who'>ALSAP Lead</td><td>Distribute the TLF TOC and Shells to the SMT Co-Chairs.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>3</td><td class='who'>ALSAP Lead</td><td>Reach alignment with SMT Co-Chairs on TLF TOC and Shells.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>4</td><td class='who'>ALSAP Lead</td><td>File the ALSAP TLF TOC and Shells in the assigned asset folder in the Statistical Computing Environment (SCE).</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>5</td><td class='who'>ALSAP Lead / Safety Programmer</td><td>In collaboration with the Safety Programmer, prepare the plan for development of statistical outputs based on the asset&#x27;s SMT schedule.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>6</td><td class='who'>Safety Programmer</td><td>Develop Dataset and TLF programming specifications.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>7</td><td class='who'>ALSAP Lead</td><td>Review Dataset and TLF programming specifications and provide feedback.</td><td><span class='badge' style='background:#047857'>verification</span></td></tr>
+<tr><td class='num'>8</td><td class='who'>Safety Programmer</td><td>Develop the datasets (SDTM, ADaM, and non-CDISC derived) and specifications. Note: development programs and output must reside in the PV restricted-access folder of the SCE to protect the blind.<div class='ex'>Produces: Analysis Datasets (SDTM / ADaM / non-CDISC derived) &nbsp;·&nbsp; References: WPD-970</div></td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>9</td><td class='who'>Safety Programmer</td><td>Create TLF programs and outputs.<div class='ex'>Produces: TLF Programs and Outputs &nbsp;·&nbsp; References: WPD-982</div></td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>10</td><td class='who'>Safety Programmer</td><td>Validate TLF programs and outputs.</td><td><span class='badge' style='background:#047857'>verification</span></td></tr>
+<tr><td class='num'>11</td><td class='who'>ALSAP Lead</td><td>Review the TLF outputs.</td><td><span class='badge' style='background:#047857'>verification</span></td></tr>
+<tr><td class='num'>12</td><td class='who'>ALSAP Lead</td><td>Provide TLF outputs to the SMT per the agreed-upon cycles and timeframes. Note: unblinded data must not be provided to the members of the SMT to protect the blind.</td><td><span class='badge' style='background:#2563eb'>action</span></td></tr>
+<tr><td class='num'>13</td><td class='who'>Safety Management Team (SMT)</td><td>Review ALSAP outputs per SOP-1798.<div class='ex'>References: SOP-1798</div></td><td><span class='badge' style='background:#047857'>verification</span></td></tr>
+</tbody></table>
+<h2>VIII. References</h2>
+<table class=refs><thead><tr><th>Document</th><th>Title</th></tr></thead><tbody><tr><td>FORM-AST-34037</td><td>ALSAP Template</td></tr>
+<tr><td>SOP-1798</td><td>Plan and Implement a Safety Management Team</td></tr>
+<tr><td>SOP-1683</td><td>Development of Safe First Dosing Guidance</td></tr>
+<tr><td>SOP-1450</td><td>Creation of Development Risk Management Plan</td></tr>
+<tr><td>SOP-1773</td><td>Develop, Update, and Distribute Investigator&#x27;s Brochure</td></tr>
+<tr><td>SOP-480</td><td>Astellas Good Documentation Practices</td></tr>
+<tr><td>SOP-AST-28304</td><td>Plan and Implement a Safety Assessment Committee</td></tr>
+<tr><td>STL-4899</td><td>Medical Monitoring Plan Template</td></tr>
+<tr><td>WPD-981</td><td>Tables, Listings, and Figures Specifications</td></tr>
+<tr><td>WPD-970</td><td>Specify, Create and Review Statistical Output</td></tr>
+<tr><td>WPD-982</td><td>Performing Statistical Analysis</td></tr>
+<tr><td>STL-3884</td><td>Creating Analysis Plans, TLF Specifications and Data Derivations</td></tr>
+<tr><td>STL-969</td><td>Data Element and Data Presentation Table</td></tr></tbody></table>
+<details><summary>Traceability appendix — every projected element ↔ atom (click to expand)</summary>
+<table><thead><tr><th>atom_id</th><th>content_hash</th></tr></thead><tbody><tr><td>atom_sop_ast29080_purpose</td><td class='mono'>sha256:0f12058f6f9d…</td></tr>
+<tr><td>atom_sop_ast29080_scope</td><td class='mono'>sha256:61d67f6f334d…</td></tr>
+<tr><td>atom_sop_ast29080_definitions</td><td class='mono'>sha256:c7fdd207e73b…</td></tr>
+<tr><td>atom_sop_ast29080_general</td><td class='mono'>sha256:e350e2216dc4…</td></tr>
+<tr><td>atom_sop_ast29080_roles</td><td class='mono'>sha256:d96fd12809f6…</td></tr>
+<tr><td>atom_sop_ast29080_proc_a_s1</td><td class='mono'>sha256:f293586f0a9e…</td></tr>
+<tr><td>atom_sop_ast29080_proc_a_s2</td><td class='mono'>sha256:418368a1b021…</td></tr>
+<tr><td>atom_sop_ast29080_proc_a_s3</td><td class='mono'>sha256:ee4dc184bc9f…</td></tr>
+<tr><td>atom_sop_ast29080_proc_a_s4</td><td class='mono'>sha256:d87bceded535…</td></tr>
+<tr><td>atom_sop_ast29080_proc_a</td><td class='mono'>sha256:3268e454c7e7…</td></tr>
+<tr><td>atom_sop_ast29080_proc_b_s1</td><td class='mono'>sha256:7c4f73437e1d…</td></tr>
+<tr><td>atom_sop_ast29080_proc_b_s2</td><td class='mono'>sha256:610b77a80259…</td></tr>
+<tr><td>atom_sop_ast29080_proc_b_s3</td><td class='mono'>sha256:b7797a6b45fd…</td></tr>
+<tr><td>atom_sop_ast29080_proc_b_s4</td><td class='mono'>sha256:a7b4564a5ca9…</td></tr>
+<tr><td>atom_sop_ast29080_proc_b_s5</td><td class='mono'>sha256:28b905a007e0…</td></tr>
+<tr><td>atom_sop_ast29080_proc_b_s6</td><td class='mono'>sha256:67cd8bbfd27b…</td></tr>
+<tr><td>atom_sop_ast29080_proc_b_s7</td><td class='mono'>sha256:f9a86b34c96d…</td></tr>
+<tr><td>atom_sop_ast29080_proc_b_s8</td><td class='mono'>sha256:854825a9c7d5…</td></tr>
+<tr><td>atom_sop_ast29080_proc_b</td><td class='mono'>sha256:ebfc66d0d48a…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s1</td><td class='mono'>sha256:80333f87cbbc…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s2</td><td class='mono'>sha256:e7db53767e3e…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s3</td><td class='mono'>sha256:6d954287700b…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s4</td><td class='mono'>sha256:88fa5adaefb2…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s5</td><td class='mono'>sha256:fb868dc96392…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s6</td><td class='mono'>sha256:3c834cfafab7…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s7</td><td class='mono'>sha256:f37a9610043e…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s8</td><td class='mono'>sha256:6ab2802085ec…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s9</td><td class='mono'>sha256:52c757fd6e98…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s10</td><td class='mono'>sha256:1f99d9fec417…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s11</td><td class='mono'>sha256:ef8e0ff9f6d5…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s12</td><td class='mono'>sha256:e9cec302d8e0…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c_s13</td><td class='mono'>sha256:52ef9653f33d…</td></tr>
+<tr><td>atom_sop_ast29080_proc_c</td><td class='mono'>sha256:c338cad5bf9c…</td></tr></tbody></table>
+</details>
+<div class=foot>Derived from: SOP-AST-29080 v1 — ALSAP SOP (docx) · Headwater mode:
+direct · Written facets: meaning, bindings.object, bindings.procedure ·
+Projector: tools/project_sop.py · This projection is regenerated, never hand-edited.</div>
+</div></body></html>
