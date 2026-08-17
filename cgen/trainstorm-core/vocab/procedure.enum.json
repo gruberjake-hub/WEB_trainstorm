@@ -1,6 +1,30 @@
 {
-  "_note": "VENDORED from repo vocab/procedure.enum.json (seed as of 2026-07-31). DO NOT EDIT here.",
-  "closed_list": true,
-  "meaning_kinds": ["procedure", "procedure_step"],
-  "step_type": ["action", "decision", "verification"]
+  "vocabulary_version": "procedure.v0.1",
+  "status": "draft_for_build",
+  "owner": "quality_content_architecture",
+  "description": "Governed closed lists introduced by the procedure facet (procedural / SOP source). Mirrors the governance pattern of intent.enum.json. These are the vocabularies the authoring/headwater agent must draw from; the validator rejects anything else.",
+  "governance": {
+    "closed_list": true,
+    "rule": "Atoms and procedure bindings may only use ids defined here. New values require a version bump and an entry.",
+    "scope": "meaning.kind (procedural values only — the field is otherwise open/example-tagged) and bindings.procedure.step_type (fully closed)."
+  },
+  "dimensions": {
+    "meaning_kind": {
+      "description": "Additive GOVERNED values for atom.meaning.kind that mark procedural content. The field stays open for other content kinds; these two are closed for procedures.",
+      "field": "atom.meaning.kind",
+      "values": [
+        { "id": "procedure",      "label": "Procedure",      "definition": "A controlled procedural container (an SOP or sub-procedure). Its meaning is the procedure's title/purpose; its steps are child atoms via object.belongs_to." },
+        { "id": "procedure_step", "label": "Procedure Step", "definition": "A single leaf step within a procedure. Its meaning is the action instruction; execution semantics live in the procedure binding." }
+      ]
+    },
+    "step_type": {
+      "description": "The kind of procedural move a step makes. Fully closed. Canonical source for the enum mirrored in procedure.facet.schema.json.",
+      "field": "bindings.procedure.step_type",
+      "values": [
+        { "id": "action",       "label": "Action",       "definition": "Perform a task. May produce records (produces_records)." },
+        { "id": "decision",     "label": "Decision",      "definition": "A branch point. Routes to other steps via branches[]; the human-readable condition is the step's own meaning." },
+        { "id": "verification", "label": "Verification",  "definition": "A QC / acceptance check. Points at an acceptance-criterion atom via acceptance_ref." }
+      ]
+    }
+  }
 }
