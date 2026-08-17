@@ -36,12 +36,15 @@ def adopt(reg_file, key, proposed_items):
         reg[key] = sorted(reg[key], key=lambda e: e["id"])
         reg["version"] = reg.get("version", 1) + 1
     (SCH / reg_file).write_text(json.dumps(reg, indent=2, ensure_ascii=False))
+    # The add-payload is the exact committable delta: the FULL governed entries for the
+    # promoted ids (id + label + description / source_number), not just their ids.
+    by_id = {e["id"]: e for e in reg[key]}
+    entries = [by_id[i["id"]] for i in proposed_items if i["id"] in by_id]
     (ADDS / f"{key}.add.json").write_text(json.dumps({
         "registry": reg_file,
         "version_after": reg.get("version"),
-        "promoted_ids": [i["id"] for i in proposed_items],
-        "carried_across": ["id", "label"] + (["source_number"] if key == "docs" else []),
-        "dropped_on_promotion": ["note"]
+        "dropped_from_proposal": ["note"],
+        "entries": entries
     }, indent=2, ensure_ascii=False))
     return added
 

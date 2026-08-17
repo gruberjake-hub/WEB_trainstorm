@@ -11,18 +11,37 @@ into one gate that runs on a project's atom store. Three layers:
 Exit policy: HARD failures block at any status. PROPOSED-pending values are allowed while the
 atom is status=draft, but block promotion to in_review/approved until adopted into the repo registries.
 """
-import json, hashlib, pathlib, sys
+import json, hashlib, pathlib, sys, argparse
 from jsonschema import Draft202012Validator
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-SCH = ROOT / "schemas"
+SCH = ROOT / "schemas"            # CLIENT registries (roles/records/docs) live here
+MIRROR = ROOT / "_core_mirror"    # fenced standalone-demo mirror of core canon — NOT canonical
 STORE = ROOT / "store" / "projects" / "ast_alsap"
 
 def load(p): return json.loads(pathlib.Path(p).read_text())
 
-atom_schema = load(SCH / "atom.schema.json")
-proc_schema = load(SCH / "procedure.facet.schema.json")
-proc_enum   = load(SCH / "procedure.enum.json")
+# Core schemas + vocab are read from the REAL repo when --core-dir is given; otherwise from the
+# fenced mirror (with a loud warning). This is the recurrence guard: no committable copy of canon
+# sits next to the tools, and in-repo runs never touch the mirror.
+_ap = argparse.ArgumentParser()
+_ap.add_argument("--core-dir", default=None,
+                 help="path to cgen/trainstorm-core; reads schemas/ + vocab/ from there (canonical)")
+_args, _ = _ap.parse_known_args()
+if _args.core_dir:
+    core = pathlib.Path(_args.core_dir)
+    atom_schema = load(core / "schemas" / "atom.schema.json")
+    proc_schema = load(core / "schemas" / "procedure.facet.schema.json")
+    proc_enum   = load(core / "vocab" / "procedure.enum.json")
+    core_src = f"canonical core @ {core}"
+else:
+    print("WARNING: no --core-dir given — validating against ./_core_mirror, a NON-canonical demo copy.")
+    print("         In the repo, run with: --core-dir <path>/cgen/trainstorm-core")
+    atom_schema = load(MIRROR / "atom.schema.json")
+    proc_schema = load(MIRROR / "procedure.facet.schema.json")
+    proc_enum   = load(MIRROR / "procedure.enum.json")
+    core_src = "bundled _core_mirror (NOT canonical)"
+
 roles_reg   = load(SCH / "roles.registry.json")
 records_reg = load(SCH / "records.registry.json")
 docs_reg    = load(SCH / "docs.registry.json")
@@ -32,8 +51,9 @@ proposed = load(STORE / "proposed_registry_extensions.json")
 
 gov_roles   = {e["id"] for e in roles_reg["roles"]}     # entries are now {id, label, …}
 gov_records = {e["id"] for e in records_reg["records"]}
-gov_kinds   = set(proc_enum["meaning_kinds"])
-gov_steptyp = set(proc_enum["step_type"])
+# canonical procedure.enum.json nests governed values under dimensions.<name>.values[].id
+gov_kinds   = {v["id"] for v in proc_enum["dimensions"]["meaning_kind"]["values"]}
+gov_steptyp = {v["id"] for v in proc_enum["dimensions"]["step_type"]["values"]}
 gov_docs    = {e["id"] for e in docs_reg["docs"]}
 prop_roles   = {r["id"] for r in proposed["roles"]}
 prop_records = {r["id"] for r in proposed["records"]}
@@ -128,7 +148,7 @@ for r in sorted(pending_docs):
 statuses = {a["governance"]["status"] for a in atoms}
 print("="*68)
 print(f"VALIDATION GATE — project ast_alsap — {len(atoms)} atoms")
-print(f"schemas: atom.schema.json (vendored)  procedure.facet.schema.json (canonical, user-supplied)")
+print(f"schemas: {core_src}")
 print("="*68)
 print(f"SCHEMA + DRIFT hard failures : {len(hard)}")
 print(f"PROPOSED / soft flags        : {len(soft)}")

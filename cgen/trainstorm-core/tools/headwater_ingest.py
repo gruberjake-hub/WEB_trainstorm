@@ -256,6 +256,9 @@ manifest = {
   "atom_count": len(atoms),
   "written_facets": ["meaning", "bindings.object", "bindings.procedure"],
   "read_only_facets": ["intent", "expression", "audience", "render"],
+  # Governed approval authority for this project: only these roles may sign off approval.
+  # From the SOP's roles table (ALSAP Approvers = GSO, Medical Lead, ALSAP Lead).
+  "approval_roles": ["role_alsap_approver", "role_gso", "role_medical_lead", "role_alsap_lead"],
   "generated_by": "tools/headwater_ingest.py"
 }
 

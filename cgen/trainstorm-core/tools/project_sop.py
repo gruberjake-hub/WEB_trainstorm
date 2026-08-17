@@ -17,6 +17,17 @@ SCH = ROOT / "schemas"
 atoms = {a["atom_id"]: a for a in json.loads((STORE / "atoms.json").read_text())}
 manifest = json.loads((STORE / "manifest.json").read_text())
 
+# document-level status, reflected from the store + the signed approval manifest
+_statuses = {a["governance"]["status"] for a in atoms.values()}
+DOC_STATUS = ("APPROVED" if _statuses == {"approved"}
+              else "IN REVIEW" if "in_review" in _statuses else "DRAFT")
+_ap = STORE / "approvals.json"
+APPROVAL = None
+if _ap.exists():
+    _aj = json.loads(_ap.read_text())
+    if _aj.get("approvals"):
+        APPROVAL = _aj["approvals"][-1]
+
 # Labels come from the GOVERNED REGISTRIES (the law), not the staging pen — a VLOOKUP of
 # the id against the client registry. This is the correct wiring: the projection resolves
 # display names from the single governed source, never from a project-local proposal.
@@ -124,6 +135,17 @@ ref_rows = "\n".join(
 trace_rows = "\n".join(
     f"<tr><td>{esc(aid)}</td><td class='mono'>{esc(h[:19])}…</td></tr>" for aid, h in rows_trace)
 
+# status / approval block for the controlled-doc header + banner
+if APPROVAL and DOC_STATUS == "APPROVED":
+    status_html = (f"Status: <b>APPROVED</b> · effective {esc(APPROVAL['effective_date'])}<br>"
+                   f"Approved by: {esc(LABEL.get(APPROVAL['approver'], APPROVAL['approver']))}<br>")
+    banner_tail = (f"All referenced roles/records/docs are governed; this SOP is <b>APPROVED</b> and "
+                   f"effective {esc(APPROVAL['effective_date'])} (signed snapshot in approvals.json).")
+else:
+    status_html = f"Status: <b>{DOC_STATUS}</b><br>"
+    banner_tail = (f"Referenced roles/records/docs resolve to governed registry entries; "
+                   f"document status: <b>{DOC_STATUS}</b>.")
+
 HTML = f"""<!doctype html><html lang=en><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <title>SOP-AST-29080 — ALSAP (controlled projection)</title>
@@ -159,15 +181,14 @@ summary{{cursor:pointer;color:var(--mut);font-size:12.5px}}
 <div class=ctrl>
  <div><div class=doc>SOP-AST-29080</div>
  <div style="font-size:12.5px;color:var(--mut)">Asset Level Safety Assessment Plan (ALSAP)</div></div>
- <div class=meta>Version 1 · Status: DRAFT<br>Regulatory-bound · GxP controlled<br>
+ <div class=meta>{status_html}Regulatory-bound · GxP controlled<br>
  Projection generated from atom store</div>
 </div>
 <h1>{esc(clean(root['meaning']['source_text']))}</h1>
 <div class=banner><b>Controlled projection.</b> This document is a deterministic projection of
 {len(atoms)} content atoms (the engineering source of truth). Every clause traces back to a stable
 <span class=mono>atom_id</span> and <span class=mono>content_hash</span> — see the traceability
-appendix. Roles/records shown in italics-by-label are <b>proposed</b> registry entries pending
-adoption; this SOP is at status <b>draft</b> accordingly.</div>
+appendix. {banner_tail}</div>
 {''.join(body)}
 <h2>VIII. References</h2>
 <table class=refs><thead><tr><th>Document</th><th>Title</th><th>Governed id</th></tr></thead><tbody>{ref_rows}</tbody></table>
