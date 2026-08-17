@@ -47,7 +47,12 @@ const SHEET_READ_TOKEN = process.env.SHEET_READ_TOKEN || "";
 const PORT = process.env.PORT || 3000;
 const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 const ANTHROPIC_VERSION = "2023-06-01";
-const MAX_TOKENS = 8000;
+// Output-length ceiling for a draft. 8000 is generous for a full eight-element
+// complaint + Dismissal Risk Assessment. Env-overridable so you can tune it on
+// the host without a code change. NOTE: this caps how much the model may WRITE;
+// it does not make short drafts long. If a draft comes back cut off, check the
+// `truncated` flag we now return (see handleDraft) before assuming this is why.
+const MAX_TOKENS = Number(process.env.DRAFT_MAX_TOKENS) || 8000;
 
 // ---- Build the system prompt once, at startup ------------------------------
 const PROFILE = readFileSafe(path.join(__dirname, "system-prompt.md"));
@@ -191,18 +196,71 @@ async function handleDraft(req, res) {
     });
   }
 
-  // 7. Pull the draft text out of the response and send it to the phone.
+  // 7. Pull the draft text out of the response — and diagnose HOW it ended.
   const data = await apiResponse.json();
-  const draft = (data.content || [])
+  const blocks = Array.isArray(data.content) ? data.content : [];
+
+  // 7a. Count what KINDS of blocks came back. This is the crucial diagnostic.
+  //     `usage.output_tokens` counts EVERY token the model generated, including
+  //     any internal "thinking" / "redacted_thinking" blocks — but we only ever
+  //     display the "text" blocks. So a model that reasons heavily can report a
+  //     huge output_tokens while the visible draft is short, and if that COMBINED
+  //     total hits max_tokens the visible draft is cut off mid-word even though
+  //     "the draft" looks small. Surfacing the block mix lets us tell that apart
+  //     from a genuinely over-long draft. (Observed once: ~8000 output tokens
+  //     billed, but only ~1700 tokens of visible text — i.e. ~6300 tokens spent
+  //     on something we never showed. That gap is what this exposes.)
+  const blockTypes = {};
+  for (const b of blocks) blockTypes[b.type] = (blockTypes[b.type] || 0) + 1;
+  const hasThinking = blocks.some(
+    (b) => b.type === "thinking" || b.type === "redacted_thinking"
+  );
+
+  let draft = blocks
     .filter((b) => b.type === "text")
     .map((b) => b.text)
     .join("\n")
     .trim();
 
+  // 7b. Did the model FINISH, or hit the output ceiling and stop mid-draft?
+  //        "end_turn"   -> finished on its own (good)
+  //        "max_tokens" -> hit the max_tokens cap and was cut off
+  //     A truncated draft can end mid-word while LOOKING finished on the phone.
+  //     For an integrity tool that is the worst failure mode, so we say so
+  //     loudly — right at the top of the draft (seen even if the UI ignores the
+  //     flag) — and we tailor the reason to whether reasoning ate the budget.
+  const stopReason = data.stop_reason || null;
+  const truncated = stopReason === "max_tokens";
+  if (truncated) {
+    const why = hasThinking
+      ? "The model spent much of its output budget on internal reasoning\n" +
+        "⚠ (thinking) tokens, leaving too little to finish the draft itself.\n" +
+        "⚠ Raise DRAFT_MAX_TOKENS well above the reasoning cost, or reduce or\n" +
+        "⚠ disable extended thinking for drafting."
+      : "The draft reached the output-length limit (max_tokens = " +
+        MAX_TOKENS +
+        ").\n" +
+        "⚠ Raise DRAFT_MAX_TOKENS or split the request into fewer incidents.";
+    const banner =
+      "⚠ ============================================================\n" +
+      "⚠ THIS DRAFT IS INCOMPLETE — IT WAS CUT OFF. DO NOT FILE IT.\n" +
+      "⚠ " +
+      why +
+      "\n" +
+      "⚠ The text below may end mid-sentence and is missing its final\n" +
+      "⚠ element(s) and the Dismissal Risk Assessment.\n" +
+      "⚠ ============================================================\n\n";
+    draft = banner + draft;
+  }
+
   return sendJSON(res, 200, {
     draft: draft || "(The model returned no text.)",
     model: MODEL,
-    usage: data.usage || null,
+    stopReason,   // null on a clean finish, "max_tokens" when cut off
+    truncated,    // convenience boolean for the app to branch on
+    blockTypes,   // e.g. {"text":1} vs {"thinking":1,"text":1} — the smoking gun
+    hasThinking,  // true if the model emitted reasoning blocks we don't display
+    usage: data.usage || null, // input_tokens / output_tokens (output INCLUDES thinking)
   });
 }
 

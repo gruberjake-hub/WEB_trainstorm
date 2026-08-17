@@ -13,17 +13,23 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 STORE = ROOT / "store" / "projects" / "ast_alsap"
 OUT = ROOT / "controlled_sop_ast29080.html"
 
+SCH = ROOT / "schemas"
 atoms = {a["atom_id"]: a for a in json.loads((STORE / "atoms.json").read_text())}
-proposed = json.loads((STORE / "proposed_registry_extensions.json").read_text())
 manifest = json.loads((STORE / "manifest.json").read_text())
 
-# role/record id -> human label (governed labels would come from the repo registries;
-# here we use the proposed labels + a fallback prettifier).
-LABEL = {}
-for r in proposed["roles"] + proposed["records"]:
-    LABEL[r["id"]] = r["label"]
-DOCLABEL = {d["id"]: d["label"] for d in proposed["docs"]}
-DOCNUM = {d["id"]: d["source_number"] for d in proposed["docs"]}
+# Labels come from the GOVERNED REGISTRIES (the law), not the staging pen — a VLOOKUP of
+# the id against the client registry. This is the correct wiring: the projection resolves
+# display names from the single governed source, never from a project-local proposal.
+roles_reg   = json.loads((SCH / "roles.registry.json").read_text())
+records_reg = json.loads((SCH / "records.registry.json").read_text())
+docs_reg    = json.loads((SCH / "docs.registry.json").read_text())
+
+LABEL, DESC = {}, {}
+for e in roles_reg["roles"] + records_reg["records"]:
+    LABEL[e["id"]] = e["label"]
+    DESC[e["id"]] = e.get("description", "")
+DOCLABEL = {d["id"]: d["label"] for d in docs_reg["docs"]}
+DOCNUM = {d["id"]: d["source_number"] for d in docs_reg["docs"]}
 def label(idn):
     if idn in LABEL: return LABEL[idn]
     return idn.split("_", 1)[-1].replace("_", " ").title()
@@ -91,9 +97,12 @@ for sec in sections:
     body.append(f"<h2>{roman[ri]}. {titles[sid]}</h2>")
     ri += 1
     if sid == f"{R}_roles":
-        body.append("<table class='roles'><thead><tr><th>Role</th><th>Responsibility (summary)</th></tr></thead><tbody>")
-        for r in proposed["roles"]:
-            body.append(f"<tr><td class='who'>{esc(r['label'])}</td><td>{esc(r.get('note',''))}</td></tr>")
+        used = sorted({r for a in atoms.values()
+                       for r in a.get("bindings", {}).get("procedure", {}).get("performed_by", [])},
+                      key=lambda x: LABEL.get(x, x))
+        body.append("<table class='roles'><thead><tr><th>Role</th><th>Responsibility (from registry)</th></tr></thead><tbody>")
+        for rid in used:
+            body.append(f"<tr><td class='who'>{esc(LABEL.get(rid, rid))}</td><td>{esc(DESC.get(rid, ''))}</td></tr>")
         body.append("</tbody></table>")
         rows_trace.append((sid, sec["content_hash"]))
         continue
@@ -110,7 +119,7 @@ for sec in sections:
 # references appendix (governed doc_ ids -> source number + title)
 ref_rows = "\n".join(
     f"<tr><td>{esc(d['source_number'])}</td><td>{esc(d['label'])}</td>"
-    f"<td class='mono'>{esc(d['id'])}</td></tr>" for d in proposed["docs"])
+    f"<td class='mono'>{esc(d['id'])}</td></tr>" for d in docs_reg["docs"])
 
 trace_rows = "\n".join(
     f"<tr><td>{esc(aid)}</td><td class='mono'>{esc(h[:19])}…</td></tr>" for aid, h in rows_trace)

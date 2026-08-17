@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """
-Adoption step — promote the project's PROPOSED extensions UP into the governed registries
-(the Astellas client namespace), by entry + version bump. Emits:
-  - schemas/{roles,records,docs}.registry.json   updated to the post-adoption governed state
-  - registry_adds/{roles,records,docs}.add.json  the exact delta to commit to the repo registries
+Adoption step — promote a project's PROPOSED extensions UP into the governed registries
+(the Astellas client namespace), by entry + version bump.
 
-The staging pen (store/.../proposed_registry_extensions.json) is NOT the home for these — after
-adoption the project only REFERENCES the now-governed ids. This script is the "approve the adds".
+What crosses the line on promotion: the id AND the label (the display name the projection
+needs). What stays behind: the review-only `note` (the argument for adoption). This is the
+concrete answer to "is the label just for review?" — no: the note is review-only, the label
+is promoted into the governed record.
+
+Idempotent: an id already governed is skipped (no duplicate, no version bump).
+Emits registry_adds/<key>.add.json — the delta to commit to the repo registries.
 """
 import json, pathlib
 
@@ -17,25 +20,35 @@ ADDS = ROOT / "registry_adds"; ADDS.mkdir(exist_ok=True)
 
 proposed = json.loads((STORE / "proposed_registry_extensions.json").read_text())
 
-def adopt(reg_file, key, proposed_ids, add_payload):
+def adopt(reg_file, key, proposed_items):
     reg = json.loads((SCH / reg_file).read_text())
-    before = set(reg[key])
-    added = [x for x in proposed_ids if x not in before]
-    reg[key] = sorted(before | set(proposed_ids))
-    reg["version"] = reg.get("version", 1) + (1 if added else 0)
-    reg["_note"] = f"Astellas client registry — post-adoption state (v{reg['version']}). Governed."
+    existing = {e["id"] for e in reg[key]}
+    added = []
+    for it in proposed_items:
+        if it["id"] in existing:
+            continue
+        entry = {"id": it["id"], "label": it["label"]}   # `note` is intentionally dropped
+        if "source_number" in it:
+            entry["source_number"] = it["source_number"]
+        reg[key].append(entry)
+        added.append(it["id"])
+    if added:
+        reg[key] = sorted(reg[key], key=lambda e: e["id"])
+        reg["version"] = reg.get("version", 1) + 1
     (SCH / reg_file).write_text(json.dumps(reg, indent=2, ensure_ascii=False))
-    (ADDS / add_payload["file"]).write_text(json.dumps(
-        {"registry": reg_file, "version_bump_to": reg["version"], "added": add_payload["items"]},
-        indent=2, ensure_ascii=False))
+    (ADDS / f"{key}.add.json").write_text(json.dumps({
+        "registry": reg_file,
+        "version_after": reg.get("version"),
+        "promoted_ids": [i["id"] for i in proposed_items],
+        "carried_across": ["id", "label"] + (["source_number"] if key == "docs" else []),
+        "dropped_on_promotion": ["note"]
+    }, indent=2, ensure_ascii=False))
     return added
 
-r = adopt("roles.registry.json", "roles", [x["id"] for x in proposed["roles"]],
-          {"file": "roles.add.json", "items": proposed["roles"]})
-rec = adopt("records.registry.json", "records", [x["id"] for x in proposed["records"]],
-            {"file": "records.add.json", "items": proposed["records"]})
-d = adopt("docs.registry.json", "docs", [x["id"] for x in proposed["docs"]],
-          {"file": "docs.add.json", "items": proposed["docs"]})
+r = adopt("roles.registry.json", "roles", proposed["roles"])
+rec = adopt("records.registry.json", "records", proposed["records"])
+d = adopt("docs.registry.json", "docs", proposed["docs"])
 
-print(f"Adopted → roles +{len(r)}, records +{len(rec)}, docs +{len(d)}")
+print(f"Adopted (new this run) → roles +{len(r)}, records +{len(rec)}, docs +{len(d)}")
+print("id + label promoted into the registries; review-only `note` dropped.")
 print(f"Commit payloads written to {ADDS}/")
