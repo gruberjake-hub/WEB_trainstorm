@@ -66,10 +66,7 @@ atom(f"{R}_purpose", "procedure",
      belongs_to=R, order=0)
 atom(f"{R}_scope", "procedure",
      "This SOP applies to all Astellas and non-Astellas employees responsible for supporting "
-     "ALSAP throughout its lifecycle. In-scope organizations: BOD, COQS, EDTS, MA, OD, RAPV. "
-     "[Headwater flag: the in-scope-organizations list is currently embedded prose; it should be "
-     "decomposed into a List container + ListItem children, but procedure.enum has no 'list'/"
-     "'list_item' kind — surfaced as an open vocab question, not smashed and not invented.]",
+     "ALSAP throughout its lifecycle. The in-scope organizations are listed below.",
      belongs_to=R, order=1)
 atom(f"{R}_definitions", "procedure",
      "For definitions, refer to Vault Quality Glossary, or directly in Vault Quality. "
@@ -77,14 +74,12 @@ atom(f"{R}_definitions", "procedure",
      belongs_to=R, order=2)
 atom(f"{R}_general", "procedure",
      "The ALSAP is the central cross-functional framework for ongoing identification, evaluation, "
-     "and communication of emerging safety risks at the asset level. It operationalizes existing "
-     "safety governance documents (SFDG, DRMP, IB, SMT minutes), integrating them into an "
-     "actionable, data-driven plan for aggregate monitoring across all relevant clinical trials. "
-     "Only one ALSAP exists per asset. It must meet ALCOA+ standards and is reviewed annually by "
-     "the SMT, with ad hoc updates triggered by emerging signals, regulatory changes, milestones, "
-     "data-quality concerns, or external safety events. "
-     "[Headwater flag: the governing-documents bullet list (SFDG/DRMP/IB/SMT) is embedded prose; "
-     "same open List/ListItem vocab question as scope.]",
+     "and communication of emerging safety risks at the asset level. It operationalizes the existing "
+     "safety governance documents listed below, integrating them into an actionable, data-driven plan "
+     "for aggregate monitoring across all relevant clinical trials. Only one ALSAP exists per asset. "
+     "It must meet ALCOA+ standards and is reviewed annually by the SMT, with ad hoc updates triggered "
+     "by emerging signals, regulatory changes, milestones, data-quality concerns, or external safety "
+     "events.",
      belongs_to=R, order=3)
 atom(f"{R}_roles", "procedure",
      "Roles and Responsibilities. [Headwater note: the roles table defines the actors referenced "
@@ -93,6 +88,35 @@ atom(f"{R}_roles", "procedure",
      belongs_to=R, order=4)
 atom(f"{R}_procedures", "procedure",
      "Procedures.", belongs_to=R, order=5)
+
+# ---- structural lists (shared-core kinds: list / list_item) — the flagged-not-smashed lists,
+#      now properly decomposed into a List container + ListItem children ----
+def listnode(aid, text, parent, order):
+    atom(aid, "list", text, belongs_to=parent, order=order)
+def item(aid, text, parent, order):
+    atom(aid, "list_item", text, belongs_to=parent, order=order)
+
+SORG = f"{R}_scope_orgs"
+listnode(SORG, "Organizations in scope of this SOP.", f"{R}_scope", 0)
+for i, name in enumerate([
+    "Biopharma & Ophthalmology Development (BOD)",
+    "Clinical Operations & Quantitative Science (COQS)",
+    "Early Development & Translational Science (EDTS)",
+    "Global Medical Affairs (MA)",
+    "Oncology Development (OD)",
+    "Regulatory Affairs & Pharmacovigilance (RAPV)",
+]):
+    item(f"{SORG}_{i}", name, SORG, i)
+
+GDOC = f"{R}_general_govdocs"
+listnode(GDOC, "Existing safety governance documents the ALSAP operationalizes.", f"{R}_general", 0)
+for i, txt in enumerate([
+    "Safe First Dosing Guidance (SFDG): establishes initial safety considerations prior to First in Human (FIH).",
+    "Development Risk Management Plan (DRMP): defines regulatory risk strategy prior to Phase 2.",
+    "Investigator Brochure (IB): summarizes known and potential risks for investigators.",
+    "Safety Management Team (SMT) minutes: capture ongoing safety decisions across the program.",
+]):
+    item(f"{GDOC}_{i}", txt, GDOC, i)
 
 # ---- sub-section containers ----
 PA = atom(f"{R}_proc_a", "procedure", "A. Plan Development of ALSAP.",
@@ -245,7 +269,7 @@ source_silent = {
     "DEFINITIONS — deferred to external Vault Quality Glossary; no embedded meaning atomised.",
     "Safety Programmer Developer/Validator — segregation of duties present in the table but modeled as one role; open.",
     "Embedded conditional in B.s2 ('if an approved ALSAP exists') — candidate decision step; kept atomic + flagged.",
-    "Narrative lists (in-scope orgs; governing docs; notify recipients) — want List/ListItem decomposition, but procedure.enum lacks those kinds."
+    "Narrative lists — RESOLVED: the in-scope-organizations and governing-documents lists are now decomposed into List + ListItem atoms (shared-core structure.enum kinds). The in-step notify-recipients list in B.s8 is left embedded (it is the object of an action, not a standalone list)."
   ]
 }
 

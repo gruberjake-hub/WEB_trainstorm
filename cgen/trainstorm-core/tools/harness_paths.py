@@ -73,6 +73,9 @@ def resolve():
     return {
         "schemas_dir": schemas_dir, "vocab_dir": vocab_dir,
         "registry_dir": registry, "project_dir": project,
+        # new-to-core vocab (e.g. structure.enum.json) not yet in a real core checkout;
+        # only present standalone. In the repo, such files live in vocab_dir once committed.
+        "core_adds_dir": base / "_core_adds",
         "core_is_mirror": core_is_mirror, "warnings": warnings,
     }
 

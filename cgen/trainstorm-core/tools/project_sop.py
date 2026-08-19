@@ -92,6 +92,19 @@ def render_steps(section):
     out.append("</tbody></table>")
     return "\n".join(out)
 
+def render_lists(parent_id):
+    out = []
+    for lst in kids(parent_id):
+        if lst["meaning"]["kind"] != "list":
+            continue
+        out.append(f"<p class='listcap'>{esc(clean(lst['meaning']['source_text']))}</p><ul>")
+        for it in kids(lst["atom_id"]):
+            out.append(f"<li>{esc(clean(it['meaning']['source_text']))}</li>")
+            rows_trace.append((it["atom_id"], it["content_hash"]))
+        out.append("</ul>")
+        rows_trace.append((lst["atom_id"], lst["content_hash"]))
+    return "".join(out)
+
 # --- assemble body ---
 sections = kids(R)
 body = []
@@ -126,6 +139,7 @@ for sec in sections:
             rows_trace.append((sub["atom_id"], sub["content_hash"]))
         continue
     body.append(f"<p>{esc(clean(sec['meaning']['source_text']))}</p>")
+    body.append(render_lists(sid))
     rows_trace.append((sid, sec["content_hash"]))
 
 # references appendix (governed doc_ ids -> source number + title)
@@ -174,6 +188,8 @@ th{{background:#f1f5f9;font-size:12px;text-transform:uppercase;letter-spacing:.0
 .who{{white-space:nowrap;font-weight:600;color:#334155;width:1%}}
 .badge{{color:#fff;border-radius:4px;padding:1px 7px;font-size:11px;text-transform:uppercase;letter-spacing:.02em}}
 .ex{{color:var(--mut);font-size:12px;margin-top:4px}}
+.listcap{{margin:10px 0 2px;color:#334155;font-weight:600;font-size:13.5px}}
+ul{{margin:2px 0 10px 22px}} li{{margin:2px 0}}
 .mono{{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--mut)}}
 details{{margin-top:34px;border-top:1px dashed var(--line);padding-top:14px}}
 summary{{cursor:pointer;color:var(--mut);font-size:12.5px}}

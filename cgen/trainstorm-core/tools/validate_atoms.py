@@ -37,8 +37,15 @@ proposed = load(_pp) if _pp.exists() else {"roles": [], "records": [], "docs": [
 
 gov_roles   = {e["id"] for e in roles_reg["roles"]}     # entries are now {id, label, …}
 gov_records = {e["id"] for e in records_reg["records"]}
-# canonical procedure.enum.json nests governed values under dimensions.<name>.values[].id
+# governed meaning.kinds come from multiple vocab files additively (each governs a subset):
+# procedure.enum (procedure / procedure_step) + structure.enum (list / list_item, source-agnostic).
 gov_kinds   = {v["id"] for v in proc_enum["dimensions"]["meaning_kind"]["values"]}
+# structure.enum lives in core vocab once committed; standalone it's in _core_adds (not yet in core).
+_struct = VOCAB / "structure.enum.json"
+if not _struct.exists():
+    _struct = P["core_adds_dir"] / "structure.enum.json"
+if _struct.exists():
+    gov_kinds |= {v["id"] for v in load(_struct)["dimensions"]["meaning_kind"]["values"]}
 gov_steptyp = {v["id"] for v in proc_enum["dimensions"]["step_type"]["values"]}
 gov_docs    = {e["id"] for e in docs_reg["docs"]}
 prop_roles   = {r["id"] for r in proposed["roles"]}
