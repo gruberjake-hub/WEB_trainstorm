@@ -22,14 +22,16 @@ exact `content_hash` of every atom approved — so the signature is bound to a p
 Usage: python3 tools/approve.py --approver role_alsap_approver [--effective-date YYYY-MM-DD]
 """
 import json, subprocess, sys, pathlib, datetime, argparse
+import harness_paths
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-TOOLS = ROOT / "tools"
-STORE = ROOT / "store" / "projects" / "ast_alsap"
+TOOLS = pathlib.Path(__file__).resolve().parent
+STORE = harness_paths.resolve()["project_dir"]
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--approver", required=True, help="approver id — must be a governed approval role")
 ap.add_argument("--effective-date", default=datetime.date.today().isoformat())
+# anchor flags: accepted here and forwarded to the gate subprocess so it resolves the same layout
+ap.add_argument("--core"); ap.add_argument("--project"); ap.add_argument("--registry")
 args = ap.parse_args()
 
 manifest = json.loads((STORE / "manifest.json").read_text())
@@ -50,8 +52,11 @@ if args.approver not in approval_roles:
               f"(Approval authority is declared per-project in manifest.json — not everyone can sign.)")
 
 # ---- precondition 2: publishable state (run the standing gate) ----
-res = subprocess.run([sys.executable, str(TOOLS / "validate_atoms.py")],
-                     capture_output=True, text=True)
+gate_cmd = [sys.executable, str(TOOLS / "validate_atoms.py")]
+for _flag, _val in [("--core", args.core), ("--project", args.project), ("--registry", args.registry)]:
+    if _val:
+        gate_cmd += [_flag, _val]
+res = subprocess.run(gate_cmd, capture_output=True, text=True)
 out = res.stdout
 gate_pass = "GATE @ draft : PASS" in out
 promote_pass = "PROMOTE >draft: PASS" in out

@@ -8,10 +8,11 @@ It reconciles deterministically (match by atom_id), and it's the same matrix sha
 localization round-trip. Word-with-tracked-changes is a richer surface to add later (needs a diff).
 """
 import json, csv, pathlib
+import harness_paths
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-SCH = ROOT / "schemas"
-STORE = ROOT / "store" / "projects" / "ast_alsap"
+_P = harness_paths.resolve()
+SCH = _P["registry_dir"]
+STORE = _P["project_dir"]
 OUT = STORE / "review_matrix.csv"
 
 atoms = json.loads((STORE / "atoms.json").read_text())

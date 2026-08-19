@@ -9,11 +9,12 @@ invisibly. No meaning is authored here — only arranged.
 """
 import json, pathlib, html
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-STORE = ROOT / "store" / "projects" / "ast_alsap"
-OUT = ROOT / "controlled_sop_ast29080.html"
+import harness_paths
+_P = harness_paths.resolve()
+STORE = _P["project_dir"]
+SCH = _P["registry_dir"]
+OUT = STORE / "controlled_sop_ast29080.html"
 
-SCH = ROOT / "schemas"
 atoms = {a["atom_id"]: a for a in json.loads((STORE / "atoms.json").read_text())}
 manifest = json.loads((STORE / "manifest.json").read_text())
 

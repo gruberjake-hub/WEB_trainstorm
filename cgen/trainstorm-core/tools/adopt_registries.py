@@ -12,11 +12,12 @@ Idempotent: an id already governed is skipped (no duplicate, no version bump).
 Emits registry_adds/<key>.add.json — the delta to commit to the repo registries.
 """
 import json, pathlib
+import harness_paths
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-SCH = ROOT / "schemas"
-STORE = ROOT / "store" / "projects" / "ast_alsap"
-ADDS = ROOT / "registry_adds"; ADDS.mkdir(exist_ok=True)
+_P = harness_paths.resolve()
+SCH = _P["registry_dir"]              # client registries (roles/records/docs) live here
+STORE = _P["project_dir"]
+ADDS = STORE / "registry_adds"; ADDS.mkdir(exist_ok=True)
 
 proposed = json.loads((STORE / "proposed_registry_extensions.json").read_text())
 

@@ -12,9 +12,9 @@ It resolves every enum to a governed member OR flags it as a proposed registry e
 NOT silently added to the governed lists.
 """
 import json, hashlib, pathlib
+import harness_paths
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-STORE = ROOT / "store" / "projects" / "ast_alsap"
+STORE = harness_paths.resolve()["project_dir"]
 CORPUS = "SOP-AST-29080 v1 — ALSAP SOP (docx)"
 
 atoms = []

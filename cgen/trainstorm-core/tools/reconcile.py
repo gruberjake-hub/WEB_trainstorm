@@ -17,11 +17,14 @@ the atom stays clean; the audit trail is another keyed side-store.
 
 Usage: python3 tools/reconcile.py <filled_matrix.csv>
 """
-import json, csv, hashlib, pathlib, sys, datetime
+import json, csv, hashlib, pathlib, sys, datetime, argparse
+import harness_paths
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-STORE = ROOT / "store" / "projects" / "ast_alsap"
-MATRIX = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else STORE / "review_matrix.filled.csv"
+STORE = harness_paths.resolve()["project_dir"]
+_a = argparse.ArgumentParser(add_help=False)
+_a.add_argument("matrix", nargs="?", default=None)   # positional; harness flags handled separately
+_ma, _ = _a.parse_known_args()
+MATRIX = pathlib.Path(_ma.matrix) if _ma.matrix else STORE / "review_matrix.filled.csv"
 
 atoms = json.loads((STORE / "atoms.json").read_text())
 idx = {a["atom_id"]: a for a in atoms}
