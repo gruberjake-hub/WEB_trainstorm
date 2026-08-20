@@ -1,0 +1,46 @@
+{
+  "registry": "options.registry.json",
+  "version_after": 2,
+  "dropped_from_proposal": [
+    "note"
+  ],
+  "entries": [
+    {
+      "id": "reg_benefit_risk_profile",
+      "label": "Benefit-Risk Profile",
+      "description": "SMT assessment of an asset's overall Benefit-Risk profile. RESOLVED from the source (2026-08-20): FORM-AST-34037 says 'Choose from the options below', so this is a CONTROLLED value set, not example wording — closing the controlled-vs-example question open since 2026-08-10.",
+      "values": [
+        {
+          "id": "favorable",
+          "label": "Favorable Benefit-Risk Profile",
+          "description": "The benefits of the investigational drug outweigh the known and potential risks. Implication: supports progression to the next phase of development or regulatory approval."
+        },
+        {
+          "id": "unfavorable",
+          "label": "Unfavorable Benefit-Risk Profile",
+          "description": "The risks outweigh the benefits, or the benefits are not sufficiently demonstrated. Implication: may lead to discontinuation, redesign of the trial, or additional data requirements."
+        },
+        {
+          "id": "uncertain_inconclusive",
+          "label": "Uncertain or Inconclusive Benefit-Risk Profile",
+          "description": "Insufficient data to make a definitive conclusion. Implication: often used in early-phase trials or when data are conflicting."
+        },
+        {
+          "id": "conditional_favorable",
+          "label": "Conditional Favorable Benefit-Risk Profile",
+          "description": "Benefits may outweigh risks if certain conditions are met, such as risk mitigation strategies, long-term follow-up, additional data, or data maturity. Implication: may support conditional approval or restricted use."
+        },
+        {
+          "id": "contextual",
+          "label": "Contextual Benefit-Risk Profile",
+          "description": "Benefit-risk is favorable in specific populations or settings, such as rare diseases or life-threatening conditions. Implication: may justify approval despite limited data or higher risk."
+        },
+        {
+          "id": "other_smt_defined",
+          "label": "Other as defined by the SMT",
+          "description": "An open option the template permits; the SMT defines the assessment. Pairs with the conditional rationale field."
+        }
+      ]
+    }
+  ]
+}

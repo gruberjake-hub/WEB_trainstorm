@@ -2,7 +2,7 @@
   "project": "ast_alsap",
   "corpus_derived_from": "SOP-AST-29080 v1 — ALSAP SOP (docx)",
   "headwater_mode": "direct",
-  "atom_count": 35,
+  "atom_count": 47,
   "written_facets": [
     "meaning",
     "bindings.object",
@@ -13,6 +13,12 @@
     "expression",
     "audience",
     "render"
+  ],
+  "approval_roles": [
+    "role_alsap_approver",
+    "role_gso",
+    "role_medical_lead",
+    "role_alsap_lead"
   ],
   "generated_by": "tools/headwater_ingest.py"
 }

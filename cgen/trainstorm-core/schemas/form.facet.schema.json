@@ -1,8 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://trainstorm.ai/schemas/form.facet.schema.json",
+  "facet_version": "form.v0.2",
   "title": "Form Facet",
-  "description": "Accreted binding facet for form/template source, sibling to the procedure facet. Single-writer: the headwater authoring agent (form-specialized). Models a form TEMPLATE (a blank instrument) — never a submission. A filled-in form is an instance with real data (potential PII); it is a record/learner-model object under separate governance and is NOT modeled here. The action/label text lives in meaning.source_text; structure (sections, order) lives in the object facet; provenance lives in governance. This facet holds only what is irreducibly about capturing structured input. field_type and content_disposition are MIRRORS of vocab/form.enum.json (vocab wins; a conformance check asserts schema enum == vocab ids). performed_by reuses roles.registry and captures_record reuses records.registry — the SAME registries the procedure facet uses; no form-specific copy.",
+  "description": "Accreted binding facet for form/template source, sibling to the procedure facet. Single-writer: the headwater authoring agent (form-specialized). Models a form TEMPLATE (a blank instrument) — never a submission. A filled-in form is an instance with real data (potential PII); it is a record/learner-model object under separate governance and is NOT modeled here. The action/label text lives in meaning.source_text; structure (sections, order) lives in the object facet; provenance lives in governance. This facet holds only what is irreducibly about capturing structured input. field_type and content_disposition are MIRRORS of vocab/form.enum.json (vocab wins; a conformance check asserts schema enum == vocab ids). performed_by reuses roles.registry and captures_record reuses records.registry — the SAME registries the procedure facet uses; no form-specific copy. v0.2 adds constraints.slots: NAMED fill-in points inside otherwise-retained text, so an instance overlay can key on (atom_id, slot_id) instead of a position in a string.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -40,13 +41,59 @@
       "description": "Validation/integrity rules on the accepted value. Embedded (they ARE part of the field's invariant truth), not a reference.",
       "additionalProperties": false,
       "properties": {
-        "required": { "type": "boolean" },
-        "format": { "type": "string", "description": "Format hint, e.g. 'DD-MMM-YYYY' or 'X.0'." },
-        "pattern": { "type": "string", "description": "Regex the value must match." },
-        "min": { "type": "number" },
-        "max": { "type": "number" },
-        "max_length": { "type": "integer", "minimum": 1 },
-        "repeatable": { "type": "boolean", "description": "For table/group: rows/clusters repeat." }
+        "required": {
+          "type": "boolean"
+        },
+        "format": {
+          "type": "string",
+          "description": "Format hint, e.g. 'DD-MMM-YYYY' or 'X.0'."
+        },
+        "pattern": {
+          "type": "string",
+          "description": "Regex the value must match."
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "max_length": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "repeatable": {
+          "type": "boolean",
+          "description": "For table/group: rows/clusters repeat."
+        },
+        "slots": {
+          "type": "array",
+          "description": "Named fill-in points inside this field's source_text — the [bracketed] spans a template leaves for the author inside text that is otherwise retained unchanged. A field like this has genuinely MIXED disposition: the sentence is controlled_standard, the slots are authorable. The facet carries one disposition per field, so the slots are declared here instead. NAMED, never positional: an instance overlay keys on (atom_id, slot_id), and a positional reference ('slot 2') would shift the moment anyone edits the sentence — exactly what stable ids exist to prevent. No field_type here on purpose: repeating that closed list would spawn a drifting second copy.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "expects"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9_]+$",
+                "description": "Stable name, unique within this field. Half of the (atom_id, slot_id) key."
+              },
+              "expects": {
+                "type": "string",
+                "description": "What the author must supply here, in plain words."
+              },
+              "options_ref": {
+                "type": "string",
+                "pattern": "^reg_[A-Za-z0-9_-]+$",
+                "description": "Controlled value set, when the slot takes one. A pattern, not an enum — no closed list is copied here."
+              }
+            }
+          }
+        }
       }
     },
     "options_ref": {
@@ -62,7 +109,10 @@
     "performed_by": {
       "type": "array",
       "description": "roles.registry ids (role_...) accountable to complete/sign this field. Roles, never people (no PII). SAME registry as procedure.performed_by.",
-      "items": { "type": "string", "pattern": "^role_[A-Za-z0-9_-]+$" }
+      "items": {
+        "type": "string",
+        "pattern": "^role_[A-Za-z0-9_-]+$"
+      }
     },
     "conditional_on": {
       "type": "array",
@@ -70,10 +120,17 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["field"],
+        "required": [
+          "field"
+        ],
         "properties": {
-          "field": { "type": "string", "pattern": "^atom_[A-Za-z0-9_-]+$" },
-          "equals": { "type": "string" }
+          "field": {
+            "type": "string",
+            "pattern": "^atom_[A-Za-z0-9_-]+$"
+          },
+          "equals": {
+            "type": "string"
+          }
         }
       }
     }

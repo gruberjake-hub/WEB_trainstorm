@@ -27,6 +27,32 @@
       "meaning_changed": true,
       "text_before": "Distribute the draft ALSAP for review to the ALSAP Reviewers.",
       "text_after": "Distribute the draft ALSAP to the ALSAP Reviewers, allowing a minimum 10 business-day review period."
+    },
+    {
+      "atom_id": "atom_sop_ast29080_proc_a_s3",
+      "date": "2026-08-19",
+      "reviewer": "sme_jdoe",
+      "note": "REPLAY of the 2026-08-13 reconcile (Added target timing per QMS.) — lost when the non-idempotent re-ingest reset the store; original event retained.",
+      "from_version": 1,
+      "to_version": 2,
+      "from_hash": "sha256:ee4dc184bc9f5aaf69775d8a346232de3decb1f81d495cb14803bcb26327f999",
+      "to_hash": "sha256:b24f0616974e5ee14c4acd98fdfa59fbc5818be147d8a10c612de4504d100d18",
+      "meaning_changed": true,
+      "text_before": "Schedule and conduct ALSAP Kick-Off Meeting.",
+      "text_after": "Schedule and conduct the ALSAP Kick-Off Meeting within 15 business days of ALSAP Lead assignment."
+    },
+    {
+      "atom_id": "atom_sop_ast29080_proc_b_s3",
+      "date": "2026-08-19",
+      "reviewer": "sme_jdoe",
+      "note": "REPLAY of the 2026-08-13 reconcile (Added the standard review window.) — lost when the non-idempotent re-ingest reset the store; original event retained.",
+      "from_version": 1,
+      "to_version": 2,
+      "from_hash": "sha256:b7797a6b45fddc4129566c839f3121982f480fcce211060f96652acae2996007",
+      "to_hash": "sha256:584a252b578838882b063dea9a4ed1967bff2dc793bc259cb13a28f4ed63f67e",
+      "meaning_changed": true,
+      "text_before": "Distribute the draft ALSAP for review to the ALSAP Reviewers.",
+      "text_after": "Distribute the draft ALSAP to the ALSAP Reviewers, allowing a minimum 10 business-day review period."
     }
   ]
 }

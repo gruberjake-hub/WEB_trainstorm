@@ -8,6 +8,6 @@
     "DEFINITIONS — deferred to external Vault Quality Glossary; no embedded meaning atomised.",
     "Safety Programmer Developer/Validator — segregation of duties present in the table but modeled as one role; open.",
     "Embedded conditional in B.s2 ('if an approved ALSAP exists') — candidate decision step; kept atomic + flagged.",
-    "Narrative lists (in-scope orgs; governing docs; notify recipients) — want List/ListItem decomposition, but procedure.enum lacks those kinds."
+    "Narrative lists — RESOLVED: the in-scope-organizations and governing-documents lists are now decomposed into List + ListItem atoms (shared-core structure.enum kinds). The in-step notify-recipients list in B.s8 is left embedded (it is the object of an action, not a standalone list)."
   ]
 }

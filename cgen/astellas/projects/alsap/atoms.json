@@ -1,0 +1,893 @@
+[
+  {
+    "atom_id": "atom_form_ast34037",
+    "content_hash": "sha256:833001bc9c4c4932d29a89bd271dba847da97762c420daee88eb365791e2f482",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Asset Level Safety Assessment Plan (ALSAP).",
+      "kind": "form"
+    },
+    "bindings": {
+      "form": {
+        "captures_record": "rec_alsap",
+        "performed_by": [
+          "role_alsap_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_instructions",
+    "content_hash": "sha256:f32f051b2c3c37b49bdc831bba2b1d08a69434289f1b08f0413152da2fa63a99",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Instructions for Use.",
+      "kind": "form_section"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037",
+        "order": 0
+      },
+      "form": {
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_cover",
+    "content_hash": "sha256:66eaf676be0dd276e0b273489d77ea36ec10b06bafce8c7065698e8197d5a58f",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Cover.",
+      "kind": "form_section"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037",
+        "order": 1
+      },
+      "form": {}
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_cover_f_asset_code",
+    "content_hash": "sha256:77b0e0441e63562cf14c6ca99f0c5cf91e6ffc2b67cf7423c089eed2181c1b54",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Asset Development Code or International Non-proprietary Name.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_cover",
+        "order": 0
+      },
+      "form": {
+        "constraints": {
+          "required": true
+        },
+        "field_type": "text_short",
+        "content_disposition": "authorable"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_cover_f_version_date",
+    "content_hash": "sha256:d05b14eb5fe8f0026631cdbaa811fb8ee10a49fd01392aa761f774f8ac77b6bf",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Version Date.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_cover",
+        "order": 1
+      },
+      "form": {
+        "constraints": {
+          "required": true,
+          "format": "DD-MMM-YYYY"
+        },
+        "field_type": "date",
+        "content_disposition": "authorable"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_cover_f_version_number",
+    "content_hash": "sha256:aed2879efe4166da38a5ffd5414f80c2960a70e5a47b48c35ff5acbb29cc0aed",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Version Number.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_cover",
+        "order": 2
+      },
+      "form": {
+        "constraints": {
+          "required": true,
+          "format": "X.0"
+        },
+        "field_type": "text_short",
+        "content_disposition": "authorable"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_cover_f_author",
+    "content_hash": "sha256:a8fad82e89212c127eedfd75000926af544420c558d5bd839063514d1ea19daf",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Author.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_cover",
+        "order": 3
+      },
+      "form": {
+        "constraints": {
+          "required": true
+        },
+        "performed_by": [
+          "role_alsap_lead"
+        ],
+        "field_type": "person",
+        "content_disposition": "authorable"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_approval",
+    "content_hash": "sha256:abd46f64e8e85cc653fc7a10583a51cec88c3a9ac5cd1691aba89b0d6f0f349d",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Reviewed and approved by.",
+      "kind": "form_section"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037",
+        "order": 2
+      },
+      "form": {}
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_approval_f_prepared_by",
+    "content_hash": "sha256:d80203d8a977952e37cb705deaa73f6f45e81dd6ef0efd452cdd837b0989ec1c",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Prepared by (name, degree, title) and date.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_approval",
+        "order": 0
+      },
+      "form": {
+        "constraints": {
+          "required": true
+        },
+        "performed_by": [
+          "role_alsap_lead"
+        ],
+        "field_type": "signature",
+        "content_disposition": "controlled_standard"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_approval_f_approved_by_1",
+    "content_hash": "sha256:29a405374a227886537ef447bddaf91d8cc2ffd038b0e19b1d5e64e9332304ef",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Approved by (name, degree, title) and date.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_approval",
+        "order": 1
+      },
+      "form": {
+        "constraints": {
+          "required": true
+        },
+        "performed_by": [
+          "role_gso",
+          "role_medical_lead",
+          "role_alsap_approver"
+        ],
+        "field_type": "signature",
+        "content_disposition": "controlled_standard"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_approval_f_approved_by_2",
+    "content_hash": "sha256:29a405374a227886537ef447bddaf91d8cc2ffd038b0e19b1d5e64e9332304ef",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Approved by (name, degree, title) and date.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_approval",
+        "order": 2
+      },
+      "form": {
+        "constraints": {
+          "required": true
+        },
+        "performed_by": [
+          "role_gso",
+          "role_medical_lead",
+          "role_alsap_approver"
+        ],
+        "field_type": "signature",
+        "content_disposition": "controlled_standard"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_version_history",
+    "content_hash": "sha256:971463e9c71d72d6e3beadad4e53c8d69744055c0e1d2e30f97da8930e9df31a",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Version History.",
+      "kind": "form_section"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037",
+        "order": 3
+      },
+      "form": {}
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_version_history_f_history_table",
+    "content_hash": "sha256:970f9c58ba205b7830bf49f8ba13926437a04c101fe341d505a3336c06e67a1e",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "ALSAP Version History Summary: the changes from the prior approved ALSAP that impact analyses, listed with the rationale (ALSAP Version, Approval Date, ALSAP Section(s), Change, Rationale).",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_version_history",
+        "order": 0
+      },
+      "form": {
+        "constraints": {
+          "repeatable": true
+        },
+        "field_type": "table",
+        "content_disposition": "example"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose",
+    "content_hash": "sha256:ea74b981e130ddd607fdaa2d276cdffb7ee67bf161f9a8c5d91fe6eef04d4143",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Purpose and Stakeholder Review.",
+      "kind": "form_section"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037",
+        "order": 4
+      },
+      "form": {}
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile",
+    "content_hash": "sha256:14e6599387981bf08968b4d6c501de1052bd61d67fdb1f85cf0f9bfef275f4ae",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Safety Profile Summary.",
+      "kind": "form_section"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose",
+        "order": 0
+      },
+      "form": {}
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_guidance",
+    "content_hash": "sha256:65e70f8ffcbdf9d2b13364c0c3d0f6a73efdc67bb79035c05a9b92a702252ba8",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Describe in a concise way the comprehensive information about the preclinical, toxicological, pharmacokinetics, pharmacodynamics and clinical safety data for this asset which may be found in the SFDG and/or IB. The DRMP offers valuable insights, including patient population epidemiology, identified and potential risks, and risk mitigation strategies. Maintain consistency of safety information described in the DRMP and ALSAP.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile",
+        "order": 0
+      },
+      "form": {
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative",
+    "content_hash": "sha256:8aa65df142449e19ae971d5cd111460685a0b789c283f70c2a7371e7ebb817f2",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "The overall safety profile for this asset as of the signing of this ALSAP draws upon data obtained from [Include # here] participants who participated in clinical trials. The most frequently encountered adverse events associated with [ASPXXXX] include [list of the most prevalent adverse events] of which the most common that were considered serious include [list of the most common serious adverse events].",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile",
+        "order": 1
+      },
+      "form": {
+        "constraints": {
+          "slots": [
+            {
+              "id": "participant_count",
+              "expects": "Number of participants across clinical trials contributing to the safety profile."
+            },
+            {
+              "id": "asset_code",
+              "expects": "Asset development code or INN, matching the cover block."
+            },
+            {
+              "id": "prevalent_adverse_events",
+              "expects": "The most frequently encountered adverse events associated with the asset."
+            },
+            {
+              "id": "serious_adverse_events",
+              "expects": "Those among the prevalent events that were considered serious."
+            }
+          ]
+        },
+        "field_type": "text_long",
+        "content_disposition": "controlled_standard"
+      }
+    },
+    "governance": {
+      "version": 3,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_guidance",
+    "content_hash": "sha256:60d4f41fc0e0b4d03023bdd65fc578eb8b0575b2469a7c34e6be88709ea64c01",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Choose from the options below to document the SMT's assessment of the overall Benefit-Risk profile of the asset. Each option carries a definition and an implication for development.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile",
+        "order": 2
+      },
+      "form": {
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+    "content_hash": "sha256:ca909c20c93c195a2ac708050702b25c008cac34ccf495778807b3feb400aa4c",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "SMT assessment of the overall Benefit-Risk profile of the asset.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile",
+        "order": 3
+      },
+      "form": {
+        "options_ref": "reg_benefit_risk_profile",
+        "constraints": {
+          "required": true
+        },
+        "performed_by": [
+          "role_smt",
+          "role_gso"
+        ],
+        "field_type": "select_one",
+        "content_disposition": "authorable"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+    "content_hash": "sha256:08661ef80dc02ee438cf201e56db933475734745ab9f7108307fcfcc3d7b68d6",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Rationale and phrasing for the selected Benefit-Risk profile.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile",
+        "order": 4
+      },
+      "form": {
+        "conditional_on": [
+          {
+            "field": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile"
+          }
+        ],
+        "field_type": "text_long",
+        "content_disposition": "authorable"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing",
+    "content_hash": "sha256:2a716bdd065aae5be64db7b7bd3d314c4fd7663efb89d07528cb2a8cef75b919",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Example phrasing for the selected Benefit-Risk profile.",
+      "kind": "form_section"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile",
+        "order": 5
+      },
+      "form": {
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_favorable_0",
+    "content_hash": "sha256:699bf6c8a253aa9805a595632c2d787b917c7dfff60a5851888e18f35078d1f2",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "The benefit-risk profile is favorable for the proposed indication.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing",
+        "order": 0
+      },
+      "form": {
+        "conditional_on": [
+          {
+            "field": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "equals": "favorable"
+          }
+        ],
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_favorable_1",
+    "content_hash": "sha256:7dc4cdf382cdfea414e0eff77db3d61f64eb29c8b7b27d204d2765e130f2a8cf",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Supports continued development and/or marketing authorization.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing",
+        "order": 1
+      },
+      "form": {
+        "conditional_on": [
+          {
+            "field": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "equals": "favorable"
+          }
+        ],
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_unfavorable_0",
+    "content_hash": "sha256:e5d52793c8952b819861326bacb77a427b5f1fdd60666685b6ac8ffc16cb6f73",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "The benefit-risk profile is not favorable at this time.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing",
+        "order": 2
+      },
+      "form": {
+        "conditional_on": [
+          {
+            "field": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "equals": "unfavorable"
+          }
+        ],
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_unfavorable_1",
+    "content_hash": "sha256:36f22fa0d385f301b4019cc0eef87c97cacb7a14792ec2cd4b4f161564b94dce",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Further data are needed to support a positive conclusion.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing",
+        "order": 3
+      },
+      "form": {
+        "conditional_on": [
+          {
+            "field": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "equals": "unfavorable"
+          }
+        ],
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_uncertain_inconclusive_0",
+    "content_hash": "sha256:5022c7658647c7cf0c8f36701456412e964f673b47319d1dc94a75b91bd6b247",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "The benefit-risk profile cannot be determined based on current evidence.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing",
+        "order": 4
+      },
+      "form": {
+        "conditional_on": [
+          {
+            "field": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "equals": "uncertain_inconclusive"
+          }
+        ],
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_uncertain_inconclusive_1",
+    "content_hash": "sha256:c806ac5113f869160cc94a16889da6d003587941d2489f63d08e006bc2f8d19d",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Additional studies are required to clarify the benefit-risk balance.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing",
+        "order": 5
+      },
+      "form": {
+        "conditional_on": [
+          {
+            "field": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "equals": "uncertain_inconclusive"
+          }
+        ],
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_conditional_favorable_0",
+    "content_hash": "sha256:ff679232c7d2ade60e9117d5577b1685ba1af3df1341558f38dd59d553c254a2",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "The benefit-risk profile is favorable under the proposed risk management plan.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing",
+        "order": 6
+      },
+      "form": {
+        "conditional_on": [
+          {
+            "field": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "equals": "conditional_favorable"
+          }
+        ],
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_conditional_favorable_1",
+    "content_hash": "sha256:e65e8c3aa4394c9f2ba88306dd24d262cee75af5c42d0b571f8319ef185a9cae",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Approval is recommended contingent upon additional safety monitoring.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing",
+        "order": 7
+      },
+      "form": {
+        "conditional_on": [
+          {
+            "field": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "equals": "conditional_favorable"
+          }
+        ],
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_contextual_0",
+    "content_hash": "sha256:627ae0a4d75b12e98110744d3607eb07659ec4b96552e3e15e1154588d5ccec6",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "The benefit-risk profile is acceptable in the context of unmet medical need.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing",
+        "order": 8
+      },
+      "form": {
+        "conditional_on": [
+          {
+            "field": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "equals": "contextual"
+          }
+        ],
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_contextual_1",
+    "content_hash": "sha256:f1badbea65c4ed321890d1ce0b2e5f23e8e1ad6937ab468682d892dbfc6006ca",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Use is justified in patients with no alternative treatment options.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing",
+        "order": 9
+      },
+      "form": {
+        "conditional_on": [
+          {
+            "field": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "equals": "contextual"
+          }
+        ],
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  }
+]

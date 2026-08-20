@@ -38,10 +38,10 @@
   },
   {
     "atom_id": "atom_sop_ast29080_scope",
-    "content_hash": "sha256:61d67f6f334d1e267434c651139b77c4d7726ef4395278c7995e6e33bcfa0d29",
+    "content_hash": "sha256:3ef4cecb01c189a5d27247e7292a2a3ba51da402313f89581ed26625860f3915",
     "meaning": {
       "source_locale": "en",
-      "source_text": "This SOP applies to all Astellas and non-Astellas employees responsible for supporting ALSAP throughout its lifecycle. In-scope organizations: BOD, COQS, EDTS, MA, OD, RAPV. [Headwater flag: the in-scope-organizations list is currently embedded prose; it should be decomposed into a List container + ListItem children, but procedure.enum has no 'list'/'list_item' kind — surfaced as an open vocab question, not smashed and not invented.]",
+      "source_text": "This SOP applies to all Astellas and non-Astellas employees responsible for supporting ALSAP throughout its lifecycle. The in-scope organizations are listed below.",
       "kind": "procedure"
     },
     "bindings": {
@@ -51,7 +51,7 @@
       }
     },
     "governance": {
-      "version": 1,
+      "version": 2,
       "status": "draft",
       "regulatory_binding": "regulatory",
       "owner": "team_qseg_safety_data_science"
@@ -80,10 +80,10 @@
   },
   {
     "atom_id": "atom_sop_ast29080_general",
-    "content_hash": "sha256:e350e2216dc48d9ef992fe2c2b8ccfadafee1743cda05764bc2d51056bd39156",
+    "content_hash": "sha256:30fd8d7229f86b353a55568e9b831b162c4f1762d67dedf382a4206cea6418f9",
     "meaning": {
       "source_locale": "en",
-      "source_text": "The ALSAP is the central cross-functional framework for ongoing identification, evaluation, and communication of emerging safety risks at the asset level. It operationalizes existing safety governance documents (SFDG, DRMP, IB, SMT minutes), integrating them into an actionable, data-driven plan for aggregate monitoring across all relevant clinical trials. Only one ALSAP exists per asset. It must meet ALCOA+ standards and is reviewed annually by the SMT, with ad hoc updates triggered by emerging signals, regulatory changes, milestones, data-quality concerns, or external safety events. [Headwater flag: the governing-documents bullet list (SFDG/DRMP/IB/SMT) is embedded prose; same open List/ListItem vocab question as scope.]",
+      "source_text": "The ALSAP is the central cross-functional framework for ongoing identification, evaluation, and communication of emerging safety risks at the asset level. It operationalizes the existing safety governance documents listed below, integrating them into an actionable, data-driven plan for aggregate monitoring across all relevant clinical trials. Only one ALSAP exists per asset. It must meet ALCOA+ standards and is reviewed annually by the SMT, with ad hoc updates triggered by emerging signals, regulatory changes, milestones, data-quality concerns, or external safety events.",
       "kind": "procedure"
     },
     "bindings": {
@@ -93,7 +93,7 @@
       }
     },
     "governance": {
-      "version": 1,
+      "version": 2,
       "status": "draft",
       "regulatory_binding": "regulatory",
       "owner": "team_qseg_safety_data_science"
@@ -132,6 +132,258 @@
       "object": {
         "belongs_to": "atom_sop_ast29080",
         "order": 5
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_scope_orgs",
+    "content_hash": "sha256:f3de7ea8f2b90637503e8e564a5798d1192fed103f7bf92d2dfdb798d3e4c4f4",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Organizations in scope of this SOP.",
+      "kind": "list"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_scope",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_scope_orgs_0",
+    "content_hash": "sha256:c4ac5c1985544e4320a6221af1779d384534f1e85587b23520129f0a21baa452",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Biopharma & Ophthalmology Development (BOD)",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_scope_orgs",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_scope_orgs_1",
+    "content_hash": "sha256:4208b03c647066fccff2f20287bf28fcd336ec0516eb22db83af9d502f64c448",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Clinical Operations & Quantitative Science (COQS)",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_scope_orgs",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_scope_orgs_2",
+    "content_hash": "sha256:5f43f953469eec2ff5f191c4ed21e4bc6e0c967e9ea85217926bda0bdb314695",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Early Development & Translational Science (EDTS)",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_scope_orgs",
+        "order": 2
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_scope_orgs_3",
+    "content_hash": "sha256:7f6be59a76f44e9686846cda0f764b94f2dd565c5d3c48f81728852d59fa4db0",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Global Medical Affairs (MA)",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_scope_orgs",
+        "order": 3
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_scope_orgs_4",
+    "content_hash": "sha256:463de427df5b56166093cb682522eff1cb35ce145a9b9a2da84a3ebdc926ea3d",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Oncology Development (OD)",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_scope_orgs",
+        "order": 4
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_scope_orgs_5",
+    "content_hash": "sha256:f272375828b2ac24af52291e451134f8ed4c3a3d7ff1f7eca7ecafc7410cf734",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Regulatory Affairs & Pharmacovigilance (RAPV)",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_scope_orgs",
+        "order": 5
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_general_govdocs",
+    "content_hash": "sha256:8192be040fc8868c0993b0d50e9a29e4dec9b2403abbbd5e51618506fd144c70",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Existing safety governance documents the ALSAP operationalizes.",
+      "kind": "list"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_general",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_general_govdocs_0",
+    "content_hash": "sha256:ad226ad727f40a43186b4151e01bb21bdad390c1963dacae8ee951fd4d63e272",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Safe First Dosing Guidance (SFDG): establishes initial safety considerations prior to First in Human (FIH).",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_general_govdocs",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_general_govdocs_1",
+    "content_hash": "sha256:0c1457aaf9b8f5ad853be9c4954396b210837725809f2978a027e4acd32b9eb7",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Development Risk Management Plan (DRMP): defines regulatory risk strategy prior to Phase 2.",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_general_govdocs",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_general_govdocs_2",
+    "content_hash": "sha256:92418dced7b0f6c1429a61c0d8b96794527cadbb3cf2dc12c9e32fec607caca9",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Investigator Brochure (IB): summarizes known and potential risks for investigators.",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_general_govdocs",
+        "order": 2
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_qseg_safety_data_science"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29080_general_govdocs_3",
+    "content_hash": "sha256:ac2797bec9f7958af83c9c9b4d5349a0fb45e35c9b3a1d5ac2740018e38982f3",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Safety Management Team (SMT) minutes: capture ongoing safety decisions across the program.",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29080_general_govdocs",
+        "order": 3
       }
     },
     "governance": {
@@ -263,10 +515,10 @@
   },
   {
     "atom_id": "atom_sop_ast29080_proc_a_s3",
-    "content_hash": "sha256:ee4dc184bc9f5aaf69775d8a346232de3decb1f81d495cb14803bcb26327f999",
+    "content_hash": "sha256:b24f0616974e5ee14c4acd98fdfa59fbc5818be147d8a10c612de4504d100d18",
     "meaning": {
       "source_locale": "en",
-      "source_text": "Schedule and conduct ALSAP Kick-Off Meeting.",
+      "source_text": "Schedule and conduct the ALSAP Kick-Off Meeting within 15 business days of ALSAP Lead assignment.",
       "kind": "procedure_step"
     },
     "bindings": {
@@ -285,8 +537,8 @@
       }
     },
     "governance": {
-      "version": 1,
-      "status": "draft",
+      "version": 2,
+      "status": "in_review",
       "regulatory_binding": "regulatory",
       "owner": "team_qseg_safety_data_science"
     }
@@ -386,10 +638,10 @@
   },
   {
     "atom_id": "atom_sop_ast29080_proc_b_s3",
-    "content_hash": "sha256:b7797a6b45fddc4129566c839f3121982f480fcce211060f96652acae2996007",
+    "content_hash": "sha256:584a252b578838882b063dea9a4ed1967bff2dc793bc259cb13a28f4ed63f67e",
     "meaning": {
       "source_locale": "en",
-      "source_text": "Distribute the draft ALSAP for review to the ALSAP Reviewers.",
+      "source_text": "Distribute the draft ALSAP to the ALSAP Reviewers, allowing a minimum 10 business-day review period.",
       "kind": "procedure_step"
     },
     "bindings": {
@@ -408,8 +660,8 @@
       }
     },
     "governance": {
-      "version": 1,
-      "status": "draft",
+      "version": 2,
+      "status": "in_review",
       "regulatory_binding": "regulatory",
       "owner": "team_qseg_safety_data_science"
     }

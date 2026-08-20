@@ -11,8 +11,9 @@ It resolves every enum to a governed member OR flags it as a proposed registry e
 (flag, never invent). Ungoverned roles/records are emitted to proposed_registry_extensions.json,
 NOT silently added to the governed lists.
 """
-import json, hashlib, pathlib
+import json, hashlib, pathlib, sys
 import harness_paths
+import store_merge
 
 STORE = harness_paths.resolve()["project_dir"]
 CORPUS = "SOP-AST-29080 v1 — ALSAP SOP (docx)"
@@ -204,13 +205,8 @@ step(f"{PC}_s12", "Provide TLF outputs to the SMT per the agreed-upon cycles and
 step(f"{PC}_s13", "Review ALSAP outputs per SOP-1798.", PC, 12, "verification", ["role_smt"],
      refs=[docid("SOP-1798")], prereqs=[f"{PC}_s12"])
 
-# ---- stamp content_hash on every atom (hash of meaning) ----
-for a in atoms:
-    payload = json.dumps(a["meaning"], sort_keys=True, ensure_ascii=False).encode("utf-8")
-    a["content_hash"] = "sha256:" + hashlib.sha256(payload).hexdigest()
-    # order keys for a clean, diffable store
-    a_ordered = {k: a[k] for k in ["atom_id", "content_hash", "meaning", "bindings", "governance"]}
-    a.clear(); a.update(a_ordered)
+# ---- stamp + merge + write (shared rule; see tools/store_merge.py) ----
+store_merge.stamp(atoms)
 
 # ---- proposed registry extensions (FLAGGED — not governed) ----
 proposed = {
@@ -286,11 +282,14 @@ manifest = {
   "generated_by": "tools/headwater_ingest.py"
 }
 
-STORE.mkdir(parents=True, exist_ok=True)
-(STORE / "atoms.json").write_text(json.dumps(atoms, indent=2, ensure_ascii=False))
-(STORE / "proposed_registry_extensions.json").write_text(json.dumps(proposed, indent=2, ensure_ascii=False))
-(STORE / "source_silent.json").write_text(json.dumps(source_silent, indent=2, ensure_ascii=False))
-(STORE / "manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False))
-print(f"Wrote {len(atoms)} atoms to {STORE/'atoms.json'}")
+atoms, rep, ingest_log, bootstrap = store_merge.merge(
+    STORE, atoms, corpus=CORPUS, project=manifest["project"], owns=("object", "procedure"), prune="--prune" in sys.argv)
+manifest["atom_count"] = len(atoms)
+store_merge.write(STORE, atoms, ingest_log, files={
+    "proposed_registry_extensions.json": proposed,
+    "source_silent.json": source_silent,
+    "manifest.json": manifest,
+})
+store_merge.report(atoms, STORE, rep, bootstrap)
 print(f"  {sum(1 for a in atoms if a['meaning']['kind']=='procedure')} containers, "
       f"{sum(1 for a in atoms if a['meaning']['kind']=='procedure_step')} steps")

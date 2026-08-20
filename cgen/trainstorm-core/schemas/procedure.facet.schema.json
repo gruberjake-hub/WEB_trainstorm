@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://trainstorm.ai/schemas/procedure.facet.schema.json",
+  "facet_version": "procedure.v0.1",
   "title": "Procedure binding facet",
   "description": "A new, extensible binding on the content atom for procedural / quality (SOP) source. Owner (single-writer): the Authoring / Headwater agent. Carries the execution semantics an SOP step needs that object/intent/expression/audience do not. Everything here is a REFERENCE (roles, records, cited docs) or a governed label — never embedded prose; the one embedded payload stays meaning.source_text (the action instruction). Attach under bindings.procedure. Applies to atoms whose meaning.kind is 'procedure' (container) or 'procedure_step' (leaf).",
   "type": "object",
@@ -8,23 +9,36 @@
   "properties": {
     "step_type": {
       "type": "string",
-      "enum": ["action", "decision", "verification"],
+      "enum": [
+        "action",
+        "decision",
+        "verification"
+      ],
       "$comment": "Canonical source: vocab/procedure.enum.json (dimensions.step_type). This enum is a mirror kept in sync by conformance check; the vocab wins.",
       "description": "GOVERNED closed list. action = do a thing; decision = a branch point (uses `branches`); verification = a QC/acceptance check (uses `acceptance_ref`). Container atoms omit this."
     },
     "performed_by": {
       "type": "array",
-      "items": { "type": "string", "pattern": "^role_[A-Za-z0-9_-]+$" },
+      "items": {
+        "type": "string",
+        "pattern": "^role_[A-Za-z0-9_-]+$"
+      },
       "description": "WHO executes — references into a governed roles vocab. Roles, never people: no PII."
     },
     "produces_records": {
       "type": "array",
-      "items": { "type": "string", "pattern": "^rec_[A-Za-z0-9_-]+$" },
+      "items": {
+        "type": "string",
+        "pattern": "^rec_[A-Za-z0-9_-]+$"
+      },
       "description": "Record/evidence ids this step generates (the GxP proof it happened). References into a records registry."
     },
     "references": {
       "type": "array",
-      "items": { "type": "string", "pattern": "^(doc|atom)_[A-Za-z0-9_-]+$" },
+      "items": {
+        "type": "string",
+        "pattern": "^(doc|atom)_[A-Za-z0-9_-]+$"
+      },
       "description": "Cited controlled documents / regulations / other atoms. References, not copies."
     },
     "acceptance_ref": {
@@ -37,11 +51,21 @@
       "description": "For step_type=decision: the conditional edges prerequisites can't express (if X → step A, else → step B).",
       "items": {
         "type": "object",
-        "required": ["on", "leads_to"],
+        "required": [
+          "on",
+          "leads_to"
+        ],
         "additionalProperties": false,
         "properties": {
-          "on": { "type": "string", "description": "Short governed outcome label for the condition (the human-readable condition is the meaning of the decision step itself)." },
-          "leads_to": { "type": "string", "pattern": "^atom_[A-Za-z0-9_-]+$", "description": "The next step atom this outcome routes to." }
+          "on": {
+            "type": "string",
+            "description": "Short governed outcome label for the condition (the human-readable condition is the meaning of the decision step itself)."
+          },
+          "leads_to": {
+            "type": "string",
+            "pattern": "^atom_[A-Za-z0-9_-]+$",
+            "description": "The next step atom this outcome routes to."
+          }
         }
       }
     }

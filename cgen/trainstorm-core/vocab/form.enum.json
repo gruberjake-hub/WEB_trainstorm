@@ -1,5 +1,5 @@
 {
-  "vocabulary_version": "form.v0.1",
+  "vocabulary_version": "form.v0.2",
   "status": "draft",
   "owner": "content_architecture",
   "description": "Governed closed vocabularies for the form facet: the meaning.kind values for form-family nodes, the field_type input primitives, and the content_disposition authoring-lifecycle values. This CLOSES the open, ad-hoc field_type vocabulary observed in raw form object models (the ALSAP FORM-AST-34037 draft used 20+ un-governed type strings such as 'controlled_choice_plus_rationale', 'person_signature_block', 'narrative_formula', 'boolean_plus_note'). Same governance pattern as intent.enum.json and procedure.enum.json.",
@@ -13,44 +13,130 @@
     "reuses": [
       "registry/roles.registry.json (performed_by) — shared with procedure facet, not duplicated",
       "registry/records.registry.json (captures_record) — shared with procedure facet, not duplicated"
-    ]
+    ],
+    "shape": "Governed values nest under dimensions.<name>.values[].id — the canonical vocab shape shared with procedure.enum.json and structure.enum.json. v0.2 normalised this file from its earlier top-level {kinds, field_type, content_disposition} layout; ids, labels and definitions are unchanged."
   },
-  "kinds": {
-    "description": "meaning.kind values for form-family nodes. Container kinds carry no field_type.",
-    "closed_list": true,
-    "values": [
-      { "id": "form",         "label": "Form",         "definition": "Container atom for a whole form/template (e.g. the ALSAP)." },
-      { "id": "form_section", "label": "Form Section", "definition": "Intermediate container grouping fields; maps a template section." },
-      { "id": "form_field",   "label": "Form Field",   "definition": "A leaf that captures one unit of input; carries a field_type." }
-    ]
-  },
-  "field_type": {
-    "description": "Closed set of input primitives. Specializations (version strings, schedules, formulas) are expressed via constraints.format or meaning.kind — NOT as new field_types. Composite source fields (choice+rationale, boolean+note) DECOMPOSE into multiple field atoms; a smashed composite type is drift, not a primitive.",
-    "closed_list": true,
-    "values": [
-      { "id": "text_short",  "label": "Short text",           "definition": "Single-line free text (codes, names, short answers)." },
-      { "id": "text_long",   "label": "Long text / narrative", "definition": "Multi-line prose (narrative, method, summary, schedule text)." },
-      { "id": "date",        "label": "Date",                 "definition": "A calendar date; display/entry format via constraints.format." },
-      { "id": "number",      "label": "Number",               "definition": "A numeric value; bounds via constraints.min / constraints.max." },
-      { "id": "boolean",     "label": "Boolean",              "definition": "Yes/No. A paired explanation is a SEPARATE text_long field, not part of this one." },
-      { "id": "select_one",  "label": "Single choice",        "definition": "Exactly one value from a controlled set (options_ref). A paired rationale is a SEPARATE field." },
-      { "id": "select_many", "label": "Multiple choice",      "definition": "Zero-or-more values from a controlled set (options_ref)." },
-      { "id": "person",      "label": "Person",               "definition": "A named-person slot on the template. The blank slot is not PII; a filled value is a submission, held elsewhere." },
-      { "id": "signature",   "label": "Signature block",      "definition": "A Part-11 signature slot (name / title / date). Filled = submission/record, not template." },
-      { "id": "table",       "label": "Repeating table",      "definition": "Tabular structure; rows repeat (constraints.repeatable). Columns are child field atoms." },
-      { "id": "group",       "label": "Repeating group",      "definition": "A repeatable cluster of fields that is not tabular." },
-      { "id": "rule",        "label": "Rule",                 "definition": "A structured decision / threshold / trigger expressed as governed logic (e.g. SAC referral)." },
-      { "id": "matrix",      "label": "Matrix",               "definition": "A 2-D map of domain x domain (e.g. safety domain x deliverable)." }
-    ]
-  },
-  "content_disposition": {
-    "description": "Authoring lifecycle of a field's standard/source text, lifted from the FORM template's own global rules (FORM_RULE_005/006/007). Governs what a downstream projection/author may do with the standard text.",
-    "closed_list": true,
-    "values": [
-      { "id": "controlled_standard",     "label": "Controlled standard text",           "definition": "Retain unchanged unless absolutely necessary; if not applicable, keep the section and enter 'Not Applicable'. (FORM_RULE_005)" },
-      { "id": "authorable",              "label": "Authorable",                         "definition": "Asset-specific content the author writes or customizes." },
-      { "id": "example",                 "label": "Example",                            "definition": "May be used as-is, modified, or deleted. (FORM_RULE_006)" },
-      { "id": "instructional_transient", "label": "Instructional (remove before final)", "definition": "Guidance to the author; must be deleted once the section is complete. (FORM_RULE_007)" }
-    ]
+  "dimensions": {
+    "meaning_kind": {
+      "description": "meaning.kind values for form-family nodes. Container kinds carry no field_type.",
+      "field": "atom.meaning.kind",
+      "closed_list": true,
+      "values": [
+        {
+          "id": "form",
+          "label": "Form",
+          "definition": "Container atom for a whole form/template (e.g. the ALSAP)."
+        },
+        {
+          "id": "form_section",
+          "label": "Form Section",
+          "definition": "Intermediate container grouping fields; maps a template section."
+        },
+        {
+          "id": "form_field",
+          "label": "Form Field",
+          "definition": "A leaf that captures one unit of input; carries a field_type."
+        }
+      ]
+    },
+    "field_type": {
+      "description": "Closed set of input primitives. Specializations (version strings, schedules, formulas) are expressed via constraints.format or meaning.kind — NOT as new field_types. Composite source fields (choice+rationale, boolean+note) DECOMPOSE into multiple field atoms; a smashed composite type is drift, not a primitive.",
+      "field": "bindings.form.field_type",
+      "closed_list": true,
+      "values": [
+        {
+          "id": "text_short",
+          "label": "Short text",
+          "definition": "Single-line free text (codes, names, short answers)."
+        },
+        {
+          "id": "text_long",
+          "label": "Long text / narrative",
+          "definition": "Multi-line prose (narrative, method, summary, schedule text)."
+        },
+        {
+          "id": "date",
+          "label": "Date",
+          "definition": "A calendar date; display/entry format via constraints.format."
+        },
+        {
+          "id": "number",
+          "label": "Number",
+          "definition": "A numeric value; bounds via constraints.min / constraints.max."
+        },
+        {
+          "id": "boolean",
+          "label": "Boolean",
+          "definition": "Yes/No. A paired explanation is a SEPARATE text_long field, not part of this one."
+        },
+        {
+          "id": "select_one",
+          "label": "Single choice",
+          "definition": "Exactly one value from a controlled set (options_ref). A paired rationale is a SEPARATE field."
+        },
+        {
+          "id": "select_many",
+          "label": "Multiple choice",
+          "definition": "Zero-or-more values from a controlled set (options_ref)."
+        },
+        {
+          "id": "person",
+          "label": "Person",
+          "definition": "A named-person slot on the template. The blank slot is not PII; a filled value is a submission, held elsewhere."
+        },
+        {
+          "id": "signature",
+          "label": "Signature block",
+          "definition": "A Part-11 signature slot (name / title / date). Filled = submission/record, not template."
+        },
+        {
+          "id": "table",
+          "label": "Repeating table",
+          "definition": "Tabular structure; rows repeat (constraints.repeatable). Columns are child field atoms."
+        },
+        {
+          "id": "group",
+          "label": "Repeating group",
+          "definition": "A repeatable cluster of fields that is not tabular."
+        },
+        {
+          "id": "rule",
+          "label": "Rule",
+          "definition": "A structured decision / threshold / trigger expressed as governed logic (e.g. SAC referral)."
+        },
+        {
+          "id": "matrix",
+          "label": "Matrix",
+          "definition": "A 2-D map of domain x domain (e.g. safety domain x deliverable)."
+        }
+      ]
+    },
+    "content_disposition": {
+      "description": "Authoring lifecycle of a field's standard/source text, lifted from the FORM template's own global rules (FORM_RULE_005/006/007). Governs what a downstream projection/author may do with the standard text.",
+      "field": "bindings.form.content_disposition",
+      "closed_list": true,
+      "values": [
+        {
+          "id": "controlled_standard",
+          "label": "Controlled standard text",
+          "definition": "Retain unchanged unless absolutely necessary; if not applicable, keep the section and enter 'Not Applicable'. (FORM_RULE_005)"
+        },
+        {
+          "id": "authorable",
+          "label": "Authorable",
+          "definition": "Asset-specific content the author writes or customizes."
+        },
+        {
+          "id": "example",
+          "label": "Example",
+          "definition": "May be used as-is, modified, or deleted. (FORM_RULE_006)"
+        },
+        {
+          "id": "instructional_transient",
+          "label": "Instructional (remove before final)",
+          "definition": "Guidance to the author; must be deleted once the section is complete. (FORM_RULE_007)"
+        }
+      ]
+    }
   }
 }

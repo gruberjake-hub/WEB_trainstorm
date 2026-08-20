@@ -1,0 +1,26 @@
+{
+  "project": "alsap",
+  "corpus_derived_from": "FORM-AST-34037 v1.0 — ALSAP Template (docx, Final)",
+  "source_document": "doc_form_ast_34037",
+  "headwater_mode": "direct",
+  "scope": "vertical slice — cover, approval, version history, purpose > safety profile summary > benefit-risk (see source_silent for deferred sections)",
+  "written_facets": [
+    "meaning",
+    "bindings.object",
+    "bindings.form"
+  ],
+  "read_only_facets": [
+    "intent",
+    "expression",
+    "audience",
+    "render"
+  ],
+  "approval_roles": [
+    "role_alsap_approver",
+    "role_gso",
+    "role_medical_lead",
+    "role_alsap_lead"
+  ],
+  "generated_by": "tools/headwater_ingest_form.py",
+  "atom_count": 31
+}

@@ -29,8 +29,12 @@ def adopt(reg_file, key, proposed_items):
         if it["id"] in existing:
             continue
         entry = {"id": it["id"], "label": it["label"]}   # `note` is intentionally dropped
-        if "source_number" in it:
-            entry["source_number"] = it["source_number"]
+        # `description` and `values` are NOT review-only — they are the governed record itself
+        # (registries are v3 {id, label, description}; an options entry additionally carries the
+        # members of its set). Promote them when the proposal supplies them.
+        for k in ("description", "source_number", "values"):
+            if k in it:
+                entry[k] = it[k]
         reg[key].append(entry)
         added.append(it["id"])
     if added:
@@ -49,10 +53,25 @@ def adopt(reg_file, key, proposed_items):
     }, indent=2, ensure_ascii=False))
     return added
 
-r = adopt("roles.registry.json", "roles", proposed["roles"])
-rec = adopt("records.registry.json", "records", proposed["records"])
-d = adopt("docs.registry.json", "docs", proposed["docs"])
+TIERS = [("roles.registry.json", "roles"),
+         ("records.registry.json", "records"),
+         ("docs.registry.json", "docs"),
+         # controlled value sets behind form.options_ref — same client tier, set-shaped entries
+         ("options.registry.json", "options")]
 
-print(f"Adopted (new this run) → roles +{len(r)}, records +{len(rec)}, docs +{len(d)}")
+counts = {}
+for reg_file, key in TIERS:
+    items = proposed.get(key) or []
+    if not items:
+        counts[key] = 0
+        continue
+    if not (SCH / reg_file).exists():
+        # never conjure a governed registry as a side effect of adoption — establishing a
+        # vocabulary is its own deliberate act
+        raise SystemExit(f"{reg_file} does not exist in {SCH}. Seed the governed registry first "
+                         f"(closed_list, version 1, empty {key}[]), then re-run adoption.")
+    counts[key] = len(adopt(reg_file, key, items))
+
+print("Adopted (new this run) → " + ", ".join(f"{k} +{v}" for k, v in counts.items()))
 print("id + label promoted into the registries; review-only `note` dropped.")
 print(f"Commit payloads written to {ADDS}/")
