@@ -1,8 +1,29 @@
-import json, sys
-from jsonschema import Draft202012Validator
+"""
+The objective-ontology gate — Cartographer's gate.
 
-schema = json.load(open("/home/claude/objectives.schema.json"))
-store = json.load(open("/home/claude/objectives.json"))
+The checks below were written and demonstrated on 2026-08-12 (gated 7/7). They then sat unrunnable:
+the two paths were hardcoded build-machine absolutes (`/home/claude/objectives.schema.json`), so this
+file has never executed inside the repo. Found 2026-08-20 while reconstructing Cartographer, whose
+prompt cites this as its gate. Repointed at the shared resolver like every other tool.
+
+    python3 tools/validate_objectives.py [--core <trainstorm-core>]
+"""
+import json, sys, pathlib
+from jsonschema import Draft202012Validator
+import harness_paths
+
+import argparse
+_ap = argparse.ArgumentParser(add_help=False); _ap.add_argument("--core")
+_a, _ = _ap.parse_known_args()
+P = harness_paths.resolve_core(_a.core)     # core-only: the ontology is core canon, not project data
+_schema_p = P["schemas_dir"] / "objectives.schema.json"
+_store_p = P["core_dir"] / "ontology" / "objectives.json"
+for _p in (_schema_p, _store_p):
+    if not _p.exists():
+        raise SystemExit(f"not found: {_p}")
+schema = json.loads(_schema_p.read_text())
+store = json.loads(_store_p.read_text())
+print(f"schema: {_schema_p}\nstore : {_store_p}\n")
 
 results = []
 

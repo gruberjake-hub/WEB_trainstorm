@@ -60,6 +60,14 @@ if not spec_p.is_file():
     spec_p = hits[0]
 spine_raw, spec_raw = spine_p.read_text(), spec_p.read_text()
 
+# The version stamp was hardcoded to "amanuensis.v0.1+spine.v0.2" — so every agent's payload claimed
+# to be Amanuensis. Harmless while one agent resolved; wrong the moment six do. Derive it instead.
+def _ver(text, default="v?"):
+    m = re.search(r"\bv(\d+\.\d+)\b", text[:1200])
+    return f"v{m.group(1)}" if m else default
+_agent_name = spec_p.stem.replace("_system_prompt", "")
+PROMPT_VERSION = f"{_agent_name}.{_ver(spec_raw)}+spine.{_ver(spine_raw)}"
+
 # ---- 1. keep only the spine proper ------------------------------------------------------------
 MARK = "Everything below is the spine."
 if MARK not in spine_raw:
@@ -181,7 +189,7 @@ payload = {
         "mode": A.mode,
         "spine": str(spine_p.relative_to(CORE)),
         "specialization": str(spec_p.relative_to(CORE)),
-        "prompt_version": "amanuensis.v0.1+spine.v0.2",
+        "prompt_version": PROMPT_VERSION,
         "slot": (packet or {}).get("slot", {}).get("atom_id"),
         "template_source_hash": (packet or {}).get("slot", {}).get("content_hash"),
         "purity": "PASS",

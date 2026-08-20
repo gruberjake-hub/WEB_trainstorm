@@ -34,21 +34,19 @@ existing stores are unaffected.
 """
 import os, argparse, json, pathlib
 
-def resolve():
-    ap = argparse.ArgumentParser(add_help=False)
-    ap.add_argument("--core", default=os.environ.get("TRAINSTORM_CORE"))
-    ap.add_argument("--project", default=os.environ.get("TRAINSTORM_PROJECT"))
-    ap.add_argument("--registry", default=os.environ.get("TRAINSTORM_REGISTRY"))
-    ap.add_argument("--template", default=os.environ.get("TRAINSTORM_TEMPLATE"))
-    args, _ = ap.parse_known_args()
+def resolve_core(core_arg=None):
+    """Resolve ONLY the core anchor (schemas + vocab). No project required.
 
+    Split out 2026-08-20. Some tools are core-only — `validate_objectives.py` gates the objective
+    ontology, which lives at `ontology/objectives.json` in core and has nothing to do with a project
+    store. Calling the full resolve() forced them to invent a --project they do not use. Extracted
+    rather than copied: one implementation of the core-detection rule, and resolve() now calls this.
+    """
     tools_dir = pathlib.Path(__file__).resolve().parent
     base = tools_dir.parent  # trainstorm-core in the repo; the package root when standalone
     warnings = []
-
-    # ---- core (schemas + vocab) ----
-    if args.core:
-        core = pathlib.Path(args.core).resolve()
+    if core_arg:
+        core = pathlib.Path(core_arg).resolve()
         core_is_mirror = False
     elif (base / "schemas" / "atom.schema.json").exists() and (base / "vocab" / "procedure.enum.json").exists():
         core = base                       # tools sit inside a real core dir → canon is right here
@@ -60,11 +58,25 @@ def resolve():
                         "In the repo pass --core <path>/cgen/trainstorm-core.")
     else:
         raise SystemExit("Cannot locate core schemas. Pass --core <path to cgen/trainstorm-core>.")
-
     if core_is_mirror:
         schemas_dir = vocab_dir = core   # mirror keeps all three files flat
     else:
         schemas_dir, vocab_dir = core / "schemas", core / "vocab"
+    return {"base": base, "core_dir": core, "schemas_dir": schemas_dir, "vocab_dir": vocab_dir,
+            "core_is_mirror": core_is_mirror, "warnings": warnings}
+
+
+def resolve():
+    ap = argparse.ArgumentParser(add_help=False)
+    ap.add_argument("--core", default=os.environ.get("TRAINSTORM_CORE"))
+    ap.add_argument("--project", default=os.environ.get("TRAINSTORM_PROJECT"))
+    ap.add_argument("--registry", default=os.environ.get("TRAINSTORM_REGISTRY"))
+    ap.add_argument("--template", default=os.environ.get("TRAINSTORM_TEMPLATE"))
+    args, _ = ap.parse_known_args()
+
+    C = resolve_core(args.core)
+    base, core, core_is_mirror = C["base"], C["core_dir"], C["core_is_mirror"]
+    schemas_dir, vocab_dir, warnings = C["schemas_dir"], C["vocab_dir"], list(C["warnings"])
 
     # ---- project store ----
     if args.project:
