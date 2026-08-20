@@ -8,6 +8,27 @@ The point was not to produce ALSAP text. It was to answer a question the purity 
 **`--verify-prompt` proves no ALSAP content is IN the prompt; it says nothing about whether the walk
 result is ENOUGH.** So: is the grounding packet sufficient?
 
+---
+
+> **Addendum, 2026-08-20 (later the same day) — the verdict below is correctly observed and was
+> wrongly scoped.** The record of what the agents did stands unedited; this note corrects only the
+> conclusion drawn from it.
+>
+> "Insufficient" implied a gap in *our* build. It is not. Asset evidence is **stakeholder intake** —
+> it belongs to the ALSAP Lead's organisation, arrives at *their* runtime, and is very likely
+> material an instructional designer may never be permitted to hold. What the seven dispatches
+> actually demonstrated is the delivered product **behaving correctly in its shipping state**:
+> handed no evidence, it declined to fabricate safety text.
+>
+> So: not *"draft mode is blocked"* but **"draft mode awaits stakeholder intake."** The engine must
+> stay deliverable and demonstrable without an asset corpus — permanently, not just in beta.
+>
+> Consequently row 1 of the defects table is **not ours to close**, and the next rung is the
+> **intake socket** — a specification, derived from the template's slots, of what a stakeholder must
+> supply — rather than a corpus. See the 2026-08-20 (fifth) decision-log entry, "ID intake vs
+> STAKEHOLDER intake".
+
+
 ## Verdict
 
 **No — and the reason is structural, not a bug.** All five first-round dispatches independently
@@ -43,7 +64,7 @@ actionable result of the exercise.
 
 | # | Finding | Status |
 |---|---|---|
-| 1 | Packet carries no asset evidence — blocks all drafting | **OPEN — needs a new corpus.** Recorded as the next rung. |
+| 1 | Packet carries no asset evidence — blocks all drafting | **NOT OURS — see the addendum above.** Second-order (stakeholder) intake; the engine ships without it by design. |
 | 2 | `gaps: []` reports *assembly* completeness; agents read it as licence to proceed | **FIXED** — new `sufficiency` block states plainly what the packet does and does not carry, and gives a per-slot verdict. |
 | 3 | A conditional slot got the controlling field's *identity* but not its value set, its type, or the predicate — "the selected profile" had no referent | **FIXED** — `this_slot_applies_when` now resolves the controlling field, inlines its governed options, and names an absent predicate explicitly. |
 | 4 | Nothing showed what had already been authored for the asset | **FIXED** — `--instance` adds `instance_so_far` (this slot, the fields it depends on, decisions, governance, staleness). This is what makes `check` mode work. |
