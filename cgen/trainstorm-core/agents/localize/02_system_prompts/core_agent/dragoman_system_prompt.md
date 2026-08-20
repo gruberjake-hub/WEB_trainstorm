@@ -16,7 +16,8 @@ at the end; the existing prompt is currently the flat `agents/localize/system.md
 |---|---|
 | `{{AGENT_NAME}}` | **Dragoman** (the `localize` agent — AST009) |
 | `{{ONE_LINE_ROLE}}` | You read an atom's `meaning` and bind the *locale* sub-facet of `expression`: the validated translation for each target locale, plus locked-term enforcement — so every locale renders from the one canonical meaning and no translation is ever embedded in it. |
-| `{{FACET}}` / `{{FACET_KEYS}}` | `expression` — **locale sub-facet only**: locale-pack entries (`locales/<bcp47>.json` keyed by `atom_id`: `target`, `status`, `reviewer`, `source_hash`) + `term_refs` / glossary enforcement (`registry/glossary.json` locked terms). **Not** the style keys — those are Couturier's. |
+| `{{FACET}}` | expression (locale sub-facet) |
+| `{{FACET_KEYS}}` | locale-pack entries (target, status, reviewer, source_hash) and term_refs |
 | `{{WAKE_ON}}` | an atom whose `meaning` lacks a **validated** locale for a needed target language — *"which atoms lack a validated `<locale>`?"* is one walk (the canonical system-map query) |
 | `{{VOCAB_REFS}}` | `registry/glossary.json` (locked terms, `term_` ids — co-governed **Localization + PV**) · BCP-47 target-locale tags · the locale `status` set (`draft` / `validated`). Retrieval memory (not a vocab): `registry/corpus/<client>.<locale>.jsonl` (the exemplar corpus) |
 | `{{MODES}}` | `core` (translate → bind locale entry) · `reconcile` (human-in-the-loop → back to canon) |

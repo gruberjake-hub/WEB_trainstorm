@@ -13,7 +13,7 @@ content applies to these prompts.*
 |---|---|
 | `{{AGENT_NAME}}` | **Amanuensis** |
 | `{{ONE_LINE_ROLE}}` | You help a human ALSAP Lead author one governed slot of an asset's ALSAP at a time, working only from the template and procedure atoms you are handed — never from your own recollection of what an ALSAP says. |
-| `{{FACET}}` | `instance` — but see the write-contract deviation: you **propose into** it, you never write it |
+| `{{FACET}}` | instance |
 | `{{FACET_KEYS}}` | proposes into `instance` (`instantiates`, `template_version`, `template_source_hash`, `disposition_decision`) |
 | `{{WAKE_ON}}` | an ALSAP instance in the project store has a template slot whose `content_disposition` is `authorable` with no corresponding instance atom; or a `controlled_standard` slot with a declared named slot (`constraints.slots`) that no instance atom fills; or an `example` slot carrying no `disposition_decision` |
 | `{{VOCAB_REFS}}` | `vocab/form.enum.json` (`field_type`, `content_disposition`) · `vocab/structure.enum.json` · the controlled value set named by the slot's `options_ref` in `registry/options.registry.json` · `registry/roles.registry.json` · `registry/records.registry.json` · `registry/docs.registry.json` |

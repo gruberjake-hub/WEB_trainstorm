@@ -50,7 +50,9 @@ A, _ = ap.parse_known_args()
 # ---- locate the two prompt files -------------------------------------------------------------
 spine_p = pathlib.Path(A.spine) if A.spine else AGENTS / "_shared" / "facet_owner_spine.md"
 spec_p = pathlib.Path(A.agent)
-if not spec_p.exists():
+# .is_file(), not .exists(): `--agent localize` run from tools/ matched the tools/localize/ DIRECTORY
+# and then tried to read it. Found 2026-08-20 by running the resolver against all seven agents.
+if not spec_p.is_file():
     hits = sorted((AGENTS / A.agent / "02_system_prompts" / "core_agent").glob("*.md"))
     if len(hits) != 1:
         raise SystemExit(f"expected exactly one specialization under agents/{A.agent}/"
@@ -69,6 +71,16 @@ spine = spine_raw.split(MARK, 1)[1].lstrip("\n").lstrip("-").lstrip("\n")
 slots = {}
 for m in re.finditer(r"^\|\s*`\{\{(\w+)\}\}`\s*\|(.+?)\|\s*$", spec_raw, re.M):
     slots[m.group(1)] = m.group(2).strip()
+
+# Fail loudly on a row that declares more than one token, e.g. `| {{FACET}} / {{FACET_KEYS}} | … |`.
+# One value cannot fill two slots, and the old behaviour was to silently not match and then report
+# the slots as "unfilled" — which reads like the specialization forgot them rather than that the
+# table shape is wrong. Four of the seven specializations were in this state.
+for line in spec_raw.splitlines():
+    if line.startswith("|") and len(re.findall(r"`\{\{(\w+)\}\}`", line.split("|")[1] if line.count("|") > 1 else "")) > 1:
+        raise SystemExit(
+            f"{spec_p.name}: one table row declares several slots —\n  {line.strip()[:110]}\n"
+            f"  Give each slot its own row; one value cannot fill two.")
 
 # ---- 3/4. split the specialization's prose into sections ---------------------------------------
 sections, cur, buf = {}, None, []
@@ -103,6 +115,18 @@ if wc_body is not None:
     spine = re.sub(r"^## The write contract — `\{\{WRITE_CONTRACT\}\}`.*?(?=^## )",
                    "## The write contract\n\n" + SENTINEL + "\n\n",
                    spine, count=1, flags=re.S | re.M)
+else:
+    # No override: the agent inherits the spine's default write contract verbatim. The heading still
+    # carries the slot token, so strip it — otherwise the token survives to the unfilled-slot check
+    # and the resolver refuses every agent that does NOT override. That was six of seven; only
+    # Amanuensis (the one this tool was built against) has an override, so only Amanuensis worked.
+    spine = re.sub(r"^## The write contract — `\{\{WRITE_CONTRACT\}\}`\s*$",
+                   "## The write contract", spine, count=1, flags=re.M)
+    # The token appears TWICE in the spine body — the heading above, and the italic note beneath it
+    # ("…unless the specialization supplies `{{WRITE_CONTRACT}}`"). Stripping only the heading left
+    # the second one to trip the unfilled check. Resolve the remainder to the plain slot name so the
+    # note still reads correctly as documentation of the slot system.
+    slots.setdefault("WRITE_CONTRACT", "WRITE_CONTRACT")
 
 # Substitution is SINGLE-PASS: a slot's value is inserted and never rescanned for further tokens.
 # Sequential str.replace() looked equivalent and was not — Amanuensis's write-contract block quotes

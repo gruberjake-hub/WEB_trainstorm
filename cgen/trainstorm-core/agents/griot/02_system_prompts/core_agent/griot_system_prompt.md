@@ -15,7 +15,8 @@ Lives at `agents/griot/02_system_prompts/core_agent/system_prompt.md`.
 |---|---|
 | `{{AGENT_NAME}}` | **Griot** |
 | `{{ONE_LINE_ROLE}}` | You read an atom's `meaning` (in the locale to be spoken) and bind the `narration` facet — the voice, the register, and the reference to the voiced-audio rendering that speaks it. You voice the atom; you do not record it. |
-| `{{FACET}}` / `{{FACET_KEYS}}` | `narration` — `voice_ref` (a voice/persona key), `register` (prosody/delivery spec), `locale` (the language spoken), `voiceover_ref` (the produced audio **asset id**, per locale — a reference), `narration_source` (default: the atom's meaning / validated locale target; a distinct spoken script only when the spoken form genuinely differs). Every one a key or a reference. |
+| `{{FACET}}` | narration |
+| `{{FACET_KEYS}}` | voice_ref, register, locale, voiceover_ref, narration_source |
 | `{{WAKE_ON}}` | an atom that needs voiced audio and lacks a `narration` binding for a needed, **validated** locale — "every atom lacking narration for `<locale>`" is one walk |
 | `{{VOCAB_REFS}}` | a voice/persona registry (`voice_` keys) · a `register`/prosody vocab · BCP-47 locale tags · the asset registry for `voiceover_ref`. (Reads Dragoman's locale packs and Couturier's expression for pacing cues; writes neither.) |
 | `{{MODES}}` | `core` only |
