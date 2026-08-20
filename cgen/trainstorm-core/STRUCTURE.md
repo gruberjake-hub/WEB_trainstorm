@@ -1,5 +1,10 @@
 # Trainstorm Core — Repository Structure
 
+*Tree and status reconciled against the repo 2026-08-20. The **one rule**, the naming conventions,
+the sync split and the logo decision below are unchanged and still correct — they were right the
+first time. What had gone stale was the tree, the ✅/⬜ markers, and the layering (see "The three
+layers" below, which is new).*
+
 The cure for getting sideways: **don't decide file-by-file. Follow one rule and this tree.**
 
 ## The one rule
@@ -33,86 +38,107 @@ cgen/
 │   ├── astellas/assets/                  ✅ identity marks only (tokens.css · fonts/ to follow)
 │   └── brunswick/assets/                 ✅ same convention for every client that follows
 │
+├── astellas/                            # ⚠ THIRD SIBLING — client atom stores + client registries
+│   ├── projects/{ast_alsap,alsap,alsap_asp9999}/   ✅ procedure · template · instance stores
+│   └── registry/{roles,records,docs,options}.registry.json  ✅ client-tier governed ENTRIES
+│
 └── trainstorm-core/                     # the build system itself (the tree below)
 ```
 
+**⚠ On `cgen/astellas/`:** this sibling post-dates the original tree and sits in tension with the one
+rule's "a client's actual course → **not here**." The 2026-08-19 namespace decision chose it
+deliberately, so the exception is real and should be stated rather than left implicit: **client
+*courses* go to a separate `trainstorm-courses/` repo; client *document stores and governed
+registries* live here**, because the harness resolves a project store and its client registry as
+sibling anchors (`harness_paths.py`). Revisit if a client store ever needs to ship separately from
+core. Everything else under `cgen/` (zips, toolkits, loose HTML) is pre-manifold accretion and is not
+part of this structure.
+
 ```
 trainstorm-core/
-├── README.md
-├── STRUCTURE.md                          ← this file
+├── README.md · README-START-HERE.md
+├── STRUCTURE.md                          ← this file  (STRUCTURE_dep*.md = deprecated, being removed)
+├── decision-log.md                       ⚠ stale duplicate of claude/decision-log.md — delete or export one-way
 │
 ├── schemas/                              # the data contracts — validate against these
-│   ├── element.schema.json               ✅ presentation unit (HOW shown)
-│   ├── atom.schema.json                  ✅ conceptual node (the manifold)
-│   ├── script.primitives.v1.json         ✅ generation IR (WHAT knowledge)
+│   ├── atom.schema.json                  ✅ conceptual node — CONTENT CANON (see "The three layers")
+│   ├── element.schema.json               ✅ production contract, COURSE chain — same node as atom, ⬜ id question open
+│   ├── script.primitives.v1.json / .v2   ✅ generation IR (WHAT knowledge)
+│   ├── procedure.facet.schema.json       ✅ source-type facet — procedures  (procedure.v0.1)
+│   ├── form.facet.schema.json            ✅ source-type facet — forms       (form.v0.3, named slots + markers)
+│   ├── instance.facet.schema.json        ✅ authored overlay on a pinned template (instance.v0.1)
+│   ├── objectives.schema.json            ✅ intent ontology — objective node contract
+│   ├── template_manifest.schema.json     ✅
 │   ├── visual-asset.schema.json          ✅ one visual asset registry entry
-│   └── objectives.schema.json            ✅ intent ontology — objective node contract
+│   └── intent_sidecar.schema.json        ✅
 │
 ├── vocab/                                # governed, closed vocabularies
-│   ├── intent.enum.json                  ✅ rhetorical + pedagogical intents
-│   └── primitives.registry.json          ⬜ text/motion/layout/interaction/style keys
+│   ├── procedure.enum.json               ✅ meaning_kind · step_type
+│   ├── form.enum.json                    ✅ meaning_kind · field_type · content_disposition   (form.v0.2)
+│   ├── instance.enum.json                ✅ meaning_kind · disposition_decision
+│   ├── structure.enum.json               ✅ list · list_item (source-agnostic)
+│   ├── intent.enum.json                  ✅ rhetorical + pedagogical intents  — ⬜ unexercised
+│   ├── primitives.registry.json          ⬜ text/motion/layout/interaction/style keys — partial
+│   └── complexity · tone · visual-type    ✅
 │
-├── agents/                              # the agents' GOVERNED PROMPTS (contracts, not code) — these sync
-│   └── localize/
-│       ├── system.md                     ✅ the translation agent's prompt (loc-agent.v0.1)
-│       └── README.md                     ✅ manifest: I/O contract + how to run
-│       # generator/ realizer/ render/    ⬜ same shape when those agents get prompts
+├── agents/                               # GOVERNED PROMPTS (contracts, not code) — these sync
+│   ├── _shared/facet_owner_spine.md      ✅ spine v0.2 (optional {{WRITE_CONTRACT}} slot)
+│   ├── headwater_ingest/                 ✅ meaning + object + source-type (the only agent that WRITES)
+│   ├── alsap_builder/                    ✅ Amanuensis — proposes into `instance`; dispatched 2026-08-20
+│   │   └── 07_examples/dispatch_2026-08-20/findings.md   ✅ first live dispatch record
+│   ├── couturier/ · griot/ · chameleon/  ✅ prompts exist — ⬜ none has ever written a binding
+│   ├── localize/                         ✅ Dragoman — ⚠ flat `system.md` still un-`git rm`'d
+│   ├── ingest-decompose/                 ⚠ predecessor of headwater_ingest; retire or merge
+│   └── cartographer/                     ⬜ DOES NOT EXIST despite the 08-12 entry listing it as built
 │
-├── registry/                            # backing store + retrieval memory (git-only, not synced)
+├── registry/                             # backing store + retrieval memory (git-only, not synced)
 │   ├── visual-assets.registry.json       ✅ 255 governed image assets — the MAP, not the bytes
+│   ├── roles/records.registry.json       ⚠ 4 and 1 entries; client tier holds 14 and 5. Seed or drift — unlabelled
 │   ├── templates/                        ⬜ HTML/CSS layout templates per layout_primitive
-│   ├── glossary/
-│   │   └── astellas-pv.candidates.csv    ✅ locked-term seed (→ .json once reviewer confirms)
-│   └── corpus/
-│       └── astellas-pv.ja.jsonl          ✅ 1,164-pair exemplar corpus — fed to the retriever, NEVER synced
+│   ├── glossary/ · corpus/               ✅ locked-term seed · 1,164-pair exemplar corpus (NEVER synced)
+│   └── brands/                           ✅
 │
-├── locales/                             # externalized translations, keyed by element_id
-│   └── <bcp47>.json                      ⬜ e.g. ja.json, fr-CA.json
+├── locales/                              ⬜ externalized translations keyed by element_id — README only
+├── ontology/objectives.json              ✅ obj_ nodes — 2 seeded, `status: example`
 │
-├── ontology/                            # the intent ontology — objective/competency graph, keyed by obj_
-│   └── objectives.json                   ✅ obj_ objective nodes (owner: L&D) — teaches[] resolves here
+├── architecture/                         # docs of record (the .md files sync to Project knowledge)
+│   ├── manifold.md · conventions.md · atom-spec.md          ✅
+│   ├── unification-map.md                ⚠ names element.schema.json as canon — SUPERSEDED, see log 08-20 (sixth)
+│   ├── agents-roster.md · promptpack_manifold.md            ✅
+│   ├── reconciliation.md · conversation-reconciliation.md   ✅
+│   ├── script-generation-layer.md · localization-agent.md   ✅
+│   └── diagrams/                         ✅ rendered HTML — git-only
 │
-├── architecture/                        # docs of record (the .md files sync to Project knowledge)
-│   ├── manifold.md                       ⬜ system map + content graph + audience/join, as TEXT
-│   ├── conventions.md                    ⬜ the constitution, expanded
-│   ├── reconciliation.md                 ✅ schema reconciliation decisions
-│   ├── conversation-reconciliation.md    ✅ chat evidence → candidate → canonical decision
-│   ├── script-generation-layer.md        ✅ generation-layer placement + realization table
-│   ├── atom-spec.md                      ✅ the atom, annotated
-│   ├── localization-agent.md             ✅ the RAG localization pipeline
-│   └── diagrams/                         # rendered HTML — visual reference, git-only (don't sync)
-│       ├── system-map.html               ✅
-│       ├── content-graph.html            ✅
-│       └── audience-join.html            ✅
-│
-├── reference/                           # ONE clean, validated example of each layer
-│   ├── example_element.json              ✅
+├── reference/                            # ONE clean, validated example of each layer
 │   ├── example_atom.json                 ✅
-│   ├── sample_script.json                ✅
-│   └── brunswick.reference.course.json   ⬜ gold-standard course (fix the sce_003 collision first)
+│   ├── example_element.json              ⚠ duplicates the atom's text with no link — see log 08-20 (sixth)
+│   ├── sample_script.json / .v2.json     ✅
+│   └── brunswick.reference.course.json   ⬜ `{"_todo": …}` — the gold course has NEVER existed
 │
-├── tools/                               # the agents' runtime code & utilities
-│   ├── lint.py                           ✅ the drift/vocab linter
-│   ├── localize/                         # the translation agent's runtime (reads agents/localize/system.md)
-│   │   ├── build_agent_call.py           ✅ assembles the [system,user] call from registry memory
-│   │   └── verify_agent_output.py        ✅ QE gate + locale-pack mapping check
-│   ├── chat-capture/                      # ChatGPT export → provenance-preserving inventory
-│   │   └── extract_chatgpt.py             ✅ local evidence intake; never promotes decisions
-│   ├── assets/                           # the visual-asset pipeline: ingest → promote → approve
-│   │   ├── ingest_images.py              ✅ mechanical tier: hash · dims · OCR · perceptual dedup
-│   │   ├── promote.py                    ✅ staging → registry entries (idempotent; preserves approvals)
-│   │   ├── approve.py                    ✅ records a human sign-off (has --dry-run)
-│   │   ├── asset_resolve.py              ✅ asset_id → path on disk; verify() + audit()
-│   │   └── requirements.txt              ⬜ pillow · imagehash · jsonschema · pytesseract (+ system tesseract)
-│   ├── realize.py                        ⬜ (later) primitives → elements
-│   └── render/                           ⬜ (later) element → HTML → PNG
+├── tools/                                # the agents' runtime code & utilities
+│   ├── harness_paths.py                  ✅ 4 anchors: core · registry · project · template
+│   ├── validate_atoms.py                 ✅ THE GATE — schema · drift · vocab · instance
+│   ├── selftest_form_gate.py             ✅ 17/17     selftest_instance_gate.py  ✅ 17/17
+│   ├── headwater_ingest.py / _form.py    ✅ procedure · form ingests
+│   ├── store_merge.py                    ✅ the idempotent merge rule — lives once, both ingests import it
+│   ├── resolve_slot.py                   ✅ the walk: one slot → grounding packet (+ sufficiency)
+│   ├── resolve_prompt.py                 ✅ spine + specialization + packet → dispatchable payload
+│   ├── prompt_purity.py                  ✅ the no-content-in-prompt rule — shared by both above
+│   ├── accept_value.py                   ✅ the ONLY writer into an instance store
+│   ├── reconcile.py · approve.py · adopt_registries.py      ✅ round-trip · sign-off · promote-UP
+│   ├── project_sop.py · project_alsap.py · project_review_table.py  ✅ projections
+│   ├── lint.py · validate_objectives.py  ✅
+│   ├── localize/ · chat-capture/ · visual-assets/           ✅
+│   ├── realize.py                        ⬜ primitives → elements — ABSENT
+│   └── render/                           ⬜ element → HTML → PNG — directory exists, EMPTY
 │
-└── project/                             # Claude Project setup
-    ├── custom_instructions.md            ✅ paste into the Project's Custom Instructions
-    └── knowledge_manifest.md             ✅ what goes in the knowledge base + sync notes
+└── project/                              # Claude Project setup
+    ├── custom_instructions.md            ⚠ still names element as the canonical unit — correct it
+    ├── knowledge_manifest.md             ✅
+    └── ast_alsap/review_matrix.csv       ⚠ stray store fragment — misfiled by the one rule above
 ```
 
-`✅` = already built (in the scaffold). `⬜` = placeholder waiting for you (or me).
+`✅` = built and exercised. `⬜` = placeholder. `⚠` = present but wrong, stale, or misfiled.
 
 ## Naming conventions (so files sort and read predictably)
 
@@ -159,12 +185,79 @@ Where classification is uncertain, **under-claim**: default to `sub_brand`, neve
 - **Client courses** (Brunswick production, Astellas, future clients) → a **separate `trainstorm-courses/<client>/` repo** that references core schemas. Only *one clean copy of one course* lives here, in `reference/`, as the gold example.
 - **Frontier** (Response Engine, Orchestrator) → their **own repos/projects** when active; they import these schemas but keep their own build context.
 
+## `atom` and `element` — one node, not two layers (2026-08-20)
+
+*An earlier version of this section, added the same day, described atom / primitives / element as
+three layers awaiting a join. **That was wrong and is retracted** — see decision log 2026-08-20
+(seventh), which quotes the July documents.*
+
+**The atom is the design; the element is the contract. They are the same node.**
+
+- **`atom.schema.json`** — the *conceptual* node. Thin: owns its meaning, everything else keyed,
+  single-writer per binding. `architecture/atom-spec.md` is its annotated reading.
+- **`element.schema.json`** — the *reconciled production* node that implements that model, unifying
+  three legacy schemas (`course` authoring / `scene` render / `course-primitives` substrate).
+
+`architecture/promptpack_manifold.md` §1 is explicit: they are *"not two temperatures of one node…
+**You validate against the element. There is no runtime atom→element promotion.**"* And
+`architecture/reconciliation.md` §4: *"`course-primitives`' flat, ID-keyed element array → **this is
+the atom store.** Make `element_id` the stable `atom_id`."*
+
+The generation pipeline contains **no atom layer** — the atom is what an element *is*:
+
+```
+source material → generator → SCRIPT PRIMITIVES → realizer → ELEMENTS → render agents → RENDERED FORMS
+```
+
+**A translation is not an element.** `element.content` is source-locale only; translations live in
+`locales/<bcp47>.json` keyed by `element_id`. One element per language would make `locales/`
+redundant and re-embed language in the node — the drift this schema exists to fix.
+
+### Open — identity, and only identity
+
+The relationship is settled; the **id** is not. Three sources disagree: `reconciliation.md` says
+`element_id` **=** `atom_id`; this file's naming conventions list `ele_` and `atom_` as two separate
+prefixes; `promptpack_manifold.md` §8 says `element_id`s are minted **at realization**, joined by a
+`derivation` stamp. Settle this before building anything that depends on either id.
+
+### Live hypothesis — element as a course-chain facet (PROPOSED, not decided)
+
+`element`'s own field descriptions call its parts **facets** — "Assessment facet", "Render-target
+facet", `expression` carrying "Owner: Brand + Localization", and `ext` as "a sanctioned extension
+point… so new facets can accrete." That is the `bindings` convention, written before `bindings`
+existed. Which suggests `element` is the atom **specialized for the course chain**, exactly as
+`form.facet` and `procedure.facet` specialize it for the document chain — not a layer above it.
+
+If that holds, the move is `element.facet.schema.json` as a fourth source-type facet, one `atom_id`,
+and the gate already validates this shape three times over. It needs a field-by-field pass and the
+identity question answered first.
+
 ## First moves
 
-1. Unzip the scaffold → `git init` → first commit (you now have a coherent, validated core).
-2. Fill the `⬜` placeholders — the near-term build: `primitives.registry.json`, `manifold.md`, `conventions.md`, `tools/lint.py`, and the cleaned `brunswick.reference.course.json`.
-3. Wire `claudesync` with the include/exclude above; point the Project's knowledge at the synced folders.
-4. Paste `project/custom_instructions.md` into the Project. You're live.
+*(The original four — unzip, fill placeholders, wire claudesync, paste custom instructions — are
+done. Superseded 2026-08-20 by the state above.)*
+
+The **document half** of the machine is built and green: three atom stores, a gate with two
+self-tests at 17/17, ingest · reconcile · approve · project, and an agent that has been dispatched
+and behaves correctly. The **course half has never run** — no store carries an `intent`,
+`expression`, `audience` or `render` binding; only Headwater has ever written a binding;
+`realize.py` is absent and `render/` is empty.
+
+Near-term, in dependency order:
+
+1. **Settle identity** — `element_id` vs `atom_id`: one key, or two joined by a `derivation` stamp.
+   Three docs disagree (see the section above). Everything below depends on it.
+2. **Test the element-as-course-facet hypothesis** field by field against `element.schema.json`.
+   If it holds, the reconciliation costs no new concepts.
+3. **`atom → primitives`** — the first hop of the pipeline has no listed transform at all.
+4. **`tools/realize.py`** (primitives → elements) and **`tools/render/`** (element → HTML → PNG).
+5. **A real `brunswick.reference.course.json`** — still `{"_todo": …}`, and the only thing that would
+   prove the course half end to end.
+
+Correct as you go: `architecture/unification-map.md` and `project/custom_instructions.md` describe
+`element.schema.json` as the canonical unit. Per the July reading that is *correct* for the course
+chain — but it reads as a contradiction next to a harness that validates against `atom`, so both
+should say which chain they mean.
 
 ## Next on the visual-asset track
 
