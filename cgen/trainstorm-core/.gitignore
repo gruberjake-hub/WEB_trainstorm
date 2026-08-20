@@ -5,3 +5,9 @@ __pycache__/
 
 # Local ChatGPT conversation intake (may contain private/client material)
 .chat-capture/
+
+# Commit messages handed over from the build container, which cannot push
+# (see claude/handoff-alsap-builder.md, "How work gets back to the repo").
+# Written next to the work, used with `git commit -F`, never committed.
+COMMIT_MSG.txt
+*.patch

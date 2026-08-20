@@ -100,6 +100,8 @@ def resolve():
         raise SystemExit(f"Template store declared but has no atoms.json: {template}")
 
     return {
+        # the core anchor itself — agents/ and _shared/ hang off it, which the prompt resolver needs
+        "core_dir": base,
         "schemas_dir": schemas_dir, "vocab_dir": vocab_dir,
         "registry_dir": registry, "project_dir": project, "template_dir": template,
         # new-to-core vocab (e.g. structure.enum.json) not yet in a real core checkout;

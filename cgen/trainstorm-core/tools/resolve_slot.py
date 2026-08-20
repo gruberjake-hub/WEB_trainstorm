@@ -27,6 +27,7 @@ REG, PROJ = P["registry_dir"], P["project_dir"]
 
 ap = argparse.ArgumentParser(add_help=False)
 ap.add_argument("--slot"); ap.add_argument("--procedure"); ap.add_argument("--out")
+ap.add_argument("--instance", help="an instance store overlaying this template — what has been authored so far")
 ap.add_argument("--list", action="store_true")
 ap.add_argument("--verify-prompt", nargs="*")
 A, _ = ap.parse_known_args()
@@ -49,33 +50,29 @@ OPTIONS = reg("options.registry.json", "options")
 def form(a): return a.get("bindings", {}).get("form", {})
 def disp(a): return form(a).get("content_disposition")
 
+def idlabel(reg, i):
+    """Carry the id AND the label. A label alone cannot be checked against a registry, so an agent
+    handed only labels cannot run the 'ungoverned value' drift check its own contract demands."""
+    return {"id": i, "label": reg.get(i, {}).get("label", i), "governed": i in reg}
+
+# The decisions an agent may propose on a non-authorable slot. Governed, so it is handed over rather
+# than left to be guessed — the first dispatch invented `as_is` precisely because it was absent.
+_dv = P["vocab_dir"] / "instance.enum.json"
+DECISIONS = []
+if _dv.exists():
+    _d = json.loads(_dv.read_text())
+    DECISIONS = [{"id": v["id"], "label": v.get("label"), "definition": v.get("definition")}
+                 for v in _d.get("dimensions", {}).get("disposition_decision", {}).get("values", [])]
+
 
 # ---------- --verify-prompt : acceptance criterion #1, made runnable ----------
 if A.verify_prompt is not None:
-    # No atom's source text may appear in the agent's prompt. If it does, the prompt has become a
-    # second copy of the controlled document.
-    leaks, checked = [], []
-    for f in A.verify_prompt:
-        text = pathlib.Path(f).read_text()
-        checked.append(f)
-        for a in atoms:
-            src = a["meaning"]["source_text"].strip().rstrip(".")
-            if len(src) < 25:
-                continue          # short labels ("Cover.", "Author.") are not content
-            if src in text:
-                leaks.append((f, a["atom_id"], src[:70]))
-    print("=" * 70)
-    print(f"PROMPT PURITY — {len(atoms)} atoms vs {len(checked)} prompt file(s)")
-    print("=" * 70)
-    for f in checked:
-        print(f"  checked: {f}")
-    if leaks:
-        for f, aid, s in leaks:
-            print(f"  x LEAK {f}: contains {aid} — \"{s}...\"")
-        print("VERDICT: FAIL — the prompt carries ALSAP content; it is a second source of truth.")
-        sys.exit(1)
-    print("VERDICT: PASS — no atom content found in the prompt. Grounding is a walk, not a paste.")
-    sys.exit(0)
+    # The rule itself lives in prompt_purity.py — resolve_prompt.py enforces the same one, and a
+    # second copy of it would drift exactly like a second copy of a schema.
+    import prompt_purity
+    texts = {f: pathlib.Path(f).read_text() for f in A.verify_prompt}
+    ok = prompt_purity.report(atoms, texts, prompt_purity.scan(atoms, texts))
+    sys.exit(0 if ok else 1)
 
 
 # ---------- --list : the slots an author (and the agent) still owes ----------
@@ -153,10 +150,30 @@ if form(slot).get("options_ref"):
             "description": (entry or {}).get("description"),
             "values": vals}
 
+def resolve_options(ref):
+    e = OPTIONS.get(ref)
+    return {"options_ref": ref, "governed": e is not None,
+            "values": [{k: v[k] for k in ("id", "label", "description") if k in v}
+                       for v in (e or {}).get("values", [])]}
+
+def controlling(c):
+    """A slot conditional on another must be handed the CONTROLLING field resolved — its type, its
+    governed value set, and the predicate. Without them 'the selected profile' has no referent and
+    the dependent slot is undraftable no matter how complete its own entry is."""
+    ctrl = by_id.get(c["field"])
+    out = {**c, "field_text": (ctrl or {}).get("meaning", {}).get("source_text")}
+    if ctrl is not None:
+        out["field_type"] = form(ctrl).get("field_type")
+        out["content_disposition"] = disp(ctrl)
+        if form(ctrl).get("options_ref"):
+            out["options"] = resolve_options(form(ctrl)["options_ref"])
+    if "equals" not in c:
+        out["predicate"] = ("UNSPECIFIED — the decomposition records a dependency on this field but "
+                            "no triggering value; treat as 'applies whenever the field is set'")
+    return out
+
 conds = {
-    "this_slot_applies_when": [
-        {**c, "field_text": by_id.get(c["field"], {}).get("meaning", {}).get("source_text")}
-        for c in form(slot).get("conditional_on", [])],
+    "this_slot_applies_when": [controlling(c) for c in form(slot).get("conditional_on", [])],
     "fields_conditional_on_this_slot": [
         {"atom_id": a["atom_id"], "text": a["meaning"]["source_text"],
          "equals": next((c.get("equals") for c in form(a).get("conditional_on", [])
@@ -164,6 +181,30 @@ conds = {
         for a in atoms
         if any(c["field"] == slot["atom_id"] for c in form(a).get("conditional_on", []))],
 }
+
+# What has already been authored for THIS asset. A slot conditional on another is undraftable without
+# it — "the selected Benefit-Risk profile" has no referent until you can see which one was selected.
+# Read-only and ephemeral, like every other section here.
+inst_view = None
+if A.instance:
+    ia = load(pathlib.Path(A.instance) / "atoms.json", [])
+    idec = load(pathlib.Path(A.instance) / "instance_decisions.json", {}).get("decisions", [])
+    interest = {slot["atom_id"]} | {c["field"] for c in form(slot).get("conditional_on", [])}
+    def _v(a):
+        b = a["bindings"]["instance"]
+        return {"atom_id": a["atom_id"], "instantiates": b["instantiates"],
+                "fills_slot": b.get("fills_slot"), "selected_value": b.get("selected_value"),
+                "text": a["meaning"]["source_text"],
+                "governance": a["governance"],
+                "template_source_hash": b.get("template_source_hash"),
+                "stale": b.get("template_source_hash") != by_id.get(b["instantiates"], {}).get("content_hash")}
+    vals = [_v(a) for a in ia if a.get("bindings", {}).get("instance", {}).get("instantiates") in interest]
+    inst_view = {
+        "instance": load(pathlib.Path(A.instance) / "manifest.json", {}).get("project"),
+        "this_slot": [v for v in vals if v["instantiates"] == slot["atom_id"]],
+        "fields_this_slot_depends_on": [v for v in vals if v["instantiates"] != slot["atom_id"]],
+        "decisions": [d for d in idec if d["instantiates"] in interest],
+    }
 
 # cross-store: the procedure steps that govern use of THIS template
 proc_steps = []
@@ -174,8 +215,8 @@ if A.procedure and doc:
         if doc in p.get("references", []):
             proc_steps.append({
                 "atom_id": a["atom_id"], "step_type": p.get("step_type"),
-                "performed_by": [ROLES.get(r, {}).get("label", r) for r in p.get("performed_by", [])],
-                "produces_records": [RECORDS.get(r, {}).get("label", r) for r in p.get("produces_records", [])],
+                "performed_by": [idlabel(ROLES, r) for r in p.get("performed_by", [])],
+                "produces_records": [idlabel(RECORDS, r) for r in p.get("produces_records", [])],
                 "text": a["meaning"]["source_text"]})
 
 packet = {
@@ -190,9 +231,22 @@ packet = {
     "path": ancestry(slot),
     "guidance": guidance,
     "options": opts,
-    "accountable": [ROLES.get(r, {}).get("label", r) for r in form(slot).get("performed_by", [])],
-    "captures_record": RECORDS.get(form(slot).get("captures_record", ""), {}).get("label"),
+    "accountable": [idlabel(ROLES, r) for r in form(slot).get("performed_by", [])],
+    "captures_record": (idlabel(RECORDS, form(slot)["captures_record"])
+                        if form(slot).get("captures_record") else None),
+    # An agent is asked to record the source_hash it bound against AND which version of a governed
+    # list it resolved. It can only do the second if the packet carries the version.
+    "governance": {**slot.get("governance", {}), "content_hash": slot.get("content_hash")},
+    "disposition_decisions_available": {
+        "values": DECISIONS,
+        "_when_none_is_owed":
+            "A slot you FILL owes no decision. That covers an `authorable` field and a "
+            "`controlled_standard` field with declared `constraints.slots` — for the latter the slot "
+            "values ARE the record that the sentence was retained and completed, so do not look for a "
+            "`retained_with_fills` id. There is none, and none is needed.",
+    },
     "conditions": conds,
+    "instance_so_far": inst_view,
     "procedure": proc_steps,
     "gaps": [],
 }
@@ -203,6 +257,25 @@ for k, why in (("guidance", "no instructional or example siblings in this sectio
         packet["gaps"].append(f"{k}: {why}")
 if opts and not opts["governed"]:
     packet["gaps"].append(f"options: {opts['options_ref']} is not in the governed options registry")
+
+# `gaps` answers "did the walk resolve everything it referenced?" — an ASSEMBLY question. It does not
+# answer "is this enough to fill the slot?" Every agent in the 2026-08-20 dispatch read an empty
+# `gaps` as licence to proceed and then had to work out for itself that the decisive input was
+# missing. Saying so here costs one field and removes the ambiguity.
+_authorable = disp(slot) in ("authorable",) or bool(form(slot).get("constraints", {}).get("slots"))
+packet["sufficiency"] = {
+    "packet_carries": "template structure + drafting guidance + governing procedure. Grounding for "
+                      "WHAT this slot requires and WHO owns it.",
+    "packet_does_not_carry": "any evidence about the asset being documented — no safety data, no "
+                             "study results, no adverse-event terms, no participant counts, no asset "
+                             "identity beyond what the template itself states. There is no asset "
+                             "dossier corpus in the manifold yet.",
+    "verdict": ("INSUFFICIENT TO FILL — this slot is authored from asset evidence, which this packet "
+                "does not contain. Propose the shape and the constraints; do not invent the content."
+                if _authorable else
+                "SUFFICIENT FOR POSTURE — this slot is not authored from asset evidence; the packet "
+                "carries what is needed to decide what may be done with it."),
+}
 
 out = json.dumps(packet, indent=2, ensure_ascii=False)
 if A.out:
@@ -218,7 +291,7 @@ print(f"  type        : {s['field_type']} · {s['content_disposition']} · {s['c
 for sl in s.get("constraints", {}).get("slots", []):
     print(f"  slot to fill: [{sl['id']}] {sl['expects']}"
           + (f"  (values: {sl['options_ref']})" if sl.get("options_ref") else ""))
-print(f"  accountable : {', '.join(packet['accountable']) or '—'}")
+print(f"  accountable : {', '.join(r['label'] for r in packet['accountable']) or '—'}")
 if opts:
     print(f"  options     : {opts['options_ref']} "
           f"({'GOVERNED' if opts['governed'] else 'NOT GOVERNED'}) — {len(opts['values'])} values")
@@ -237,7 +310,7 @@ for x in c["fields_conditional_on_this_slot"]:
         print(f"  drives      : {x['atom_id']}")
 print(f"  procedure   : {len(proc_steps)} governing step(s)")
 for p in proc_steps:
-    print(f"                [{p['step_type']}] {', '.join(p['performed_by'])}: {p['text'][:80]}")
+    print(f"                [{p['step_type']}] {', '.join(r['label'] for r in p['performed_by'])}: {p['text'][:80]}")
 print(f"  gaps        : {len(packet['gaps'])}")
 for g in packet["gaps"]:
     print(f"                ! {g}")
