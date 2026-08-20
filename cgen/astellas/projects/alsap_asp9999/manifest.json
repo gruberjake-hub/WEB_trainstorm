@@ -1,0 +1,29 @@
+{
+  "project": "alsap_asp9999",
+  "_note": "WORKED EXAMPLE. ASP9999 is a deliberately fictional asset code — this store exists to prove the instance loop end to end, not to hold a real ALSAP. A real asset gets its own sibling store on the same pattern.",
+  "kind": "instance",
+  "instantiates_template": {
+    "store": "../alsap",
+    "document": "doc_form_ast_34037",
+    "version": "1.0"
+  },
+  "written_facets": [
+    "meaning",
+    "bindings.instance"
+  ],
+  "read_only_facets": [
+    "object",
+    "form",
+    "intent",
+    "expression",
+    "audience",
+    "render"
+  ],
+  "approval_roles": [
+    "role_alsap_approver",
+    "role_gso",
+    "role_medical_lead",
+    "role_alsap_lead"
+  ],
+  "generated_by": "tools/accept_value.py"
+}

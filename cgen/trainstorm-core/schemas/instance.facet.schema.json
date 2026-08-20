@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/instance.facet.schema.json",
+  "facet_version": "instance.v0.1",
+  "title": "Instance Facet",
+  "description": "Binds an AUTHORED atom to the template slot it fills. Single-writer: the ALSAP Lead (via the Amanuensis authoring loop) — NOT the headwater agent, which owns the form facet on a template drop. The writer boundary is why this is its own facet rather than an extension of form: two writers on one facet breaks single-writer. An authored instance is a SPARSE OVERLAY over a pinned template — controlled standard text is never copied down, it resolves from the template at render time — so an instance atom exists only where there is genuinely new meaning to embed. An atom carrying this facet carries no form or procedure facet: it is not a template node. Staleness is free: a template revision changes that template atom's content_hash, and one walk over template_source_hash names every instance that has gone stale and exactly where.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["instantiates", "template_document", "template_version", "template_source_hash"],
+  "properties": {
+    "instantiates": {
+      "type": "string",
+      "description": "atom_id of the TEMPLATE atom this value fills. Resolved against the template store named by the instance manifest's instantiates_template, not against this store. This is a persisted cross-store reference, and it is legal because it points UP into a governed shared tier — the same direction as role_ / rec_ / doc_ / reg_ registry ids. Sideways (peer project to peer project) and downward (shared to instance) remain forbidden.",
+      "pattern": "^atom_[A-Za-z0-9_-]+$"
+    },
+    "fills_slot": {
+      "type": "string",
+      "description": "Which NAMED slot inside the template atom's source_text this value fills, when the template atom is standard text carrying [bracketed] authorable spans (form.constraints.slots). Omitted when the instance fills the whole field. Together with instantiates this is the compound stable key (atom_id, slot_id) — never positional, because a position in a string shifts the moment anyone edits the sentence. Its presence is also what makes an instance atom legal over controlled_standard text: the sentence is retained, only the declared slot is authored.",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "template_document": {
+      "type": "string",
+      "description": "docs.registry id (doc_...) of the controlled template document this instance is written against. The human-legible half of the pin; instantiates is the machine half.",
+      "pattern": "^doc_[A-Za-z0-9_-]+$"
+    },
+    "template_version": {
+      "type": "string",
+      "description": "The template document version this value was authored against, as document control states it (e.g. '1.0'). Pinned, not tracked: an instance is authored against a specific approved template and does not silently follow it forward."
+    },
+    "template_source_hash": {
+      "type": "string",
+      "description": "The template atom's content_hash at the moment this value was authored. If it no longer matches the template atom's current hash, the template's MEANING moved underneath this instance and the value is stale — the same source_hash discipline every facet owner already follows, applied across the template/instance boundary.",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "disposition_decision": {
+      "type": "string",
+      "description": "Recorded here ONLY when the decision produced an atom — i.e. 'modified'. Decisions that produce no new meaning (retained / marked_not_applicable / deleted) have no atom to ride on and live in the external instance_decisions.json instead. MIRROR of vocab/instance.enum.json disposition_decision ids.",
+      "enum": ["retained", "modified", "marked_not_applicable", "deleted"]
+    },
+    "selected_value": {
+      "type": "string",
+      "description": "For a template slot whose field_type is select_one/select_many, the governed value id chosen from the set behind the template's options_ref. Held as an id, never as the option's prose: the label and definition live once, in the options registry. The gate checks it against that set — this is where 'select one of the six governed values and never invent a seventh' is actually enforced."
+    },
+    "authored_by": {
+      "type": "string",
+      "description": "roles.registry id (role_...) accountable for this value. A ROLE, never a person — no PII in content, on the instance side exactly as on the template side.",
+      "pattern": "^role_[A-Za-z0-9_-]+$"
+    },
+    "proposed_by_agent": {
+      "type": "string",
+      "description": "Identifier of the authoring agent whose proposal a human accepted to produce this value (e.g. 'amanuensis'). Provenance, not authority: the agent writes nothing, and acceptance plus the gates are what make a value canon. Absent when a human authored it unaided."
+    }
+  }
+}

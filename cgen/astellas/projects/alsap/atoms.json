@@ -441,18 +441,22 @@
           "slots": [
             {
               "id": "participant_count",
+              "marker": "[Include # here]",
               "expects": "Number of participants across clinical trials contributing to the safety profile."
             },
             {
               "id": "asset_code",
+              "marker": "[ASPXXXX]",
               "expects": "Asset development code or INN, matching the cover block."
             },
             {
               "id": "prevalent_adverse_events",
+              "marker": "[list of the most prevalent adverse events]",
               "expects": "The most frequently encountered adverse events associated with the asset."
             },
             {
               "id": "serious_adverse_events",
+              "marker": "[list of the most common serious adverse events]",
               "expects": "Those among the prevalent events that were considered serious."
             }
           ]
@@ -462,7 +466,7 @@
       }
     },
     "governance": {
-      "version": 3,
+      "version": 4,
       "status": "draft",
       "regulatory_binding": "regulatory",
       "owner": "team_qseg_safety_data_science"

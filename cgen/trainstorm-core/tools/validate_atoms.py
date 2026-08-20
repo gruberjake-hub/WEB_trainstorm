@@ -7,9 +7,14 @@ into one gate that runs on a project's atom store. Three layers:
   2. DRIFT         — id uniqueness, resolvable refs, content_hash correctness, no embedded localization
   3. VOCAB CONF.   — step_type / roles / records resolve to a GOVERNED member, else must be an
                      explicitly PROPOSED extension (flag, never invent). Ungoverned AND unproposed = hard fail.
+  4. INSTANCE      — for an instance store only (one declaring instantiates_template in its manifest):
+                     every authored value resolves to a real template slot, is legal for that slot's
+                     content_disposition, is pinned to one template version, and is not stale.
 
 Exit policy: HARD failures block at any status. PROPOSED-pending values are allowed while the
 atom is status=draft, but block promotion to in_review/approved until adopted into the repo registries.
+Staleness and incompleteness are SOFT: an instance is drafted incrementally, but it may not be
+promoted while it still owes values or while the template has moved underneath it.
 """
 import json, hashlib, pathlib, sys
 import harness_paths
@@ -22,10 +27,15 @@ def load(p): return json.loads(pathlib.Path(p).read_text())
 P = harness_paths.resolve()
 core_src = harness_paths.announce(P)
 SCHEMAS, VOCAB, REG, PROJ = P["schemas_dir"], P["vocab_dir"], P["registry_dir"], P["project_dir"]
+TPL = P.get("template_dir")          # None unless this project declares instantiates_template
 
 atom_schema = load(SCHEMAS / "atom.schema.json")
 proc_schema = load(SCHEMAS / "procedure.facet.schema.json")
 form_schema = load(SCHEMAS / "form.facet.schema.json")
+# The instance facet is newer than the two source-type facets; a core checkout without it simply
+# runs the gate as before. Same graceful-absence rule the structure.enum union already follows.
+_inst_sp = SCHEMAS / "instance.facet.schema.json"
+inst_schema = load(_inst_sp) if _inst_sp.exists() else None
 roles_reg   = load(REG / "roles.registry.json")
 records_reg = load(REG / "records.registry.json")
 docs_reg    = load(REG / "docs.registry.json")
@@ -36,6 +46,18 @@ _opts = REG / "options.registry.json"
 options_reg = load(_opts) if _opts.exists() else {"options": []}
 
 atoms = load(PROJ / "atoms.json")
+store_by_id = {a["atom_id"]: a for a in atoms if "atom_id" in a}
+manifest = load(PROJ / "manifest.json") if (PROJ / "manifest.json").exists() else {}
+# The pinned template an instance store overlays. Read-only, and read ACROSS a store boundary on
+# purpose: per-project isolation governs what a store may PERSIST, and a persisted instantiates ref
+# points UP into a shared tier (the same direction as role_/rec_/doc_/reg_ ids), never sideways.
+tpl_atoms = load(TPL / "atoms.json") if TPL else []
+tpl_by_id = {a["atom_id"]: a for a in tpl_atoms}
+# Decisions about template text the author is NOT authoring into. These carry no meaning, so they
+# have no atom: external and atom_id-keyed, the same move as reconciliation_log.json / locale packs.
+_dec_p = PROJ / "instance_decisions.json"
+decisions_doc = load(_dec_p) if _dec_p.exists() else {}
+decisions = decisions_doc.get("decisions", [])
 # staging pen is dropped after adoption (repo state) — treat a missing file as "no pending proposals"
 _pp = PROJ / "proposed_registry_extensions.json"
 proposed = load(_pp) if _pp.exists() else {}
@@ -71,12 +93,15 @@ def govset(name, dim, required=False):
 #   procedure.enum -> procedure / procedure_step
 #   structure.enum -> list / list_item        (source-agnostic)
 #   form.enum      -> form / form_section / form_field
+#   instance.enum  -> instance_value           (an instance store holds authored values only)
 gov_kinds   = (govset("procedure.enum.json", "meaning_kind", required=True)
                | govset("structure.enum.json", "meaning_kind")
-               | govset("form.enum.json", "meaning_kind"))
+               | govset("form.enum.json", "meaning_kind")
+               | govset("instance.enum.json", "meaning_kind"))
 gov_steptyp = govset("procedure.enum.json", "step_type", required=True)
 gov_fieldty = govset("form.enum.json", "field_type")
 gov_disp    = govset("form.enum.json", "content_disposition")
+gov_decision = govset("instance.enum.json", "disposition_decision")
 
 gov_roles   = {e["id"] for e in roles_reg["roles"]}     # entries are now {id, label, …}
 gov_records = {e["id"] for e in records_reg["records"]}
@@ -94,6 +119,7 @@ def flag(msg): soft.append(msg)
 av = Draft202012Validator(atom_schema)
 pv = Draft202012Validator(proc_schema)
 fv = Draft202012Validator(form_schema)
+iv = Draft202012Validator(inst_schema) if inst_schema else None
 
 for m in _vocab_shape_errors:
     fail(f"[vocab/shape] {m}")
@@ -113,6 +139,8 @@ def mirror(label, schema, prop, govern):
 mirror("procedure.facet.step_type", proc_schema, "step_type", gov_steptyp)
 mirror("form.facet.field_type", form_schema, "field_type", gov_fieldty)
 mirror("form.facet.content_disposition", form_schema, "content_disposition", gov_disp)
+if inst_schema:
+    mirror("instance.facet.disposition_decision", inst_schema, "disposition_decision", gov_decision)
 
 # ---- 1. SCHEMA ----
 ids = set()
@@ -129,10 +157,23 @@ for a in atoms:
     if form is not None:
         for e in fv.iter_errors(form):
             fail(f"[schema/form] {aid}: {e.message} (at {'/'.join(map(str,e.path))})")
+    inst = b.get("instance")
+    if inst is not None:
+        if iv is None:
+            fail(f"[schema/instance] {aid}: carries bindings.instance but core has no "
+                 f"instance.facet.schema.json to validate it against")
+        else:
+            for e in iv.iter_errors(inst):
+                fail(f"[schema/instance] {aid}: {e.message} (at {'/'.join(map(str,e.path))})")
     # an atom carries EXACTLY ONE source-type facet (procedure | form) — a procedure produces a
     # record and a form is that record's template; merging them into one atom collapses the duality
     if proc is not None and form is not None:
         fail(f"[drift/source-type] {aid}: carries BOTH procedure and form facets (exactly one allowed)")
+    # an instance atom is an authored VALUE, not a template node. Carrying a source-type facet would
+    # make it a rival declaration of the slot it fills — the filled-in-copy failure, one atom at a time.
+    if inst is not None and (proc is not None or form is not None):
+        fail(f"[drift/source-type] {aid}: carries an instance facet AND a source-type facet "
+             f"(an instance atom fills a template slot; it does not redeclare one)")
 
 # ---- 2. DRIFT ----
 for a in atoms:
@@ -242,11 +283,23 @@ for a in atoms:
         # the author's obligation is invisible to any projection. Soft: square brackets have other
         # uses, so this reports rather than blocks.
         import re as _re
-        spans = _re.findall(r"\[[^\[\]]{2,}\]", a["meaning"]["source_text"])
+        src = a["meaning"]["source_text"]
+        spans = _re.findall(r"\[[^\[\]]{2,}\]", src)
         declared = form.get("constraints", {}).get("slots", [])
         if spans and len(spans) != len(declared):
             flag(f"[form/slots] {aid}: {len(spans)} bracketed span(s) in source_text but "
                  f"{len(declared)} declared slot(s)")
+        # A marker that does not appear exactly once is not a stable handle on a span — it is a
+        # positional reference wearing a name, which is the failure constraints.slots exists to
+        # prevent. Hard, because a renderer would otherwise substitute into the wrong blank or none.
+        for _s in declared:
+            _m = _s.get("marker")
+            if _m is None:
+                continue
+            _n = src.count(_m)
+            if _n != 1:
+                fail(f"[form/slots] {aid}: slot '{_s['id']}' marker {_m!r} occurs {_n} time(s) in "
+                     f"source_text (must be exactly 1)")
         if ft in ("select_one", "select_many") and not form.get("options_ref"):
             flag(f"[form/options] {aid}: {ft} with no options_ref — controlled value set unidentified")
     else:
@@ -275,6 +328,198 @@ for r in sorted(pending_records):
 for r in sorted(pending_docs):
     flag(f"[vocab/doc-pending] {r}: PROPOSED extension, not yet governed")
 
+# ---- 4. INSTANCE LAYER -------------------------------------------------------------------
+# Only runs for a store that declares instantiates_template. An authored ALSAP is a SPARSE OVERLAY:
+# controlled standard text is never copied down, so the questions this layer answers are "does every
+# authored value point at a real template slot it is ALLOWED to fill", "is it still pinned to the
+# template it was written against", and "what does this instance still owe".
+_pin = manifest.get("instantiates_template") or {}
+instance_atoms = [a for a in atoms if "instance" in a.get("bindings", {})]
+owed_values, owed_decisions, stale = [], [], []
+
+def _tform(t):  return t.get("bindings", {}).get("form", {})
+def _tdisp(t):  return _tform(t).get("content_disposition")
+def _tslots(t): return {s["id"] for s in _tform(t).get("constraints", {}).get("slots", [])}
+
+# Which decisions each template disposition permits. Lifted from the template's OWN global rules
+# (FORM_RULE_005/006/007) — the same source that produced content_disposition itself, so the matrix
+# is read off the controlled document rather than invented here.
+LEGAL_DECISIONS = {
+    "controlled_standard":     {"retained", "marked_not_applicable"},
+    "example":                 {"retained", "modified", "deleted"},
+    "instructional_transient": {"deleted"},
+    "authorable":              set(),   # an authorable slot is FILLED by an atom, never "decided"
+}
+
+if TPL is None:
+    for a in instance_atoms:
+        fail(f"[instance/store] {a['atom_id']}: carries bindings.instance but this project declares "
+             f"no instantiates_template — the reference cannot be resolved")
+    if decisions:
+        fail(f"[instance/store] instance_decisions.json has {len(decisions)} entrie(s) but this "
+             f"project declares no instantiates_template")
+else:
+    if not instance_atoms and not decisions:
+        flag("[instance/empty] project declares a template pin but holds no authored values "
+             "or decisions yet")
+    seen_keys, decided = {}, {}
+
+    for a in instance_atoms:
+        aid, inst = a["atom_id"], a["bindings"]["instance"]
+        if a["meaning"].get("kind") != "instance_value":
+            fail(f"[drift/instance] {aid}: carries an instance facet but meaning.kind is "
+                 f"'{a['meaning'].get('kind')}' (expected 'instance_value')")
+        t = tpl_by_id.get(inst["instantiates"])
+        if t is None:
+            fail(f"[instance/ref] {aid}: instantiates -> unknown template atom "
+                 f"{inst['instantiates']} (template store: {TPL})")
+            continue
+
+        # ONE atom per (instantiates, fills_slot). The compound key is the whole point of naming
+        # slots; two atoms on one key means two rival values for one blank.
+        key = (inst["instantiates"], inst.get("fills_slot"))
+        if key in seen_keys:
+            fail(f"[instance/duplicate] {aid}: second value for "
+                 f"{key[0]}{'#' + key[1] if key[1] else ''} (already {seen_keys[key]})")
+        seen_keys[key] = aid
+
+        # The whole store is authored against ONE approved template version. A mixed pin means the
+        # projection would resolve some slots against one revision and some against another.
+        for fld, label in (("template_document", "document"), ("template_version", "version")):
+            if _pin.get(label) and inst.get(fld) != _pin[label]:
+                fail(f"[instance/pin] {aid}: {fld}='{inst.get(fld)}' but the manifest pins "
+                     f"{label}='{_pin[label]}' (one instance store, one template version)")
+        _govcheck(aid, "doc", inst.get("template_document", ""), gov_docs, pending_docs, prop_docs)
+        if inst.get("authored_by"):
+            _govcheck(aid, "role", inst["authored_by"], gov_roles, pending_roles, prop_roles)
+
+        # Staleness: the template atom's MEANING moved after this value was authored. Soft, because
+        # an instance mid-draft is allowed to lag; it must not be promoted while it does.
+        if inst["template_source_hash"] != t.get("content_hash"):
+            stale.append(aid)
+            flag(f"[instance/stale] {aid}: template atom {t['atom_id']} has changed since this "
+                 f"value was authored (pinned {inst['template_source_hash'][:14]}…, "
+                 f"now {str(t.get('content_hash'))[:14]}…)")
+
+        d, slot_id = _tdisp(t), inst.get("fills_slot")
+        if slot_id is not None and slot_id not in _tslots(t):
+            fail(f"[instance/slot] {aid}: fills_slot '{slot_id}' is not a declared slot on "
+                 f"{t['atom_id']} (declared: {sorted(_tslots(t)) or 'none'})")
+
+        # The line the whole overlay rests on. An instance may not overwrite retained standard text
+        # — that is a document-control act, not an authoring one. The ONE exception is a declared
+        # named slot: the sentence stays controlled, the [bracketed] span is authorable.
+        if d == "controlled_standard" and slot_id is None:
+            fail(f"[instance/controlled] {aid}: authors over controlled_standard template atom "
+                 f"{t['atom_id']} without filling a declared slot (retained text is resolved from "
+                 f"the template, never copied into an instance)")
+        if d == "instructional_transient":
+            fail(f"[instance/controlled] {aid}: authors into instructional_transient template atom "
+                 f"{t['atom_id']} (guidance is deleted before final, never authored into)")
+
+        dd = inst.get("disposition_decision")
+        if d == "example" and dd != "modified":
+            fail(f"[instance/decision] {aid}: an atom over an 'example' template slot means the "
+                 f"author rewrote it — expected disposition_decision='modified', got {dd!r}")
+        if d == "authorable" and dd is not None:
+            fail(f"[instance/decision] {aid}: authorable slot carries disposition_decision "
+                 f"{dd!r} (an authorable slot is filled, not decided)")
+
+        # "Select one of the six governed values and never invent a seventh", enforced.
+        ref, sv = _tform(t).get("options_ref"), inst.get("selected_value")
+        if ref:
+            if sv is None:
+                fail(f"[instance/option] {aid}: template slot takes a controlled value from {ref} "
+                     f"but no selected_value is recorded")
+            else:
+                entry = next((e for e in options_reg["options"] if e["id"] == ref), None)
+                allowed = {v["id"] for v in (entry or {}).get("values", [])}
+                if entry is None:
+                    fail(f"[instance/option] {aid}: options_ref {ref} is not in the governed "
+                         f"options registry, so selected_value cannot be checked")
+                elif sv not in allowed:
+                    fail(f"[instance/option] {aid}: selected_value '{sv}' is not in {ref} "
+                         f"(governed: {sorted(allowed)})")
+                elif a["meaning"]["source_text"] != sv:
+                    # For a controlled value set the authored meaning IS the choice, so the atom's
+                    # payload is the option id and nothing else. Prose here would be a second copy
+                    # of the option's label, which lives once in the options registry.
+                    fail(f"[instance/option] {aid}: meaning.source_text does not match "
+                         f"selected_value '{sv}' (a chosen option's meaning is its id; the label "
+                         f"lives once, in {ref})")
+        elif sv is not None:
+            fail(f"[instance/option] {aid}: selected_value '{sv}' but template slot "
+                 f"{t['atom_id']} has no options_ref (no value set to choose from)")
+
+    # ---- decisions sidecar: template text the author did NOT author into ----
+    for i, e in enumerate(decisions):
+        where = f"instance_decisions[{i}]"
+        tid = e.get("instantiates")
+        t = tpl_by_id.get(tid)
+        if t is None:
+            fail(f"[instance/ref] {where}: instantiates -> unknown template atom {tid}")
+            continue
+        if tid in decided:
+            fail(f"[instance/duplicate] {where}: second decision for {tid} "
+                 f"(already {decided[tid]!r})")
+        decided[tid] = e.get("decision")
+        dec, d = e.get("decision"), _tdisp(t)
+        if dec not in gov_decision:
+            fail(f"[instance/decision] {where}: '{dec}' is not a governed disposition_decision")
+        elif d is None:
+            fail(f"[instance/decision] {where}: template atom {tid} carries no content_disposition "
+                 f"— there is nothing to decide")
+        elif dec not in LEGAL_DECISIONS.get(d, set()):
+            fail(f"[instance/decision] {where}: '{dec}' is not legal for a '{d}' slot "
+                 f"(legal: {sorted(LEGAL_DECISIONS.get(d, set())) or 'none — it is filled by an atom'})")
+        # 'modified' is the one decision that produces new meaning, so it is the one decision that
+        # must name an atom. Every other value is text-free and must NOT.
+        auth = e.get("authored_atom")
+        if dec == "modified":
+            if auth is None:
+                fail(f"[instance/decision] {where}: 'modified' but no authored_atom carries the "
+                     f"modified text")
+            elif auth not in ids:
+                fail(f"[instance/ref] {where}: authored_atom -> unknown atom {auth}")
+            elif store_by_id[auth].get("bindings", {}).get("instance", {}).get("instantiates") != tid:
+                fail(f"[instance/decision] {where}: authored_atom {auth} does not instantiate {tid}")
+        elif auth is not None:
+            fail(f"[instance/decision] {where}: '{dec}' names authored_atom {auth}, but only "
+                 f"'modified' produces new meaning")
+        if e.get("decided_by"):
+            _govcheck(where, "role", e["decided_by"], gov_roles, pending_roles, prop_roles)
+        if e.get("template_source_hash") and e["template_source_hash"] != t.get("content_hash"):
+            stale.append(where)
+            flag(f"[instance/stale] {where}: template atom {tid} has changed since this decision "
+                 f"was recorded")
+
+    # An atom and a non-'modified' decision on the same slot are contradictory instructions to the
+    # projection: one says render this text, the other says the template's text stands (or goes).
+    for (tid, _slot), aid in seen_keys.items():
+        if tid in decided and decided[tid] != "modified":
+            fail(f"[instance/conflict] {aid} authors {tid} but instance_decisions records "
+                 f"'{decided[tid]}' for it")
+
+    # ---- completeness: what this instance still owes ----
+    # Soft by design: an instance is drafted incrementally. But it may not be PROMOTED while any
+    # template slot is unanswered — that is the difference between a draft and a document.
+    for t in tpl_atoms:
+        tid, d = t["atom_id"], _tdisp(t)
+        if d is None:
+            continue
+        if d == "authorable":
+            if (tid, None) not in seen_keys:
+                owed_values.append(f"{tid} (authorable)")
+        elif d == "controlled_standard" and _tslots(t):
+            for s in sorted(_tslots(t)):
+                if (tid, s) not in seen_keys:
+                    owed_values.append(f"{tid}#{s}")
+        elif tid not in decided:
+            owed_decisions.append(f"{tid} ({d})")
+    if owed_values or owed_decisions:
+        flag(f"[instance/incomplete] {len(owed_values)} value(s) and {len(owed_decisions)} "
+             f"decision(s) still owed against the pinned template")
+
 # ---- report ----
 statuses = {a["governance"]["status"] for a in atoms}
 print("="*68)
@@ -283,6 +528,10 @@ _project = load(_mf).get("project", PROJ.name) if _mf.exists() else PROJ.name
 _facets = sorted({k for a in atoms for k in a.get("bindings", {})})
 print(f"VALIDATION GATE — project {_project} — {len(atoms)} atoms")
 print(f"facets present: {', '.join(_facets) or '(none)'}")
+if TPL is not None:
+    print(f"instance of  : {_pin.get('document','?')} v{_pin.get('version','?')} "
+          f"— {len(tpl_atoms)} template atoms, {len(instance_atoms)} authored value(s), "
+          f"{len(decisions)} decision(s)")
 print(f"schemas: {core_src}")
 print("="*68)
 print(f"SCHEMA + DRIFT hard failures : {len(hard)}")
@@ -298,6 +547,13 @@ print("-"*68)
 print("SOFT FLAGS (allowed at draft; block promotion to in_review/approved until adopted):")
 for m in soft: print("  !", m)
 print("-"*68)
+# The owed list is the instance's to-do, and the answer to "what does this ALSAP still need?".
+# Printed in full rather than summarised: a silently truncated list reads as "nothing left".
+if TPL is not None and (owed_values or owed_decisions):
+    print(f"STILL OWED — {len(owed_values)} value(s), {len(owed_decisions)} decision(s):")
+    for m in owed_values:    print("  value    ", m)
+    for m in owed_decisions: print("  decision ", m)
+    print("-"*68)
 gate_ok = (len(hard) == 0)
 promote_ok = gate_ok and (len(soft) == 0)
 print(f"GATE @ draft : {'PASS' if gate_ok else 'FAIL'}")

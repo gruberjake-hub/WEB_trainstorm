@@ -18,14 +18,28 @@ Resolution priority for each anchor: explicit flag > env var > auto-detect > sta
   --core     / TRAINSTORM_CORE
   --project  / TRAINSTORM_PROJECT
   --registry / TRAINSTORM_REGISTRY
+  --template / TRAINSTORM_TEMPLATE   (optional 4th anchor; None for a template store)
+
+The template anchor exists because an INSTANCE store is a sparse overlay over a template that lives
+in a different store, and bindings.instance.instantiates has to resolve somewhere. It is declared
+once, in the instance project's manifest.json:
+
+    "instantiates_template": {"store": "../alsap", "document": "doc_form_ast_34037", "version": "1.0"}
+
+`store` is relative to the instance project dir. Keeping it in the manifest rather than hardcoding a
+path is what makes the still-pending promotion of the ALSAP template UP into a client-shared content
+tier a one-line change instead of a refactor. A project with no instantiates_template resolves
+template_dir to None and every instance check is simply skipped — the four existing tools and both
+existing stores are unaffected.
 """
-import os, argparse, pathlib
+import os, argparse, json, pathlib
 
 def resolve():
     ap = argparse.ArgumentParser(add_help=False)
     ap.add_argument("--core", default=os.environ.get("TRAINSTORM_CORE"))
     ap.add_argument("--project", default=os.environ.get("TRAINSTORM_PROJECT"))
     ap.add_argument("--registry", default=os.environ.get("TRAINSTORM_REGISTRY"))
+    ap.add_argument("--template", default=os.environ.get("TRAINSTORM_TEMPLATE"))
     args, _ = ap.parse_known_args()
 
     tools_dir = pathlib.Path(__file__).resolve().parent
@@ -70,9 +84,24 @@ def resolve():
     else:
         raise SystemExit("Cannot locate the client registry. Pass --registry <path>.")
 
+    # ---- template store (optional; only instance stores have one) ----
+    if args.template:
+        template = pathlib.Path(args.template).resolve()
+    else:
+        mf = project / "manifest.json"
+        declared = None
+        if mf.exists():
+            try:
+                declared = (json.loads(mf.read_text()).get("instantiates_template") or {}).get("store")
+            except (ValueError, AttributeError):
+                declared = None
+        template = (project / declared).resolve() if declared else None
+    if template is not None and not (template / "atoms.json").exists():
+        raise SystemExit(f"Template store declared but has no atoms.json: {template}")
+
     return {
         "schemas_dir": schemas_dir, "vocab_dir": vocab_dir,
-        "registry_dir": registry, "project_dir": project,
+        "registry_dir": registry, "project_dir": project, "template_dir": template,
         # new-to-core vocab (e.g. structure.enum.json) not yet in a real core checkout;
         # only present standalone. In the repo, such files live in vocab_dir once committed.
         "core_adds_dir": base / "_core_adds",
@@ -85,4 +114,5 @@ def announce(P):
         print("WARNING:", w)
     src = "MIRROR (non-canonical)" if P["core_is_mirror"] else "canonical"
     return (f"core[{src}]={P['schemas_dir'].parent if not P['core_is_mirror'] else P['schemas_dir']} "
-            f"registry={P['registry_dir']} project={P['project_dir']}")
+            f"registry={P['registry_dir']} project={P['project_dir']}"
+            + (f" template={P['template_dir']}" if P.get("template_dir") else ""))

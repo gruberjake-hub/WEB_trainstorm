@@ -68,9 +68,13 @@ def m_form_kind_without_facet(a):
     del by_id(a, "f_agg_data_table")["bindings"]["form"]
 def m_slot_missing_expects(a):
     by_id(a, "f_version_date")["bindings"]["form"]["constraints"]["slots"] = [{"id": "when"}]
+def m_slot_marker_absent(a):
+    # form.facet v0.3: a marker that is not in the text is a positional reference wearing a name.
+    by_id(a, "f_version_date")["bindings"]["form"]["constraints"]["slots"] = [
+        {"id": "when", "expects": "the date", "marker": "[nowhere in this sentence]"}]
 def m_slot_bad_id(a):
     by_id(a, "f_version_date")["bindings"]["form"]["constraints"]["slots"] = [
-        {"id": "Version Date", "expects": "the date"}]
+        {"id": "Version Date", "expects": "the date", "marker": "[x]"}]
 
 CASES = [
     ("ungoverned field_type (smashed composite)", m_ungoverned_field_type, "[schema/form]"),
@@ -83,6 +87,7 @@ CASES = [
     ("form kind with no form binding",            m_form_kind_without_facet, "[drift/form]"),
     ("a named slot with no `expects`",            m_slot_missing_expects, "[schema/form]"),
     ("a slot id that is not a stable name",       m_slot_bad_id, "[schema/form]"),
+    ("a slot marker absent from source_text",     m_slot_marker_absent, "[form/slots]"),
 ]
 
 # soft-flag cases: the gate reports rather than blocks, but promotion must still be held

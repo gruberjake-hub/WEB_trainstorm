@@ -131,14 +131,17 @@ field(f"{SS}_f_narrative",
       "prevalent adverse events] of which the most common that were considered serious include "
       "[list of the most common serious adverse events].",
       SS, 1, "text_long", "controlled_standard",
+      # form.facet v0.3: each slot names the exact bracketed literal it fills. Naming the slots
+      # (v0.2) removed positional references from the INSTANCE key; the marker removes them from
+      # RENDERING too, which is where they had quietly survived.
       constraints={"slots": [
-          {"id": "participant_count",
+          {"id": "participant_count", "marker": "[Include # here]",
            "expects": "Number of participants across clinical trials contributing to the safety profile."},
-          {"id": "asset_code",
+          {"id": "asset_code", "marker": "[ASPXXXX]",
            "expects": "Asset development code or INN, matching the cover block."},
-          {"id": "prevalent_adverse_events",
+          {"id": "prevalent_adverse_events", "marker": "[list of the most prevalent adverse events]",
            "expects": "The most frequently encountered adverse events associated with the asset."},
-          {"id": "serious_adverse_events",
+          {"id": "serious_adverse_events", "marker": "[list of the most common serious adverse events]",
            "expects": "Those among the prevalent events that were considered serious."}]})
 
 field(f"{SS}_f_br_guidance",

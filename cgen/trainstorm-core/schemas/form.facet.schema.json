@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://trainstorm.ai/schemas/form.facet.schema.json",
-  "facet_version": "form.v0.2",
+  "facet_version": "form.v0.3",
   "title": "Form Facet",
-  "description": "Accreted binding facet for form/template source, sibling to the procedure facet. Single-writer: the headwater authoring agent (form-specialized). Models a form TEMPLATE (a blank instrument) — never a submission. A filled-in form is an instance with real data (potential PII); it is a record/learner-model object under separate governance and is NOT modeled here. The action/label text lives in meaning.source_text; structure (sections, order) lives in the object facet; provenance lives in governance. This facet holds only what is irreducibly about capturing structured input. field_type and content_disposition are MIRRORS of vocab/form.enum.json (vocab wins; a conformance check asserts schema enum == vocab ids). performed_by reuses roles.registry and captures_record reuses records.registry — the SAME registries the procedure facet uses; no form-specific copy. v0.2 adds constraints.slots: NAMED fill-in points inside otherwise-retained text, so an instance overlay can key on (atom_id, slot_id) instead of a position in a string.",
+  "description": "Accreted binding facet for form/template source, sibling to the procedure facet. Single-writer: the headwater authoring agent (form-specialized). Models a form TEMPLATE (a blank instrument) — never a submission. A filled-in form is an instance with real data (potential PII); it is a record/learner-model object under separate governance and is NOT modeled here. The action/label text lives in meaning.source_text; structure (sections, order) lives in the object facet; provenance lives in governance. This facet holds only what is irreducibly about capturing structured input. field_type and content_disposition are MIRRORS of vocab/form.enum.json (vocab wins; a conformance check asserts schema enum == vocab ids). performed_by reuses roles.registry and captures_record reuses records.registry — the SAME registries the procedure facet uses; no form-specific copy. v0.2 adds constraints.slots: NAMED fill-in points inside otherwise-retained text, so an instance overlay can key on (atom_id, slot_id) instead of a position in a string. v0.3 adds slots[].marker — the exact bracketed literal the slot stands for — because naming the slots was necessary but not sufficient: without a marker a renderer must still match spans to ids BY POSITION, which is the very thing v0.2 set out to eliminate.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -68,13 +68,14 @@
         },
         "slots": {
           "type": "array",
-          "description": "Named fill-in points inside this field's source_text — the [bracketed] spans a template leaves for the author inside text that is otherwise retained unchanged. A field like this has genuinely MIXED disposition: the sentence is controlled_standard, the slots are authorable. The facet carries one disposition per field, so the slots are declared here instead. NAMED, never positional: an instance overlay keys on (atom_id, slot_id), and a positional reference ('slot 2') would shift the moment anyone edits the sentence — exactly what stable ids exist to prevent. No field_type here on purpose: repeating that closed list would spawn a drifting second copy.",
+          "description": "Named fill-in points inside this field's source_text — the [bracketed] spans a template leaves for the author inside text that is otherwise retained unchanged. A field like this has genuinely MIXED disposition: the sentence is controlled_standard, the slots are authorable. The facet carries one disposition per field, so the slots are declared here instead. NAMED, never positional: an instance overlay keys on (atom_id, slot_id), and a positional reference ('slot 2') would shift the moment anyone edits the sentence — exactly what stable ids exist to prevent. Each slot names its own marker — the literal bracketed span it fills — so the mapping survives an edit to the surrounding sentence. No field_type here on purpose: repeating that closed list would spawn a drifting second copy.",
           "items": {
             "type": "object",
             "additionalProperties": false,
             "required": [
               "id",
-              "expects"
+              "expects",
+              "marker"
             ],
             "properties": {
               "id": {
@@ -90,6 +91,11 @@
                 "type": "string",
                 "pattern": "^reg_[A-Za-z0-9_-]+$",
                 "description": "Controlled value set, when the slot takes one. A pattern, not an enum — no closed list is copied here."
+              },
+              "marker": {
+                "type": "string",
+                "description": "The exact [bracketed] literal in the field's source_text that this slot stands for, e.g. '[ASPXXXX]'. Substitution is then a literal match on the marker, never an index into a list of spans — so re-ordering or rewording the sentence around a marker cannot silently re-point a filled value at the wrong blank. Must occur EXACTLY ONCE in source_text; the gate checks it. If the marker text itself is edited, meaning changed, content_hash moves, and every instance value on this field is correctly reported stale.",
+                "pattern": "^\\[.+\\]$"
               }
             }
           }

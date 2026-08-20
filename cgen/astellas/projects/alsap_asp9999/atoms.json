@@ -1,0 +1,249 @@
+[
+  {
+    "atom_id": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+    "content_hash": "sha256:be0af1b9d04b8820307fdc8c5fc2e7243fb07bad68ed2b9165a16705c4becb6a",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "conditional_favorable",
+      "kind": "instance_value"
+    },
+    "bindings": {
+      "instance": {
+        "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+        "template_document": "doc_form_ast_34037",
+        "template_version": "1.0",
+        "template_source_hash": "sha256:ca909c20c93c195a2ac708050702b25c008cac34ccf495778807b3feb400aa4c",
+        "selected_value": "conditional_favorable",
+        "authored_by": "role_smt",
+        "proposed_by_agent": "amanuensis"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "role_smt"
+    }
+  },
+  {
+    "atom_id": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+    "content_hash": "sha256:1687a021cb2f3194994b0f98cffd3b6698a84e8e9bdc38506c593296f3b710e1",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "The benefit-risk profile of ASP9999 is favorable provided the additional hepatic monitoring described in the risk management plan is in place. Across 412 participants the observed transaminase elevations were reversible and detected by scheduled monitoring in every case; the SMT judges the residual risk acceptable for the proposed indication on that condition, and will re-assess when the Phase 3 dataset matures.",
+      "kind": "instance_value"
+    },
+    "bindings": {
+      "instance": {
+        "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+        "template_document": "doc_form_ast_34037",
+        "template_version": "1.0",
+        "template_source_hash": "sha256:08661ef80dc02ee438cf201e56db933475734745ab9f7108307fcfcc3d7b68d6",
+        "authored_by": "role_alsap_lead",
+        "proposed_by_agent": "amanuensis"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "role_alsap_lead"
+    }
+  },
+  {
+    "atom_id": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_narrative__participant_count",
+    "content_hash": "sha256:bf9dacf967fd97c70e9da7187f3d4ba7d719e42685968415892dfb2190f861f6",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "412",
+      "kind": "instance_value"
+    },
+    "bindings": {
+      "instance": {
+        "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative",
+        "template_document": "doc_form_ast_34037",
+        "template_version": "1.0",
+        "template_source_hash": "sha256:8aa65df142449e19ae971d5cd111460685a0b789c283f70c2a7371e7ebb817f2",
+        "fills_slot": "participant_count",
+        "authored_by": "role_alsap_lead"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "role_alsap_lead"
+    }
+  },
+  {
+    "atom_id": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_narrative__asset_code",
+    "content_hash": "sha256:adc684086f026560484eb62895478f912b76e429fdbfeed1a38a7b497fe43cbf",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "ASP9999",
+      "kind": "instance_value"
+    },
+    "bindings": {
+      "instance": {
+        "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative",
+        "template_document": "doc_form_ast_34037",
+        "template_version": "1.0",
+        "template_source_hash": "sha256:8aa65df142449e19ae971d5cd111460685a0b789c283f70c2a7371e7ebb817f2",
+        "fills_slot": "asset_code",
+        "authored_by": "role_alsap_lead"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "role_alsap_lead"
+    }
+  },
+  {
+    "atom_id": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_narrative__prevalent_adverse_events",
+    "content_hash": "sha256:e7473596618e3ebe2161ca51ba3ff64e79340ff982922ba6c135483dc6297649",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "nausea, fatigue, headache and transaminase elevation",
+      "kind": "instance_value"
+    },
+    "bindings": {
+      "instance": {
+        "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative",
+        "template_document": "doc_form_ast_34037",
+        "template_version": "1.0",
+        "template_source_hash": "sha256:8aa65df142449e19ae971d5cd111460685a0b789c283f70c2a7371e7ebb817f2",
+        "fills_slot": "prevalent_adverse_events",
+        "authored_by": "role_alsap_lead"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "role_alsap_lead"
+    }
+  },
+  {
+    "atom_id": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_narrative__serious_adverse_events",
+    "content_hash": "sha256:d38064632018ba9dfaec1ced0cfc7740b04c2cc4cb98e9329a4894b17a5f6a3b",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "transaminase elevation meeting Hy's Law criteria",
+      "kind": "instance_value"
+    },
+    "bindings": {
+      "instance": {
+        "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative",
+        "template_document": "doc_form_ast_34037",
+        "template_version": "1.0",
+        "template_source_hash": "sha256:8aa65df142449e19ae971d5cd111460685a0b789c283f70c2a7371e7ebb817f2",
+        "fills_slot": "serious_adverse_events",
+        "authored_by": "role_alsap_lead"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "role_alsap_lead"
+    }
+  },
+  {
+    "atom_id": "atom_alsap_asp9999__form_ast34037_sec_cover_f_asset_code",
+    "content_hash": "sha256:adc684086f026560484eb62895478f912b76e429fdbfeed1a38a7b497fe43cbf",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "ASP9999",
+      "kind": "instance_value"
+    },
+    "bindings": {
+      "instance": {
+        "instantiates": "atom_form_ast34037_sec_cover_f_asset_code",
+        "template_document": "doc_form_ast_34037",
+        "template_version": "1.0",
+        "template_source_hash": "sha256:77b0e0441e63562cf14c6ca99f0c5cf91e6ffc2b67cf7423c089eed2181c1b54",
+        "authored_by": "role_alsap_lead"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "role_alsap_lead"
+    }
+  },
+  {
+    "atom_id": "atom_alsap_asp9999__form_ast34037_sec_cover_f_version_date",
+    "content_hash": "sha256:3026b62ab83260554b2a5e1d407e5f2365c230a0045a18e5f07bd41cf05c4593",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "20-AUG-2026",
+      "kind": "instance_value"
+    },
+    "bindings": {
+      "instance": {
+        "instantiates": "atom_form_ast34037_sec_cover_f_version_date",
+        "template_document": "doc_form_ast_34037",
+        "template_version": "1.0",
+        "template_source_hash": "sha256:d05b14eb5fe8f0026631cdbaa811fb8ee10a49fd01392aa761f774f8ac77b6bf",
+        "authored_by": "role_alsap_lead"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "role_alsap_lead"
+    }
+  },
+  {
+    "atom_id": "atom_alsap_asp9999__form_ast34037_sec_cover_f_version_number",
+    "content_hash": "sha256:c0f11aabcc59ea8a841509cab4d6de880a2b2c570c0fb96ec34bcaf8b8dc2b3a",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "1.0",
+      "kind": "instance_value"
+    },
+    "bindings": {
+      "instance": {
+        "instantiates": "atom_form_ast34037_sec_cover_f_version_number",
+        "template_document": "doc_form_ast_34037",
+        "template_version": "1.0",
+        "template_source_hash": "sha256:aed2879efe4166da38a5ffd5414f80c2960a70e5a47b48c35ff5acbb29cc0aed",
+        "authored_by": "role_alsap_lead"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "role_alsap_lead"
+    }
+  },
+  {
+    "atom_id": "atom_alsap_asp9999__form_ast34037_sec_cover_f_author",
+    "content_hash": "sha256:574e6653621e705e4eedc26c89cfe63a3de67e995ce19d54ce491272da789832",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "role_alsap_lead",
+      "kind": "instance_value"
+    },
+    "bindings": {
+      "instance": {
+        "instantiates": "atom_form_ast34037_sec_cover_f_author",
+        "template_document": "doc_form_ast_34037",
+        "template_version": "1.0",
+        "template_source_hash": "sha256:a8fad82e89212c127eedfd75000926af544420c558d5bd839063514d1ea19daf",
+        "authored_by": "role_alsap_lead"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "role_alsap_lead"
+    }
+  }
+]

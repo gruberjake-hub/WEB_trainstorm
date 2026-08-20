@@ -1,0 +1,59 @@
+{
+  "vocabulary_version": "instance.v0.1",
+  "status": "draft",
+  "owner": "content_architecture",
+  "description": "Governed closed vocabularies for the instance facet: the meaning.kind for an authored instance atom, and the disposition_decision an author records against a template atom they are NOT authoring into. An authored ALSAP is a SPARSE OVERLAY over a pinned template, never a filled-in copy: controlled standard text stays in the template and resolves at render time, so the only things an instance store holds are (a) atoms carrying genuinely NEW meaning and (b) decisions about template text that carry no meaning at all. Same governance pattern as procedure.enum.json / form.enum.json / structure.enum.json.",
+  "governance": {
+    "closed_list": true,
+    "rule": "Instance facets may only use ids defined here. New values require a version bump and an entry; the validator rejects anything else. disposition_decision in instance.facet.schema.json is a MIRROR of these ids — a conformance check asserts (schema enum == vocab ids) so there is no drifting second copy.",
+    "mirrors": [
+      "instance.facet.schema.json#/properties/disposition_decision"
+    ],
+    "reuses": [
+      "vocab/form.enum.json (content_disposition) — the template-side value this decision answers to; NOT duplicated here",
+      "registry/*.registry.json — instance atoms reference the same governed roles/records/docs/options as the template"
+    ],
+    "shape": "Governed values nest under dimensions.<name>.values[].id — the canonical vocab shape shared with procedure.enum.json, structure.enum.json and form.enum.json."
+  },
+  "dimensions": {
+    "meaning_kind": {
+      "description": "meaning.kind for atoms that live in an INSTANCE store. Exactly one kind: an instance store holds authored values and nothing else. Structure is not re-declared per instance — it is the template's, resolved at render time through instantiates.",
+      "field": "atom.meaning.kind",
+      "closed_list": true,
+      "values": [
+        {
+          "id": "instance_value",
+          "label": "Instance value",
+          "definition": "Asset-specific authored content filling one template slot: either a whole authorable field, or one NAMED slot inside a field of otherwise-retained standard text. Carries new meaning, so it is a real atom with its own content_hash, version and approval lifecycle. One atom per (instantiates, fills_slot)."
+        }
+      ]
+    },
+    "disposition_decision": {
+      "description": "What the author decided to do with a template atom they are NOT authoring into. Lifted from the FORM template's own global rules — FORM_RULE_005 (controlled standard: retain, or keep the section and enter 'Not Applicable'), FORM_RULE_006 (example: use as-is, modify, or delete), FORM_RULE_007 (instructional: delete once complete). Which decisions are LEGAL depends on the template atom's content_disposition; the gate enforces that matrix. A decision that produces no new meaning has no atom — it is recorded in the external, atom_id-keyed instance_decisions.json, the same reference-don't-embed move as reconciliation_log.json and the locale packs.",
+      "field": "instance_decisions.json[].decision (and bindings.instance.disposition_decision when the decision produced an atom)",
+      "closed_list": true,
+      "values": [
+        {
+          "id": "retained",
+          "label": "Retained as-is",
+          "definition": "The template's text stands unchanged in this instance. The default for controlled_standard (FORM_RULE_005) and the 'use as-is' arm of FORM_RULE_006. Produces no atom: the text resolves from the pinned template at render time."
+        },
+        {
+          "id": "modified",
+          "label": "Modified",
+          "definition": "The author rewrote the template's text for this asset. Legal only where FORM_RULE_006 permits it (content_disposition = example). Because the result carries NEW meaning, it MUST be carried by an instance atom; the decision entry names that atom."
+        },
+        {
+          "id": "marked_not_applicable",
+          "label": "Marked Not Applicable",
+          "definition": "FORM_RULE_005's explicit escape: the section is kept and 'Not Applicable' is entered rather than the section being removed. A governed constant, not authored meaning, so it produces no atom."
+        },
+        {
+          "id": "deleted",
+          "label": "Deleted before final",
+          "definition": "The text is absent from this instance. Mandatory for instructional_transient (FORM_RULE_007 — guidance must be deleted once the section is complete) and permitted for example (FORM_RULE_006). Produces no atom."
+        }
+      ]
+    }
+  }
+}

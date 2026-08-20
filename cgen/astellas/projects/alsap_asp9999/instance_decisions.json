@@ -1,0 +1,134 @@
+{
+  "instance": "alsap_asp9999",
+  "template_document": "doc_form_ast_34037",
+  "template_version": "1.0",
+  "_note": "Decisions recorded against template atoms this instance does NOT author into. External and atom_id-keyed because they carry no meaning, and only meaning embeds in an atom. Governed by vocab/instance.enum.json disposition_decision.",
+  "decisions": [
+    {
+      "instantiates": "atom_form_ast34037_sec_approval_f_approved_by_1",
+      "decision": "retained",
+      "template_source_hash": "sha256:29a405374a227886537ef447bddaf91d8cc2ffd038b0e19b1d5e64e9332304ef",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_approval_f_approved_by_2",
+      "decision": "retained",
+      "template_source_hash": "sha256:29a405374a227886537ef447bddaf91d8cc2ffd038b0e19b1d5e64e9332304ef",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_approval_f_prepared_by",
+      "decision": "retained",
+      "template_source_hash": "sha256:d80203d8a977952e37cb705deaa73f6f45e81dd6ef0efd452cdd837b0989ec1c",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_instructions",
+      "decision": "deleted",
+      "template_source_hash": "sha256:f32f051b2c3c37b49bdc831bba2b1d08a69434289f1b08f0413152da2fa63a99",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_guidance",
+      "decision": "deleted",
+      "template_source_hash": "sha256:60d4f41fc0e0b4d03023bdd65fc578eb8b0575b2469a7c34e6be88709ea64c01",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_guidance",
+      "decision": "deleted",
+      "template_source_hash": "sha256:65e70f8ffcbdf9d2b13364c0c3d0f6a73efdc67bb79035c05a9b92a702252ba8",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing",
+      "decision": "deleted",
+      "template_source_hash": "sha256:2a716bdd065aae5be64db7b7bd3d314c4fd7663efb89d07528cb2a8cef75b919",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_conditional_favorable_0",
+      "decision": "deleted",
+      "template_source_hash": "sha256:ff679232c7d2ade60e9117d5577b1685ba1af3df1341558f38dd59d553c254a2",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_conditional_favorable_1",
+      "decision": "deleted",
+      "template_source_hash": "sha256:e65e8c3aa4394c9f2ba88306dd24d262cee75af5c42d0b571f8319ef185a9cae",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_contextual_0",
+      "decision": "deleted",
+      "template_source_hash": "sha256:627ae0a4d75b12e98110744d3607eb07659ec4b96552e3e15e1154588d5ccec6",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_contextual_1",
+      "decision": "deleted",
+      "template_source_hash": "sha256:f1badbea65c4ed321890d1ce0b2e5f23e8e1ad6937ab468682d892dbfc6006ca",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_favorable_0",
+      "decision": "deleted",
+      "template_source_hash": "sha256:699bf6c8a253aa9805a595632c2d787b917c7dfff60a5851888e18f35078d1f2",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_favorable_1",
+      "decision": "deleted",
+      "template_source_hash": "sha256:7dc4cdf382cdfea414e0eff77db3d61f64eb29c8b7b27d204d2765e130f2a8cf",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_uncertain_inconclusive_0",
+      "decision": "deleted",
+      "template_source_hash": "sha256:5022c7658647c7cf0c8f36701456412e964f673b47319d1dc94a75b91bd6b247",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_uncertain_inconclusive_1",
+      "decision": "deleted",
+      "template_source_hash": "sha256:c806ac5113f869160cc94a16889da6d003587941d2489f63d08e006bc2f8d19d",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_unfavorable_0",
+      "decision": "deleted",
+      "template_source_hash": "sha256:e5d52793c8952b819861326bacb77a427b5f1fdd60666685b6ac8ffc16cb6f73",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_purpose_sec_safety_profile_sec_br_phrasing_unfavorable_1",
+      "decision": "deleted",
+      "template_source_hash": "sha256:36f22fa0d385f301b4019cc0eef87c97cacb7a14792ec2cd4b4f161564b94dce",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    },
+    {
+      "instantiates": "atom_form_ast34037_sec_version_history_f_history_table",
+      "decision": "retained",
+      "template_source_hash": "sha256:970f9c58ba205b7830bf49f8ba13926437a04c101fe341d505a3336c06e67a1e",
+      "decided_by": "role_alsap_lead",
+      "decided_on": "2026-08-20"
+    }
+  ]
+}
