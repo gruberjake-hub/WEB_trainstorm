@@ -1,6 +1,6 @@
 {
   "store": "ontology/objectives",
-  "version": 1,
+  "version": 2,
   "status": "seeded",
   "closed_list": true,
   "owner": "L&D / Instructional Design",
@@ -10,14 +10,19 @@
       "requires": [],
       "framework": "CASE",
       "status": "example",
-      "derived_from": "AST009 reference course; the prerequisite named (but not defined) by atom-spec §4's example"
+      "derived_from": "AST009 reference course; the prerequisite named (but not defined) by atom-spec §4's example",
+      "serves": ["goal_ast009_psi_reported_on_time"],
+      "bloom": "understand"
     },
     "obj_recognize_psi": {
       "label": "Recognize PSI",
       "requires": ["obj_define_psi"],
       "framework": "CASE",
       "status": "example",
-      "derived_from": "atom-spec §4 canonical example objective (obj_recognize_psi)"
+      "derived_from": "atom-spec §4 canonical example objective (obj_recognize_psi)",
+      "serves": ["goal_ast009_psi_reported_on_time"],
+      "bloom": "analyze"
     }
-  }
+  },
+  "_note": "v2, 2026-08-21: both seeded objectives now carry `serves` (the outcome that warrants them) and `bloom` (the level of the capability). They remain status:example — the goal they serve is itself an example, so nothing here is ratified. A real engagement replaces both stores together."
 }

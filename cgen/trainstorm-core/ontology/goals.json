@@ -1,0 +1,28 @@
+{
+  "store": "ontology/goals",
+  "version": 1,
+  "status": "seeded",
+  "closed_list": true,
+  "owner": "Client business owner (NOT L&D) — see goal.schema.json",
+  "_note": "Seeded 2026-08-21 with the one goal the existing objective seeds actually imply. AST009 is the real programme the two seeded objectives were distilled from (atom-spec §4); the outcome and its measure below are stated as `status: example` because no client has ratified them. A real engagement replaces this file with the client's own outcomes — the SCHEMA is shared core, these INSTANCES are per-project content.",
+  "goals": {
+    "goal_ast009_psi_reported_on_time": {
+      "label": "Product safety information reaching the company is recognised and reported within the required window, without relying on individual vigilance.",
+      "measure": "Proportion of inbound PSI-bearing contacts that are reported inside the regulatory window, and the count of late or missed reports found on audit.",
+      "owner": "role_gso",
+      "reachability": {
+        "trainable": "Recognition. Staff who encounter a contact cannot report what they do not identify as product safety information in the first place — that is a knowledge and discrimination problem, and it is the part instruction can move.",
+        "not_trainable": [
+          "Reporting channel friction — if the intake path is slow or unclear, trained staff still report late. Process, not instruction.",
+          "Workload and staffing — recognition under time pressure degrades regardless of how well someone was taught.",
+          "Incentive structure — where reporting is perceived to create work or risk for the reporter, training does not overcome it."
+        ],
+        "assessed_by": "role_alsap_lead",
+        "assessed_on": "2026-08-21",
+        "rationale": "The two seeded objectives (define PSI, recognise PSI) both sit squarely on the recognition half. Naming the other three causes explicitly keeps a later audit from reading a flat reporting rate as a training failure — which is the failure mode this gate exists to prevent."
+      },
+      "status": "example",
+      "derived_from": "AST009 reference programme; the outcome implied by atom-spec §4's objectives, made explicit here for the first time."
+    }
+  }
+}

@@ -53,7 +53,7 @@
     },
     "intent": {
       "type": "object",
-      "description": "Two distinct senses of intent, deliberately separated. Owner: L&D / Instructional Design.",
+      "description": "Two distinct senses of intent, deliberately separated — plus the teaching move. Owner: L&D / Instructional Design. `rhetorical` = what this does on the page; `move` = what teaching act it performs; `teaches` = which objective it serves. `bloom` was removed 2026-08-21 and now lives on the objective node.",
       "additionalProperties": false,
       "properties": {
         "rhetorical": {
@@ -63,7 +63,11 @@
         },
         "teaches": { "type": "array", "items": { "type": "string" }, "description": "objective_ids in the intent ontology this element serves (the pedagogical add)." },
         "intended_response": { "type": "string" },
-        "bloom": { "type": "string", "enum": ["remember", "understand", "apply", "analyze", "evaluate", "create"] }
+        "move": {
+          "type": "string",
+          "description": "The teaching MOVE this occurrence performs — what instructional act is happening here. MIRRORS vocab/intent.enum.json dimensions.pedagogical (Gagné's events, retention and transfer split); the vocab is canonical and the mirror is checked by tools/validate_objectives.py. Occurrence-level, and a sibling of `rhetorical`: both answer 'what is this doing HERE'. The same atom is a `hook` in module 1 and `reinforce` in module 5 — that is spaced repetition, and it is why move cannot live on the atom. Distinct from teaches[]: a move is the MEANS, an objective the END, and many moves serve one objective. The names are a closed list on purpose — an open one would destroy the coverage queries ('does this module contain any retrieval practice?', 'does every objective have an assess move?') that are the whole reason for having the dimension. The REALISATION of a move is unbounded. See decision log 2026-08-21.",
+          "enum": ["hook", "objective", "activate", "present", "exemplify", "practice", "feedback", "assess", "reinforce", "transfer"]
+        }
       }
     },
     "expression": {

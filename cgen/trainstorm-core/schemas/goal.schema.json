@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/goal.schema.json",
+  "title": "Trainstorm Warrant — Business-Outcome (Goal) Store",
+  "description": "The governed store of business-outcome nodes (goal_...). Owner: the CLIENT's business, not L&D — a goal is something the organisation wants to be different, stated before any training exists. This is the node three prior analyses recorded as missing (unification-map GAP-05: 'the intervention warrant IS the business-outcome node: no goal_, no project'). Objectives are DERIVED from goals via the reachability assessment below and point back with serves:[goal_id]; that upward link is what gives an objective a warrant instead of an assertion. Canonical home: cgen/trainstorm-core/ontology/goals.json — schema is shared core, INSTANCES are per-project client content.",
+  "type": "object",
+  "required": ["store", "version", "status", "closed_list", "goals"],
+  "additionalProperties": false,
+  "properties": {
+    "store": { "const": "ontology/goals" },
+    "version": { "type": "integer", "minimum": 1 },
+    "status": { "enum": ["draft", "seeded", "validated"] },
+    "closed_list": { "const": true },
+    "owner": { "type": "string" },
+    "_note": { "type": "string", "description": "Free-text note about this store as a whole — provenance, seeding rationale, what a real engagement replaces. Established house style (manifest.json, instance_decisions.json use it); allowed explicitly because the store is additionalProperties:false." },
+    "goals": {
+      "type": "object",
+      "description": "Map of goal_ id -> goal node. propertyNames enforce the governed goal_ prefix.",
+      "propertyNames": { "pattern": "^goal_[a-z0-9_]+$" },
+      "additionalProperties": { "$ref": "#/$defs/goal" }
+    }
+  },
+  "$defs": {
+    "goal": {
+      "type": "object",
+      "required": ["label", "measure", "reachability"],
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string", "minLength": 1, "description": "What the organisation wants to be different, in the business's own terms." },
+        "measure": {
+          "type": "string",
+          "minLength": 1,
+          "description": "How anyone would know it moved. REQUIRED, and it is what separates an outcome from a wish — an unmeasurable goal cannot warrant an objective because nothing can ever discharge it."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Whose outcome this is. A governed role id where one exists. Deliberately NOT L&D: if L&D owns the outcome, it is not a business outcome."
+        },
+        "reachability": {
+          "$ref": "#/$defs/reachability",
+          "description": "The gate. See $defs/reachability — required, so a goal cannot exist without one."
+        },
+        "status": { "type": "string", "enum": ["draft", "example", "validated"] },
+        "derived_from": {
+          "type": "string",
+          "description": "Provenance — the brief, conversation or document this outcome was taken from."
+        }
+      }
+    },
+    "reachability": {
+      "type": "object",
+      "description": "THE HARD GATE (unification-map: the warrant band needs 'a hard gate'). Not every business outcome is reachable by training — 'reduce complaints 20%' may be a process, staffing or incentive problem. An instructional designer who accepts an unreachable outcome ships a course that cannot work however well built. Requiring this object on every goal makes the filter unavoidable: the judgment must be made, recorded, and attributed, not assumed.",
+      "required": ["trainable", "not_trainable", "assessed_by"],
+      "additionalProperties": false,
+      "properties": {
+        "trainable": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The part of this outcome that training can actually move — the delta objectives may be derived from. If nothing here is true, the project should not exist."
+        },
+        "not_trainable": {
+          "type": "array",
+          "description": "The causes training will NOT fix, named out loud. May be empty, but the field is required: writing it is the ID's protection, and an empty array is a claim, not a default.",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "assessed_by": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Who made this judgment. A governed role id where one exists. Attribution is the point — this is the highest-leverage judgment in the chain."
+        },
+        "assessed_on": { "type": "string", "description": "ISO date of the assessment." },
+        "rationale": { "type": "string", "description": "Why the split falls where it does." }
+      }
+    }
+  }
+}

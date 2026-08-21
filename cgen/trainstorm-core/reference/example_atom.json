@@ -14,8 +14,7 @@
     },
     "intent": {
       "teaches": ["obj_recognize_psi"],
-      "intended_response": "discriminate reportable from non-reportable safety information",
-      "bloom": "analyze"
+      "intended_response": "discriminate reportable from non-reportable safety information"
     },
     "expression": {
       "content_type": "instructional.objective",

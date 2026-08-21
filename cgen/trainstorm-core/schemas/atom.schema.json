@@ -45,12 +45,11 @@
         },
         "intent": {
           "type": "object",
-          "description": "Meaning/purpose. Owner: L&D / Instructional Design. References into the intent ontology — the atom points into it, it does not contain it.",
+          "description": "Meaning/purpose. Owner: L&D / Instructional Design. References into the intent ontology — the atom points into it, it does not contain it. NOTE 2026-08-21: `bloom` was removed from here and now lives on the OBJECTIVE node (objectives.schema.json v2). Bloom grades a capability, not a piece of content; an atom teaching several objectives has no single level, so a content-level bloom is a walk over teaches[] rather than a stored value. `rhetorical` and `move` are deliberately absent too — both are occurrence-level and live on the element. See decision log 2026-08-21.",
           "additionalProperties": false,
           "properties": {
             "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids in the intent ontology this atom serves." },
-            "intended_response": { "type": "string", "description": "The cognitive/affective response the atom is designed to elicit." },
-            "bloom": { "type": "string", "enum": ["remember", "understand", "apply", "analyze", "evaluate", "create"] }
+            "intended_response": { "type": "string", "description": "The cognitive/affective response the atom is designed to elicit." }
           }
         },
         "expression": {

@@ -17,7 +17,7 @@
     "rhetorical": "assert",
     "teaches": ["obj_recognize_psi"],
     "intended_response": "discriminate reportable from non-reportable safety information",
-    "bloom": "analyze"
+    "move": "present"
   },
   "expression": {
     "text_primitive": "tp_statement",

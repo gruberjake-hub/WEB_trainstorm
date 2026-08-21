@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://trainstorm.ai/schemas/objectives.schema.json",
   "title": "Trainstorm Intent Ontology — Objective Store",
-  "description": "The governed store of learning-objective nodes (obj_...). Owner: L&D / Instructional Design. The intent facet's teaches[] on an atom references obj_ ids in this store. Governed like the roles/records registries: closed for USE (an ungoverned obj_ reference is flagged, never silently accepted), grown only by entry + version bump. Canonical home: cgen/trainstorm-core/ontology/objectives.json. Objectives point SIDEWAYS (requires = prerequisite objectives) and OUTWARD (framework = external competency standard). An UPWARD serves:[goal_id] link is a designed-later additive field, gated on the not-yet-designed goal/outcome node; adding it is a version bump, not a rewrite.",
+  "description": "The governed store of learning-objective nodes (obj_...). Owner: L&D / Instructional Design. The intent facet's teaches[] on an atom references obj_ ids in this store. Governed like the roles/records registries: closed for USE (an ungoverned obj_ reference is flagged, never silently accepted), grown only by entry + version bump. Canonical home: cgen/trainstorm-core/ontology/objectives.json. Objectives point SIDEWAYS (requires = prerequisite objectives), OUTWARD (framework = external competency standard), and — as of v2 — UPWARD (serves = the business outcome that warrants this objective). v2, 2026-08-21: the anticipated additive version bump, now triggered. An objective is DERIVED from a reachable business outcome and CLASSIFIED by Bloom; `serves` carries the derivation and `bloom` the classification. Bloom moved here from atom.bindings.intent and element.intent because it grades the CAPABILITY, not the content — content inherits a level by reference through teaches[]. See decision log 2026-08-21 (later).",
   "type": "object",
   "required": ["store", "version", "status", "closed_list", "objectives"],
   "additionalProperties": false,
@@ -12,6 +12,7 @@
     "status": { "enum": ["draft", "seeded", "validated"] },
     "closed_list": { "const": true },
     "owner": { "type": "string" },
+    "_note": { "type": "string", "description": "Free-text note about this store as a whole." },
     "objectives": {
       "type": "object",
       "description": "Map of obj_ id -> objective node. propertyNames enforce the governed obj_ prefix.",
@@ -45,8 +46,29 @@
         "derived_from": {
           "type": "string",
           "description": "Provenance pointer to the source this objective was distilled from."
+        },
+        "serves": {
+          "type": "array",
+          "description": "The business outcome(s) this objective is derived from — goal_ ids resolving in ontology/goals.json. This is the WARRANT: an objective with no serves is an assertion, not a derivation. Referential integrity is checked outside the schema (tools/validate_objectives.py), as with requires[]. Required once status is 'validated' — see the conditional below; an 'example' or 'draft' objective may predate its goal.",
+          "items": { "type": "string", "pattern": "^goal_[a-z0-9_]+$" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "bloom": {
+          "type": "string",
+          "enum": ["remember", "understand", "apply", "analyze", "evaluate", "create"],
+          "description": "The cognitive level of the capability this objective names. Bloom CLASSIFIES an objective; it never generates one — the reachable outcome says what capability is needed, Bloom says at what level it sits and therefore what instruction and assessment it demands. Lives here and NOT on atom.intent or element.intent: content that teaches several objectives has no single level, so a content-level bloom is a walk over teaches[], not a stored value."
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "validated" } }, "required": ["status"] },
+          "then": {
+            "required": ["serves"],
+            "description": "A validated objective must name the outcome it serves. This is the promotion gate: draft and example may precede the warrant; validated may not."
+          }
+        }
+      ]
     }
   }
 }
