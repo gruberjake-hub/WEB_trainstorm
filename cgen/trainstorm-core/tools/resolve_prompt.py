@@ -165,16 +165,21 @@ if not ok:
     raise SystemExit("refusing to write a payload whose prompt carries controlled content.")
 
 # ---- the user message: the mode instruction, then the packet -----------------------------------
-MODE_TASK = {
-    "draft":   "Work in `draft` mode. Propose content for this one slot.",
-    "check":   "Work in `check` mode. Review the author's draft below without rewriting it.",
-    "explain": "Work in `explain` mode. Surface the grounding for this slot and propose nothing.",
-}
-if A.mode not in MODE_TASK:
-    raise SystemExit(f"unknown mode {A.mode!r}; the specialization declares {sorted(MODE_TASK)}")
+# Modes are DECLARED BY THE SPECIALIZATION, not by this tool. They used to be a hardcoded dict of
+# Amanuensis's three (draft/check/explain) — and the error message claimed they came from the
+# specialization, which made the lie hard to see. Cartographer declares `bind`/`steward` and was
+# refused. Fourth Amanuensis-ism found in this file by running it against another agent.
+_declared = re.findall(r"^-\s+\*\*`(\w+)`\*\*", slots.get("MODES", ""), re.M)
+if _declared and A.mode not in _declared:
+    raise SystemExit(f"unknown mode {A.mode!r} for {_agent_name}; "
+                     f"its specialization declares {sorted(_declared)}")
+if not _declared:
+    print(f"  ! {spec_p.name} declares no parseable modes; accepting {A.mode!r} unchecked")
 
 packet = json.loads(pathlib.Path(A.packet).read_text()) if A.packet else None
-user = MODE_TASK[A.mode]
+# The mode's SEMANTICS are in the specialization's own Modes section, which is already inlined in the
+# system prompt. The user turn only has to name which one is in force.
+user = f"Work in `{A.mode}` mode, as your specialization defines it."
 if packet:
     user += ("\n\nThis is the grounding packet for the slot. It is your entire world for this task; "
              "nothing else about the ALSAP is available to you, and nothing may come from your "
