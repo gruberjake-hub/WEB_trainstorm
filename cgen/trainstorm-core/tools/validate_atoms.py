@@ -17,6 +17,7 @@ Staleness and incompleteness are SOFT: an instance is drafted incrementally, but
 promoted while it still owes values or while the template has moved underneath it.
 """
 import json, hashlib, pathlib, sys
+import re as _re2
 import harness_paths
 from jsonschema import Draft202012Validator
 
@@ -102,6 +103,22 @@ gov_steptyp = govset("procedure.enum.json", "step_type", required=True)
 gov_fieldty = govset("form.enum.json", "field_type")
 gov_disp    = govset("form.enum.json", "content_disposition")
 gov_decision = govset("instance.enum.json", "disposition_decision")
+gov_evkind  = govset("evidence.enum.json", "evidence_kind")
+gov_supply  = govset("evidence.enum.json", "supplied_by")
+
+# Which evidence kinds are PII-bearing is a property of the vocabulary entry, not a constant in this
+# file. Hardcoding {"person_identity"} here would be a second copy of a governed fact, and it would
+# not follow the vocab when a later kind is added that also carries PII.
+def _pii_kinds():
+    fp = vocab_path("evidence.enum.json")
+    if not fp.exists():
+        return set()
+    try:
+        return {v["id"] for v in load(fp)["dimensions"]["evidence_kind"]["values"]
+                if v.get("pii_bearing")}
+    except (KeyError, TypeError):
+        return set()
+PII_KINDS = _pii_kinds()
 
 gov_roles   = {e["id"] for e in roles_reg["roles"]}     # entries are now {id, label, …}
 gov_records = {e["id"] for e in records_reg["records"]}
@@ -139,6 +156,14 @@ def mirror(label, schema, prop, govern):
 mirror("procedure.facet.step_type", proc_schema, "step_type", gov_steptyp)
 mirror("form.facet.field_type", form_schema, "field_type", gov_fieldty)
 mirror("form.facet.content_disposition", form_schema, "content_disposition", gov_disp)
+mirror("form.facet.evidence_kind", form_schema, "evidence_kind", gov_evkind)
+mirror("form.facet.supplied_by", form_schema, "supplied_by", gov_supply)
+# The slot-level copies are a SECOND inline enum of the same closed list, so they need the same
+# assertion — an unchecked mirror is exactly how the 08-13 drift got in.
+_slot_props = (form_schema.get("properties", {}).get("constraints", {})
+               .get("properties", {}).get("slots", {}).get("items", {}))
+mirror("form.facet.slots[].evidence_kind", _slot_props, "evidence_kind", gov_evkind)
+mirror("form.facet.slots[].supplied_by", _slot_props, "supplied_by", gov_supply)
 if inst_schema:
     mirror("instance.facet.disposition_decision", inst_schema, "disposition_decision", gov_decision)
 
@@ -278,6 +303,38 @@ for a in atoms:
             fail(f"[drift/form] {aid}: form_field carries no content_disposition")
         elif cd not in gov_disp:
             fail(f"[vocab/content_disposition] {aid}: '{cd}' not governed")
+
+        # ---- the DEMAND rule (form.facet v0.4) --------------------------------------------
+        # A template's unfilled points enumerate a demand on someone OUTSIDE the manifold. An
+        # authorable field is a demand; so is each declared slot, in its own right. Naming the kind
+        # of evidence and who it falls on is what lets tools/project_socket.py derive an intake
+        # CONTRACT rather than a checklist — so a demand that cannot say what it wants is a hard
+        # failure, on the same argument that made content_disposition hard: a downstream reader
+        # that cannot see it cannot do its job, and silence reads as "nothing is required."
+        _ek, _sb = form.get("evidence_kind"), form.get("supplied_by")
+        _is_demand = (cd == "authorable")
+        if _is_demand:
+            if _ek is None:
+                fail(f"[socket/demand] {aid}: authorable field declares no evidence_kind "
+                     f"(what must the stakeholder supply?)")
+            elif _ek not in gov_evkind:
+                fail(f"[vocab/evidence_kind] {aid}: '{_ek}' not governed")
+            if _sb is None:
+                fail(f"[socket/demand] {aid}: authorable field declares no supplied_by "
+                     f"(whose obligation is this?)")
+            elif _sb not in gov_supply:
+                fail(f"[vocab/supplied_by] {aid}: '{_sb}' not governed")
+        else:
+            # The converse matters as much. A retained sentence or a block that gets deleted
+            # demands NOTHING; letting it name an evidence kind would put a phantom obligation in
+            # a contract handed to a client. Note this also catches the subtle case: a sentence
+            # that CARRIES slots is not itself a demand — its slots are — so the kind belongs on
+            # them and never on the sentence.
+            for _f, _v in (("evidence_kind", _ek), ("supplied_by", _sb)):
+                if _v is not None:
+                    fail(f"[socket/demand] {aid}: {cd} field carries {_f}='{_v}' but demands "
+                         f"nothing (only an authorable field is a demand; slots carry their own)")
+
         # A [bracketed] span inside retained text is a fill-in point. If the field declares no
         # matching slot, the instance layer has nothing stable to attach the filled value to, and
         # the author's obligation is invisible to any projection. Soft: square brackets have other
@@ -300,6 +357,15 @@ for a in atoms:
             if _n != 1:
                 fail(f"[form/slots] {aid}: slot '{_s['id']}' marker {_m!r} occurs {_n} time(s) in "
                      f"source_text (must be exactly 1)")
+        # Each slot is a demand in its own right — (atom_id, slot_id) IS the demand id in the
+        # socket — so each states its own kind rather than inheriting the sentence's.
+        for _s in declared:
+            for _f, _gov in (("evidence_kind", gov_evkind), ("supplied_by", gov_supply)):
+                _v = _s.get(_f)
+                if _v is None:
+                    fail(f"[socket/demand] {aid}: slot '{_s['id']}' declares no {_f}")
+                elif _v not in _gov:
+                    fail(f"[vocab/{_f}] {aid}: slot '{_s['id']}': '{_v}' not governed")
         if ft in ("select_one", "select_many") and not form.get("options_ref"):
             flag(f"[form/options] {aid}: {ft} with no options_ref — controlled value set unidentified")
     else:
@@ -416,6 +482,36 @@ else:
         if d == "instructional_transient":
             fail(f"[instance/controlled] {aid}: authors into instructional_transient template atom "
                  f"{t['atom_id']} (guidance is deleted before final, never authored into)")
+
+        # ---- no PII in a content atom, ENFORCED ------------------------------------------------
+        # Some demands are for a named individual (the ALSAP cover requires an Author). The demand
+        # is real and stays in the intake contract; the VALUE may never land in a content atom. It
+        # keys into a separately-governed identity tier and resolves at render time, exactly as
+        # role_ ids already do. Which kinds are PII-bearing is read from the vocabulary entry, so
+        # this bites automatically on any kind later marked that way.
+        _tf = t.get("bindings", {}).get("form", {})
+        _dk = (next((s for s in _tf.get("constraints", {}).get("slots", [])
+                     if s.get("id") == slot_id), {}) if slot_id is not None else _tf).get("evidence_kind")
+        if _dk in PII_KINDS:
+            _val = a["meaning"]["source_text"].strip()
+            _where = t["atom_id"] + (f" slot '{slot_id}'" if slot_id else "")
+            if _re2.fullmatch(r"person_[a-z0-9_]+", _val):
+                pass                       # an opaque key: the manifold holds the handle, not the person
+            elif _re2.fullmatch(r"role_[a-z0-9_-]+", _val):
+                # Subtle, and worth its own message. A role id is PII-free, so a blanket no-PII check
+                # waves it through — but it answers a DIFFERENT question. "Accountable for the field"
+                # is not "the value of the field": the 2026-08-20 dispatch declined exactly this
+                # inference unprompted, and a store that makes it commits the error its own agent
+                # refused. Who is accountable already lives in form.performed_by on the template.
+                fail(f"[instance/pii] {aid}: fills the '{_dk}' demand on {_where} with the role id "
+                     f"'{_val}'. A role is not a person — accountable FOR a field is not the VALUE "
+                     f"of it. Use an opaque person_ key; accountability is already carried by "
+                     f"form.performed_by on the template atom.")
+            else:
+                fail(f"[instance/pii] {aid}: fills the '{_dk}' demand on {_where} with free text. "
+                     f"PII-bearing values are never stored in a content atom — store an opaque "
+                     f"person_ key and resolve it at render time against the identity tier "
+                     f"(vocab/evidence.enum.json storage_rule).")
 
         dd = inst.get("disposition_decision")
         if d == "example" and dd != "modified":

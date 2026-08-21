@@ -1,0 +1,367 @@
+{
+  "artifact": "intake_socket",
+  "version": 1,
+  "generated_by": "tools/project_socket.py — DERIVED. Do not edit: correct the template atom.",
+  "template": {
+    "document": "doc_form_ast_34037",
+    "version": "1.0",
+    "title": "Asset Level Safety Assessment Plan (ALSAP)",
+    "store": "alsap",
+    "atom_count": 31
+  },
+  "coverage": {
+    "partial": true,
+    "sections_decomposed": [
+      "Cover",
+      "Reviewed and approved by",
+      "Version History",
+      "Purpose and Stakeholder Review > Safety Profile Summary"
+    ],
+    "sections_not_decomposed": [
+      "Source of Aggregated Data and Pooling Strategies",
+      "Safety Topics of Interest",
+      "Data Analysis Approaches",
+      "Ongoing Safety Surveillance of Clinical Trials",
+      "Background Incidence of Anticipated SAEs",
+      "Communication of Safety Information",
+      "Supporting Documentation (Appendices 1-4)",
+      "References"
+    ],
+    "tables_total": 17,
+    "tables_decomposed": 4,
+    "statement": "PARTIAL CONTRACT. It covers 4 decomposed area(s) of the template and enumerates 10 demand(s). 8 section(s) are not yet decomposed and may carry demands of their own, which this contract cannot yet list."
+  },
+  "demands": [
+    {
+      "demand_id": "atom_form_ast34037_sec_cover_f_asset_code",
+      "source_atom": "atom_form_ast34037_sec_cover_f_asset_code",
+      "path": [
+        "Asset Level Safety Assessment Plan (ALSAP)",
+        "Cover"
+      ],
+      "expects": "Asset Development Code or International Non-proprietary Name.",
+      "evidence_kind": "identifier",
+      "supplied_by": "asset_evidence",
+      "field_type": "text_short",
+      "required": true,
+      "governed_by": [
+        {
+          "atom_id": "atom_sop_ast29080_proc_b_s2",
+          "text": "Draft the ALSAP using FORM-AST-34037 (ALSAP Template), with the support of the Contributing Authors. If the asset already has an approved ALSAP, obtain the most current version from the EDMS to make the updates. [Headwater flag: embedded conditional — candidate to split into a decision step; kept atomic for the beta and flagged.]"
+        }
+      ]
+    },
+    {
+      "demand_id": "atom_form_ast34037_sec_cover_f_version_date",
+      "source_atom": "atom_form_ast34037_sec_cover_f_version_date",
+      "path": [
+        "Asset Level Safety Assessment Plan (ALSAP)",
+        "Cover"
+      ],
+      "expects": "Version Date.",
+      "evidence_kind": "date",
+      "supplied_by": "authoring_context",
+      "field_type": "date",
+      "required": true,
+      "format": "DD-MMM-YYYY",
+      "governed_by": [
+        {
+          "atom_id": "atom_sop_ast29080_proc_b_s2",
+          "text": "Draft the ALSAP using FORM-AST-34037 (ALSAP Template), with the support of the Contributing Authors. If the asset already has an approved ALSAP, obtain the most current version from the EDMS to make the updates. [Headwater flag: embedded conditional — candidate to split into a decision step; kept atomic for the beta and flagged.]"
+        }
+      ]
+    },
+    {
+      "demand_id": "atom_form_ast34037_sec_cover_f_version_number",
+      "source_atom": "atom_form_ast34037_sec_cover_f_version_number",
+      "path": [
+        "Asset Level Safety Assessment Plan (ALSAP)",
+        "Cover"
+      ],
+      "expects": "Version Number.",
+      "evidence_kind": "identifier",
+      "supplied_by": "authoring_context",
+      "field_type": "text_short",
+      "required": true,
+      "format": "X.0",
+      "governed_by": [
+        {
+          "atom_id": "atom_sop_ast29080_proc_b_s2",
+          "text": "Draft the ALSAP using FORM-AST-34037 (ALSAP Template), with the support of the Contributing Authors. If the asset already has an approved ALSAP, obtain the most current version from the EDMS to make the updates. [Headwater flag: embedded conditional — candidate to split into a decision step; kept atomic for the beta and flagged.]"
+        }
+      ]
+    },
+    {
+      "demand_id": "atom_form_ast34037_sec_cover_f_author",
+      "source_atom": "atom_form_ast34037_sec_cover_f_author",
+      "path": [
+        "Asset Level Safety Assessment Plan (ALSAP)",
+        "Cover"
+      ],
+      "expects": "Author.",
+      "evidence_kind": "person_identity",
+      "supplied_by": "authoring_context",
+      "storage_rule": "An instance atom may not carry this value. The demand is real and stays in the contract; the VALUE lives in the identity tier, joined by key. The gate refuses an instance atom that fills a pii_bearing demand — the no-PII invariant enforced rather than merely stated.",
+      "field_type": "person",
+      "required": true,
+      "accountable": [
+        {
+          "id": "role_alsap_lead",
+          "label": "ALSAP Lead",
+          "governed": true
+        }
+      ],
+      "governed_by": [
+        {
+          "atom_id": "atom_sop_ast29080_proc_b_s2",
+          "text": "Draft the ALSAP using FORM-AST-34037 (ALSAP Template), with the support of the Contributing Authors. If the asset already has an approved ALSAP, obtain the most current version from the EDMS to make the updates. [Headwater flag: embedded conditional — candidate to split into a decision step; kept atomic for the beta and flagged.]"
+        }
+      ]
+    },
+    {
+      "demand_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative#participant_count",
+      "source_atom": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative",
+      "path": [
+        "Asset Level Safety Assessment Plan (ALSAP)",
+        "Purpose and Stakeholder Review",
+        "Safety Profile Summary"
+      ],
+      "expects": "Number of participants across clinical trials contributing to the safety profile.",
+      "evidence_kind": "count",
+      "supplied_by": "asset_evidence",
+      "slot_id": "participant_count",
+      "marker": "[Include # here]",
+      "governed_by": [
+        {
+          "atom_id": "atom_sop_ast29080_proc_b_s2",
+          "text": "Draft the ALSAP using FORM-AST-34037 (ALSAP Template), with the support of the Contributing Authors. If the asset already has an approved ALSAP, obtain the most current version from the EDMS to make the updates. [Headwater flag: embedded conditional — candidate to split into a decision step; kept atomic for the beta and flagged.]"
+        }
+      ]
+    },
+    {
+      "demand_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative#asset_code",
+      "source_atom": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative",
+      "path": [
+        "Asset Level Safety Assessment Plan (ALSAP)",
+        "Purpose and Stakeholder Review",
+        "Safety Profile Summary"
+      ],
+      "expects": "Asset development code or INN, matching the cover block.",
+      "evidence_kind": "identifier",
+      "supplied_by": "asset_evidence",
+      "slot_id": "asset_code",
+      "marker": "[ASPXXXX]",
+      "governed_by": [
+        {
+          "atom_id": "atom_sop_ast29080_proc_b_s2",
+          "text": "Draft the ALSAP using FORM-AST-34037 (ALSAP Template), with the support of the Contributing Authors. If the asset already has an approved ALSAP, obtain the most current version from the EDMS to make the updates. [Headwater flag: embedded conditional — candidate to split into a decision step; kept atomic for the beta and flagged.]"
+        }
+      ]
+    },
+    {
+      "demand_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative#prevalent_adverse_events",
+      "source_atom": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative",
+      "path": [
+        "Asset Level Safety Assessment Plan (ALSAP)",
+        "Purpose and Stakeholder Review",
+        "Safety Profile Summary"
+      ],
+      "expects": "The most frequently encountered adverse events associated with the asset.",
+      "evidence_kind": "term_list",
+      "supplied_by": "asset_evidence",
+      "slot_id": "prevalent_adverse_events",
+      "marker": "[list of the most prevalent adverse events]",
+      "governed_by": [
+        {
+          "atom_id": "atom_sop_ast29080_proc_b_s2",
+          "text": "Draft the ALSAP using FORM-AST-34037 (ALSAP Template), with the support of the Contributing Authors. If the asset already has an approved ALSAP, obtain the most current version from the EDMS to make the updates. [Headwater flag: embedded conditional — candidate to split into a decision step; kept atomic for the beta and flagged.]"
+        }
+      ]
+    },
+    {
+      "demand_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative#serious_adverse_events",
+      "source_atom": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_narrative",
+      "path": [
+        "Asset Level Safety Assessment Plan (ALSAP)",
+        "Purpose and Stakeholder Review",
+        "Safety Profile Summary"
+      ],
+      "expects": "Those among the prevalent events that were considered serious.",
+      "evidence_kind": "term_list",
+      "supplied_by": "asset_evidence",
+      "slot_id": "serious_adverse_events",
+      "marker": "[list of the most common serious adverse events]",
+      "governed_by": [
+        {
+          "atom_id": "atom_sop_ast29080_proc_b_s2",
+          "text": "Draft the ALSAP using FORM-AST-34037 (ALSAP Template), with the support of the Contributing Authors. If the asset already has an approved ALSAP, obtain the most current version from the EDMS to make the updates. [Headwater flag: embedded conditional — candidate to split into a decision step; kept atomic for the beta and flagged.]"
+        }
+      ]
+    },
+    {
+      "demand_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+      "source_atom": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+      "path": [
+        "Asset Level Safety Assessment Plan (ALSAP)",
+        "Purpose and Stakeholder Review",
+        "Safety Profile Summary"
+      ],
+      "expects": "SMT assessment of the overall Benefit-Risk profile of the asset.",
+      "evidence_kind": "governed_selection",
+      "supplied_by": "stakeholder_decision",
+      "field_type": "select_one",
+      "required": true,
+      "options": {
+        "options_ref": "reg_benefit_risk_profile",
+        "governed": true,
+        "values": [
+          {
+            "id": "favorable",
+            "label": "Favorable Benefit-Risk Profile",
+            "governed": true
+          },
+          {
+            "id": "unfavorable",
+            "label": "Unfavorable Benefit-Risk Profile",
+            "governed": true
+          },
+          {
+            "id": "uncertain_inconclusive",
+            "label": "Uncertain or Inconclusive Benefit-Risk Profile",
+            "governed": true
+          },
+          {
+            "id": "conditional_favorable",
+            "label": "Conditional Favorable Benefit-Risk Profile",
+            "governed": true
+          },
+          {
+            "id": "contextual",
+            "label": "Contextual Benefit-Risk Profile",
+            "governed": true
+          },
+          {
+            "id": "other_smt_defined",
+            "label": "Other as defined by the SMT",
+            "governed": true
+          }
+        ]
+      },
+      "accountable": [
+        {
+          "id": "role_smt",
+          "label": "Safety Management Team (SMT)",
+          "governed": true
+        },
+        {
+          "id": "role_gso",
+          "label": "Global Safety Officer (GSO)",
+          "governed": true
+        }
+      ],
+      "governed_by": [
+        {
+          "atom_id": "atom_sop_ast29080_proc_b_s2",
+          "text": "Draft the ALSAP using FORM-AST-34037 (ALSAP Template), with the support of the Contributing Authors. If the asset already has an approved ALSAP, obtain the most current version from the EDMS to make the updates. [Headwater flag: embedded conditional — candidate to split into a decision step; kept atomic for the beta and flagged.]"
+        }
+      ]
+    },
+    {
+      "demand_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+      "source_atom": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+      "path": [
+        "Asset Level Safety Assessment Plan (ALSAP)",
+        "Purpose and Stakeholder Review",
+        "Safety Profile Summary"
+      ],
+      "expects": "Rationale and phrasing for the selected Benefit-Risk profile.",
+      "evidence_kind": "judgment",
+      "supplied_by": "stakeholder_decision",
+      "field_type": "text_long",
+      "applies_when": [
+        {
+          "demand_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+          "equals": null,
+          "predicate_stated": false
+        }
+      ],
+      "governed_by": [
+        {
+          "atom_id": "atom_sop_ast29080_proc_b_s2",
+          "text": "Draft the ALSAP using FORM-AST-34037 (ALSAP Template), with the support of the Contributing Authors. If the asset already has an approved ALSAP, obtain the most current version from the EDMS to make the updates. [Headwater flag: embedded conditional — candidate to split into a decision step; kept atomic for the beta and flagged.]"
+        }
+      ]
+    }
+  ],
+  "out_of_band": [
+    {
+      "ref": "atom_form_ast34037_sec_approval_f_prepared_by",
+      "obligation": "Prepared by (name, degree, title) and date — applied to the rendered document, not authored through this engine.",
+      "accountable": [
+        {
+          "id": "role_alsap_lead",
+          "label": "ALSAP Lead",
+          "governed": true
+        }
+      ]
+    },
+    {
+      "ref": "atom_form_ast34037_sec_approval_f_approved_by_1",
+      "obligation": "Approved by (name, degree, title) and date — applied to the rendered document, not authored through this engine.",
+      "accountable": [
+        {
+          "id": "role_gso",
+          "label": "Global Safety Officer (GSO)",
+          "governed": true
+        },
+        {
+          "id": "role_medical_lead",
+          "label": "Medical Lead (ML)",
+          "governed": true
+        },
+        {
+          "id": "role_alsap_approver",
+          "label": "ALSAP Approver",
+          "governed": true
+        }
+      ]
+    },
+    {
+      "ref": "atom_form_ast34037_sec_approval_f_approved_by_2",
+      "obligation": "Approved by (name, degree, title) and date — applied to the rendered document, not authored through this engine.",
+      "accountable": [
+        {
+          "id": "role_gso",
+          "label": "Global Safety Officer (GSO)",
+          "governed": true
+        },
+        {
+          "id": "role_medical_lead",
+          "label": "Medical Lead (ML)",
+          "governed": true
+        },
+        {
+          "id": "role_alsap_approver",
+          "label": "ALSAP Approver",
+          "governed": true
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "by_evidence_kind": {
+      "count": 1,
+      "date": 1,
+      "governed_selection": 1,
+      "identifier": 3,
+      "judgment": 1,
+      "person_identity": 1,
+      "term_list": 2
+    },
+    "by_supplied_by": {
+      "asset_evidence": 5,
+      "authoring_context": 3,
+      "stakeholder_decision": 2
+    }
+  }
+}

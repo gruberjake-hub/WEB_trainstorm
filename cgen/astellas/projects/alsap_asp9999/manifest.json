@@ -25,5 +25,10 @@
     "role_medical_lead",
     "role_alsap_lead"
   ],
-  "generated_by": "tools/accept_value.py"
+  "generated_by": "tools/accept_value.py",
+  "identity_resolution": {
+    "scheme": "person_",
+    "resolves_against": "the client's own identity system — NOT a file in this repo and NOT a registry here",
+    "note": "A person_ key is a handle the manifold holds and cannot itself resolve. That is what 'separately governed' means: the content store carries the join key, the identity tier carries the person, and the two meet only at render time under that tier's access control. Stated as a limit rather than a solution — a pseudonymous key is still re-identifiable by whoever holds the other half, so the tier's governance is the control, not the opacity of the string."
+  }
 }

@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/socket.schema.json",
+  "artifact_version": "socket.v0.1",
+  "title": "Trainstorm Intake Socket — the contract a delivered agent declares",
+  "description": "The specification of what a STAKEHOLDER must supply for a delivered authoring agent to do its work. Derived, never authored: tools/project_socket.py walks the template store and emits one demand per unfilled point (each authorable field, each named slot). This is the second-order half of the two orders of intake (decision log 2026-08-20, fifth): the manifold's first-order product is an agent; that agent is itself an intake surface for someone else's evidence, which arrives at THEIR runtime and may never be the instructional designer's to hold. The socket is what makes the engine deliverable and demonstrable without that evidence — permanently, not as a beta state. It is a DERIVED artifact and must never be hand-edited: correcting a demand means correcting the template atom it came from, or the contract becomes a second source of truth that drifts the moment the template is revised — the exact failure the whole architecture exists to prevent.",
+  "type": "object",
+  "required": ["artifact", "version", "generated_by", "template", "coverage", "demands"],
+  "additionalProperties": false,
+  "properties": {
+    "artifact": { "const": "intake_socket" },
+    "version": { "type": "integer", "minimum": 1 },
+    "generated_by": {
+      "type": "string",
+      "description": "The tool that derived this. Present so a reader can regenerate rather than edit."
+    },
+    "template": {
+      "type": "object",
+      "required": ["document", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "document": { "type": "string", "pattern": "^doc_[A-Za-z0-9_-]+$" },
+        "version": { "type": "string" },
+        "title": { "type": "string" },
+        "store": { "type": "string", "description": "Path of the template store this was walked from." },
+        "atom_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "description": "How much of the template this contract actually speaks for. REQUIRED, and `partial` is required within it, because a contract that lists ten demands from a template with eight undecomposed sections would read to a client as the whole obligation. An honest partial contract is useful; a silently partial one is misleading. Rests on structured data from the ingest's source_silent, never on scraping prose.",
+      "required": ["partial", "statement"],
+      "additionalProperties": false,
+      "properties": {
+        "partial": { "type": "boolean" },
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "description": "One sentence a client can read, stating plainly what is and is not covered."
+        },
+        "sections_decomposed": { "type": "array", "items": { "type": "string" } },
+        "sections_not_decomposed": { "type": "array", "items": { "type": "string" } },
+        "tables_decomposed": { "type": "integer", "minimum": 0 },
+        "tables_total": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "demands": {
+      "type": "array",
+      "description": "One entry per unfilled point in the covered scope. Order is the template's own reading order.",
+      "items": { "$ref": "#/$defs/demand" }
+    },
+    "out_of_band": {
+      "type": "array",
+      "description": "Obligations the template imposes that are NOT filled through this engine — a wet or electronic signature applied to the rendered document, for instance. Listed because omitting them would understate the contract, and marked because including them among the demands would imply the tool collects them.",
+      "items": {
+        "type": "object",
+        "required": ["ref", "obligation"],
+        "additionalProperties": false,
+        "properties": {
+          "ref": { "type": "string" },
+          "obligation": { "type": "string" },
+          "accountable": { "type": "array", "items": { "$ref": "#/$defs/idlabel" } }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "description": "Counts by governed dimension. Derived from demands[]; carried so a reader sees the shape of the ask before reading it item by item.",
+      "additionalProperties": { "type": "object", "additionalProperties": { "type": "integer" } }
+    }
+  },
+  "$defs": {
+    "idlabel": {
+      "type": "object",
+      "required": ["id", "label", "governed"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "governed": {
+          "type": "boolean",
+          "description": "Whether the id resolves in the client registry. Carried, not silently resolved to a label, so a reader can run the ungoverned-value drift check."
+        }
+      }
+    },
+    "demand": {
+      "type": "object",
+      "required": ["demand_id", "expects", "evidence_kind", "supplied_by", "source_atom"],
+      "additionalProperties": false,
+      "properties": {
+        "demand_id": {
+          "type": "string",
+          "description": "Stable id for this demand: the template atom_id, or atom_id#slot_id for a named slot. It is the (atom_id, slot_id) instance key rendered as one string, so a submission can be matched back to the exact point it fills."
+        },
+        "source_atom": { "type": "string", "pattern": "^atom_[A-Za-z0-9_-]+$" },
+        "slot_id": { "type": "string" },
+        "path": {
+          "type": "array",
+          "description": "Where this sits in the document, outermost first — so a stakeholder can find it in their own copy of the template.",
+          "items": { "type": "string" }
+        },
+        "expects": {
+          "type": "string",
+          "description": "What the template asks for, in the template's own words. Verbatim; this file paraphrases nothing."
+        },
+        "evidence_kind": { "type": "string" },
+        "supplied_by": { "type": "string" },
+        "field_type": { "type": "string" },
+        "marker": { "type": "string", "description": "For a slot: the literal bracketed span it fills." },
+        "required": { "type": "boolean" },
+        "format": { "type": "string" },
+        "options": {
+          "type": "object",
+          "description": "For a governed_selection: the value set the submission must resolve in. The set is REFERENCED and its members listed for the reader; a submission outside it is the invent-guard failure.",
+          "required": ["options_ref", "governed"],
+          "additionalProperties": false,
+          "properties": {
+            "options_ref": { "type": "string" },
+            "governed": { "type": "boolean" },
+            "values": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/idlabel" }
+            }
+          }
+        },
+        "accountable": {
+          "type": "array",
+          "description": "Roles accountable for this point, from the template's performed_by. Answers WHO SIGNS, which is not the same question as who supplies the value.",
+          "items": { "$ref": "#/$defs/idlabel" }
+        },
+        "applies_when": {
+          "type": "array",
+          "description": "Conditional demands: this is owed only when the named field holds the named value. A contract that listed a conditional demand unconditionally would over-state the ask.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "demand_id": { "type": "string" },
+              "equals": { "type": ["string", "null"] },
+              "predicate_stated": { "type": "boolean" }
+            }
+          }
+        },
+        "governed_by": {
+          "type": "array",
+          "description": "Procedure steps from the governing SOP that reference this template — the authority behind the demand, not decoration.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "atom_id": { "type": "string" },
+              "text": { "type": "string" }
+            }
+          }
+        },
+        "storage_rule": {
+          "type": "string",
+          "description": "Present only for a PII-bearing kind. States that the value never lands in a content atom and how it is carried instead. Copied from the vocabulary entry so the contract states the constraint at the point it applies."
+        }
+      }
+    }
+  }
+}

@@ -85,12 +85,14 @@
         "constraints": {
           "required": true
         },
+        "evidence_kind": "identifier",
+        "supplied_by": "asset_evidence",
         "field_type": "text_short",
         "content_disposition": "authorable"
       }
     },
     "governance": {
-      "version": 1,
+      "version": 2,
       "status": "draft",
       "regulatory_binding": "regulatory",
       "owner": "team_qseg_safety_data_science"
@@ -114,12 +116,14 @@
           "required": true,
           "format": "DD-MMM-YYYY"
         },
+        "evidence_kind": "date",
+        "supplied_by": "authoring_context",
         "field_type": "date",
         "content_disposition": "authorable"
       }
     },
     "governance": {
-      "version": 1,
+      "version": 2,
       "status": "draft",
       "regulatory_binding": "regulatory",
       "owner": "team_qseg_safety_data_science"
@@ -143,12 +147,14 @@
           "required": true,
           "format": "X.0"
         },
+        "evidence_kind": "identifier",
+        "supplied_by": "authoring_context",
         "field_type": "text_short",
         "content_disposition": "authorable"
       }
     },
     "governance": {
-      "version": 1,
+      "version": 2,
       "status": "draft",
       "regulatory_binding": "regulatory",
       "owner": "team_qseg_safety_data_science"
@@ -174,12 +180,14 @@
         "performed_by": [
           "role_alsap_lead"
         ],
+        "evidence_kind": "person_identity",
+        "supplied_by": "authoring_context",
         "field_type": "person",
         "content_disposition": "authorable"
       }
     },
     "governance": {
-      "version": 1,
+      "version": 2,
       "status": "draft",
       "regulatory_binding": "regulatory",
       "owner": "team_qseg_safety_data_science"
@@ -442,22 +450,30 @@
             {
               "id": "participant_count",
               "marker": "[Include # here]",
-              "expects": "Number of participants across clinical trials contributing to the safety profile."
+              "expects": "Number of participants across clinical trials contributing to the safety profile.",
+              "evidence_kind": "count",
+              "supplied_by": "asset_evidence"
             },
             {
               "id": "asset_code",
               "marker": "[ASPXXXX]",
-              "expects": "Asset development code or INN, matching the cover block."
+              "expects": "Asset development code or INN, matching the cover block.",
+              "evidence_kind": "identifier",
+              "supplied_by": "asset_evidence"
             },
             {
               "id": "prevalent_adverse_events",
               "marker": "[list of the most prevalent adverse events]",
-              "expects": "The most frequently encountered adverse events associated with the asset."
+              "expects": "The most frequently encountered adverse events associated with the asset.",
+              "evidence_kind": "term_list",
+              "supplied_by": "asset_evidence"
             },
             {
               "id": "serious_adverse_events",
               "marker": "[list of the most common serious adverse events]",
-              "expects": "Those among the prevalent events that were considered serious."
+              "expects": "Those among the prevalent events that were considered serious.",
+              "evidence_kind": "term_list",
+              "supplied_by": "asset_evidence"
             }
           ]
         },
@@ -466,7 +482,7 @@
       }
     },
     "governance": {
-      "version": 4,
+      "version": 5,
       "status": "draft",
       "regulatory_binding": "regulatory",
       "owner": "team_qseg_safety_data_science"
@@ -519,12 +535,14 @@
           "role_smt",
           "role_gso"
         ],
+        "evidence_kind": "governed_selection",
+        "supplied_by": "stakeholder_decision",
         "field_type": "select_one",
         "content_disposition": "authorable"
       }
     },
     "governance": {
-      "version": 1,
+      "version": 2,
       "status": "draft",
       "regulatory_binding": "regulatory",
       "owner": "team_qseg_safety_data_science"
@@ -549,12 +567,14 @@
             "field": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile"
           }
         ],
+        "evidence_kind": "judgment",
+        "supplied_by": "stakeholder_decision",
         "field_type": "text_long",
         "content_disposition": "authorable"
       }
     },
     "governance": {
-      "version": 1,
+      "version": 2,
       "status": "draft",
       "regulatory_binding": "regulatory",
       "owner": "team_qseg_safety_data_science"

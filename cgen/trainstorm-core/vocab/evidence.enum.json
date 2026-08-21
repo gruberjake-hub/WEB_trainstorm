@@ -1,0 +1,109 @@
+{
+  "vocabulary_version": "evidence.v0.2",
+  "status": "draft",
+  "owner": "content_architecture",
+  "description": "Governed closed vocabularies for the INTAKE SOCKET: what KIND of evidence a template demand requires, and WHO supplies it. A form template's unfilled points (authorable fields and named slots inside retained text) enumerate a demand on someone outside the manifold — the stakeholder who operates the delivered agent. Naming that demand in governed terms is what turns a checklist into a contract their own ingest can be validated against. Both dimensions are READ OFF the template's own words, the same move as reading content_disposition off its colour convention: 'Number of participants' says count; 'Version Date' says the operator supplies it. Neither is derivable from field_type — text_short covers both an identifier and a version stamp, text_long covers both a judgment and a term list — so these are RECORDED JUDGMENTS with provenance, not computed values. Seeded 2026-08-21 with only the kinds the ten current demands exhibit; a later decomposition needing a kind absent here takes a version bump and an entry, never a silent addition. v0.2, the same day: `determination` and `structured_set` added on the COMPLETENESS rule below, which the reference fragment exercised within the hour — the governed-growth path used rather than merely described. Same governance pattern as form.enum.json and intent.enum.json.",
+  "governance": {
+    "closed_list": true,
+    "rule": "Form facets may only use ids defined here. New values require a version bump and an entry; the validator rejects anything else. evidence_kind and supplied_by in form.facet.schema.json are MIRRORS of these ids — a conformance check asserts (schema enum == vocab ids) so there is no drifting second copy.",
+    "mirrors": [
+      "form.facet.schema.json#/properties/evidence_kind",
+      "form.facet.schema.json#/properties/supplied_by",
+      "form.facet.schema.json#/properties/constraints/properties/slots/items/properties/evidence_kind",
+      "form.facet.schema.json#/properties/constraints/properties/slots/items/properties/supplied_by"
+    ],
+    "scope_note": "This vocabulary says what KIND of thing a demand is. It deliberately says NOTHING about WHERE the stakeholder keeps it — which dossier, which system, which document. That is their knowledge, not ours, and presuming it would collapse the first-order/second-order intake distinction the socket exists to respect (decision log 2026-08-20, fifth). The socket asks; it does not presume.",
+    "completeness_rule": "This vocabulary must be able to classify a demand of EVERY authorable field_type that form.enum.json permits. Otherwise the gate's demand rule is unsatisfiable for a legal template — a form could carry a blank that no governed kind describes, and the only ways out would be to weaken the rule or to fudge the classification. So the trigger for a version bump is not 'a new document appeared' but 'a governed field_type has no kind that fits it'. This is derived from canon (the closed field_type list), NOT from whatever document happened to surface the gap: a fixture built from a summary is a hypothesis (decision log 2026-08-20), and minting governed vocabulary from a hypothesis is exactly the drift this file exists to prevent.",
+    "shape": "Governed values nest under dimensions.<name>.values[].id — the canonical vocab shape shared with form.enum.json, procedure.enum.json and structure.enum.json."
+  },
+  "dimensions": {
+    "evidence_kind": {
+      "description": "What kind of thing the demand requires. Determines how a submission can be checked: a count is a number, a term_list is an enumerated set, a governed_selection must resolve in a named registry. Read off the demand's own expects text.",
+      "field": "bindings.form.evidence_kind (and constraints.slots[].evidence_kind)",
+      "closed_list": true,
+      "values": [
+        {
+          "id": "identifier",
+          "label": "Identifier",
+          "definition": "A controlled string that NAMES a thing — an asset code, an INN, a version stamp. Checkable against a pattern or an external register; must be consistent everywhere it appears in one document.",
+          "exhibited_by": "cover asset_code; cover version_number; narrative slot [asset_code]"
+        },
+        {
+          "id": "date",
+          "label": "Date",
+          "definition": "A calendar date. Carries a format constraint where the template states one.",
+          "exhibited_by": "cover version_date"
+        },
+        {
+          "id": "count",
+          "label": "Count",
+          "definition": "A cardinal number derived from evidence — how many of something. Checkable as a non-negative integer, and traceable to the source that produced it.",
+          "exhibited_by": "narrative slot [participant_count]"
+        },
+        {
+          "id": "term_list",
+          "label": "Term list",
+          "definition": "An enumerated set of terms, not prose. A submission that arrives as a sentence has not met the demand. Where the terms belong to a controlled dictionary the demand says so; this vocabulary does not name the dictionary.",
+          "exhibited_by": "narrative slots [prevalent_adverse_events], [serious_adverse_events]"
+        },
+        {
+          "id": "governed_selection",
+          "label": "Governed selection",
+          "definition": "Exactly one value (or a subset) drawn from a named controlled value set. The demand carries the options_ref; a submission is checkable by membership, and inventing a value outside the set is the failure the invent-guard exists to catch.",
+          "exhibited_by": "safety profile br_profile (reg_benefit_risk_profile)"
+        },
+        {
+          "id": "judgment",
+          "label": "Judgment",
+          "definition": "Authored prose expressing an assessment or its rationale. NOT machine-checkable for correctness — only for presence, authorship and consistency with any governed selection it explains. Naming it a judgment is what stops a checkable contract from over-claiming.",
+          "exhibited_by": "safety profile br_rationale"
+        },
+        {
+          "id": "determination",
+          "label": "Determination",
+          "definition": "A yes/no fact about the programme, recorded rather than argued — was adjudication performed, does a committee exist. Checkable as a boolean; the reasoning behind it is not, and where the template wants that reasoning it asks for it as a separate conditional demand of kind `judgment`. Added v0.2: the governed field_type `boolean` is authorable, so a demand of this shape is legal and needed a kind.",
+          "exhibited_by": "reference fragment: Event Adjudication (boolean, required)"
+        },
+        {
+          "id": "structured_set",
+          "label": "Structured set",
+          "definition": "Repeated rows of related values — the demand is for a SET of records, not one value, and a single answer does not meet it. Checkable for shape (the expected columns are present, rows are well-formed) but never for correctness. Added v0.2: the governed field_type `table` is authorable, so a demand of this shape is legal and needed a kind.",
+          "exhibited_by": "reference fragment: Source of Aggregated Data (table, repeatable)"
+        },
+        {
+          "id": "person_identity",
+          "label": "Person identity",
+          "definition": "A named individual. PII-BEARING: the value may never be stored in a content atom. It keys into a separately-governed identity tier and is resolved at render time, exactly as role_ ids already are. See storage_rule.",
+          "exhibited_by": "cover author",
+          "pii_bearing": true,
+          "storage_rule": "An instance atom may not carry this value. The demand is real and stays in the contract; the VALUE lives in the identity tier, joined by key. The gate refuses an instance atom that fills a pii_bearing demand — the no-PII invariant enforced rather than merely stated."
+        }
+      ]
+    },
+    "supplied_by": {
+      "description": "Who the demand falls on. Keeps the contract honest: a stakeholder gathering an evidence dossier should not be handed the document's own version number as though it were part of that job.",
+      "field": "bindings.form.supplied_by (and constraints.slots[].supplied_by)",
+      "closed_list": true,
+      "values": [
+        {
+          "id": "asset_evidence",
+          "label": "Asset evidence",
+          "definition": "Comes from the stakeholder's evidence base about the asset. This is SECOND-ORDER intake — it arrives at their runtime, may never be the instructional designer's to hold, and is the reason the engine must ship and demo without it.",
+          "exhibited_by": "asset_code; [participant_count]; [prevalent_adverse_events]; [serious_adverse_events]"
+        },
+        {
+          "id": "authoring_context",
+          "label": "Authoring context",
+          "definition": "Known to whoever is operating the tool at the moment of authoring — document control values and the operator's own identity. Requires no dossier and no gathering; the tool can ask for it inline.",
+          "exhibited_by": "version_date; version_number; author"
+        },
+        {
+          "id": "stakeholder_decision",
+          "label": "Stakeholder decision",
+          "definition": "Neither gathered nor known — DECIDED, by a named accountable body, and the document records the decision. Cannot be supplied in advance with the evidence pack; the contract states who must have decided it before authoring can complete.",
+          "exhibited_by": "br_profile and its br_rationale (the SMT's assessment)"
+        }
+      ]
+    }
+  }
+}

@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://trainstorm.ai/schemas/form.facet.schema.json",
-  "facet_version": "form.v0.3",
+  "facet_version": "form.v0.5",
   "title": "Form Facet",
-  "description": "Accreted binding facet for form/template source, sibling to the procedure facet. Single-writer: the headwater authoring agent (form-specialized). Models a form TEMPLATE (a blank instrument) — never a submission. A filled-in form is an instance with real data (potential PII); it is a record/learner-model object under separate governance and is NOT modeled here. The action/label text lives in meaning.source_text; structure (sections, order) lives in the object facet; provenance lives in governance. This facet holds only what is irreducibly about capturing structured input. field_type and content_disposition are MIRRORS of vocab/form.enum.json (vocab wins; a conformance check asserts schema enum == vocab ids). performed_by reuses roles.registry and captures_record reuses records.registry — the SAME registries the procedure facet uses; no form-specific copy. v0.2 adds constraints.slots: NAMED fill-in points inside otherwise-retained text, so an instance overlay can key on (atom_id, slot_id) instead of a position in a string. v0.3 adds slots[].marker — the exact bracketed literal the slot stands for — because naming the slots was necessary but not sufficient: without a marker a renderer must still match spans to ids BY POSITION, which is the very thing v0.2 set out to eliminate.",
+  "description": "Accreted binding facet for form/template source, sibling to the procedure facet. Single-writer: the headwater authoring agent (form-specialized). Models a form TEMPLATE (a blank instrument) — never a submission. A filled-in form is an instance with real data (potential PII); it is a record/learner-model object under separate governance and is NOT modeled here. The action/label text lives in meaning.source_text; structure (sections, order) lives in the object facet; provenance lives in governance. This facet holds only what is irreducibly about capturing structured input. field_type and content_disposition are MIRRORS of vocab/form.enum.json (vocab wins; a conformance check asserts schema enum == vocab ids). performed_by reuses roles.registry and captures_record reuses records.registry — the SAME registries the procedure facet uses; no form-specific copy. v0.2 adds constraints.slots: NAMED fill-in points inside otherwise-retained text, so an instance overlay can key on (atom_id, slot_id) instead of a position in a string. v0.3 adds slots[].marker — the exact bracketed literal the slot stands for — because naming the slots was necessary but not sufficient: without a marker a renderer must still match spans to ids BY POSITION, which is the very thing v0.2 set out to eliminate. v0.4 adds evidence_kind and supplied_by, at BOTH the field and the slot level: a template's unfilled points enumerate a demand on someone outside the manifold, and naming that demand in governed terms is what makes tools/project_socket.py able to derive an intake contract instead of a checklist. MIRRORS of vocab/evidence.enum.json. v0.5 tracks evidence.v0.2 (determination, structured_set) — a mirror bump, no shape change.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -34,6 +34,30 @@
         "authorable",
         "example",
         "instructional_transient"
+      ]
+    },
+    "evidence_kind": {
+      "type": "string",
+      "description": "What kind of evidence this demand requires. Present on a DEMAND — an authorable field, or a field whose slots leave points unfilled. Omitted elsewhere: a controlled_standard sentence with no slots demands nothing, and an instructional_transient block is deleted rather than filled. MIRROR of vocab/evidence.enum.json evidence_kind ids. Deliberately NOT derived from field_type — text_short covers both an identifier and a version stamp — so this is a recorded judgment read off the demand's own expects/source text, with the same standing as content_disposition read off the template's colour convention.",
+      "enum": [
+        "identifier",
+        "date",
+        "count",
+        "term_list",
+        "governed_selection",
+        "judgment",
+        "determination",
+        "structured_set",
+        "person_identity"
+      ]
+    },
+    "supplied_by": {
+      "type": "string",
+      "description": "Who the demand falls on: the stakeholder's asset evidence, the operator's authoring context, or a named body's decision. MIRROR of vocab/evidence.enum.json supplied_by ids. Keeps the intake contract honest — a version number is not part of gathering an evidence dossier. Present wherever evidence_kind is.",
+      "enum": [
+        "asset_evidence",
+        "authoring_context",
+        "stakeholder_decision"
       ]
     },
     "constraints": {
@@ -86,6 +110,30 @@
               "expects": {
                 "type": "string",
                 "description": "What the author must supply here, in plain words."
+              },
+              "evidence_kind": {
+                "type": "string",
+                "description": "As the field-level property, for this slot. A slot is a demand in its own right — the (atom_id, slot_id) key IS the demand id in the intake socket — so it carries its own kind rather than inheriting the sentence's.",
+                "enum": [
+                  "identifier",
+                  "date",
+                  "count",
+                  "term_list",
+                  "governed_selection",
+                  "judgment",
+                  "determination",
+                  "structured_set",
+                  "person_identity"
+                ]
+              },
+              "supplied_by": {
+                "type": "string",
+                "description": "As the field-level property, for this slot.",
+                "enum": [
+                  "asset_evidence",
+                  "authoring_context",
+                  "stakeholder_decision"
+                ]
               },
               "options_ref": {
                 "type": "string",

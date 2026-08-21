@@ -74,17 +74,29 @@ section(f"{R}_sec_instructions", "Instructions for Use.", R, 0,
 
 # ---------------- Cover block (TABLE 2) — labelled fields, [bracketed] slots ----------------
 SC = section(f"{R}_sec_cover", "Cover.", R, 1)
+# form.facet v0.4: every authorable field is a DEMAND on someone outside the manifold, so it names
+# what kind of evidence it wants and who it falls on. Both are read off the field's own words — the
+# same standing as reading content_disposition off the template's colour convention, and for the same
+# reason: a rule mapping field_type -> kind would be a guess (text_short covers both the asset code
+# and the version stamp), whereas a stored value is a recorded judgment with provenance.
 field(f"{SC}_f_asset_code",
       "Asset Development Code or International Non-proprietary Name.", SC, 0,
-      "text_short", "authorable", constraints={"required": True})
+      "text_short", "authorable", constraints={"required": True},
+      evidence_kind="identifier", supplied_by="asset_evidence")
 field(f"{SC}_f_version_date", "Version Date.", SC, 1,
-      "date", "authorable", constraints={"required": True, "format": "DD-MMM-YYYY"})
+      "date", "authorable", constraints={"required": True, "format": "DD-MMM-YYYY"},
+      evidence_kind="date", supplied_by="authoring_context")
 # "Final signed versions are X.0. The first final approved version is version 1.0."
 field(f"{SC}_f_version_number", "Version Number.", SC, 2,
-      "text_short", "authorable", constraints={"required": True, "format": "X.0"})
+      "text_short", "authorable", constraints={"required": True, "format": "X.0"},
+      evidence_kind="identifier", supplied_by="authoring_context")
+# person_identity is PII-bearing. The demand is real and stays in the contract; the VALUE may never
+# land in a content atom — it keys into a separately-governed identity tier and resolves at render
+# time, exactly as role_ ids already do. The gate refuses an instance atom that fills this.
 field(f"{SC}_f_author", "Author.", SC, 3,
       "person", "authorable", constraints={"required": True},
-      performed_by=["role_alsap_lead"])
+      performed_by=["role_alsap_lead"],
+      evidence_kind="person_identity", supplied_by="authoring_context")
 
 # ---------------- Approval block (TABLE 3) ----------------
 # Signature SLOTS only. A signed block is a submission (PII) held under separate governance — the
@@ -136,13 +148,18 @@ field(f"{SS}_f_narrative",
       # RENDERING too, which is where they had quietly survived.
       constraints={"slots": [
           {"id": "participant_count", "marker": "[Include # here]",
-           "expects": "Number of participants across clinical trials contributing to the safety profile."},
+           "expects": "Number of participants across clinical trials contributing to the safety profile.",
+           "evidence_kind": "count", "supplied_by": "asset_evidence"},
           {"id": "asset_code", "marker": "[ASPXXXX]",
-           "expects": "Asset development code or INN, matching the cover block."},
+           "expects": "Asset development code or INN, matching the cover block.",
+           "evidence_kind": "identifier", "supplied_by": "asset_evidence"},
+          # term_list, not text: a submission that arrives as a sentence has not met the demand.
           {"id": "prevalent_adverse_events", "marker": "[list of the most prevalent adverse events]",
-           "expects": "The most frequently encountered adverse events associated with the asset."},
+           "expects": "The most frequently encountered adverse events associated with the asset.",
+           "evidence_kind": "term_list", "supplied_by": "asset_evidence"},
           {"id": "serious_adverse_events", "marker": "[list of the most common serious adverse events]",
-           "expects": "Those among the prevalent events that were considered serious."}]})
+           "expects": "Those among the prevalent events that were considered serious.",
+           "evidence_kind": "term_list", "supplied_by": "asset_evidence"}]})
 
 field(f"{SS}_f_br_guidance",
       "Choose from the options below to document the SMT's assessment of the overall Benefit-Risk "
@@ -156,11 +173,18 @@ BR = field(f"{SS}_f_br_profile",
            "select_one", "authorable",
            options_ref="reg_benefit_risk_profile",
            constraints={"required": True},
-           performed_by=["role_smt", "role_gso"])
+           performed_by=["role_smt", "role_gso"],
+           # Neither gathered nor known — DECIDED. The contract states who must have decided it,
+           # not what to go and find; an evidence pack cannot supply this in advance.
+           evidence_kind="governed_selection", supplied_by="stakeholder_decision")
 
+# `judgment`, not `term_list` or `identifier`: not machine-checkable for correctness, only for
+# presence, authorship, and consistency with the selection it explains. Naming it that is what keeps
+# a checkable contract from over-claiming about the parts that cannot be checked.
 field(f"{SS}_f_br_rationale",
       "Rationale and phrasing for the selected Benefit-Risk profile.", SS, 4,
-      "text_long", "authorable", conditional_on=[{"field": BR}])
+      "text_long", "authorable", conditional_on=[{"field": BR}],
+      evidence_kind="judgment", supplied_by="stakeholder_decision")
 
 # ---- Example phrasing, per Benefit-Risk option ----
 # A SECTION WRAPPER, not loose siblings: the association "these belong to the rationale field" needs
@@ -241,6 +265,28 @@ proposed = {
 source_silent = {
   "_note": "Gaps, ambiguities and deferred scope surfaced by this ingest. Named, not invented.",
   "corpus": CORPUS,
+  # STRUCTURED, not only prose. tools/project_socket.py states in the intake contract how much of
+  # the template the contract actually covers, and a client-facing completeness claim must rest on
+  # data — a projection that regex-scraped the flags below for the word "deferred" would be one
+  # rewording away from silently claiming full coverage. The prose flag stays: it explains, this
+  # enumerates.
+  "deferred_scope": {
+    "decomposed": ["Cover", "Reviewed and approved by", "Version History",
+                   "Purpose and Stakeholder Review > Safety Profile Summary"],
+    "not_decomposed_sections": [
+      "Source of Aggregated Data and Pooling Strategies",
+      "Safety Topics of Interest",
+      "Data Analysis Approaches",
+      "Ongoing Safety Surveillance of Clinical Trials",
+      "Background Incidence of Anticipated SAEs",
+      "Communication of Safety Information",
+      "Supporting Documentation (Appendices 1-4)",
+      "References"],
+    "tables_total": 17,
+    "tables_decomposed": 4,
+    "note": "Each undecomposed section may carry demands of its own. Until it is decomposed the "
+            "socket cannot enumerate them, and says so rather than implying they do not exist."
+  },
   "flags": [
     "APPROVER COUNT — the approval table provides one 'Prepared by' and TWO 'Approved by' blocks, "
     "but SOP-AST-29080 names THREE approver roles (GSO, Medical Lead, ALSAP Lead). Whether the "

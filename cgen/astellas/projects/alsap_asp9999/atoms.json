@@ -224,10 +224,10 @@
   },
   {
     "atom_id": "atom_alsap_asp9999__form_ast34037_sec_cover_f_author",
-    "content_hash": "sha256:574e6653621e705e4eedc26c89cfe63a3de67e995ce19d54ce491272da789832",
+    "content_hash": "sha256:4630098a44dac4c09a886dbe1d2a7ee1c029c069611107957caaaf3210b1805d",
     "meaning": {
       "source_locale": "en",
-      "source_text": "role_alsap_lead",
+      "source_text": "person_asp9999_author",
       "kind": "instance_value"
     },
     "bindings": {
@@ -240,7 +240,7 @@
       }
     },
     "governance": {
-      "version": 1,
+      "version": 2,
       "status": "draft",
       "regulatory_binding": "regulatory",
       "owner": "role_alsap_lead"

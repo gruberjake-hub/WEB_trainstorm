@@ -100,6 +100,27 @@ if (A.value or A.select) and tdisp == "instructional_transient":
     raise SystemExit(f"{A.slot} is instructional_transient — guidance to be deleted before final, "
                      f"not a slot to author into. Use --decision deleted.")
 
+# A PII-bearing demand (form.facet v0.4 evidence_kind) accepts only an opaque key. The demand is
+# real and stays in the intake contract; the VALUE lives in a separately-governed identity tier and
+# resolves at render time, exactly as role_ ids already do. Refused here so the author is told
+# before the write; the gate remains the authority for a hand-edited store.
+import re as _re
+_ekinds = json.loads((P["vocab_dir"] / "evidence.enum.json").read_text()) \
+    if (P["vocab_dir"] / "evidence.enum.json").exists() else {"dimensions": {}}
+_PII = {v["id"] for v in _ekinds.get("dimensions", {}).get("evidence_kind", {}).get("values", [])
+        if v.get("pii_bearing")}
+_slotdef = next((s for s in tform.get("constraints", {}).get("slots", [])
+                 if s.get("id") == A.fills_slot), {}) if A.fills_slot else tform
+if _slotdef.get("evidence_kind") in _PII and (A.value or A.select):
+    _v = (A.value or A.select).strip()
+    if not _re.fullmatch(r"person_[a-z0-9_]+", _v):
+        raise SystemExit(
+            f"{A.slot} is a '{_slotdef['evidence_kind']}' demand — PII-bearing. It accepts an "
+            f"opaque person_ key only, never a name and never a role id (a role answers who is "
+            f"ACCOUNTABLE, which form.performed_by already carries; it is not the value of the "
+            f"field). Got {_v!r}. The key resolves at render time against the identity tier "
+            f"declared in the project manifest.")
+
 atoms = load(PROJ / "atoms.json", [])
 by_id = {a["atom_id"]: a for a in atoms}
 dec_doc = load(PROJ / "instance_decisions.json", {

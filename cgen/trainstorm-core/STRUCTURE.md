@@ -65,9 +65,11 @@ trainstorm-core/
 │   ├── element.schema.json               ✅ production contract, COURSE chain — same node as atom, ⬜ id question open
 │   ├── script.primitives.v1.json / .v2   ✅ generation IR (WHAT knowledge)
 │   ├── procedure.facet.schema.json       ✅ source-type facet — procedures  (procedure.v0.1)
-│   ├── form.facet.schema.json            ✅ source-type facet — forms       (form.v0.3, named slots + markers)
+│   ├── form.facet.schema.json            ✅ source-type facet — forms       (form.v0.5, + evidence_kind/supplied_by)
 │   ├── instance.facet.schema.json        ✅ authored overlay on a pinned template (instance.v0.1)
-│   ├── objectives.schema.json            ✅ intent ontology — objective node contract
+│   ├── objectives.schema.json            ✅ intent ontology — objective node contract  (v2: serves + bloom)
+│   ├── goal.schema.json                  ✅ business-outcome node — reachability is a REQUIRED gate
+│   ├── socket.schema.json                ✅ the INTAKE CONTRACT — derived, never authored (socket.v0.1)
 │   ├── template_manifest.schema.json     ✅
 │   ├── visual-asset.schema.json          ✅ one visual asset registry entry
 │   └── intent_sidecar.schema.json        ✅
@@ -75,9 +77,10 @@ trainstorm-core/
 ├── vocab/                                # governed, closed vocabularies
 │   ├── procedure.enum.json               ✅ meaning_kind · step_type
 │   ├── form.enum.json                    ✅ meaning_kind · field_type · content_disposition   (form.v0.2)
+│   ├── evidence.enum.json                ✅ evidence_kind · supplied_by — the socket's terms  (evidence.v0.2)
 │   ├── instance.enum.json                ✅ meaning_kind · disposition_decision
 │   ├── structure.enum.json               ✅ list · list_item (source-agnostic)
-│   ├── intent.enum.json                  ✅ rhetorical + pedagogical intents  — ⬜ unexercised
+│   ├── intent.enum.json                  ✅ rhetorical + pedagogical intents  — ✅ pedagogical → element.intent.move
 │   ├── primitives.registry.json          ⬜ text/motion/layout/interaction/style keys — partial
 │   └── complexity · tone · visual-type    ✅
 │
@@ -99,7 +102,8 @@ trainstorm-core/
 │   └── brands/                           ✅
 │
 ├── locales/                              ⬜ externalized translations keyed by element_id — README only
-├── ontology/objectives.json              ✅ obj_ nodes — 2 seeded, `status: example`
+├── ontology/objectives.json              ✅ obj_ nodes — 2 seeded, `status: example` (v2: serves + bloom)
+├── ontology/goals.json                   ✅ goal_ nodes — 1 seeded, `status: example`; the WARRANT
 │
 ├── architecture/                         # docs of record (the .md files sync to Project knowledge)
 │   ├── manifold.md · conventions.md · atom-spec.md          ✅
@@ -119,6 +123,7 @@ trainstorm-core/
 │   ├── harness_paths.py                  ✅ 4 anchors: core · registry · project · template
 │   ├── validate_atoms.py                 ✅ THE GATE — schema · drift · vocab · instance
 │   ├── selftest_form_gate.py             ✅ 17/17     selftest_instance_gate.py  ✅ 17/17
+│   ├── selftest_socket.py                ✅ 21/21     demand rules · PII · contract honesty
 │   ├── headwater_ingest.py / _form.py    ✅ procedure · form ingests
 │   ├── store_merge.py                    ✅ the idempotent merge rule — lives once, both ingests import it
 │   ├── resolve_slot.py                   ✅ the walk: one slot → grounding packet (+ sufficiency)
@@ -127,6 +132,7 @@ trainstorm-core/
 │   ├── accept_value.py                   ✅ the ONLY writer into an instance store
 │   ├── reconcile.py · approve.py · adopt_registries.py      ✅ round-trip · sign-off · promote-UP
 │   ├── project_sop.py · project_alsap.py · project_review_table.py  ✅ projections
+│   ├── project_socket.py                 ✅ template → INTAKE CONTRACT (json + client-facing html)
 │   ├── lint.py · validate_objectives.py  ✅
 │   ├── localize/ · chat-capture/ · visual-assets/           ✅
 │   ├── realize.py                        ⬜ primitives → elements — ABSENT

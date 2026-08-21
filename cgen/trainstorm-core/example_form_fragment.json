@@ -51,6 +51,8 @@
         "object": { "belongs_to": "atom_form_alsap_sec000_cover", "order": 1 },
         "form": {
           "field_type": "date",
+          "evidence_kind": "date",
+          "supplied_by": "authoring_context",
           "content_disposition": "authorable",
           "constraints": { "required": true, "format": "DD-MMM-YYYY" }
         }
@@ -107,6 +109,8 @@
         "object": { "belongs_to": "atom_form_alsap", "order": 16 },
         "form": {
           "field_type": "text_long",
+          "evidence_kind": "judgment",
+          "supplied_by": "stakeholder_decision",
           "content_disposition": "authorable",
           "conditional_on": [{ "field": "atom_form_alsap_f_br_profile" }]
         }
@@ -125,6 +129,8 @@
         "object": { "belongs_to": "atom_form_alsap", "order": 30 },
         "form": {
           "field_type": "boolean",
+          "evidence_kind": "determination",
+          "supplied_by": "asset_evidence",
           "content_disposition": "authorable",
           "constraints": { "required": true }
         }
@@ -143,6 +149,8 @@
         "object": { "belongs_to": "atom_form_alsap", "order": 31 },
         "form": {
           "field_type": "text_long",
+          "evidence_kind": "judgment",
+          "supplied_by": "asset_evidence",
           "content_disposition": "authorable",
           "conditional_on": [{ "field": "atom_form_alsap_f_event_adjudication", "equals": "true" }]
         }
@@ -161,6 +169,8 @@
         "object": { "belongs_to": "atom_form_alsap", "order": 20 },
         "form": {
           "field_type": "table",
+          "evidence_kind": "structured_set",
+          "supplied_by": "asset_evidence",
           "content_disposition": "authorable",
           "constraints": { "repeatable": true }
         }

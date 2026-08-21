@@ -1,6 +1,27 @@
 {
   "_note": "Gaps, ambiguities and deferred scope surfaced by this ingest. Named, not invented.",
   "corpus": "FORM-AST-34037 v1.0 — ALSAP Template (docx, Final)",
+  "deferred_scope": {
+    "decomposed": [
+      "Cover",
+      "Reviewed and approved by",
+      "Version History",
+      "Purpose and Stakeholder Review > Safety Profile Summary"
+    ],
+    "not_decomposed_sections": [
+      "Source of Aggregated Data and Pooling Strategies",
+      "Safety Topics of Interest",
+      "Data Analysis Approaches",
+      "Ongoing Safety Surveillance of Clinical Trials",
+      "Background Incidence of Anticipated SAEs",
+      "Communication of Safety Information",
+      "Supporting Documentation (Appendices 1-4)",
+      "References"
+    ],
+    "tables_total": 17,
+    "tables_decomposed": 4,
+    "note": "Each undecomposed section may carry demands of its own. Until it is decomposed the socket cannot enumerate them, and says so rather than implying they do not exist."
+  },
   "flags": [
     "APPROVER COUNT — the approval table provides one 'Prepared by' and TWO 'Approved by' blocks, but SOP-AST-29080 names THREE approver roles (GSO, Medical Lead, ALSAP Lead). Whether the block is fixed at two or repeatable is not stated. Modelled as two fixed slots, each carrying all three candidate roles in performed_by. Open question for the SME.",
     "BLUE TEXT — RESOLVED 2026-08-20, no SME needed. A full run-colour audit shows a consistent three-colour convention, self-evidenced by the legend entries' own colours: black upright = standard (97 paras), green 00B050 upright = example (23 paras), blue 5B9BD5 ITALIC = instructional (89 paras). Blue does two jobs, split by italics: italic blue is an instructional block; upright blue inside [ ] is a fill-in slot (authorable). The template is internally consistent; the earlier ambiguity was a sampling error on our side.",
