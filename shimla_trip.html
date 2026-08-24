@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shimla — Nicole &amp; Rohil's Wedding · Travel Plan</title>
+<style>
+  :root{
+    --cedar:#1f3d2b;
+    --cedar-deep:#132a1d;
+    --pine:#3a6b4a;
+    --marigold:#e6a11c;
+    --saffron:#c9541f;
+    --paper:#f7f1e3;
+    --paper-2:#efe6d1;
+    --card:#fffaf0;
+    --ink:#2a2622;
+    --ink-2:#5b544b;
+    --rule:#d9cdb2;
+    --ok:#2f7a4a;
+    --warn:#b7791f;
+    --open:#9a3b1c;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:16px;line-height:1.55;
+  }
+  h1,h2,h3,h4{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;line-height:1.15;margin:0 0 .4em;color:var(--cedar-deep);font-weight:600}
+  h1{font-size:clamp(2rem,5vw,3.4rem);letter-spacing:-.01em}
+  h2{font-size:1.7rem;margin-top:0;padding-top:.2rem}
+  h3{font-size:1.2rem;margin-top:1.3rem}
+  p{margin:.5rem 0 .9rem}
+  a{color:var(--saffron)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--paper-2);padding:.05em .35em;border-radius:4px;font-size:.92em}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 20px}
+
+  /* header */
+  header{background:var(--cedar-deep);color:#f4ecd8;position:relative;overflow:hidden}
+  header .wrap{position:relative;padding-top:52px;padding-bottom:28px;z-index:1}
+  header .kicker{font-family:"Iowan Old Style",Palatino,Georgia,serif;font-style:italic;color:var(--marigold);font-size:1.05rem;letter-spacing:.02em}
+  header h1{color:#fbf5e6;margin:.2em 0 .25em}
+  header .sub{color:#cfd9cf;font-size:1.05rem;max-width:640px}
+  header .meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;font-size:.92rem;color:#e6dcc3}
+  header .meta b{color:var(--marigold);font-weight:600}
+  .ridges{position:absolute;left:0;right:0;bottom:0;width:100%;height:190px;display:block;opacity:.9}
+  .updated{display:inline-block;background:rgba(230,161,28,.15);border:1px solid rgba(230,161,28,.5);color:#f6dfa6;padding:4px 10px;border-radius:999px;font-size:.82rem;margin-top:16px}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:5;background:var(--cedar);border-bottom:3px solid var(--marigold)}
+  nav .wrap{display:flex;gap:2px;overflow-x:auto;padding:0 12px;scrollbar-width:none}
+  nav .wrap::-webkit-scrollbar{display:none}
+  nav a{color:#efe6d1;text-decoration:none;padding:12px 12px;white-space:nowrap;font-size:.9rem;border-bottom:3px solid transparent;margin-bottom:-3px}
+  nav a:hover{border-bottom-color:var(--marigold);color:#fff}
+
+  section{padding:44px 0 8px;border-bottom:1px solid var(--rule);scroll-margin-top:48px}
+  section:last-of-type{border-bottom:0}
+  .lede{font-size:1.08rem;color:var(--ink-2);max-width:720px}
+
+  /* status board */
+  .board{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 8px}
+  .col{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:14px 16px 8px;border-top:5px solid var(--rule)}
+  .col.ok{border-top-color:var(--ok)} .col.warn{border-top-color:var(--warn)} .col.open{border-top-color:var(--open)}
+  .col h3{margin:0 0 8px;font-size:1.05rem;display:flex;align-items:center;gap:8px}
+  .col ul{margin:0;padding-left:1.1rem}
+  .col li{margin:.3rem 0;font-size:.95rem}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .ok .dot{background:var(--ok)} .warn .dot{background:var(--warn)} .open .dot{background:var(--open)}
+
+  /* checklist */
+  .checks{list-style:none;padding:0;margin:14px 0}
+  .checks li{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:12px 14px;background:var(--card);border:1px solid var(--rule);border-radius:10px;margin-bottom:10px;align-items:start}
+  .checks .box{width:20px;height:20px;border:2px solid var(--pine);border-radius:5px;margin-top:3px}
+  .checks b{color:var(--cedar-deep)}
+  .checks .when{display:inline-block;background:var(--paper-2);color:var(--ink-2);font-size:.78rem;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
+  .checks .when.now{background:#f8dcc9;color:var(--open)}
+  .checks small{display:block;color:var(--ink-2);margin-top:4px;font-size:.92rem}
+  .handled{background:var(--paper-2);border:1px dashed var(--rule);border-radius:10px;padding:12px 16px;margin:12px 0 10px;font-size:.95rem}
+  .handled b{color:var(--cedar-deep)}
+
+  /* tables */
+  table{border-collapse:collapse;width:100%;margin:12px 0 18px;background:var(--card);border:1px solid var(--rule);border-radius:10px;overflow:hidden;font-size:.95rem}
+  th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule)}
+  th{background:var(--paper-2);font-weight:600;color:var(--cedar-deep);font-size:.85rem;letter-spacing:.03em;text-transform:uppercase}
+  tr:last-child td{border-bottom:0}
+  td.t{white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--ink-2);width:1%}
+  .tablewrap{overflow-x:auto}
+
+  /* callouts */
+  .note{border-left:4px solid var(--marigold);background:#fbf3df;padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.95rem}
+  .note.red{border-left-color:var(--saffron);background:#f9e6da}
+  .note.green{border-left-color:var(--pine);background:#e8f0e8}
+  .note b:first-child{color:var(--cedar-deep)}
+
+  /* flight cards */
+  .legs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+  .leg{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:16px 18px}
+  .leg h3{margin:0 0 10px;display:flex;justify-content:space-between;align-items:baseline}
+  .leg h3 span{font-family:inherit;font-size:.8rem;color:var(--ink-2);font-weight:400}
+  .seg{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;padding:8px 0;border-top:1px dashed var(--rule)}
+  .seg:first-of-type{border-top:0}
+  .seg .tm{font-variant-numeric:tabular-nums;color:var(--ink-2);font-size:.9rem;white-space:nowrap}
+  .seg .ap{font-weight:600;color:var(--cedar-deep)}
+  .seg .fl{color:var(--ink-2);font-size:.9rem}
+  .layover{background:var(--paper-2);border-radius:8px;padding:8px 12px;font-size:.88rem;color:var(--ink-2);margin:6px 0}
+
+  /* route */
+  .route{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:12px 8px 4px;margin:10px 0 18px;overflow-x:auto}
+  .route svg{display:block;width:100%;min-width:760px;height:auto}
+
+  /* days */
+  .day{background:var(--card);border:1px solid var(--rule);border-radius:12px;margin:14px 0;overflow:hidden}
+  .day .head{display:flex;align-items:baseline;gap:14px;padding:12px 18px;background:var(--paper-2);border-bottom:1px solid var(--rule);flex-wrap:wrap}
+  .day .head .d{font-family:"Iowan Old Style",Palatino,Georgia,serif;font-size:1.25rem;font-weight:600;color:var(--cedar-deep)}
+  .day .head .w{color:var(--ink-2);font-size:.9rem}
+  .day .head .tag{margin-left:auto;background:var(--marigold);color:#2a1e05;font-size:.75rem;padding:2px 9px;border-radius:999px;font-weight:600;letter-spacing:.03em}
+  .day .head .tag.big{background:var(--saffron);color:#fff}
+  .day .body{padding:12px 18px 6px}
+  .day .body p{margin:.35rem 0 .7rem}
+  .day table{margin:8px 0 12px}
+  .day .body ul{margin:.3rem 0 .8rem;padding-left:1.2rem}
+  .carry{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;background:var(--paper-2);border-radius:8px;padding:9px 12px;margin:4px 0 12px;font-size:.9rem}
+  .carry>b{color:var(--saffron);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;padding-top:2px}
+  .carry span b{color:var(--cedar-deep)}
+  .ledger td:first-child{font-weight:600;color:var(--cedar-deep);white-space:nowrap}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .swatches{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
+  .sw{width:38px;height:38px;border-radius:8px;border:1px solid rgba(0,0,0,.15);position:relative}
+  .sw.no::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 46%,#fff 46%,#fff 54%,transparent 54%),linear-gradient(45deg,transparent 46%,#fff 46%,#fff 54%,transparent 54%)}
+  .sw.no.light::after{background:linear-gradient(135deg,transparent 46%,#2a2622 46%,#2a2622 54%,transparent 54%),linear-gradient(45deg,transparent 46%,#2a2622 46%,#2a2622 54%,transparent 54%)}
+  .hindi{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin:10px 0 16px}
+  .hindi div{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:8px 12px;font-size:.93rem}
+  .hindi b{color:var(--saffron);font-family:"Iowan Old Style",Palatino,Georgia,serif;font-size:1.02rem}
+
+  .open-list{list-style:none;padding:0;margin:12px 0}
+  .open-list li{display:grid;grid-template-columns:1fr auto;gap:12px;padding:10px 14px;border:1px solid var(--rule);background:var(--card);border-radius:8px;margin-bottom:8px;align-items:center;font-size:.95rem}
+  .owner{font-size:.78rem;padding:3px 9px;border-radius:999px;background:var(--paper-2);color:var(--ink-2);white-space:nowrap}
+  .owner.you{background:#f8dcc9;color:var(--open)}
+  .owner.jake{background:#e8f0e8;color:var(--ok)}
+  .owner.wed{background:#fbf3df;color:var(--warn)}
+
+  footer{padding:30px 0 50px;color:var(--ink-2);font-size:.88rem;text-align:center}
+
+  @media (max-width:760px){
+    .board,.legs,.two{grid-template-columns:1fr}
+    header .wrap{padding-top:36px}
+    .ridges{height:120px}
+  }
+  @media print{
+    nav{display:none}
+    header{background:#fff;color:#000}
+    header h1,header .sub,header .meta{color:#000}
+    .ridges{display:none}
+    section{break-inside:auto}
+    .day,.leg,.col{break-inside:avoid}
+    body{font-size:12.5px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kicker">Nicole &amp; Rohil · Wildflower Hall, Shimla · October 2–5, 2026</div>
+    <h1>The Shimla Plan</h1>
+    <p class="sub">Everything for the trip in one place — what's booked, what's still getting sorted, and the short list of things that need doing before we leave. Written for Norah; Jake keeps it current.</p>
+    <div class="meta">
+      <div><b>Depart</b> Sat Sep 26 · O'Hare</div>
+      <div><b>Home</b> Tue Oct 6 · via Heathrow</div>
+      <div><b>BA ref</b> ZHHJUS</div>
+      <div><b>Cabin</b> World Traveller Plus</div>
+    </div>
+    <span class="updated">Plan v2 · updated Monday, August 24, 2026 — this document changes as things get sorted</span>
+  </div>
+  <svg class="ridges" viewBox="0 0 1200 190" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,190 L0,120 L90,80 L160,105 L240,55 L330,95 L420,40 L510,90 L590,60 L680,100 L760,50 L850,85 L930,45 L1010,95 L1100,70 L1200,110 L1200,190 Z" fill="#1c3a29"/>
+    <path d="M0,190 L0,145 L110,120 L200,140 L290,105 L380,130 L470,100 L560,135 L650,110 L740,140 L830,115 L920,135 L1010,120 L1100,140 L1200,125 L1200,190 Z" fill="#2c5238"/>
+    <path d="M0,190 L0,170 L150,160 L300,172 L450,158 L600,170 L750,160 L900,172 L1050,162 L1200,168 L1200,190 Z" fill="#3a6b4a"/>
+    <path d="M0,183 C300,178 600,186 900,180 S1150,182 1200,181" stroke="#e6a11c" stroke-width="2" fill="none" stroke-dasharray="6 5"/>
+  </svg>
+</header>
+
+<nav><div class="wrap">
+  <a href="#status">Status</a>
+  <a href="#todo">Your to-do list</a>
+  <a href="#flights">Flights</a>
+  <a href="#ground">Getting around</a>
+  <a href="#lodging">Where we sleep</a>
+  <a href="#days">Day by day</a>
+  <a href="#wardrobe">Wardrobe</a>
+  <a href="#objects">Things that resurface</a>
+  <a href="#practical">Practical</a>
+  <a href="#open">Still sorting</a>
+</div></nav>
+
+<div class="wrap">
+
+<!-- ============ STATUS ============ -->
+<section id="status">
+  <h2>Where things stand</h2>
+  <p class="lede">The wedding is at Wildflower Hall, a hilltop hotel above Shimla in Himachal Pradesh, on Friday–Monday, October 2–5. We fly into Delhi on the morning of Monday, September 28, drive to Chandigarh (where Rohil's family lives) for a few days of shopping, dance practice and jet lag, head up the mountain on the 2nd, and fly home from Delhi on the 6th.</p>
+
+  <div class="board">
+    <div class="col ok">
+      <h3><span class="dot"></span>Booked</h3>
+      <ul>
+        <li>Flights ORD → LHR → DEL and back, BA <code>ZHHJUS</code>, premium economy, 2 × 23 kg bags each</li>
+        <li>Jake's UK ETA (approved) and India e-Visa (submitted)</li>
+        <li>Delhi airport pickup on Sept 28 — private driver arranged by Rohil's father</li>
+      </ul>
+    </div>
+    <div class="col warn">
+      <h3><span class="dot"></span>In progress</h3>
+      <ul>
+        <li>Wildflower Hall rooms — probably a wedding room block; confirming</li>
+        <li>Chandigarh lodging Sept 28 – Oct 1 — asking the wedding side for their recommendation</li>
+        <li>Oct 5 evening: car down to Chandigarh, then a short flight to Delhi</li>
+        <li>Your visa/ETA paperwork — see the to-do list below</li>
+      </ul>
+    </div>
+    <div class="col open">
+      <h3><span class="dot"></span>Still open</h3>
+      <ul>
+        <li>Whether you need to arrive at Wildflower Hall Friday with the families (you're in the wedding party) — likely yes</li>
+        <li>Delhi hotel for the night of Oct 5 (near the airport)</li>
+        <li>Whether to add one buffer day so the Oct 5 dash is less of a dash — <em>your call as much as Jake's</em></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TODO ============ -->
+<section id="todo">
+  <h2>Your to-do list</h2>
+  <p class="lede">These are the things only you can do. Two of them (the two travel authorizations) are worth doing this week — they're cheap and quick, and you don't want to be waiting on a government email in late September.</p>
+
+  <ul class="checks">
+    <li><span class="box"></span><div>
+      <b>Apply for the India e-Visa</b> <span class="when now">this week</span>
+      <small>Official site only: <code>indianvisaonline.gov.in</code> (there are look-alike sites that charge triple). Choose <b>e-Tourist</b>. The 30-day version covers our dates; Jake chose the 1-year one because he may stay on a bit. You'll need a passport photo and a scan of the passport photo page; the "reference in India" is Wildflower Hall (address in the lodging section). Government fee for US passports is roughly $25 for the 30-day and $40 for the 1-year — confirm on the site. The government's stated minimum is 4 days before travel, but grants sometimes take longer. <b>When the email arrives, make sure it says GRANTED</b>, not just "received," then print it. You'll need the printout at BA check-in in Chicago and again at immigration in Delhi.</small>
+    </div></li>
+    <li><span class="box"></span><div>
+      <b>Get the UK ETA</b> <span class="when now">this week</span>
+      <small>Because we change planes (and terminals) at Heathrow. The official route is the "UK ETA" app or <code>gov.uk/eta</code>; it's £16, usually approved within minutes to a few hours, and lasts two years. Technically there's a temporary exemption for people who stay airside at Heathrow, but our Terminal 3 → Terminal 5 change is the exact case that trips people up, so just get it. Nothing to print — it's linked to your passport electronically.</small>
+    </div></li>
+    <li><span class="box"></span><div>
+      <b>Check your passport</b> <span class="when now">now</span>
+      <small>India wants at least six months of validity beyond your arrival date (so valid past March 28, 2027) and two blank pages. If you're close on either, say so this week.</small>
+    </div></li>
+    <li><span class="box"></span><div>
+      <b>Log in to BA "Manage My Booking"</b> <span class="when">this week</span>
+      <small>Reference <code>ZHHJUS</code> plus your last name at <code>ba.com</code>. Confirm all four flights show under your name (the final Heathrow → Chicago leg was cut off on the confirmation we have — please note its flight number and times if you see it), add your passport details, and pick seats. Premium economy on BA is 2-3-2 or 2-4-2 depending on the plane; the pairs by the window are the ones to grab.</small>
+    </div></li>
+    <li><span class="box"></span><div>
+      <b>Tell the wedding side you're coming Friday</b> <span class="when">soon</span>
+      <small>As wedding party, you likely arrive at Wildflower Hall on Friday Oct 2 with the families rather than Saturday with general guests. Whoever is coordinating for Nicole's side can confirm this, and also whether your room is in the wedding block (most likely) or booked separately.</small>
+    </div></li>
+    <li><span class="box"></span><div>
+      <b>File the India e-Arrival card</b> <span class="when">Sept 25–28</span>
+      <small>A short online form that must be done within 72 hours of landing: <code>indianvisaonline.gov.in/earrival/</code>. Jake will remind you. Keep a screenshot of the confirmation.</small>
+    </div></li>
+    <li><span class="box"></span><div>
+      <b>Money and phone</b> <span class="when">before we go</span>
+      <small>Tell your bank you'll be in the UK and India. Cards work almost everywhere but <b>Apple Pay doesn't</b>, so carry some rupees for small things — an ATM at Delhi airport is the easiest source. Install WhatsApp if you haven't; it's how everyone in India communicates, including the wedding group. Check your carrier's international plan.</small>
+    </div></li>
+    <li><span class="box"></span><div>
+      <b>Pack for a mountain, not for Delhi</b> <span class="when">before we go</span>
+      <small>Wildflower Hall sits at 8,250 feet. Evening events run from 7 PM past midnight outdoors or in open pavilions — bring real layers and a shawl or wrap that works over formalwear (or buy a Himachali one there, they're famous for them). Also: a universal plug adaptor, a battery pack, comfortable shoes for Chandigarh days, and anything you can't buy easily abroad. One suggestion, offered once: <b>a single pouch for passport, printed e-Visa, and cards</b> that lives in the same pocket of the same bag for the whole trip. Everything that has to be produced at a counter comes out of that one place and goes back into it.</small>
+    </div></li>
+  </ul>
+
+  <div class="handled"><b>Jake has these:</b> confirming the Delhi driver pickup · booking the Oct 5 Chandigarh → Delhi flight · booking the Delhi airport hotel for Oct 5 · the car from Wildflower Hall down to Chandigarh on Oct 5 · his own train ticket up the mountain. You'll get the confirmations as they land.</div>
+</section>
+
+<!-- ============ FLIGHTS ============ -->
+<section id="flights">
+  <h2>Flights</h2>
+  <p class="lede">British Airways, booking reference <code>ZHHJUS</code>. World Traveller Plus (premium economy) the whole way, with two checked bags of 23 kg each per person. The Chicago–London leg is a BA ticket flown by American Airlines, which just means you check in at the American desks in Terminal 3 at O'Hare.</p>
+
+  <div class="legs">
+    <div class="leg">
+      <h3>Outbound <span>Sat Sep 26 → Mon Sep 28</span></h3>
+      <div class="seg"><div class="tm">Sat Sep 26<br>8:50 PM</div><div><div class="ap">Depart Chicago O'Hare — Terminal 3</div><div class="fl">BA1518, operated by American Airlines as AA54 · about 8 hours</div></div></div>
+      <div class="seg"><div class="tm">Sun Sep 27<br>10:50 AM</div><div><div class="ap">Arrive London Heathrow — Terminal 3</div></div></div>
+      <div class="layover">8-hour connection. We do this one together: follow the purple <b>Flight Connections</b> signs to the bus to Terminal 5 — don't exit to arrivals. Long enough for a real meal and a shower in the terminal if you want one. <b>Before leaving the first plane:</b> seat-back pocket, then the pouch — the printed e-Visa has to survive this connection; Delhi immigration wants it tomorrow morning.</div>
+      <div class="seg"><div class="tm">Sun Sep 27<br>6:50 PM</div><div><div class="ap">Depart Heathrow — Terminal 5</div><div class="fl">BA257 · about 8 h 40 m, overnight</div></div></div>
+      <div class="seg"><div class="tm">Mon Sep 28<br>8:00 AM</div><div><div class="ap">Arrive Delhi — Terminal 3</div><div class="fl">In order: immigration (passport + printed e-Visa out of the pouch, then back in), baggage, then out through the exit where drivers wait with name signs. Realistic pickup around 10 AM.</div></div></div>
+    </div>
+    <div class="leg">
+      <h3>Return <span>Tue Oct 6</span></h3>
+      <div class="seg"><div class="tm">Tue Oct 6<br>8:10 AM</div><div><div class="ap">Depart Delhi — Terminal 3</div><div class="fl">BA136 · about 9 h 45 m</div></div></div>
+      <div class="seg"><div class="tm">Tue Oct 6<br>1:25 PM</div><div><div class="ap">Arrive Heathrow — Terminal 5</div></div></div>
+      <div class="seg"><div class="tm">Tue Oct 6<br>afternoon</div><div><div class="ap">Heathrow → Chicago</div><div class="fl">Flight number and times to be confirmed from Manage My Booking (see to-do list)</div></div></div>
+      <div class="layover">Your return is booked exactly as shown. Jake is still deciding whether to stay in India a few extra days after the wedding; if he does, only his ticket changes — yours doesn't move.</div>
+    </div>
+  </div>
+
+  <div class="note"><b>Timing on the way over.</b> We land in Delhi at 8 AM, which is close to ideal for beating jet lag going east. The rule for Monday the 28th: sleep in the car to Chandigarh all you like, but no naps in a hotel bed. Stay up until 9 or 10 PM local and you'll be mostly reset by Tuesday.</div>
+
+  <h3>The route</h3>
+  <div class="route">
+    <svg viewBox="-10 0 960 200" role="img" aria-label="Route: Chicago to London to Delhi to Chandigarh to Shimla, then back via Chandigarh, Delhi, London to Chicago">
+      <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3a6b4a"/></marker></defs>
+      <!-- outbound line -->
+      <path d="M60,60 H840" stroke="#3a6b4a" stroke-width="2.5" fill="none"/>
+      <!-- return line -->
+      <path d="M840,140 H60" stroke="#c9541f" stroke-width="2.5" fill="none" stroke-dasharray="7 5" marker-end="url(#arr)"/>
+      <!-- stops outbound -->
+      <g font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="12" fill="#2a2622">
+        <g><circle cx="60" cy="60" r="7" fill="#1f3d2b"/><text x="60" y="35" text-anchor="middle" font-weight="600">Chicago</text><text x="60" y="88" text-anchor="middle" fill="#5b544b">Sat 9/26 · 8:50 PM</text></g>
+        <g><circle cx="255" cy="60" r="7" fill="#1f3d2b"/><text x="255" y="35" text-anchor="middle" font-weight="600">London</text><text x="255" y="88" text-anchor="middle" fill="#5b544b">Sun 9/27 · 8 hr connection</text></g>
+        <g><circle cx="450" cy="60" r="7" fill="#1f3d2b"/><text x="450" y="35" text-anchor="middle" font-weight="600">Delhi</text><text x="450" y="88" text-anchor="middle" fill="#5b544b">Mon 9/28 · 8:00 AM</text></g>
+        <g><circle cx="645" cy="60" r="7" fill="#1f3d2b"/><text x="645" y="35" text-anchor="middle" font-weight="600">Chandigarh</text><text x="645" y="88" text-anchor="middle" fill="#5b544b">9/28 – 10/2 · by car</text></g>
+        <g><circle cx="840" cy="60" r="9" fill="#e6a11c" stroke="#1f3d2b" stroke-width="2"/><text x="840" y="35" text-anchor="middle" font-weight="600">Shimla</text><text x="840" y="88" text-anchor="middle" fill="#5b544b">10/2 – 10/5 · the wedding</text></g>
+        <!-- vertical link -->
+        <path d="M840,69 V131" stroke="#c9541f" stroke-width="2.5" stroke-dasharray="7 5"/>
+        <!-- stops return -->
+        <g><circle cx="645" cy="140" r="7" fill="#c9541f"/><text x="645" y="168" text-anchor="middle" fill="#5b544b">Mon 10/5 · car, then flight</text></g>
+        <g><circle cx="450" cy="140" r="7" fill="#c9541f"/><text x="450" y="168" text-anchor="middle" fill="#5b544b">10/5 night · Tue 8:10 AM out</text></g>
+        <g><circle cx="255" cy="140" r="7" fill="#c9541f"/><text x="255" y="168" text-anchor="middle" fill="#5b544b">Tue 10/6 · 1:25 PM</text></g>
+        <g><text x="60" y="168" text-anchor="middle" fill="#5b544b">Tue 10/6 · home</text></g>
+        <text x="450" y="118" text-anchor="middle" fill="#3a6b4a" font-size="11" font-style="italic">— outbound —</text>
+        <text x="450" y="192" text-anchor="middle" fill="#c9541f" font-size="11" font-style="italic">- - return - -</text>
+      </g>
+    </svg>
+  </div>
+  <p><b>The same thing in words:</b> Chicago to London overnight, eight hours in Heathrow, London to Delhi overnight. Land Monday morning, drive four to five hours north to Chandigarh, stay four nights. Friday morning, up the mountain to Shimla, three nights at the wedding. Monday afternoon back down to Chandigarh, one short flight to Delhi, one short night by the airport. Tuesday morning Delhi to London, Tuesday afternoon London to Chicago, home the same day.</p>
+</section>
+
+<!-- ============ GROUND ============ -->
+<section id="ground">
+  <h2>Getting around</h2>
+
+  <h3>Monday Sept 28 — Delhi to Chandigarh</h3>
+  <p>A private driver, arranged by Rohil's father, meets us at Delhi Terminal 3. It's about 4–5 hours on a good highway. We looked at flying this leg and rejected it — the terminal change and second security line would save under an hour and cost a lot of arrival-day patience. It's also possible the car is shared with other arriving guests; we'll know closer to the date.</p>
+
+  <h3>Friday Oct 2 — Chandigarh up to Shimla</h3>
+  <p>You ride up with the family convoy — a normal car, about 3½–4 hours of increasingly winding road, arriving at Wildflower Hall around midday. Jake is doing this leg separately on the Kalka–Shimla "toy train," a 5-hour narrow-gauge UNESCO line with 102 tunnels that's been on his list for years; he'll meet everyone at the hotel. The one favor: his bag rides in the convoy with you, since the train coaches are tiny.</p>
+  <div class="note"><b>Oct 2 is Gandhi Jayanti</b>, a national holiday — shops in Chandigarh are closed, which is why all the shopping happens on the 29th–30th.</div>
+
+  <h3>Monday Oct 5 — Shimla back to Delhi</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Time</th><th>What</th></tr>
+    <tr><td class="t">~1:00 PM</td><td>Leave Wildflower Hall after the Vidai (Nicole's send-off)</td></tr>
+    <tr><td class="t">~5:30–6:00 PM</td><td>Arrive Chandigarh airport — about 4 hours; the hotel is on the far side of Shimla, which adds 45 minutes</td></tr>
+    <tr><td class="t">Evening</td><td>Short flight Chandigarh → Delhi, about an hour (IndiGo or Air India, ~$30–60). Jake is booking; aiming for a 6–8 PM departure rather than the last one at ~9:45 PM</td></tr>
+    <tr><td class="t">~11:00 PM</td><td>Check in at a hotel in Aerocity, ten minutes from the airport, for a short night before the 8:10 AM flight home</td></tr>
+  </table></div>
+  <p>Why fly the last bit instead of driving straight through: eight hours of road at the end of a wedding weekend, mostly in the dark, on Indian highways, is the riskier option, not the safer one. If the short flight were ever cancelled, the fallback is that drive (arriving Delhi around 3–4 AM — miserable but workable), and we'd make that call early in the evening, not at the gate.</p>
+</section>
+
+<!-- ============ LODGING ============ -->
+<section id="lodging">
+  <h2>Where we sleep</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Nights</th><th>Where</th><th>Status</th></tr>
+    <tr><td class="t">Sat Sep 26</td><td>On the plane to London</td><td>—</td></tr>
+    <tr><td class="t">Sun Sep 27</td><td>On the plane to Delhi</td><td>—</td></tr>
+    <tr><td class="t">Sep 28 – Oct 1<br>(4 nights)</td><td><b>Chandigarh</b></td><td>To be decided. The wedding deck lists it as TBD too, so we're asking Rohil's family for a recommendation before booking on our own.</td></tr>
+    <tr><td class="t">Oct 2 – 4<br>(3 nights)</td><td><b>Wildflower Hall, Shimla</b></td><td>Very likely a wedding room block — the deck talks about guests "checking in," which is room-block language. Confirming before booking anything; rooms are $330+ a night at rack rate.</td></tr>
+    <tr><td class="t">Oct 5<br>(1 night)</td><td><b>Delhi — Aerocity</b>, by the airport</td><td>Jake is booking. Leading choice is the Pullman New Delhi Aerocity; Novotel next door is a solid backup.</td></tr>
+  </table></div>
+
+  <h3>Wildflower Hall</h3>
+  <p>Chharabra, Mashobra, Shimla, Himachal Pradesh 171012 · +91-177-2648585</p>
+  <p>Twenty-three acres of pine and cedar at 8,250 feet — higher than Shimla town itself — on the site of Lord Kitchener's old residence. Run by the Oberoi group. It's a properly beautiful place; the reason for all the layer-nagging in this document is that it's also a properly cold place after dark in October.</p>
+</section>
+
+<!-- ============ DAYS ============ -->
+<section id="days">
+  <h2>Day by day</h2>
+  <p class="lede">Ceremony times come from the wedding deck. Treat them as intentions rather than promises — Indian weddings run on their own clock, and the deck's own guidance is "chill vibes." Each ceremony has a one-line explanation so nothing on Sunday is a surprise.</p>
+
+  <div class="day"><div class="head"><span class="d">Sat Sep 26</span><span class="w">Chicago</span><span class="tag">Travel</span></div><div class="body">
+    <p>Evening departure from O'Hare Terminal 3, 8:50 PM. Aim to be at the airport by 6. Have the printed India e-Visa in hand — BA/American will ask for it at check-in, and then you need it again in Delhi, so it goes back in the pouch, not in the recycling.</p>
+  </div></div>
+
+  <div class="day"><div class="head"><span class="d">Sun Sep 27</span><span class="w">London Heathrow</span><span class="tag">Travel</span></div><div class="body">
+    <p>Land 10:50 AM, connect to Terminal 5 together, depart 6:50 PM. Eight hours: lunch, a walk, a shower if you like. The overnight to Delhi is where sleep matters most — eye mask and whatever helps.</p>
+    <div class="carry"><b>Off each plane</b><span>Seat-back pocket, under the seat, headphones, the pouch. Two planes today, two sweeps.</span></div>
+  </div></div>
+
+  <div class="day"><div class="head"><span class="d">Mon Sep 28</span><span class="w">Delhi → Chandigarh</span><span class="tag">Travel</span></div><div class="body">
+    <p>Land 8:00 AM, driver around 10, Chandigarh by mid-afternoon. Daylight and staying vertical until 9–10 PM is the whole anti-jet-lag plan. Nap in the car, not the hotel.</p>
+  </div></div>
+
+  <div class="day"><div class="head"><span class="d">Tue Sep 29 – Thu Oct 1</span><span class="w">Chandigarh</span><span class="tag">Flex days</span></div><div class="body">
+    <p>Meeting Rohil's family at their home, shopping for wedding clothes (Sector 17 — see Wardrobe), sightseeing, sangeet dance practice, and recovering from the time change. Thursday is deliberately kept loose as an alterations buffer for anything bought on Tuesday or Wednesday.</p>
+  </div></div>
+
+  <div class="day"><div class="head"><span class="d">Fri Oct 2</span><span class="w">Chandigarh → Wildflower Hall</span><span class="tag big">Wedding begins</span></div><div class="body">
+    <p><b>Gandhi Jayanti — national holiday.</b> Morning drive up with the families; Jake arrives by train around midday. Check in at Wildflower Hall.</p>
+    <ul>
+      <li>Afternoon: Rohil and Nicole's photo shoot</li>
+      <li>Nicole's own mehendi (henna) — 2–3 hours</li>
+      <li>Buffet dinner for the three families — <b>casual</b></li>
+      <li>Evening free</li>
+    </ul>
+    <div class="carry"><b>Tonight</b><span>Lay out Saturday's two outfits before bed — the yellow one and the evening one — and put the shawl with the evening one. Saturday changes happen fast and mid-day.</span></div>
+  </div></div>
+
+  <div class="day"><div class="head"><span class="d">Sat Oct 3</span><span class="w">Wildflower Hall</span><span class="tag big">Pre-wedding ceremonies</span></div><div class="body">
+    <div class="tablewrap"><table>
+      <tr><th>Time</th><th>Event</th><th>What it is</th></tr>
+      <tr><td class="t">10:00</td><td>Breakfast</td><td></td></tr>
+      <tr><td class="t">12:00</td><td>General guest check-in</td><td>Everyone else arrives</td></tr>
+      <tr><td class="t">1:00–4:00</td><td><b>Mehendi</b></td><td>Henna. Artists on hand for guests — get some done. Lunch, drinks, music, dancing. Daytime outfit.</td></tr>
+      <tr><td class="t">4:00–5:00</td><td><b>Haldi</b></td><td>Turmeric paste applied to the couple for blessing and protection. It flies. Wear something you don't mind staining — yellow is traditional and hides it.</td></tr>
+      <tr><td class="t">7:00–8:00</td><td><b>Choora &amp; Kaleera</b></td><td>The bride receives bangles from her maternal uncles; then shakes the kaleera ornaments over the unmarried women — whoever a piece falls on is said to marry next. Evening outfit.</td></tr>
+    </table></div>
+    <div class="carry"><b>The change</b><span>Between Haldi and Choora: empty the yellow outfit's pockets before it goes in the laundry pile — phone, room key, lip balm. The turmeric outfit is the one most likely to be left in a heap.</span></div>
+    <div class="carry"><b>Bring back</b><span>Shawl, phone, clutch. Mehendi means wet hands for an hour — put the phone somewhere it lives, not on a table.</span></div>
+  </div></div>
+
+  <div class="day"><div class="head"><span class="d">Sun Oct 4</span><span class="w">Wildflower Hall</span><span class="tag big">Wedding day</span></div><div class="body">
+    <div class="tablewrap"><table>
+      <tr><th>Time</th><th>Event</th><th>What it is</th></tr>
+      <tr><td class="t">9:00</td><td>Breakfast</td><td></td></tr>
+      <tr><td class="t">11:00–12:30</td><td><b>Havan</b></td><td>A fire ritual with offerings. Lunch afterward.</td></tr>
+      <tr><td class="t">2:30</td><td><b>Pagdi</b></td><td>Turban-tying for all the men — turbans provided.</td></tr>
+      <tr><td class="t">3:00</td><td><b>Sehra Bandi</b></td><td>Richa ties a beaded veil to Rohil's forehead.</td></tr>
+      <tr><td class="t">3:30–4:30</td><td><b>Baraat</b></td><td>The groom's processional — an hour of dancing toward the venue. Nicole's side joins about halfway through, then peels off in the last five minutes to receive Rohil's family. Susan applies a tilak (forehead mark); garlands and petals follow.</td></tr>
+      <tr><td class="t">4:00</td><td><b>Jaimala</b></td><td>The couple exchange garlands — this formally opens the ceremony.</td></tr>
+      <tr><td class="t">5:00–6:00</td><td><b>Pheras</b></td><td>Seven circuits of the sacred fire, the heart of the wedding. In Hindi; printed English translations will be handed out.</td></tr>
+      <tr><td class="t">7:30–8:30</td><td><b>Sangeet</b></td><td>Guests perform and dance for the couple (this is what the Chandigarh dance practice is for). Combined with the reception.</td></tr>
+      <tr><td class="t">8:30</td><td>Dinner &amp; dancing</td><td></td></tr>
+      <tr><td class="t">11:00</td><td>Afterparty</td><td>Outdoors, 8,250 ft, October. Shawl.</td></tr>
+    </table></div>
+    <div class="carry"><b>Shoes</b><span>They come off for the Havan and the Pheras. Put them beside where you'll be sitting, not at the entrance — the entrance is where three hundred pairs of shoes go to become one pair of shoes.</span></div>
+    <div class="carry"><b>Long day</b><span>Fourteen hours of events, one outfit. Battery pack in the clutch in the morning; shawl on a chair you'll return to, or on you.</span></div>
+  </div></div>
+
+  <div class="day"><div class="head"><span class="d">Mon Oct 5</span><span class="w">Wildflower Hall → Delhi</span><span class="tag">Departure</span></div><div class="body">
+    <p>10:00 breakfast · 11:00 <b>Vidai</b> and games — the bride's farewell to her parents' home, tearful and playful in roughly equal measure — <b>casual</b> · ~1:00 PM cars leave for Chandigarh · evening flight to Delhi · Aerocity hotel around 11 PM.</p>
+    <div class="carry"><b>Checkout</b><span>Pack before breakfast, not after the Vidai — the cars leave on a schedule and the Vidai doesn't. Last sweep in this order: <b>safe</b>, bathroom hook (Sunday's outfit), chargers in the wall, the drawer by the bed. The safe is the one everybody forgets, because it's designed to be.</span></div>
+    <div class="carry"><b>Aerocity</b><span>Eleven PM in, 5:30 AM out. <b>Don't unpack.</b> Take out the toothbrush and tomorrow's clothes, leave everything else zipped. Passport and pouch on top of the bag, not in the safe.</span></div>
+  </div></div>
+
+  <div class="day"><div class="head"><span class="d">Tue Oct 6</span><span class="w">Delhi → London → Chicago</span><span class="tag">Travel</span></div><div class="body">
+    <p>BA136 departs 8:10 AM — leave the hotel by 5:30. Land Heathrow 1:25 PM, connect on to Chicago the same afternoon. Home the same calendar day, which is the one nice thing about flying west.</p>
+  </div></div>
+</section>
+
+<!-- ============ WARDROBE ============ -->
+<section id="wardrobe">
+  <h2>Wardrobe</h2>
+  <p class="lede">Six events, three outfits. Friday's dinner and Monday's Vidai are casual. Below is the plan Jake worked out for himself — the color rules and the shopping logistics apply to everyone, and the shopping days are a good thing to do together. You'll have your own wedding-party guidance from Nicole's side on top of this.</p>
+
+  <div class="two">
+    <div>
+      <h3>When and what</h3>
+      <div class="tablewrap"><table>
+        <tr><th>When</th><th>What</th><th>Color</th></tr>
+        <tr><td>Sat afternoon<br><small>Mehendi → Haldi</small></td><td><b>Cheap and expendable</b></td><td><b>Yellow</b> — traditional for haldi, and turmeric stains permanently</td></tr>
+        <tr><td>Sat evening<br><small>Choora</small></td><td>Second outfit</td><td>Jewel tones</td></tr>
+        <tr><td>Sunday<br><small>all day</small></td><td><b>The investment piece</b></td><td>Jewel tones — royal blue, emerald, teal, wine, deep purple</td></tr>
+      </table></div>
+    </div>
+    <div>
+      <h3>Colors to avoid</h3>
+      <div class="swatches">
+        <div class="sw no" style="background:#111" title="Solid black"></div>
+        <div class="sw no light" style="background:#fff" title="Solid white"></div>
+        <div class="sw no" style="background:#b8191f" title="Dominant red"></div>
+        <div class="sw no light" style="background:linear-gradient(135deg,#f3e6c4,#c9a227)" title="Cream with heavy gold"></div>
+      </div>
+      <p><b>Solid black</b> and <b>solid white</b> are both inauspicious at a Hindu wedding. <b>Dominant red</b> is the bride's. <b>Cream with heavy gold</b> is groom's-family territory — Rohil's father is wearing it.</p>
+      <h3>Good colors</h3>
+      <div class="swatches">
+        <div class="sw" style="background:#f2c230" title="Yellow (Saturday day)"></div>
+        <div class="sw" style="background:#1f3f9e" title="Royal blue"></div>
+        <div class="sw" style="background:#0f7a4f" title="Emerald"></div>
+        <div class="sw" style="background:#0e7c86" title="Teal"></div>
+        <div class="sw" style="background:#722f37" title="Wine"></div>
+        <div class="sw" style="background:#4b2a7a" title="Deep purple"></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Jake's plan</h3>
+  <p>A <b>bandhgala or Jodhpuri suit</b> rather than a full sherwani — the bride's father and brother are in sherwanis, and a high-collar suit fits a friend-of-the-party better. It's also wearable again in Chicago, which a sherwani is not. Plus <b>juttis</b> (traditional flat shoes) and a <b>shawl</b> for the evenings. Bringing one cheap kurta set from the US as insurance in case the shopping days go sideways. Headwear is handled — the Pagdi ceremony supplies turbans for all the men.</p>
+
+  <h3>Shopping in Chandigarh, Sept 29–30</h3>
+  <p>Buying there rather than in Chicago: <b>Sector 17</b> has Manyavar, Tasva, Ethnix by Raymond and plenty of independents, and ready-to-wear runs roughly ₹10,000–30,000 ($120–360) versus multiples of that at home. Shopping on the 29th and 30th leaves the 1st as an alterations buffer, and the 2nd is a holiday with shops shut.</p>
+  <p>Two ways to not do this blind: ask Rohil's family — we're at their house anyway, they're local, and helping a foreign guest find wedding clothes is a normal and welcome ask that makes for a warmer first meeting than living-room small talk. Or stick to the branded stores, which are fixed-price, English-speaking, Western-sized, and do alterations in-house.</p>
+  <p>Bring: your measurements, the shoes you'll wear under the outfit (hem length depends on them), and screenshots of the outfit slides from the wedding deck to show the staff.</p>
+</section>
+
+<!-- ============ OBJECTS ============ -->
+<section id="objects">
+  <h2>Things that have to resurface</h2>
+  <p class="lede">For both of us. Every trip has a handful of physical objects that get used, put down, and then needed again somewhere else — and a hotel safe is a machine built specifically to defeat this list. Here they are, with where each one lives and the moment it has to come back out.</p>
+  <div class="tablewrap"><table class="ledger">
+    <tr><th>Object</th><th>Lives in</th><th>Needed at</th><th>The trap</th></tr>
+    <tr><td>Printed India e-Visa</td><td>The pouch</td><td>ORD check-in (Sat) → Delhi immigration (Mon AM)</td><td>Feels used after check-in. It isn't. Two planes and a terminal change between its two jobs.</td></tr>
+    <tr><td>Passport</td><td>The pouch</td><td>ORD, LHR bus, DEL immigration, every hotel check-in, DEL departure, LHR, ORD</td><td>Hotel front desks sometimes hold it for a photocopy. Don't walk away without it.</td></tr>
+    <tr><td>Phone + battery pack</td><td>Clutch / pocket</td><td>All day, every day</td><td>Mehendi (wet hands for an hour), Haldi (turmeric everywhere), and any table at any event.</td></tr>
+    <tr><td>Shawl</td><td>With the evening outfit</td><td>Sat 7 PM, Sun 7:30 PM onward, Mon morning</td><td>Chairs. It comes off when the dancing starts and stays on the chair when the dancing moves.</td></tr>
+    <tr><td>Shoes</td><td>Beside your seat</td><td>Havan and Pheras, Sunday</td><td>Removed for both fire ceremonies. Entrances collect hundreds of pairs; put yours where you'll be sitting.</td></tr>
+    <tr><td>Yesterday's outfit pockets</td><td>—</td><td>Every change, especially Saturday mid-day</td><td>Room key, lip balm, cash, phone. The turmeric outfit goes straight in a heap; empty it first.</td></tr>
+    <tr><td>Chargers + adaptor</td><td>One wall socket per hotel</td><td>Every checkout</td><td>Four hotels, four walls. Charge everything in one spot so there's one spot to check.</td></tr>
+    <tr><td>Hotel safe contents</td><td>The safe</td><td>Checkout, Oct 5 especially</td><td>The fast departure. First sweep, not last.</td></tr>
+    <tr><td>e-Arrival card confirmation</td><td>Phone screenshot</td><td>Delhi immigration, Mon AM</td><td>Filed Sept 25–28; an email in an inbox is not a screenshot on a lock screen.</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ PRACTICAL ============ -->
+<section id="practical">
+  <h2>Practical notes</h2>
+  <div class="two">
+    <div>
+      <p><b>Water:</b> bottled only, including for teeth. Hotel restaurants are fine; street ice is not.</p>
+      <p><b>Payments:</b> major cards accepted almost everywhere; Apple Pay is not. Keep rupees for small purchases, tips and autorickshaws.</p>
+      <p><b>Communication:</b> WhatsApp for everything. Hotel and café Wi-Fi is good; an international phone plan or an airport SIM covers the gaps.</p>
+      <p><b>Power:</b> India uses round-pin plugs (Type C/D/M), 230 V. A universal adaptor covers it; phones and laptops don't need a converter. Bring a battery pack for long ceremony days.</p>
+    </div>
+    <div>
+      <p><b>Timing:</b> expect things to start late and run late. The deck says it best: chill vibes.</p>
+      <p><b>Altitude and cold:</b> Wildflower Hall is at 8,250 feet. The deck's advice about "modest, loose-fitting clothes" was written by people picturing Delhi in the plains. Daytime up there in October is pleasant (60s °F); nights drop into the 40s. Real layers, and a shawl over formalwear for the evening events.</p>
+      <p><b>Health:</b> no vaccines are required for entry, but a travel-clinic conversation about routine boosters and a small kit (rehydration salts, anti-diarrheal, your usual painkiller) is sensible. Bring any prescription meds in original packaging.</p>
+    </div>
+  </div>
+
+  <h3>Who's who</h3>
+  <p><b>Nicole</b> (bride, née Smith) — Jake's former speech-team student. <b>Rohil</b> — the groom; his family is from Chandigarh. Families named in the wedding materials: <b>Smith</b>, <b>Bhargava</b>, <b>Pathak</b>. Other names that come up on the schedule: Susan, Molly, Josh, Amanda, Richa.</p>
+
+  <h3>A little Hindi</h3>
+  <div class="hindi">
+    <div><b>namaste</b> — hello</div>
+    <div><b>shukriya</b> — thank you</div>
+    <div><b>haan / nahin</b> — yes / no</div>
+    <div><b>shaadi</b> — wedding</div>
+    <div><b>aapse milkar accha laga</b> — nice to meet you</div>
+    <div><b>mera naam ___ hai</b> — my name is ___</div>
+    <div><b>dost</b> — friend</div>
+    <div><b>bhai / behen</b> — brother / sister</div>
+    <div><b>maa / papa</b> — mom / dad</div>
+  </div>
+</section>
+
+<!-- ============ OPEN ============ -->
+<section id="open">
+  <h2>Still getting sorted</h2>
+  <p class="lede">The honest list of what isn't nailed down yet, and who's on it. This section shrinks as the "Last updated" date moves.</p>
+  <ul class="open-list">
+    <li><span>India e-Visa — apply, then confirm the grant email says GRANTED</span><span class="owner you">Norah</span></li>
+    <li><span>UK ETA</span><span class="owner you">Norah</span></li>
+    <li><span>Confirm your Friday Oct 2 arrival with the families, and whether your room is in the block</span><span class="owner you">Norah</span></li>
+    <li><span>Check all four flights show in Manage My Booking; note the Heathrow → Chicago leg</span><span class="owner you">Norah</span></li>
+    <li><span>Jake's India e-Visa — waiting on the grant</span><span class="owner jake">Jake</span></li>
+    <li><span>Confirm the Sept 28 Delhi driver pickup (T3, ~10 AM)</span><span class="owner jake">Jake</span></li>
+    <li><span>Book the Oct 5 Chandigarh → Delhi flight (aiming 6–8 PM)</span><span class="owner jake">Jake</span></li>
+    <li><span>Book the Delhi Aerocity hotel for Oct 5</span><span class="owner jake">Jake</span></li>
+    <li><span>Car: Wildflower Hall → Chandigarh airport on Oct 5</span><span class="owner jake">Jake</span></li>
+    <li><span>Wildflower Hall room block — yes or no?</span><span class="owner wed">Wedding side</span></li>
+    <li><span>Chandigarh hotel recommendation for Sept 28 – Oct 1</span><span class="owner wed">Wedding side</span></li>
+    <li><span>Whether to add a buffer day so Oct 5 isn't a same-day mountain-to-airport dash</span><span class="owner">Both of us</span></li>
+    <li><span>File the e-Arrival card, Sept 25–28</span><span class="owner">Both of us</span></li>
+  </ul>
+</section>
+
+</div>
+
+<footer>
+  Nicole &amp; Rohil · Wildflower Hall · October 2–5, 2026 · Plan v2, August 24, 2026<br>
+  Questions, corrections, and "wait, what about—" all go to Jake.
+</footer>
+
+</body>
+</html>
