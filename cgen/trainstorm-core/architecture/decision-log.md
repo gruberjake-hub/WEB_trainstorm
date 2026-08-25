@@ -13,6 +13,29 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-25 — Realizer 1:many seed lands in the live ALSAP store (two atoms, not the SOP)
+
+The store was still 1:1 after Realizer v1 (one `ele_` per atom) and Cartographer v1 (intent on
+those records). This entry records the first extra occurrences: the same atom, twice, with
+distinct `move`, no duplicated meaning.
+
+`tools/realize.py` mints a documented seed (`agents/realizer/one_to_many_v1.md`):
+
+- `atom_sop_ast29080` → extra `ele_sop_ast29080__present` (`present`; primary stays `hook`)
+- `atom_sop_ast29080_general` → extra `ele_sop_ast29080_general__reinforce` (`reinforce` as
+  the closed-vocab name for retrieve/retention; primary stays `present`)
+
+The other 45 atoms stay 1:1. Extra ids are stable (`primary ele_ + "__" + move`). Re-run of
+realize accretes missing extras and does not drop extras or Cartographer bindings. Cartographer
+is re-runnable on the mixed store: it still writes `teaches` / `rhetorical` /
+`intended_response`, and it **preserves** the extra's stamped `move` (flag
+`extra_occurrence_move_preserved`). HTML groups cards that share `composed_from`.
+`atoms.json` untouched; no `content.text` on occurrences.
+
+Not this hop: Couturier, Dragoman, Storyline, a full ID treatment of the SOP, a new `retrieve`
+enum value.
+
+---
 ## 2026-08-25 — Cartographer v1: first occurrence-intent write. Heuristic compiler; small ALSAP ontology.
 
 Previous Cartographer dispatches (2026-08-21) wrote nothing: `teaches` was unbindable because the
