@@ -3,3 +3,9 @@ node_modules
 out
 *.log
 .DS_Store
+
+# Next static export copied into this folder on Netlify CI only — do not commit
+/index.html
+/404.html
+/404
+/_next/
