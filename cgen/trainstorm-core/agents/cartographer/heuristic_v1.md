@@ -100,3 +100,21 @@ Each occurrence that this pass touches gets `ext.cartographer`:
 
 `ext.realized_from` stays Realizer’s. Cartographer does not take
 `governance.owner` of the occurrence node.
+
+---
+
+## Extra occurrences (Realizer 1:many seed)
+
+Realizer may mint a second `ele_` of the same atom (`agents/realizer/one_to_many_v1.md`).
+That extra exists because its `move` is *different* from the primary. This compiler:
+
+- does **not** re-derive `move` from atom structure for extras — it keeps the
+  Realizer-stamped value (`ext.realized_from.target_move` / existing `intent.move`)
+- still binds `teaches`, `rhetorical`, and `intended_response` (the last using the
+  preserved move)
+- flags `extra_occurrence_move_preserved` on `ext.cartographer`
+- still mints no ids and still copies no meaning onto the element
+
+Primary occurrences keep the first-match walk above. Do not treat an extra
+`reinforce` as a license to invent `practice` / `assess` on 1:1 atoms this SOP
+does not contain.

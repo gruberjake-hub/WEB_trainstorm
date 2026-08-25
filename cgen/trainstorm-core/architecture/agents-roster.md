@@ -86,8 +86,9 @@ have opinions about content; she has opinions about form, and they are all in th
 - **Reads:** live atom store (v1); later, script primitives, expression registries, audience facets
 - **Wakes on:** a validated atom store (v1); later, a validated script
 - **Temperature:** low. *(absorbs: prompt-pack compiler, CREATOR's compile function)*
-- **v1 code:** `tools/realize.py` — one occurrence per atom, `move: present`, no authored
-  `content.text`. HTML projection reads meaning from the atom. 1:many accretion is later.
+- **v1 code:** `tools/realize.py` — one primary occurrence per atom plus a small 1:many seed
+  (two ALSAP atoms mint a second `ele_`). No authored `content.text`. HTML projection reads
+  meaning from the atom and groups extras that share `composed_from`.
 
 ## The Render Crew
 *One per target. Zero-temperature craftsmen, all equal citizens.*

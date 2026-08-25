@@ -10,7 +10,8 @@ already-minted `ele_` records, and re-projects `realized_lesson.html`.
 
 Never: mint `ele_` / `atom_` ids; copy meaning onto the element; write
 `atoms.json`; put `teaches` back on atoms; invent `practice`/`assess` this SOP
-does not contain.
+does not contain. Extra 1:many occurrences keep their Realizer-stamped `move`;
+Cartographer still binds `teaches` / `rhetorical` / `intended_response`.
 
 Usage (from `cgen/trainstorm-core`):
 
@@ -18,7 +19,8 @@ Usage (from `cgen/trainstorm-core`):
     python3 tools/cartographer.py --project ../astellas/projects/ast_alsap
     python3 tools/cartographer.py --selftest
 
-Requires Realizer v1 output at `<project>/occurrences/elements.json`.
+Requires Realizer output at `<project>/occurrences/elements.json`. Re-runnable
+on a mixed 1:1 + extra store; extra `ele_` ids are not dropped.
 """
 from __future__ import annotations
 
@@ -163,6 +165,8 @@ def bind_intended_response(atom, move: str) -> str | None:
         return "state the process this SOP defines (plan, develop, execute, maintain, archive)"
     if move == "transfer":
         return "carry the named handoff into the job (notify, deliver outputs, or follow the cited SOP)"
+    if move == "reinforce":
+        return "recall this meaning at a later placement of the same atom, not as new information"
     return None
 
 
@@ -194,6 +198,35 @@ def bind_intent(atom, closed_moves, closed_rhetorical, objective_ids) -> tuple[d
         "confidence": confidence,
         "flags": flags,
     }
+    return intent, stamp
+
+
+def bind_intent_for_occurrence(el, atom, closed_moves, closed_rhetorical, objective_ids) -> tuple[dict, dict]:
+    """Bind intent on one occurrence. Extra occurrences keep Realizer-stamped `move`."""
+    intent, stamp = bind_intent(atom, closed_moves, closed_rhetorical, objective_ids)
+    if not realize.is_extra_element(el):
+        return intent, stamp
+    rf = (el.get("ext") or {}).get("realized_from") or {}
+    move = (el.get("intent") or {}).get("move") or rf.get("target_move")
+    if not move:
+        raise SystemExit(
+            f"{el.get('element_id')}: extra occurrence has no move to preserve "
+            "(Realizer must stamp target_move when minting)"
+        )
+    if move not in closed_moves:
+        raise SystemExit(f"{el.get('element_id')}: preserved extra move {move!r} is not in the closed vocab")
+    intent = dict(intent)
+    intent["move"] = move
+    intended = bind_intended_response(atom, move)
+    if intended:
+        intent["intended_response"] = intended
+    else:
+        intent.pop("intended_response", None)
+    stamp = dict(stamp)
+    flags = list(stamp.get("flags") or [])
+    if "extra_occurrence_move_preserved" not in flags:
+        flags.append("extra_occurrence_move_preserved")
+    stamp["flags"] = flags
     return intent, stamp
 
 
@@ -314,6 +347,43 @@ def selftest(closed_moves, closed_rhetorical, objective_ids):
     results.append(("does not steal realized_from", "realized_from" in el["ext"], ""))
     results.append(("hook is not present", el["intent"]["move"] == "hook", el["intent"]["move"]))
 
+    # 1:many extra: same atom, Realizer-stamped move survives Cartographer.
+    extra = {
+        "element_id": "ele_sop_x__present",
+        "composed_from": "atom_sop_x",
+        "type": "Course",
+        "intent": {"rhetorical": "orient", "move": "present"},
+        "governance": {"version": 1, "status": "draft", "owner": "realizer"},
+        "ext": {
+            "realized_from": {
+                "atom_id": "atom_sop_x",
+                "realizer": "tools/realize.py",
+                "policy": "v1_extra_occurrence",
+                "role": "extra",
+                "target_move": "present",
+            }
+        },
+    }
+    extra_intent, extra_stamp = bind_intent_for_occurrence(
+        extra, cases[0][0], closed_moves, closed_rhetorical, objective_ids
+    )
+    apply_intent(extra, extra_intent, extra_stamp)
+    results.append(("extra keeps Realizer-stamped present (not atom heuristic hook)",
+                    extra["intent"]["move"] == "present", extra["intent"]["move"]))
+    results.append(("extra still binds teaches from the atom",
+                    extra["intent"].get("teaches") == [OBJ_EXPLAIN], extra["intent"].get("teaches")))
+    results.append(("extra does not mint a new element_id",
+                    extra["element_id"] == "ele_sop_x__present", extra["element_id"]))
+    results.append(("extra flagged move_preserved",
+                    "extra_occurrence_move_preserved" in extra["ext"]["cartographer"]["flags"],
+                    extra["ext"]["cartographer"]["flags"]))
+    results.append(("primary and extra share composed_from",
+                    el["composed_from"] == extra["composed_from"] == "atom_sop_x", ""))
+    results.append(("primary and extra have distinct moves",
+                    el["intent"]["move"] != extra["intent"]["move"],
+                    f"{el['intent']['move']} vs {extra['intent']['move']}"))
+    results.append(("does not copy meaning onto the extra", "content" not in extra, ""))
+
     print(f"{'CHECK':<72} RESULT")
     print("-" * 86)
     ok = True
@@ -406,7 +476,9 @@ def main():
         atom = atoms_by_id.get(cf)
         if atom is None:
             raise SystemExit(f"{eid}: composed_from {cf} is not in the atom store")
-        intent, stamp = bind_intent(atom, closed_moves, closed_rhetorical, objective_ids)
+        intent, stamp = bind_intent_for_occurrence(
+            el, atom, closed_moves, closed_rhetorical, objective_ids
+        )
         apply_intent(el, intent, stamp)
 
     after_ids = {e["element_id"] for e in elements}
@@ -432,8 +504,10 @@ def main():
         "low_confidence": low_n,
         "element_count": len(elements),
         "ontology": "ontology/objectives.json",
-        "note": ("v1 compiler pass over Realizer occurrences. Cartographer writes intent only; "
-                 "it does not mint ele_ ids or rewrite atoms. Next: Couturier or 1:many minting."),
+        "note": ("v1 compiler pass over Realizer occurrences, including extra 1:many "
+                 "records. Cartographer writes intent only; it does not mint ele_ ids "
+                 "or rewrite atoms. Extra occurrences keep Realizer-stamped move. "
+                 "Next: Couturier."),
     }
 
     html_path = pathlib.Path(args.out).resolve() if args.out else project / "realized_lesson.html"
@@ -469,6 +543,9 @@ def main():
     print(f"  lesson HTML  : {html_path}")
     print(f"  moves        : {dict(sorted(move_counts.items()))}")
     print(f"  teaches bound: {teaches_bound}  ·  low-confidence: {low_n}")
+    extras = [e for e in elements if realize.is_extra_element(e)]
+    if extras:
+        print(f"  extras kept  : {len(extras)} ({', '.join(e['element_id'] + '=' + e['intent']['move'] for e in extras)})")
     print("  schema       : element.schema.json ALL PASS (intent only; no authored content.text)")
 
 

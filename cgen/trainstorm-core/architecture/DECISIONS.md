@@ -239,3 +239,54 @@ level under 1:many; this is the first writer of that facet on a live store.
 facet remaining unbound*. Realizer still mints `ele_` ids; Cartographer still mints none. The
 example PSI ontology is not deleted.
 
+---
+
+## 2026-08-25 — Realizer 1:many seed: two ALSAP atoms mint a second occurrence
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The live ALSAP occurrence store is no longer strictly 1:1. Realizer
+mints a **small, honest extra-occurrence seed** (`agents/realizer/one_to_many_v1.md`,
+store policy `v1_one_to_many_seed`) — not the whole SOP. Two teaching-worthy atoms
+get a second `ele_` record, each with its own stable id, `composed_from` pointing
+at the same `atom_id`, and a distinct `intent.move`. The other 45 atoms stay 1:1.
+`atoms.json` is untouched. No authored `content.text` on occurrences. Locale packs
+still key on `atom_id`.
+
+Seed:
+
+- `atom_sop_ast29080` (SOP title): primary remains Cartographer’s `hook`; extra
+  `ele_sop_ast29080__present` is stamped `present` (hook + present).
+- `atom_sop_ast29080_general` (what an ALSAP is): primary remains Cartographer’s
+  `present`; extra `ele_sop_ast29080_general__reinforce` is stamped `reinforce`
+  (present + retrieve/retention). Closed vocab has no `retrieve`; `reinforce` is
+  Gagné 9a and is the legal name.
+
+Idempotency: extra ids are `(primary ele_) + "__" + move`. A re-run of
+`realize.py` accretes missing extras and never drops existing extras or
+Cartographer bindings. Cartographer remains the single writer of occurrence
+intent on re-run, except it **preserves Realizer-stamped `move` on extra
+occurrences** (the extra exists because that move is different) and still binds
+`teaches` / `rhetorical` / `intended_response`. HTML groups cards that share
+`composed_from`.
+
+**Why:** Schemas and this file already said 1:many. The store was still 1:1
+(Realizer v1 minted one `ele_` per atom; Cartographer bound intent on those
+records). This hop proves the instrument — the same atom, twice, under different
+teaching acts — without an ID treatment of all 47 atoms and without duplicating
+authored meaning.
+
+**Consequences:**
+
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py`. Optional `--no-one-to-many` skips minting new
+  extras but still preserves any that exist. `--selftest` on both tools.
+- Next hop is still **Couturier** (style keys). Not a full spaced-retrieval
+  treatment of the SOP. Couturier still mints nothing.
+
+**Supersedes:** the Realizer v1 block’s “v1 is deliberately 1:1” as to *the live
+ALSAP store remaining 1:1*; one occurrence per atom remains the default for
+unseeded atoms. Cartographer v1’s “Next hop is Couturier or Realizer 1:many
+minting” as to the minting half — Couturier is still unbuilt. Cartographer still
+mints no ids. Working-process block untouched.
+

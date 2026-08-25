@@ -1,16 +1,34 @@
 {
   "store": "occurrences",
   "project": "ast_alsap",
-  "policy": "v1_one_occurrence_per_atom",
+  "policy": "v1_one_to_many_seed",
   "default_move": "present",
-  "element_count": 47,
+  "element_count": 49,
   "generated_by": "tools/realize.py",
   "realized_from": {
     "atom_store": "cgen/astellas/projects/ast_alsap/atoms.json",
     "atom_count": 47,
     "atoms_sha256": "sha256:93b278fbdaffb692987dbb0e97ee25e0bf4d26a76681a7af0693504a9f33af30"
   },
-  "note": "v1 mints one ele_ per atom. 1:many can accrete more elements later without changing atom ids. Meaning is not copied onto the occurrence.",
+  "one_to_many": {
+    "spec": "agents/realizer/one_to_many_v1.md",
+    "seeded_atom_count": 2,
+    "extra_count": 2,
+    "seed": [
+      {
+        "atom_id": "atom_sop_ast29080",
+        "extra_element_id": "ele_sop_ast29080__present",
+        "move": "present"
+      },
+      {
+        "atom_id": "atom_sop_ast29080_general",
+        "extra_element_id": "ele_sop_ast29080_general__reinforce",
+        "move": "reinforce"
+      }
+    ],
+    "note": "Small honest seed, not the whole SOP. Extra ele_ ids are stable. Re-run accretes missing extras and never drops existing extras or Cartographer bindings."
+  },
+  "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). Cartographer owns occurrence intent; a re-realize preserves ext.cartographer and extra ele_ records.",
   "cartographer": {
     "policy": "v1_heuristic_compiler",
     "tool": "tools/cartographer.py",
@@ -20,13 +38,14 @@
       "exemplify": 5,
       "hook": 1,
       "objective": 1,
-      "present": 35,
+      "present": 36,
+      "reinforce": 1,
       "transfer": 3
     },
-    "teaches_bound": 42,
+    "teaches_bound": 44,
     "low_confidence": 10,
-    "element_count": 47,
+    "element_count": 49,
     "ontology": "ontology/objectives.json",
-    "note": "v1 compiler pass over Realizer occurrences. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Next: Couturier or 1:many minting."
+    "note": "v1 compiler pass over Realizer occurrences, including extra 1:many records. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Extra occurrences keep Realizer-stamped move. Next: Couturier."
   }
 }

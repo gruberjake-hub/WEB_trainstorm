@@ -89,8 +89,10 @@ As of 2026-08-25 `bind` is a documented heuristic compiler, not a live model cal
 From `cgen/trainstorm-core`. It updates the existing occurrence store in place and re-projects
 `realized_lesson.html`. Spec: `agents/cartographer/heuristic_v1.md`. Policy:
 `v1_heuristic_compiler`. Closed `move` vocab from `vocab/intent.enum.json`. Low-confidence matches
-are flagged on `ext.cartographer`, not silently upgraded into `practice`/`assess`. Next hop is
-Couturier (style keys) or Realizer 1:many minting — not this tool.
+are flagged on `ext.cartographer`, not silently upgraded into `practice`/`assess`. Extra
+1:many occurrences (Realizer seed) keep their stamped `move`; this compiler still binds
+`teaches` / rest of intent and does not drop extra `ele_` ids. Next hop is Couturier
+(style keys) — not this tool.
 
 ## You steward the objective ontology — but you do not extend it alone
 
