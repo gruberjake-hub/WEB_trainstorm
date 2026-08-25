@@ -1,11 +1,8 @@
 {
   "element_id": "ele_ast009_recognize_psi",
+  "composed_from": "atom_ast009_recognize_psi",
   "source_hash": "sha256:3b7e9a1c4d2f8065a1be47c0d9f2e6a5b8c31d0e7f4a29b6c5d8e1f0a2b3c4d5",
   "type": "Statement",
-  "content": {
-    "locale": "en",
-    "text": "Recognize product safety information"
-  },
   "structure": {
     "section_id": "sec_1",
     "slide_id": "sld_1_3",

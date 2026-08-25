@@ -12,10 +12,6 @@
       "order": 4,
       "prerequisites": ["atom_ast009_def_psi"]
     },
-    "intent": {
-      "teaches": ["obj_recognize_psi"],
-      "intended_response": "discriminate reportable from non-reportable safety information"
-    },
     "expression": {
       "content_type": "instructional.objective",
       "register": "formal",

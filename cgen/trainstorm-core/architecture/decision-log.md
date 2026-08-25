@@ -13,12 +13,42 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
-## 2026-08-21 (Fable run) — PENDING, not landed: objectives are INTERVENTION-SCOPED. The restitch executes: `teaches` + `intended_response` off the atom; `atom.intent` is empty and closed. Supersedes the "teaches on the atom" clause of the earlier 2026-08-21 layer-split entry.
+## 2026-08-25 — Schemas now enforce occurrence identity; 2026-08-21 Fable-run restitch LANDED
 
-> **STATUS AT MIGRATION (2026-08-25): DECIDED by Jake, NOT YET IN THE REPO.** The patch this entry
+The 2026-08-25 occurrence-identity block in `DECISIONS.md` was ratified in prose (PR #8) while
+`element.schema.json` still treated `element_id` as the locale-pack join key and required `content`
+as source meaning, and `atom.schema.json` still carried a populated `bindings.intent`. This entry
+records that the schemas, gates, and worked examples now match that block:
+
+- `element.schema.json` requires `composed_from` (an `atom_id`); `element_id` is the `ele_`
+  occurrence key, minted at realization; locale packs are not keyed by `element_id`.
+- Authored meaning does not live on the element. `content` / `content.text` is not required as the
+  source-meaning store; remaining `content` is optional presentation-constraint copy only (default
+  omit).
+- `atom.bindings.intent` is empty and closed. `teaches` + `intended_response` live on the
+  occurrence (`element.intent`), with `rhetorical` and `move`.
+- `validate_atoms.py` / `validate_objectives.py` enforce the closed binding and the occurrence
+  link. `reference/example_atom.json` has no intent fields; `reference/example_element.json` has
+  `composed_from` and no authored `content`.
+
+Live Astellas stores (`ast_alsap`, `alsap`, `alsap_asp9999`) were already atoms with zero intent
+bindings — no SOP/form rewrite into elements. Not in this landing: `realize.py`, Dragoman, renderer.
+
+The PENDING banner on the 2026-08-21 Fable-run entry below is struck.
+
+---
+
+## 2026-08-21 (Fable run) — LANDED 2026-08-25: objectives are INTERVENTION-SCOPED. The restitch executes: `teaches` + `intended_response` off the atom; `atom.intent` is empty and closed. Supersedes the "teaches on the atom" clause of the earlier 2026-08-21 layer-split entry.
+
+> **STATUS (2026-08-25): LANDED.** `atom.schema.json` now has `bindings.intent` empty and closed;
+> `teaches` + `intended_response` live on the occurrence (`element.intent`). Banner struck when the
+> schema PR landed. The body below is the decision as written on 2026-08-21; treat the schema on
+> this branch as the contract, not a target.
+>
+> ~~STATUS AT MIGRATION (2026-08-25): DECIDED by Jake, NOT YET IN THE REPO. The patch this entry
 > describes was produced against an uploaded snapshot and has not been applied to `main`.
 > `atom.schema.json` on `main` still carries a populated `bindings.intent`. Treat the schema state
-> described below as the target, not the current file. Land the patch, then strike this banner.
+> described below as the target, not the current file. Land the patch, then strike this banner.~~
 
 *Jake's ratification, made in the independent Fable-run session after the spec-vs-log collision was
 surfaced. Anchor honesty (08-20 sharpened rule): this work ran on an uploaded snapshot, NOT on

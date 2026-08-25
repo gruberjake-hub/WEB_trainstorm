@@ -122,3 +122,40 @@ bind to `atom_id`, and that facet owners mint no ids, stand.
 **Process note, so it does not recur:** a decision block that supersedes another must quote or cite
 the *argument* it is overturning, not only the *documents* it read. And "this file wins" only works
 once this file holds the history — hence the block above.
+
+---
+
+## 2026-08-25 — Schemas enforce occurrence identity; the 2026-08-21 intent restitch lands
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The schemas now match the ratified 1:many occurrence identity (this file, previous
+block / PR #8). An **element** is one occurrence of an atom in a course: required `composed_from`
+(an `atom_id`); `element_id` is the occurrence key (`ele_`, minted at realization); locale packs are
+not keyed by `element_id`. Authored meaning does not live on the element — `content` / `content.text`
+is no longer required as the source-meaning store; meaning lives on the atom. Occurrence facets stay
+on the element: `rhetorical`, `move`, `teaches`, `intended_response`, expression keys. Optional
+`content` is flagged as presentation-constraint copy only; default is omit.
+
+The PENDING 2026-08-21 Fable-run restitch is **landed**: `atom.bindings.intent` is empty and closed
+(`additionalProperties: false`, no properties). `teaches` and `intended_response` live on the
+occurrence. Procedure / form / instance facets are unchanged. Live Astellas SOP/form stores
+(`ast_alsap`, `alsap`, `alsap_asp9999`) remain atoms — they are not rewritten into elements.
+
+**Why:** Prose already said 1:many. The schemas still described the element as a rival meaning node
+(`content` as source locale, `element_id` as the locale-pack join key) and still stored `teaches` on
+the atom. The contract now agrees with the decision.
+
+**Consequences:**
+- Gates (`validate_atoms.py`, `validate_objectives.py`) enforce the closed `atom.intent` and the
+  occurrence link (`composed_from` required; leftover `intent.teaches` on an atom is a hard fail).
+- `reference/example_element.json` carries `composed_from` and no authored `content`.
+- `reference/example_atom.json` carries no intent fields.
+- The PENDING banner on the 2026-08-21 Fable-run log entry is struck.
+
+**Supersedes:** the "decided but not landed" clause of the 2026-08-25 narrative-log-migration block;
+the occurrence-identity block's clause that "`element.content` … remains a known violation … still
+owed", as to *required authored meaning on the element*. Optional presentation-constraint copy may
+still appear, flagged, not as the meaning store. Realize.py / Dragoman / renderer are not in this
+landing.
+

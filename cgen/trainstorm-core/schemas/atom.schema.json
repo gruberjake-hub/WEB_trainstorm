@@ -2,14 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://astellas.example/schemas/content-atom.schema.json",
   "title": "Content Atom",
-  "description": "A thin content atom: stable identity + the invariant meaning payload + keyed bindings (references) into the sub-models. Renderings (translations, visual treatment, adaptive variants) are NOT stored here; they live in external stores keyed by atom_id. One agent owns each binding (single-writer).",
+  "description": "A thin content atom: stable identity + the invariant meaning payload + keyed bindings (references) into the sub-models. This is the meaning node — atom_id is the only content-node key (locale packs join here). An element is one occurrence of this atom in a course (ele_, composed_from), not a second meaning store. Renderings (translations, visual treatment, adaptive variants) are NOT stored here; they live in external stores keyed by atom_id. Intent is occurrence-level and does not live here. One agent owns each binding (single-writer).",
   "type": "object",
   "required": ["atom_id", "meaning", "bindings", "governance"],
   "additionalProperties": false,
   "properties": {
     "atom_id": {
       "type": "string",
-      "description": "Stable, opaque, durable identity. The single join key across the object graph, every locale pack, the registries, and the learner model. Never reused, never edited.",
+      "description": "Stable, opaque, durable identity of the meaning node. The join key for locale packs, registries, and the learner model. Never reused, never edited. Distinct from element_id (ele_), which keys one occurrence of this atom in a course.",
       "pattern": "^atom_[A-Za-z0-9_-]+$"
     },
     "content_hash": {
@@ -45,12 +45,9 @@
         },
         "intent": {
           "type": "object",
-          "description": "Meaning/purpose. Owner: L&D / Instructional Design. References into the intent ontology — the atom points into it, it does not contain it. NOTE 2026-08-21: `bloom` was removed from here and now lives on the OBJECTIVE node (objectives.schema.json v2). Bloom grades a capability, not a piece of content; an atom teaching several objectives has no single level, so a content-level bloom is a walk over teaches[] rather than a stored value. `rhetorical` and `move` are deliberately absent too — both are occurrence-level and live on the element. See decision log 2026-08-21.",
+          "description": "CLOSED. Intent is occurrence-level: rhetorical, move, teaches, and intended_response live on the element (one occurrence of this atom in a course). An atom carrying any intent field is a schema failure — 2026-08-21 Fable-run restitch, landed 2026-08-25 (architecture/DECISIONS.md). additionalProperties is false and there are no properties; omit this binding or leave it empty. Bloom lives on the objective node, not here.",
           "additionalProperties": false,
-          "properties": {
-            "teaches": { "type": "array", "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }, "description": "objective_ids in the intent ontology this atom serves." },
-            "intended_response": { "type": "string", "description": "The cognitive/affective response the atom is designed to elicit." }
-          }
+          "properties": {}
         },
         "expression": {
           "type": "object",

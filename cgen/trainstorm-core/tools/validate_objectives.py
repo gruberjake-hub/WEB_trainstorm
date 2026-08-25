@@ -129,26 +129,72 @@ _mirror("move", _ei.get("move", {}).get("enum", []),
 
 # 13. bloom lives on the objective and NOWHERE else. The 2026-08-21 decision moved it; assert the
 #     move stuck, or it quietly reappears the next time someone edits a node schema from memory.
+#     The Fable-run restitch (landed 2026-08-25) then emptied atom.intent entirely: teaches and
+#     intended_response moved to the occurrence with rhetorical and move.
 _atom = json.loads((P["schemas_dir"] / "atom.schema.json").read_text())
-_ai = _atom["properties"]["bindings"]["properties"]["intent"]["properties"]
+_intent_schema = _atom["properties"]["bindings"]["properties"]["intent"]
+_ai = _intent_schema.get("properties") or {}
 results.append(("bloom is on the objective node", "bloom" in schema["$defs"]["objective"]["properties"], ""))
 results.append(("bloom is NOT on atom.intent", "bloom" not in _ai, "still present"))
 results.append(("bloom is NOT on element.intent", "bloom" not in _ei, "still present"))
+
+_closed = (_intent_schema.get("additionalProperties") is False) and (not _ai)
+results.append(("atom.intent is empty and closed", _closed,
+                f"properties={list(_ai)} additionalProperties={_intent_schema.get('additionalProperties')}"))
+_forbidden = ("bloom", "teaches", "intended_response", "rhetorical", "move")
+_present = [f for f in _forbidden if f in _ai]
+results.append(("atom.intent carries none of the occurrence-level intent fields",
+                not _present, f"present: {_present}"))
+for _f in ("rhetorical", "move", "teaches", "intended_response"):
+    results.append((f"element.intent carries {_f}", _f in _ei, "missing"))
+
+_req = element.get("required", [])
+results.append(("element requires composed_from", "composed_from" in _req, f"required={_req}"))
+results.append(("element does not require content as source meaning", "content" not in _req,
+                f"required={_req}"))
+_cf = element["properties"].get("composed_from", {})
+results.append(("composed_from is a string atom_id",
+                _cf.get("type") == "string" and str(_cf.get("pattern", "")).startswith("^atom_"),
+                str(_cf)))
+_eid = element["properties"].get("element_id", {})
+results.append(("element_id is the ele_ occurrence key, not the locale-pack join",
+                str(_eid.get("pattern", "")).startswith("^ele_"),
+                str(_eid)))
 
 # 14. The WORKED EXAMPLES still validate. Added 2026-08-21 because moving `bloom` off both intent
 #     bindings silently invalidated reference/example_atom.json and example_element.json, and nothing
 #     would have caught it — the stores carry no intent binding, so the gates stayed green while the
 #     canonical examples were broken. An example that does not validate is worse than no example: it
 #     is a template someone will copy.
+_ex_atom_doc = _ex_elem_doc = None
 for _name, _sch in (("example_atom", _atom), ("example_element", element)):
     _ex_p = P["core_dir"] / "reference" / f"{_name}.json"
     if not _ex_p.exists():
         results.append((f"{_name}.json present", False, "missing"))
         continue
-    _errs = sorted(Draft202012Validator(_sch).iter_errors(json.loads(_ex_p.read_text())),
+    _doc = json.loads(_ex_p.read_text())
+    if _name == "example_atom":
+        _ex_atom_doc = _doc
+    else:
+        _ex_elem_doc = _doc
+    _errs = sorted(Draft202012Validator(_sch).iter_errors(_doc),
                    key=lambda e: list(e.path))
     results.append((f"{_name}.json validates against its schema", not _errs,
                     "; ".join(e.message for e in _errs)))
+
+if _ex_atom_doc is not None:
+    _ex_intent = (_ex_atom_doc.get("bindings") or {}).get("intent") or {}
+    results.append(("example_atom carries no intent fields",
+                    not _ex_intent, f"intent={_ex_intent}"))
+if _ex_elem_doc is not None:
+    results.append(("example_element has composed_from",
+                    bool(_ex_elem_doc.get("composed_from")), "missing"))
+    results.append(("example_element has no authored content",
+                    "content" not in _ex_elem_doc, "content still present"))
+    _ex_ei = _ex_elem_doc.get("intent") or {}
+    results.append(("example_element carries teaches + intended_response",
+                    "teaches" in _ex_ei and "intended_response" in _ex_ei,
+                    f"intent keys={sorted(_ex_ei)}"))
 
 # --- Negative controls: the gates must REJECT bad input ---
 
@@ -220,6 +266,16 @@ reappeared = json.loads(json.dumps(_atom))
 reappeared["properties"]["bindings"]["properties"]["intent"]["properties"]["bloom"] = {"type": "string"}
 results.append(("bloom reappearing on atom.intent is caught",
                 "bloom" in reappeared["properties"]["bindings"]["properties"]["intent"]["properties"], ""))
+
+_leftover = json.loads(json.dumps(_ex_atom_doc or {"atom_id": "atom_x", "meaning": {"source_locale": "en", "source_text": "x"}, "bindings": {}, "governance": {"version": 1, "status": "draft"}}))
+_leftover.setdefault("bindings", {})["intent"] = {"teaches": ["obj_recognize_psi"]}
+results.append(("an atom instance carrying intent.teaches is rejected",
+                bool(list(Draft202012Validator(_atom).iter_errors(_leftover))), ""))
+
+_no_cf = json.loads(json.dumps(_ex_elem_doc or {"element_id": "ele_x", "type": "Statement", "governance": {"version": 1, "status": "draft"}}))
+_no_cf.pop("composed_from", None)
+results.append(("an element without composed_from is rejected",
+                bool(list(Draft202012Validator(element).iter_errors(_no_cf))), ""))
 
 print(f"{'CHECK':<58} RESULT")
 print("-" * 72)
