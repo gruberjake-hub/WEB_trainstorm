@@ -137,8 +137,8 @@ trainstorm-core/
 │   ├── project_socket.py                 ✅ template → INTAKE CONTRACT (json + client-facing html)
 │   ├── lint.py · validate_objectives.py  ✅
 │   ├── localize/ · chat-capture/ · visual-assets/           ✅
-│   ├── realize.py                        ⬜ primitives → elements — ABSENT
-│   └── render/                           ⬜ element → HTML → PNG — directory exists, EMPTY
+│   ├── realize.py                        ✅ Realizer v1 — atoms → occurrences (1 ele_ per atom, move=present) + realized_lesson.html
+│   └── render/                           ⬜ element → HTML → PNG — NOT this hop (no PNG pipeline)
 │
 └── project/                              # Claude Project setup — one-way snapshot FROM git, not a second constitution
     ├── custom_instructions.md            ✅ points at STRUCTURE.md + architecture/DECISIONS.md; atom is the node
@@ -245,7 +245,7 @@ existed. Which suggests `element` is the atom **specialized for the course chain
 
 Locale packs key on `atom_id` (meaning is translated once), with occurrence-level overrides keyed by
 `element_id` only where presentation constrains the rendering — not built yet. Couturier owns style on
-the occurrence's expression facet; Realizer (when it exists) mints `ele_` ids and owns layout/render;
+the occurrence's expression facet; Realizer (`tools/realize.py`) mints `ele_` ids and owns layout/render;
 Couturier mints nothing.
 
 ## First moves
@@ -255,9 +255,10 @@ done. Superseded 2026-08-20 by the state above.)*
 
 The **document half** of the machine is built and green: three atom stores, a gate with two
 self-tests at 17/17, ingest · reconcile · approve · project, and an agent that has been dispatched
-and behaves correctly. The **course half has never run** — no store carries an `intent`,
-`expression`, `audience` or `render` binding; only Headwater has ever written a binding;
-`realize.py` is absent and `render/` is empty.
+and behaves correctly. The **course half has started**: Realizer v1 (`tools/realize.py`) mints one
+occurrence per atom from a live store and projects `realized_lesson.html`. Couturier has never
+written a binding; Dragoman and `tools/render/` PNG pipelines are unbuilt. The `atom → primitives`
+hop is still owed — v1 realizes atoms directly.
 
 Near-term, in dependency order:
 
@@ -266,8 +267,8 @@ Near-term, in dependency order:
 2. ~~**Land the PENDING restitch**~~ — **done 2026-08-25.** `atom.intent` empty and closed;
    `teaches` + `intended_response` on the occurrence. See `architecture/DECISIONS.md`.
 3. **`atom → primitives`** — the first hop of the pipeline has no listed transform at all.
-4. **`tools/realize.py`** (primitives → elements: mint `ele_`, set `composed_from`, no authored
-   text) and **`tools/render/`** (element → HTML → PNG).
+4. ~~**`tools/realize.py`**~~ — **done 2026-08-25, v1.** One `ele_` per atom, `composed_from`, no
+   authored text, `realized_lesson.html`. 1:many accretion and **`tools/render/`** (PNG) remain.
 5. **A real `brunswick.reference.course.json`** — still `{"_todo": …}`, and the only thing that would
    prove the course half end to end.
 

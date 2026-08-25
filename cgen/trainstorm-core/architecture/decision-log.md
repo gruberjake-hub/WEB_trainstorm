@@ -13,6 +13,20 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-25 — Realizer v1: first course hop. One occurrence per atom; HTML reads meaning from the atom.
+
+Schemas already enforced 1:many (PR #9). Nothing had yet *written* an occurrence. `tools/realize.py`
+is that writer: it walks a live atom store (default `ast_alsap`, 47 SOP atoms), mints one `ele_` per
+atom with `composed_from` and `move: present`, copies no authored `content.text`, writes
+`<project>/occurrences/` (atoms.json untouched), and projects `realized_lesson.html` so Jake can
+open it in a browser. Provenance is `realized_from` / source hashes.
+
+v1 is 1:1 on purpose. Preview → teach → retrieve as three elements of the same atom can accrete
+later without changing atom ids; Cartographer is not a v1 gate. Couturier, Dragoman, Storyline,
+`.potx`, and PNG render pipelines are not this hop. Live SOP/form stores stay atoms.
+
+---
+
 ## 2026-08-25 — Schemas now enforce occurrence identity; 2026-08-21 Fable-run restitch LANDED
 
 The 2026-08-25 occurrence-identity block in `DECISIONS.md` was ratified in prose (PR #8) while

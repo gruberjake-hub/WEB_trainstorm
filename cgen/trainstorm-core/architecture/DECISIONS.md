@@ -159,3 +159,38 @@ owed", as to *required authored meaning on the element*. Optional presentation-c
 still appear, flagged, not as the meaning store. Realize.py / Dragoman / renderer are not in this
 landing.
 
+---
+
+## 2026-08-25 — Realizer v1 exists: one occurrence per atom; 1:many accretes later
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Realizer v1 exists as `tools/realize.py`. It reads a live atom store (default
+`cgen/astellas/projects/ast_alsap`, 47 SOP atoms), mints **one occurrence per atom**, and writes a
+separate occurrence store plus a double-clickable HTML lesson. Each element gets a new stable
+`ele_` id, `composed_from` = that atom's `atom_id`, occurrence `move` = `present` (closed vocab),
+and **no authored `content.text`**. Display HTML reads meaning from the atom. Provenance is
+`realized_from` / source hashes on the store manifest and on each element (`source_hash` echoes the
+atom's `content_hash`). Live SOP/form atoms are not rewritten into elements.
+
+v1 is deliberately 1:1 and ugly. Later 1:many (preview / teach / retrieve as three elements of the
+same atom) can accrete more `ele_` records without changing atom ids. Cartographer is not a v1
+blocker. The `atom → primitives` hop remains owed; this hop realizes the atom store directly so the
+course chain can start.
+
+**Why:** Schemas already enforce 1:many (previous block / PR #9). The course half had never run —
+no writer of occurrence nodes. This is that writer.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python tools/realize.py` (optional `--project` like other harness
+  tools). Writes `<project>/occurrences/elements.json`, `occurrences/manifest.json`, and
+  `<project>/realized_lesson.html`.
+- Minted elements validate against `element.schema.json`. `validate_atoms.py` stays green on the
+  three Astellas stores — it still only gates `atoms.json`.
+- Couturier (style keys), Dragoman, Storyline, `.potx`, and `tools/render/` PNG pipelines are not
+  this landing.
+
+**Supersedes:** `STRUCTURE.md`'s marker that `realize.py` is absent; the previous block's clause
+that Realize.py is not in that landing. Atom identity, locale packs on `atom_id`, and "element is
+not a rival canon" stand.
+

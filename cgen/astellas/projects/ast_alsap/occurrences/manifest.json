@@ -1,0 +1,14 @@
+{
+  "store": "occurrences",
+  "project": "ast_alsap",
+  "policy": "v1_one_occurrence_per_atom",
+  "default_move": "present",
+  "element_count": 47,
+  "generated_by": "tools/realize.py",
+  "realized_from": {
+    "atom_store": "cgen/astellas/projects/ast_alsap/atoms.json",
+    "atom_count": 47,
+    "atoms_sha256": "sha256:93b278fbdaffb692987dbb0e97ee25e0bf4d26a76681a7af0693504a9f33af30"
+  },
+  "note": "v1 mints one ele_ per atom. 1:many can accrete more elements later without changing atom ids. Meaning is not copied onto the occurrence."
+}

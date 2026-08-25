@@ -82,10 +82,12 @@ generated from `expected_response_features` and `misconception_predictions`. Eve
 she mints carries its `derivation` stamp back to the primitive it realizes. She does not
 have opinions about content; she has opinions about form, and they are all in the registry.
 
-- **Writes:** elements (`element.schema.json`), derivation stamps
-- **Reads:** script primitives, expression registries, audience facets (variant routing)
-- **Wakes on:** a validated script
+- **Writes:** elements (`element.schema.json`), derivation stamps (`composed_from`, `realized_from`)
+- **Reads:** live atom store (v1); later, script primitives, expression registries, audience facets
+- **Wakes on:** a validated atom store (v1); later, a validated script
 - **Temperature:** low. *(absorbs: prompt-pack compiler, CREATOR's compile function)*
+- **v1 code:** `tools/realize.py` — one occurrence per atom, `move: present`, no authored
+  `content.text`. HTML projection reads meaning from the atom. 1:many accretion is later.
 
 ## The Render Crew
 *One per target. Zero-temperature craftsmen, all equal citizens.*
