@@ -13,6 +13,27 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-25 — Cartographer v1: first occurrence-intent write. Heuristic compiler; small ALSAP ontology.
+
+Previous Cartographer dispatches (2026-08-21) wrote nothing: `teaches` was unbindable because the
+ontology was two `status: example` PSI nodes. Realizer v1 then minted 47 ALSAP occurrences, all
+`move: present`. This entry records the first writer of the intent facet on that store.
+
+`tools/cartographer.py` is a **documented heuristic compiler** (`agents/cartographer/heuristic_v1.md`),
+not a model call and not fake ID genius. It reads atoms for meaning, writes `element.intent`
+(`move`, `teaches`, `rhetorical`, `intended_response`) onto existing `ele_` records, stamps
+`ext.cartographer` (including low-confidence flags), re-projects `realized_lesson.html`, and does
+not touch `atoms.json`. It never mints ids.
+
+Ontology seed, small and honest: `goal_alsap_asset_safety_monitored` (`status: draft`) plus five
+draft `obj_` nodes distilled from SOP-AST-29080. The AST009 PSI example goal/objectives stay.
+Draft is not validated — no human lock. `teaches` binds sparsely; container labels stay empty
+(coverage is a walk over children).
+
+Next: Couturier, or Realizer minting a second occurrence of 1–2 atoms (1:many in the store).
+Cartographer does not do that.
+
+---
 ## 2026-08-25 — Realizer v1: first course hop. One occurrence per atom; HTML reads meaning from the atom.
 
 Schemas already enforced 1:many (PR #9). Nothing had yet *written* an occurrence. `tools/realize.py`

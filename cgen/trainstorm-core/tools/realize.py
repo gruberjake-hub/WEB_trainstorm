@@ -219,10 +219,50 @@ def validate_elements(elements, schema, atoms_by_id):
         raise SystemExit(1)
 
 
+def move_counts(elements):
+    counts = {}
+    for el in elements:
+        m = (el.get("intent") or {}).get("move") or "?"
+        counts[m] = counts.get(m, 0) + 1
+    return counts
+
+
+def preserve_cartographer_intent(elements, previous):
+    """Single-writer: Cartographer owns occurrence intent. A re-realize must not clobber it."""
+    if not previous:
+        return
+    prev = {e.get("element_id"): e for e in previous if e.get("element_id")}
+    for el in elements:
+        old = prev.get(el.get("element_id"))
+        if not old:
+            continue
+        cart = (old.get("ext") or {}).get("cartographer")
+        if not cart:
+            continue
+        if "intent" in old:
+            el["intent"] = old["intent"]
+        el.setdefault("ext", {})["cartographer"] = cart
+
+
 def project_html(atoms, elements, manifest, out_path: pathlib.Path):
     by_atom = {a["atom_id"]: a for a in atoms}
     by_ele = {e["element_id"]: e for e in elements}
     esc = html.escape
+    cart = manifest.get("cartographer") or {}
+    counts = cart.get("move_counts") or move_counts(elements)
+    mixed = len([k for k in counts if k != "?"]) > 1
+
+    def pills_for(el):
+        intent = el.get("intent") or {}
+        move = intent.get("move", DEFAULT_MOVE)
+        low = (el.get("ext") or {}).get("cartographer", {}).get("confidence") == "low"
+        out = [f'<span class="pill move-{esc(move)}{ " low" if low else ""}">{esc(move)}</span>']
+        for oid in intent.get("teaches") or []:
+            short = oid[4:] if oid.startswith("obj_") else oid
+            out.append(f'<span class="pill teaches" title="{esc(oid)}">{esc(short)}</span>')
+        if low:
+            out.append('<span class="pill dim">low-conf</span>')
+        return "".join(out)
 
     def walk(atom, depth, acc):
         el = by_ele[mint_element_id(atom["atom_id"])]
@@ -233,7 +273,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             f'<article class="occ d{depth}">'
             f'<div class="meta">'
             f'<span class="id">{esc(el["element_id"])}</span>'
-            f'<span class="pill">{esc(el["intent"]["move"])}</span>'
+            f'{pills_for(el)}'
             f'<span class="pill dim">{esc(el["type"])}</span>'
             f'<span class="pill dim">{esc(kind)}</span>'
             f'</div>'
@@ -252,16 +292,46 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
     rows = []
     for el in elements:
         a = by_atom[el["composed_from"]]
+        teaches = ", ".join((el.get("intent") or {}).get("teaches") or []) or "—"
         rows.append(
             f"<tr><td class=mono>{esc(el['element_id'])}</td>"
             f"<td class=mono>{esc(el['composed_from'])}</td>"
-            f"<td>{esc(el['intent']['move'])}</td>"
+            f"<td>{esc((el.get('intent') or {}).get('move', ''))}</td>"
+            f"<td class=mono>{esc(teaches)}</td>"
             f"<td>{esc(el['type'])}</td>"
             f"<td>{esc(a['meaning'].get('kind', ''))}</td></tr>"
         )
 
     rf = manifest.get("realized_from") or {}
     title = f"Realized lesson — {esc(manifest.get('project', 'course'))}"
+    count_bits = " · ".join(f"{esc(k)} {v}" for k, v in sorted(counts.items()))
+    if cart:
+        ctrl_doc = "Cartographer v1"
+        ctrl_sub = f'{esc(manifest.get("project", ""))} · occurrence intent bound'
+        ctrl_meta = (f"{len(elements)} occurrences · {count_bits}<br>"
+                     f"policy {esc(cart.get('policy', ''))}")
+        banner = (
+            "<b>Meaning lives on the atom.</b> Occurrence intent "
+            "(<span class=mono>move</span>, <span class=mono>teaches</span>) is Cartographer’s. "
+            "v1 is a documented heuristic compiler, not ID genius — low-confidence pills are flagged. "
+            "The Realizer minted the <span class=mono>ele_</span> ids and copied no authored "
+            "<span class=mono>content.text</span>. Couturier / Dragoman / PNG render are not this hop."
+        )
+        projector = f"{esc(REALIZER)} + {esc(cart.get('tool', 'tools/cartographer.py'))}"
+    else:
+        ctrl_doc = "Realizer v1"
+        ctrl_sub = f'{esc(manifest.get("project", ""))} · occurrence hop'
+        ctrl_meta = (f"{len(elements)} occurrences · move "
+                     f"<b>{esc(manifest.get('default_move', DEFAULT_MOVE))}</b><br>"
+                     f"policy {esc(POLICY)}")
+        banner = (
+            "<b>Meaning lives on the atom.</b> Each card is one occurrence "
+            "(<span class=mono>ele_</span>), linked by <span class=mono>composed_from</span>. "
+            "The Realizer copied no authored <span class=mono>content.text</span>. Ugly typography "
+            "is v1. Later 1:many can mint preview/teach/retrieve as additional elements without "
+            "changing atom ids. Couturier / Dragoman / PNG render are not this hop."
+        )
+        projector = esc(REALIZER)
     HTML = f"""<!doctype html><html lang=en><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <title>{title}</title>
@@ -286,6 +356,18 @@ h1{{font-size:20px;margin:8px 0 4px}}
 .pill{{background:#1e3a8a;color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;
  text-transform:uppercase;letter-spacing:.03em}}
 .pill.dim{{background:#e2e8f0;color:#334155}}
+.pill.teaches{{background:#e0e7ff;color:#3730a3;text-transform:none;letter-spacing:0}}
+.pill.low{{box-shadow:0 0 0 2px #f59e0b inset}}
+.pill.move-hook{{background:#b45309}}
+.pill.move-objective{{background:#047857}}
+.pill.move-activate{{background:#0f766e}}
+.pill.move-present{{background:#1e3a8a}}
+.pill.move-exemplify{{background:#6d28d9}}
+.pill.move-practice{{background:#be123c}}
+.pill.move-feedback{{background:#9f1239}}
+.pill.move-assess{{background:#7f1d1d}}
+.pill.move-reinforce{{background:#334155}}
+.pill.move-transfer{{background:#c2410c}}
 .meaning{{margin:4px 0 6px}}
 .join{{font-size:12px;color:var(--mut)}}
 .mono{{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px}}
@@ -298,25 +380,21 @@ summary{{cursor:pointer;color:var(--mut);font-size:12.5px}}
  padding-top:12px}}
 </style></head><body><div class=page>
 <div class=ctrl>
- <div><div class=doc>Realizer v1</div>
- <div style="font-size:12.5px;color:var(--mut)">{esc(manifest.get("project", ""))} · occurrence hop</div></div>
- <div class=meta>{len(elements)} occurrences · move <b>{esc(manifest.get("default_move", DEFAULT_MOVE))}</b><br>
- policy {esc(POLICY)}</div>
+ <div><div class=doc>{ctrl_doc}</div>
+ <div style="font-size:12.5px;color:var(--mut)">{ctrl_sub}</div></div>
+ <div class=meta>{ctrl_meta}</div>
 </div>
 <h1>Realized lesson</h1>
-<div class=banner><b>Meaning lives on the atom.</b> Each card is one occurrence
-(<span class=mono>ele_</span>), linked by <span class=mono>composed_from</span>.
-The Realizer copied no authored <span class=mono>content.text</span>. Ugly typography
-is v1. Later 1:many can mint preview/teach/retrieve as additional elements without
-changing atom ids. Couturier / Dragoman / PNG render are not this hop.</div>
+<div class=banner>{banner}</div>
 {''.join(body)}
 <details><summary>Occurrence index — {len(elements)} ele_ records (click to expand)</summary>
-<table><thead><tr><th>element_id</th><th>composed_from</th><th>move</th><th>type</th><th>atom kind</th></tr></thead>
+<table><thead><tr><th>element_id</th><th>composed_from</th><th>move</th><th>teaches</th><th>type</th><th>atom kind</th></tr></thead>
 <tbody>{''.join(rows)}</tbody></table></details>
 <div class=foot>Atom store: {esc(str(rf.get("atom_store", "")))} ·
 atoms_sha256 {esc(str(rf.get("atoms_sha256", ""))[:19])}…<br>
-Projector: {esc(REALIZER)} · this HTML is regenerated, never hand-edited.
-Meaning is read from atoms.json at realize time.</div>
+Projector: {projector} · this HTML is regenerated, never hand-edited.
+Meaning is read from atoms.json. Occurrence intent is Cartographer’s when bound.
+{"Moves are mixed." if mixed else "All moves still share one value — run tools/cartographer.py."}</div>
 </div></body></html>"""
     out_path.write_text(HTML)
 
@@ -366,12 +444,24 @@ def main():
     if move not in closed_moves:
         raise SystemExit(f"--move {move!r} is not in the closed vocab: {closed_moves}")
 
+    store_dir = pathlib.Path(args.store).resolve() if args.store else project / "occurrences"
+    previous = []
+    prev_path = store_dir / "elements.json"
+    prev_mf = {}
+    if prev_path.exists() and prev_path.resolve() != atoms_path.resolve():
+        previous = load(prev_path)
+        if not isinstance(previous, list):
+            previous = []
+        mf_prev_path = store_dir / "manifest.json"
+        if mf_prev_path.exists():
+            prev_mf = load(mf_prev_path)
+
     elements = [mint_element(a, move) for a in atoms]
+    preserve_cartographer_intent(elements, previous)
     validate_elements(elements, element_schema, atoms_by_id)
     if len(elements) != len(atoms):
         raise SystemExit(f"v1 policy is one occurrence per atom; got {len(elements)} vs {len(atoms)}")
 
-    store_dir = pathlib.Path(args.store).resolve() if args.store else project / "occurrences"
     store_dir.mkdir(parents=True, exist_ok=True)
     elements_path = store_dir / "elements.json"
     if elements_path.resolve() == atoms_path.resolve():
@@ -392,8 +482,19 @@ def main():
             "atoms_sha256": atoms_hash_before,
         },
         "note": ("v1 mints one ele_ per atom. 1:many can accrete more elements later "
-                 "without changing atom ids. Meaning is not copied onto the occurrence."),
+                 "without changing atom ids. Meaning is not copied onto the occurrence. "
+                 "Cartographer owns occurrence intent; a re-realize preserves ext.cartographer."),
     }
+    if any((e.get("ext") or {}).get("cartographer") for e in elements):
+        cart = dict(prev_mf.get("cartographer") or {})
+        cart["move_counts"] = move_counts(elements)
+        cart["teaches_bound"] = sum(1 for e in elements if (e.get("intent") or {}).get("teaches"))
+        cart["low_confidence"] = sum(
+            1 for e in elements
+            if (e.get("ext") or {}).get("cartographer", {}).get("confidence") == "low"
+        )
+        cart["element_count"] = len(elements)
+        occ_manifest["cartographer"] = cart
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 

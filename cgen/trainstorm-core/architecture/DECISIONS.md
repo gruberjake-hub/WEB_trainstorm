@@ -194,3 +194,48 @@ no writer of occurrence nodes. This is that writer.
 that Realize.py is not in that landing. Atom identity, locale packs on `atom_id`, and "element is
 not a rival canon" stand.
 
+---
+
+## 2026-08-25 — Cartographer v1: heuristic compiler writes occurrence intent on the ALSAP store
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Cartographer v1 exists as `tools/cartographer.py`. It is a **documented heuristic
+compiler** (`agents/cartographer/heuristic_v1.md`, policy `v1_heuristic_compiler`), not an ID
+genius. It reads atoms for meaning and writes **only occurrence intent** (`move`, `teaches`,
+`rhetorical`, `intended_response`) onto the Realizer's existing `ele_` records. It never mints
+`ele_` or `atom_` ids, never copies meaning onto the element, never rewrites `atoms.json`.
+
+`teaches` is now bindable because the ontology has a **small real ALSAP seed**: one draft goal
+(`goal_alsap_asset_safety_monitored`) and five draft `obj_` nodes distilled from SOP-AST-29080 —
+the procedure the live atom store already is. Status is `draft`, not `example` and not `validated`:
+the SOP is real; the human objective-lock conversation has not happened. The AST009 PSI goal + two
+objectives remain `status: example`. This is not a 50-node fake competency graph.
+
+`move` is a first-match walk over atom structure/kind (title → `hook`, purpose → `objective`,
+definitions/roles → `activate` flagged low, govdocs → `exemplify` flagged low, handoff steps →
+`transfer` flagged low, steps/lists → `present`). Closed vocab from `intent.enum.json`. No
+`practice`/`assess`/`reinforce` invented for atoms this SOP does not contain. Low-confidence is
+flagged on `ext.cartographer`, not silently upgraded.
+
+Single-writer: only Cartographer writes those intent fields. A re-run of `realize.py` preserves
+`ext.cartographer` + bound intent. HTML (`realized_lesson.html`) is re-projected so move pills are
+not all `present`.
+
+**Why:** Previous Cartographer dispatches wrote nothing because `teaches` was unbindable (ontology
+was two PSI examples). Realizer v1 minted 47 occurrences, all `move=present`. Intent is occurrence-
+level under 1:many; this is the first writer of that facet on a live store.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/cartographer.py` (optional `--project` like realize).
+  Updates `<project>/occurrences/elements.json` in place, stamps the occurrence manifest, rewrites
+  `<project>/realized_lesson.html`.
+- `python3 tools/validate_objectives.py` and `python3 tools/validate_atoms.py` stay green. Elements
+  validate against `element.schema.json`. Atoms unchanged.
+- Next hop is **Couturier** (style keys on the occurrence) or **Realizer 1:many minting** (a second
+  `ele_` for hook+present). Cartographer does not mint occurrences.
+
+**Supersedes:** the Realizer v1 block's clause that "Cartographer is not a v1 blocker" as to *this
+facet remaining unbound*. Realizer still mints `ele_` ids; Cartographer still mints none. The
+example PSI ontology is not deleted.
+
