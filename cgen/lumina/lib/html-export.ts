@@ -1,4 +1,5 @@
 import JSZip from "jszip";
+import { applyInlineStyle } from "./style";
 import type { Block, Lesson } from "./types";
 
 function escapeHtml(value: string): string {
@@ -143,46 +144,61 @@ p.block { font-size: 18px; }
 .opt.wrong { background: #f3ddd0; border-color: #c46b3a; }
 .explain { display: none; margin-top: 10px; color: #5c5346; }
 .explain.show { display: block; }
+.html-block { margin: 0 0 22px; }
 @media (max-width: 700px) {
   .columns { grid-template-columns: 1fr; }
   .lesson-title { font-size: 32px; }
 }`;
 
 function renderBlock(block: Block): string {
+  let html = "";
   switch (block.type) {
     case "heading": {
       const tag = `h${block.level}`;
-      return `<${tag} class="block align-${block.align}">${textToHtml(block.text)}</${tag}>`;
+      html = `<${tag} class="block align-${block.align}">${textToHtml(block.text)}</${tag}>`;
+      break;
     }
     case "paragraph":
-      return `<p class="block">${textToHtml(block.text)}</p>`;
+      html = `<p class="block">${textToHtml(block.text)}</p>`;
+      break;
     case "image": {
       const img = block.src
         ? `<img src="${escapeHtml(block.src)}" alt="${escapeHtml(block.alt)}" />`
         : `<div class="img-ph">Image placeholder</div>`;
       const cap = block.caption ? `<div class="caption">${textToHtml(block.caption)}</div>` : "";
-      return `<figure class="figure">${img}${cap}</figure>`;
+      html = `<figure class="figure">${img}${cap}</figure>`;
+      break;
     }
     case "button":
-      return `<p class="block"><a class="btn btn-${block.variant}" href="${escapeHtml(block.href)}">${textToHtml(block.label)}</a></p>`;
+      html = `<p class="block"><a class="btn btn-${block.variant}" href="${escapeHtml(block.href)}">${textToHtml(block.label)}</a></p>`;
+      break;
     case "list": {
       const tag = block.ordered ? "ol" : "ul";
       const items = block.items.map((item) => `<li>${textToHtml(item)}</li>`).join("");
-      return `<${tag} class="list">${items}</${tag}>`;
+      html = `<${tag} class="list">${items}</${tag}>`;
+      break;
     }
     case "callout":
-      return `<aside class="callout callout-${block.tone}"><h4>${textToHtml(block.title)}</h4><p>${textToHtml(block.body)}</p></aside>`;
+      html = `<aside class="callout callout-${block.tone}"><h4>${textToHtml(block.title)}</h4><p>${textToHtml(block.body)}</p></aside>`;
+      break;
     case "columns":
-      return `<div class="columns"><div class="col">${block.left.map(renderBlock).join("")}</div><div class="col">${block.right.map(renderBlock).join("")}</div></div>`;
+      html = `<div class="columns"><div class="col">${block.left.map(renderBlock).join("")}</div><div class="col">${block.right.map(renderBlock).join("")}</div></div>`;
+      break;
     case "video":
-      return `<div class="video"><div><div class="play">▶</div><div>${textToHtml(block.title)}</div><div class="dur">${textToHtml(block.duration)}</div><p>${textToHtml(block.note)}</p></div></div>`;
+      html = `<div class="video"><div><div class="play">▶</div><div>${textToHtml(block.title)}</div><div class="dur">${textToHtml(block.duration)}</div><p>${textToHtml(block.note)}</p></div></div>`;
+      break;
     case "quiz": {
       const options = block.options
         .map((option, index) => `<button type="button" class="opt" data-index="${index}">${textToHtml(option)}</button>`)
         .join("");
-      return `<div class="quiz" data-correct="${block.correctIndex}"><p class="q">${textToHtml(block.question)}</p>${options}<div class="explain">${textToHtml(block.explanation)}</div></div>`;
+      html = `<div class="quiz" data-correct="${block.correctIndex}"><p class="q">${textToHtml(block.question)}</p>${options}<div class="explain">${textToHtml(block.explanation)}</div></div>`;
+      break;
     }
+    case "html":
+      html = `<div class="html-block">${block.html}</div>`;
+      break;
   }
+  return applyInlineStyle(html, block.style);
 }
 
 const PLAYER_JS = `document.querySelectorAll(".quiz").forEach(function (quiz) {
@@ -225,6 +241,7 @@ export function lessonDocument(lesson: Lesson): string {
     ${lessonInnerHtml(lesson)}
   </article>
   <script>${PLAYER_JS}</script>
+  ${lesson.extraJs ? `<script>\n${lesson.extraJs.replace(/<\/script/gi, "<\\/script")}\n</script>` : ""}
 </body>
 </html>`;
 }

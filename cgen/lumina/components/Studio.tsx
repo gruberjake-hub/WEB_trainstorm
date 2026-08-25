@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { createBlock } from "@/lib/blocks";
 import { exportHtmlFile, exportZipFile } from "@/lib/html-export";
-import { loadLesson, saveLesson } from "@/lib/storage";
+import { importHtmlDocument } from "@/lib/html-import";
+import { loadLesson, listProjects, openProject, saveLesson, saveUnsaved } from "@/lib/storage";
 import { starterLesson } from "@/lib/starter-lesson";
 import {
   cloneTree,
@@ -16,9 +17,11 @@ import {
   reorder,
   updateBlock,
 } from "@/lib/tree";
-import type { Block, BlockType, Lesson } from "@/lib/types";
+import type { Block, BlockType, Lesson, ProjectMeta } from "@/lib/types";
 import { Canvas } from "./Canvas";
 import { CodeInspector } from "./CodeInspector";
+import { ImportDialog } from "./ImportDialog";
+import { LessonsDialog } from "./LessonsDialog";
 import { Palette } from "./Palette";
 import { PreviewPane } from "./PreviewPane";
 import { PropertiesPanel } from "./PropertiesPanel";
@@ -37,6 +40,7 @@ function isBlockType(value: string): value is BlockType {
     "columns",
     "video",
     "quiz",
+    "html",
   ].includes(value);
 }
 
@@ -54,22 +58,39 @@ export function Studio() {
   const [hydrated, setHydrated] = useState(false);
   const [tab, setTab] = useState<RightTab>("properties");
   const [savedLabel, setSavedLabel] = useState<string | null>(null);
+  const [unsavedImport, setUnsavedImport] = useState(false);
+  const [importNote, setImportNote] = useState<string | null>(null);
+  const [importOpen, setImportOpen] = useState(false);
+  const [lessonsOpen, setLessonsOpen] = useState(false);
+  const [projects, setProjects] = useState<ProjectMeta[]>([]);
 
   useEffect(() => {
     const loaded = loadLesson();
     setLesson(loaded);
-    setSavedLabel(formatTime(loaded.updatedAt));
+    const draft = typeof window !== "undefined" && window.localStorage.getItem("lumina.unsaved.v1");
+    if (draft) {
+      setUnsavedImport(true);
+      setSavedLabel(null);
+    } else {
+      setSavedLabel(formatTime(loaded.updatedAt));
+    }
+    setProjects(listProjects());
     setHydrated(true);
   }, []);
 
   useEffect(() => {
     if (!hydrated) return;
     const handle = window.setTimeout(() => {
+      if (unsavedImport) {
+        saveUnsaved(lesson);
+        return;
+      }
       saveLesson(lesson);
       setSavedLabel(formatTime(new Date().toISOString()));
+      setProjects(listProjects());
     }, 400);
     return () => window.clearTimeout(handle);
-  }, [lesson, hydrated]);
+  }, [lesson, hydrated, unsavedImport]);
 
   const selected = useMemo(
     () => (selectedId ? findBlock(lesson.blocks, selectedId) : null),
@@ -127,12 +148,20 @@ export function Studio() {
       <Toolbar
         title={lesson.title}
         savedAt={savedLabel}
+        unsavedImport={unsavedImport}
         onTitle={(title) => setLesson((current) => ({ ...current, title }))}
+        onLessons={() => {
+          setProjects(listProjects());
+          setLessonsOpen(true);
+        }}
+        onImportHtml={() => setImportOpen(true)}
         onSave={() => {
           saveLesson(lesson);
           const stamp = new Date().toISOString();
           setLesson((current) => ({ ...current, updatedAt: stamp }));
           setSavedLabel(formatTime(stamp));
+          setUnsavedImport(false);
+          setProjects(listProjects());
         }}
         onExportHtml={() => exportHtmlFile(lesson)}
         onExportZip={() => {
@@ -142,9 +171,20 @@ export function Studio() {
           const next = starterLesson();
           setLesson(next);
           setSelectedId(null);
+          setImportNote(null);
+          setUnsavedImport(false);
           saveLesson(next);
+          setProjects(listProjects());
         }}
       />
+      {importNote ? (
+        <div className="import-banner">
+          <span>{importNote}</span>
+          <button type="button" className="ghost" onClick={() => setImportNote(null)}>
+            Dismiss
+          </button>
+        </div>
+      ) : null}
       <div className="workspace">
         <aside className="left-pane">
           <Palette onAdd={(type) => addBlock(type)} />
@@ -201,6 +241,7 @@ export function Studio() {
               block={selected}
               lessonTitle={lesson.title}
               lessonSubtitle={lesson.subtitle}
+              extraJs={lesson.extraJs || ""}
               onLessonMeta={(patch) => setLesson((current) => ({ ...current, ...patch }))}
               onChange={(patch) => {
                 if (!selectedId) return;
@@ -218,6 +259,41 @@ export function Studio() {
           {tab === "code" ? <CodeInspector lesson={lesson} /> : null}
         </aside>
       </div>
+      <ImportDialog
+        open={importOpen}
+        onClose={() => setImportOpen(false)}
+        onImport={(html, filename) => {
+          const result = importHtmlDocument(html, filename);
+          setLesson(result.lesson);
+          setSelectedId(null);
+          setUnsavedImport(true);
+          setSavedLabel(null);
+          setImportNote(result.note || "Imported as a new project. Save to keep it without replacing the previous lesson.");
+          saveUnsaved(result.lesson);
+          setImportOpen(false);
+          setLessonsOpen(false);
+          setTab("properties");
+        }}
+      />
+      <LessonsDialog
+        open={lessonsOpen}
+        projects={projects}
+        onClose={() => setLessonsOpen(false)}
+        onImportHtml={() => {
+          setLessonsOpen(false);
+          setImportOpen(true);
+        }}
+        onOpen={(id) => {
+          const opened = openProject(id);
+          if (!opened) return;
+          setLesson(opened);
+          setSelectedId(null);
+          setUnsavedImport(false);
+          setImportNote(null);
+          setSavedLabel(formatTime(opened.updatedAt));
+          setLessonsOpen(false);
+        }}
+      />
     </div>
   );
 }

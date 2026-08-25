@@ -1,5 +1,7 @@
 "use client";
 
+import type { CSSProperties } from "react";
+import { reactStyle } from "@/lib/style";
 import type { Block } from "@/lib/types";
 
 function ImagePreview({ src, alt }: { src: string; alt: string }) {
@@ -7,31 +9,36 @@ function ImagePreview({ src, alt }: { src: string; alt: string }) {
   return <img src={src} alt={alt} />;
 }
 
+function withStyle(style: CSSProperties | undefined, className: string) {
+  return { className, style };
+}
+
 export function BlockPreview({ block }: { block: Block }) {
+  const style = reactStyle(block.style);
   switch (block.type) {
     case "heading": {
       const Tag = (`h${block.level}` as "h1" | "h2" | "h3");
-      return <Tag className={`block align-${block.align}`}>{block.text}</Tag>;
+      return <Tag {...withStyle(style, `block align-${block.style?.align || block.align}`)}>{block.text}</Tag>;
     }
     case "paragraph":
-      return <p className="block">{block.text}</p>;
+      return <p {...withStyle(style, "block")}>{block.text}</p>;
     case "image":
       return (
-        <figure className="figure">
+        <figure {...withStyle(style, "figure")}>
           <ImagePreview src={block.src} alt={block.alt} />
           {block.caption ? <div className="caption">{block.caption}</div> : null}
         </figure>
       );
     case "button":
       return (
-        <p className="block">
+        <p {...withStyle(style, "block")}>
           <span className={`btn btn-${block.variant}`}>{block.label}</span>
         </p>
       );
     case "list": {
       const Tag = block.ordered ? "ol" : "ul";
       return (
-        <Tag className="list">
+        <Tag {...withStyle(style, "list")}>
           {block.items.map((item, index) => (
             <li key={`${block.id}-${index}`}>{item}</li>
           ))}
@@ -40,14 +47,14 @@ export function BlockPreview({ block }: { block: Block }) {
     }
     case "callout":
       return (
-        <aside className={`callout callout-${block.tone}`}>
+        <aside {...withStyle(style, `callout callout-${block.tone}`)}>
           <h4>{block.title}</h4>
           <p>{block.body}</p>
         </aside>
       );
     case "columns":
       return (
-        <div className="columns">
+        <div {...withStyle(style, "columns")}>
           <div className="col">
             {block.left.map((child) => (
               <BlockPreview key={child.id} block={child} />
@@ -62,7 +69,7 @@ export function BlockPreview({ block }: { block: Block }) {
       );
     case "video":
       return (
-        <div className="video">
+        <div {...withStyle(style, "video")}>
           <div>
             <div className="play">▶</div>
             <div>{block.title}</div>
@@ -73,7 +80,7 @@ export function BlockPreview({ block }: { block: Block }) {
       );
     case "quiz":
       return (
-        <div className="quiz">
+        <div {...withStyle(style, "quiz")}>
           <p className="q">{block.question}</p>
           {block.options.map((option, index) => (
             <div key={`${block.id}-o${index}`} className={`opt ${index === block.correctIndex ? "correct" : ""}`}>
@@ -82,6 +89,13 @@ export function BlockPreview({ block }: { block: Block }) {
             </div>
           ))}
         </div>
+      );
+    case "html":
+      return (
+        <div
+          {...withStyle(style, "html-block")}
+          dangerouslySetInnerHTML={{ __html: block.html }}
+        />
       );
   }
 }

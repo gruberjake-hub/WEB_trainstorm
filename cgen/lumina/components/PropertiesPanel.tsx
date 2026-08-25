@@ -4,12 +4,14 @@ import type { ReactNode } from "react";
 import type {
   Align,
   Block,
+  BlockStyle,
   BlockType,
   ButtonBlock,
   CalloutBlock,
   CalloutTone,
   ColumnsBlock,
   HeadingBlock,
+  HtmlBlock,
   ImageBlock,
   ListBlock,
   ParagraphBlock,
@@ -30,6 +32,7 @@ export function PropertiesPanel({
   block,
   lessonTitle,
   lessonSubtitle,
+  extraJs,
   onLessonMeta,
   onChange,
   onAddNested,
@@ -37,7 +40,8 @@ export function PropertiesPanel({
   block: Block | null;
   lessonTitle: string;
   lessonSubtitle: string;
-  onLessonMeta: (patch: { title?: string; subtitle?: string }) => void;
+  extraJs: string;
+  onLessonMeta: (patch: { title?: string; subtitle?: string; extraJs?: string }) => void;
   onChange: (patch: Partial<Block>) => void;
   onAddNested: (side: "left" | "right", type: BlockType) => void;
 }) {
@@ -53,6 +57,14 @@ export function PropertiesPanel({
             rows={4}
             value={lessonSubtitle}
             onChange={(event) => onLessonMeta({ subtitle: event.target.value })}
+          />
+        </Field>
+        <Field label="Extra JS (imported scripts — not run in the editor)">
+          <textarea
+            rows={8}
+            value={extraJs}
+            onChange={(event) => onLessonMeta({ extraJs: event.target.value })}
+            spellCheck={false}
           />
         </Field>
         <p className="palette-help">Select a block on the canvas to edit its properties.</p>
@@ -72,6 +84,13 @@ export function PropertiesPanel({
       {block.type === "video" ? <VideoFields block={block} onChange={onChange} /> : null}
       {block.type === "quiz" ? <QuizFields block={block} onChange={onChange} /> : null}
       {block.type === "columns" ? <ColumnsFields block={block} onAddNested={onAddNested} /> : null}
+      {block.type === "html" ? <HtmlFields block={block} onChange={onChange} /> : null}
+      {block.type !== "columns" ? (
+        <StyleFields
+          style={block.style}
+          onChange={(style) => onChange({ style })}
+        />
+      ) : null}
     </div>
   );
 }
@@ -300,7 +319,7 @@ function ColumnsFields({
   block: ColumnsBlock;
   onAddNested: (side: "left" | "right", type: BlockType) => void;
 }) {
-  const types: BlockType[] = ["heading", "paragraph", "list", "callout", "image", "button", "video", "quiz"];
+  const types: BlockType[] = ["heading", "paragraph", "list", "callout", "image", "button", "video", "quiz", "html"];
   return (
     <>
       <p className="palette-help">
@@ -342,6 +361,74 @@ function ColumnsFields({
         </select>
       </Field>
       <p className="palette-help">Click a nested block on the canvas to edit it.</p>
+    </>
+  );
+}
+
+function HtmlFields({
+  block,
+  onChange,
+}: {
+  block: HtmlBlock;
+  onChange: (patch: Partial<HtmlBlock>) => void;
+}) {
+  return (
+    <Field label="HTML">
+      <textarea
+        rows={10}
+        value={block.html}
+        spellCheck={false}
+        onChange={(event) => onChange({ html: event.target.value })}
+      />
+    </Field>
+  );
+}
+
+function StyleFields({
+  style,
+  onChange,
+}: {
+  style?: BlockStyle;
+  onChange: (style: BlockStyle) => void;
+}) {
+  const current = style || {};
+  return (
+    <>
+      <div className="pane-label">Look</div>
+      <Field label="Text color">
+        <input
+          value={current.color || ""}
+          placeholder="#1f4d45"
+          onChange={(event) => onChange({ ...current, color: event.target.value || undefined })}
+        />
+      </Field>
+      <Field label="Font size">
+        <input
+          value={current.fontSize || ""}
+          placeholder="18px"
+          onChange={(event) => onChange({ ...current, fontSize: event.target.value || undefined })}
+        />
+      </Field>
+      <Field label="Alignment">
+        <select
+          value={current.align || ""}
+          onChange={(event) =>
+            onChange({ ...current, align: (event.target.value || undefined) as BlockStyle["align"] })
+          }
+        >
+          <option value="">Default</option>
+          <option value="left">Left</option>
+          <option value="center">Center</option>
+          <option value="right">Right</option>
+        </select>
+      </Field>
+      <Field label="Spacing (margin)">
+        <input
+          value={current.margin || ""}
+          placeholder="0 0 22px"
+          onChange={(event) => onChange({ ...current, margin: event.target.value || undefined })}
+        />
+      </Field>
     </>
   );
 }
