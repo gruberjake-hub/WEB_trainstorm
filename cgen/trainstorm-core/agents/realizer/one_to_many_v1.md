@@ -11,16 +11,19 @@ Realizer mints `ele_` ids. Cartographer still writes occurrence intent, except i
 
 ## What is seeded (ALSAP live store only)
 
-Two teaching-worthy atoms. The other 45 stay 1:1.
+Two teaching-worthy atoms originally; this hop keeps those and adds **one**
+more so two extras are `reinforce` checks. The other atoms stay 1:1.
 
 | Atom | Primary `move` (Cartographer) | Extra `ele_` | Extra `move` | Why |
 |---|---|---|---|---|
 | `atom_sop_ast29080` (SOP title) | `hook` | `ele_sop_ast29080__present` | `present` | hook + present of the same meaning |
-| `atom_sop_ast29080_general` (what an ALSAP is) | `present` | `ele_sop_ast29080_general__reinforce` | `reinforce` | present + retrieve/retention of the same meaning |
+| `atom_sop_ast29080_general` (what an ALSAP is) | `present` | `ele_sop_ast29080_general__reinforce` | `reinforce` | present + retrieve/retention of the same meaning — HTML projects this extra as a **check** (`agents/realizer/check_v1.md`) |
+| `atom_sop_ast29080_purpose` (what this SOP is for) | `objective` | `ele_sop_ast29080_purpose__reinforce` | `reinforce` | objective + retrieve/retention — second check, still a seed |
 
 Closed pedagogical vocab has no `retrieve`. `reinforce` is Gagné 9a (enhance
 retention) — the legal name for a later placement of the same atom. Do not
-invent a new enum value.
+invent a new enum value. The extra `reinforce` is a check the reader can
+attempt, not a recap reprint of the atom.
 
 Do not mint extras for the whole SOP. Do not duplicate atoms. Do not copy
 `content.text` onto the occurrence.

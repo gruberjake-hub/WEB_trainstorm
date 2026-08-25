@@ -21,15 +21,18 @@ The map is from Cartographer's `intent.move` (already on the occurrence).
 
 ## Why three looks matter more than seven
 
-The live 1:many seed is two pairs:
+The live 1:many seed is two pairs plus a third check:
 
 - SOP title: `hook` + `present` → opening clothes vs instructional clothes
-- ALSAP definition: `present` + `reinforce` → instructional clothes vs recall clothes
+- ALSAP definition: `present` + `reinforce` → instructional clothes vs recall **check**
+- SOP purpose: `objective` + `reinforce` → purpose clothes vs recall **check**
 
-Those pairs must not look like the same SOP card. Other live moves get a
-distinct look so the page is not 36 identical present-cards, but the map is
-still one row per closed pedagogical value this SOP actually uses. No
-`practice` / `feedback` / `assess` looks until those moves exist.
+Those pairs must not look like the same SOP card. `reinforce` is a check
+projected from the atom (`agents/realizer/check_v1.md`), dressed here as
+`brand.recall`. Other live moves get a distinct look so the page is not 36
+identical present-cards, but the map is still one row per closed pedagogical
+value this SOP actually uses. No `practice` / `feedback` / `assess` looks
+until those moves exist.
 
 ---
 
@@ -39,7 +42,7 @@ still one row per closed pedagogical value this SOP actually uses. No
 |---|---|---|---|---|---|
 | `hook` | `brand.opening` | `tp_display` | `title` | `banner` | large centered opening, not a body card |
 | `present` | `brand.instructional` | `tp_body` | `body` | `card` | instructional body card |
-| `reinforce` | `brand.recall` | `tp_recall` | `retrieval` | `recap` | recall / quoted recap ("remember"), not a first teaching |
+| `reinforce` | `brand.recall` | `tp_recall` | `retrieval` | `check` | a check the reader can attempt (stem + choices or cloze), not a quoted recap |
 | `objective` | `brand.purpose` | `tp_purpose` | `purpose` | `purpose_bar` | purpose frame |
 | `activate` | `brand.prior` | `tp_body` | `prior` | `callout` | prior-knowledge callout |
 | `exemplify` | `brand.example` | `tp_body` | `example` | `cite` | named-example / citation |
@@ -53,7 +56,9 @@ Unmapped closed-vocab moves (`practice`, `feedback`, `assess`): **do not invent
 a look**. Flag `look_unmapped` and leave the occurrence undressed. Honest gap.
 
 `reinforce` is the closed-vocab name for retrieve/retention (Gagné 9a). The
-look is `brand.recall`. Do not invent a `retrieve` move.
+look is `brand.recall` with `layout_hint: check`. Do not invent a `retrieve`
+move. The HTML projector (Realizer) turns that look into a check UI from
+atom meaning — Couturier still writes only the style keys.
 
 ---
 

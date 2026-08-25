@@ -81,7 +81,8 @@ Closed rhetorical list: `vocab/intent.enum.json` `dimensions.rhetorical`.
 ## `intended_response` — sparse
 
 Written only where the teaching act names a response worth recording
-(hook, objective, transfer). Omitted elsewhere. Open string; not a vocab.
+(hook, objective, transfer, and extra `reinforce` — attempt a check of this
+atom). Omitted elsewhere. Open string; not a vocab.
 
 ---
 
@@ -118,4 +119,7 @@ That extra exists because its `move` is *different* from the primary. This compi
 
 Primary occurrences keep the first-match walk above. Do not treat an extra
 `reinforce` as a license to invent `practice` / `assess` on 1:1 atoms this SOP
-does not contain.
+does not contain. The extra `reinforce` is a later placement of the same
+atom; Realizer’s HTML projector may render it as a check from that atom’s
+meaning (`agents/realizer/check_v1.md`). Cartographer still does not mint
+the extra and still does not invent a learner-check atom.

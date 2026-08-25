@@ -13,6 +13,29 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-25 — Extra `reinforce` is a check (render of move + atom meaning)
+
+Couturier v1 (PR #13) dressed `reinforce` as `brand.recall` / `tp_recall`, but
+the extra occurrence on the ALSAP definition was still the same SOP paragraph
+in a Remember recap. Traditional ID’s third move is a check. This entry
+records that the extra `reinforce` now *instructs*.
+
+The HTML projector in `tools/realize.py` branches on `intent.move ==
+reinforce` (and Couturier `brand.recall` / `tp_recall`) and emits a check UI
+from the atom (`agents/realizer/check_v1.md`). No new agent. No authored
+`content.text`. No new `retrieve` enum. Shape is `mcq_siblings` or `cloze` —
+a key, not a second meaning. Key ⊆ this atom; distractors ⊆ sibling atoms
+in the same store (definition vs purpose vs scope as closed contrast). Couturier
+`layout_hint` for `reinforce` is `check`.
+
+Seed: keep `ele_sop_ast29080_general__reinforce`; mint one more teaching-worthy
+extra, `ele_sop_ast29080_purpose__reinforce`. Not the whole SOP. Idempotent
+with realize → cartographer → couturier. `atoms.json` untouched.
+
+Not this hop: Dragoman, Storyline, `.potx`, motion, PNG pipelines, rewriting
+SOP/form atoms into elements, inventing a `retrieve` move.
+
+---
 ## 2026-08-25 — Couturier v1: first writer of style on the occurrence
 
 Realizer minted `ele_` records (PR #10, 1:many seed PR #12) and Cartographer bound

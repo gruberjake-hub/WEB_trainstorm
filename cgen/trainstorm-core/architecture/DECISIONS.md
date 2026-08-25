@@ -284,6 +284,9 @@ authored meaning.
 - Next hop is still **Couturier** (style keys). Not a full spaced-retrieval
   treatment of the SOP. Couturier still mints nothing.
 
+**Pointer:** a later 2026-08-25 block adds one more seed atom (`purpose`) and
+projects extra `reinforce` as a check, not a recap.
+
 **Supersedes:** the Realizer v1 block’s “v1 is deliberately 1:1” as to *the live
 ALSAP store remaining 1:1*; one occurrence per atom remains the default for
 unseeded atoms. Cartographer v1’s “Next hop is Couturier or Realizer 1:many
@@ -346,4 +349,60 @@ and “Next hop is still Couturier”. Realizer still mints `ele_` ids;
 Cartographer still owns intent; Couturier still mints none. Working-process
 block untouched.
 
+**Pointer:** a later 2026-08-25 block projects `reinforce` / `brand.recall` as a
+check UI (`layout_hint: check`), not a quoted recap.
+
+---
+
+## 2026-08-25 — Extra `reinforce` is a check: render of move + atom meaning
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Traditional ID’s third move is a check. Extra `reinforce`
+occurrences (Gagné 9a; closed vocab has no `retrieve`) now **project as a
+check the reader can attempt**, derived only from the atom’s existing
+meaning. Not a new agent. Realizer still mints `ele_` ids and owns the HTML
+projection (`agents/realizer/check_v1.md`, policy `v1_check_from_atom`).
+Cartographer still owns intent. Couturier still owns style (`brand.recall` /
+`tp_recall`; `layout_hint` is `check`, not `recap`). No authored
+`content.text` on the element. `atoms.json` unchanged. Locale packs stay
+keyed on `atom_id`.
+
+The check is a **shape**, not a second meaning. Stem is a grammatical invert
+of this atom’s first sentence (`{subject} is {complement}` → `What is
+{subject}?`). Key is the complement — a substring of this atom. Distractors,
+if any, are first sentences of sibling atoms in the same store (closed
+contrast). If siblings are thin, fall back to a cloze of this atom. Do not
+invent facts, numbers, SOP rules, or misconceptions.
+
+Seed stays small. The ALSAP definition extra
+(`ele_sop_ast29080_general__reinforce`) is the required check. One more
+teaching-worthy atom is minted: `atom_sop_ast29080_purpose` → extra
+`ele_sop_ast29080_purpose__reinforce`. Title extra stays `present`. Do not
+1:many the entire store.
+
+Idempotent: re-run of realize → cartographer → couturier keeps extra `ele_`
+ids, intent, style, and the same check projection (pure function of store +
+move).
+
+**Why:** After Couturier v1 the extra `reinforce` *looked* like recall
+clothes but still *read* as an italic reprint of the SOP sentence. Clothes
+without a check are not instruction. 1:many’s extra occurrence has to
+instruct.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  `--selftest` on all three. Default project `cgen/astellas/projects/ast_alsap`.
+- Open `cgen/astellas/projects/ast_alsap/realized_lesson.html` — the two
+  `reinforce` extras are stem + choices, not a Remember recap.
+- Elements still validate against `element.schema.json`. No new move enum.
+  No `interaction_primitive` (Storyline). No option labels on
+  `element.assessment`.
+
+**Supersedes:** the Couturier v1 clause that `reinforce` HTML is a “quoted
+recap”; the 1:many seed’s “two atoms” count as to *the live store remaining
+two extras* — three extras now, still a seed. Realizer still mints `ele_`
+ids; Cartographer still owns intent; Couturier still mints none.
+Working-process block untouched.
 
