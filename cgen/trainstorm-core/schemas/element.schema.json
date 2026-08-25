@@ -1,25 +1,31 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://trainstorm.ai/schemas/element.schema.json",
-  "title": "Trainstorm Element (Unified)",
-  "description": "The reconciled Trainstorm element: one flat, ID-keyed node that unifies course.schema (authoring), scene.schema (render), and course-primitives (substrate). A node is thin — it owns its SOURCE meaning and carries keyed references (facets) into the sub-models. Translations live in external locale packs keyed by element_id; visual/motion/interaction primitives live in registries; objectives live in the intent ontology. One agent owns each facet (single-writer). Containers (Course/Module/Section/Scene) and leaf elements (Head/Statement/…) are both nodes here, related by structure.parent_id.",
+  "title": "Trainstorm Element (Occurrence)",
+  "description": "One OCCURRENCE of an atom in a course — not a rival meaning canon. atom_id is the meaning-node key (locale packs join there); element_id (ele_) is minted at realization and keys this placement. composed_from is the required link to that atom. The element never carries authored meaning of its own; occurrence facets (rhetorical, move, teaches, intended_response, expression keys) bind here. Containers (Course/Module/Section/Scene) and leaf elements (Head/Statement/…) are both occurrence nodes, related by structure.parent_id. One agent owns each facet (single-writer).",
   "type": "object",
-  "required": ["element_id", "type", "content", "governance"],
+  "required": ["element_id", "composed_from", "type", "governance"],
   "additionalProperties": false,
   "properties": {
     "element_id": {
       "type": "string",
       "minLength": 1,
-      "description": "Stable, opaque, durable identity — the single join key across the object graph, every locale pack, the registries, and the learner model. Never reused or edited. Recommended prefix convention, e.g. ele_… / sce_… / mod_…"
+      "pattern": "^ele_[A-Za-z0-9_-]+$",
+      "description": "Occurrence key (prefix ele_), minted at realization. Addressable identity of THIS placement of an atom in a course — the same atom may be a hook in module 1 and reinforce in module 5. Not the join key for locale packs (those key on atom_id via composed_from). Never reused or edited."
+    },
+    "composed_from": {
+      "type": "string",
+      "pattern": "^atom_[A-Za-z0-9_-]+$",
+      "description": "The atom_id this occurrence realizes. Required explicit link under 1:many (architecture/DECISIONS.md 2026-08-25 occurrence identity). Meaning and content_hash live on that atom; this node does not duplicate them."
     },
     "source_hash": {
       "type": "string",
       "pattern": "^sha256:[a-f0-9]{64}$",
-      "description": "Hash of the content payload. Detects a real change of meaning (invalidating downstream renderings / translations) versus a node that merely moved. This is the cure for 'which version is this?'."
+      "description": "Optional stale-detection handle. Meaning-change detection is the atom's content_hash, joined through composed_from. Locale packs key on atom_id, not this field. If present, typically echoes the atom's content_hash so an occurrence can be flagged when its atom's meaning moved."
     },
     "type": {
       "type": "string",
-      "description": "What this node IS. Containers and leaf elements share the array; parent/child is expressed via structure.parent_id.",
+      "description": "What this occurrence IS. Containers and leaf elements share the array; parent/child is expressed via structure.parent_id.",
       "enum": [
         "Course", "Module", "Section", "Scene", "Scenario",
         "KnowledgeCheck", "Assessment", "JobAid", "Resource", "Conclusion",
@@ -30,17 +36,17 @@
     },
     "content": {
       "type": "object",
-      "description": "The invariant meaning — SOURCE LOCALE ONLY. Do not embed other languages here; translations live in locales/<lang>.json keyed by element_id. (This is the fix for the AST009 drift.) Containers may omit text.",
+      "description": "NOT the meaning store. Meaning lives on the atom (composed_from). Authored text on the occurrence is a known 1:many violation (decision-log 2026-08-20 eighth; DECISIONS.md 2026-08-25). Default: omit this field. Optional only as a presentation-constraint copy (length limits, heading vs sentence) — never as source meaning, never as the locale-pack join. Locale packs key on atom_id.",
       "required": ["locale"],
       "additionalProperties": false,
       "properties": {
-        "locale": { "type": "string", "description": "BCP-47 tag of the source language.", "examples": ["en"] },
-        "text": { "type": "string", "description": "The canonical source string." }
+        "locale": { "type": "string", "description": "BCP-47 tag of a presentation-constraint copy, if one exists. Not the source-meaning locale — that is meaning.source_locale on the atom.", "examples": ["en"] },
+        "text": { "type": "string", "description": "Presentation-constraint copy only (e.g. a shortened heading). Not canonical source meaning. Prefer omit." }
       }
     },
     "structure": {
       "type": "object",
-      "description": "Object facet — the node's place in the graph. Owner: Content Architecture.",
+      "description": "Object facet — this occurrence's place in the course graph. Owner: Content Architecture.",
       "additionalProperties": false,
       "properties": {
         "section_id": { "type": "string" },
@@ -53,7 +59,7 @@
     },
     "intent": {
       "type": "object",
-      "description": "Two distinct senses of intent, deliberately separated — plus the teaching move. Owner: L&D / Instructional Design. `rhetorical` = what this does on the page; `move` = what teaching act it performs; `teaches` = which objective it serves. `bloom` was removed 2026-08-21 and now lives on the objective node.",
+      "description": "Occurrence-level intent — ALL of it. Owner: L&D / Instructional Design. `rhetorical` = what this does on the page; `move` = what teaching act it performs HERE; `teaches` + `intended_response` live here (not on the atom) because objectives are intervention-scoped (2026-08-21 Fable-run restitch, landed 2026-08-25). `bloom` lives on the objective node.",
       "additionalProperties": false,
       "properties": {
         "rhetorical": {
@@ -61,8 +67,8 @@
           "description": "What the element does on the page (from scene.schema). A lint rule may default this from `type` (e.g. Head→orient) — not enforced here so reuse stays legal.",
           "enum": ["orient", "refine", "organize", "structure", "specify", "assert", "explain", "persuade", "contextualize", "transition", "support"]
         },
-        "teaches": { "type": "array", "items": { "type": "string" }, "description": "objective_ids in the intent ontology this element serves (the pedagogical add)." },
-        "intended_response": { "type": "string" },
+        "teaches": { "type": "array", "items": { "type": "string" }, "description": "objective_ids in the intent ontology this OCCURRENCE serves. Intervention-scoped: the same atom may teach different objectives at different placements. Moved off the atom 2026-08-21." },
+        "intended_response": { "type": "string", "description": "The cognitive/affective response this occurrence is designed to elicit. Moved off the atom 2026-08-21." },
         "move": {
           "type": "string",
           "description": "The teaching MOVE this occurrence performs — what instructional act is happening here. MIRRORS vocab/intent.enum.json dimensions.pedagogical (Gagné's events, retention and transfer split); the vocab is canonical and the mirror is checked by tools/validate_objectives.py. Occurrence-level, and a sibling of `rhetorical`: both answer 'what is this doing HERE'. The same atom is a `hook` in module 1 and `reinforce` in module 5 — that is spaced repetition, and it is why move cannot live on the atom. Distinct from teaches[]: a move is the MEANS, an objective the END, and many moves serve one objective. The names are a closed list on purpose — an open one would destroy the coverage queries ('does this module contain any retrieval practice?', 'does every objective have an assess move?') that are the whole reason for having the dimension. The REALISATION of a move is unbounded. See decision log 2026-08-21.",
@@ -72,7 +78,7 @@
     },
     "expression": {
       "type": "object",
-      "description": "Form — KEYS into the expression registries (from scene.schema's primitive refs). Never embedded styles or translations. Owner: Brand + Localization.",
+      "description": "Form — KEYS into the expression registries (from scene.schema's primitive refs). Never embedded styles or translations. Owner: Brand + Localization. Occurrence-level: the same atom may be a heading here and a body line there.",
       "additionalProperties": false,
       "properties": {
         "text_primitive": { "type": "string" },
@@ -106,13 +112,13 @@
     },
     "narration": {
       "type": "object",
-      "description": "Voice facet (from scene.narration + course-primitives.speaker). Owner: Narration/Audio.",
+      "description": "Voice facet (from scene.narration + course-primitives.speaker). Owner: Narration/Audio. Spoken variant of on-screen text is occurrence-level delivery, not a second meaning store.",
       "additionalProperties": false,
       "properties": {
         "speaker": { "type": ["string", "null"] },
         "voice_id": { "type": "string" },
         "voice_name": { "type": "string" },
-        "voice_text": { "type": "string", "description": "Spoken variant of the on-screen text, source locale." },
+        "voice_text": { "type": "string", "description": "Spoken variant of the on-screen text (resolved from the atom's meaning unless presentation constrains it), source locale." },
         "voiceover_ref": { "type": "string" },
         "duration_estimate_sec": { "type": "number", "minimum": 0 }
       }
@@ -133,7 +139,7 @@
     },
     "governance": {
       "type": "object",
-      "description": "Provenance/authority — per element, not just per course. This is what ends the 'too much generated, which is current?' problem. Owner: Governance / Quality.",
+      "description": "Provenance/authority — per occurrence. Owner: Governance / Quality.",
       "required": ["version", "status"],
       "additionalProperties": false,
       "properties": {

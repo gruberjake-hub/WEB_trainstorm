@@ -117,7 +117,7 @@ trainstorm-core/
 │
 ├── reference/                            # ONE clean, validated example of each layer
 │   ├── example_atom.json                 ✅
-│   ├── example_element.json              ⚠ duplicates the atom's text with no link — see log 08-20 (sixth)
+│   ├── example_element.json              ✅ occurrence of example_atom (`composed_from`, no authored content)
 │   ├── sample_script.json / .v2.json     ✅
 │   └── brunswick.reference.course.json   ⬜ `{"_todo": …}` — the gold course has NEVER existed
 │
@@ -205,13 +205,15 @@ from the July documents and was corrected the same day; see `architecture/DECISI
 `element_id` keys the occurrence; `composed_from` links them. One atom → many elements.**
 
 - **`atom.schema.json`** — CONTENT CANON. Thin: owns its meaning and `content_hash`, everything else
-  keyed, single-writer per binding. `architecture/atom-spec.md` is its annotated reading. The live
-  gate is `tools/validate_atoms.py`.
+  keyed, single-writer per binding. `bindings.intent` is empty and closed (`teaches` +
+  `intended_response` live on the occurrence). `architecture/atom-spec.md` is its annotated reading
+  (July sketch; the schema is the contract). The live gate is `tools/validate_atoms.py`.
 - **`element.schema.json`** — one *occurrence* of an atom in a course: this atom, at this position,
   shown this way. The same atom is a `hook` in module 1 and `reinforce` in module 5 — that is spaced
   repetition, and it is why an occurrence needs its own key. Occurrence-level facets (`rhetorical`,
-  `move`, expression keys) bind here. Not a rival canon — it never carries meaning of its own
-  (`element.content` as an authored copy is a known violation, still owed).
+  `move`, expression keys, `teaches`, `intended_response`) bind here. Not a rival canon — it never
+  carries meaning of its own. `content`/`content.text` is not the source-meaning store (optional
+  presentation-constraint copy only; default omit).
 
 `architecture/reconciliation.md` §4's *"make `element_id` the stable `atom_id`"* is the one-node
 reading and is **wrong** under 1:many; `promptpack_manifold.md` §8 (mint `element_id`s at
@@ -261,8 +263,8 @@ Near-term, in dependency order:
 
 1. ~~**Settle identity**~~ — **done 2026-08-20, re-affirmed 2026-08-25.** Two ids: `atom_` for
    meaning, `ele_` for an occurrence, `composed_from` between them. See `architecture/DECISIONS.md`.
-2. **Land the PENDING restitch** (`architecture/decision-log.md`, 2026-08-21 Fable run): `atom.intent`
-   empty and closed; `teaches` + `intended_response` on the occurrence. Decided, not yet on `main`.
+2. ~~**Land the PENDING restitch**~~ — **done 2026-08-25.** `atom.intent` empty and closed;
+   `teaches` + `intended_response` on the occurrence. See `architecture/DECISIONS.md`.
 3. **`atom → primitives`** — the first hop of the pipeline has no listed transform at all.
 4. **`tools/realize.py`** (primitives → elements: mint `ele_`, set `composed_from`, no authored
    text) and **`tools/render/`** (element → HTML → PNG).

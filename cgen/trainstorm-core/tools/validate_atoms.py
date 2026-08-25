@@ -3,7 +3,10 @@
 The standing validation gate. Generalises the form-facet validate.py / validate_objectives.py
 into one gate that runs on a project's atom store. Three layers:
 
-  1. SCHEMA        — atom shell vs atom.schema.json; bindings.procedure vs procedure.facet.schema.json
+  1. SCHEMA        — atom shell vs atom.schema.json; bindings.procedure vs procedure.facet.schema.json.
+                     atom.intent is empty and closed (2026-08-21 restitch): leftover teaches /
+                     intended_response on an atom is a schema failure; those fields live on the
+                     occurrence (element.intent). Procedure / form / instance facets are unchanged.
   2. DRIFT         — id uniqueness, resolvable refs, content_hash correctness, no embedded localization
   3. VOCAB CONF.   — step_type / roles / records resolve to a GOVERNED member, else must be an
                      explicitly PROPOSED extension (flag, never invent). Ungoverned AND unproposed = hard fail.
@@ -199,6 +202,13 @@ for a in atoms:
     if inst is not None and (proc is not None or form is not None):
         fail(f"[drift/source-type] {aid}: carries an instance facet AND a source-type facet "
              f"(an instance atom fills a template slot; it does not redeclare one)")
+    # 2026-08-21 restitch (landed 2026-08-25): atom.intent is empty and closed. Schema already
+    # rejects extra properties; this names the failure so a leftover teaches[] is not read as a
+    # generic additionalProperties miss. Occurrence-level: element.intent.
+    intent = b.get("intent")
+    if isinstance(intent, dict) and intent:
+        fail(f"[schema/intent] {aid}: atom.intent is closed (2026-08-21 restitch); "
+             f"{sorted(intent)} belong on the occurrence (element.intent)")
 
 # ---- 2. DRIFT ----
 for a in atoms:
