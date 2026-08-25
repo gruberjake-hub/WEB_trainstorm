@@ -1,6 +1,9 @@
 [build]
   publish = "."
-  command = ""
+  command = "cd cgen/lumina && npm ci && npm run build && cp -r out/. ."
+
+[build.environment]
+  NODE_VERSION = "22"
 
 [[redirects]]
   from = "/api/*"

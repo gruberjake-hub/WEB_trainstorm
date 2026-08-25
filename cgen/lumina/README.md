@@ -6,6 +6,8 @@ This folder is self-contained. It does not change the rest of Trainstorm or `cge
 
 ## Run
 
+Local studio (no base path):
+
 ```bash
 cd cgen/lumina
 npm install
@@ -13,6 +15,15 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+Production is a static export on the existing Netlify site: [https://trainstorm.ai/cgen/lumina](https://trainstorm.ai/cgen/lumina). Netlify runs `npm ci && npm run build` in this folder on push and copies `out/` onto `/cgen/lumina` (the `/cgen` course player is unchanged).
+
+```bash
+cd cgen/lumina
+npm run build
+```
+
+That writes a static site to `out/` (`output: "export"`). Do not commit `out/` or `.next/`.
 
 ## What you get
 
