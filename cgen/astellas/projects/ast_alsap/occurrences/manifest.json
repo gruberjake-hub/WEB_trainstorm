@@ -10,5 +10,23 @@
     "atom_count": 47,
     "atoms_sha256": "sha256:93b278fbdaffb692987dbb0e97ee25e0bf4d26a76681a7af0693504a9f33af30"
   },
-  "note": "v1 mints one ele_ per atom. 1:many can accrete more elements later without changing atom ids. Meaning is not copied onto the occurrence."
+  "note": "v1 mints one ele_ per atom. 1:many can accrete more elements later without changing atom ids. Meaning is not copied onto the occurrence.",
+  "cartographer": {
+    "policy": "v1_heuristic_compiler",
+    "tool": "tools/cartographer.py",
+    "heuristic": "agents/cartographer/heuristic_v1.md",
+    "move_counts": {
+      "activate": 2,
+      "exemplify": 5,
+      "hook": 1,
+      "objective": 1,
+      "present": 35,
+      "transfer": 3
+    },
+    "teaches_bound": 42,
+    "low_confidence": 10,
+    "element_count": 47,
+    "ontology": "ontology/objectives.json",
+    "note": "v1 compiler pass over Realizer occurrences. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Next: Couturier or 1:many minting."
+  }
 }

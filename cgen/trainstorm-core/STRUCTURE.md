@@ -137,7 +137,8 @@ trainstorm-core/
 │   ├── project_socket.py                 ✅ template → INTAKE CONTRACT (json + client-facing html)
 │   ├── lint.py · validate_objectives.py  ✅
 │   ├── localize/ · chat-capture/ · visual-assets/           ✅
-│   ├── realize.py                        ✅ Realizer v1 — atoms → occurrences (1 ele_ per atom, move=present) + realized_lesson.html
+│   ├── realize.py                        ✅ Realizer v1 — atoms → occurrences (1 ele_ per atom) + realized_lesson.html
+│   ├── cartographer.py                   ✅ Cartographer v1 — occurrence intent (move/teaches) on existing ele_ records
 │   └── render/                           ⬜ element → HTML → PNG — NOT this hop (no PNG pipeline)
 │
 └── project/                              # Claude Project setup — one-way snapshot FROM git, not a second constitution
@@ -255,10 +256,10 @@ done. Superseded 2026-08-20 by the state above.)*
 
 The **document half** of the machine is built and green: three atom stores, a gate with two
 self-tests at 17/17, ingest · reconcile · approve · project, and an agent that has been dispatched
-and behaves correctly. The **course half has started**: Realizer v1 (`tools/realize.py`) mints one
-occurrence per atom from a live store and projects `realized_lesson.html`. Couturier has never
-written a binding; Dragoman and `tools/render/` PNG pipelines are unbuilt. The `atom → primitives`
-hop is still owed — v1 realizes atoms directly.
+and behaves correctly. The **course half has started**: Realizer v1 mints one occurrence per atom;
+Cartographer v1 (`tools/cartographer.py`) binds occurrence intent on that store and re-projects
+`realized_lesson.html`. Couturier has never written a binding; Dragoman and `tools/render/` PNG
+pipelines are unbuilt. The `atom → primitives` hop is still owed — v1 realizes atoms directly.
 
 Near-term, in dependency order:
 
@@ -269,7 +270,9 @@ Near-term, in dependency order:
 3. **`atom → primitives`** — the first hop of the pipeline has no listed transform at all.
 4. ~~**`tools/realize.py`**~~ — **done 2026-08-25, v1.** One `ele_` per atom, `composed_from`, no
    authored text, `realized_lesson.html`. 1:many accretion and **`tools/render/`** (PNG) remain.
-5. **A real `brunswick.reference.course.json`** — still `{"_todo": …}`, and the only thing that would
+5. ~~**Cartographer v1**~~ — **done 2026-08-25.** Heuristic compiler writes `move`/`teaches` on the
+   ALSAP occurrence store. Next: **Couturier** or **1:many minting**.
+6. **A real `brunswick.reference.course.json`** — still `{"_todo": …}`, and the only thing that would
    prove the course half end to end.
 
 `project/custom_instructions.md` now points at this file and `architecture/DECISIONS.md`.

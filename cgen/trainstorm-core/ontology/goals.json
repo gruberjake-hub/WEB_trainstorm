@@ -1,10 +1,10 @@
 {
   "store": "ontology/goals",
-  "version": 1,
+  "version": 2,
   "status": "seeded",
   "closed_list": true,
   "owner": "Client business owner (NOT L&D) — see goal.schema.json",
-  "_note": "Seeded 2026-08-21 with the one goal the existing objective seeds actually imply. AST009 is the real programme the two seeded objectives were distilled from (atom-spec §4); the outcome and its measure below are stated as `status: example` because no client has ratified them. A real engagement replaces this file with the client's own outcomes — the SCHEMA is shared core, these INSTANCES are per-project content.",
+  "_note": "v2, 2026-08-25: added goal_alsap_asset_safety_monitored, distilled from the live SOP-AST-29080 atom store (ast_alsap). Status on that node is draft — the SOP is real; a client has not ratified the outcome statement. The AST009 PSI goal remains status:example. Schema is shared core; these INSTANCES are per-engagement content that currently live in the core seed because no per-project ontology store exists yet.",
   "goals": {
     "goal_ast009_psi_reported_on_time": {
       "label": "Product safety information reaching the company is recognised and reported within the required window, without relying on individual vigilance.",
@@ -23,6 +23,25 @@
       },
       "status": "example",
       "derived_from": "AST009 reference programme; the outcome implied by atom-spec §4's objectives, made explicit here for the first time."
+    },
+    "goal_alsap_asset_safety_monitored": {
+      "label": "Emerging safety risks at the asset level are identified, evaluated, and communicated through a single maintained ALSAP during clinical development.",
+      "measure": "Proportion of in-scope assets with a current ALSAP (annual SMT review complete; ad hoc updates after signals, regulatory changes, or milestones), and the count of assets proceeding in development without one.",
+      "owner": "role_gso",
+      "reachability": {
+        "trainable": "Knowing what an ALSAP is and that one exists per asset; who is in scope; and how to run the three procedure cycles the SOP names (plan development, develop/maintain/approve, analysis datasets and TLFs including protecting the blind). Those are knowledge and procedure-following problems instruction can move.",
+        "not_trainable": [
+          "EDMS or SCE friction — if filing, routing, or restricted-folder access is slow, a trained ALSAP Lead still misses windows. Process, not instruction.",
+          "SMT meeting culture and schedule — alignment and review cycles fail when the forum does not meet, regardless of how well the SOP was taught.",
+          "Data quality that triggers ad hoc updates, and the regulatory changes themselves — those are inputs to the plan, not outputs of training.",
+          "Workload that compresses the 10-business-day review — training does not create calendar time."
+        ],
+        "assessed_by": "role_alsap_lead",
+        "assessed_on": "2026-08-25",
+        "rationale": "SOP-AST-29080 exists to operationalize asset-level safety monitoring. The trainable slice is the procedure the atoms already state. Naming EDMS, SMT cadence, data quality, and workload as not-trainable keeps a later missing-ALSAP count from being read as a training failure."
+      },
+      "status": "draft",
+      "derived_from": "Live SOP-AST-29080 atom store (cgen/astellas/projects/ast_alsap/atoms.json). Distilled from the procedure's purpose, general statement, and three procedure sections. Not client-ratified — Jake merging the Cartographer PR is the first human look, not a lock."
     }
   }
 }

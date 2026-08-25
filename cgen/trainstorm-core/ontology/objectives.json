@@ -1,6 +1,6 @@
 {
   "store": "ontology/objectives",
-  "version": 2,
+  "version": 3,
   "status": "seeded",
   "closed_list": true,
   "owner": "L&D / Instructional Design",
@@ -22,7 +22,52 @@
       "derived_from": "atom-spec §4 canonical example objective (obj_recognize_psi)",
       "serves": ["goal_ast009_psi_reported_on_time"],
       "bloom": "analyze"
+    },
+    "obj_explain_alsap_purpose": {
+      "label": "Explain what an ALSAP is, that one exists per asset, and why it exists for asset-level safety monitoring",
+      "requires": [],
+      "framework": "none",
+      "status": "draft",
+      "derived_from": "SOP-AST-29080 purpose + general statement in ast_alsap/atoms.json",
+      "serves": ["goal_alsap_asset_safety_monitored"],
+      "bloom": "understand"
+    },
+    "obj_identify_alsap_scope": {
+      "label": "Identify which organizations and roles are in scope of the ALSAP lifecycle",
+      "requires": ["obj_explain_alsap_purpose"],
+      "framework": "none",
+      "status": "draft",
+      "derived_from": "SOP-AST-29080 scope, in-scope organizations list, and roles heading in ast_alsap/atoms.json",
+      "serves": ["goal_alsap_asset_safety_monitored"],
+      "bloom": "remember"
+    },
+    "obj_execute_alsap_plan": {
+      "label": "Execute Plan Development of ALSAP (notify, authors, kick-off, deliverable alignment)",
+      "requires": ["obj_identify_alsap_scope"],
+      "framework": "none",
+      "status": "draft",
+      "derived_from": "SOP-AST-29080 section A procedure steps in ast_alsap/atoms.json",
+      "serves": ["goal_alsap_asset_safety_monitored"],
+      "bloom": "apply"
+    },
+    "obj_execute_alsap_develop_maintain": {
+      "label": "Execute Develop and Maintain ALSAP (draft, review, reconcile, approve, notify)",
+      "requires": ["obj_execute_alsap_plan"],
+      "framework": "none",
+      "status": "draft",
+      "derived_from": "SOP-AST-29080 section B procedure steps in ast_alsap/atoms.json",
+      "serves": ["goal_alsap_asset_safety_monitored"],
+      "bloom": "apply"
+    },
+    "obj_produce_alsap_analysis_outputs": {
+      "label": "Produce analysis datasets and TLFs per the ALSAP while protecting the blind",
+      "requires": ["obj_execute_alsap_develop_maintain"],
+      "framework": "none",
+      "status": "draft",
+      "derived_from": "SOP-AST-29080 section C procedure steps in ast_alsap/atoms.json",
+      "serves": ["goal_alsap_asset_safety_monitored"],
+      "bloom": "apply"
     }
   },
-  "_note": "v2, 2026-08-21: both seeded objectives now carry `serves` (the outcome that warrants them) and `bloom` (the level of the capability). They remain status:example — the goal they serve is itself an example, so nothing here is ratified. A real engagement replaces both stores together."
+  "_note": "v3, 2026-08-25: five draft ALSAP objectives distilled from SOP-AST-29080 (the live ast_alsap atom store), warranted by goal_alsap_asset_safety_monitored. Status is draft, not example and not validated — the procedure is real, the human objective-lock conversation has not happened (Cartographer steward rule). The two AST009 PSI objectives remain status:example. This is a small ontology (5+2), not a fake competency graph."
 }
