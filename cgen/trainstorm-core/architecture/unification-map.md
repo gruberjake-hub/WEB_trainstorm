@@ -12,10 +12,11 @@ MANIFOLD_HANDOFF) and Jake's expression-nature notes against trainstorm-core. Co
 Nothing in the archaeology is a rival architecture; every layer is a **partial discovery of
 the same manifold**, each strongest where the others are blind. The handoff's proposal to
 "invert CREATOR_v2 to the canonical centre" is rejected — that would mint a second canonical
-source beside `element.schema.json`, violating *one canonical source*. Instead, every legacy
-artifact **dissolves into the existing substrate**: its novel fields become facet upgrades,
-its stages become agents/tools/skills placed by the grouping rule in §3, and its prompts
-become the implementation behind contracts the graph already defines.
+source beside the live node contract (`atom.schema.json`; `element.schema.json` is the course
+costume of the same node — `architecture/DECISIONS.md` 2026-08-25), violating *one canonical
+source*. Instead, every legacy artifact **dissolves into the existing substrate**: its novel
+fields become facet upgrades, its stages become agents/tools/skills placed by the grouping
+rule in §3, and its prompts become the implementation behind contracts the graph already defines.
 
 ---
 

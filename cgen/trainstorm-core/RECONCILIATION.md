@@ -5,6 +5,10 @@ conform, plus small additive changes flowed the other way into the canonical voc
 diff and the rationale. Nothing here writes to git — apply the `trainstorm-core/` files and the two
 PATCH docs to your repo yourself.*
 
+> **Settled 2026-08-25** (`architecture/DECISIONS.md`): the node join key is `atom_id`. This July
+> record's `element_id` is that same key in a course costume, not a second ID space. Do not mint
+> `ele_` IDs.
+
 ## What was already right (kept)
 
 The three-orthogonal-concerns model (structure / skin / fill) is the Manifold's *reference-don't-embed*

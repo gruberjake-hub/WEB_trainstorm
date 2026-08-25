@@ -2,8 +2,8 @@
 
 ChatGPT conversations are discovery evidence, not architectural authority. The canonical state is
 the checked-out `trainstorm-core` repository. A remembered idea, chat summary, or exported message
-changes the architecture only after it is reconciled against the repository and accepted in the
-decision log.
+changes the architecture only after it is reconciled against the repository and accepted in
+`architecture/DECISIONS.md`. If a chat disagrees with that file, **the file wins.**
 
 ## Why this process exists
 
@@ -17,7 +17,7 @@ as evidence for what a prior session actually proposed.
 Use the strongest available source and preserve its provenance:
 
 1. **Canonical repo artifact** - current behavior and architecture; authoritative.
-2. **Accepted decision-log entry** - rationale for a settled repo decision.
+2. **Accepted `architecture/DECISIONS.md` entry** - rationale for a settled repo decision.
 3. **Full conversation text** - evidence of a proposal, constraint, or unresolved question.
 4. **Contemporaneous chat summary** - useful lead, but verify against the full chat when possible.
 5. **Cross-chat memory or recollection** - discovery hint only; never merge directly.
@@ -75,7 +75,7 @@ Promotion is a separate, human-reviewed act:
 1. Confirm the intended decision with Jake when the conversation does not contain an explicit choice.
 2. Update the smallest canonical artifact that owns the behavior.
 3. Validate affected schemas, examples, vocabularies, and tools.
-4. Add a dated `decision-log.md` entry with the conversation provenance and changed repo paths.
+4. Add a dated `architecture/DECISIONS.md` block with the conversation provenance and changed repo paths.
 5. Keep the raw export and working candidate ledger outside git unless a sanitized evidence artifact
    is deliberately approved for the repository.
 
@@ -92,7 +92,7 @@ The default local layout is:
 ```
 
 These are working materials, not a second source of truth. The durable outputs are changes to the
-canonical architecture plus their decision-log entries.
+canonical architecture plus their `architecture/DECISIONS.md` entries.
 
 ## First-pass review order
 
