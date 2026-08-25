@@ -6,7 +6,7 @@
 **Goal:** figure out how these relate to each other and to the atom model — and stop the version sprawl.
 **Date:** 20 July 2026
 
-> **Settled 2026-08-25** (`architecture/DECISIONS.md`): `atom_id` is the only node key. Locale packs and expression keys bind to `atom_id`. Historical `element_id` / `ele_…` in this July sketch **are that same key in a course costume**, not a second ID space. Do not mint `ele_` IDs; do not mint `element_id` at realization. If this file and a chat disagree with `DECISIONS.md`, `DECISIONS.md` wins.
+> **Corrected 2026-08-20 / 2026-08-25** (`architecture/decision-log.md` 2026-08-20 eighth; `architecture/DECISIONS.md` 2026-08-25, occurrence identity): this July sketch's "make `element_id` the stable `atom_id`" (§4, §6) is the one-node reading and is **wrong** under the 1:many decision. `atom_id` keys meaning; `element_id` keys one occurrence of an atom in a course; `composed_from` links them. Locale packs bind to `atom_id`; expression keys to `element_id`. If this file and a chat disagree with `DECISIONS.md`, `DECISIONS.md` wins.
 
 ---
 
@@ -70,7 +70,7 @@ Two things pop out of the table: `scene` owns the best **expression** model (pri
 
 ## 4. Keep-list — the good ideas already in your schemas
 
-- **`course-primitives`' flat, ID-keyed element array** → this *is* the atom store. Make `element_id` the stable `atom_id`. **Frozen 2026-08-25:** that is one key, not two. Do not mint `ele_` as a parallel space.
+- **`course-primitives`' flat, ID-keyed element array** → this *is* the atom store. ~~Make `element_id` the stable `atom_id`.~~ **Corrected:** two keys — the element array is the *occurrence* store; the atom store is the meaning it composes from (1:many, 2026-08-20).
 - **`scene`'s primitive references** (`text/motion/layout/interaction_primitive`, `style_ref`) → this is the **expression binding done right**: keys into registries, not embedded styles. Pull these onto the canonical element. (`course-primitives` only has a weak `layout_hint` — upgrade it with these.)
 - **`scene`'s rhetorical `intent` enum** → keep it, as the *rhetorical* sub-facet of intent.
 - **`course`'s type→intent mapping** → keep it, but as a **validation/default rule** applied when projecting the authoring view, not as baked structure. (i.e. "a Head defaults to orient" is a lint rule, not a schema constraint that forbids reuse.)
@@ -94,7 +94,7 @@ One reconciled element — your `course-primitives` shape, keeping `scene`'s exp
 
 ```jsonc
 {
-  "element_id": "atom_ast009_recognize_psi", // = atom_id (stable, the only join key; do not mint ele_)
+  "element_id": "ele_ast009_recognize_psi",  // the occurrence key; composed_from → atom_ast009_recognize_psi
   "source_hash": "sha256:…",                     // guards meaning across regeneration
 
   "content": { "locale": "en",                   // meaning: SOURCE only — not all locales
@@ -146,4 +146,4 @@ You don't have a versioning problem. You have three copies of a truth that shoul
 
 ## 8. Next
 
-If this reconciliation lands, the natural next artifact is the **unified `element.schema.json`** — a single formal, validatable schema (draft 2020-12) that merges the three, with the four fixes baked in — plus a short **migration note** showing how each of your existing three maps into it (so nothing you built is lost, just consolidated). That file exists. **Identity (2026-08-25):** it is a course costume of the atom, not a second key — `architecture/DECISIONS.md`.
+If this reconciliation lands, the natural next artifact is the **unified `element.schema.json`** — a single formal, validatable schema (draft 2020-12) that merges the three, with the four fixes baked in — plus a short **migration note** showing how each of your existing three maps into it (so nothing you built is lost, just consolidated). That file exists. **Identity:** it is the occurrence node — its own `ele_` key, `composed_from` → atom (`architecture/DECISIONS.md`, 2026-08-25 occurrence identity).

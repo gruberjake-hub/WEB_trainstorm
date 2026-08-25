@@ -18,10 +18,10 @@ Keep the canonical artifacts in one git repo (`cgen/trainstorm-core` inside `WEB
 
 ```
 trainstorm-core/
-├── STRUCTURE.md                         ✅ tree, prefixes, same-node-two-costumes
+├── STRUCTURE.md                         ✅ tree, prefixes, one atom / many elements
 ├── schemas/
 │   ├── atom.schema.json                 ✅ CANONICAL NODE — validate against this
-│   ├── element.schema.json              ✅ course costume of the same node (not a second key)
+│   ├── element.schema.json              ✅ the occurrence node — ele_ key, composed_from → atom (1:many)
 │   ├── procedure.facet.schema.json      ✅
 │   ├── form.facet.schema.json           ✅
 │   ├── instance.facet.schema.json       ✅
@@ -55,7 +55,7 @@ Do **not** keep a ⬜ “create `intent.enum.json` / `primitives.registry.json`�
 
 | File | Why it's canon |
 |---|---|
-| `STRUCTURE.md` | Tree, prefixes, same node / two costumes. |
+| `STRUCTURE.md` | Tree, prefixes, one atom / many elements. |
 | `architecture/DECISIONS.md` | Settled calls. Chat loses if it disagrees. |
 | `schemas/atom.schema.json` | The single definition of a valid node. The gate validates against it. |
 | `reference/example_atom.json` | A worked, validated instance the model can pattern-match to. |
@@ -65,7 +65,7 @@ Do **not** keep a ⬜ “create `intent.enum.json` / `primitives.registry.json`�
 | `architecture/reconciliation.md` | Historical convergence of course/scene/primitives. Identity freeze lives in `DECISIONS.md`. |
 | `project/custom_instructions.md` | Always-on pointer at the above — not a second source. |
 
-`element.schema.json` may sync as the **course costume** contract. It is not the canonical unit and not a second ID space.
+`element.schema.json` syncs as the **occurrence** contract: one atom → many elements, each with its own `ele_` key linked by `composed_from`. It is not the canonical *meaning* unit; it is where occurrence-level facets bind (`architecture/DECISIONS.md` 2026-08-25, occurrence identity).
 
 ---
 
@@ -85,7 +85,7 @@ Name chats by spoke so the project stays navigable. Suggested starting set:
 - `localization agent` — locale packs keyed by `atom_id`, glossary/termbase, the RAG draft→review loop. (Do not implement Dragoman unless asked.)
 - `render / lottie` — HTML/CSS→PNG render agent; AE→Lottie path; `delivery` routing.
 - `visual registry` — brand kits, tokens, fonts, logos, the layout templates.
-- `generator` — script primitives from source; realizer writes a course costume of the **same** `atom_id`.
+- `generator` — script primitives from source; realizer mints `ele_` occurrences of atoms (`composed_from`).
 
 Keep a one-line index of active chats at the top of `README.md` so you can find them.
 
@@ -105,4 +105,4 @@ They share the *substrate* (this repo's schemas), so point their instructions at
 1. After Jake merges a PR, **pull** locally; re-sync this knowledge base FROM git (one way).
 2. Read `architecture/DECISIONS.md` and `STRUCTURE.md` at the start of a session.
 3. Run `tools/validate_atoms.py` against the live stores before changing them. Do not move `cgen/astellas/`.
-4. Course-chain work (realize / render / Brunswick gold course) is still owed — without minting `ele_` IDs.
+4. Course-chain work (realize / render / Brunswick gold course) is still owed — realize mints `ele_` ids, never authored text.

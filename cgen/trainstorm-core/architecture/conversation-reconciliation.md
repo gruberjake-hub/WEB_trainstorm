@@ -3,7 +3,8 @@
 ChatGPT conversations are discovery evidence, not architectural authority. The canonical state is
 the checked-out `trainstorm-core` repository. A remembered idea, chat summary, or exported message
 changes the architecture only after it is reconciled against the repository and accepted in
-`architecture/DECISIONS.md`. If a chat disagrees with that file, **the file wins.**
+`architecture/DECISIONS.md` (with its reasoning in `architecture/decision-log.md`). If a chat
+disagrees with that file, **the file wins.**
 
 ## Why this process exists
 

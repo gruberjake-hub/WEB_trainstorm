@@ -10,7 +10,7 @@ The prompt pack takes a messy corpus to a production-ready script — and, in it
  
 The conversational map had the pack cooling from hot ideation into a single **atom → element promotion**, "where identity is born." That does not survive the files:
  
-- `atom.schema.json` and `element.schema.json` are **not two temperatures of one node.** The atom is the node (meaning + keyed bindings); the element is the *course costume* of that same node (`reconciliation.md`'s unification of `course` / `scene` / `course-primitives`). **Settled 2026-08-25:** one `atom_id`; do not mint a second key. Validate the live graph with `tools/validate_atoms.py`. See `architecture/DECISIONS.md`.
+- `atom.schema.json` and `element.schema.json` are **not two temperatures of one node.** The atom is the *meaning* node (meaning + keyed bindings); the element is one *occurrence* of it in a course (`reconciliation.md`'s unification of `course` / `scene` / `course-primitives`, as the shape of the occurrence node). **Decided 2026-08-20, re-affirmed 2026-08-25:** one atom → many elements; `atom_id` and `element_id` are both stable, joined by `composed_from`. Validate atoms with `tools/validate_atoms.py`. See `architecture/DECISIONS.md`. *(Tier note: this file is a crosswalk from a parallel workstream, not core canon.)*
 - Identity is not born in one step. Script-primitive ids are still minted at generation. **`element_id`s are not minted at realization** — that §8 line is superseded.
 ## 2. The canonical pipeline (from `architecture/script-generation-layer.md`)
  
@@ -83,7 +83,7 @@ The one genuinely **un-designed** piece is the **business-outcome / ROI node abo
  
 ## 8. Identity — mint early, not at compile
  
-The pack mints IDs positionally at the compiler (`S01`, `b1`) — the coldest end — so they renumber on every re-run, violating *stable, opaque IDs, never reused*. Move minting up to the transforms. **Script-primitive ids at generation; the content node keeps `atom_id`.** Do not mint `element_id` at realization as a new key — superseded by `architecture/DECISIONS.md` (2026-08-25 identity freeze). A course costume is not a second ID space.
+The pack mints IDs positionally at the compiler (`S01`, `b1`) — the coldest end — so they renumber on every re-run, violating *stable, opaque IDs, never reused*. In the manifold, IDs are minted where each layer creates nodes: **primitive ids at generation, `element_id`s at realization**, each element linked to its atom by `composed_from` (the `derivation` stamp, made explicit). Move minting up to the transforms. *(This §8 reading was briefly superseded on 2026-08-25 and restored the same day — `architecture/DECISIONS.md` 2026-08-25, occurrence identity.)*
  
 ## 9. Validated vs. open
  
