@@ -86,5 +86,11 @@ export function createBlock(type: BlockType): Block {
         correctIndex: 0,
         explanation: "Explain why the correct choice works on the job.",
       };
+    case "html":
+      return {
+        id: nid(),
+        type,
+        html: "<p>Custom markup that Lumina will keep as-is on export.</p>",
+      };
   }
 }

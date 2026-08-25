@@ -7,11 +7,19 @@ export type BlockType =
   | "callout"
   | "columns"
   | "video"
-  | "quiz";
+  | "quiz"
+  | "html";
 
 export type Align = "left" | "center" | "right";
 
 export type CalloutTone = "info" | "tip" | "warning" | "success";
+
+export type BlockStyle = {
+  color?: string;
+  fontSize?: string;
+  align?: Align;
+  margin?: string;
+};
 
 export type HeadingBlock = {
   id: string;
@@ -19,12 +27,14 @@ export type HeadingBlock = {
   level: 1 | 2 | 3;
   text: string;
   align: Align;
+  style?: BlockStyle;
 };
 
 export type ParagraphBlock = {
   id: string;
   type: "paragraph";
   text: string;
+  style?: BlockStyle;
 };
 
 export type ImageBlock = {
@@ -33,6 +43,7 @@ export type ImageBlock = {
   src: string;
   alt: string;
   caption: string;
+  style?: BlockStyle;
 };
 
 export type ButtonBlock = {
@@ -41,6 +52,7 @@ export type ButtonBlock = {
   label: string;
   href: string;
   variant: "primary" | "secondary";
+  style?: BlockStyle;
 };
 
 export type ListBlock = {
@@ -48,6 +60,7 @@ export type ListBlock = {
   type: "list";
   ordered: boolean;
   items: string[];
+  style?: BlockStyle;
 };
 
 export type CalloutBlock = {
@@ -56,6 +69,7 @@ export type CalloutBlock = {
   tone: CalloutTone;
   title: string;
   body: string;
+  style?: BlockStyle;
 };
 
 export type ColumnsBlock = {
@@ -63,6 +77,7 @@ export type ColumnsBlock = {
   type: "columns";
   left: Block[];
   right: Block[];
+  style?: BlockStyle;
 };
 
 export type VideoBlock = {
@@ -71,6 +86,7 @@ export type VideoBlock = {
   title: string;
   duration: string;
   note: string;
+  style?: BlockStyle;
 };
 
 export type QuizBlock = {
@@ -80,6 +96,14 @@ export type QuizBlock = {
   options: string[];
   correctIndex: number;
   explanation: string;
+  style?: BlockStyle;
+};
+
+export type HtmlBlock = {
+  id: string;
+  type: "html";
+  html: string;
+  style?: BlockStyle;
 };
 
 export type Block =
@@ -91,13 +115,21 @@ export type Block =
   | CalloutBlock
   | ColumnsBlock
   | VideoBlock
-  | QuizBlock;
+  | QuizBlock
+  | HtmlBlock;
 
 export type Lesson = {
   id: string;
   title: string;
   subtitle: string;
   blocks: Block[];
+  updatedAt: string;
+  extraJs?: string;
+};
+
+export type ProjectMeta = {
+  id: string;
+  title: string;
   updatedAt: string;
 };
 
@@ -110,6 +142,7 @@ export const NESTABLE_TYPES: BlockType[] = [
   "callout",
   "video",
   "quiz",
+  "html",
 ];
 
 export const PALETTE: { type: BlockType; label: string; hint: string }[] = [
@@ -122,4 +155,5 @@ export const PALETTE: { type: BlockType; label: string; hint: string }[] = [
   { type: "columns", label: "Two-column", hint: "Side-by-side blocks" },
   { type: "video", label: "Video", hint: "Placeholder stage" },
   { type: "quiz", label: "Quiz (MCQ)", hint: "One correct answer" },
+  { type: "html", label: "HTML", hint: "Kept markup" },
 ];

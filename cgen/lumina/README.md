@@ -19,6 +19,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - Block canvas with heading, paragraph, image, button, list, callout, two-column, video placeholder, and quiz (MCQ)
 - Properties panel for the selected block
 - Live preview and a generated-HTML code inspector
-- Autosave to `localStorage`
+- Autosave to `localStorage` (imported HTML is a new project and does not overwrite the previous lesson until you Save)
+- **Import HTML** (file picker or paste) — headings, lists, images, links/buttons, callouts, columns, video/iframes, quizzes; leftover markup is kept as an HTML block
 - Export as a single HTML file or a zip
 - Starter lesson: **Giving constructive feedback**

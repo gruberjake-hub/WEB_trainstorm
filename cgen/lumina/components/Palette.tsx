@@ -12,6 +12,7 @@ const ICONS: Record<BlockType, string> = {
   columns: "⧉",
   video: "▶",
   quiz: "?",
+  html: "</>",
 };
 
 export function Palette({
