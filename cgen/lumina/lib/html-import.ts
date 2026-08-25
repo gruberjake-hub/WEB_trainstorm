@@ -275,8 +275,13 @@ function loneLink(el: HTMLElement): HTMLAnchorElement | null {
   return text === linkText ? (links[0] as HTMLAnchorElement) : null;
 }
 
+/** SVG `className` is SVGAnimatedString, not a string — never call string methods on it. */
+function classAttr(el: Element): string {
+  return (el.getAttribute("class") || "").toLowerCase();
+}
+
 function looksLikeButton(el: HTMLElement, host?: HTMLElement) {
-  const cls = `${el.className} ${host?.className || ""}`.toLowerCase();
+  const cls = `${classAttr(el)} ${host ? classAttr(host) : ""}`;
   if (/(btn|button|cta|pill)/.test(cls)) return true;
   if (el.tagName === "A" && el.getAttribute("role") === "button") return true;
   return false;
@@ -284,7 +289,7 @@ function looksLikeButton(el: HTMLElement, host?: HTMLElement) {
 
 function linkToButton(el: HTMLAnchorElement | HTMLElement, style?: BlockStyle): Block {
   const href = el.getAttribute("href") || "#";
-  const variant = /secondary|ghost|outline/.test(el.className) ? "secondary" : "primary";
+  const variant = /secondary|ghost|outline/.test(classAttr(el)) ? "secondary" : "primary";
   return {
     id: nid(),
     type: "button",
@@ -320,8 +325,8 @@ function videoFrom(el: HTMLElement, style?: BlockStyle): Block {
 }
 
 function isQuiz(el: HTMLElement) {
-  if (el.classList.contains("quiz") || el.getAttribute("data-correct") != null) return true;
-  return /quiz|mcq|multiple-choice/.test(el.className.toLowerCase());
+  if (el.classList?.contains("quiz") || el.getAttribute("data-correct") != null) return true;
+  return /quiz|mcq|multiple-choice/.test(classAttr(el));
 }
 
 function quizFrom(el: HTMLElement, style?: BlockStyle): Block {
@@ -354,11 +359,11 @@ function quizFrom(el: HTMLElement, style?: BlockStyle): Block {
 
 function isCallout(el: HTMLElement) {
   if (el.tagName === "ASIDE" || el.tagName === "BLOCKQUOTE") return true;
-  return /callout|alert|tip|note|warning|success|notice|info-box|admonition/.test(el.className.toLowerCase());
+  return /callout|alert|tip|note|warning|success|notice|info-box|admonition/.test(classAttr(el));
 }
 
 function calloutFrom(el: HTMLElement, style?: BlockStyle): Block {
-  const cls = el.className.toLowerCase();
+  const cls = classAttr(el);
   let tone: CalloutTone = "info";
   if (/warn|caution|alert/.test(cls)) tone = "warning";
   else if (/tip|hint/.test(cls)) tone = "tip";
@@ -372,8 +377,8 @@ function calloutFrom(el: HTMLElement, style?: BlockStyle): Block {
 }
 
 function isTwoColumn(el: HTMLElement) {
-  if (el.classList.contains("columns")) return true;
-  if (/two-?col|split-?col|side-?by-?side/.test(el.className.toLowerCase())) return true;
+  if (el.classList?.contains("columns")) return true;
+  if (/two-?col|split-?col|side-?by-?side/.test(classAttr(el))) return true;
   const kids = Array.from(el.children);
   if (el.tagName === "TABLE") {
     const cells = el.querySelector("tr")?.children;
@@ -381,7 +386,7 @@ function isTwoColumn(el: HTMLElement) {
   }
   const style = (el.getAttribute("style") || "").toLowerCase();
   if (kids.length === 2 && (/display:\s*grid/.test(style) || /display:\s*flex/.test(style))) return true;
-  if (kids.length === 2 && kids.every((kid) => /(^|\s)col(umn)?s?\b/.test(kid.className.toLowerCase()))) return true;
+  if (kids.length === 2 && kids.every((kid) => /(^|\s)col(umn)?s?\b/.test(classAttr(kid)))) return true;
   return false;
 }
 
