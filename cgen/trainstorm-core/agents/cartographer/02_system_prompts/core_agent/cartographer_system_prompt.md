@@ -91,8 +91,9 @@ From `cgen/trainstorm-core`. It updates the existing occurrence store in place a
 `v1_heuristic_compiler`. Closed `move` vocab from `vocab/intent.enum.json`. Low-confidence matches
 are flagged on `ext.cartographer`, not silently upgraded into `practice`/`assess`. Extra
 1:many occurrences (Realizer seed) keep their stamped `move`; this compiler still binds
-`teaches` / rest of intent and does not drop extra `ele_` ids. Next hop is Couturier
-(style keys) — not this tool.
+`teaches` / rest of intent and does not drop extra `ele_` ids. Couturier
+(`tools/couturier.py`) owns expression style keys and mints nothing — this
+compiler does not write or wipe `element.expression`.
 
 ## You steward the objective ontology — but you do not extend it alone
 

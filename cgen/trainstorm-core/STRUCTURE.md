@@ -88,7 +88,7 @@ trainstorm-core/
 │   ├── headwater_ingest/                 ✅ meaning + object + source-type (the only agent that WRITES)
 │   ├── alsap_builder/                    ✅ Amanuensis — proposes into `instance`; dispatched 2026-08-20
 │   │   └── 07_examples/dispatch_2026-08-20/findings.md   ✅ first live dispatch record
-│   ├── couturier/ · griot/ · chameleon/  ✅ prompts exist — ⬜ none has ever written a binding
+│   ├── couturier/ · griot/ · chameleon/  ✅ prompts exist; Couturier v1 has written a binding (`tools/couturier.py`)
 │   ├── localize/                         ✅ Dragoman — ⚠ flat `system.md` still un-`git rm`'d
 │   ├── ingest-decompose/                 ⚠ predecessor of headwater_ingest; retire or merge
 │   ├── cartographer/                     ✅ prompt + heuristic_v1.md; tools/cartographer.py writes occurrence intent
@@ -140,6 +140,7 @@ trainstorm-core/
 │   ├── localize/ · chat-capture/ · visual-assets/           ✅
 │   ├── realize.py                        ✅ Realizer v1 — atoms → occurrences (1 ele_ per atom + small 1:many seed) + realized_lesson.html
 │   ├── cartographer.py                   ✅ Cartographer v1 — occurrence intent on existing ele_ records (preserves extra moves)
+│   ├── couturier.py                      ✅ Couturier v1 — occurrence style keys on existing ele_ records (mints nothing)
 │   └── render/                           ⬜ element → HTML → PNG — NOT this hop (no PNG pipeline)
 │
 └── project/                              # Claude Project setup — one-way snapshot FROM git, not a second constitution
@@ -248,7 +249,8 @@ existed. Which suggests `element` is the atom **specialized for the course chain
 Locale packs key on `atom_id` (meaning is translated once), with occurrence-level overrides keyed by
 `element_id` only where presentation constrains the rendering — not built yet. Couturier owns style on
 the occurrence's expression facet; Realizer (`tools/realize.py`) mints `ele_` ids and owns layout/render;
-Couturier mints nothing.
+Couturier mints nothing. Couturier v1 (`tools/couturier.py`) writes style keys on
+the occurrence's `expression` facet from a documented move→look map.
 
 ## First moves
 
@@ -259,9 +261,9 @@ The **document half** of the machine is built and green: three atom stores, a ga
 self-tests at 17/17, ingest · reconcile · approve · project, and an agent that has been dispatched
 and behaves correctly. The **course half has started**: Realizer v1 mints one occurrence per atom
 plus a small 1:many seed (two ALSAP atoms); Cartographer v1 (`tools/cartographer.py`) binds
-occurrence intent on that mixed store and re-projects `realized_lesson.html`. Couturier has never
-written a binding; Dragoman and `tools/render/` PNG pipelines are unbuilt. The `atom → primitives`
-hop is still owed — v1 realizes atoms directly.
+occurrence intent on that mixed store and re-projects `realized_lesson.html`. Couturier v1
+has written style keys on those occurrences (`tools/couturier.py`); Dragoman and `tools/render/`
+PNG pipelines are unbuilt. The `atom → primitives` hop is still owed — v1 realizes atoms directly.
 
 Near-term, in dependency order:
 
@@ -274,8 +276,10 @@ Near-term, in dependency order:
    authored text, `realized_lesson.html`. **1:many seed 2026-08-25** — two ALSAP atoms mint a
    second occurrence. **`tools/render/`** (PNG) remains.
 5. ~~**Cartographer v1**~~ — **done 2026-08-25.** Heuristic compiler writes `move`/`teaches` on the
-   ALSAP occurrence store; re-runnable on extras (preserves stamped `move`). Next: **Couturier**.
-6. **A real `brunswick.reference.course.json`** — still `{"_todo": …}`, and the only thing that would
+   ALSAP occurrence store; re-runnable on extras (preserves stamped `move`).
+6. ~~**Couturier v1**~~ — **done 2026-08-25.** Move→look map writes expression style keys; HTML
+   clothes the 1:many pairs differently. Next: Dragoman / `atom → primitives`.
+7. **A real `brunswick.reference.course.json`** — still `{"_todo": …}`, and the only thing that would
    prove the course half end to end.
 
 `project/custom_instructions.md` now points at this file and `architecture/DECISIONS.md`.

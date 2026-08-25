@@ -26,9 +26,9 @@
         "move": "reinforce"
       }
     ],
-    "note": "Small honest seed, not the whole SOP. Extra ele_ ids are stable. Re-run accretes missing extras and never drops existing extras or Cartographer bindings."
+    "note": "Small honest seed, not the whole SOP. Extra ele_ ids are stable. Re-run accretes missing extras and never drops existing extras, Cartographer bindings, or Couturier style."
   },
-  "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). Cartographer owns occurrence intent; a re-realize preserves ext.cartographer and extra ele_ records.",
+  "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). Cartographer owns occurrence intent; Couturier owns expression style. A re-realize preserves both plus extra ele_ records.",
   "cartographer": {
     "policy": "v1_heuristic_compiler",
     "tool": "tools/cartographer.py",
@@ -46,6 +46,25 @@
     "low_confidence": 10,
     "element_count": 49,
     "ontology": "ontology/objectives.json",
-    "note": "v1 compiler pass over Realizer occurrences, including extra 1:many records. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Extra occurrences keep Realizer-stamped move. Next: Couturier."
+    "note": "v1 compiler pass over Realizer occurrences, including extra 1:many records. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Extra occurrences keep Realizer-stamped move. Couturier owns expression style; this tool does not wipe it."
+  },
+  "couturier": {
+    "policy": "v1_move_to_look",
+    "tool": "tools/couturier.py",
+    "spec": "agents/couturier/style_map_v1.md",
+    "look_counts": {
+      "brand.example": 5,
+      "brand.instructional": 36,
+      "brand.job": 3,
+      "brand.opening": 1,
+      "brand.prior": 2,
+      "brand.purpose": 1,
+      "brand.recall": 1
+    },
+    "dressed": 49,
+    "unmapped": 0,
+    "element_count": 49,
+    "registry": "vocab/primitives.registry.json",
+    "note": "v1 map from occurrence move to expression style keys. Couturier mints no ids, does not rewrite atoms or intent, and does not bind motion / layout_primitive / interaction_primitive. HTML reads these keys for clothes; meaning stays on the atom."
   }
 }

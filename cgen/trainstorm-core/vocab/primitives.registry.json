@@ -1,13 +1,42 @@
 {
-  "registry_version": "primitives.v0.2",
+  "registry_version": "primitives.v0.3",
   "status": "partial",
-  "note": "Governed keys referenced by element.expression. layout_primitive and interaction_primitive are now seeded from the layout engine's first real .potx (astellas_v1, GEN607). text_primitive / motion_primitive / style_ref remain to be filled. A registered key is the value an element carries in expression.layout_primitive / expression.interaction_primitive, AND (for layouts) the id a layout-engine template_manifest layout uses — one name across the manifold and the deliverable pipeline.",
+  "note": "Governed keys referenced by element.expression. layout_primitive and interaction_primitive are seeded from the layout engine's first real .potx (astellas_v1, GEN607). Couturier v1 (2026-08-25) seeded a handful of style_ref + text_primitive look keys mapped from occurrence move — not a design system. motion_primitive remains empty (stub; not this hop). A registered key is the value an element carries in expression.*; layout keys also equal the layout-engine template_manifest layout id.",
   "governance": {
     "closed_list": true,
     "rule": "element.expression.* may only reference keys defined here. New keys require a version bump and an entry — the validator rejects anything else.",
     "naming": "layout_primitive keys are UPPER_SNAKE and equal the layout-engine template_manifest layout id (decision 2026-07-31: layout-engine ids are canonical). interaction_primitive keys are lower_snake behavior names."
   },
-  "text_primitive": [],
+  "text_primitive": [
+    {
+      "key": "tp_display",
+      "label": "Display",
+      "description": "Large opening type. Clothes for a hook — not body prose.",
+      "status": "draft",
+      "derived_from": "agents/couturier/style_map_v1.md"
+    },
+    {
+      "key": "tp_body",
+      "label": "Body",
+      "description": "Instructional prose. Clothes for present / activate / exemplify / transfer.",
+      "status": "draft",
+      "derived_from": "agents/couturier/style_map_v1.md"
+    },
+    {
+      "key": "tp_purpose",
+      "label": "Purpose",
+      "description": "Purpose-frame type. Clothes for an objective move.",
+      "status": "draft",
+      "derived_from": "agents/couturier/style_map_v1.md"
+    },
+    {
+      "key": "tp_recall",
+      "label": "Recall",
+      "description": "Recap / quoted type. Clothes for reinforce (retrieve/retention), not a first teaching.",
+      "status": "draft",
+      "derived_from": "agents/couturier/style_map_v1.md"
+    }
+  ],
   "motion_primitive": [],
   "layout_primitive": [
     {
@@ -94,5 +123,55 @@
       "derived_from": "KC_SINGLE"
     }
   ],
-  "style_ref": []
+  "style_ref": [
+    {
+      "key": "brand.opening",
+      "label": "Opening",
+      "description": "Attention/opening surface. Role, not a hex. Maps from move hook.",
+      "status": "draft",
+      "derived_from": "agents/couturier/style_map_v1.md"
+    },
+    {
+      "key": "brand.instructional",
+      "label": "Instructional",
+      "description": "Instructional body surface. Role, not a hex. Maps from move present.",
+      "status": "draft",
+      "derived_from": "agents/couturier/style_map_v1.md"
+    },
+    {
+      "key": "brand.recall",
+      "label": "Recall",
+      "description": "Later-placement / retention surface. Role, not a hex. Maps from move reinforce (Gagné 9a retrieve).",
+      "status": "draft",
+      "derived_from": "agents/couturier/style_map_v1.md"
+    },
+    {
+      "key": "brand.purpose",
+      "label": "Purpose",
+      "description": "Purpose-frame surface. Maps from move objective.",
+      "status": "draft",
+      "derived_from": "agents/couturier/style_map_v1.md"
+    },
+    {
+      "key": "brand.prior",
+      "label": "Prior knowledge",
+      "description": "Already-known callout. Maps from move activate.",
+      "status": "draft",
+      "derived_from": "agents/couturier/style_map_v1.md"
+    },
+    {
+      "key": "brand.example",
+      "label": "Example",
+      "description": "Named-example / citation surface. Maps from move exemplify.",
+      "status": "draft",
+      "derived_from": "agents/couturier/style_map_v1.md"
+    },
+    {
+      "key": "brand.job",
+      "label": "On the job",
+      "description": "Job-bridge surface. Maps from move transfer.",
+      "status": "draft",
+      "derived_from": "agents/couturier/style_map_v1.md"
+    }
+  ]
 }

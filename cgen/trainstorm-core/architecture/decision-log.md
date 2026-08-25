@@ -13,6 +13,33 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-25 — Couturier v1: first writer of style on the occurrence
+
+Realizer minted `ele_` records (PR #10, 1:many seed PR #12) and Cartographer bound
+`move` / `teaches` (PR #11), but every occurrence still *looked* like the same SOP
+card. This entry records the first writer of occurrence style.
+
+`tools/couturier.py` is a **documented move→look map**
+(`agents/couturier/style_map_v1.md`), not a design system. It writes
+`element.expression` style keys (`style_ref`, `text_primitive`, `content_role`,
+`layout_hint`) onto existing `ele_` records, stamps `ext.couturier`, re-projects
+`realized_lesson.html`, and mints no ids. `atoms.json` and `element.intent`
+untouched. Locale packs stay on `atom_id`; style is on `element_id`.
+
+The map is from `intent.move`. The 1:many pairs must not wear the same clothes:
+title `hook` → `brand.opening` / `tp_display`; title extra `present` →
+`brand.instructional` / `tp_body`; definition `present` vs extra `reinforce` →
+instructional vs `brand.recall` / `tp_recall`. Other live moves get a distinct
+look. Unmapped `practice` / `feedback` / `assess` stay undressed. Motion /
+`.potx` layout_primitive / Storyline interaction_primitive are not this hop.
+
+`vocab/primitives.registry.json` bumped to v0.3 for the handful of look keys.
+HTML projector reads expression keys, not authored `content.text`.
+
+Not this hop: Dragoman, Storyline, `.potx`, motion primitives, PNG pipelines,
+rewriting SOP/form atoms into elements.
+
+---
 ## 2026-08-25 — Realizer 1:many seed lands in the live ALSAP store (two atoms, not the SOP)
 
 The store was still 1:1 after Realizer v1 (one `ele_` per atom) and Cartographer v1 (intent on
