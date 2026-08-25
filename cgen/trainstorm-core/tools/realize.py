@@ -10,6 +10,11 @@ a couple of teaching-worthy atoms — same `composed_from`, distinct `move`,
 stable extra ids. The rest of the store stays 1:1. Not a full ID treatment of
 the SOP.
 
+`reinforce` extras (Gagné 9a; closed vocab has no `retrieve`) project as a
+**check** derived from the atom's existing meaning (`agents/realizer/check_v1.md`)
+— a stem + choices or a cloze, not an italic reprint. No authored
+`content.text`. Distractors, if any, are sibling atoms in the same store.
+
 Idempotency: extra ids are `(primary ele_) + "__" + move`. A re-run accretes
 missing extras and never drops existing extras or Cartographer bindings.
 
@@ -62,8 +67,11 @@ ELE_ID_RE = re.compile(r"^ele_[A-Za-z0-9_-]+$")
 # Spec: agents/realizer/one_to_many_v1.md
 ONE_TO_MANY_SEED = (
     ("atom_sop_ast29080", "present"),            # title: hook (primary) + present
-    ("atom_sop_ast29080_general", "reinforce"),  # what ALSAP is: present + retrieve
+    ("atom_sop_ast29080_general", "reinforce"),  # what ALSAP is: present + check
+    ("atom_sop_ast29080_purpose", "reinforce"),  # SOP purpose: objective + check
 )
+CHECK_SPEC = "agents/realizer/check_v1.md"
+CHECK_POLICY = "v1_check_from_atom"
 
 KIND_TO_TYPE = {
     "procedure": "Section",
@@ -414,12 +422,278 @@ CLOTHES_CLASS = {
 KICKER = {
     "title": "Opening",
     "body": "Present",
-    "retrieval": "Remember",
+    "retrieval": "Check",
     "purpose": "Purpose",
     "prior": "Already known",
     "example": "Example",
     "handoff": "On the job",
 }
+
+THIN_HEADING_RE = re.compile(
+    r"^(roles and responsibilities|procedures|organizations in scope of this sop)\.?$",
+    re.I,
+)
+GLOSSARY_POINTER_RE = re.compile(r"^for definitions,\s+refer\b", re.I)
+
+
+def first_sentence(text: str) -> str:
+    t = clean_meaning(text or "")
+    if not t:
+        return ""
+    if ". " in t:
+        return t.split(". ", 1)[0].strip().rstrip(".") + "."
+    return t if t.endswith(".") else t + "."
+
+
+def strip_period(s: str) -> str:
+    s = (s or "").strip()
+    return s[:-1] if s.endswith(".") else s
+
+
+def copula_parts(sentence: str) -> tuple[str, str] | None:
+    """Split '{subject} is {complement}'. Complement must be substantial."""
+    body = strip_period(sentence)
+    m = re.match(r"^(?P<sub>.+?)\s+is\s+(?P<comp>.+)$", body, re.I)
+    if not m:
+        return None
+    sub, comp = m.group("sub").strip(), m.group("comp").strip()
+    if len(sub) < 3 or len(comp) < 8:
+        return None
+    return sub, comp
+
+
+def question_stem(subject: str) -> str:
+    """Grammatical invert of '{subject} is …' — a question form, not a new fact."""
+    s = (subject or "").strip()
+    low = s[:4].lower()
+    if low == "the ":
+        s = "the " + s[4:]
+    elif s[:3].lower() == "an ":
+        s = "an " + s[3:]
+    elif s[:2].lower() == "a ":
+        s = "a " + s[2:]
+    return f"What is {s}?"
+
+
+def atom_belongs_to(atom):
+    return (atom.get("bindings") or {}).get("object", {}).get("belongs_to")
+
+
+def atom_order(atom) -> int:
+    return int((atom.get("bindings") or {}).get("object", {}).get("order", 0) or 0)
+
+
+def is_usable_sibling(atom) -> bool:
+    text = clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
+    if len(text) < 50:
+        return False
+    if THIN_HEADING_RE.match(text):
+        return False
+    if GLOSSARY_POINTER_RE.match(text):
+        return False
+    return True
+
+
+def sibling_atoms(atom, atoms) -> list:
+    """Same parent in the store — closed contrast, not invented misconceptions."""
+    parent = atom_belongs_to(atom)
+    out = []
+    for a in atoms:
+        if a.get("atom_id") == atom.get("atom_id"):
+            continue
+        if atom_belongs_to(a) != parent:
+            continue
+        if is_usable_sibling(a):
+            out.append(a)
+    return sorted(out, key=atom_order)
+
+
+def phrase_in_atom(phrase: str, atom) -> bool:
+    src = clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
+    p = (phrase or "").strip()
+    if not p or not src:
+        return False
+    return p in src or strip_period(p) in src
+
+
+def is_check_occurrence(el) -> bool:
+    move = (el.get("intent") or {}).get("move")
+    expr = el.get("expression") or {}
+    return (
+        move == "reinforce"
+        or expr.get("style_ref") == "brand.recall"
+        or expr.get("text_primitive") == "tp_recall"
+        or expr.get("layout_hint") == "check"
+    )
+
+
+def derive_check(atom, atoms) -> dict | None:
+    """Project a check from this atom's meaning. Shape is a key, not a second meaning.
+
+    Honesty: key ⊆ this atom; distractors ⊆ sibling atoms in the same store.
+    """
+    src = (atom.get("meaning") or {}).get("source_text") or ""
+    sentence = first_sentence(src)
+    if not sentence:
+        return None
+    src_clean = clean_meaning(src)
+    parts = copula_parts(sentence)
+    distractors = []
+    for sib in sibling_atoms(atom, atoms):
+        sib_sent = first_sentence((sib.get("meaning") or {}).get("source_text") or "")
+        if not sib_sent:
+            continue
+        if strip_period(sib_sent).lower() == strip_period(sentence).lower():
+            continue
+        if not phrase_in_atom(sib_sent, sib):
+            continue
+        distractors.append({"text": sib_sent, "from_atom_id": sib["atom_id"]})
+        if len(distractors) >= 2:
+            break
+
+    if parts:
+        subject, complement = parts
+        key = complement
+        if key not in src_clean:
+            return None
+        stem = question_stem(subject)
+        shape = "mcq_siblings" if distractors else "cloze"
+        cloze_lead = cloze_blank = cloze_tail = None
+        if shape == "cloze":
+            # Type-in of the complement; stem still the question invert.
+            cloze_lead, cloze_blank, cloze_tail = "", key, ""
+    else:
+        body = strip_period(sentence)
+        words = body.split()
+        if len(words) < 6:
+            return None
+        cloze_lead = " ".join(words[:3]) + " "
+        cloze_blank = " ".join(words[3:-1])
+        cloze_tail = " " + words[-1]
+        key = cloze_blank
+        if key not in src_clean:
+            return None
+        stem = f"{cloze_lead}______{cloze_tail}."
+        shape = "mcq_siblings" if distractors else "cloze"
+
+    check = {
+        "shape": shape,
+        "spec": CHECK_SPEC,
+        "policy": CHECK_POLICY,
+        "stem": stem,
+        "key": key,
+        "key_atom_id": atom["atom_id"],
+        "sentence": sentence,
+        "choices": [],
+        "cloze_lead": cloze_lead if shape == "cloze" else None,
+        "cloze_tail": cloze_tail if shape == "cloze" else None,
+    }
+    if shape == "mcq_siblings":
+        check["choices"] = (
+            [{"text": key, "correct": True, "from_atom_id": atom["atom_id"]}]
+            + [{"text": d["text"], "correct": False, "from_atom_id": d["from_atom_id"]} for d in distractors]
+        )
+    return check
+
+
+def assert_check_honest(check, atom, atoms):
+    """Refuse a projection that invented a key or a distractor."""
+    if not check:
+        raise SystemExit(f"{atom.get('atom_id')}: check derivation returned nothing")
+    if not phrase_in_atom(check["key"], atom):
+        raise SystemExit(
+            f"{atom.get('atom_id')}: check key is not in the atom — refusing to invent"
+        )
+    atoms_by_id = {a["atom_id"]: a for a in atoms}
+    for c in check.get("choices") or []:
+        src = atoms_by_id.get(c["from_atom_id"])
+        if src is None:
+            raise SystemExit(f"check choice cites unknown atom {c['from_atom_id']}")
+        if not phrase_in_atom(c["text"], src):
+            raise SystemExit(
+                f"{atom.get('atom_id')}: choice from {c['from_atom_id']} is not in that atom"
+            )
+        if c["correct"] and c["from_atom_id"] != atom["atom_id"]:
+            raise SystemExit(f"{atom.get('atom_id')}: key choice must cite this atom")
+        if not c["correct"] and c["from_atom_id"] == atom["atom_id"]:
+            raise SystemExit(f"{atom.get('atom_id')}: distractor must be a sibling, not this atom")
+
+
+def stable_rotate(items, seed: str) -> list:
+    if not items:
+        return []
+    n = int(hashlib.sha256(seed.encode()).hexdigest(), 16) % len(items)
+    return items[n:] + items[:n]
+
+
+def check_body_html(el, atom, atoms, esc) -> str:
+    """Occurrence body for reinforce: a check the reader can attempt."""
+    chk = derive_check(atom, atoms)
+    if chk:
+        assert_check_honest(chk, atom, atoms)
+    eid = el["element_id"]
+    if not chk:
+        # Last-resort cloze of whatever text exists — still from this atom.
+        meaning = clean_meaning(atom["meaning"]["source_text"])
+        return (
+            f'<form class="check" data-shape="cloze" data-key="{esc(meaning)}" data-eid="{esc(eid)}">'
+            f'<p class="stem">Recall this atom’s wording.</p>'
+            f'<input type="text" class="cloze-in" autocomplete="off" aria-label="Your recall">'
+            f'<div class="check-actions"><button type="submit">Check</button></div>'
+            f'<p class="feedback" hidden></p>'
+            f'<p class="reveal" hidden>{esc(meaning)}</p>'
+            f"</form>"
+        )
+    reveal = esc(chk["sentence"])
+    src_note = (
+        f'<p class="check-note">Key is this atom '
+        f'(<span class="mono">{esc(chk["key_atom_id"])}</span>). '
+        f'Distractors, if any, are sibling atoms in this store. '
+        f'Shape <span class="mono">{esc(chk["shape"])}</span> — '
+        f'not authored <span class="mono">content.text</span>.</p>'
+    )
+    if chk["shape"] == "mcq_siblings":
+        choices = stable_rotate(list(chk["choices"]), eid)
+        labels = []
+        for c in choices:
+            val = "key" if c["correct"] else "d:" + c["from_atom_id"]
+            labels.append(
+                f'<label class="choice">'
+                f'<input type="radio" name="{esc(eid)}" value="{esc(val)}">'
+                f'<span>{esc(c["text"])}</span>'
+                f"</label>"
+            )
+        return (
+            f'<form class="check" data-shape="mcq_siblings" data-key="key" data-eid="{esc(eid)}">'
+            f'<p class="stem">{esc(chk["stem"])}</p>'
+            f'{"".join(labels)}'
+            f'<div class="check-actions"><button type="submit">Check</button></div>'
+            f'<p class="feedback" hidden></p>'
+            f'<p class="reveal" hidden>{reveal}</p>'
+            f"{src_note}"
+            f"</form>"
+        )
+    # cloze
+    lead = esc(chk.get("cloze_lead") or "")
+    tail = esc(chk.get("cloze_tail") or "")
+    stem = chk["stem"]
+    if chk.get("cloze_lead") is not None and "______" in stem:
+        stem_html = f"{lead}<span class=\"blank\">______</span>{tail}".rstrip(".")
+        if stem.endswith("."):
+            stem_html += "."
+        stem_block = f'<p class="stem">{stem_html}</p>'
+    else:
+        stem_block = f'<p class="stem">{esc(stem)}</p>'
+    return (
+        f'<form class="check" data-shape="cloze" data-key="{esc(chk["key"])}" data-eid="{esc(eid)}">'
+        f"{stem_block}"
+        f'<input type="text" class="cloze-in" autocomplete="off" aria-label="Your recall">'
+        f'<div class="check-actions"><button type="submit">Check</button></div>'
+        f'<p class="feedback" hidden></p>'
+        f'<p class="reveal" hidden>{reveal}</p>'
+        f"{src_note}"
+        f"</form>"
+    )
 
 
 def project_html(atoms, elements, manifest, out_path: pathlib.Path):
@@ -449,6 +723,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         out = [f'<span class="pill move-{esc(move)}{ " low" if low else ""}">{esc(move)}</span>']
         if extra:
             out.append('<span class="pill extra-occ">extra</span>')
+        if is_check_occurrence(el):
+            out.append('<span class="pill check-occ">check</span>')
         if expr.get("style_ref"):
             out.append(f'<span class="pill style" title="expression.style_ref">{esc(expr["style_ref"])}</span>')
         for oid in intent.get("teaches") or []:
@@ -480,6 +756,16 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
                 f' · {esc(tp)} · {esc(expr.get("content_role", ""))}'
                 f' · {esc(hint)}</span>'
             )
+        if is_check_occurrence(el):
+            chk = derive_check(atom, atoms)
+            if chk:
+                join_bits.append(
+                    f'check <span class="mono">{esc(chk["shape"])}</span> · '
+                    f'key from this atom · distractors from siblings'
+                )
+            body = check_body_html(el, atom, atoms, esc)
+        else:
+            body = f'<{meaning_tag} class="meaning">{esc(meaning)}</{meaning_tag}>'
         return (
             f'<article class="occ{extra_cls}{clothes_cls}">'
             f'{kicker_html}'
@@ -489,7 +775,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             f'<span class="pill dim">{esc(el["type"])}</span>'
             f'<span class="pill dim">{esc(kind)}</span>'
             f'</div>'
-            f'<{meaning_tag} class="meaning">{esc(meaning)}</{meaning_tag}>'
+            f'{body}'
             f'<div class="join">{" · ".join(join_bits)}</div>'
             f'</article>'
         )
@@ -545,14 +831,24 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
     count_bits = " · ".join(f"{esc(k)} {v}" for k, v in sorted(counts.items()))
     look_counts = cout.get("look_counts") or {}
     look_bits = " · ".join(f"{esc(k)} {v}" for k, v in sorted(look_counts.items()))
+    check_n = sum(1 for e in elements if is_check_occurrence(e))
+    pair_n = sum(1 for n in cf_counts.values() if n > 1)
     extras_bit = (f" · {extra_n} extra" + ("s" if extra_n != 1 else "")
-                  + f" on {otm.get('seeded_atom_count', sum(1 for n in cf_counts.values() if n > 1))} atoms"
+                  + f" on {otm.get('seeded_atom_count', pair_n)} atoms"
+                  + (f" · {check_n} check" + ("s" if check_n != 1 else "") if check_n else "")
                   if extra_n else "")
     many_note = (
-        f" Two atoms carry a second <span class=mono>ele_</span> (same "
+        f" {pair_n} atom"
+        + ("s" if pair_n != 1 else "")
+        + " carry a second <span class=mono>ele_</span> (same "
         f"<span class=mono>composed_from</span>, distinct <span class=mono>move</span>) — grouped below. "
         if extra_n else
         " Later 1:many can mint additional elements without changing atom ids. "
+    )
+    check_note = (
+        " Extra <span class=mono>reinforce</span> occurrences render as a check "
+        "(stem + choices or cloze) derived from the atom — not an italic reprint. "
+        if check_n else ""
     )
     clothes_note = (
         " Couturier dressed each occurrence from its <span class=mono>move</span> "
@@ -570,7 +866,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             "<b>Meaning lives on the atom.</b> Clothes come from <span class=mono>element.expression</span> "
             "(Couturier). Intent (<span class=mono>move</span>, <span class=mono>teaches</span>) is "
             "Cartographer’s. The Realizer minted the <span class=mono>ele_</span> ids and copied no authored "
-            f"<span class=mono>content.text</span>.{many_note}{clothes_note}"
+            f"<span class=mono>content.text</span>.{many_note}{check_note}{clothes_note}"
             "Dragoman / Storyline / PNG render are not this hop."
         )
         projector = (f"{esc(REALIZER)} + {esc(cart.get('tool', 'tools/cartographer.py'))} + "
@@ -585,7 +881,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             "(<span class=mono>move</span>, <span class=mono>teaches</span>) is Cartographer’s. "
             "v1 is a documented heuristic compiler, not ID genius — low-confidence pills are flagged. "
             "The Realizer minted the <span class=mono>ele_</span> ids and copied no authored "
-            f"<span class=mono>content.text</span>.{many_note}{clothes_note}"
+            f"<span class=mono>content.text</span>.{many_note}{check_note}{clothes_note}"
             "Dragoman / PNG render are not this hop."
         )
         projector = f"{esc(REALIZER)} + {esc(cart.get('tool', 'tools/cartographer.py'))}"
@@ -599,7 +895,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             "<b>Meaning lives on the atom.</b> Each card is one occurrence "
             "(<span class=mono>ele_</span>), linked by <span class=mono>composed_from</span>. "
             "The Realizer copied no authored <span class=mono>content.text</span>. Ugly typography "
-            f"is v1.{many_note}{clothes_note}"
+            f"is v1.{many_note}{check_note}{clothes_note}"
             "Dragoman / PNG render are not this hop."
         )
         projector = esc(REALIZER)
@@ -640,6 +936,7 @@ h1{{font-size:20px;margin:8px 0 4px}}
 .pill.move-reinforce{{background:#334155}}
 .pill.move-transfer{{background:#c2410c}}
 .pill.extra-occ{{background:#0f766e;text-transform:none}}
+.pill.check-occ{{background:#1e3a8a;text-transform:none}}
 .pair{{border:2px solid #1e3a8a;border-radius:10px;padding:10px 12px 6px;margin:12px 0;
  background:#f1f5f9}}
 .pair-label{{font-size:12px;color:#1e3a8a;font-weight:600;margin:0 0 8px}}
@@ -657,10 +954,25 @@ h1{{font-size:20px;margin:8px 0 4px}}
 .occ.style-instructional{{background:#fff;border:1px solid #cbd5e1;border-left:5px solid #1e3a8a;
  border-radius:6px;padding:14px 16px}}
 .occ.style-instructional .meaning{{font-size:15px;line-height:1.55}}
-.occ.style-recall{{background:#f8fafc;border:2px dashed #64748b;border-radius:4px;padding:16px 18px}}
-.occ.style-recall .meaning{{font-size:14px;font-style:italic;color:#334155;
- border-left:3px solid #94a3b8;padding:4px 0 4px 12px}}
-.occ.style-recall .kicker{{color:#475569}}
+.occ.style-recall{{background:#f1f5f9;border:2px solid #334155;border-radius:6px;padding:16px 18px}}
+.occ.style-recall .kicker{{color:#1e293b;opacity:1}}
+.occ.style-recall form.check .stem{{font-size:16px;font-weight:650;font-style:normal;margin:8px 0 12px;color:var(--ink)}}
+.occ.style-recall form.check .blank{{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+ letter-spacing:.12em;color:#334155}}
+form.check .choice{{display:flex;gap:10px;align-items:flex-start;margin:8px 0;padding:10px 12px;
+ border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer}}
+form.check .choice:hover{{border-color:#334155}}
+form.check .choice span{{flex:1}}
+form.check .cloze-in{{width:100%;font:inherit;padding:8px 10px;border:1px solid #94a3b8;border-radius:6px}}
+form.check .check-actions{{margin:12px 0 6px}}
+form.check button{{background:#1e3a8a;color:#fff;border:0;border-radius:6px;padding:8px 14px;
+ font:inherit;font-weight:600;cursor:pointer}}
+form.check .feedback{{font-size:13px;margin:8px 0 0}}
+form.check .feedback.ok{{color:#047857;font-weight:650}}
+form.check .feedback.no{{color:#9f1239;font-weight:650}}
+form.check .reveal{{margin:10px 0 0;padding:8px 10px;background:#fff;border-left:3px solid #1e3a8a;
+ font-size:13.5px}}
+form.check .check-note{{font-size:11.5px;color:var(--mut);margin:10px 0 0}}
 .occ.style-purpose{{background:#ecfdf5;border:1px solid #059669;border-left:6px solid #047857;
  border-radius:6px}}
 .occ.style-purpose .meaning{{font-weight:600}}
@@ -702,8 +1014,46 @@ Meaning is read from atoms.json. Occurrence intent is Cartographer’s when boun
 Clothes are Couturier’s when bound (expression keys, not authored text).
 {"Moves are mixed." if mixed else "All moves still share one value — run tools/cartographer.py."}
 {" 1:many pairs share composed_from." if extra_n else ""}
-{" Clothes are mixed." if cout and len(look_counts) > 1 else (" Run tools/couturier.py to dress occurrences." if not cout else "")}</div>
-</div></body></html>"""
+{" Clothes are mixed." if cout and len(look_counts) > 1 else (" Run tools/couturier.py to dress occurrences." if not cout else "")}
+{" Extra reinforce occurrences project as a check from the atom (agents/realizer/check_v1.md)." if check_n else ""}</div>
+</div>
+<script>
+(function () {{
+  function norm(s) {{
+    return (s || "").replace(/\\s+/g, " ").trim().toLowerCase();
+  }}
+  document.querySelectorAll("form.check").forEach(function (form) {{
+    form.addEventListener("submit", function (e) {{
+      e.preventDefault();
+      var fb = form.querySelector(".feedback");
+      var reveal = form.querySelector(".reveal");
+      var shape = form.getAttribute("data-shape");
+      var key = form.getAttribute("data-key");
+      var ok = false;
+      if (shape === "mcq_siblings") {{
+        var picked = form.querySelector("input[type=radio]:checked");
+        if (!picked) {{
+          fb.hidden = false;
+          fb.className = "feedback";
+          fb.textContent = "Pick an answer to check.";
+          return;
+        }}
+        ok = picked.value === "key";
+      }} else {{
+        var typed = form.querySelector("input[type=text]");
+        ok = typed && norm(typed.value) === norm(key);
+      }}
+      fb.hidden = false;
+      fb.className = "feedback " + (ok ? "ok" : "no");
+      fb.textContent = ok
+        ? "Correct — that wording is this atom."
+        : "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom’s own wording.";
+      if (reveal) reveal.hidden = false;
+    }});
+  }});
+}})();
+</script>
+</body></html>"""
     out_path.write_text(HTML)
 
 
@@ -767,7 +1117,7 @@ def selftest(closed_moves):
             "style_ref": "brand.recall",
             "text_primitive": "tp_recall",
             "content_role": "retrieval",
-            "layout_hint": "recap",
+            "layout_hint": "check",
         }
         extra["ext"]["couturier"] = {
             "policy": "v1_move_to_look",
@@ -791,8 +1141,110 @@ def selftest(closed_moves):
                         (kept.get("expression") or {}).get("style_ref")))
         results.append(("ids stable across re-run",
                         {e["element_id"] for e in assembled} == {e["element_id"] for e in assembled2}, ""))
+        results.append(("re-realize preserves layout_hint check",
+                        (kept.get("expression") or {}).get("layout_hint") == "check",
+                        (kept.get("expression") or {}).get("layout_hint")))
     finally:
         assert ONE_TO_MANY_SEED is orig_seed
+
+    # Honesty bar: check is derived from this atom; distractors from siblings.
+    general_live = atom(
+        "atom_sop_ast29080_general", "procedure",
+        "The ALSAP is the central cross-functional framework for ongoing identification, "
+        "evaluation, and communication of emerging safety risks at the asset level. "
+        "Only one ALSAP exists per asset.",
+        "atom_sop_ast29080", 3,
+    )
+    purpose_live = atom(
+        "atom_sop_ast29080_purpose", "procedure",
+        "The purpose of this SOP is to define the process for planning, developing, executing, "
+        "maintaining, and archiving the Asset Level Safety Assessment Plan (ALSAP) for use in "
+        "asset-level safety monitoring during clinical development.",
+        "atom_sop_ast29080", 0,
+    )
+    scope_live = atom(
+        "atom_sop_ast29080_scope", "procedure",
+        "This SOP applies to all Astellas and non-Astellas employees responsible for supporting "
+        "ALSAP throughout its lifecycle. The in-scope organizations are listed below.",
+        "atom_sop_ast29080", 1,
+    )
+    title_live = atom(
+        "atom_sop_ast29080", "procedure",
+        "SOP-AST-29080 — Plan, Develop, Execute, Maintain, and Archive the Asset Level Safety "
+        "Assessment Plan (ALSAP).",
+    )
+    thin = atom("atom_sop_ast29080_roles", "procedure",
+                "Roles and Responsibilities.", "atom_sop_ast29080", 4)
+    store = [title_live, purpose_live, scope_live, general_live, thin]
+
+    chk_g = derive_check(general_live, store)
+    assert_check_honest(chk_g, general_live, store)
+    results.append(("general check shape is mcq_siblings",
+                    chk_g and chk_g["shape"] == "mcq_siblings", chk_g and chk_g.get("shape")))
+    results.append(("general stem is question invert of this atom",
+                    chk_g and chk_g["stem"] == "What is the ALSAP?", chk_g and chk_g.get("stem")))
+    results.append(("general key is the complement in this atom",
+                    chk_g and "central cross-functional framework" in chk_g["key"]
+                    and phrase_in_atom(chk_g["key"], general_live), chk_g and chk_g.get("key")))
+    d_from = sorted({c["from_atom_id"] for c in chk_g["choices"] if not c["correct"]}) if chk_g else []
+    results.append(("general distractors are purpose + scope siblings",
+                    d_from == ["atom_sop_ast29080_purpose", "atom_sop_ast29080_scope"], d_from))
+    results.append(("roles heading is not a distractor",
+                    chk_g and all(c["from_atom_id"] != "atom_sop_ast29080_roles" for c in chk_g["choices"]),
+                    ""))
+    results.append(("no authored content field on a check", "content" not in extra, ""))
+
+    chk_p = derive_check(purpose_live, store)
+    assert_check_honest(chk_p, purpose_live, store)
+    results.append(("purpose check shape is mcq_siblings",
+                    chk_p and chk_p["shape"] == "mcq_siblings", chk_p and chk_p.get("shape")))
+    results.append(("purpose stem is question invert of this atom",
+                    chk_p and chk_p["stem"] == "What is the purpose of this SOP?",
+                    chk_p and chk_p.get("stem")))
+    results.append(("purpose key is the complement in this atom",
+                    chk_p and chk_p["key"].startswith("to define the process for planning")
+                    and phrase_in_atom(chk_p["key"], purpose_live), chk_p and chk_p.get("key", "")[:40]))
+
+    # Seed mints both reinforce extras when those atom ids are in the store.
+    seeded = assemble_elements(store, [], DEFAULT_MOVE, mint_extras=True)
+    seeded_ids = {e["element_id"] for e in seeded}
+    results.append(("seed mints general reinforce extra",
+                    "ele_sop_ast29080_general__reinforce" in seeded_ids, sorted(seeded_ids)))
+    results.append(("seed mints purpose reinforce extra",
+                    "ele_sop_ast29080_purpose__reinforce" in seeded_ids, ""))
+    results.append(("title extra is present not reinforce",
+                    any(e["element_id"] == "ele_sop_ast29080__present"
+                        and e["intent"]["move"] == "present" for e in seeded), ""))
+    results.append(("roles stay 1:1",
+                    sum(1 for e in seeded if e["composed_from"] == "atom_sop_ast29080_roles") == 1, ""))
+
+    # HTML: reinforce extra is a form the reader can attempt, not an italic reprint.
+    import tempfile
+    gen_extra = next(e for e in seeded if e["element_id"] == "ele_sop_ast29080_general__reinforce")
+    gen_extra["expression"] = {
+        "style_ref": "brand.recall",
+        "text_primitive": "tp_recall",
+        "content_role": "retrieval",
+        "layout_hint": "check",
+    }
+    with tempfile.TemporaryDirectory() as td:
+        html_path = pathlib.Path(td) / "lesson.html"
+        project_html(store, seeded, {"project": "selftest", "one_to_many": {"seeded_atom_count": 3}}, html_path)
+        page = html_path.read_text()
+    results.append(("HTML check form present for general reinforce",
+                    'form class="check"' in page and "ele_sop_ast29080_general__reinforce" in page, ""))
+    results.append(("HTML stem is the question invert", "What is the ALSAP?" in page, ""))
+    results.append(("HTML does not italic-reprint the general paragraph as .meaning on the extra",
+                    page.split("ele_sop_ast29080_general__reinforce", 1)[-1]
+                    .split("</article>", 1)[0].count('class="meaning"') == 0, ""))
+    results.append(("HTML kicker is Check not Remember",
+                    ">Check</div>" in page and "Remember" not in page, ""))
+    results.append(("HTML choices include sibling purpose sentence",
+                    "The purpose of this SOP is to define the process" in page, ""))
+    results.append(("HTML choices include sibling scope sentence",
+                    "This SOP applies to all Astellas and non-Astellas employees" in page, ""))
+    results.append(("closed vocab still has no retrieve on extras",
+                    all((e.get("intent") or {}).get("move") != "retrieve" for e in seeded), ""))
 
     print(f"{'CHECK':<72} RESULT")
     print("-" * 86)
@@ -900,6 +1352,13 @@ def main():
         if len([e for e in elements if e["composed_from"] == aid]) > 1 and len(mvset) < 2:
             raise SystemExit(f"{aid}: 1:many occurrences must have distinct moves; got {sorted(mvset)}")
 
+    for e in extras:
+        if (e.get("intent") or {}).get("move") != "reinforce":
+            continue
+        atom = atoms_by_id[e["composed_from"]]
+        chk = derive_check(atom, atoms)
+        assert_check_honest(chk, atom, atoms)
+
     store_dir.mkdir(parents=True, exist_ok=True)
     elements_path = store_dir / "elements.json"
     if elements_path.resolve() == atoms_path.resolve():
@@ -930,7 +1389,9 @@ def main():
             "seed": seeded_present,
             "note": ("Small honest seed, not the whole SOP. Extra ele_ ids are stable. "
                      "Re-run accretes missing extras and never drops existing extras, "
-                     "Cartographer bindings, or Couturier style."),
+                     "Cartographer bindings, or Couturier style. Extra reinforce "
+                     "occurrences project as a check from the atom "
+                     "(agents/realizer/check_v1.md)."),
         },
         "note": ("Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple "
                  "of teaching-worthy atoms (same composed_from, distinct move, no authored "

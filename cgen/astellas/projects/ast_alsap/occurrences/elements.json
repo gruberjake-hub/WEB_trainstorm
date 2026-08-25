@@ -121,7 +121,8 @@
     "type": "Section",
     "structure": {
       "parent_id": "ele_sop_ast29080",
-      "sequence_index": 0
+      "sequence_index": 0,
+      "group_id": "atom_sop_ast29080_purpose"
     },
     "intent": {
       "rhetorical": "assert",
@@ -170,6 +171,67 @@
       "text_primitive": "tp_purpose",
       "content_role": "purpose",
       "layout_hint": "purpose_bar"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29080_purpose__reinforce",
+    "composed_from": "atom_sop_ast29080_purpose",
+    "source_hash": "sha256:0f12058f6f9dad4d1a7c7bcbb33ab9d0e60bd2683081e69b75cd20aa19bb81f1",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29080",
+      "sequence_index": 0,
+      "group_id": "atom_sop_ast29080_purpose"
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "reinforce",
+      "teaches": [
+        "obj_explain_alsap_purpose"
+      ],
+      "intended_response": "attempt a check that retrieves this atom's meaning, not as new information"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29080_purpose",
+        "realizer": "tools/realize.py",
+        "policy": "v1_extra_occurrence",
+        "role": "extra",
+        "target_move": "reinforce",
+        "content_hash": "sha256:0f12058f6f9dad4d1a7c7bcbb33ab9d0e60bd2683081e69b75cd20aa19bb81f1"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "purpose_frame",
+          "extra_occurrence_move_preserved"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "reinforce",
+        "source_hash": "sha256:0f12058f6f9dad4d1a7c7bcbb33ab9d0e60bd2683081e69b75cd20aa19bb81f1",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      }
+    },
+    "expression": {
+      "style_ref": "brand.recall",
+      "text_primitive": "tp_recall",
+      "content_role": "retrieval",
+      "layout_hint": "check"
     }
   },
   {
@@ -357,7 +419,7 @@
       "teaches": [
         "obj_explain_alsap_purpose"
       ],
-      "intended_response": "recall this meaning at a later placement of the same atom, not as new information"
+      "intended_response": "attempt a check that retrieves this atom's meaning, not as new information"
     },
     "governance": {
       "version": 1,
@@ -399,7 +461,7 @@
       "style_ref": "brand.recall",
       "text_primitive": "tp_recall",
       "content_role": "retrieval",
-      "layout_hint": "recap"
+      "layout_hint": "check"
     }
   },
   {

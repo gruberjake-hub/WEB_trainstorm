@@ -23,7 +23,9 @@ Usage (from `cgen/trainstorm-core`):
 
 Requires Realizer output at `<project>/occurrences/elements.json`. Run
 Cartographer first so 1:many pairs have distinct moves (hook+present,
-present+reinforce). Re-runnable; does not drop extras or Cartographer intent.
+present+reinforce, objective+reinforce). `reinforce` extras project as a
+check in the HTML (Realizer), dressed here as `brand.recall` / `tp_recall`
+with `layout_hint: check`. Re-runnable; does not drop extras or Cartographer intent.
 """
 from __future__ import annotations
 
@@ -65,7 +67,7 @@ MOVE_TO_LOOK = {
         "style_ref": "brand.recall",
         "text_primitive": "tp_recall",
         "content_role": "retrieval",
-        "layout_hint": "recap",
+        "layout_hint": "check",
     },
     "objective": {
         "style_ref": "brand.purpose",
@@ -327,6 +329,9 @@ def selftest(closed_style_refs, closed_text_primitives):
     results.append(("present vs reinforce are not the same look",
                     general["expression"]["style_ref"] != recall["expression"]["style_ref"],
                     f"{general['expression']['style_ref']} vs {recall['expression']['style_ref']}"))
+    results.append(("recall layout_hint is check not recap",
+                    recall["expression"]["layout_hint"] == "check",
+                    recall["expression"].get("layout_hint")))
     results.append(("same composed_from on title pair",
                     hook["composed_from"] == present["composed_from"] == "atom_sop_x", ""))
 

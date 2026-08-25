@@ -14,8 +14,10 @@ From `cgen/trainstorm-core`:
 Default project is the live ALSAP SOP store (47 atoms). See the module docstring in `realize.py`.
 A re-run preserves Cartographer-bound intent (`ext.cartographer`), Couturier style
 (`expression` / `ext.couturier`), and extra 1:many `ele_` records. Default run mints a small
-1:many seed (`agents/realizer/one_to_many_v1.md`) on two ALSAP atoms. `--no-one-to-many` skips
-new extras but still preserves any that exist. `--selftest` checks stable extra ids.
+1:many seed (`agents/realizer/one_to_many_v1.md`) on a few ALSAP atoms. Extra `reinforce`
+occurrences project as a check from the atom (`agents/realizer/check_v1.md`). `--no-one-to-many` skips
+new extras but still preserves any that exist. `--selftest` checks stable extra ids and the
+check honesty bar.
 
 ## Cartographer
 
@@ -42,4 +44,4 @@ From `cgen/trainstorm-core`:
 Binds style keys on existing `ele_` records (`style_ref`, `text_primitive`, `content_role`,
 `layout_hint`) from a documented move→look map (`agents/couturier/style_map_v1.md`). Mints no
 ids. Does not write `atoms.json` or `element.intent`. HTML reads those keys so hook vs present
-vs reinforce do not look like the same card. Run realize then cartographer first.
+vs reinforce do not look like the same card; extra `reinforce` is a check, not a recap. Run realize then cartographer first.

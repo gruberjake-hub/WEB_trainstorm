@@ -32,7 +32,7 @@
     {
       "key": "tp_recall",
       "label": "Recall",
-      "description": "Recap / quoted type. Clothes for reinforce (retrieve/retention), not a first teaching.",
+      "description": "Check / retrieval type. Clothes for reinforce (retrieve/retention) — a check the reader can attempt, not a quoted recap and not a first teaching.",
       "status": "draft",
       "derived_from": "agents/couturier/style_map_v1.md"
     }

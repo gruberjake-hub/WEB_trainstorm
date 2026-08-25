@@ -260,7 +260,8 @@ done. Superseded 2026-08-20 by the state above.)*
 The **document half** of the machine is built and green: three atom stores, a gate with two
 self-tests at 17/17, ingest · reconcile · approve · project, and an agent that has been dispatched
 and behaves correctly. The **course half has started**: Realizer v1 mints one occurrence per atom
-plus a small 1:many seed (two ALSAP atoms); Cartographer v1 (`tools/cartographer.py`) binds
+plus a small 1:many seed (two ALSAP atoms, plus purpose as a second `reinforce`
+check); Cartographer v1 (`tools/cartographer.py`) binds
 occurrence intent on that mixed store and re-projects `realized_lesson.html`. Couturier v1
 has written style keys on those occurrences (`tools/couturier.py`); Dragoman and `tools/render/`
 PNG pipelines are unbuilt. The `atom → primitives` hop is still owed — v1 realizes atoms directly.
@@ -274,11 +275,11 @@ Near-term, in dependency order:
 3. **`atom → primitives`** — the first hop of the pipeline has no listed transform at all.
 4. ~~**`tools/realize.py`**~~ — **done 2026-08-25, v1.** One `ele_` per atom, `composed_from`, no
    authored text, `realized_lesson.html`. **1:many seed 2026-08-25** — two ALSAP atoms mint a
-   second occurrence. **`tools/render/`** (PNG) remains.
+   second occurrence; extra `reinforce` projects as a check from the atom. **`tools/render/`** (PNG) remains.
 5. ~~**Cartographer v1**~~ — **done 2026-08-25.** Heuristic compiler writes `move`/`teaches` on the
    ALSAP occurrence store; re-runnable on extras (preserves stamped `move`).
 6. ~~**Couturier v1**~~ — **done 2026-08-25.** Move→look map writes expression style keys; HTML
-   clothes the 1:many pairs differently. Next: Dragoman / `atom → primitives`.
+   clothes the 1:many pairs differently. Extra `reinforce` is a check, not a recap. Next: Dragoman / `atom → primitives`.
 7. **A real `brunswick.reference.course.json`** — still `{"_todo": …}`, and the only thing that would
    prove the course half end to end.
 

@@ -168,7 +168,7 @@ def bind_intended_response(atom, move: str) -> str | None:
     if move == "transfer":
         return "carry the named handoff into the job (notify, deliver outputs, or follow the cited SOP)"
     if move == "reinforce":
-        return "recall this meaning at a later placement of the same atom, not as new information"
+        return "attempt a check that retrieves this atom's meaning, not as new information"
     return None
 
 
@@ -385,6 +385,35 @@ def selftest(closed_moves, closed_rhetorical, objective_ids):
                     el["intent"]["move"] != extra["intent"]["move"],
                     f"{el['intent']['move']} vs {extra['intent']['move']}"))
     results.append(("does not copy meaning onto the extra", "content" not in extra, ""))
+
+    extra_r = {
+        "element_id": "ele_sop_x_general__reinforce",
+        "composed_from": "atom_sop_x_general",
+        "type": "Section",
+        "intent": {"rhetorical": "explain", "move": "reinforce"},
+        "governance": {"version": 1, "status": "draft", "owner": "realizer"},
+        "ext": {
+            "realized_from": {
+                "atom_id": "atom_sop_x_general",
+                "realizer": "tools/realize.py",
+                "policy": "v1_extra_occurrence",
+                "role": "extra",
+                "target_move": "reinforce",
+            }
+        },
+    }
+    extra_r_atom = atom("atom_sop_x_general", "procedure", "The ALSAP is the framework.", "atom_sop_x")
+    extra_r_intent, extra_r_stamp = bind_intent_for_occurrence(
+        extra_r, extra_r_atom, closed_moves, closed_rhetorical, objective_ids
+    )
+    apply_intent(extra_r, extra_r_intent, extra_r_stamp)
+    results.append(("extra reinforce keeps Realizer-stamped move",
+                    extra_r["intent"]["move"] == "reinforce", extra_r["intent"]["move"]))
+    results.append(("extra reinforce intended_response names a check",
+                    "check" in (extra_r["intent"].get("intended_response") or ""),
+                    extra_r["intent"].get("intended_response")))
+    results.append(("extra reinforce does not invent retrieve",
+                    extra_r["intent"]["move"] != "retrieve", extra_r["intent"]["move"]))
 
     # Couturier style on the extra must survive a Cartographer re-bind.
     extra["expression"] = {
