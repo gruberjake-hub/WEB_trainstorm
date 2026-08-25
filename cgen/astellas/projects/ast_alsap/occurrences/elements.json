@@ -46,14 +46,14 @@
         ]
       }
     },
-    "structure": {
-      "group_id": "atom_sop_ast29080"
-    },
     "expression": {
       "style_ref": "brand.opening",
       "text_primitive": "tp_display",
       "content_role": "title",
       "layout_hint": "banner"
+    },
+    "structure": {
+      "group_id": "atom_sop_ast29080"
     }
   },
   {
@@ -104,14 +104,14 @@
         ]
       }
     },
-    "structure": {
-      "group_id": "atom_sop_ast29080"
-    },
     "expression": {
       "style_ref": "brand.instructional",
       "text_primitive": "tp_body",
       "content_role": "body",
       "layout_hint": "card"
+    },
+    "structure": {
+      "group_id": "atom_sop_ast29080"
     }
   },
   {
