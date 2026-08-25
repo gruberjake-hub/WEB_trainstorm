@@ -7,7 +7,7 @@
 this follows directly from the atom→element 1:many decision (decision log, 2026-08-20 eighth). Two
 questions this raises are flagged at the foot of the file and deliberately NOT resolved here.*
 
-*Identity freeze 2026-08-25 (`architecture/DECISIONS.md`): `atom_id` is the only node key. An element is the same node in a course costume, not a second ID space. Do not mint `ele_` IDs. The 1:many ID-space reading is superseded; Couturier still owns style on the expression facet and still does not invent an id.*
+*Occurrence identity 2026-08-25 (`architecture/DECISIONS.md`, re-affirming the 2026-08-20 1:many decision): `atom_id` keys meaning; `element_id` (`ele_`) keys one occurrence of an atom in a course, linked by `composed_from`. Style is an occurrence-level facet — the same atom may be a heading here and a body line there — so Couturier writes `element.expression` style keys. Couturier mints no ids of either kind.*
 
 Lives at `agents/couturier/02_system_prompts/core_agent/couturier_system_prompt.md`.
 
@@ -56,7 +56,7 @@ else.
 
 ## The expression boundary — one facet, two writers, split by key
 
-> **Identity settled 2026-08-25 — see `architecture/DECISIONS.md`.** Locale packs and expression keys bind to `atom_id`. An element is the same node in a course costume, not a second ID space. Do not mint `ele_` IDs. You still own style on the expression facet; you do not invent an id. The operational rule is unchanged: never write the words.
+> **Identity settled — see `architecture/DECISIONS.md` (2026-08-25, occurrence identity).** Locale packs bind to `atom_id` (meaning is translated once); expression keys bind to `element_id` (presentation is per occurrence). You own style on the occurrence's expression facet; you mint no ids. The operational rule is unchanged: never write the words.
 >
 > The 2026-08-20 note below asked whether locale packs key off `atom_id` or `element_id`. That fork is closed (`atom_id`). Sub-facet vs layer split for Couturier vs Dragoman can still be refined later; it is not an identity question anymore.
 

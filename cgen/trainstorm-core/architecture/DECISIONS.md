@@ -40,3 +40,85 @@ Signed: **Jake** / **Claude** / **App-maker** (Cursor cloud agents on this repo)
 - Session notes under `architecture/sessions/` are memory, not canon.
 
 **Supersedes:** treating Claude Custom Instructions / Project knowledge as an independently maintained constitution.
+
+---
+
+## 2026-08-25 — The narrative decision log moves into git; its entries 2026-08-10 → 2026-08-21 are ratified as history
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** `architecture/decision-log.md` is the reasoning record behind this file — migrated
+verbatim from the Claude Project doc `claude/decision-log.md`, which is retired as a writable
+source. By merging this block Jake ratifies its entries dated 2026-08-10 through 2026-08-21 as the
+decision history of the manifold. The two files are different genres of one history, not two copies:
+**this file** holds the settled call in one short block; **the log** holds what was tried, found,
+retracted and why. When they disagree, this file wins, and the fix is a new block here plus a new
+dated entry there — never a silent edit to either.
+
+**Why:** The 2026-08-25 identity-freeze block at the top of this file was written against a repo that held none of
+the prior history, and so it superseded a decision it could not see (see the next block). "If a chat
+disagrees with this file, this file wins" is the right rule; it was switched on before the history was
+in the repo. The 08-19 log rule already said *the repo wins over the log* — this closes the loop by
+making the log part of the repo.
+
+**Consequences:**
+- The Project copy `claude/decision-log.md` is a one-way snapshot from git from this commit forward
+  (the GitHub sync already covers `architecture/`). Nothing is hand-written there again.
+- The one entry in the log still marked **PENDING** (2026-08-21 Fable run — `atom.intent` empty and
+  closed, `teaches` + `intended_response` to the occurrence) is **decided but not landed**: its patch
+  has not been applied to `main`. Land it, then strike its banner.
+- `STRUCTURE.md`'s line about a stale `cgen/trainstorm-core/decision-log.md` refers to a file that no
+  longer exists; corrected in the same PR.
+
+**Supersedes:** nothing. Adds the record this file was missing.
+
+---
+
+## 2026-08-25 — Occurrence identity: `atom_id` is the only *node* key; an occurrence of an atom in a course is addressable by its own stable key, linked to its atom. 1:many stands.
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The 2026-08-20 (eighth) decision stands: **one atom may become many elements; two
+stable ids; an explicit link.** `atom_id` is the only key of a *content node* — the lexicon entry,
+the thing that carries meaning and `content_hash`, and the key that locale packs join on. An
+**element** is one *occurrence* of an atom in a course: the same atom may appear as a `hook` in
+module 1 and `reinforce` in module 5, and each occurrence must be addressable — by its own stable
+`element_id` (prefix `ele_`), which references its atom (`composed_from`) and never carries authored
+text of its own. Occurrence-level facets (`rhetorical`, `move`, expression keys, and — once the
+PENDING restitch lands — `teaches`, `intended_response`) bind to the occurrence. Meaning-level facets
+bind to the atom.
+
+**Why:** The identity-freeze block above (2026-08-25, Jake / App-maker) re-derived the 2026-08-20
+(seventh) reading — "same node, two costumes" — from the same three July documents that the eighth
+entry showed cannot settle the question (they conflict, and one is a crosswalk from a parallel
+workstream, not core canon). It superseded the 1:many decision without engaging the argument that
+made it, which is instructional, not archaeological: *repetition is the instrument.* Preview → teach →
+retrieve is the same atom at three positions; a model that cannot say "this one, here" cannot express
+spaced retrieval without minting three atoms of identical meaning that then drift apart. Jake, on
+review of that block: he did not intend to reverse 1:many, and "we'll be addressing the same atom
+over and over again wearing different clothes" — which is exactly the point, and exactly why an
+occurrence needs a key. The freeze was right that element is *not a rival canon*; it was wrong that an
+occurrence is *not addressable*. Those are different axes, and it settled the wrong one.
+
+**Consequences:**
+- `STRUCTURE.md` restores `ele_` as the occurrence prefix. Do not mint `ele_` ids for *content*; do
+  not mint `atom_` ids for *occurrences*. Two id spaces, two kinds of node.
+- `element_id` is minted at realization (`promptpack_manifold.md` §8 was right on this point), joined
+  to its atom by `composed_from` — the "explicit link" the eighth entry requires. Realizer (when it
+  exists) mints occurrence ids; Couturier still owns style on the occurrence's expression facet and
+  still mints nothing.
+- **Locale packs key on `atom_id`** — the freeze's choice and the eighth entry's own "cheaper choice"
+  agree. Element-level locale overrides only where presentation constrains the rendering (length
+  limits, heading vs sentence), keyed by `element_id`; not built yet.
+- `element.content` (authored text on the occurrence) remains a known violation under 1:many — flagged
+  in the eighth entry, unchanged here, still owed.
+- The 08-21 intent arc (`move` on the occurrence; `teaches` scoped per intervention) keeps its home.
+
+**Supersedes:** the 2026-08-25 identity-freeze block's clauses "do not mint `ele_` IDs", "do not mint
+`element_id` at realization", and "any reading that one atom becomes many element IDs". Its
+working-process block is untouched. Its clauses that element is not a rival canon, that locale packs
+bind to `atom_id`, and that facet owners mint no ids, stand.
+
+**Process note, so it does not recur:** a decision block that supersedes another must quote or cite
+the *argument* it is overturning, not only the *documents* it read. And "this file wins" only works
+once this file holds the history — hence the block above.

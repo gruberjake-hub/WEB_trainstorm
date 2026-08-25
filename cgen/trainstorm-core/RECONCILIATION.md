@@ -5,9 +5,9 @@ conform, plus small additive changes flowed the other way into the canonical voc
 diff and the rationale. Nothing here writes to git — apply the `trainstorm-core/` files and the two
 PATCH docs to your repo yourself.*
 
-> **Settled 2026-08-25** (`architecture/DECISIONS.md`): the node join key is `atom_id`. This July
-> record's `element_id` is that same key in a course costume, not a second ID space. Do not mint
-> `ele_` IDs.
+> **Identity** (`architecture/DECISIONS.md` 2026-08-25, occurrence identity): `atom_id` keys meaning; `element_id`
+> keys one occurrence of an atom in a course (1:many, decided 2026-08-20). This July record's
+> `element_id`-keyed render records are therefore correct as written — presentation is per occurrence.
 
 ## What was already right (kept)
 

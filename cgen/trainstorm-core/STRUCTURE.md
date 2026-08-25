@@ -58,11 +58,10 @@ part of this structure.
 trainstorm-core/
 ├── README.md · README-START-HERE.md
 ├── STRUCTURE.md                          ← this file  (STRUCTURE_dep*.md = deprecated, being removed)
-├── decision-log.md                       ⚠ stale duplicate of claude/decision-log.md — living log is architecture/DECISIONS.md
 │
 ├── schemas/                              # the data contracts — validate against these
-│   ├── atom.schema.json                  ✅ CONTENT CANON — the node; atom_id is the only key (DECISIONS.md 2026-08-25)
-│   ├── element.schema.json               ✅ course costume of the same node — not a second ID space
+│   ├── atom.schema.json                  ✅ CONTENT CANON — the meaning node; atom_id is the only content-node key (DECISIONS.md 2026-08-25)
+│   ├── element.schema.json               ✅ one OCCURRENCE of an atom in a course — its own ele_ key, linked by composed_from; 1:many (DECISIONS.md 2026-08-25, occurrence identity)
 │   ├── script.primitives.v1.json / .v2   ✅ generation IR (WHAT knowledge)
 │   ├── procedure.facet.schema.json       ✅ source-type facet — procedures  (procedure.v0.1)
 │   ├── form.facet.schema.json            ✅ source-type facet — forms       (form.v0.5, + evidence_kind/supplied_by)
@@ -106,11 +105,12 @@ trainstorm-core/
 ├── ontology/goals.json                   ✅ goal_ nodes — 1 seeded, `status: example`; the WARRANT
 │
 ├── architecture/                         # docs of record (the .md files sync to Project knowledge)
-│   ├── DECISIONS.md                      ✅ append-only canon — if a chat disagrees, this file wins
+│   ├── DECISIONS.md                      ✅ append-only canon, one short block per settled call — if a chat disagrees, this file wins
+│   ├── decision-log.md                   ✅ the narrative record behind DECISIONS.md (migrated from the Claude Project 2026-08-25); newest first
 │   ├── sessions/                         ✅ dated notes, not canon
 │   ├── manifold.md · conventions.md · atom-spec.md          ✅
 │   ├── unification-map.md                ⚠ names element.schema.json as canon — SUPERSEDED, see DECISIONS.md 2026-08-25
-│   ├── agents-roster.md · promptpack_manifold.md            ✅  (§8 identity minting superseded — DECISIONS.md)
+│   ├── agents-roster.md · promptpack_manifold.md            ✅  (promptpack is a crosswalk from a parallel workstream — cite as such, not as canon)
 │   ├── reconciliation.md · conversation-reconciliation.md   ✅
 │   ├── script-generation-layer.md · localization-agent.md   ✅
 │   └── diagrams/                         ✅ rendered HTML — git-only
@@ -154,7 +154,7 @@ trainstorm-core/
 - **Vocabularies:** `*.enum.json` (closed value lists) · `*.registry.json` (keyed lookups)
 - **Locale packs:** `<bcp47>.json` — `en.json`, `ja.json`, `fr-CA.json`
 - **Examples:** `example_*.json` · reference courses: `*.reference.course.json`
-- **Stable ID prefixes** (never reused/edited): `atom_` **the only content-node key** · `obj_` objective · `term_` glossary term · `asset_` visual asset · `prim_`/`p###` script primitive · `sce_`/`sec_`/`mod_` structure. **Do not mint `ele_` IDs** — an element is the same node in a course costume, not a second ID space (`architecture/DECISIONS.md`, 2026-08-25). Historical `ele_…` strings in examples are costumes of `atom_id`.
+- **Stable ID prefixes** (never reused/edited): `atom_` **content node** (the only key meaning is stored under) · `ele_` **occurrence** of an atom in a course (minted at realization, linked to its atom by `composed_from`, never carries authored text) · `obj_` objective · `goal_` business outcome · `term_` glossary term · `asset_` visual asset · `prim_`/`p###` script primitive · `sce_`/`sec_`/`mod_` structure. Two id spaces, two kinds of node: never mint `ele_` for content, never mint `atom_` for an occurrence (`architecture/DECISIONS.md`, 2026-08-25 occurrence identity; decision-log 2026-08-20 eighth).
 - **Asset ids** are minted from the file's content hash at first ingest (`asset_img_<hash12>`) and then **frozen**. Opaque is correct here — but on re-ingest, match against the registry rather than re-deriving, or a re-exported image mints a second identity for the same asset.
 - **Two new governed closed lists** ship with the visual asset registry, both `v0.1` draft, both bumped by version not by silent extension: `role` (signature · motif · chrome) and `mark_class` (identity · sub_brand · program · third_party). `mark_class` is **required when `role: signature`**, enforced by a conditional in the schema — an unclassified signature is the exact ambiguity it exists to remove. Note it is deliberately *not* named `*_tier`: "tier" already means audience segment here (`tier1_field`, `tier2_msl`).
 
@@ -193,36 +193,47 @@ Where classification is uncertain, **under-claim**: default to `sub_brand`, neve
 - **Client courses** (Brunswick production, Astellas, future clients) → a **separate `trainstorm-courses/<client>/` repo** that references core schemas. Only *one clean copy of one course* lives here, in `reference/`, as the gold example.
 - **Frontier** (Response Engine, Orchestrator) → their **own repos/projects** when active; they import these schemas but keep their own build context.
 
-## `atom` and `element` — same node, two costumes (settled 2026-08-25)
+## `atom` and `element` — lexicon and utterance: one atom, many occurrences (decided 2026-08-20, re-affirmed 2026-08-25)
 
-*An earlier version of this section, added 2026-08-20, described atom / primitives / element as
-three layers awaiting a join. **That was wrong and is retracted.** The same day's "identity still
-open" subsection is **superseded** by `architecture/DECISIONS.md` (2026-08-25 identity freeze).*
+*Three readings of this relationship were produced on 2026-08-20 — three layers, one node, two
+nodes — and the third was decided by Jake on instructional-design grounds
+(`architecture/decision-log.md`, 2026-08-20 eighth). A 2026-08-25 PR re-derived the "one node" reading
+from the July documents and was corrected the same day; see `architecture/DECISIONS.md`
+(2026-08-25, occurrence identity).*
 
-**The atom is the node. The element is that node in a course costume. One `atom_id`. No second key.**
+**The atom is the lexicon entry. The element is one utterance of it. `atom_id` keys meaning;
+`element_id` keys the occurrence; `composed_from` links them. One atom → many elements.**
 
-- **`atom.schema.json`** — CONTENT CANON. Thin: owns its meaning, everything else keyed,
-  single-writer per binding. `architecture/atom-spec.md` is its annotated reading. The live gate is
-  `tools/validate_atoms.py`.
-- **`element.schema.json`** — the *course-chain costume* of the same node (fields that unify the
-  three legacy schemas: `course` authoring / `scene` render / `course-primitives` substrate). Not a
-  rival canon. Not a second ID space. Do not mint `ele_` IDs; do not mint `element_id` at realization.
+- **`atom.schema.json`** — CONTENT CANON. Thin: owns its meaning and `content_hash`, everything else
+  keyed, single-writer per binding. `architecture/atom-spec.md` is its annotated reading. The live
+  gate is `tools/validate_atoms.py`.
+- **`element.schema.json`** — one *occurrence* of an atom in a course: this atom, at this position,
+  shown this way. The same atom is a `hook` in module 1 and `reinforce` in module 5 — that is spaced
+  repetition, and it is why an occurrence needs its own key. Occurrence-level facets (`rhetorical`,
+  `move`, expression keys) bind here. Not a rival canon — it never carries meaning of its own
+  (`element.content` as an authored copy is a known violation, still owed).
 
-`architecture/reconciliation.md` §4 already had the join: *"`course-primitives`' flat, ID-keyed
-element array → **this is the atom store.** Make `element_id` the stable `atom_id`."* That is now
-frozen. `promptpack_manifold.md` §8 (mint `element_id`s at realization) is superseded.
+`architecture/reconciliation.md` §4's *"make `element_id` the stable `atom_id`"* is the one-node
+reading and is **wrong** under 1:many; `promptpack_manifold.md` §8 (mint `element_id`s at
+realization, joined by a derivation stamp) is **right** on that point, though it is a crosswalk from
+a parallel workstream, not core canon.
 
-The generation pipeline still has a **costume step** (how the node is shown), not a new identity:
+The generation pipeline realizes atoms into occurrences; identity is minted at each transform:
 
 ```
-source material → generator → SCRIPT PRIMITIVES → realizer → COURSE COSTUME (same atom_id) → render agents → RENDERED FORMS
+source material → generator → SCRIPT PRIMITIVES → realizer → ELEMENTS (ele_, composed_from atom_) → render agents → RENDERED FORMS
 ```
 
 **A translation is not a new node.** Source-locale meaning lives on the atom; translations live in
 `locales/<bcp47>.json` keyed by `atom_id`. One node per language would make `locales/` redundant and
 re-embed language — the drift this schema exists to fix.
 
-### Element as a course-chain facet (hypothesis, identity no longer blocking)
+### Element as a course-chain facet (hypothesis — does NOT survive 1:many as written)
+
+*A facet on the atom is per-atom; an occurrence is per-placement. Under 1:many the element is a
+different node kind, not a fourth source-type facet. What may survive is the observation below that
+element's top-level fields are facets merely unnested — worth a field-by-field pass when `realize.py`
+is built, but as the shape of the occurrence node, not as a binding on the atom.*
 
 `element`'s own field descriptions call its parts **facets** — "Assessment facet", "Render-target
 facet", `expression` carrying "Owner: Brand + Localization", and `ext` as "a sanctioned extension
@@ -230,11 +241,10 @@ point… so new facets can accrete." That is the `bindings` convention, written 
 existed. Which suggests `element` is the atom **specialized for the course chain**, exactly as
 `form.facet` and `procedure.facet` specialize it for the document chain — not a layer above it.
 
-If that holds, the move is `element.facet.schema.json` as a fourth source-type facet, **one
-`atom_id`**, and the gate already validates this shape three times over. Field-by-field pass still
-owed; identity is no longer the blocker. Locale packs and expression keys bind to `atom_id`.
-Couturier owns style on the expression facet; Realizer (when it exists) owns layout/render; neither
-invents a new id.
+Locale packs key on `atom_id` (meaning is translated once), with occurrence-level overrides keyed by
+`element_id` only where presentation constrains the rendering — not built yet. Couturier owns style on
+the occurrence's expression facet; Realizer (when it exists) mints `ele_` ids and owns layout/render;
+Couturier mints nothing.
 
 ## First moves
 
@@ -249,19 +259,19 @@ and behaves correctly. The **course half has never run** — no store carries an
 
 Near-term, in dependency order:
 
-1. ~~**Settle identity**~~ — **done 2026-08-25.** `atom_id` is the only node key. See
-   `architecture/DECISIONS.md`.
-2. **Test the element-as-course-facet hypothesis** field by field against `element.schema.json`.
-   If it holds, the reconciliation costs no new concepts. Identity is no longer the blocker.
+1. ~~**Settle identity**~~ — **done 2026-08-20, re-affirmed 2026-08-25.** Two ids: `atom_` for
+   meaning, `ele_` for an occurrence, `composed_from` between them. See `architecture/DECISIONS.md`.
+2. **Land the PENDING restitch** (`architecture/decision-log.md`, 2026-08-21 Fable run): `atom.intent`
+   empty and closed; `teaches` + `intended_response` on the occurrence. Decided, not yet on `main`.
 3. **`atom → primitives`** — the first hop of the pipeline has no listed transform at all.
-4. **`tools/realize.py`** (primitives → course costume of the **same** `atom_id`; do not mint
-   `ele_`) and **`tools/render/`** (that costume → HTML → PNG).
+4. **`tools/realize.py`** (primitives → elements: mint `ele_`, set `composed_from`, no authored
+   text) and **`tools/render/`** (element → HTML → PNG).
 5. **A real `brunswick.reference.course.json`** — still `{"_todo": …}`, and the only thing that would
    prove the course half end to end.
 
 `project/custom_instructions.md` now points at this file and `architecture/DECISIONS.md`.
 `architecture/unification-map.md` still names `element.schema.json` as canon in July prose —
-historical; the living rule is the identity freeze.
+historical; the living rule is the occurrence-identity block in `architecture/DECISIONS.md`.
 
 ## Next on the visual-asset track
 
