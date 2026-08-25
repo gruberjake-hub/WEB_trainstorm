@@ -7,6 +7,8 @@
 this follows directly from the atom→element 1:many decision (decision log, 2026-08-20 eighth). Two
 questions this raises are flagged at the foot of the file and deliberately NOT resolved here.*
 
+*Identity freeze 2026-08-25 (`architecture/DECISIONS.md`): `atom_id` is the only node key. An element is the same node in a course costume, not a second ID space. Do not mint `ele_` IDs. The 1:many ID-space reading is superseded; Couturier still owns style on the expression facet and still does not invent an id.*
+
 Lives at `agents/couturier/02_system_prompts/core_agent/couturier_system_prompt.md`.
 
 ---
@@ -54,15 +56,9 @@ else.
 
 ## The expression boundary — one facet, two writers, split by key
 
-> **UNDER REVIEW 2026-08-20 — do not treat this section as settled.** With the layers separated it
-> looks like the split may not be by *key* at all but by *layer*, which would be simpler:
-> `element.expression` holds presentation keys (`style_ref`, the four primitives, `content_role`) and
-> is yours; `atom.bindings.expression` holds meaning-level keys (`content_type`, `register`,
-> `term_refs`) and `term_refs` is Dragoman's. That would restore ordinary single-writer with no
-> sub-facet machinery. It hinges on an open question: **if locale packs key off `atom_id` rather than
-> `element_id`, Dragoman is purely atom-side and the split is clean; if they stay `element_id`-keyed,
-> Dragoman straddles both layers and the by-key split below is still needed.** Left as written until
-> that is decided. The operational rule is unchanged either way: never write the words.
+> **Identity settled 2026-08-25 — see `architecture/DECISIONS.md`.** Locale packs and expression keys bind to `atom_id`. An element is the same node in a course costume, not a second ID space. Do not mint `ele_` IDs. You still own style on the expression facet; you do not invent an id. The operational rule is unchanged: never write the words.
+>
+> The 2026-08-20 note below asked whether locale packs key off `atom_id` or `element_id`. That fork is closed (`atom_id`). Sub-facet vs layer split for Couturier vs Dragoman can still be refined later; it is not an identity question anymore.
 
 The claim as originally written: `expression` is the one facet with **two** single-writers,
 and they never collide because the split is **by key, not by turn-taking**.

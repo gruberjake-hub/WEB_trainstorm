@@ -104,7 +104,7 @@ point of boring — which is the compliment.
 *The proven one. AST009's veteran — the only agent with a track record.*
 
 Grounded drafting, deterministic QE gate, in-country human validation, and a memory that
-gets smarter with every correction. Writes locale packs keyed by `element_id`, each entry
+gets smarter with every correction. Writes locale packs keyed by `atom_id`, each entry
 carrying `status` / `reviewer` / `source_hash`. To him a translation is just another render
 of the source meaning — which is exactly why he plugged into the manifold before the
 manifold had a name.
