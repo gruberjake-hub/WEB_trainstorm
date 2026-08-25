@@ -10,8 +10,10 @@ already-minted `ele_` records, and re-projects `realized_lesson.html`.
 
 Never: mint `ele_` / `atom_` ids; copy meaning onto the element; write
 `atoms.json`; put `teaches` back on atoms; invent `practice`/`assess` this SOP
-does not contain. Extra 1:many occurrences keep their Realizer-stamped `move`;
-Cartographer still binds `teaches` / `rhetorical` / `intended_response`.
+does not contain; write `element.expression` (Couturier). Extra 1:many
+occurrences keep their Realizer-stamped `move`; Cartographer still binds
+`teaches` / `rhetorical` / `intended_response`. A re-run does not wipe
+Couturier style.
 
 Usage (from `cgen/trainstorm-core`):
 
@@ -384,6 +386,24 @@ def selftest(closed_moves, closed_rhetorical, objective_ids):
                     f"{el['intent']['move']} vs {extra['intent']['move']}"))
     results.append(("does not copy meaning onto the extra", "content" not in extra, ""))
 
+    # Couturier style on the extra must survive a Cartographer re-bind.
+    extra["expression"] = {
+        "style_ref": "brand.instructional",
+        "text_primitive": "tp_body",
+        "content_role": "body",
+        "layout_hint": "card",
+    }
+    extra["ext"]["couturier"] = {"policy": "v1_move_to_look", "tool": "tools/couturier.py"}
+    extra_intent2, extra_stamp2 = bind_intent_for_occurrence(
+        extra, cases[0][0], closed_moves, closed_rhetorical, objective_ids
+    )
+    apply_intent(extra, extra_intent2, extra_stamp2)
+    results.append(("re-bind does not wipe Couturier expression",
+                    extra.get("expression", {}).get("style_ref") == "brand.instructional",
+                    extra.get("expression")))
+    results.append(("re-bind does not wipe ext.couturier",
+                    "couturier" in extra.get("ext", {}), extra.get("ext", {}).keys()))
+
     print(f"{'CHECK':<72} RESULT")
     print("-" * 86)
     ok = True
@@ -469,6 +489,10 @@ def main():
     if not isinstance(elements, list) or not elements:
         raise SystemExit(f"{elements_path} is not a non-empty element list")
     before_ids = {e["element_id"] for e in elements}
+    before_expr = {
+        e["element_id"]: dict(e["expression"]) if isinstance(e.get("expression"), dict) else None
+        for e in elements
+    }
 
     for el in elements:
         eid = el["element_id"]
@@ -483,6 +507,14 @@ def main():
 
     after_ids = {e["element_id"] for e in elements}
     assert_no_id_minting(before_ids, after_ids)
+    for el in elements:
+        old_expr = before_expr.get(el["element_id"])
+        new_expr = el.get("expression")
+        if old_expr != new_expr:
+            raise SystemExit(
+                f"{el['element_id']}: Cartographer must not rewrite expression "
+                f"(was {old_expr}, now {new_expr})"
+            )
     validate_elements(elements, element_schema, atoms_by_id, objective_ids, closed_moves, closed_rhetorical)
 
     move_counts = Counter(e["intent"]["move"] for e in elements)
@@ -507,7 +539,7 @@ def main():
         "note": ("v1 compiler pass over Realizer occurrences, including extra 1:many "
                  "records. Cartographer writes intent only; it does not mint ele_ ids "
                  "or rewrite atoms. Extra occurrences keep Realizer-stamped move. "
-                 "Next: Couturier."),
+                 "Couturier owns expression style; this tool does not wipe it."),
     }
 
     html_path = pathlib.Path(args.out).resolve() if args.out else project / "realized_lesson.html"

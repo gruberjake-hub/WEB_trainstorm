@@ -290,3 +290,60 @@ unseeded atoms. Cartographer v1’s “Next hop is Couturier or Realizer 1:many
 minting” as to the minting half — Couturier is still unbuilt. Cartographer still
 mints no ids. Working-process block untouched.
 
+---
+
+## 2026-08-25 — Couturier v1: first writer of style on the occurrence
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Couturier v1 exists as `tools/couturier.py`. It is a **documented
+move→look map** (`agents/couturier/style_map_v1.md`, policy `v1_move_to_look`),
+not a design system and not ID genius. It reads already-minted `ele_` records
+and writes **only occurrence style keys** onto `element.expression`
+(`style_ref`, `text_primitive`, `content_role`, `layout_hint`). It never mints
+`ele_` or `atom_` ids, never copies meaning onto the element, never rewrites
+`atoms.json`, never writes `element.intent`. Locale packs stay keyed on
+`atom_id`. Style is keyed on `element_id`.
+
+The map is from Cartographer’s `intent.move`. Three looks carry the 1:many
+instrument: `hook` → `brand.opening` / `tp_display`; `present` →
+`brand.instructional` / `tp_body`; `reinforce` → `brand.recall` / `tp_recall`
+(retrieve/retention; closed vocab has no `retrieve`). Other live moves
+(objective / activate / exemplify / transfer) get a distinct look so the page
+is not 36 identical present-cards. Unmapped moves (`practice` / `feedback` /
+`assess`) are left undressed — no invented look. `teaches` does not change
+clothes in v1.
+
+v1 does **not** bind `motion_primitive` (registry still empty — stub),
+`layout_primitive` (the `.potx` / Storyline set), or `interaction_primitive`.
+If a foreign key is already set, it is preserved, not overwritten. HTML
+(`realized_lesson.html`) reads the expression keys for clothes; meaning still
+comes from the atom. 1:many pairs must wear distinct `style_ref` values.
+
+Idempotency: re-run of Couturier mints nothing. Re-run of realize preserves
+`expression` + `ext.couturier` (and extras, and Cartographer intent). Re-run
+of cartographer does not wipe style.
+
+**Why:** Realizer minted `ele_` records (including a 1:many seed) and
+Cartographer bound `move` / `teaches`, but the HTML still looked like the same
+SOP card for every move. Style is an occurrence-level facet — the same atom
+wears different clothes at hook vs present vs reinforce. This is the first
+writer of that facet on a live store. The expression facet already existed on
+`element.schema.json`; no parallel store.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Optional `--project` / `--selftest` like the others.
+- `vocab/primitives.registry.json` is `v0.3`: a handful of `style_ref` +
+  `text_primitive` keys seeded. Layout/interaction keys unchanged. Motion
+  still empty.
+- Next hop is not this landing: Dragoman, Storyline, `.potx`, motion
+  primitives, `tools/render/` PNG pipelines.
+
+**Supersedes:** the Realizer 1:many seed block’s “Couturier is still unbuilt”
+and “Next hop is still Couturier”. Realizer still mints `ele_` ids;
+Cartographer still owns intent; Couturier still mints none. Working-process
+block untouched.
+
+

@@ -105,4 +105,4 @@ They share the *substrate* (this repo's schemas), so point their instructions at
 1. After Jake merges a PR, **pull** locally; re-sync this knowledge base FROM git (one way).
 2. Read `architecture/DECISIONS.md` and `STRUCTURE.md` at the start of a session.
 3. Run `tools/validate_atoms.py` against the live stores before changing them. Do not move `cgen/astellas/`.
-4. Course-chain: `tools/realize.py` mints `ele_` ids (no authored text; small 1:many seed on two ALSAP atoms); `tools/cartographer.py` binds occurrence intent (preserves extra `move`). Neither writes `atoms.json`.
+4. Course-chain: `tools/realize.py` mints `ele_` ids (no authored text; small 1:many seed on two ALSAP atoms); `tools/cartographer.py` binds occurrence intent (preserves extra `move`); `tools/couturier.py` binds occurrence style keys (mints nothing). None writes `atoms.json`.

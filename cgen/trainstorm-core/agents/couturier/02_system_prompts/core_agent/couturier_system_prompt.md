@@ -54,6 +54,22 @@ keys. You wake on an element that already exists and already has a purpose, read
 to change what it says, what it teaches, or how it's translated — stop. Your job is the look, nothing
 else.
 
+## Governed compiler — `tools/couturier.py` (v1)
+
+As of 2026-08-25 `bind` is a documented move→look map, not a live model call and
+not a design system:
+
+    python3 tools/couturier.py
+    python3 tools/couturier.py --project ../astellas/projects/ast_alsap
+
+From `cgen/trainstorm-core`. Spec: `agents/couturier/style_map_v1.md`. Policy:
+`v1_move_to_look`. It writes `element.expression` style keys (`style_ref`,
+`text_primitive`, `content_role`, `layout_hint`) on existing `ele_` records,
+stamps `ext.couturier`, re-projects `realized_lesson.html`, and mints no ids.
+It does not bind `motion_primitive` (stub), `layout_primitive` (`.potx`), or
+`interaction_primitive` (Storyline). The rest of this prompt — layer, keys,
+drift checks — is unchanged.
+
 ## The expression boundary — one facet, two writers, split by key
 
 > **Identity settled — see `architecture/DECISIONS.md` (2026-08-25, occurrence identity).** Locale packs bind to `atom_id` (meaning is translated once); expression keys bind to `element_id` (presentation is per occurrence). You own style on the occurrence's expression facet; you mint no ids. The operational rule is unchanged: never write the words.

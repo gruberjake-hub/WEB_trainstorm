@@ -13,9 +13,11 @@ the SOP.
 Idempotency: extra ids are `(primary ele_) + "__" + move`. A re-run accretes
 missing extras and never drops existing extras or Cartographer bindings.
 
-Not this tool: Couturier (style keys), Dragoman (locale packs), Storyline, .potx,
-PNG pipelines, `tools/render/`. Does not rewrite SOP/form atoms into elements —
-`atoms.json` is read-only. Cartographer still binds `teaches` / rest of intent.
+Not this tool: Dragoman (locale packs), Storyline, .potx, PNG pipelines,
+`tools/render/`. Couturier (`tools/couturier.py`) owns style keys on the
+occurrence; a re-realize preserves them. Does not rewrite SOP/form atoms into
+elements — `atoms.json` is read-only. Cartographer still binds `teaches` / rest
+of intent.
 
 Usage (from `cgen/trainstorm-core`):
 
@@ -23,6 +25,7 @@ Usage (from `cgen/trainstorm-core`):
     python tools/realize.py --project ../astellas/projects/ast_alsap
     python tools/realize.py --selftest
     python tools/cartographer.py          # re-runnable on the mixed store
+    python tools/couturier.py             # dresses existing ele_; mints nothing
 
 Default `--project` is the live ALSAP SOP store (47 atoms). Writes (regenerated,
 never hand-edited):
@@ -274,6 +277,7 @@ def assemble_elements(atoms, previous, default_move: str, *, mint_extras: bool =
         aid = atom["atom_id"]
         primary = mint_element(atom, default_move, role="primary")
         preserve_cartographer_intent([primary], previous)
+        preserve_couturier_expression([primary], previous)
         elements.append(primary)
         claimed.add(primary["element_id"])
 
@@ -299,6 +303,7 @@ def assemble_elements(atoms, previous, default_move: str, *, mint_extras: bool =
             extra = mint_element(atom, move, role="extra")
             extra["element_id"] = eid
             preserve_cartographer_intent([extra], previous)
+            preserve_couturier_expression([extra], previous)
             if not (extra.get("ext") or {}).get("cartographer"):
                 extra["intent"]["move"] = move
             elements.append(extra)
@@ -378,6 +383,45 @@ def preserve_cartographer_intent(elements, previous):
         el.setdefault("ext", {})["cartographer"] = cart
 
 
+def preserve_couturier_expression(elements, previous):
+    """Single-writer: Couturier owns occurrence style. A re-realize must not clobber it."""
+    if not previous:
+        return
+    prev = {e.get("element_id"): e for e in previous if e.get("element_id")}
+    for el in elements:
+        old = prev.get(el.get("element_id"))
+        if not old:
+            continue
+        cout = (old.get("ext") or {}).get("couturier")
+        if not cout and "expression" not in old:
+            continue
+        if "expression" in old:
+            el["expression"] = old["expression"]
+        if cout:
+            el.setdefault("ext", {})["couturier"] = cout
+
+
+CLOTHES_CLASS = {
+    "brand.opening": "style-opening",
+    "brand.instructional": "style-instructional",
+    "brand.recall": "style-recall",
+    "brand.purpose": "style-purpose",
+    "brand.prior": "style-prior",
+    "brand.example": "style-example",
+    "brand.job": "style-job",
+}
+
+KICKER = {
+    "title": "Opening",
+    "body": "Present",
+    "retrieval": "Remember",
+    "purpose": "Purpose",
+    "prior": "Already known",
+    "example": "Example",
+    "handoff": "On the job",
+}
+
+
 def project_html(atoms, elements, manifest, out_path: pathlib.Path):
     by_atom = {a["atom_id"]: a for a in atoms}
     esc = html.escape
@@ -398,12 +442,15 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
 
     def pills_for(el):
         intent = el.get("intent") or {}
+        expr = el.get("expression") or {}
         move = intent.get("move", DEFAULT_MOVE)
         low = (el.get("ext") or {}).get("cartographer", {}).get("confidence") == "low"
         extra = is_extra_element(el)
         out = [f'<span class="pill move-{esc(move)}{ " low" if low else ""}">{esc(move)}</span>']
         if extra:
             out.append('<span class="pill extra-occ">extra</span>')
+        if expr.get("style_ref"):
+            out.append(f'<span class="pill style" title="expression.style_ref">{esc(expr["style_ref"])}</span>')
         for oid in intent.get("teaches") or []:
             short = oid[4:] if oid.startswith("obj_") else oid
             out.append(f'<span class="pill teaches" title="{esc(oid)}">{esc(short)}</span>')
@@ -415,17 +462,35 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         meaning = clean_meaning(atom["meaning"]["source_text"])
         kind = atom["meaning"].get("kind", "")
         sh = (el.get("source_hash") or "")[:19]
+        expr = el.get("expression") or {}
+        clothes = CLOTHES_CLASS.get(expr.get("style_ref"), "")
+        clothes_cls = f" {clothes}" if clothes else ""
+        kicker = KICKER.get(expr.get("content_role"), "")
+        kicker_html = f'<div class="kicker">{esc(kicker)}</div>' if kicker else ""
+        meaning_tag = "h2" if expr.get("text_primitive") == "tp_display" else "p"
+        tp = expr.get("text_primitive") or ""
+        hint = expr.get("layout_hint") or ""
+        join_bits = [
+            f'composed_from <span class="mono">{esc(el["composed_from"])}</span>',
+            f'source_hash <span class="mono">{esc(sh)}…</span>',
+        ]
+        if expr:
+            join_bits.append(
+                f'clothes <span class="mono">{esc(expr.get("style_ref", ""))}'
+                f' · {esc(tp)} · {esc(expr.get("content_role", ""))}'
+                f' · {esc(hint)}</span>'
+            )
         return (
-            f'<article class="occ{extra_cls}">'
+            f'<article class="occ{extra_cls}{clothes_cls}">'
+            f'{kicker_html}'
             f'<div class="meta">'
             f'<span class="id">{esc(el["element_id"])}</span>'
             f'{pills_for(el)}'
             f'<span class="pill dim">{esc(el["type"])}</span>'
             f'<span class="pill dim">{esc(kind)}</span>'
             f'</div>'
-            f'<p class="meaning">{esc(meaning)}</p>'
-            f'<div class="join">composed_from <span class="mono">{esc(el["composed_from"])}</span>'
-            f' · source_hash <span class="mono">{esc(sh)}…</span></div>'
+            f'<{meaning_tag} class="meaning">{esc(meaning)}</{meaning_tag}>'
+            f'<div class="join">{" · ".join(join_bits)}</div>'
             f'</article>'
         )
 
@@ -461,10 +526,12 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         pair = cf_counts[el["composed_from"]] > 1
         row_cls = " class=pair-row" if pair else ""
         many = "1:many" if pair else "1:1"
+        look = (el.get("expression") or {}).get("style_ref") or "—"
         rows.append(
             f"<tr{row_cls}><td class=mono>{esc(el['element_id'])}</td>"
             f"<td class=mono>{esc(el['composed_from'])}</td>"
             f"<td>{esc((el.get('intent') or {}).get('move', ''))}</td>"
+            f"<td class=mono>{esc(look)}</td>"
             f"<td class=mono>{esc(teaches)}</td>"
             f"<td>{esc(el['type'])}</td>"
             f"<td>{esc(a['meaning'].get('kind', ''))}</td>"
@@ -473,8 +540,11 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
 
     rf = manifest.get("realized_from") or {}
     otm = manifest.get("one_to_many") or {}
+    cout = manifest.get("couturier") or {}
     title = f"Realized lesson — {esc(manifest.get('project', 'course'))}"
     count_bits = " · ".join(f"{esc(k)} {v}" for k, v in sorted(counts.items()))
+    look_counts = cout.get("look_counts") or {}
+    look_bits = " · ".join(f"{esc(k)} {v}" for k, v in sorted(look_counts.items()))
     extras_bit = (f" · {extra_n} extra" + ("s" if extra_n != 1 else "")
                   + f" on {otm.get('seeded_atom_count', sum(1 for n in cf_counts.values() if n > 1))} atoms"
                   if extra_n else "")
@@ -484,7 +554,28 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         if extra_n else
         " Later 1:many can mint additional elements without changing atom ids. "
     )
-    if cart:
+    clothes_note = (
+        " Couturier dressed each occurrence from its <span class=mono>move</span> "
+        "(<span class=mono>style_ref</span> / <span class=mono>text_primitive</span>) — "
+        "hook vs present vs reinforce must not look like the same card. "
+        if cout else
+        " Couturier (style keys) is the next hop so different moves look like different clothes. "
+    )
+    if cout:
+        ctrl_doc = "Couturier v1"
+        ctrl_sub = f'{esc(manifest.get("project", ""))} · occurrence style bound'
+        ctrl_meta = (f"{len(elements)} occurrences{extras_bit} · {look_bits or count_bits}<br>"
+                     f"policy {esc(cout.get('policy', ''))}")
+        banner = (
+            "<b>Meaning lives on the atom.</b> Clothes come from <span class=mono>element.expression</span> "
+            "(Couturier). Intent (<span class=mono>move</span>, <span class=mono>teaches</span>) is "
+            "Cartographer’s. The Realizer minted the <span class=mono>ele_</span> ids and copied no authored "
+            f"<span class=mono>content.text</span>.{many_note}{clothes_note}"
+            "Dragoman / Storyline / PNG render are not this hop."
+        )
+        projector = (f"{esc(REALIZER)} + {esc(cart.get('tool', 'tools/cartographer.py'))} + "
+                     f"{esc(cout.get('tool', 'tools/couturier.py'))}")
+    elif cart:
         ctrl_doc = "Cartographer v1"
         ctrl_sub = f'{esc(manifest.get("project", ""))} · occurrence intent bound'
         ctrl_meta = (f"{len(elements)} occurrences{extras_bit} · {count_bits}<br>"
@@ -494,8 +585,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             "(<span class=mono>move</span>, <span class=mono>teaches</span>) is Cartographer’s. "
             "v1 is a documented heuristic compiler, not ID genius — low-confidence pills are flagged. "
             "The Realizer minted the <span class=mono>ele_</span> ids and copied no authored "
-            f"<span class=mono>content.text</span>.{many_note}"
-            "Couturier / Dragoman / PNG render are not this hop."
+            f"<span class=mono>content.text</span>.{many_note}{clothes_note}"
+            "Dragoman / PNG render are not this hop."
         )
         projector = f"{esc(REALIZER)} + {esc(cart.get('tool', 'tools/cartographer.py'))}"
     else:
@@ -508,8 +599,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             "<b>Meaning lives on the atom.</b> Each card is one occurrence "
             "(<span class=mono>ele_</span>), linked by <span class=mono>composed_from</span>. "
             "The Realizer copied no authored <span class=mono>content.text</span>. Ugly typography "
-            f"is v1.{many_note}"
-            "Couturier / Dragoman / PNG render are not this hop."
+            f"is v1.{many_note}{clothes_note}"
+            "Dragoman / PNG render are not this hop."
         )
         projector = esc(REALIZER)
     HTML = f"""<!doctype html><html lang=en><head><meta charset=utf-8>
@@ -550,10 +641,37 @@ h1{{font-size:20px;margin:8px 0 4px}}
 .pill.move-transfer{{background:#c2410c}}
 .pill.extra-occ{{background:#0f766e;text-transform:none}}
 .pair{{border:2px solid #1e3a8a;border-radius:10px;padding:10px 12px 6px;margin:12px 0;
- background:#f8fafc}}
+ background:#f1f5f9}}
 .pair-label{{font-size:12px;color:#1e3a8a;font-weight:600;margin:0 0 8px}}
 .pair .occ{{background:#fff}}
 .occ.extra{{background:#fffbeb;border-color:#f59e0b}}
+.pill.style{{background:#fef3c7;color:#92400e;text-transform:none;letter-spacing:0}}
+.kicker{{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+ margin:0 0 8px;color:inherit;opacity:.85}}
+.occ.style-opening{{background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;
+ border-radius:4px;padding:28px 24px 22px;text-align:center}}
+.occ.style-opening .id,.occ.style-opening .join,.occ.style-opening .pill.dim{{color:#fde68a}}
+.occ.style-opening .meaning{{font-size:22px;font-weight:700;line-height:1.25;letter-spacing:-.02em;
+ margin:8px 0 10px}}
+.occ.style-opening .kicker{{color:#fffbeb;opacity:1}}
+.occ.style-instructional{{background:#fff;border:1px solid #cbd5e1;border-left:5px solid #1e3a8a;
+ border-radius:6px;padding:14px 16px}}
+.occ.style-instructional .meaning{{font-size:15px;line-height:1.55}}
+.occ.style-recall{{background:#f8fafc;border:2px dashed #64748b;border-radius:4px;padding:16px 18px}}
+.occ.style-recall .meaning{{font-size:14px;font-style:italic;color:#334155;
+ border-left:3px solid #94a3b8;padding:4px 0 4px 12px}}
+.occ.style-recall .kicker{{color:#475569}}
+.occ.style-purpose{{background:#ecfdf5;border:1px solid #059669;border-left:6px solid #047857;
+ border-radius:6px}}
+.occ.style-purpose .meaning{{font-weight:600}}
+.occ.style-purpose .kicker{{color:#047857}}
+.occ.style-prior{{background:#f0fdfa;border:1px solid #0f766e;border-radius:6px;font-size:14px}}
+.occ.style-prior .kicker{{color:#0f766e}}
+.occ.style-example{{background:#faf5ff;border:1px solid #c4b5fd;border-radius:6px;padding:12px 14px 12px 18px}}
+.occ.style-example .meaning{{font-family:Georgia,Times,serif;font-size:14px}}
+.occ.style-example .kicker{{color:#6d28d9}}
+.occ.style-job{{background:#fff7ed;border:1px solid #c2410c;border-left:6px solid #c2410c;border-radius:6px}}
+.occ.style-job .kicker{{color:#c2410c}}
 tr.pair-row td{{background:#eff6ff}}
 .meaning{{margin:4px 0 6px}}
 .join{{font-size:12px;color:var(--mut)}}
@@ -575,14 +693,16 @@ summary{{cursor:pointer;color:var(--mut);font-size:12.5px}}
 <div class=banner>{banner}</div>
 {''.join(body)}
 <details><summary>Occurrence index — {len(elements)} ele_ records (click to expand)</summary>
-<table><thead><tr><th>element_id</th><th>composed_from</th><th>move</th><th>teaches</th><th>type</th><th>atom kind</th><th>arity</th></tr></thead>
+<table><thead><tr><th>element_id</th><th>composed_from</th><th>move</th><th>style_ref</th><th>teaches</th><th>type</th><th>atom kind</th><th>arity</th></tr></thead>
 <tbody>{''.join(rows)}</tbody></table></details>
 <div class=foot>Atom store: {esc(str(rf.get("atom_store", "")))} ·
 atoms_sha256 {esc(str(rf.get("atoms_sha256", ""))[:19])}…<br>
 Projector: {projector} · this HTML is regenerated, never hand-edited.
 Meaning is read from atoms.json. Occurrence intent is Cartographer’s when bound.
+Clothes are Couturier’s when bound (expression keys, not authored text).
 {"Moves are mixed." if mixed else "All moves still share one value — run tools/cartographer.py."}
-{" 1:many pairs share composed_from." if extra_n else ""}</div>
+{" 1:many pairs share composed_from." if extra_n else ""}
+{" Clothes are mixed." if cout and len(look_counts) > 1 else (" Run tools/couturier.py to dress occurrences." if not cout else "")}</div>
 </div></body></html>"""
     out_path.write_text(HTML)
 
@@ -643,6 +763,17 @@ def selftest(closed_moves):
                                         "confidence": "high", "flags": ["extra_occurrence_move_preserved"]}
         extra["intent"]["teaches"] = ["obj_explain_alsap_purpose"]
         extra["intent"]["move"] = "reinforce"
+        extra["expression"] = {
+            "style_ref": "brand.recall",
+            "text_primitive": "tp_recall",
+            "content_role": "retrieval",
+            "layout_hint": "recap",
+        }
+        extra["ext"]["couturier"] = {
+            "policy": "v1_move_to_look",
+            "tool": "tools/couturier.py",
+            "from_move": "reinforce",
+        }
         assembled2 = assemble_elements([title, general, other], [primary, extra, prev_primary_g, prev_extra],
                                        DEFAULT_MOVE, mint_extras=False)
         kept = next(e for e in assembled2 if e["element_id"] == "ele_sop_x__reinforce")
@@ -653,6 +784,11 @@ def selftest(closed_moves):
                         kept["intent"].get("teaches")))
         results.append(("re-realize preserves cartographer stamp",
                         "cartographer" in kept.get("ext", {}), ""))
+        results.append(("re-realize preserves couturier stamp",
+                        "couturier" in kept.get("ext", {}), ""))
+        results.append(("re-realize preserves expression style_ref",
+                        (kept.get("expression") or {}).get("style_ref") == "brand.recall",
+                        (kept.get("expression") or {}).get("style_ref")))
         results.append(("ids stable across re-run",
                         {e["element_id"] for e in assembled} == {e["element_id"] for e in assembled2}, ""))
     finally:
@@ -694,7 +830,8 @@ def main():
                "  python tools/realize.py\n"
                "  python3 tools/realize.py --project ../astellas/projects/ast_alsap\n"
                "  python3 tools/realize.py --selftest\n"
-               "  python3 tools/cartographer.py\n",
+               "  python3 tools/cartographer.py\n"
+               "  python3 tools/couturier.py\n",
     )
     ap.add_argument("--project", default=None,
                     help=f"Atom store directory containing atoms.json (default: {default_shown})")
@@ -792,13 +929,13 @@ def main():
             "extra_count": len(extras),
             "seed": seeded_present,
             "note": ("Small honest seed, not the whole SOP. Extra ele_ ids are stable. "
-                     "Re-run accretes missing extras and never drops existing extras or "
-                     "Cartographer bindings."),
+                     "Re-run accretes missing extras and never drops existing extras, "
+                     "Cartographer bindings, or Couturier style."),
         },
         "note": ("Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple "
                  "of teaching-worthy atoms (same composed_from, distinct move, no authored "
-                 "content.text). Cartographer owns occurrence intent; a re-realize preserves "
-                 "ext.cartographer and extra ele_ records."),
+                 "content.text). Cartographer owns occurrence intent; Couturier owns expression "
+                 "style. A re-realize preserves both plus extra ele_ records."),
     }
     if any((e.get("ext") or {}).get("cartographer") for e in elements):
         cart = dict(prev_mf.get("cartographer") or {})
@@ -810,6 +947,15 @@ def main():
         )
         cart["element_count"] = len(elements)
         occ_manifest["cartographer"] = cart
+    if any((e.get("ext") or {}).get("couturier") for e in elements):
+        from collections import Counter
+        cout = dict(prev_mf.get("couturier") or {})
+        cout["look_counts"] = dict(sorted(Counter(
+            (e.get("expression") or {}).get("style_ref") or "undressed" for e in elements
+        ).items()))
+        cout["dressed"] = sum(1 for e in elements if e.get("expression"))
+        cout["element_count"] = len(elements)
+        occ_manifest["couturier"] = cout
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 

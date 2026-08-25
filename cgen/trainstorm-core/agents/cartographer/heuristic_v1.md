@@ -99,7 +99,8 @@ Each occurrence that this pass touches gets `ext.cartographer`:
 ```
 
 `ext.realized_from` stays Realizer’s. Cartographer does not take
-`governance.owner` of the occurrence node.
+`governance.owner` of the occurrence node. Couturier (`tools/couturier.py`)
+owns `element.expression`; this compiler does not write or wipe it.
 
 ---
 

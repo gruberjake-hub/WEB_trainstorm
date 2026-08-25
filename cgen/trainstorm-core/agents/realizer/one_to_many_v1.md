@@ -56,6 +56,8 @@ Example: `atom_sop_ast29080_general` → primary `ele_sop_ast29080_general` → 
 ```
 python3 tools/realize.py
 python3 tools/cartographer.py
+python3 tools/couturier.py
 ```
 
 Optional: `python3 tools/realize.py --selftest` · `python3 tools/cartographer.py --selftest`.
+Couturier (`python3 tools/couturier.py`) dresses extras; it mints nothing and does not drop them.

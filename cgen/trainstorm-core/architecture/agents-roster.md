@@ -88,7 +88,9 @@ have opinions about content; she has opinions about form, and they are all in th
 - **Temperature:** low. *(absorbs: prompt-pack compiler, CREATOR's compile function)*
 - **v1 code:** `tools/realize.py` — one primary occurrence per atom plus a small 1:many seed
   (two ALSAP atoms mint a second `ele_`). No authored `content.text`. HTML projection reads
-  meaning from the atom and groups extras that share `composed_from`.
+  meaning from the atom and groups extras that share `composed_from`. Couturier v1
+  (`tools/couturier.py`) then dresses those occurrences (expression style keys) and mints
+  nothing.
 
 ## The Render Crew
 *One per target. Zero-temperature craftsmen, all equal citizens.*
