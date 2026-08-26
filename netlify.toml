@@ -19,15 +19,19 @@
 # Do not collide with /cgen (course player) or /cgen/lumina.
 
 # Sibling names the projected HTML already uses (relative hrefs).
+# force = true so Pretty URLs cannot 301 these paths to themselves
+# (PR #18 loop: unforced 200 lost to the directory-slash canonicalizer).
 [[redirects]]
   from = "/cgen/alsap/realized_coverage.html"
   to = "/cgen/astellas/projects/ast_alsap/realized_coverage.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/cgen/alsap/realized_lesson.html"
   to = "/cgen/astellas/projects/ast_alsap/realized_lesson.html"
   status = 200
+  force = true
 
 # Short coverage alias. File-like (no trailing slash) so relative
 # href="realized_lesson.html" resolves as a sibling under /cgen/alsap/.
@@ -35,20 +39,26 @@
   from = "/cgen/alsap/coverage/"
   to = "/cgen/alsap/coverage"
   status = 301
+  force = true
 
 [[redirects]]
   from = "/cgen/alsap/coverage"
   to = "/cgen/astellas/projects/ast_alsap/realized_coverage.html"
   status = 200
+  force = true
 
 # Canonical public lesson URL. Trailing slash so relative
 # href="realized_coverage.html" stays under /cgen/alsap/.
+# force on the 200 is required: Pretty URLs treat /cgen/alsap/ as a
+# directory and 301 it to itself unless the rewrite shadows that.
 [[redirects]]
   from = "/cgen/alsap"
   to = "/cgen/alsap/"
   status = 301
+  force = true
 
 [[redirects]]
   from = "/cgen/alsap/"
   to = "/cgen/astellas/projects/ast_alsap/realized_lesson.html"
   status = 200
+  force = true

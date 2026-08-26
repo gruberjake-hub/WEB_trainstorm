@@ -13,6 +13,21 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-26 — `/cgen/alsap/` rewrite needs `force = true` (Pretty URLs)
+
+PR #18 rewrote `/cgen/alsap/` to the projector file without `force`.
+On production Pretty URLs treated that slash path as a directory and
+301’d `/cgen/alsap/` → `/cgen/alsap/` (self). `/cgen/alsap` 301’d to
+the slash, then looped. Jake got `ERR_TOO_MANY_REDIRECTS`. Buried
+`realized_lesson.html` stayed 200. `/cgen/alsap/coverage` self-301’d
+the same way.
+
+Fix: `force = true` on the ALSAP 200 rewrites (and the one-hop 301s)
+in `netlify.toml`. Canonical URL remains `/cgen/alsap/` so relative
+coverage hrefs stay siblings. No parallel HTML store. No second CSP.
+`/cgen` and `/cgen/lumina` untouched.
+
+---
 ## 2026-08-26 — ALSAP short lesson public URL (`/cgen/alsap`)
 
 After PR #17 the short lesson lived at the buried static path
