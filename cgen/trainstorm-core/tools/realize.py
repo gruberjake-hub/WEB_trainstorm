@@ -16,9 +16,12 @@ the SOP.
 `content.text`. Distractors, if any, are sibling atoms in the same store.
 
 Default HTML is a **short lesson spine** (`agents/realizer/spine_v1.md`): title
-hook, a handful of front-matter teaching cards, the two existing checks. The
-full SOP dump is `realized_coverage.html`. Spine is a selection of existing
-`ele_` records — it mints none and drops none.
+hook, a handful of front-matter teaching cards, the first real procedure’s
+lead present, then the existing checks. The full SOP dump is
+`realized_coverage.html`. Spine is a selection of existing `ele_` records —
+it mints none and drops none. Procedure-step atoms stay 1:1 (no extra
+`reinforce`): they are imperatives, so they cannot host an honest copula-invert
+sibling check.
 
 Idempotency: extra ids are `(primary ele_) + "__" + move`. A re-run accretes
 missing extras and never drops existing extras or Cartographer bindings.
@@ -80,7 +83,10 @@ ONE_TO_MANY_SEED = (
 CHECK_SPEC = "agents/realizer/check_v1.md"
 CHECK_POLICY = "v1_check_from_atom"
 SPINE_SPEC = "agents/realizer/spine_v1.md"
-SPINE_POLICY = "v1_front_matter_then_checks"
+SPINE_POLICY = "v1_front_matter_one_procedure_then_checks"
+# First real procedure’s lead atom only — not the A/B/C dump. Cap is 1 of the
+# allowed 1–3 spine beats; later steps stay coverage.
+PROCEDURE_LEAD_CAP = 1
 
 KIND_TO_TYPE = {
     "procedure": "Section",
@@ -560,8 +566,91 @@ def is_front_matter_section(atom, root_id) -> bool:
     return not is_thin_teaching_atom(atom)
 
 
+def is_procedures_heading(atom) -> bool:
+    text = clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
+    return bool(re.match(r"^procedures\.?$", text, re.I))
+
+
+def descendants_of(atoms, parent_id) -> list:
+    """All belongs_to descendants of parent_id, not including the parent."""
+    by_parent = defaultdict(list)
+    for a in atoms:
+        pid = atom_belongs_to(a)
+        if pid:
+            by_parent[pid].append(a)
+    out = []
+    stack = list(by_parent.get(parent_id) or [])
+    while stack:
+        cur = stack.pop()
+        out.append(cur)
+        stack.extend(by_parent.get(cur["atom_id"]) or [])
+    return out
+
+
+def procedure_container(atoms, root_id):
+    """SOP Procedures heading — parent of A/B/C branches. Not a walk of the steps."""
+    if not root_id:
+        return None
+    direct = kids(atoms, root_id)
+    for a in direct:
+        if is_procedures_heading(a):
+            return a
+    for a in direct:
+        if any((d.get("meaning") or {}).get("kind") == "procedure_step"
+               for d in descendants_of(atoms, a["atom_id"])):
+            return a
+    return None
+
+
+def lead_procedure_atoms(atoms) -> list:
+    """First real procedure’s lead atom. Skip thin A/B/C headings. Cap = 1.
+
+    Object tree: Procedures. → A/B/C (thin) → steps. Walking that *is* the dump.
+    This selector takes the first branch in object.order, then its first
+    non-thin procedure_step — on ALSAP, Plan Development’s GSO notify / request
+    Lead. Later A steps and branches B/C stay coverage.
+    """
+    rs = roots(atoms)
+    if not rs:
+        return []
+    rid = rs[0]["atom_id"]
+    container = procedure_container(atoms, rid)
+    if not container:
+        return []
+    branches = kids(atoms, container["atom_id"])
+    if not branches:
+        return []
+    branch = branches[0]
+    steps = [
+        a for a in kids(atoms, branch["atom_id"])
+        if (a.get("meaning") or {}).get("kind") == "procedure_step"
+        and not is_thin_teaching_atom(a)
+    ]
+    if steps:
+        return steps[:PROCEDURE_LEAD_CAP]
+    if not is_thin_teaching_atom(branch):
+        kind = (branch.get("meaning") or {}).get("kind")
+        if kind in ("procedure", "procedure_step"):
+            return [branch]
+    return []
+
+
+def supports_honest_sibling_check(atom, atoms) -> bool:
+    """True only for a copula invert plus two sibling first-sentences.
+
+    Procedure steps are imperatives — no `{subject} is {complement}` — so this
+    is False and we do not mint an extra `reinforce`. Cloze is not sibling
+    contrast; do not treat it as an honest check for this hop.
+    """
+    sentence = first_sentence((atom.get("meaning") or {}).get("source_text") or "")
+    if not copula_parts(sentence):
+        return False
+    chk = derive_check(atom, atoms)
+    return bool(chk and chk.get("shape") == "mcq_siblings")
+
+
 def spine_atom_ids(atoms) -> list:
-    """Root, then teachable front-matter children in object.order. Not a tree walk."""
+    """Root, teachable front-matter, then one procedure lead. Not a tree walk."""
     rs = roots(atoms)
     if not rs:
         return []
@@ -569,14 +658,17 @@ def spine_atom_ids(atoms) -> list:
     rid = root["atom_id"]
     kids_teaching = [a for a in atoms if is_front_matter_section(a, rid)]
     kids_teaching.sort(key=atom_order)
-    return [rid] + [a["atom_id"] for a in kids_teaching]
+    seen = {rid} | {a["atom_id"] for a in kids_teaching}
+    lead_ids = [a["atom_id"] for a in lead_procedure_atoms(atoms) if a["atom_id"] not in seen]
+    return [rid] + [a["atom_id"] for a in kids_teaching] + lead_ids
 
 
 def select_spine(atoms, elements) -> list:
     """Stable ele_ ids in teachable order. Selection of existing occurrences; mints nothing.
 
     Opening (root primary + non-check extras) → front-matter primaries →
-    reinforce extras of those atoms. Spec: agents/realizer/spine_v1.md
+    first real procedure’s lead present → reinforce extras of spine atoms.
+    Spec: agents/realizer/spine_v1.md
     """
     by_id = {e["element_id"]: e for e in elements}
     by_cf = defaultdict(list)
@@ -618,9 +710,10 @@ def apply_spine(manifest, atoms, elements) -> dict:
         "count": len(ids),
         "store_count": len(elements),
         "note": ("Selection of existing ele_ records in teachable order: document-root "
-                 "opening, then teachable front-matter primaries (object.order), then "
-                 "existing reinforce extras. Coverage dump keeps the rest. Not an LLM "
-                 "path and not a full object-tree walk."),
+                 "opening, teachable front-matter primaries (object.order), the first "
+                 "real procedure’s lead atom (not thin A/B/C headings), then existing "
+                 "reinforce extras. Coverage dump keeps the rest. Not an LLM path and "
+                 "not a full object-tree walk."),
     }
     return manifest["spine"]
 
@@ -996,8 +1089,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         f" Default HTML is the short lesson spine "
         f"(<span class=mono>{esc(spine.get('policy', SPINE_POLICY))}</span>): "
         f"{spine.get('count', 0)} of {len(elements)} occurrences — document-root opening, "
-        "teachable front-matter primaries, then the existing checks. "
-        "The object tree walk is coverage, not the path. "
+        "teachable front-matter primaries, the first real procedure’s lead, then the "
+        "existing checks. The object tree walk is coverage, not the path. "
     )
     if cout:
         ctrl_doc = "Couturier v1"
@@ -1231,8 +1324,8 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f"Short lesson — {project_name}",
         "Short lesson",
         f'<a href="{coverage_href}">Full SOP / coverage ({store_n} occurrences)</a>',
-        (f"{spine_n} of {store_n} occurrences · front-matter of the SOP, then the "
-         "existing checks. Not the procedure dump. Heuristic is documented, not an LLM."),
+        (f"{spine_n} of {store_n} occurrences · front-matter, then one procedure lead, "
+         "then the existing checks. Not the procedure dump. Heuristic is documented, not an LLM."),
         "".join(spine_body),
         lesson_details,
     )
@@ -1375,12 +1468,28 @@ def selftest(closed_moves):
     )
     procedures = atom("atom_sop_ast29080_procedures", "procedure",
                       "Procedures.", "atom_sop_ast29080", 5)
+    proc_a = atom("atom_sop_ast29080_proc_a", "procedure",
+                  "A. Plan Development of ALSAP.", "atom_sop_ast29080_procedures", 0)
+    proc_b = atom("atom_sop_ast29080_proc_b", "procedure",
+                  "B. Develop and Maintain ALSAP.", "atom_sop_ast29080_procedures", 1)
     step = atom(
         "atom_sop_ast29080_proc_a_s1", "procedure_step",
-        "The QSEG Safety Data Science Lead drafts the asset-level plan with SMT input.",
-        "atom_sop_ast29080_procedures", 0,
+        "Notify a member of Safety Data Science in QSEG of the need for an ALSAP "
+        "and request an ALSAP Lead.",
+        "atom_sop_ast29080_proc_a", 0,
     )
-    store = [title_live, purpose_live, scope_live, general_live, thin, definitions, procedures, step]
+    step2 = atom(
+        "atom_sop_ast29080_proc_a_s2", "procedure_step",
+        "Collaborate with SMT to identify contributing authors and reviewers for the ALSAP.",
+        "atom_sop_ast29080_proc_a", 1,
+    )
+    step_b = atom(
+        "atom_sop_ast29080_proc_b_s1", "procedure_step",
+        "Provide the ALSAP Lead with contributions to the ALSAP within the agreed-upon timeframe.",
+        "atom_sop_ast29080_proc_b", 0,
+    )
+    store = [title_live, purpose_live, scope_live, general_live, thin, definitions,
+             procedures, proc_a, proc_b, step, step2, step_b]
 
     chk_g = derive_check(general_live, store)
     assert_check_honest(chk_g, general_live, store)
@@ -1446,6 +1555,7 @@ def selftest(closed_moves):
         "ele_sop_ast29080_purpose",
         "ele_sop_ast29080_scope",
         "ele_sop_ast29080_general",
+        "ele_sop_ast29080_proc_a_s1",
         "ele_sop_ast29080_purpose__reinforce",
         "ele_sop_ast29080_general__reinforce",
     ]
@@ -1453,9 +1563,20 @@ def selftest(closed_moves):
     results.append(("spine is the short ALSAP path", got_spine == want_spine, got_spine))
     results.append(("spine skips thin roles heading", "ele_sop_ast29080_roles" not in got_spine, ""))
     results.append(("spine skips glossary pointer", "ele_sop_ast29080_definitions" not in got_spine, ""))
-    results.append(("spine skips procedure dump",
-                    "ele_sop_ast29080_procedures" not in got_spine
-                    and "ele_sop_ast29080_proc_a_s1" not in got_spine, ""))
+    results.append(("spine skips thin procedures heading",
+                    "ele_sop_ast29080_procedures" not in got_spine, ""))
+    results.append(("spine skips thin A heading", "ele_sop_ast29080_proc_a" not in got_spine, ""))
+    results.append(("spine includes procedure A lead step",
+                    "ele_sop_ast29080_proc_a_s1" in got_spine, got_spine))
+    results.append(("spine skips later A steps and branch B",
+                    "ele_sop_ast29080_proc_a_s2" not in got_spine
+                    and "ele_sop_ast29080_proc_b_s1" not in got_spine, ""))
+    results.append(("procedure lead stays 1:1 (no extra reinforce)",
+                    sum(1 for e in seeded if e["composed_from"] == "atom_sop_ast29080_proc_a_s1") == 1,
+                    ""))
+    results.append(("procedure lead has no copula invert — skip check",
+                    not supports_honest_sibling_check(step, store),
+                    copula_parts(first_sentence(step["meaning"]["source_text"]))))
     results.append(("spine is a subset of existing ele_ ids", set(got_spine) <= seeded_ids, ""))
     mf_spine = {}
     apply_spine(mf_spine, store, seeded)
@@ -1486,15 +1607,22 @@ def selftest(closed_moves):
                     all((e.get("intent") or {}).get("move") != "retrieve" for e in seeded), ""))
     results.append(("lesson HTML is the spine not the dump",
                     "ele_sop_ast29080_roles" not in page
-                    and "ele_sop_ast29080_proc_a_s1" not in page
-                    and "ele_sop_ast29080_procedures" not in page, ""))
+                    and '<span class="id">ele_sop_ast29080_proc_a_s1</span>' in page
+                    and '<span class="id">ele_sop_ast29080_proc_a_s2</span>' not in page
+                    and '<span class="id">ele_sop_ast29080_proc_b_s1</span>' not in page
+                    and '<span class="id">ele_sop_ast29080_procedures</span>' not in page
+                    and '<span class="id">ele_sop_ast29080_proc_a</span>' not in page, ""))
+    results.append(("lesson puts procedure present before the checks",
+                    page.find("ele_sop_ast29080_proc_a_s1")
+                    < page.find("ele_sop_ast29080_purpose__reinforce"), ""))
     results.append(("lesson links to coverage",
                     "realized_coverage.html" in page and "Full SOP / coverage" in page, ""))
-    results.append(("lesson has both existing checks",
+    results.append(("lesson has both existing checks (no new procedure check)",
                     page.count('form class="check"') == 2, page.count('form class="check"')))
-    results.append(("coverage dump keeps roles and steps",
+    results.append(("coverage dump keeps roles and later steps",
                     "ele_sop_ast29080_roles" in cov_page
-                    and "ele_sop_ast29080_proc_a_s1" in cov_page, ""))
+                    and "ele_sop_ast29080_proc_a_s1" in cov_page
+                    and "ele_sop_ast29080_proc_a_s2" in cov_page, ""))
     results.append(("coverage links back to the lesson", "realized_lesson.html" in cov_page, ""))
 
     print(f"{'CHECK':<72} RESULT")

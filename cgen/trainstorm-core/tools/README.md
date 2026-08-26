@@ -19,7 +19,7 @@ occurrences project as a check from the atom (`agents/realizer/check_v1.md`). De
 the short lesson spine (`agents/realizer/spine_v1.md`); `realized_coverage.html` is the full
 SOP dump. `--no-one-to-many` skips
 new extras but still preserves any that exist. `--selftest` checks stable extra ids, the
-check honesty bar, and spine membership.
+check honesty bar, and spine membership (front-matter, one procedure lead, then checks).
 
 ## Cartographer
 

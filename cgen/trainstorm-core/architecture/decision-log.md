@@ -13,6 +13,32 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-26 — One real procedure on the ALSAP lesson spine
+
+Spine v1 (PR #15) projected front-matter then the two existing checks.
+Procedure steps lived only in `realized_coverage.html`. An ID would teach
+doing the work. This entry records putting **one** teaching-worthy
+procedure present on the short path.
+
+`tools/realize.py` extends `agents/realizer/spine_v1.md` (policy
+`v1_front_matter_one_procedure_then_checks`): after teachable front-matter,
+take the first Procedures-container branch in `object.order`, skip the thin
+A/B/C heading, take its first non-thin `procedure_step`. Live ALSAP: Procedure
+A (Plan Development) lead `atom_sop_ast29080_proc_a_s1` — GSO notifies SDS
+and requests an ALSAP Lead. First real work; B and C cannot start without
+it. Cap 1. Later A steps and branches B/C stay coverage.
+
+No extra `reinforce`. Procedure steps are imperatives; sibling first
+sentences exist but there is no honest copula invert. Cloze is not sibling
+contrast. Distractor-writer stays parked. Store stays 50. `atoms.json`
+untouched. Checks still at the end. Idempotent with realize → cartographer
+→ couturier.
+
+Not this hop: distractor-writer, Dragoman, Storyline, `.potx`, motion, PNG
+pipelines, rewriting SOP/form atoms into elements, 1:many of the procedure
+tree, inventing a `retrieve` enum.
+
+---
 ## 2026-08-25 — Lesson spine v1 (short path; dump is coverage)
 
 The course hop was proven through extra `reinforce` as a check (PR #14), but
