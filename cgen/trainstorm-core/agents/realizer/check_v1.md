@@ -116,6 +116,6 @@ Optional: `python3 tools/realize.py --selftest` (includes the honesty bar).
 
 The short lesson path that *uses* these checks is Realizer projection
 (`agents/realizer/spine_v1.md`); this spec does not pick the path or mint
-more extras. A later spine hop puts one procedure-step *present* on that
-path; it does not mint a procedure-step check — those atoms are imperatives
-and cannot host an honest copula-invert sibling MCQ.
+more extras. A later spine hop puts Procedure A’s step *presents* on that
+path as a job sequence; it does not mint a procedure-step check — those
+atoms are imperatives and cannot host an honest copula-invert sibling MCQ.

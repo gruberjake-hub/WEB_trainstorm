@@ -73,7 +73,7 @@
     "note": "v1 map from occurrence move to expression style keys. Couturier mints no ids, does not rewrite atoms or intent, and does not bind motion / layout_primitive / interaction_primitive. HTML reads these keys for clothes; meaning stays on the atom. Lesson spine is Realizer projection; this tool does not pick the path."
   },
   "spine": {
-    "policy": "v1_front_matter_one_procedure_then_checks",
+    "policy": "v1_front_matter_procedure_sequence_then_checks",
     "spec": "agents/realizer/spine_v1.md",
     "element_ids": [
       "ele_sop_ast29080",
@@ -82,11 +82,14 @@
       "ele_sop_ast29080_scope",
       "ele_sop_ast29080_general",
       "ele_sop_ast29080_proc_a_s1",
+      "ele_sop_ast29080_proc_a_s2",
+      "ele_sop_ast29080_proc_a_s3",
+      "ele_sop_ast29080_proc_a_s4",
       "ele_sop_ast29080_purpose__reinforce",
       "ele_sop_ast29080_general__reinforce"
     ],
-    "count": 8,
+    "count": 11,
     "store_count": 50,
-    "note": "Selection of existing ele_ records in teachable order: document-root opening, teachable front-matter primaries (object.order), the first real procedure\u2019s lead atom (not thin A/B/C headings), then existing reinforce extras. Coverage dump keeps the rest. Not an LLM path and not a full object-tree walk."
+    "note": "Selection of existing ele_ records in teachable order: document-root opening, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then existing reinforce extras. Coverage dump keeps the rest. Not an LLM path and not a full object-tree walk."
   }
 }
