@@ -630,3 +630,40 @@ hosting aliases it.
 ownership. Adds the public URL those blocks did not have. Working-process
 block untouched.
 
+**Pointer:** a later 2026-08-26 block sets `force = true` on these
+rewrites so Pretty URLs cannot 301 `/cgen/alsap/` to itself.
+
+---
+
+## 2026-08-26 — `/cgen/alsap/` rewrite must `force = true`
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The ALSAP public rewrite from the previous block stands —
+same projector file, same canonical `/cgen/alsap/`, no parallel store —
+but every ALSAP `200` (and the one-hop `301`s) in `netlify.toml` now
+sets `force = true` (Netlify `_redirects` `200!`). Pretty URLs treat
+`/cgen/alsap/` as a directory and 301 it to `/cgen/alsap/` again; an
+unforced 200 never wins, which is `ERR_TOO_MANY_REDIRECTS` after PR #18.
+
+Canonical URL stays `/cgen/alsap/` so relative `href="realized_coverage.html"`
+still resolves under that prefix. `/cgen/alsap` is still one 301 to the
+slash, then a forced 200. Coverage `/cgen/alsap/coverage` is also forced
+(production 301’d that path to itself too). `_headers` untouched: one
+site-wide CSP. No second CSP. `/cgen` and `/cgen/lumina` untouched.
+Python tools and `atoms.json` untouched.
+
+**Why:** Confirmed on production: `GET /cgen/alsap` → 301 `/cgen/alsap/`;
+`GET /cgen/alsap/` → 301 `/cgen/alsap/` (self). Buried
+`realized_lesson.html` stayed 200.
+
+**Consequences:**
+- After merge, Jake opens https://trainstorm.ai/cgen/alsap (at most one
+  301 to slash, then 200) and https://trainstorm.ai/cgen/alsap/coverage.
+- Do not copy HTML into `cgen/alsap/`. Do not add a path-specific CSP.
+
+**Supersedes:** the previous public-URL block’s unforced `status = 200`
+rewrites as to *whether Pretty URLs will honor them*. The public path,
+projector file, and “no parallel store” clauses stand. Working-process
+block untouched.
+
