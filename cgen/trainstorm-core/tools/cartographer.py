@@ -568,7 +568,9 @@ def main():
         "note": ("v1 compiler pass over Realizer occurrences, including extra 1:many "
                  "records. Cartographer writes intent only; it does not mint ele_ ids "
                  "or rewrite atoms. Extra occurrences keep Realizer-stamped move. "
-                 "Couturier owns expression style; this tool does not wipe it."),
+                 "Couturier owns expression style; this tool does not wipe it. "
+                 "Lesson spine is Realizer projection (agents/realizer/spine_v1.md); "
+                 "this tool does not own sequence."),
     }
 
     html_path = pathlib.Path(args.out).resolve() if args.out else project / "realized_lesson.html"
@@ -581,9 +583,11 @@ def main():
         print("  no files written")
         return
 
+    realize.apply_spine(occ_manifest, atoms, elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
-    realize.project_html(atoms, elements, occ_manifest, html_path)
+    coverage_path = realize.project_html(atoms, elements, occ_manifest, html_path)
+    mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
     atoms_hash_after = sha256_bytes(atoms_path.read_bytes())
     if atoms_hash_after != atoms_hash_before:
@@ -601,7 +605,8 @@ def main():
     print(f"  atoms        : {atoms_path} ({len(atoms)} records, unchanged)")
     print(f"  occurrences  : {elements_path}")
     print(f"  manifest     : {mf_path}")
-    print(f"  lesson HTML  : {html_path}")
+    print(f"  lesson HTML  : {html_path}  ← short spine")
+    print(f"  coverage     : {coverage_path}")
     print(f"  moves        : {dict(sorted(move_counts.items()))}")
     print(f"  teaches bound: {teaches_bound}  ·  low-confidence: {low_n}")
     extras = [e for e in elements if realize.is_extra_element(e)]

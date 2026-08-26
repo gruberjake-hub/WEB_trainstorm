@@ -119,3 +119,7 @@ python3 tools/couturier.py
 ```
 
 Optional: `python3 tools/couturier.py --selftest` · `--project` like the others.
+
+The short lesson path is Realizer projection (`agents/realizer/spine_v1.md`).
+Couturier still dresses every occurrence from `move`, including coverage
+cards this hop does not put on the default page.

@@ -13,6 +13,30 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-25 — Lesson spine v1 (short path; dump is coverage)
+
+The course hop was proven through extra `reinforce` as a check (PR #14), but
+`realized_lesson.html` still walked every SOP atom in document order — 47
+cards plus extras. That is a dressed SOP, not a course. This entry records
+the first **short lesson path**.
+
+`tools/realize.py` projects a documented heuristic
+(`agents/realizer/spine_v1.md`, policy `v1_front_matter_then_checks`):
+document-root opening (title hook + seeded present extra), then teachable
+front-matter primaries (purpose, scope, general — skip thin headings and
+the glossary pointer), then the two existing reinforce checks. Cartographer's
+object tree is reused as *input* (root vs child vs descendant, sibling
+`order`); walking it remains coverage, not the path. No new 1:many. No
+`retrieve` enum. No LLM path-picker. No distractor-writer (parked).
+
+Default HTML is the spine. `realized_coverage.html` keeps the full dump.
+Manifest stamps `spine.element_ids`. 50 `ele_` records stay. `atoms.json`
+untouched. Idempotent with realize → cartographer → couturier.
+
+Not this hop: Dragoman, Storyline, `.potx`, motion, PNG pipelines, rewriting
+SOP/form atoms into elements, inventing distractors with a model.
+
+---
 ## 2026-08-25 — Extra `reinforce` is a check (render of move + atom meaning)
 
 Couturier v1 (PR #13) dressed `reinforce` as `brand.recall` / `tp_recall`, but

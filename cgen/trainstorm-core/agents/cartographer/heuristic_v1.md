@@ -119,7 +119,16 @@ That extra exists because its `move` is *different* from the primary. This compi
 
 Primary occurrences keep the first-match walk above. Do not treat an extra
 `reinforce` as a license to invent `practice` / `assess` on 1:1 atoms this SOP
-does not contain. The extra `reinforce` is a later placement of the same
+does not contain.
+
+---
+
+## Lesson spine (Realizer projection)
+
+Sequence/selection of existing `ele_` records is **not this compiler**.
+`agents/realizer/spine_v1.md` reuses `belongs_to` / `object.order` as *input*
+(root vs child vs descendant) and projects a short path. Cartographer still
+writes intent only. The full object-tree walk remains coverage. The extra `reinforce` is a later placement of the same
 atom; Realizer’s HTML projector may render it as a check from that atom’s
 meaning (`agents/realizer/check_v1.md`). Cartographer still does not mint
 the extra and still does not invent a learner-check atom.

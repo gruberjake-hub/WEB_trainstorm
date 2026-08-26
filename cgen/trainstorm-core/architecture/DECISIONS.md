@@ -406,3 +406,58 @@ two extras* — three extras now, still a seed. Realizer still mints `ele_`
 ids; Cartographer still owns intent; Couturier still mints none.
 Working-process block untouched.
 
+**Pointer:** a later 2026-08-25 block projects a short lesson spine; the full
+dump remains as coverage.
+
+---
+
+## 2026-08-25 — Lesson spine v1: short path; full dump is coverage
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The default realized HTML is a **short ALSAP lesson**, not every
+SOP atom in document order. Spine membership is a documented heuristic
+(`agents/realizer/spine_v1.md`, policy `v1_front_matter_then_checks`), not
+fake ID genius and not an LLM call. Realizer projects a stable sequence of
+**existing** `ele_` ids onto the occurrence manifest and default-renders
+that order. The full dump remains as `realized_coverage.html`. No
+`ele_` records or atoms are dropped. `atoms.json` unchanged.
+
+The object graph (`belongs_to` / `order`) is SOP document structure. Walking
+it *is* the 47-card dump, so it is not the path. Spine v1 reuses those roles
+as input: document root (hook + seeded title present), then teachable
+direct-child procedure/form paragraphs in `object.order` (skip thin headings
+and glossary pointers — same bar as check siblings), then the existing
+`reinforce` extras as checks. Descendants (lists, steps, A/B/C heads) stay
+coverage.
+
+Live ALSAP path (seven occurrences): `ele_sop_ast29080` (hook) →
+`ele_sop_ast29080__present` → `ele_sop_ast29080_purpose` (objective) →
+`ele_sop_ast29080_scope` → `ele_sop_ast29080_general` →
+`ele_sop_ast29080_purpose__reinforce` (check) →
+`ele_sop_ast29080_general__reinforce` (check). Reuses the existing 1:many
+seed. Does not mint a pile of new extras. Does not invent `retrieve`.
+Distractors stay closed-contrast sibling atoms (verbatim). Jake parked a
+future distractor-writer agent; this hop does not build it.
+
+Cartographer still owns intent. Couturier still owns style. Spine is
+sequence/selection — Realizer projection. Idempotent with realize →
+cartographer → couturier.
+
+**Why:** The course hop is proven (atoms → occurrences → move/teaches →
+style → reinforce checks). The HTML was still a dressed SOP. A course is a
+short teachable path plus coverage, not 47 sequential cards.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`.
+- Open `cgen/astellas/projects/ast_alsap/realized_lesson.html` — short
+  lesson. Open `realized_coverage.html` — full SOP dump. Link both ways.
+- Manifest carries `spine.element_ids`. Store stays 50 `ele_` / 47 atoms.
+
+**Supersedes:** the Realizer v1 / Cartographer / Couturier clauses that the
+default HTML *is* the document-order walk of every occurrence. Those walks
+remain as coverage. Working-process block untouched. Single-writer per facet
+stands. Locale packs stay keyed on `atom_id`.
+

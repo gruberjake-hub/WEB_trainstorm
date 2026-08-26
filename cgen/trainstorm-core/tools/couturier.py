@@ -8,6 +8,7 @@ Couturier owns style on the occurrence's expression facet: `style_ref`,
 not ID genius. It reads already-minted `ele_` records, writes only
 `element.expression` (+ `ext.couturier` provenance), and re-projects
 `realized_lesson.html` so different moves look like different clothes.
+Default HTML is the short lesson spine; `realized_coverage.html` is the dump.
 
 Never: mint `ele_` / `atom_` ids; copy meaning onto the element; write
 `atoms.json`; write `element.intent`; bind `motion_primitive` (stub),
@@ -500,7 +501,8 @@ def main():
         "note": ("v1 map from occurrence move to expression style keys. Couturier "
                  "mints no ids, does not rewrite atoms or intent, and does not bind "
                  "motion / layout_primitive / interaction_primitive. HTML reads these "
-                 "keys for clothes; meaning stays on the atom."),
+                 "keys for clothes; meaning stays on the atom. Lesson spine is Realizer "
+                 "projection; this tool does not pick the path."),
     }
 
     html_path = pathlib.Path(args.out).resolve() if args.out else project / "realized_lesson.html"
@@ -512,9 +514,11 @@ def main():
         print("  no files written")
         return
 
+    realize.apply_spine(occ_manifest, atoms, elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
-    realize.project_html(atoms, elements, occ_manifest, html_path)
+    coverage_path = realize.project_html(atoms, elements, occ_manifest, html_path)
+    mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
     atoms_hash_after = sha256_bytes(atoms_path.read_bytes())
     if atoms_hash_after != atoms_hash_before:
@@ -524,7 +528,8 @@ def main():
     print(f"  atoms        : {atoms_path} ({len(atoms)} records, unchanged)")
     print(f"  occurrences  : {elements_path}")
     print(f"  manifest     : {mf_path}")
-    print(f"  lesson HTML  : {html_path}")
+    print(f"  lesson HTML  : {html_path}  ← short spine")
+    print(f"  coverage     : {coverage_path}")
     print(f"  looks        : {dict(sorted(look_counts.items()))}")
     print(f"  dressed      : {dressed}  ·  unmapped: {len(unmapped)}")
     extras = [e for e in elements if realize.is_extra_element(e)]
