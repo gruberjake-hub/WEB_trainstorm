@@ -34,6 +34,10 @@ A later hop adds **guest instance extras** (not 1:many of SOP atoms): two
 `alsap_asp9999` atom_id. Spec: `agents/realizer/instance_example_v1.md`.
 Those extras are not a second meaning of a SOP atom.
 
+A later hop adds **guest form-field presents** of the two FORM-AST-34037
+fields those instance values `instantiates`. Spec:
+`agents/realizer/form_field_present_v1.md`. Not a form dump.
+
 Do not mint extras for the whole SOP. Do not duplicate atoms. Do not copy
 `content.text` onto the occurrence.
 
@@ -77,5 +81,6 @@ Couturier (`python3 tools/couturier.py`) dresses extras; it mints nothing and do
 The short lesson that *selects* these extras into a teachable order is
 `agents/realizer/spine_v1.md` (title opening, purpose activate callout,
 front-matter, Procedure A as a job sequence, sequence practice of those
-presents, a small instance example, then these checks). This spec
+presents, two form-field presents then a small instance example, then these
+checks). This spec
 still does not 1:many the SOP.

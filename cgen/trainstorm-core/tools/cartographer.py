@@ -109,6 +109,8 @@ def classify_move(atom) -> tuple[str, str, list[str]]:
         return "transfer", "low", ["handoff_as_transfer"]
     if kind in ("procedure_step", "list", "list_item"):
         return "present", "high", ["kind_present"]
+    if kind == "form_field":
+        return "present", "high", ["form_field_as_present"]
     return "present", "high", ["section_head_as_present"]
 
 
@@ -132,6 +134,8 @@ def classify_rhetorical(atom) -> str:
         return "specify"
     if kind == "procedure_step":
         return "assert"
+    if kind == "form_field":
+        return "specify"
     if aid.endswith("_general"):
         return "explain"
     return "organize"
@@ -146,7 +150,7 @@ def is_container_label(atom) -> bool:
 def bind_teaches(atom) -> list[str]:
     """Sparse objective binding. Empty is honest; never mint obj_ ids."""
     aid = atom["atom_id"]
-    if "_definitions" in aid or is_container_label(atom):
+    if "_definitions" in aid or is_container_label(atom) or atom_kind(atom) == "form_field":
         return []
     if not belongs_to(atom) or aid.endswith("_purpose") or aid.endswith("_general") or "govdocs" in aid:
         return [OBJ_EXPLAIN]
@@ -190,7 +194,8 @@ def bind_intent(atom, closed_moves, closed_rhetorical, objective_ids) -> tuple[d
     unknown = [t for t in teaches if t not in objective_ids]
     if unknown:
         raise SystemExit(f"{atom['atom_id']}: teaches {unknown} not in ontology/objectives.json")
-    if not teaches and not is_container_label(atom) and "_definitions" not in atom["atom_id"]:
+    if not teaches and not is_container_label(atom) and "_definitions" not in atom["atom_id"] \
+            and atom_kind(atom) != "form_field":
         confidence = "low"
         flags = list(flags) + ["teaches_unbound"]
     intent = {"rhetorical": rhetorical, "move": move}
@@ -328,6 +333,10 @@ def selftest(closed_moves, closed_rhetorical, objective_ids):
         (atom("atom_sop_x_general_govdocs_0", "list_item", "Investigator Brochure (IB): summarizes known risks.",
               "atom_sop_x_general_govdocs"),
          "exemplify", "low", [OBJ_EXPLAIN]),
+        (atom("atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile", "form_field",
+              "SMT assessment of the overall Benefit-Risk profile of the asset.",
+              "atom_form_ast34037_sec_purpose_sec_safety_profile"),
+         "present", "high", []),
     ]
     for a, want_move, want_conf, want_teach in cases:
         intent, stamp = bind_intent(a, closed_moves, closed_rhetorical, objective_ids)
@@ -336,6 +345,14 @@ def selftest(closed_moves, closed_rhetorical, objective_ids):
               and intent.get("teaches", []) == want_teach)
         results.append((f"{a['atom_id']} → {want_move}/{want_conf}/{want_teach}", ok,
                         f"got {intent.get('move')} / {stamp['confidence']} / {intent.get('teaches', [])}"))
+    form_atom = cases[-1][0]
+    form_intent, form_stamp = bind_intent(form_atom, closed_moves, closed_rhetorical, objective_ids)
+    results.append(("form_field rhetorical is specify (a named slot)",
+                    form_intent.get("rhetorical") == "specify", form_intent.get("rhetorical")))
+    results.append(("form_field empty teaches is honest not low-conf",
+                    form_stamp["confidence"] == "high"
+                    and "teaches_unbound" not in (form_stamp.get("flags") or []),
+                    form_stamp))
 
     # Write contract: existing ele_ kept; no content copied; atom store untouched.
     el = {
@@ -520,7 +537,12 @@ def main():
     instance_hash_before = (
         sha256_bytes((instance_path / "atoms.json").read_bytes()) if instance_path else None
     )
-    atoms_by_id = realize.meaning_catalog(atoms, instance_atoms)
+    form_atoms = realize.load_form_field_atoms(project)
+    form_path = realize.sibling_form_project(project)
+    form_hash_before = (
+        sha256_bytes((form_path / "atoms.json").read_bytes()) if form_path else None
+    )
+    atoms_by_id = realize.meaning_catalog(atoms, form_atoms + instance_atoms)
     if len({a["atom_id"] for a in atoms if "atom_id" in a}) != len(atoms):
         raise SystemExit("atom store has missing or duplicate atom_id values")
 
@@ -608,7 +630,7 @@ def main():
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
     coverage_path = realize.project_html(
-        atoms, elements, occ_manifest, html_path, meaning_atoms=instance_atoms
+        atoms, elements, occ_manifest, html_path, meaning_atoms=form_atoms + instance_atoms
     )
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
@@ -620,6 +642,12 @@ def main():
             raise SystemExit(
                 "alsap_asp9999/atoms.json changed during cartographer — abort. "
                 "Cartographer must not rewrite instance atoms."
+            )
+    if form_path and form_hash_before:
+        if sha256_bytes((form_path / "atoms.json").read_bytes()) != form_hash_before:
+            raise SystemExit(
+                "alsap/atoms.json changed during cartographer — abort. "
+                "Cartographer must not rewrite form atoms."
             )
 
     leftover_intent = [

@@ -25,7 +25,8 @@ This pass writes **occurrence intent only** (`move`, `teaches`, `rhetorical`,
 | 5 | Governance-document list or item (`govdocs` in id) | `exemplify` | **low** — named docs that make “operationalizes existing governance” concrete |
 | 6 | Handoff / job-bridge step: notify-of-approval, provide outputs to SMT, or “review per SOP-…” | `transfer` | **low** — these are still procedure steps; transfer is the honest Gagné 9b reading, not a new atom |
 | 7 | `kind` in `procedure_step`, `list`, `list_item` | `present` | high |
-| 8 | Remaining procedure sections (purpose already matched; these are body / section heads) | `present` | high |
+| 8 | `kind` is `form_field` | `present` | high — a named slot, not a section head |
+| 9 | Remaining procedure sections (purpose already matched; these are body / section heads) | `present` | high |
 
 No `reinforce`: this SOP store has no closing/summary atom. Do not mint one.
 No `practice` / `feedback` / `assess`: the atomized SOP has no learner check.
@@ -36,6 +37,13 @@ Cartographer **preserves** that extra move (`extra_occurrence_move_preserved`).
 Do not reclassify an unbound `instance_value` (no `belongs_to`) as `hook`.
 Spec: `agents/realizer/instance_example_v1.md`. Not a dump of all ten
 instance atoms.
+
+**Form-field extras** (guest `ele_` records whose `composed_from` is an
+`alsap` form atom): Realizer stamps `present`. Cartographer **preserves**
+that extra move. Kind `form_field` is also `present` (high) if classified
+from the atom — not a section-head leftover. Empty `teaches` is honest
+(these are form slots, not SOP objectives); do not invent an `obj_`.
+Spec: `agents/realizer/form_field_present_v1.md`. Not a dump of the form.
 
 Closed pedagogical list (must match `intent.enum.json` `dimensions.pedagogical`):
 `hook` · `objective` · `activate` · `present` · `exemplify` · `practice` ·
@@ -78,6 +86,7 @@ Derived from the same atom structure:
 | `kind: list` | `structure` |
 | `kind: list_item` | `specify` |
 | `kind: procedure_step` | `assert` |
+| `kind: form_field` | `specify` |
 | General/body explanation | `explain` |
 | Section heads (roles, procedures, A/B/C) | `organize` |
 
@@ -136,7 +145,7 @@ Sequence/selection of existing `ele_` records is **not this compiler**.
 `agents/realizer/spine_v1.md` reuses `belongs_to` / `object.order` as *input*
 (root vs child vs descendant) and projects a short path — front-matter, then
 Procedure A as a job sequence, then a sequence practice of those presents,
-then instance example, then existing checks. Cartographer still
+then form BR-field presents, then instance example, then existing checks. Cartographer still
 writes intent only. The full object-tree walk remains coverage. The extra `reinforce` is a later placement of the same
 atom; Realizer’s HTML projector may render it as a check from that atom’s
 meaning (`agents/realizer/check_v1.md`). Cartographer still does not mint

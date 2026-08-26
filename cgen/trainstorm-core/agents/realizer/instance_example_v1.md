@@ -84,9 +84,16 @@ Realizer-stamped `exemplify` (an unbound instance_value with no
 ## Spine membership
 
 After Procedure A’s job-aid **and the sequence practice of those four
-presents**, before the two existing reinforce checks.
+presents**, **after the two form-field presents** of the fields those
+values fill (`agents/realizer/form_field_present_v1.md`), before the two
+existing reinforce checks.
 Spec: `agents/realizer/spine_v1.md`. Policy
-`v1_front_matter_callout_procedure_sequence_example_then_checks`.
+`v1_front_matter_callout_procedure_sequence_form_example_then_checks`.
+
+The form atoms those instance values `instantiates` are exactly
+`atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile` and
+`atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale`. Those
+are the referent of this example pair. Do not stretch a cousin field.
 
 Do not mint a procedure-step MCQ. Sequence practice is projector-only
 (`agents/realizer/check_v1.md`). Do not 1:many the SOP. Do not stand up

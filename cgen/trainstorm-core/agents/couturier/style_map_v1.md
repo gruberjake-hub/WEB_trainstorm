@@ -47,11 +47,11 @@ until those moves exist.
 | move | `style_ref` | `text_primitive` | `content_role` | `layout_hint` | What Jake should see |
 |---|---|---|---|---|---|
 | `hook` | `brand.opening` | `tp_display` | `title` | `banner` | large centered opening, not a body card |
-| `present` | `brand.instructional` | `tp_body` (or `tp_step` if Realizer bound a procedure_step) | `body` (or `step`) | `card` (or `job_aid`) | instructional body card — or a job-aid line |
+| `present` | `brand.instructional` | `tp_body` (or `tp_step` if Realizer bound a procedure_step) | `body` (or `step`) | `card` (or `job_aid`) | instructional body card — or a job-aid line. **On the spine:** two FORM-AST-34037 BR-field presents before the instance examples |
 | `reinforce` | `brand.recall` | `tp_recall` | `retrieval` | `check` | a check the reader can attempt (stem + choices or cloze), not a quoted recap |
 | `objective` | `brand.purpose` | `tp_purpose` | `purpose` | `purpose_bar` | purpose frame |
 | `activate` | `brand.prior` | `tp_callout` if Realizer bound activate (else `tp_body` fallback) | `callout` (or `prior` if unbound) | `callout` | why-this / prior-knowledge callout — kicker **Why this** |
-| `exemplify` | `brand.example` | `tp_body` | `example` | `cite` | named-example / citation — **on the spine** as the two instance beats (ASP-9999 BR profile + rationale) |
+| `exemplify` | `brand.example` | `tp_body` | `example` | `cite` | named-example / citation — **on the spine** as the two instance beats (ASP-9999 BR profile + rationale), after the form-field presents |
 | `transfer` | `brand.job` | `tp_body` | `handoff` | `job_rail` | job-bridge |
 
 `style_ref` is a **role** ("this is an opening surface"), not a hex or a font.

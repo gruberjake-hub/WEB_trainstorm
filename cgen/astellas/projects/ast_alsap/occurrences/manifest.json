@@ -3,7 +3,7 @@
   "project": "ast_alsap",
   "policy": "v1_one_to_many_seed",
   "default_move": "present",
-  "element_count": 53,
+  "element_count": 55,
   "generated_by": "tools/realize.py",
   "realized_from": {
     "atom_store": "cgen/astellas/projects/ast_alsap/atoms.json",
@@ -13,7 +13,7 @@
   "one_to_many": {
     "spec": "agents/realizer/one_to_many_v1.md",
     "seeded_atom_count": 3,
-    "extra_count": 6,
+    "extra_count": 8,
     "seed": [
       {
         "atom_id": "atom_sop_ast29080",
@@ -56,7 +56,25 @@
     ],
     "note": "Procedure A has no honest match in the instance store (plan-development acts vs filled AST-34037 values). Two cited atoms illustrate the ALSAP generally: BR profile + rationale. composed_from points at the instance atom_id. Meaning catalog joins the sibling store; SOP atoms.json is not copied into."
   },
-  "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). A small instance-example seed mints guest ele_ records in this occurrence store whose composed_from is an alsap_asp9999 atom_id (agents/realizer/instance_example_v1.md). Cartographer owns occurrence intent; Couturier owns expression style. Realizer binds compiler primitives (text_primitive) from atom kind + move (agents/realizer/primitives_v1.md). Spine is a documented selection of existing ele_ records (agents/realizer/spine_v1.md); the full dump is coverage. Procedure A presents project a sequence practice from those four existing ele_ records (agents/realizer/check_v1.md); composing that check from one atom would be a lie, so no extra is minted. A re-realize preserves extras, intent, style, and recomputes the same spine and primitives.",
+  "form_field_present": {
+    "spec": "agents/realizer/form_field_present_v1.md",
+    "policy": "v1_form_field_present_seed",
+    "store": "alsap",
+    "seed": [
+      {
+        "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+        "extra_element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present",
+        "move": "present"
+      },
+      {
+        "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+        "extra_element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present",
+        "move": "present"
+      }
+    ],
+    "note": "The two instance examples instantiate exactly these FORM-AST-34037 fields (BR profile + rationale). Guest ele_ records composed_from the form atom_id. Not a form dump. Not f_br_guidance or phrasing cousins. Meaning catalog joins the sibling alsap store; SOP and form atoms.json are not copied into."
+  },
+  "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). A small form-field present seed mints guest ele_ records whose composed_from is an alsap form atom_id (agents/realizer/form_field_present_v1.md). A small instance-example seed mints guest ele_ records whose composed_from is an alsap_asp9999 atom_id (agents/realizer/instance_example_v1.md). Cartographer owns occurrence intent; Couturier owns expression style. Realizer binds compiler primitives (text_primitive) from atom kind + move (agents/realizer/primitives_v1.md). Spine is a documented selection of existing ele_ records (agents/realizer/spine_v1.md); the full dump is coverage. Procedure A presents project a sequence practice from those four existing ele_ records (agents/realizer/check_v1.md); composing that check from one atom would be a lie, so no extra is minted. A re-realize preserves extras, intent, style, and recomputes the same spine and primitives.",
   "cartographer": {
     "policy": "v1_heuristic_compiler",
     "tool": "tools/cartographer.py",
@@ -66,13 +84,13 @@
       "exemplify": 7,
       "hook": 1,
       "objective": 1,
-      "present": 36,
+      "present": 38,
       "reinforce": 2,
       "transfer": 3
     },
     "teaches_bound": 48,
     "low_confidence": 10,
-    "element_count": 53,
+    "element_count": 55,
     "ontology": "ontology/objectives.json",
     "note": "v1 compiler pass over Realizer occurrences, including extra 1:many records. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Extra occurrences keep Realizer-stamped move. Couturier owns expression style; this tool does not wipe it. After writing move, Realizer refreshes text_primitive (compiler form). Lesson spine is Realizer projection (agents/realizer/spine_v1.md); this tool does not own sequence."
   },
@@ -82,21 +100,21 @@
     "spec": "agents/couturier/style_map_v1.md",
     "look_counts": {
       "brand.example": 7,
-      "brand.instructional": 36,
+      "brand.instructional": 38,
       "brand.job": 3,
       "brand.opening": 1,
       "brand.prior": 3,
       "brand.purpose": 1,
       "brand.recall": 2
     },
-    "dressed": 53,
+    "dressed": 55,
     "unmapped": 0,
-    "element_count": 53,
+    "element_count": 55,
     "registry": "vocab/primitives.registry.json",
     "note": "v1 map from occurrence move to expression style keys. Couturier mints no ids, does not rewrite atoms or intent, and does not bind motion / layout_primitive / interaction_primitive. Realizer owns text_primitive (compiler form); this tool preserves it and writes style_ref / content_role / layout_hint. HTML reads these keys for clothes; meaning stays on the atom. Lesson spine is Realizer projection; this tool does not pick the path."
   },
   "spine": {
-    "policy": "v1_front_matter_callout_procedure_sequence_example_then_checks",
+    "policy": "v1_front_matter_callout_procedure_sequence_form_example_then_checks",
     "spec": "agents/realizer/spine_v1.md",
     "element_ids": [
       "ele_sop_ast29080",
@@ -109,14 +127,16 @@
       "ele_sop_ast29080_proc_a_s2",
       "ele_sop_ast29080_proc_a_s3",
       "ele_sop_ast29080_proc_a_s4",
+      "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present",
+      "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present",
       "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify",
       "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify",
       "ele_sop_ast29080_purpose__reinforce",
       "ele_sop_ast29080_general__reinforce"
     ],
-    "count": 14,
-    "store_count": 53,
-    "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then a small instance-example seed (alsap_asp9999 atoms via composed_from \u2014 Procedure A has no honest match; these illustrate the ALSAP generally), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check) plus a sequence practice of the Procedure A presents (projector-only; no extra ele_) plus exemplify clothes on the instance beats; coverage dump stays card-like. Not an LLM path and not a full object-tree walk.",
+    "count": 16,
+    "store_count": 55,
+    "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then the two FORM-AST-34037 BR-field presents those instance examples fill (alsap atoms via composed_from), then a small instance-example seed (alsap_asp9999 atoms via composed_from \u2014 Procedure A has no honest match; these illustrate the ALSAP generally), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check) plus a sequence practice of the Procedure A presents (projector-only; no extra ele_) plus present clothes on the form-field beats and exemplify clothes on the instance beats; coverage dump stays card-like. Not an LLM path and not a full object-tree walk.",
     "sequence_check": {
       "shape": "sequence",
       "spec": "agents/realizer/check_v1.md",
@@ -141,7 +161,7 @@
     "spec": "agents/realizer/primitives_v1.md",
     "owner": "realizer",
     "counts": {
-      "tp_body": 21,
+      "tp_body": 23,
       "tp_callout": 3,
       "tp_display": 1,
       "tp_purpose": 1,
