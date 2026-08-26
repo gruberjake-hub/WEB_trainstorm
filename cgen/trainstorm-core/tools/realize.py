@@ -18,17 +18,21 @@ the SOP.
 Default HTML is a **short lesson spine** (`agents/realizer/spine_v1.md`): title
 hook, a why-this callout of the purpose atom (`tp_callout`), a handful of
 front-matter teaching cards, Procedure A’s real steps as a job sequence
-(present only), then the existing checks. The full SOP dump is
+(present only), one worked example from the sibling instance store (two
+`exemplify` extras of existing ASP-9999 atoms — `agents/realizer/instance_example_v1.md`),
+then the existing checks. The full SOP dump is
 `realized_coverage.html`. Spine is a selection of existing `ele_` records —
 it mints none for membership and drops none. Procedure-step atoms stay 1:1
 (no extra `reinforce`): they are imperatives, so they cannot host an honest
-copula-invert sibling check.
+copula-invert sibling check. Instance extras `composed_from` instance
+`atom_id`s; they do not copy text onto the element or into SOP `atoms.json`.
 
 **Atom → primitives** (`agents/realizer/primitives_v1.md`): Realizer binds a
 closed compiler `text_primitive` on the occurrence from atom kind + occurrence
 move (heading / body / step / callout / check). The spine projector renders
 those primitives — why-this as a callout of purpose, Procedure A s1–s4 as one
-job-aid step list, front-matter as heading/body, reinforce as the existing
+job-aid step list, the instance example as body/`exemplify` clothes (not a
+new SOP card), front-matter as heading/body, reinforce as the existing
 check. Coverage stays card-like. Couturier still owns `style_ref`. No authored
 `content.text`.
 
@@ -95,7 +99,17 @@ ONE_TO_MANY_SEED = (
 CHECK_SPEC = "agents/realizer/check_v1.md"
 CHECK_POLICY = "v1_check_from_atom"
 SPINE_SPEC = "agents/realizer/spine_v1.md"
-SPINE_POLICY = "v1_front_matter_callout_procedure_sequence_then_checks"
+SPINE_POLICY = "v1_front_matter_callout_procedure_sequence_example_then_checks"
+INSTANCE_EXAMPLE_SPEC = "agents/realizer/instance_example_v1.md"
+INSTANCE_EXAMPLE_POLICY = "v1_instance_example_seed"
+INSTANCE_PROJECT_NAME = "alsap_asp9999"
+# Procedure A has no honest match in the instance store (plan-development
+# acts vs filled AST-34037 values). These two illustrate the ALSAP generally:
+# the SMT's selected BR conclusion + the authored rationale. Not the other 8.
+INSTANCE_EXAMPLE_SEED = (
+    ("atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile", "exemplify"),
+    ("atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale", "exemplify"),
+)
 PRIMITIVE_SPEC = "agents/realizer/primitives_v1.md"
 PRIMITIVE_POLICY = "v1_atom_to_primitive"
 # Closed compiler vocabulary. Keys must exist in primitives.registry.json.
@@ -235,6 +249,37 @@ def portable_atom_store_path(atoms_path: pathlib.Path) -> str:
         return "atoms.json"
 
 
+def sibling_instance_project(sop_project: pathlib.Path | None) -> pathlib.Path | None:
+    """Lesson store is ast_alsap; instance is sibling alsap_asp9999. Not every project."""
+    if sop_project is None or sop_project.name != "ast_alsap":
+        return None
+    sibling = sop_project.parent / INSTANCE_PROJECT_NAME
+    if (sibling / "atoms.json").exists():
+        return sibling
+    return None
+
+
+def load_instance_example_atoms(sop_project: pathlib.Path | None) -> list:
+    """Join catalog only. Does not rewrite SOP or instance atoms.json."""
+    sibling = sibling_instance_project(sop_project)
+    if sibling is None:
+        return []
+    atoms = load(sibling / "atoms.json")
+    if not isinstance(atoms, list):
+        return []
+    return [a for a in atoms if a.get("atom_id")]
+
+
+def meaning_catalog(sop_atoms, extra_atoms=None) -> dict:
+    """SOP atoms plus joined instance atoms, keyed by atom_id. SOP wins on collision."""
+    by_id = {a["atom_id"]: a for a in sop_atoms if a.get("atom_id")}
+    for a in extra_atoms or []:
+        aid = a.get("atom_id")
+        if aid and aid not in by_id:
+            by_id[aid] = a
+    return by_id
+
+
 def mint_element(atom, move: str, *, role: str = "primary") -> dict:
     aid = atom["atom_id"]
     obj = (atom.get("bindings") or {}).get("object") or {}
@@ -303,14 +348,42 @@ def extra_move_of(el) -> str | None:
     return rf.get("target_move") or intent_move
 
 
-def assemble_elements(atoms, previous, default_move: str, *, mint_extras: bool = True) -> list:
+EXT_KEY_ORDER = ("realized_from", "cartographer", "couturier", "realizer_primitive")
+
+
+def normalize_element_ext(el):
+    """Stable ext key order so re-runs do not reshuffle JSON."""
+    ext = el.get("ext")
+    if not isinstance(ext, dict) or not ext:
+        return
+    ordered = {}
+    for k in EXT_KEY_ORDER:
+        if k in ext:
+            ordered[k] = ext[k]
+    for k, v in ext.items():
+        if k not in ordered:
+            ordered[k] = v
+    el["ext"] = ordered
+
+
+def normalize_elements_ext(elements):
+    for el in elements:
+        normalize_element_ext(el)
+    return elements
+
+
+def assemble_elements(atoms, previous, default_move: str, *, mint_extras: bool = True,
+                      instance_atoms=None) -> list:
     """
-    Mint one primary per atom, then extra occurrences from the seed and from
+    Mint one primary per SOP atom, then extra occurrences from the seed and from
     any extras already in the store. Never drop an existing extra. Preserve
-    Cartographer intent on matching element_id values.
+    Cartographer intent on matching element_id values. Guest instance extras
+    (sibling alsap_asp9999) mint into this occurrence store with composed_from
+    pointing at the instance atom_id — they are not copied into SOP atoms.json.
     """
     prev = {e.get("element_id"): e for e in (previous or []) if e.get("element_id")}
-    atoms_by_id = {a["atom_id"]: a for a in atoms}
+    instance_by_id = {a["atom_id"]: a for a in (instance_atoms or []) if a.get("atom_id")}
+    atoms_by_id = meaning_catalog(atoms, instance_atoms)
     seed_moves = {}
     if mint_extras:
         for aid, move in ONE_TO_MANY_SEED:
@@ -355,6 +428,43 @@ def assemble_elements(atoms, previous, default_move: str, *, mint_extras: bool =
             elements.append(extra)
             claimed.add(eid)
 
+    wanted_inst = []
+    seen_inst = set()
+    if mint_extras:
+        for aid, move in INSTANCE_EXAMPLE_SEED:
+            if aid not in instance_by_id:
+                continue
+            eid = mint_extra_element_id(aid, move)
+            wanted_inst.append((eid, aid, move))
+            seen_inst.add(eid)
+    for old in prev.values():
+        cf = old.get("composed_from")
+        if cf not in instance_by_id or not is_extra_element(old):
+            continue
+        eid = old["element_id"]
+        if eid in seen_inst or eid in claimed:
+            continue
+        move = extra_move_of(old)
+        if not move:
+            continue
+        wanted_inst.append((eid, cf, move))
+        seen_inst.add(eid)
+    for eid, aid, move in wanted_inst:
+        if eid in claimed:
+            continue
+        extra = mint_element(instance_by_id[aid], move, role="extra")
+        extra["element_id"] = eid
+        rf = extra.setdefault("ext", {}).setdefault("realized_from", {})
+        rf["instance_store"] = INSTANCE_PROJECT_NAME
+        rf["instance_spec"] = INSTANCE_EXAMPLE_SPEC
+        rf["policy"] = INSTANCE_EXAMPLE_POLICY
+        preserve_cartographer_intent([extra], previous)
+        preserve_couturier_expression([extra], previous)
+        if not (extra.get("ext") or {}).get("cartographer"):
+            extra["intent"]["move"] = move
+        elements.append(extra)
+        claimed.add(eid)
+
     for eid, old in prev.items():
         if eid in claimed:
             continue
@@ -365,6 +475,7 @@ def assemble_elements(atoms, previous, default_move: str, *, mint_extras: bool =
 
     apply_group_ids(elements)
     refresh_text_primitives(elements, atoms_by_id)
+    normalize_elements_ext(elements)
     return elements
 
 
@@ -800,13 +911,30 @@ def spine_atom_ids(atoms) -> list:
     return [rid] + [a["atom_id"] for a in kids_teaching] + seq_ids
 
 
+def instance_example_spine_ids(elements) -> list:
+    """Seed order. Guest extras whose composed_from is a cited instance atom."""
+    by_eid = {e["element_id"]: e for e in elements}
+    out = []
+    for aid, move in INSTANCE_EXAMPLE_SEED:
+        eid = mint_extra_element_id(aid, move)
+        el = by_eid.get(eid)
+        if el is None:
+            continue
+        if el.get("composed_from") != aid:
+            continue
+        if (el.get("intent") or {}).get("move") != move:
+            continue
+        out.append(eid)
+    return out
+
+
 def select_spine(atoms, elements) -> list:
     """Stable ele_ ids in teachable order. Selection of existing occurrences; mints nothing.
 
     Opening (root primary + non-check extras) → why-this activate extras of
     spine atoms → front-matter primaries → first real procedure’s step
-    presents (job sequence) → reinforce extras of spine atoms.
-    Spec: agents/realizer/spine_v1.md
+    presents (job sequence) → instance-example extras → reinforce extras of
+    spine atoms. Spec: agents/realizer/spine_v1.md
     """
     by_id = {e["element_id"]: e for e in elements}
     by_cf = defaultdict(list)
@@ -844,7 +972,8 @@ def select_spine(atoms, elements) -> list:
         if i != 0:
             presents.extend(callouts + primaries)
         checks.extend(atom_checks)
-    return opening + presents + checks
+    examples = instance_example_spine_ids(elements)
+    return opening + presents + examples + checks
 
 
 def apply_spine(manifest, atoms, elements) -> dict:
@@ -860,10 +989,12 @@ def apply_spine(manifest, atoms, elements) -> dict:
                  "opening, why-this activate callout of purpose, teachable front-matter "
                  "primaries (object.order), the first real procedure’s non-thin "
                  "procedure_step children as a job sequence (not thin A/B/C headings, "
-                 "not B/C), then existing reinforce extras. Spine projector renders "
-                 "compiler primitives (callout / step list / heading / body / check); "
-                 "coverage dump stays card-like. Not an LLM path and not a full "
-                 "object-tree walk."),
+                 "not B/C), then a small instance-example seed (alsap_asp9999 atoms via "
+                 "composed_from — Procedure A has no honest match; these illustrate the "
+                 "ALSAP generally), then existing reinforce extras. Spine projector "
+                 "renders compiler primitives (callout / step list / heading / body / "
+                 "check) plus exemplify clothes on the instance beats; coverage dump "
+                 "stays card-like. Not an LLM path and not a full object-tree walk."),
     }
     return manifest["spine"]
 
@@ -1092,9 +1223,20 @@ def check_body_html(el, atom, atoms, esc) -> str:
     )
 
 
-def project_html(atoms, elements, manifest, out_path: pathlib.Path):
-    """Write the short lesson (spine) and the full SOP dump (coverage)."""
-    by_atom = {a["atom_id"]: a for a in atoms}
+def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_atoms=None):
+    """Write the short lesson (spine) and the full SOP dump (coverage).
+
+    `atoms` is the SOP tree (coverage walk / spine SOP membership).
+    `meaning_atoms` is an optional join catalog (instance citations) so
+    composed_from can resolve across stores without copying into SOP atoms.json.
+    """
+    catalog = list(atoms)
+    if meaning_atoms:
+        seen = {a["atom_id"] for a in catalog}
+        for a in meaning_atoms:
+            if a.get("atom_id") and a["atom_id"] not in seen:
+                catalog.append(a)
+    by_atom = {a["atom_id"]: a for a in catalog}
     esc = html.escape
     cart = manifest.get("cartographer") or {}
     counts = cart.get("move_counts") or move_counts(elements)
@@ -1120,9 +1262,12 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         move = intent.get("move", DEFAULT_MOVE)
         low = (el.get("ext") or {}).get("cartographer", {}).get("confidence") == "low"
         extra = is_extra_element(el)
+        instance = bool((el.get("ext") or {}).get("realized_from", {}).get("instance_store"))
         out = [f'<span class="pill move-{esc(move)}{ " low" if low else ""}">{esc(move)}</span>']
         if extra:
             out.append('<span class="pill extra-occ">extra</span>')
+        if instance:
+            out.append('<span class="pill instance-occ">instance</span>')
         if is_check_occurrence(el):
             out.append('<span class="pill check-occ">check</span>')
         tp = expr.get("text_primitive")
@@ -1342,7 +1487,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         "(<span class=mono>text_primitive</span>: heading / body / step / callout / check) "
         "from atom kind + occurrence move. The short lesson renders those primitives — "
         "why-this as a <span class=mono>tp_callout</span> of purpose, "
-        "Procedure A as a job-aid step list, front-matter as heading/body, "
+        "Procedure A as a job-aid step list, a worked example as body/`exemplify` "
+        "clothes (instance atom via composed_from), front-matter as heading/body, "
         "reinforce as the existing check. Coverage stays card-like. "
         if prim_counts else
         " The atom → primitives hop is owed so beats are clothes, not SOP cards. "
@@ -1352,8 +1498,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         f"(<span class=mono>{esc(spine.get('policy', SPINE_POLICY))}</span>): "
         f"{spine.get('count', 0)} of {len(elements)} occurrences — document-root opening, "
         "why-this callout of purpose, teachable front-matter primaries, Procedure A as "
-        "a job sequence, then the existing checks. The object tree walk is coverage, "
-        "not the path. "
+        "a job sequence, a small instance example, then the existing checks. The object "
+        "tree walk is coverage, not the path. "
     )
     if cout:
         ctrl_doc = "Couturier v1"
@@ -1435,6 +1581,7 @@ h1{font-size:20px;margin:8px 0 4px}
 .pill.move-reinforce{background:#334155}
 .pill.move-transfer{background:#c2410c}
 .pill.extra-occ{background:#0f766e;text-transform:none}
+.pill.instance-occ{background:#6d28d9;text-transform:none}
 .pill.check-occ{background:#1e3a8a;text-transform:none}
 .pair{border:2px solid #1e3a8a;border-radius:10px;padding:10px 12px 6px;margin:12px 0;
  background:#f1f5f9}
@@ -1608,9 +1755,9 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         "Short lesson",
         f'<a href="{coverage_href}">Full SOP / coverage ({store_n} occurrences)</a>',
         (f"{spine_n} of {store_n} occurrences · why-this callout of purpose, "
-         "front-matter as heading/body, then Procedure A as a job-aid step sequence, "
-         "then the existing checks. Not B/C and not the SOP dump. Heuristic is "
-         "documented, not an LLM."),
+         "front-matter as heading/body, Procedure A as a job-aid step sequence, "
+         "then a worked example from the instance store, then the existing checks. "
+         "Not B/C and not the SOP dump. Heuristic is documented, not an LLM."),
         "".join(spine_body),
         lesson_details,
     )
@@ -2037,6 +2184,117 @@ def selftest(closed_moves):
                     "class=\"prim prim-step job-aid\"" not in cov_page
                     and "ele_sop_ast29080_proc_a_s1" in cov_page, ""))
 
+    profile_inst = {
+        "atom_id": INSTANCE_EXAMPLE_SEED[0][0],
+        "content_hash": "sha256:" + ("c" * 64),
+        "meaning": {
+            "source_locale": "en",
+            "source_text": "conditional_favorable",
+            "kind": "instance_value",
+        },
+        "bindings": {"instance": {"instantiates": "atom_form_x", "authored_by": "role_smt"}},
+        "governance": {"version": 1, "status": "draft", "owner": "role_smt"},
+    }
+    rationale_inst = {
+        "atom_id": INSTANCE_EXAMPLE_SEED[1][0],
+        "content_hash": "sha256:" + ("d" * 64),
+        "meaning": {
+            "source_locale": "en",
+            "source_text": (
+                "The benefit-risk profile of ASP9999 is favorable provided the additional "
+                "hepatic monitoring described in the risk management plan is in place."
+            ),
+            "kind": "instance_value",
+        },
+        "bindings": {"instance": {"instantiates": "atom_form_y", "authored_by": "role_alsap_lead"}},
+        "governance": {"version": 1, "status": "draft", "owner": "role_alsap_lead"},
+    }
+    unused_inst = {
+        "atom_id": "atom_alsap_asp9999__form_ast34037_sec_cover_f_asset_code",
+        "content_hash": "sha256:" + ("e" * 64),
+        "meaning": {"source_locale": "en", "source_text": "ASP9999", "kind": "instance_value"},
+        "bindings": {"instance": {}},
+        "governance": {"version": 1, "status": "draft"},
+    }
+    instance_store = [profile_inst, rationale_inst, unused_inst]
+    seeded_inst = assemble_elements(
+        store, [], DEFAULT_MOVE, mint_extras=True, instance_atoms=instance_store
+    )
+    inst_eids = [
+        mint_extra_element_id(INSTANCE_EXAMPLE_SEED[0][0], "exemplify"),
+        mint_extra_element_id(INSTANCE_EXAMPLE_SEED[1][0], "exemplify"),
+    ]
+    unused_eid = mint_element_id(unused_inst["atom_id"])
+    unused_extra = mint_extra_element_id(unused_inst["atom_id"], "exemplify")
+    got_spine_inst = select_spine(store, seeded_inst)
+    results.append(("instance seed mints two exemplify extras",
+                    all(eid in {e["element_id"] for e in seeded_inst} for eid in inst_eids),
+                    sorted(e["element_id"] for e in seeded_inst if "asp9999" in e["element_id"])))
+    results.append(("instance extras composed_from instance atom_ids",
+                    all(next(e for e in seeded_inst if e["element_id"] == eid)["composed_from"]
+                        == aid for eid, (aid, _) in zip(inst_eids, INSTANCE_EXAMPLE_SEED)), ""))
+    results.append(("instance extras stamp exemplify not present",
+                    all(next(e for e in seeded_inst if e["element_id"] == eid)["intent"]["move"]
+                        == "exemplify" for eid in inst_eids), ""))
+    results.append(("instance extras carry no authored content.text",
+                    all("content" not in next(e for e in seeded_inst if e["element_id"] == eid)
+                        for eid in inst_eids), ""))
+    results.append(("unused instance atom is not minted onto the store",
+                    unused_eid not in {e["element_id"] for e in seeded_inst}
+                    and unused_extra not in {e["element_id"] for e in seeded_inst}, ""))
+    results.append(("SOP atoms.json fixture is unchanged by instance join",
+                    all(a["atom_id"].startswith("atom_sop_") for a in store), ""))
+    results.append(("spine places instance example after Procedure A and before checks",
+                    got_spine_inst[-4:] == inst_eids + [
+                        "ele_sop_ast29080_purpose__reinforce",
+                        "ele_sop_ast29080_general__reinforce",
+                    ]
+                    and got_spine_inst.index("ele_sop_ast29080_proc_a_s4")
+                    < got_spine_inst.index(inst_eids[0])
+                    < got_spine_inst.index("ele_sop_ast29080_purpose__reinforce"),
+                    got_spine_inst))
+    results.append(("spine without instance store stays the original 12",
+                    got_spine == want_spine and len(got_spine) == 12, len(got_spine)))
+    results.append(("instance_value + exemplify is tp_body not a new primitive",
+                    classify_text_primitive(rationale_inst, {"intent": {"move": "exemplify"}})
+                    == PRIMITIVE_BODY, ""))
+    for eid in inst_eids:
+        el = next(e for e in seeded_inst if e["element_id"] == eid)
+        el["expression"] = {
+            "style_ref": "brand.example",
+            "text_primitive": "tp_body",
+            "content_role": "example",
+            "layout_hint": "cite",
+        }
+    with tempfile.TemporaryDirectory() as td:
+        html_path = pathlib.Path(td) / "realized_lesson.html"
+        project_html(
+            store, seeded_inst,
+            {"project": "selftest", "one_to_many": {"seeded_atom_count": 3}},
+            html_path, meaning_atoms=instance_store,
+        )
+        page_inst = html_path.read_text()
+    results.append(("lesson HTML shows Example kicker on instance beats",
+                    page_inst.count(">Example</div>") == 2
+                    and "style-example" in page_inst
+                    and "brand.example" in page_inst, page_inst.count(">Example</div>")))
+    results.append(("lesson HTML meaning is the instance atoms not invented text",
+                    "conditional_favorable" in page_inst
+                    and "The benefit-risk profile of ASP9999 is favorable provided" in page_inst, ""))
+    results.append(("lesson HTML composed_from is the instance atom_id",
+                    INSTANCE_EXAMPLE_SEED[0][0] in page_inst
+                    and INSTANCE_EXAMPLE_SEED[1][0] in page_inst, ""))
+    results.append(("lesson HTML does not dump the unused instance atom",
+                    unused_inst["atom_id"] not in page_inst
+                    and unused_eid not in page_inst, ""))
+    results.append(("instance example is not a third check or a job-aid card",
+                    page_inst.count('form class="check"') == 2
+                    and page_inst.count('class="prim prim-step job-aid"') == 1, ""))
+    results.append(("instance example sits after the job aid and before checks in HTML",
+                    page_inst.find("ele_sop_ast29080_proc_a_s4")
+                    < page_inst.find(inst_eids[0])
+                    < page_inst.find("ele_sop_ast29080_purpose__reinforce"), ""))
+
     huge_steps = [
         atom(
             f"atom_sop_ast29080_proc_a_s{i}", "procedure_step",
@@ -2079,6 +2337,9 @@ def main():
         for _aid, mv in ONE_TO_MANY_SEED:
             if mv not in closed_moves:
                 raise SystemExit(f"seed move {mv!r} is not in the closed vocab")
+        for _aid, mv in INSTANCE_EXAMPLE_SEED:
+            if mv not in closed_moves:
+                raise SystemExit(f"instance-example move {mv!r} is not in the closed vocab")
         selftest(closed_moves)
         return
 
@@ -2137,6 +2398,9 @@ def main():
     for _aid, mv in ONE_TO_MANY_SEED:
         if mv not in closed_moves:
             raise SystemExit(f"seed move {mv!r} is not in the closed vocab: {closed_moves}")
+    for _aid, mv in INSTANCE_EXAMPLE_SEED:
+        if mv not in closed_moves:
+            raise SystemExit(f"instance-example move {mv!r} is not in the closed vocab: {closed_moves}")
 
     store_dir = pathlib.Path(args.store).resolve() if args.store else project / "occurrences"
     previous = []
@@ -2151,7 +2415,21 @@ def main():
             prev_mf = load(mf_prev_path)
 
     mint_extras = not args.no_one_to_many
-    elements = assemble_elements(atoms, previous, move, mint_extras=mint_extras)
+    instance_atoms = load_instance_example_atoms(project)
+    instance_path = sibling_instance_project(project)
+    instance_hash_before = (
+        sha256_bytes((instance_path / "atoms.json").read_bytes()) if instance_path else None
+    )
+    instance_by_id = {a["atom_id"]: a for a in instance_atoms}
+    missing_seed = [aid for aid, _mv in INSTANCE_EXAMPLE_SEED if aid not in instance_by_id]
+    if instance_atoms and missing_seed:
+        raise SystemExit(
+            f"instance-example seed atom_id(s) missing from {INSTANCE_PROJECT_NAME}: {missing_seed}"
+        )
+    elements = assemble_elements(
+        atoms, previous, move, mint_extras=mint_extras, instance_atoms=instance_atoms
+    )
+    atoms_by_id = meaning_catalog(atoms, instance_atoms)
     validate_elements(elements, element_schema, atoms_by_id)
     assert_primitives_registered(elements, closed_text_primitives)
 
@@ -2208,9 +2486,25 @@ def main():
                      "occurrences project as a check from the atom "
                      "(agents/realizer/check_v1.md)."),
         },
+        "instance_example": {
+            "spec": INSTANCE_EXAMPLE_SPEC,
+            "policy": INSTANCE_EXAMPLE_POLICY,
+            "store": INSTANCE_PROJECT_NAME,
+            "seed": [
+                {"atom_id": aid, "extra_element_id": mint_extra_element_id(aid, mv), "move": mv}
+                for aid, mv in INSTANCE_EXAMPLE_SEED if aid in instance_by_id
+            ],
+            "note": ("Procedure A has no honest match in the instance store (plan-"
+                     "development acts vs filled AST-34037 values). Two cited atoms "
+                     "illustrate the ALSAP generally: BR profile + rationale. "
+                     "composed_from points at the instance atom_id. Meaning catalog "
+                     "joins the sibling store; SOP atoms.json is not copied into."),
+        },
         "note": ("Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple "
                  "of teaching-worthy atoms (same composed_from, distinct move, no authored "
-                 "content.text). Cartographer owns occurrence intent; Couturier owns expression "
+                 "content.text). A small instance-example seed mints guest ele_ records "
+                 f"in this occurrence store whose composed_from is an alsap_asp9999 atom_id "
+                 f"({INSTANCE_EXAMPLE_SPEC}). Cartographer owns occurrence intent; Couturier owns expression "
                  "style. Realizer binds compiler primitives (text_primitive) from atom kind + "
                  f"move ({PRIMITIVE_SPEC}). Spine is a documented selection of existing ele_ records "
                  f"({SPINE_SPEC}); the full dump is coverage. A re-realize preserves extras, "
@@ -2237,16 +2531,25 @@ def main():
         occ_manifest["couturier"] = cout
     apply_spine(occ_manifest, atoms, elements)
     stamp_primitives(occ_manifest, elements)
+    normalize_elements_ext(elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
     html_path = pathlib.Path(args.out).resolve() if args.out else project / "realized_lesson.html"
-    coverage_path = project_html(atoms, elements, occ_manifest, html_path)
+    coverage_path = project_html(
+        atoms, elements, occ_manifest, html_path, meaning_atoms=instance_atoms
+    )
     (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
     atoms_hash_after = sha256_bytes(atoms_path.read_bytes())
     if atoms_hash_after != atoms_hash_before:
         raise SystemExit("atoms.json changed during realize — abort. Realizer must not rewrite atoms.")
+    if instance_path and instance_hash_before:
+        if sha256_bytes((instance_path / "atoms.json").read_bytes()) != instance_hash_before:
+            raise SystemExit(
+                f"{INSTANCE_PROJECT_NAME}/atoms.json changed during realize — abort. "
+                "Realizer must not rewrite instance atoms."
+            )
 
     spine_n = (occ_manifest.get("spine") or {}).get("count", 0)
     print(f"Realizer v1 → {len(elements)} elements ({occ_manifest['policy']}, default_move={move})")
@@ -2256,6 +2559,8 @@ def main():
     print(f"  occurrences: {elements_path}")
     print(f"  manifest   : {store_dir / 'manifest.json'}")
     print(f"  spine      : {spine_n} of {len(elements)} ({SPINE_POLICY})")
+    print(f"  instance   : {INSTANCE_PROJECT_NAME} ({len(instance_atoms)} atoms joined for meaning; "
+          f"{sum(1 for e in extras if (e.get('ext') or {}).get('realized_from', {}).get('instance_store'))} guest ele_)")
     print(f"  primitives : {dict(sorted(primitive_counts(elements).items()))}")
     print(f"  lesson HTML: {html_path}  ← open this (short lesson)")
     print(f"  coverage   : {coverage_path}  (full SOP dump)")

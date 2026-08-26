@@ -29,6 +29,11 @@ atom. Do not invent a new enum value. The extra `reinforce` is a check
 the reader can attempt, not a recap reprint of the atom. The extra
 `activate` is a callout, not a second authored purpose.
 
+A later hop adds **guest instance extras** (not 1:many of SOP atoms): two
+`exemplify` occurrences in the ALSAP store whose `composed_from` is an
+`alsap_asp9999` atom_id. Spec: `agents/realizer/instance_example_v1.md`.
+Those extras are not a second meaning of a SOP atom.
+
 Do not mint extras for the whole SOP. Do not duplicate atoms. Do not copy
 `content.text` onto the occurrence.
 
@@ -71,5 +76,5 @@ Couturier (`python3 tools/couturier.py`) dresses extras; it mints nothing and do
 
 The short lesson that *selects* these extras into a teachable order is
 `agents/realizer/spine_v1.md` (title opening, purpose activate callout,
-front-matter, Procedure A as a job sequence, then these checks). This spec
+front-matter, Procedure A as a job sequence, a small instance example, then these checks). This spec
 still does not 1:many the SOP.

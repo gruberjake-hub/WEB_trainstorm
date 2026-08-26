@@ -13,6 +13,33 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-26 — One worked example on the ALSAP spine (instance atoms via composed_from)
+
+The short lesson already had opening, why-this callout of purpose, front-matter,
+Procedure A as a job-aid, then two checks. This hop puts **that it happened**
+on the path: one worked example after the job aid, before the checks.
+
+**Heuristic (small seed, not all ten).** Procedure A has no honest match in
+`alsap_asp9999` — those atoms are filled AST-34037 values, not notify / kick-off
+/ authors / dates. They illustrate the ALSAP generally. Cited:
+
+- BR profile `conditional_favorable`
+- BR rationale (authored SMT judgment; names ASP9999)
+
+Not cited: cover metadata, slot fills (412, AE lists, duplicate ASP9999).
+
+**Cross-store.** Lesson store is `ast_alsap`. Instance is `alsap_asp9999`.
+Realizer mints guest `ele_` records in the ALSAP occurrence store whose
+`composed_from` is the instance `atom_id`. Meaning catalog joins the sibling
+store. No copy into `ast_alsap/atoms.json`. No parallel meaning atom. Clothes:
+`exemplify` → Couturier `brand.example` / kicker Example / `tp_body`. Spine
+policy `v1_front_matter_callout_procedure_sequence_example_then_checks`. Store
+53 / 47. Instance store untouched. No chameleon.py, no audience variants, no
+LLM distractors, no procedure-step MCQ, no `/cgen/alsap` hosting.
+
+Idempotent with realize → cartographer → couturier.
+
+---
 ## 2026-08-26 — Authoring Chameleon vs runtime Chameleon; `tp_callout` on the spine
 
 Two jobs were mixed in the Chameleon stub (“writes nothing / do not

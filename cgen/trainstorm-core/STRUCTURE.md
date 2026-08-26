@@ -284,7 +284,9 @@ Near-term, in dependency order:
    second occurrence; extra `reinforce` projects as a check from the atom. **Lesson spine
    2026-08-25** — default HTML is a short path; `realized_coverage.html` is the dump.
    **2026-08-26** — that path includes Procedure A as a job sequence
-   (present only; no extra `ele_`; no invented procedure check).
+   (present only; no extra `ele_` on A; no invented procedure check),
+   then one worked example from two `alsap_asp9999` instance atoms
+   (`composed_from` crosses stores; SOP `atoms.json` untouched).
    **`tools/render/`** (PNG) remains.
 5. ~~**Cartographer v1**~~ — **done 2026-08-25.** Heuristic compiler writes `move`/`teaches` on the
    ALSAP occurrence store; re-runnable on extras (preserves stamped `move`).
