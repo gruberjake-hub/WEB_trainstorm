@@ -83,11 +83,13 @@ Realizer-stamped `exemplify` (an unbound instance_value with no
 
 ## Spine membership
 
-After Procedure A’s job-aid, before the two existing reinforce checks.
+After Procedure A’s job-aid **and the sequence practice of those four
+presents**, before the two existing reinforce checks.
 Spec: `agents/realizer/spine_v1.md`. Policy
 `v1_front_matter_callout_procedure_sequence_example_then_checks`.
 
-Do not mint a procedure-step MCQ. Do not 1:many the SOP. Do not stand up
+Do not mint a procedure-step MCQ. Sequence practice is projector-only
+(`agents/realizer/check_v1.md`). Do not 1:many the SOP. Do not stand up
 Chameleon. Do not host `/cgen/alsap`.
 
 ---

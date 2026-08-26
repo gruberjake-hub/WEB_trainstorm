@@ -13,6 +13,34 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-26 — Procedure A sequence practice (order the four existing step atoms)
+
+After PR #22 the short lesson walked Procedure A as a job-aid, then showed
+an instance example, then two definition checks. An ID would practice the
+**order** of those steps near the job aid. This entry records that hop.
+
+**Shape.** `agents/realizer/check_v1.md` gains `sequence` beside invert-
+definition `mcq_siblings` / `cloze`. Items = first sentences of
+`atom_sop_ast29080_proc_a_s1` … `_s4` (verbatim). Correct order =
+`bindings.object.order` (already taught). Prompt is task clothes: *Put
+these in the order already taught.* Not “which is the first planning
+step?” (PR #16 refused that invented fact). Feedback does not invent SOP
+facts. Stable shuffle so the learner can be wrong, then right.
+
+**Mint nothing.** Composing from one A step is a lie (the check is the
+four siblings). Composing from the thin A heading is a lie. Project from
+the four existing present `ele_` records. Store stays 53 / 47.
+`atoms.json` untouched. Spine `element_ids` still 14.
+`spine.sequence_check` documents the projection. Placement: after the
+job aid, before the instance example (`exemplify` stays). Definition
+checks stay at the end.
+
+Closed vocab: no `retrieve`. Did not stamp `practice` on a fake extra.
+No chameleon.py, no Headwater outcomes-mode, no `/cgen/alsap` hosting,
+no 1:many of the SOP, no distractor-writer. Idempotent with realize →
+cartographer → couturier.
+
+---
 ## 2026-08-26 — One worked example on the ALSAP spine (instance atoms via composed_from)
 
 The short lesson already had opening, why-this callout of purpose, front-matter,

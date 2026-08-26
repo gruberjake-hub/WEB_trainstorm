@@ -12,28 +12,33 @@ the SOP.
 
 `reinforce` extras (Gagné 9a; closed vocab has no `retrieve`) project as a
 **check** derived from the atom's existing meaning (`agents/realizer/check_v1.md`)
-— a stem + choices or a cloze, not an italic reprint. No authored
+— a stem + choices or a cloze, not an italic reprint. Procedure A’s four
+presents also project a **sequence** check (order those first sentences;
+correct order is `bindings.object.order`). That check is projector-only: no
+extra `ele_`, because composing it from one atom would be a lie. No authored
 `content.text`. Distractors, if any, are sibling atoms in the same store.
 
 Default HTML is a **short lesson spine** (`agents/realizer/spine_v1.md`): title
 hook, a why-this callout of the purpose atom (`tp_callout`), a handful of
 front-matter teaching cards, Procedure A’s real steps as a job sequence
-(present only), one worked example from the sibling instance store (two
-`exemplify` extras of existing ASP-9999 atoms — `agents/realizer/instance_example_v1.md`),
-then the existing checks. The full SOP dump is
-`realized_coverage.html`. Spine is a selection of existing `ele_` records —
-it mints none for membership and drops none. Procedure-step atoms stay 1:1
-(no extra `reinforce`): they are imperatives, so they cannot host an honest
-copula-invert sibling check. Instance extras `composed_from` instance
-`atom_id`s; they do not copy text onto the element or into SOP `atoms.json`.
+(present only), a sequence practice of those four presents, one worked example
+from the sibling instance store (two `exemplify` extras of existing ASP-9999
+atoms — `agents/realizer/instance_example_v1.md`), then the existing definition
+checks. The full SOP dump is `realized_coverage.html`. Spine is a selection of
+existing `ele_` records — it mints none for membership and drops none.
+Procedure-step atoms stay 1:1 (no extra `reinforce`): they are imperatives, so
+they cannot host an honest copula-invert sibling check. Instance extras
+`composed_from` instance `atom_id`s; they do not copy text onto the element or
+into SOP `atoms.json`.
 
 **Atom → primitives** (`agents/realizer/primitives_v1.md`): Realizer binds a
 closed compiler `text_primitive` on the occurrence from atom kind + occurrence
 move (heading / body / step / callout / check). The spine projector renders
 those primitives — why-this as a callout of purpose, Procedure A s1–s4 as one
-job-aid step list, the instance example as body/`exemplify` clothes (not a
-new SOP card), front-matter as heading/body, reinforce as the existing
-check. Coverage stays card-like. Couturier still owns `style_ref`. No authored
+job-aid step list then a sequence practice of the same four presents, the
+instance example as body/`exemplify` clothes (not a new SOP card),
+front-matter as heading/body, reinforce as the existing definition checks.
+Coverage stays card-like. Couturier still owns `style_ref`. No authored
 `content.text`.
 
 Idempotency: extra ids are `(primary ele_) + "__" + move`. A re-run accretes
@@ -887,8 +892,9 @@ def supports_honest_sibling_check(atom, atoms) -> bool:
     """True only for a copula invert plus two sibling first-sentences.
 
     Procedure steps are imperatives — no `{subject} is {complement}` — so this
-    is False and we do not mint an extra `reinforce`. Cloze is not sibling
-    contrast; do not treat it as an honest check for this hop.
+    is False and we do not mint an extra `reinforce` of one step. Cloze is not
+    sibling contrast. Sequence practice of a procedure_step *group* is a
+    different shape (`derive_sequence_check`); it mints no extra `ele_`.
     """
     sentence = first_sentence((atom.get("meaning") or {}).get("source_text") or "")
     if not copula_parts(sentence):
@@ -993,9 +999,28 @@ def apply_spine(manifest, atoms, elements) -> dict:
                  "composed_from — Procedure A has no honest match; these illustrate the "
                  "ALSAP generally), then existing reinforce extras. Spine projector "
                  "renders compiler primitives (callout / step list / heading / body / "
-                 "check) plus exemplify clothes on the instance beats; coverage dump "
-                 "stays card-like. Not an LLM path and not a full object-tree walk."),
+                 "check) plus a sequence practice of the Procedure A presents "
+                 "(projector-only; no extra ele_) plus exemplify clothes on the "
+                 "instance beats; coverage dump stays card-like. Not an LLM path and "
+                 "not a full object-tree walk."),
     }
+    seq_atoms = procedure_sequence_atoms(atoms)
+    seq = derive_sequence_check(seq_atoms)
+    if seq:
+        assert_sequence_check_honest(seq, atoms)
+        by_cf = {e.get("composed_from"): e for e in elements if is_primary_element(e)}
+        from_eids = [by_cf[aid]["element_id"] for aid in seq["correct_ids"] if aid in by_cf]
+        manifest["spine"]["sequence_check"] = {
+            "shape": seq["shape"],
+            "spec": CHECK_SPEC,
+            "policy": CHECK_POLICY,
+            "from_atom_ids": seq["correct_ids"],
+            "from_element_ids": from_eids,
+            "note": ("Projector-only practice of the Procedure A presents already on "
+                     "the spine. Items are those atoms’ first sentences. Correct order "
+                     "is bindings.object.order (already taught). No extra ele_ — "
+                     "composing this check from one atom would be a lie."),
+        }
     return manifest["spine"]
 
 
@@ -1144,6 +1169,84 @@ def assert_check_honest(check, atom, atoms):
             raise SystemExit(f"{atom.get('atom_id')}: key choice must cite this atom")
         if not c["correct"] and c["from_atom_id"] == atom["atom_id"]:
             raise SystemExit(f"{atom.get('atom_id')}: distractor must be a sibling, not this atom")
+
+
+def derive_sequence_check(step_atoms) -> dict | None:
+    """Order-the-siblings check for a procedure_step group.
+
+    Items = verbatim first sentences of the given atoms. Correct order =
+    bindings.object.order (already taught on the job aid). Not a copula invert
+    and not an MCQ stem. Composing this from one atom would be a lie — the
+    check *is* the siblings — so the projector emits it without minting an
+    extra ele_.
+    """
+    items = []
+    for atom in step_atoms or []:
+        if (atom.get("meaning") or {}).get("kind") != "procedure_step":
+            return None
+        sent = first_sentence((atom.get("meaning") or {}).get("source_text") or "")
+        if not sent or not phrase_in_atom(sent, atom):
+            return None
+        items.append({
+            "atom_id": atom["atom_id"],
+            "text": sent,
+            "order": atom_order(atom),
+        })
+    if len(items) < 2:
+        return None
+    items.sort(key=lambda it: it["order"])
+    orders = [it["order"] for it in items]
+    if len(set(orders)) != len(orders):
+        return None
+    return {
+        "shape": "sequence",
+        "spec": CHECK_SPEC,
+        "policy": CHECK_POLICY,
+        "prompt": "Put these in the order already taught.",
+        "items": items,
+        "correct_ids": [it["atom_id"] for it in items],
+    }
+
+
+def assert_sequence_check_honest(check, atoms):
+    """Refuse a sequence projection that invented wording or order."""
+    if not check or check.get("shape") != "sequence":
+        raise SystemExit("sequence check derivation returned nothing")
+    if check.get("prompt") != "Put these in the order already taught.":
+        raise SystemExit("sequence prompt is clothes, not an SOP stem — refusing a new fact")
+    by_id = {a["atom_id"]: a for a in atoms}
+    prev = None
+    for it in check.get("items") or []:
+        src = by_id.get(it["atom_id"])
+        if src is None:
+            raise SystemExit(f"sequence item cites unknown atom {it['atom_id']}")
+        if (src.get("meaning") or {}).get("kind") != "procedure_step":
+            raise SystemExit(f"{it['atom_id']}: sequence item is not a procedure_step")
+        if not phrase_in_atom(it["text"], src):
+            raise SystemExit(
+                f"{it['atom_id']}: sequence item is not in the atom — refusing to invent"
+            )
+        expected = first_sentence((src.get("meaning") or {}).get("source_text") or "")
+        if it["text"] != expected:
+            raise SystemExit(f"{it['atom_id']}: sequence item is not the atom’s first sentence")
+        o = atom_order(src)
+        if it["order"] != o:
+            raise SystemExit(f"{it['atom_id']}: sequence order is not bindings.object.order")
+        if prev is not None and o <= prev:
+            raise SystemExit("sequence items are not strictly object.order")
+        prev = o
+    if check.get("correct_ids") != [it["atom_id"] for it in check["items"]]:
+        raise SystemExit("sequence correct_ids must follow the sorted items")
+
+
+def shuffled_sequence_items(items, seed: str) -> list:
+    """Stable non-identity permutation so the learner can be wrong, then right."""
+    rotated = stable_rotate(list(items), seed)
+    ids = [it["atom_id"] for it in rotated]
+    correct = [it["atom_id"] for it in items]
+    if ids == correct and len(items) > 1:
+        rotated = list(items[1:]) + list(items[:1])
+    return rotated
 
 
 def stable_rotate(items, seed: str) -> list:
@@ -1372,6 +1475,45 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
             f'</section>'
         )
 
+    def sequence_check_html(step_els, chk):
+        """Projector-only order practice of the job-aid presents. No extra ele_."""
+        seed = "sequence:" + ",".join(chk["correct_ids"])
+        shown = shuffled_sequence_items(chk["items"], seed)
+        rows = []
+        for it in shown:
+            rows.append(
+                f'<li data-atom="{esc(it["atom_id"])}">'
+                f'<div class="seq-move">'
+                f'<button type="button" class="seq-up" aria-label="Move up">Up</button>'
+                f'<button type="button" class="seq-down" aria-label="Move down">Down</button>'
+                f'</div>'
+                f'<span class="seq-text">{esc(it["text"])}</span>'
+                f'</li>'
+            )
+        reveal = "".join(f'<li>{esc(it["text"])}</li>' for it in chk["items"])
+        from_ids = ", ".join(esc(el["element_id"]) for el in step_els)
+        from_atoms = ", ".join(f'<span class="mono">{esc(i)}</span>' for i in chk["correct_ids"])
+        return (
+            f'<section class="prim prim-check sequence-check">'
+            f'<div class="kicker">Practice</div>'
+            f'<form class="check" data-shape="sequence" '
+            f'data-order="{esc(",".join(chk["correct_ids"]))}" '
+            f'data-eid="sequence:{esc(chk["correct_ids"][0])}">'
+            f'<p class="stem">{esc(chk["prompt"])}</p>'
+            f'<ol class="sequence-items">{"".join(rows)}</ol>'
+            f'<div class="check-actions"><button type="submit">Check</button></div>'
+            f'<p class="feedback" hidden></p>'
+            f'<ol class="reveal" hidden>{reveal}</ol>'
+            f'<p class="check-note">Items are the first sentences of {from_atoms}. '
+            f'Correct order is <span class="mono">bindings.object.order</span> '
+            f'(already taught). Projects the present '
+            f'<span class="mono">ele_</span> records ({from_ids}) — no extra '
+            f'occurrence, not authored <span class="mono">content.text</span>. '
+            f'Shape <span class="mono">sequence</span>.</p>'
+            f'</form>'
+            f'</section>'
+        )
+
     def walk(atom, depth, acc):
         occs = occs_for(atom["atom_id"])
         if not occs:
@@ -1403,6 +1545,11 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
     for kind, els in group_spine_for_project(spine_ids, by_eid):
         if kind == "job_aid":
             spine_body.append(job_aid_block_html(els))
+            seq_atoms = [by_atom[el["composed_from"]] for el in els]
+            seq_chk = derive_sequence_check(seq_atoms)
+            if seq_chk:
+                assert_sequence_check_honest(seq_chk, catalog)
+                spine_body.append(sequence_check_html(els, seq_chk))
             continue
         el = els[0]
         atom = by_atom[el["composed_from"]]
@@ -1470,6 +1617,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
     check_note = (
         " Extra <span class=mono>reinforce</span> occurrences render as a check "
         "(stem + choices or cloze) derived from the atom — not an italic reprint. "
+        "Procedure A’s job-aid presents also project a sequence practice "
+        "(order those first sentences; object.order; no extra ele_). "
         if check_n else ""
     )
     clothes_note = (
@@ -1487,9 +1636,10 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         "(<span class=mono>text_primitive</span>: heading / body / step / callout / check) "
         "from atom kind + occurrence move. The short lesson renders those primitives — "
         "why-this as a <span class=mono>tp_callout</span> of purpose, "
-        "Procedure A as a job-aid step list, a worked example as body/`exemplify` "
+        "Procedure A as a job-aid step list then a sequence practice of those "
+        "presents, a worked example as body/`exemplify` "
         "clothes (instance atom via composed_from), front-matter as heading/body, "
-        "reinforce as the existing check. Coverage stays card-like. "
+        "reinforce as the existing definition checks. Coverage stays card-like. "
         if prim_counts else
         " The atom → primitives hop is owed so beats are clothes, not SOP cards. "
     )
@@ -1498,7 +1648,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         f"(<span class=mono>{esc(spine.get('policy', SPINE_POLICY))}</span>): "
         f"{spine.get('count', 0)} of {len(elements)} occurrences — document-root opening, "
         "why-this callout of purpose, teachable front-matter primaries, Procedure A as "
-        "a job sequence, a small instance example, then the existing checks. The object "
+        "a job sequence then a sequence practice of those presents, a small instance "
+        "example, then the existing definition checks. The object "
         "tree walk is coverage, not the path. "
     )
     if cout:
@@ -1648,6 +1799,22 @@ form.check .check-note{font-size:11.5px;color:var(--mut);margin:10px 0 0}
 .job-aid li.step .meaning{grid-column:2;margin:0 0 4px;font-size:15.5px;line-height:1.45}
 .job-aid li.step .join{grid-column:2}
 .job-aid > .join{margin:10px 0 4px}
+.sequence-check{border:2px solid #334155;border-radius:8px;padding:16px 18px 10px;margin:16px 0;
+ background:#f1f5f9}
+.sequence-check .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+ color:#1e293b;margin:0 0 6px}
+.sequence-check form.check .stem{font-size:16px;font-weight:650;margin:4px 0 12px}
+.sequence-check ol.sequence-items{margin:0;padding:0;list-style:none}
+.sequence-check ol.sequence-items li{display:grid;grid-template-columns:auto 1fr;gap:10px;
+ align-items:start;padding:10px 12px;margin:8px 0;background:#fff;border:1px solid var(--line);
+ border-radius:6px}
+.sequence-check .seq-move{display:flex;flex-direction:column;gap:4px}
+.sequence-check .seq-move button{background:#e2e8f0;color:#0f172a;border:0;border-radius:4px;
+ padding:4px 8px;font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.sequence-check .seq-move button:hover{background:#cbd5e1}
+.sequence-check .seq-text{font-size:14.5px;line-height:1.45}
+.sequence-check ol.reveal{margin:10px 0 0;padding:8px 10px 8px 28px;background:#fff;
+ border-left:3px solid #1e3a8a;font-size:13.5px}
 .occ.prim-heading .meaning,.occ.prim-body .meaning{margin:4px 0 6px}
 tr.pair-row td{background:#eff6ff}
 .meaning{margin:4px 0 6px}
@@ -1668,6 +1835,22 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
     return (s || "").replace(/\s+/g, " ").trim().toLowerCase();
   }
   document.querySelectorAll("form.check").forEach(function (form) {
+    form.querySelectorAll(".seq-up").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var li = btn.closest("li");
+        if (li && li.previousElementSibling) {
+          li.parentNode.insertBefore(li, li.previousElementSibling);
+        }
+      });
+    });
+    form.querySelectorAll(".seq-down").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var li = btn.closest("li");
+        if (li && li.nextElementSibling) {
+          li.parentNode.insertBefore(li.nextElementSibling, li);
+        }
+      });
+    });
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var fb = form.querySelector(".feedback");
@@ -1684,15 +1867,32 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
           return;
         }
         ok = picked.value === "key";
+        fb.hidden = false;
+        fb.className = "feedback " + (ok ? "ok" : "no");
+        fb.textContent = ok
+          ? "Correct — that wording is this atom."
+          : "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom’s own wording.";
+      } else if (shape === "sequence") {
+        var want = (form.getAttribute("data-order") || "").split(",");
+        var got = [];
+        form.querySelectorAll(".sequence-items li").forEach(function (li) {
+          got.push(li.getAttribute("data-atom"));
+        });
+        ok = got.join(",") === want.join(",");
+        fb.hidden = false;
+        fb.className = "feedback " + (ok ? "ok" : "no");
+        fb.textContent = ok
+          ? "Correct — that is the order of these atoms."
+          : "Not yet. The order is the sequence already taught (these atoms’ object.order).";
       } else {
         var typed = form.querySelector("input[type=text]");
         ok = typed && norm(typed.value) === norm(key);
+        fb.hidden = false;
+        fb.className = "feedback " + (ok ? "ok" : "no");
+        fb.textContent = ok
+          ? "Correct — that wording is this atom."
+          : "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom’s own wording.";
       }
-      fb.hidden = false;
-      fb.className = "feedback " + (ok ? "ok" : "no");
-      fb.textContent = ok
-        ? "Correct — that wording is this atom."
-        : "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom’s own wording.";
       if (reveal) reveal.hidden = false;
     });
   });
@@ -1709,6 +1909,7 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f"{' 1:many pairs share composed_from.' if extra_n else ''}"
         f"{' Clothes are mixed.' if cout and len(look_counts) > 1 else (' Run tools/couturier.py to dress occurrences.' if not cout else '')}"
         f"{' Extra reinforce occurrences project as a check from the atom (agents/realizer/check_v1.md).' if check_n else ''} "
+        f"{' Procedure A presents also project a sequence practice (same spec; no extra ele_).' if check_n else ''} "
         f"{' Compiler primitives: ' + prim_bits + '.' if prim_bits else ''} "
         f"Spine heuristic: <span class=mono>{esc(SPINE_SPEC)}</span>."
     )
@@ -1756,7 +1957,8 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f'<a href="{coverage_href}">Full SOP / coverage ({store_n} occurrences)</a>',
         (f"{spine_n} of {store_n} occurrences · why-this callout of purpose, "
          "front-matter as heading/body, Procedure A as a job-aid step sequence, "
-         "then a worked example from the instance store, then the existing checks. "
+         "then a sequence practice of those four presents, then a worked example "
+         "from the instance store, then the existing definition checks. "
          "Not B/C and not the SOP dump. Heuristic is documented, not an LLM."),
         "".join(spine_body),
         lesson_details,
@@ -2049,11 +2251,44 @@ def selftest(closed_moves):
                             "atom_sop_ast29080_proc_a_s4",
                         )),
                     ""))
-    results.append(("procedure A steps have no copula invert — skip check",
+    results.append(("procedure A steps have no copula invert — skip sibling MCQ",
                     all(not supports_honest_sibling_check(s, store)
                         for s in (step, step2, step3, step4)),
                     [copula_parts(first_sentence(s["meaning"]["source_text"]))
                      for s in (step, step2, step3, step4)]))
+    seq_chk = derive_sequence_check([step, step2, step3, step4])
+    assert_sequence_check_honest(seq_chk, store)
+    results.append(("procedure A sequence shape is sequence not mcq",
+                    seq_chk and seq_chk["shape"] == "sequence", seq_chk and seq_chk.get("shape")))
+    results.append(("sequence items are first sentences of the four A atoms",
+                    seq_chk and [it["atom_id"] for it in seq_chk["items"]] == [
+                        "atom_sop_ast29080_proc_a_s1",
+                        "atom_sop_ast29080_proc_a_s2",
+                        "atom_sop_ast29080_proc_a_s3",
+                        "atom_sop_ast29080_proc_a_s4",
+                    ]
+                    and all(phrase_in_atom(it["text"], by)
+                            for it, by in zip(seq_chk["items"], (step, step2, step3, step4))),
+                    seq_chk and [it["text"][:40] for it in seq_chk["items"]]))
+    results.append(("sequence order is object.order",
+                    seq_chk and seq_chk["correct_ids"] == [
+                        "atom_sop_ast29080_proc_a_s1",
+                        "atom_sop_ast29080_proc_a_s2",
+                        "atom_sop_ast29080_proc_a_s3",
+                        "atom_sop_ast29080_proc_a_s4",
+                    ]
+                    and [it["order"] for it in seq_chk["items"]] == [0, 1, 2, 3],
+                    seq_chk and seq_chk.get("correct_ids")))
+    results.append(("sequence prompt is task clothes not an SOP stem",
+                    seq_chk and seq_chk["prompt"] == "Put these in the order already taught."
+                    and "first planning" not in seq_chk["prompt"].lower(),
+                    seq_chk and seq_chk.get("prompt")))
+    results.append(("sequence check of one atom is refused",
+                    derive_sequence_check([step]) is None, ""))
+    shuffled = shuffled_sequence_items(seq_chk["items"], "sequence:" + ",".join(seq_chk["correct_ids"]))
+    results.append(("sequence shuffle is not identity so the learner can be wrong",
+                    [it["atom_id"] for it in shuffled] != seq_chk["correct_ids"],
+                    [it["atom_id"] for it in shuffled]))
     results.append(("spine is a subset of existing ele_ ids", set(got_spine) <= seeded_ids, ""))
     mf_spine = {}
     apply_spine(mf_spine, store, seeded)
@@ -2139,8 +2374,10 @@ def selftest(closed_moves):
                     < page.find("ele_sop_ast29080_purpose__reinforce"), ""))
     results.append(("lesson links to coverage",
                     "realized_coverage.html" in page and "Full SOP / coverage" in page, ""))
-    results.append(("lesson has both existing checks (no new procedure check)",
-                    page.count('form class="check"') == 2, page.count('form class="check"')))
+    results.append(("lesson has two definition checks plus one sequence practice",
+                    page.count('form class="check"') == 3
+                    and page.count('data-shape="sequence"') == 1
+                    and page.count('data-shape="mcq_siblings"') == 2, page.count('form class="check"')))
     results.append(("coverage dump keeps roles and later steps",
                     "ele_sop_ast29080_roles" in cov_page
                     and "ele_sop_ast29080_proc_a_s1" in cov_page
@@ -2178,11 +2415,55 @@ def selftest(closed_moves):
                     page.split("ele_sop_ast29080_purpose__activate", 1)[-1]
                     .split("</article>", 1)[0]
                     .find("The purpose of this SOP is to define the process") != -1, ""))
-    results.append(("callout is not a third check",
-                    page.count('form class="check"') == 2, page.count('form class="check"')))
+    results.append(("callout is not a check",
+                    page.split("ele_sop_ast29080_purpose__activate", 1)[-1]
+                    .split("</article>", 1)[0].count('form class="check"') == 0, ""))
     results.append(("coverage dump stays card-like (no job-aid grouping)",
                     "class=\"prim prim-step job-aid\"" not in cov_page
                     and "ele_sop_ast29080_proc_a_s1" in cov_page, ""))
+    results.append(("coverage dump has no sequence practice (lesson-only projection)",
+                    'data-shape="sequence"' not in cov_page, ""))
+    results.append(("lesson sequence practice sits after the job aid",
+                    page.find('class="prim prim-step job-aid"')
+                    < page.find('data-shape="sequence"')
+                    < page.find("ele_sop_ast29080_purpose__reinforce"), ""))
+    results.append(("lesson sequence items are the four A first sentences",
+                    'data-atom="atom_sop_ast29080_proc_a_s1"' in page
+                    and 'data-atom="atom_sop_ast29080_proc_a_s2"' in page
+                    and 'data-atom="atom_sop_ast29080_proc_a_s3"' in page
+                    and 'data-atom="atom_sop_ast29080_proc_a_s4"' in page
+                    and "Notify a member of Safety Data Science" in page
+                    and "Schedule and conduct the ALSAP Kick-Off Meeting" in page, ""))
+    results.append(("lesson sequence does not invent a planning-step MCQ stem",
+                    "first planning step" not in page.lower()
+                    and "Which is the first" not in page
+                    and "Put these in the order already taught." in page, ""))
+    results.append(("lesson sequence kicker is Practice not a new retrieve enum",
+                    ">Practice</div>" in page
+                    and "retrieve" not in page, ""))
+    seq_section = page.split('data-shape="sequence"', 1)[-1].split("</form>", 1)[0]
+    shown_ids = re.findall(r'data-atom="([^"]+)"', seq_section)
+    results.append(("lesson sequence initial order is shuffled",
+                    shown_ids != [
+                        "atom_sop_ast29080_proc_a_s1",
+                        "atom_sop_ast29080_proc_a_s2",
+                        "atom_sop_ast29080_proc_a_s3",
+                        "atom_sop_ast29080_proc_a_s4",
+                    ]
+                    and set(shown_ids) == {
+                        "atom_sop_ast29080_proc_a_s1",
+                        "atom_sop_ast29080_proc_a_s2",
+                        "atom_sop_ast29080_proc_a_s3",
+                        "atom_sop_ast29080_proc_a_s4",
+                    }, shown_ids))
+    results.append(("spine sequence_check stamp names the four presents",
+                    (mf_spine.get("spine") or {}).get("sequence_check", {}).get("from_atom_ids")
+                    == [
+                        "atom_sop_ast29080_proc_a_s1",
+                        "atom_sop_ast29080_proc_a_s2",
+                        "atom_sop_ast29080_proc_a_s3",
+                        "atom_sop_ast29080_proc_a_s4",
+                    ], (mf_spine.get("spine") or {}).get("sequence_check")))
 
     profile_inst = {
         "atom_id": INSTANCE_EXAMPLE_SEED[0][0],
@@ -2287,13 +2568,16 @@ def selftest(closed_moves):
     results.append(("lesson HTML does not dump the unused instance atom",
                     unused_inst["atom_id"] not in page_inst
                     and unused_eid not in page_inst, ""))
-    results.append(("instance example is not a third check or a job-aid card",
-                    page_inst.count('form class="check"') == 2
-                    and page_inst.count('class="prim prim-step job-aid"') == 1, ""))
-    results.append(("instance example sits after the job aid and before checks in HTML",
+    results.append(("instance example is not a fourth job-aid card",
+                    page_inst.count('class="prim prim-step job-aid"') == 1, ""))
+    results.append(("instance example sits after sequence practice and before definition checks",
                     page_inst.find("ele_sop_ast29080_proc_a_s4")
+                    < page_inst.find('data-shape="sequence"')
                     < page_inst.find(inst_eids[0])
                     < page_inst.find("ele_sop_ast29080_purpose__reinforce"), ""))
+    results.append(("instance lesson has sequence practice plus two definition checks",
+                    page_inst.count('form class="check"') == 3
+                    and page_inst.count('data-shape="sequence"') == 1, page_inst.count('form class="check"')))
 
     huge_steps = [
         atom(
@@ -2451,6 +2735,9 @@ def main():
         atom = atoms_by_id[e["composed_from"]]
         chk = derive_check(atom, atoms)
         assert_check_honest(chk, atom, atoms)
+    seq_live = derive_sequence_check(procedure_sequence_atoms(atoms))
+    if seq_live:
+        assert_sequence_check_honest(seq_live, atoms)
 
     store_dir.mkdir(parents=True, exist_ok=True)
     elements_path = store_dir / "elements.json"
@@ -2507,7 +2794,10 @@ def main():
                  f"({INSTANCE_EXAMPLE_SPEC}). Cartographer owns occurrence intent; Couturier owns expression "
                  "style. Realizer binds compiler primitives (text_primitive) from atom kind + "
                  f"move ({PRIMITIVE_SPEC}). Spine is a documented selection of existing ele_ records "
-                 f"({SPINE_SPEC}); the full dump is coverage. A re-realize preserves extras, "
+                 f"({SPINE_SPEC}); the full dump is coverage. Procedure A presents project "
+                 "a sequence practice from those four existing ele_ records "
+                 "(agents/realizer/check_v1.md); composing that check from one atom "
+                 "would be a lie, so no extra is minted. A re-realize preserves extras, "
                  "intent, style, and recomputes the same spine and primitives."),
     }
     if any((e.get("ext") or {}).get("cartographer") for e in elements):

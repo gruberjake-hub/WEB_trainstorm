@@ -284,7 +284,8 @@ Near-term, in dependency order:
    second occurrence; extra `reinforce` projects as a check from the atom. **Lesson spine
    2026-08-25** — default HTML is a short path; `realized_coverage.html` is the dump.
    **2026-08-26** — that path includes Procedure A as a job sequence
-   (present only; no extra `ele_` on A; no invented procedure check),
+   (present only; no extra `ele_` on A; no invented procedure-step MCQ),
+   a sequence practice of those four presents (projector-only; object.order),
    then one worked example from two `alsap_asp9999` instance atoms
    (`composed_from` crosses stores; SOP `atoms.json` untouched).
    **`tools/render/`** (PNG) remains.
@@ -294,9 +295,10 @@ Near-term, in dependency order:
    clothes the 1:many pairs differently. Extra `reinforce` is a check, not a recap.
    **Lesson spine v1** — short path is the default HTML; dump is coverage.
    **2026-08-26** — Procedure A’s real steps as a job sequence on that path
-   (no extra `ele_`; no invented procedure check). **Same day — atom →
+   (no extra `ele_`; no invented procedure-step MCQ). **Same day — atom →
    primitives:** those steps project as a job-aid, not four SOP cards.
-   Next: Dragoman / `tools/render/`.
+   **Same day — sequence practice:** order those four first sentences
+   (projector-only; `object.order`). Next: Dragoman / `tools/render/`.
 7. **A real `brunswick.reference.course.json`** — still `{"_todo": …}`, and the only thing that would
    prove the course half end to end.
 

@@ -919,4 +919,77 @@ beats are now on the path; B/C and the dump of the rest stand. Working-
 process block untouched. Single-writer per facet stands. Chameleon
 agent still not stood up.
 
+**Pointer:** a later 2026-08-26 block projects a sequence practice of
+Procedure A’s four presents after the job aid (projector-only; no extra
+`ele_`). The instance example stays `exemplify` after that practice.
+
+---
+
+## 2026-08-26 — Procedure A sequence practice: order the four existing step atoms
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** After the Procedure A job aid, the short ALSAP lesson now
+includes an interactive **order/sequence check** of the four existing
+Plan Development step atoms. Items are those atoms’ first sentences
+(verbatim). Correct order is Cartographer `bindings.object.order` — the
+sequence already taught. Not an MCQ stem such as “which is the first
+planning step?” (that invents a fact; PR #16 correctly refused it). Not
+LLM distractors. Jake parked a distractor-writer; this hop does not
+build it. `atoms.json` unchanged. No authored `content.text`.
+
+**Composition choice — mint nothing.** Prefer one extra `ele_` with
+`move: reinforce` (closed vocab; do not invent `retrieve`) if that extra
+can honestly `composed_from` one atom. Composing from a single A step
+is a lie (the check is the four siblings). Composing from the thin A
+heading (`atom_sop_ast29080_proc_a`) is also a lie (skipped teaching
+card; children’s sentences under a parent `composed_from`). So: **no
+new `ele_`.** Project the check from the four existing present records
+`ele_sop_ast29080_proc_a_s1` … `_s4` (same honesty as grouping them into
+one job-aid). Documented on the occurrence manifest as
+`spine.sequence_check`. Store stays **53 / 47**. A-step primaries stay
+`present`. Did not stamp `practice` on a fake extra.
+
+**Shape.** New check shape `sequence` in `agents/realizer/check_v1.md`
+(alongside invert-definition `mcq_siblings` / `cloze`). Sequence is for
+`procedure_step` groups that already have `object.order`. Definition
+checks stay as they are. Prompt is task clothes: *Put these in the order
+already taught.* Feedback names object.order; it does not invent SOP
+facts. Initial display is a stable non-identity permutation so the
+learner can be wrong, then right.
+
+**Placement.** After the job aid, before the instance example
+(Gagné-ish: practice the steps near the job aid). Instance example stays
+`exemplify`. Two existing definition checks stay at the end. Spine
+`element_ids` membership is unchanged (14). Coverage dump stays
+card-like (no sequence form).
+
+Cartographer still owns intent. Couturier still owns style. Closed vocab
+still has no `retrieve`. No chameleon.py. No Headwater outcomes-mode.
+No `/cgen/alsap` hosting. No 1:many of the whole SOP. Idempotent with
+realize → cartographer → couturier.
+
+**Why:** After PR #22 the spine had a job-aid then an instance example
+then definition checks. An ID would let the learner **practice the
+order** of the steps just taught, without inventing a planning-step MCQ
+or minting a dishonest extra.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. `--selftest` on
+  all three.
+- Open `realized_lesson.html` — job aid, then sequence practice, then
+  instance example, then the two definition checks. Open
+  `realized_coverage.html` — full dump, no sequence form.
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`.
+
+**Supersedes:** the previous spine blocks’ “no procedure check” as to
+*invert-definition MCQ / invented stem* — that refusal stands; a
+sequence practice of the four existing presents is now on the path.
+Working-process block untouched. Single-writer per facet stands.
+Chameleon agent still not stood up.
+
+
 

@@ -21,7 +21,10 @@ owns style. Spine **mints no `ele_` ids for membership** (the instance extras
 are minted by the instance-example seed, then selected) and **drops none**.
 `atoms.json` (SOP and instance) is untouched. Locale packs stay keyed on
 `atom_id`. Closed vocab still has no `retrieve`; extra `reinforce` stays a
-check (`agents/realizer/check_v1.md`).
+check (`agents/realizer/check_v1.md`). Procedure A’s four presents also
+project a **sequence** practice (order those first sentences; object.order)
+immediately after the job aid, before the instance example. That practice
+mints no `ele_`.
 
 ---
 
@@ -31,7 +34,8 @@ check (`agents/realizer/check_v1.md`).
 card dump. It does not imply a short lesson. Spine v1 **reuses those roles as
 input** (root vs direct child vs descendant; sibling `order`) and then **selects
 a subset**, sequenced as opening → why-this callout of purpose → front-matter
-teaching cards → Procedure A job sequence → instance example → existing checks.
+teaching cards → Procedure A job sequence → sequence practice of those
+presents → instance example → existing definition checks.
 
 The Cartographer object tree already lists Procedure A’s children in `order`.
 The selector takes those non-heading children — it does not invent a parallel
@@ -74,22 +78,29 @@ coverage. Not the whole SOP.
 
 ---
 
-## Why no extra `reinforce` on those atoms
+## Why no extra `ele_` on those atoms (sequence practice is projector-only)
 
-A check for this hop must be **sibling-atom closed contrast**: verbatim first
-sentences of sibling steps. No LLM. No invented stem.
+A copula-invert sibling MCQ is still impossible: Procedure-step atoms are
+**imperatives** (*Notify…*, *Collaborate…*, *Schedule…*). `derive_check`
+cannot invert `{subject} is {complement}`. A stem such as “Which is the
+first planning step?” would invent a fact (PR #16 refused it). Jake parked
+a distractor-writer.
 
-`derive_check` can invert `{subject} is {complement}` → `What is {subject}?`
-(the two existing checks). Procedure-step atoms are **imperatives** (*Notify…*,
-*Collaborate…*, *Schedule…*). They have usable sibling sentences, but no
-copula to invert. A cloze of a step is not sibling contrast. A stem such as
-“Which is the first planning step?” would invent a fact. Jake parked a
-distractor-writer agent for later.
+A **sequence** check *is* honest: items are those four first sentences;
+correct order is `bindings.object.order` (already taught on the job aid).
+See `agents/realizer/check_v1.md`.
 
-So: **present only on those atoms. No extra `ele_` for Procedure A.** The
-guest extras this hop mints are the two instance **exemplify** beats, not a
-procedure check. `supports_honest_sibling_check` is the gate (`tools/realize.py`);
-it is False for every A step.
+**Do not mint an extra for it.** Composing from s1 (or any one A step) is
+a lie — the check is the four siblings. Composing from the thin A heading
+is also a lie (that atom is skipped as a teaching card). Project the
+check from the four existing present `ele_` records, same honesty as the
+job-aid grouping. `supports_honest_sibling_check` stays False for every A
+step (that gate is the invert-definition MCQ). Guest extras this hop
+does not mint: the two instance **exemplify** beats remain from the
+instance-example seed.
+
+The projector kicker is **Practice**. Closed vocab still has no
+`retrieve`. Did not stamp `practice` on a fake extra.
 
 ---
 
@@ -103,8 +114,9 @@ it is False for every A step.
 | Why-this callout | Purpose atom `atom_sop_ast29080_purpose` | Seeded extra `activate` (`ele_sop_ast29080_purpose__activate`) | Verified why-this meaning (SOP purpose sentence). Clothes: `tp_callout`. Not invented text. Not the title atom. |
 | Front-matter teaching cards | Direct children of the root, `kind` in `procedure` / `form`, **not thin** | Primary occurrence only | Paragraphs an ID would actually say: purpose (objective / `tp_purpose`), scope, what-it-is. Sorted by `object.order`. |
 | Procedure A job sequence | First Procedures-container branch in `object.order`; skip thin A/B/C heading; take every non-thin `procedure_step` child (`PROCEDURE_SEQUENCE_CAP = 8`) | Primary occurrence only | Doing the work: Plan Development’s four real steps, in `object.order`. Not B/C. |
+| Sequence practice | Same four A-step atoms | **No new `ele_`.** Projector-only check of the four presents (`shape: sequence`) | Gagné-ish: practice the steps near the job aid. Items = first sentences. Order = `object.order`. Instance example stays `exemplify` after this. |
 | Worked example | Two instance atoms from sibling `alsap_asp9999` (see `instance_example_v1.md`) | Guest extras `…__exemplify` | **Procedure A has no honest match** in the instance store (plan-development acts vs filled AST-34037 values). These two illustrate the ALSAP generally: selected BR profile `conditional_favorable` + the authored rationale. `composed_from` is the instance `atom_id`. Clothes: `exemplify` / `brand.example` / `tp_body`. Not another SOP card. Not the other eight instance atoms. |
-| Checks | Spine atoms that already have an extra `reinforce` | Those extras, in the same atom order as their presents | Reuse the two existing checks. Do not mint a procedure-step MCQ. |
+| Checks | Spine atoms that already have an extra `reinforce` | Those extras, in the same atom order as their presents | Reuse the two existing definition checks. Do not mint a procedure-step MCQ. |
 
 **Off the path (coverage, not deleted)**
 
@@ -134,10 +146,12 @@ Live ALSAP therefore yields **fourteen** occurrences, in this order:
 
 Teachable order is Gagné-shaped and small: gain attention → why-this
 callout → say the thing (purpose-frame / who / what) → walk the Plan
-Development job sequence → show that it happened (instance) → enhance
-retention with the two existing checks.
-Checks come **after** the teaching cards and the example, not interleaved.
-Not the 20 procedure steps of A+B+C. Purpose is three clothes of one atom
+Development job sequence → practice that order (projector-only sequence
+check) → show that an ALSAP happened (instance, `exemplify`) → enhance
+retention with the two existing definition checks.
+The sequence practice sits **after** the job aid and **before** the
+instance example. Definition checks stay at the end. Not the 20
+procedure steps of A+B+C. Purpose is three clothes of one atom
 (activate + objective + reinforce).
 
 ---
@@ -153,7 +167,7 @@ Occurrence manifest `spine`:
   "element_ids": ["ele_sop_ast29080", "ele_sop_ast29080__present", "ele_sop_ast29080_purpose__activate", "…"],
   "count": 14,
   "store_count": 53,
-  "note": "Selection of existing ele_ records. Coverage dump keeps the rest."
+  "note": "Selection of existing ele_ records. Coverage dump keeps the rest. Sequence practice of Procedure A is projector-only (spine.sequence_check)."
 }
 ```
 
@@ -165,7 +179,7 @@ HTML (Realizer projector):
 
 | File | Default experience |
 |---|---|
-| `<project>/realized_lesson.html` | The spine, in the order above. Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), two example beats (`exemplify` / `brand.example` / `tp_body`), two checks (`tp_recall`). Link to coverage. |
+| `<project>/realized_lesson.html` | The spine, in the order above. Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), a **sequence practice** of those four presents (order the first sentences), two example beats (`exemplify` / `brand.example` / `tp_body`), two definition checks (`tp_recall`). Link to coverage. |
 | `<project>/realized_coverage.html` | Full occurrence dump in SOP document order — still card-like. Link back to the lesson. |
 
 Compiler primitives (`agents/realizer/primitives_v1.md`) are Realizer-owned
@@ -182,10 +196,12 @@ Do not hide coverage by deleting `ele_` records. The store stays 53
 ## What this is not
 
 - Not an ID genius and not an LLM path-picker.
-- Not a distractor-writer. Checks keep closed-contrast distractors from sibling
-  atoms (verbatim). Jake parked a future distractor-writer agent. This hop
-  does not mint a procedure-step check.
-- Not a new `retrieve` enum. One extra `ele_` (purpose activate); not 1:many
+- Not a distractor-writer. Definition checks keep closed-contrast distractors from sibling
+  atoms (verbatim). Sequence practice uses the four A first sentences and
+  `object.order`. Jake parked a future distractor-writer agent. This hop
+  does not mint a procedure-step MCQ and does not invent “which is the first
+  planning step?”
+- Not a new `retrieve` enum. No extra `ele_` for Procedure A. Not 1:many
   of the SOP.
 - Not Dragoman, Storyline, `.potx`, motion, or `tools/render/` PNG pipelines.
 - Not Cartographer writing sequence; not Couturier picking clothes from the

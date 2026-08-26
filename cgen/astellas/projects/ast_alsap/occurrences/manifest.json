@@ -56,7 +56,7 @@
     ],
     "note": "Procedure A has no honest match in the instance store (plan-development acts vs filled AST-34037 values). Two cited atoms illustrate the ALSAP generally: BR profile + rationale. composed_from points at the instance atom_id. Meaning catalog joins the sibling store; SOP atoms.json is not copied into."
   },
-  "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). A small instance-example seed mints guest ele_ records in this occurrence store whose composed_from is an alsap_asp9999 atom_id (agents/realizer/instance_example_v1.md). Cartographer owns occurrence intent; Couturier owns expression style. Realizer binds compiler primitives (text_primitive) from atom kind + move (agents/realizer/primitives_v1.md). Spine is a documented selection of existing ele_ records (agents/realizer/spine_v1.md); the full dump is coverage. A re-realize preserves extras, intent, style, and recomputes the same spine and primitives.",
+  "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). A small instance-example seed mints guest ele_ records in this occurrence store whose composed_from is an alsap_asp9999 atom_id (agents/realizer/instance_example_v1.md). Cartographer owns occurrence intent; Couturier owns expression style. Realizer binds compiler primitives (text_primitive) from atom kind + move (agents/realizer/primitives_v1.md). Spine is a documented selection of existing ele_ records (agents/realizer/spine_v1.md); the full dump is coverage. Procedure A presents project a sequence practice from those four existing ele_ records (agents/realizer/check_v1.md); composing that check from one atom would be a lie, so no extra is minted. A re-realize preserves extras, intent, style, and recomputes the same spine and primitives.",
   "cartographer": {
     "policy": "v1_heuristic_compiler",
     "tool": "tools/cartographer.py",
@@ -116,7 +116,25 @@
     ],
     "count": 14,
     "store_count": 53,
-    "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then a small instance-example seed (alsap_asp9999 atoms via composed_from \u2014 Procedure A has no honest match; these illustrate the ALSAP generally), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check) plus exemplify clothes on the instance beats; coverage dump stays card-like. Not an LLM path and not a full object-tree walk."
+    "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then a small instance-example seed (alsap_asp9999 atoms via composed_from \u2014 Procedure A has no honest match; these illustrate the ALSAP generally), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check) plus a sequence practice of the Procedure A presents (projector-only; no extra ele_) plus exemplify clothes on the instance beats; coverage dump stays card-like. Not an LLM path and not a full object-tree walk.",
+    "sequence_check": {
+      "shape": "sequence",
+      "spec": "agents/realizer/check_v1.md",
+      "policy": "v1_check_from_atom",
+      "from_atom_ids": [
+        "atom_sop_ast29080_proc_a_s1",
+        "atom_sop_ast29080_proc_a_s2",
+        "atom_sop_ast29080_proc_a_s3",
+        "atom_sop_ast29080_proc_a_s4"
+      ],
+      "from_element_ids": [
+        "ele_sop_ast29080_proc_a_s1",
+        "ele_sop_ast29080_proc_a_s2",
+        "ele_sop_ast29080_proc_a_s3",
+        "ele_sop_ast29080_proc_a_s4"
+      ],
+      "note": "Projector-only practice of the Procedure A presents already on the spine. Items are those atoms\u2019 first sentences. Correct order is bindings.object.order (already taught). No extra ele_ \u2014 composing this check from one atom would be a lie."
+    }
   },
   "primitives": {
     "policy": "v1_atom_to_primitive",
