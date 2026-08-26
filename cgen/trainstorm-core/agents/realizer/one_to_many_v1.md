@@ -76,5 +76,6 @@ Couturier (`python3 tools/couturier.py`) dresses extras; it mints nothing and do
 
 The short lesson that *selects* these extras into a teachable order is
 `agents/realizer/spine_v1.md` (title opening, purpose activate callout,
-front-matter, Procedure A as a job sequence, a small instance example, then these checks). This spec
+front-matter, Procedure A as a job sequence, sequence practice of those
+presents, a small instance example, then these checks). This spec
 still does not 1:many the SOP.

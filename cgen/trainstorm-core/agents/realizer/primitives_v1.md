@@ -31,7 +31,7 @@ key. Cartographer still owns intent. No authored `content.text`.
 | body | `tp_body` (already registered) | default instructional present; also `exemplify` | title extra, scope, general; **on the spine:** two instance-example beats (`brand.example`) |
 | step | `tp_step` | atom `kind == procedure_step` | Procedure A s1–s4 as one job aid |
 | callout | `tp_callout` | `move == activate` | **on the spine:** extra `ele_sop_ast29080_purpose__activate` (why this) |
-| check | `tp_recall` (already registered) | `move == reinforce` | the two existing reinforce extras |
+| check | `tp_recall` (already registered) | `move == reinforce` | the two existing reinforce extras. Procedure A sequence practice is projector-only (not a third `tp_recall` occurrence). |
 
 `tp_purpose` stays as Couturier’s look for `objective` (purpose-frame
 front-matter). It is not a sixth compiler role; the projector treats it
@@ -48,7 +48,9 @@ First match in `classify_text_primitive`:
 6. else → body (`tp_body`)
 
 Not an ID genius. Not 1:many of the SOP. Procedure-step atoms still
-cannot host an honest copula-invert check (`agents/realizer/check_v1.md`).
+cannot host an honest copula-invert check (`agents/realizer/check_v1.md`);
+their group *does* host a sequence practice projected from the four
+existing presents.
 
 ---
 
@@ -61,7 +63,7 @@ cannot host an honest copula-invert check (`agents/realizer/check_v1.md`).
 | heading | display/opening surface — not a body card |
 | callout | **why-this / activate** aside of the purpose atom’s existing meaning. Kicker `Why this`. Not invented text. |
 | body (and `tp_purpose`) | instructional prose / purpose frame. **`exemplify`** uses this form with Couturier’s example look (`brand.example` / kicker Example) — the two instance beats after Procedure A. |
-| step | **one** numbered job-aid sequence for a consecutive run (Procedure A s1–s4), not four SOP cards. Sequence title is the parent atom’s meaning (the thin A heading we already skip as a teaching card). Each `li` still joins its own `composed_from`. |
+| step | **one** numbered job-aid sequence for a consecutive run (Procedure A s1–s4), not four SOP cards. Sequence title is the parent atom’s meaning (the thin A heading we already skip as a teaching card). Each `li` still joins its own `composed_from`. Immediately after: a **sequence practice** of those same presents (order the first sentences; `object.order`; no extra `ele_`). |
 | check | existing check UI (`agents/realizer/check_v1.md`) |
 
 `realized_coverage.html` stays card-like. Spine is the proof.

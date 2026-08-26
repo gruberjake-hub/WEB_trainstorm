@@ -23,7 +23,7 @@ instance-example seed (`agents/realizer/instance_example_v1.md`) mints two guest
 records whose `composed_from` is an `alsap_asp9999` atom_id. `--no-one-to-many` skips
 new extras but still preserves any that exist. `--selftest` checks stable extra ids, the
 check honesty bar, spine membership (why-this callout of purpose, front-matter, Procedure A
-as a job sequence, instance example, then checks), and the atom → primitives bind (procedure_step → `tp_step`,
+as a job sequence, sequence practice of those presents, instance example, then checks), and the atom → primitives bind (procedure_step → `tp_step`,
 activate → `tp_callout`, job-aid HTML).
 
 ## Cartographer

@@ -135,8 +135,12 @@ does not contain.
 Sequence/selection of existing `ele_` records is **not this compiler**.
 `agents/realizer/spine_v1.md` reuses `belongs_to` / `object.order` as *input*
 (root vs child vs descendant) and projects a short path — front-matter, then
-Procedure A as a job sequence, then existing checks. Cartographer still
+Procedure A as a job sequence, then a sequence practice of those presents,
+then instance example, then existing checks. Cartographer still
 writes intent only. The full object-tree walk remains coverage. The extra `reinforce` is a later placement of the same
 atom; Realizer’s HTML projector may render it as a check from that atom’s
 meaning (`agents/realizer/check_v1.md`). Cartographer still does not mint
-the extra and still does not invent a learner-check atom.
+the extra and still does not invent a learner-check atom. A sequence
+practice of Procedure A’s presents is Realizer HTML projection of those
+existing `ele_` records — still not a Cartographer-minted `practice` /
+`assess`.
