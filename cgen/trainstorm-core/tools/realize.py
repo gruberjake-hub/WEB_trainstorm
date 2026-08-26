@@ -26,7 +26,10 @@ presents from the sibling form store (the BR profile / rationale fields the
 instance examples fill — `agents/realizer/form_field_present_v1.md`), one
 worked example from the sibling instance store (two `exemplify` extras of
 existing ASP-9999 atoms — `agents/realizer/instance_example_v1.md`), then the
-existing definition checks. The full SOP dump is `realized_coverage.html`.
+existing definition checks. The projector wraps those existing beats in
+**three named scenes** (front-matter / Procedure A / form BR) — layout chrome
+from SOP/form roles already in the graph, not new beats and not outcome
+language. The full SOP dump is `realized_coverage.html`.
 Spine is a selection of existing `ele_` records — it mints none for membership
 and drops none. Procedure-step atoms stay 1:1 (no extra `reinforce`): they are
 imperatives, so they cannot host an honest copula-invert sibling check. Form
@@ -40,7 +43,8 @@ those primitives — why-this as a callout of purpose, Procedure A s1–s4 as on
 job-aid step list then a sequence practice of the same four presents, the
 form-field presents as body/`present` clothes, the instance example as
 body/`exemplify` clothes (not a new SOP card), front-matter as heading/body,
-reinforce as the existing definition checks.
+reinforce as the existing definition checks. Scene headings group those
+existing primitives; they do not mint `ele_`.
 Coverage stays card-like. Couturier still owns `style_ref`. No authored
 `content.text`.
 
@@ -142,6 +146,49 @@ PRIMITIVE_PURPOSE = "tp_purpose"
 # object.order. Live ALSAP Procedure A is a handful (4) — all land. Cap only
 # if that branch is huge. Not B/C, not thin A/B/C headings.
 PROCEDURE_SEQUENCE_CAP = 8
+# Layout chrome only: group existing spine ele_ into three scenes from
+# SOP/form roles already used for membership. Not new beats. Not an LLM.
+# Headings are role labels, not invented outcomes. Spec: spine_v1.md.
+SCENE_POLICY = "v1_three_scenes_from_roles"
+SCENE_FRONT_MATTER = "front_matter"
+SCENE_PROCEDURE_A = "procedure_a"
+SCENE_FORM_BR = "form_br"
+SCENE_LESSON_END = "lesson_end"
+SCENE_DEFS = (
+    {
+        "id": "what_an_alsap_is",
+        "role": SCENE_FRONT_MATTER,
+        "heading": "What an ALSAP is",
+        "kicker": "Front matter",
+        "from": (
+            "Document-root opening, why-this callout of purpose, and teachable "
+            "front-matter primaries (purpose / scope / general). Those atoms "
+            "are the SOP’s definitional front-matter."
+        ),
+    },
+    {
+        "id": "how_an_alsap_starts",
+        "role": SCENE_PROCEDURE_A,
+        "heading": "How an ALSAP starts",
+        "kicker": "Procedure A",
+        "from": (
+            "First Procedures-container branch in object.order (thin heading: "
+            "A. Plan Development of ALSAP.). Job-aid presents plus the "
+            "in-scene sequence practice of those presents."
+        ),
+    },
+    {
+        "id": "benefit_risk_on_the_form",
+        "role": SCENE_FORM_BR,
+        "heading": "Benefit-risk on the form",
+        "kicker": "Form",
+        "from": (
+            "FORM-AST-34037 BR-field presents (Benefit-Risk profile + rationale) "
+            "plus the instance examples that instantiate those fields."
+        ),
+    },
+)
+SCENE_DEFS_BY_ROLE = {d["role"]: d for d in SCENE_DEFS}
 
 KIND_TO_TYPE = {
     "procedure": "Section",
@@ -1084,7 +1131,9 @@ def apply_spine(manifest, atoms, elements) -> dict:
                  "check) plus a sequence practice of the Procedure A presents "
                  "(projector-only; no extra ele_) plus present clothes on the form-field "
                  "beats and exemplify clothes on the instance beats; coverage dump stays "
-                 "card-like. Not an LLM path and not a full object-tree walk."),
+                 "card-like. Named scene headings group those existing beats from "
+                 "SOP/form roles (layout chrome, not new meaning). Not an LLM path "
+                 "and not a full object-tree walk."),
     }
     seq_atoms = procedure_sequence_atoms(atoms)
     seq = derive_sequence_check(seq_atoms)
@@ -1101,8 +1150,13 @@ def apply_spine(manifest, atoms, elements) -> dict:
             "note": ("Projector-only practice of the Procedure A presents already on "
                      "the spine. Items are those atoms’ first sentences. Correct order "
                      "is bindings.object.order (already taught). No extra ele_ — "
-                     "composing this check from one atom would be a lie."),
+                     "composing this check from one atom would be a lie. Lives in the "
+                     "Procedure A scene."),
         }
+    by_eid = {e["element_id"]: e for e in elements}
+    by_atom = {a["atom_id"]: a for a in atoms}
+    scenes, lesson_end = group_spine_scenes(ids, by_eid, by_atom)
+    manifest["spine"]["scenes"] = stamp_spine_scenes(scenes, lesson_end)
     return manifest["spine"]
 
 
@@ -1159,6 +1213,84 @@ def group_spine_for_project(spine_ids, by_eid):
             groups.append(("card", [el]))
             i += 1
     return groups
+
+
+def spine_scene_role(el, atoms_by_id) -> str:
+    """Which scene cluster this existing spine occurrence belongs to.
+
+    Pure function of SOP/form/instance roles already on the graph (atom kind,
+    guest stamps, extra reinforce). Not an LLM. Not a new ele_. Definition /
+    purpose reinforce extras stay lesson-end unless they are the Procedure A
+    sequence practice (that practice is projector-only and has no ele_).
+    """
+    if is_extra_element(el) and (
+        (el.get("intent") or {}).get("move") == "reinforce" or is_check_occurrence(el)
+    ):
+        return SCENE_LESSON_END
+    atom = atoms_by_id.get(el.get("composed_from")) or {}
+    kind = (atom.get("meaning") or {}).get("kind") or ""
+    realized = (el.get("ext") or {}).get("realized_from") or {}
+    if realized.get("form_store") or realized.get("instance_store"):
+        return SCENE_FORM_BR
+    if kind in ("form_field", "form_section", "form", "instance_value"):
+        return SCENE_FORM_BR
+    if kind == "procedure_step" or is_step_primitive(el):
+        return SCENE_PROCEDURE_A
+    return SCENE_FRONT_MATTER
+
+
+def group_spine_scenes(spine_ids, by_eid, atoms_by_id):
+    """Consecutive same-role spine ids → scene runs. Lesson-end checks trail."""
+    scenes = []
+    lesson_end = []
+    current = None
+    for eid in spine_ids:
+        el = by_eid.get(eid)
+        if el is None:
+            continue
+        role = spine_scene_role(el, atoms_by_id)
+        if role == SCENE_LESSON_END:
+            if current is not None:
+                scenes.append(current)
+                current = None
+            lesson_end.append(eid)
+            continue
+        if current is not None and current["role"] == role:
+            current["element_ids"].append(eid)
+        else:
+            if current is not None:
+                scenes.append(current)
+            current = {"role": role, "element_ids": [eid]}
+    if current is not None:
+        scenes.append(current)
+    return scenes, lesson_end
+
+
+def stamp_spine_scenes(scenes, lesson_end) -> dict:
+    """Manifest chrome for the three role clusters. Membership is unchanged."""
+    out = []
+    for s in scenes:
+        d = SCENE_DEFS_BY_ROLE.get(s["role"]) or {}
+        out.append({
+            "id": d.get("id") or s["role"],
+            "role": s["role"],
+            "heading": d.get("heading") or s["role"],
+            "kicker": d.get("kicker") or "",
+            "element_ids": list(s["element_ids"]),
+            "includes_sequence_check": s["role"] == SCENE_PROCEDURE_A,
+            "from": d.get("from") or "",
+        })
+    return {
+        "policy": SCENE_POLICY,
+        "spec": SPINE_SPEC,
+        "scenes": out,
+        "lesson_end_checks": list(lesson_end),
+        "note": ("Layout chrome only: named section headings group existing spine "
+                 "ele_ records from SOP/form roles already in the graph. Same "
+                 "membership. Sequence practice stays in Procedure A. Definition/"
+                 "purpose checks stay at lesson end. Not an LLM. Not outcome language. "
+                 "Coverage dump stays ungrouped."),
+    }
 
 
 def derive_check(atom, atoms) -> dict | None:
@@ -1627,20 +1759,56 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
 
     by_eid = {e["element_id"]: e for e in elements}
     spine_ids = list(spine.get("element_ids") or [])
+
+    def render_beat_groups(ids):
+        chunks = []
+        for kind, els in group_spine_for_project(ids, by_eid):
+            if kind == "job_aid":
+                chunks.append(job_aid_block_html(els))
+                seq_atoms = [by_atom[el["composed_from"]] for el in els]
+                seq_chk = derive_sequence_check(seq_atoms)
+                if seq_chk:
+                    assert_sequence_check_honest(seq_chk, catalog)
+                    chunks.append(sequence_check_html(els, seq_chk))
+                continue
+            el = els[0]
+            atom = by_atom[el["composed_from"]]
+            extra_cls = " extra" if is_extra_element(el) else ""
+            chunks.append(card_html(el, atom, extra_cls))
+        return chunks
+
+    scenes_stamp = spine.get("scenes") or {}
+    scene_list = list(scenes_stamp.get("scenes") or [])
+    lesson_end_ids = list(scenes_stamp.get("lesson_end_checks") or [])
+    eid_to_scene = {}
+    for sc in scene_list:
+        for eid in sc.get("element_ids") or []:
+            eid_to_scene[eid] = sc.get("heading") or sc.get("role") or ""
+    for eid in lesson_end_ids:
+        eid_to_scene[eid] = "lesson-end"
+
     spine_body = []
-    for kind, els in group_spine_for_project(spine_ids, by_eid):
-        if kind == "job_aid":
-            spine_body.append(job_aid_block_html(els))
-            seq_atoms = [by_atom[el["composed_from"]] for el in els]
-            seq_chk = derive_sequence_check(seq_atoms)
-            if seq_chk:
-                assert_sequence_check_honest(seq_chk, catalog)
-                spine_body.append(sequence_check_html(els, seq_chk))
-            continue
-        el = els[0]
-        atom = by_atom[el["composed_from"]]
-        extra_cls = " extra" if is_extra_element(el) else ""
-        spine_body.append(card_html(el, atom, extra_cls))
+    if scene_list:
+        for sc in scene_list:
+            inner = render_beat_groups(sc.get("element_ids") or [])
+            spine_body.append(
+                f'<section class="scene" data-scene="{esc(sc.get("id") or "")}" '
+                f'data-role="{esc(sc.get("role") or "")}">'
+                f'<header class="scene-head">'
+                f'<p class="scene-kicker">{esc(sc.get("kicker") or "")}</p>'
+                f'<h2 class="scene-heading">{esc(sc.get("heading") or "")}</h2>'
+                f'</header>'
+                f'{"".join(inner)}'
+                f'</section>'
+            )
+        if lesson_end_ids:
+            spine_body.append(
+                f'<section class="lesson-end-checks">'
+                f'{"".join(render_beat_groups(lesson_end_ids))}'
+                f'</section>'
+            )
+    else:
+        spine_body.extend(render_beat_groups(spine_ids))
     spine_rows = []
     for n, eid in enumerate(spine_ids, 1):
         el = by_eid.get(eid)
@@ -1650,6 +1818,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         teaches = ", ".join((el.get("intent") or {}).get("teaches") or []) or "—"
         look = (el.get("expression") or {}).get("style_ref") or "—"
         prim = (el.get("expression") or {}).get("text_primitive") or "—"
+        scene_label = eid_to_scene.get(eid, "—")
         spine_rows.append(
             f"<tr><td>{n}</td>"
             f"<td class=mono>{esc(el['element_id'])}</td>"
@@ -1658,7 +1827,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
             f"<td class=mono>{esc(prim)}</td>"
             f"<td class=mono>{esc(look)}</td>"
             f"<td class=mono>{esc(teaches)}</td>"
-            f"<td>{esc(a['meaning'].get('kind', ''))}</td></tr>"
+            f"<td>{esc(a['meaning'].get('kind', ''))}</td>"
+            f"<td>{esc(scene_label)}</td></tr>"
         )
 
     rows = []
@@ -1726,7 +1896,9 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         "presents, a form-field present as body/`present` clothes then a worked "
         "example as body/`exemplify` clothes (form then instance atom via "
         "composed_from), front-matter as heading/body, "
-        "reinforce as the existing definition checks. Coverage stays card-like. "
+        "reinforce as the existing definition checks. Named scene headings group "
+        "those existing beats (front-matter / Procedure A / form BR); coverage "
+        "stays card-like. "
         if prim_counts else
         " The atom → primitives hop is owed so beats are clothes, not SOP cards. "
     )
@@ -1737,7 +1909,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         "why-this callout of purpose, teachable front-matter primaries, Procedure A as "
         "a job sequence then a sequence practice of those presents, the form "
         "fields those examples fill, a small instance example, then the existing "
-        "definition checks. The object "
+        "definition checks. Scene chrome groups those same beats from SOP/form "
+        "roles. The object "
         "tree walk is coverage, not the path. "
     )
     if cout:
@@ -1888,6 +2061,12 @@ form.check .check-note{font-size:11.5px;color:var(--mut);margin:10px 0 0}
 .job-aid li.step .meaning{grid-column:2;margin:0 0 4px;font-size:15.5px;line-height:1.45}
 .job-aid li.step .join{grid-column:2}
 .job-aid > .join{margin:10px 0 4px}
+.scene{margin:32px 0 28px;padding:4px 0 8px;border-top:3px solid var(--accent)}
+.scene-head{margin:10px 0 16px}
+.scene-kicker{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+ color:var(--accent);margin:0 0 4px}
+.scene-heading{font-size:22px;margin:0;letter-spacing:-.02em;color:var(--ink)}
+.lesson-end-checks{margin:28px 0 8px;padding-top:10px;border-top:1px dashed var(--line)}
 .sequence-check{border:2px solid #334155;border-radius:8px;padding:16px 18px 10px;margin:16px 0;
  background:#f1f5f9}
 .sequence-check .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
@@ -2001,6 +2180,7 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f"{' Procedure A presents also project a sequence practice (same spec; no extra ele_).' if check_n else ''} "
         f"{' Compiler primitives: ' + prim_bits + '.' if prim_bits else ''} "
         f"Spine heuristic: <span class=mono>{esc(SPINE_SPEC)}</span>."
+        f"{' Scene chrome: ' + esc(SCENE_POLICY) + '.' if scene_list else ''}"
     )
 
     def render_page(page_title, heading, nav, path_line, main, details_html):
@@ -2031,7 +2211,8 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f"<details open><summary>Spine membership — {spine_n} ele_ records "
         f"(heuristic <span class=mono>{esc(SPINE_POLICY)}</span>)</summary>"
         "<table><thead><tr><th>#</th><th>element_id</th><th>composed_from</th>"
-        "<th>move</th><th>primitive</th><th>style_ref</th><th>teaches</th><th>atom kind</th></tr></thead>"
+        "<th>move</th><th>primitive</th><th>style_ref</th><th>teaches</th><th>atom kind</th>"
+        "<th>scene</th></tr></thead>"
         f"<tbody>{''.join(spine_rows)}</tbody></table></details>"
     )
     coverage_details = (
@@ -2040,15 +2221,22 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         "<th>style_ref</th><th>teaches</th><th>type</th><th>atom kind</th><th>arity</th></tr></thead>"
         f"<tbody>{''.join(rows)}</tbody></table></details>"
     )
+    scene_headings = [sc.get("heading") for sc in scene_list if sc.get("heading")]
+    scene_path = (
+        (f"{len(scene_list)} scene" + ("s" if len(scene_list) != 1 else "")
+         + (" (" + ", ".join(scene_headings) + ")" if scene_headings else "")
+         + " grouping the same beats. ")
+        if scene_list else ""
+    )
     lesson_html = render_page(
         f"Short lesson — {project_name}",
         "Short lesson",
         f'<a href="{coverage_href}">Full SOP / coverage ({store_n} occurrences)</a>',
-        (f"{spine_n} of {store_n} occurrences · why-this callout of purpose, "
-         "front-matter as heading/body, Procedure A as a job-aid step sequence, "
-         "then a sequence practice of those four presents, then the form fields "
-         "those examples fill, then a worked example from the instance store, "
-         "then the existing definition checks. "
+        (f"{spine_n} of {store_n} occurrences · {scene_path}"
+         "Why-this callout of purpose, front-matter as heading/body, Procedure A as "
+         "a job-aid step sequence then a sequence practice of those four presents, "
+         "then the form fields those examples fill, then a worked example from the "
+         "instance store, then the existing definition checks at lesson end. "
          "Not B/C and not the SOP dump. Heuristic is documented, not an LLM."),
         "".join(spine_body),
         lesson_details,
@@ -2385,6 +2573,38 @@ def selftest(closed_moves):
     apply_spine(mf_spine, store, seeded)
     results.append(("spine recompute is stable",
                     mf_spine["spine"]["element_ids"] == want_spine, mf_spine["spine"]["element_ids"]))
+    scenes0 = (mf_spine.get("spine") or {}).get("scenes") or {}
+    scene_roles0 = [s["role"] for s in scenes0.get("scenes") or []]
+    results.append(("spine scenes are front-matter then Procedure A (no form in fixture)",
+                    scene_roles0 == [SCENE_FRONT_MATTER, SCENE_PROCEDURE_A], scene_roles0))
+    results.append(("scene headings are role labels not outcome language",
+                    [s["heading"] for s in scenes0.get("scenes") or []]
+                    == ["What an ALSAP is", "How an ALSAP starts"]
+                    and all("will be able" not in (s.get("heading") or "").lower()
+                            and "learning outcome" not in (s.get("from") or "").lower()
+                            for s in scenes0.get("scenes") or []),
+                    [s.get("heading") for s in scenes0.get("scenes") or []]))
+    results.append(("definition checks stay lesson-end not in a fourth scene",
+                    scenes0.get("lesson_end_checks") == [
+                        "ele_sop_ast29080_purpose__reinforce",
+                        "ele_sop_ast29080_general__reinforce",
+                    ], scenes0.get("lesson_end_checks")))
+    results.append(("Procedure A scene includes sequence-check flag and the four presents",
+                    any(s["role"] == SCENE_PROCEDURE_A
+                        and s.get("includes_sequence_check")
+                        and s["element_ids"] == [
+                            "ele_sop_ast29080_proc_a_s1",
+                            "ele_sop_ast29080_proc_a_s2",
+                            "ele_sop_ast29080_proc_a_s3",
+                            "ele_sop_ast29080_proc_a_s4",
+                        ]
+                        for s in scenes0.get("scenes") or []),
+                    [s for s in scenes0.get("scenes") or [] if s["role"] == SCENE_PROCEDURE_A]))
+    results.append(("scene grouping does not change spine membership",
+                    scenes0.get("policy") == SCENE_POLICY
+                    and set(sum((s["element_ids"] for s in scenes0.get("scenes") or []), [])
+                            + list(scenes0.get("lesson_end_checks") or []))
+                    == set(want_spine), ""))
 
     # Compiler primitives from atom kind + occurrence move.
     results.append(("procedure_step present is tp_step",
@@ -2513,6 +2733,45 @@ def selftest(closed_moves):
                     and "ele_sop_ast29080_proc_a_s1" in cov_page, ""))
     results.append(("coverage dump has no sequence practice (lesson-only projection)",
                     'data-shape="sequence"' not in cov_page, ""))
+    results.append(("lesson HTML names two scenes from SOP roles (no form in fixture)",
+                    page.count('class="scene-heading">What an ALSAP is</h2>') == 1
+                    and page.count('class="scene-heading">How an ALSAP starts</h2>') == 1
+                    and "Benefit-risk on the form" not in page, ""))
+    results.append(("lesson scene kickers are graph roles not outcomes",
+                    ">Front matter</p>" in page
+                    and ">Procedure A</p>" in page
+                    and "will be able" not in page.lower(), ""))
+    fm_start = page.find('data-scene="what_an_alsap_is"')
+    proc_start = page.find('data-scene="how_an_alsap_starts"')
+    end_start = page.find('class="lesson-end-checks"')
+    fm_chunk = page[fm_start:proc_start] if fm_start != -1 and proc_start != -1 else ""
+    proc_chunk = page[proc_start:end_start] if proc_start != -1 and end_start != -1 else ""
+    end_chunk = page[end_start:] if end_start != -1 else ""
+    results.append(("front-matter scene holds title, callout, purpose, scope, general",
+                    all(eid in fm_chunk for eid in (
+                        "ele_sop_ast29080",
+                        "ele_sop_ast29080__present",
+                        "ele_sop_ast29080_purpose__activate",
+                        "ele_sop_ast29080_purpose",
+                        "ele_sop_ast29080_scope",
+                        "ele_sop_ast29080_general",
+                    ))
+                    and "ele_sop_ast29080_proc_a_s1" not in fm_chunk
+                    and "ele_sop_ast29080_purpose__reinforce" not in fm_chunk, ""))
+    results.append(("Procedure A scene holds the job-aid and the sequence practice",
+                    "ele_sop_ast29080_proc_a_s1" in proc_chunk
+                    and "ele_sop_ast29080_proc_a_s4" in proc_chunk
+                    and 'data-shape="sequence"' in proc_chunk
+                    and "ele_sop_ast29080_purpose__reinforce" not in proc_chunk, ""))
+    results.append(("definition checks sit after the scenes at lesson end",
+                    "ele_sop_ast29080_purpose__reinforce" in end_chunk
+                    and "ele_sop_ast29080_general__reinforce" in end_chunk
+                    and page.find('data-scene="how_an_alsap_starts"')
+                    < page.find('class="lesson-end-checks"')
+                    < page.find("ele_sop_ast29080_purpose__reinforce"), ""))
+    results.append(("coverage dump has no scene chrome",
+                    'class="scene-heading"' not in cov_page
+                    and 'class="scene"' not in cov_page, ""))
     results.append(("lesson sequence practice sits after the job aid",
                     page.find('class="prim prim-step job-aid"')
                     < page.find('data-shape="sequence"')
@@ -2805,6 +3064,40 @@ def selftest(closed_moves):
                     .find("style-example") == -1, ""))
     results.append(("form present is not a second job-aid",
                     page_form.count('class="prim prim-step job-aid"') == 1, ""))
+    mf_form = {}
+    apply_spine(mf_form, store, seeded_form)
+    form_scenes = (mf_form.get("spine") or {}).get("scenes") or {}
+    form_roles = [s["role"] for s in form_scenes.get("scenes") or []]
+    results.append(("form fixture yields three scenes from SOP/form roles",
+                    form_roles == [SCENE_FRONT_MATTER, SCENE_PROCEDURE_A, SCENE_FORM_BR],
+                    form_roles))
+    results.append(("third scene heading is Benefit-risk on the form",
+                    any(s["role"] == SCENE_FORM_BR
+                        and s["heading"] == "Benefit-risk on the form"
+                        and s["element_ids"] == form_eids + inst_eids
+                        for s in form_scenes.get("scenes") or []),
+                    [s for s in form_scenes.get("scenes") or [] if s["role"] == SCENE_FORM_BR]))
+    results.append(("three-scene membership still equals the spine",
+                    set(sum((s["element_ids"] for s in form_scenes.get("scenes") or []), [])
+                        + list(form_scenes.get("lesson_end_checks") or []))
+                    == set(got_spine_form), ""))
+    br_start = page_form.find('data-scene="benefit_risk_on_the_form"')
+    end_form = page_form.find('class="lesson-end-checks"')
+    br_chunk = page_form[br_start:end_form] if br_start != -1 and end_form != -1 else ""
+    results.append(("lesson HTML names all three scenes when form+instance extras exist",
+                    page_form.count('class="scene-heading">What an ALSAP is</h2>') == 1
+                    and page_form.count('class="scene-heading">How an ALSAP starts</h2>') == 1
+                    and page_form.count('class="scene-heading">Benefit-risk on the form</h2>') == 1, ""))
+    results.append(("form BR scene holds the two presents then the two examples",
+                    all(eid in br_chunk for eid in form_eids + inst_eids)
+                    and br_chunk.find(form_eids[0]) < br_chunk.find(inst_eids[0])
+                    and "ele_sop_ast29080_purpose__reinforce" not in br_chunk
+                    and "ele_sop_ast29080_proc_a_s1" not in br_chunk, ""))
+    results.append(("form lesson still parks definition checks at lesson end",
+                    'class="lesson-end-checks"' in page_form
+                    and page_form.find('data-scene="benefit_risk_on_the_form"')
+                    < page_form.find('class="lesson-end-checks"')
+                    < page_form.find("ele_sop_ast29080_purpose__reinforce"), ""))
 
     huge_steps = [
         atom(

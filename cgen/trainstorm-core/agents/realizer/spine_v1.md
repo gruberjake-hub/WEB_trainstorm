@@ -165,6 +165,35 @@ clothes of one atom (activate + objective + reinforce).
 
 ---
 
+## Scenes (layout chrome only)
+
+Membership above is unchanged. The projector then **groups those same
+`ele_` records** under three named section headings so the short lesson
+reads as three scenes, not sixteen stacked cards. Policy id:
+`v1_three_scenes_from_roles`, stamped as `spine.scenes`. Not new beats.
+Not new atoms. Not a new `ele_`. Not an LLM. Not invented outcome
+language (“will be able to…”).
+
+Heuristic — SOP/form roles already used for membership:
+
+| Scene | Role | Heading | Kicker | Which existing beats |
+|---|---|---|---|---|
+| 1 | `front_matter` | **What an ALSAP is** | Front matter | Document-root opening, why-this callout of purpose, teachable front-matter primaries (purpose / scope / general) |
+| 2 | `procedure_a` | **How an ALSAP starts** | Procedure A | Procedure A job-aid presents (`tp_step`). The projector-only sequence practice stays **in-scene** (it is practice of those presents). |
+| 3 | `form_br` | **Benefit-risk on the form** | Form | FORM-AST-34037 BR-field presents + the instance examples that instantiate those fields |
+
+Headings are the documented labels of those role clusters. Scene 2’s
+first-procedure branch already has the thin parent *A. Plan Development
+of ALSAP.* (job-aid title). Scene 3’s field atoms already say
+*Benefit-Risk profile*. Scene 1 is the SOP’s definitional front-matter.
+Do not mint a fourth scene for the two definition/purpose checks —
+they stay at **lesson end** (`spine.scenes.lesson_end_checks`) unless a
+check clearly belongs in-scene (the sequence practice does).
+
+Coverage dump stays ungrouped (no scene chrome).
+
+---
+
 ## What is written
 
 Occurrence manifest `spine`:
@@ -176,7 +205,7 @@ Occurrence manifest `spine`:
   "element_ids": ["ele_sop_ast29080", "ele_sop_ast29080__present", "ele_sop_ast29080_purpose__activate", "…"],
   "count": 16,
   "store_count": 55,
-  "note": "Selection of existing ele_ records. Coverage dump keeps the rest. Sequence practice of Procedure A is projector-only (spine.sequence_check). Form BR presents then instance examples."
+  "note": "Selection of existing ele_ records. Coverage dump keeps the rest. Sequence practice of Procedure A is projector-only (spine.sequence_check). Form BR presents then instance examples. Scene chrome (spine.scenes) groups those same ids into three named sections."
 }
 ```
 
@@ -188,7 +217,7 @@ HTML (Realizer projector):
 
 | File | Default experience |
 |---|---|
-| `<project>/realized_lesson.html` | The spine, in the order above. Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), a **sequence practice** of those four presents (order the first sentences), two form-field presents (`present` / `tp_body`), two example beats (`exemplify` / `brand.example` / `tp_body`), two definition checks (`tp_recall`). Link to coverage. |
+| `<project>/realized_lesson.html` | The spine, in the order above, wrapped as **three named scenes** (What an ALSAP is / How an ALSAP starts / Benefit-risk on the form). Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), a **sequence practice** of those four presents (order the first sentences; in-scene), two form-field presents (`present` / `tp_body`), two example beats (`exemplify` / `brand.example` / `tp_body`), two definition checks (`tp_recall`) at lesson end. Link to coverage. |
 | `<project>/realized_coverage.html` | Full occurrence dump in SOP document order — still card-like. Link back to the lesson. |
 
 Compiler primitives (`agents/realizer/primitives_v1.md`) are Realizer-owned
@@ -225,6 +254,9 @@ Do not hide coverage by deleting `ele_` records. The store stays 55
   inventing a Procedure A match that the instance store does not contain.
   Not stretching a cousin form field (`f_br_guidance`, phrasing examples)
   if the honest `instantiates` target were missing.
+- Not new scene meaning, not a fourth scene of outcomes, and not a
+  one-off HTML edit. Scene headings are projector chrome from the
+  membership heuristic.
 
 ---
 
