@@ -1198,7 +1198,8 @@
       "move": "exemplify",
       "teaches": [
         "obj_explain_alsap_purpose"
-      ]
+      ],
+      "intended_response": "notice a filled ALSAP instance as evidence the job happened, not as a new SOP rule"
     },
     "governance": {
       "version": 1,
@@ -1263,7 +1264,8 @@
       "move": "exemplify",
       "teaches": [
         "obj_explain_alsap_purpose"
-      ]
+      ],
+      "intended_response": "notice a filled ALSAP instance as evidence the job happened, not as a new SOP rule"
     },
     "governance": {
       "version": 1,
@@ -1328,7 +1330,8 @@
       "move": "exemplify",
       "teaches": [
         "obj_explain_alsap_purpose"
-      ]
+      ],
+      "intended_response": "notice a filled ALSAP instance as evidence the job happened, not as a new SOP rule"
     },
     "governance": {
       "version": 1,
@@ -1393,7 +1396,8 @@
       "move": "exemplify",
       "teaches": [
         "obj_explain_alsap_purpose"
-      ]
+      ],
+      "intended_response": "notice a filled ALSAP instance as evidence the job happened, not as a new SOP rule"
     },
     "governance": {
       "version": 1,
@@ -1458,7 +1462,8 @@
       "move": "exemplify",
       "teaches": [
         "obj_explain_alsap_purpose"
-      ]
+      ],
+      "intended_response": "notice a filled ALSAP instance as evidence the job happened, not as a new SOP rule"
     },
     "governance": {
       "version": 1,
@@ -3412,6 +3417,138 @@
       "text_primitive": "tp_step",
       "content_role": "step",
       "layout_hint": "job_aid"
+    }
+  },
+  {
+    "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify",
+    "composed_from": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+    "source_hash": "sha256:be0af1b9d04b8820307fdc8c5fc2e7243fb07bad68ed2b9165a16705c4becb6a",
+    "type": "Course",
+    "intent": {
+      "rhetorical": "orient",
+      "move": "exemplify",
+      "teaches": [
+        "obj_explain_alsap_purpose"
+      ],
+      "intended_response": "notice a filled ALSAP instance as evidence the job happened, not as a new SOP rule"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+        "realizer": "tools/realize.py",
+        "policy": "v1_instance_example_seed",
+        "role": "extra",
+        "target_move": "exemplify",
+        "content_hash": "sha256:be0af1b9d04b8820307fdc8c5fc2e7243fb07bad68ed2b9165a16705c4becb6a",
+        "instance_store": "alsap_asp9999",
+        "instance_spec": "agents/realizer/instance_example_v1.md"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "root_title",
+          "extra_occurrence_move_preserved"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "exemplify",
+        "source_hash": "sha256:be0af1b9d04b8820307fdc8c5fc2e7243fb07bad68ed2b9165a16705c4becb6a",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "instance_value",
+        "from_move": "exemplify",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "style_ref": "brand.example",
+      "text_primitive": "tp_body",
+      "content_role": "example",
+      "layout_hint": "cite"
+    }
+  },
+  {
+    "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify",
+    "composed_from": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+    "source_hash": "sha256:1687a021cb2f3194994b0f98cffd3b6698a84e8e9bdc38506c593296f3b710e1",
+    "type": "Course",
+    "intent": {
+      "rhetorical": "orient",
+      "move": "exemplify",
+      "teaches": [
+        "obj_explain_alsap_purpose"
+      ],
+      "intended_response": "notice a filled ALSAP instance as evidence the job happened, not as a new SOP rule"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+        "realizer": "tools/realize.py",
+        "policy": "v1_instance_example_seed",
+        "role": "extra",
+        "target_move": "exemplify",
+        "content_hash": "sha256:1687a021cb2f3194994b0f98cffd3b6698a84e8e9bdc38506c593296f3b710e1",
+        "instance_store": "alsap_asp9999",
+        "instance_spec": "agents/realizer/instance_example_v1.md"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "root_title",
+          "extra_occurrence_move_preserved"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "exemplify",
+        "source_hash": "sha256:1687a021cb2f3194994b0f98cffd3b6698a84e8e9bdc38506c593296f3b710e1",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "instance_value",
+        "from_move": "exemplify",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "style_ref": "brand.example",
+      "text_primitive": "tp_body",
+      "content_role": "example",
+      "layout_hint": "cite"
     }
   }
 ]

@@ -419,6 +419,16 @@ def selftest(closed_style_refs, closed_text_primitives):
     results.append(("callout flagged from_primitive_callout",
                     "from_primitive_callout" in stamp.get("flags", []), stamp.get("flags")))
 
+    example = el("ele_alsap_x__exemplify", "atom_alsap_x", "exemplify", extra=True)
+    expr, stamp = bind_expression(example, a, closed_style_refs, closed_text_primitives)
+    apply_expression(example, expr, stamp)
+    results.append(("exemplify wears brand.example / tp_body / example / cite",
+                    expr["style_ref"] == "brand.example"
+                    and expr["text_primitive"] == "tp_body"
+                    and expr["content_role"] == "example"
+                    and expr["layout_hint"] == "cite",
+                    expr))
+
     print(f"{'CHECK':<72} RESULT")
     print("-" * 86)
     ok = True
@@ -496,8 +506,13 @@ def main():
     atoms_bytes = atoms_path.read_bytes()
     atoms_hash_before = sha256_bytes(atoms_bytes)
     atoms = json.loads(atoms_bytes)
-    atoms_by_id = {a["atom_id"]: a for a in atoms if "atom_id" in a}
-    if len(atoms_by_id) != len(atoms):
+    instance_atoms = realize.load_instance_example_atoms(project)
+    instance_path = realize.sibling_instance_project(project)
+    instance_hash_before = (
+        sha256_bytes((instance_path / "atoms.json").read_bytes()) if instance_path else None
+    )
+    atoms_by_id = realize.meaning_catalog(atoms, instance_atoms)
+    if len({a["atom_id"] for a in atoms if "atom_id" in a}) != len(atoms):
         raise SystemExit("atom store has missing or duplicate atom_id values")
 
     elements = load(elements_path)
@@ -575,14 +590,23 @@ def main():
 
     realize.apply_spine(occ_manifest, atoms, elements)
     realize.stamp_primitives(occ_manifest, elements)
+    realize.normalize_elements_ext(elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
-    coverage_path = realize.project_html(atoms, elements, occ_manifest, html_path)
+    coverage_path = realize.project_html(
+        atoms, elements, occ_manifest, html_path, meaning_atoms=instance_atoms
+    )
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
     atoms_hash_after = sha256_bytes(atoms_path.read_bytes())
     if atoms_hash_after != atoms_hash_before:
         raise SystemExit("atoms.json changed during couturier — abort. Couturier must not rewrite atoms.")
+    if instance_path and instance_hash_before:
+        if sha256_bytes((instance_path / "atoms.json").read_bytes()) != instance_hash_before:
+            raise SystemExit(
+                "alsap_asp9999/atoms.json changed during couturier — abort. "
+                "Couturier must not rewrite instance atoms."
+            )
 
     print(f"Couturier v1 → {len(elements)} elements ({POLICY})")
     print(f"  atoms        : {atoms_path} ({len(atoms)} records, unchanged)")

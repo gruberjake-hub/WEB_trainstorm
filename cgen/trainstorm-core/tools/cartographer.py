@@ -172,6 +172,8 @@ def bind_intended_response(atom, move: str) -> str | None:
         return "attempt a check that retrieves this atom's meaning, not as new information"
     if move == "activate":
         return "notice why this exists as a prior frame, not as a new fact"
+    if move == "exemplify":
+        return "notice a filled ALSAP instance as evidence the job happened, not as a new SOP rule"
     return None
 
 
@@ -513,8 +515,13 @@ def main():
     atoms_bytes = atoms_path.read_bytes()
     atoms_hash_before = sha256_bytes(atoms_bytes)
     atoms = json.loads(atoms_bytes)
-    atoms_by_id = {a["atom_id"]: a for a in atoms if "atom_id" in a}
-    if len(atoms_by_id) != len(atoms):
+    instance_atoms = realize.load_instance_example_atoms(project)
+    instance_path = realize.sibling_instance_project(project)
+    instance_hash_before = (
+        sha256_bytes((instance_path / "atoms.json").read_bytes()) if instance_path else None
+    )
+    atoms_by_id = realize.meaning_catalog(atoms, instance_atoms)
+    if len({a["atom_id"] for a in atoms if "atom_id" in a}) != len(atoms):
         raise SystemExit("atom store has missing or duplicate atom_id values")
 
     elements = load(elements_path)
@@ -597,14 +604,23 @@ def main():
 
     realize.apply_spine(occ_manifest, atoms, elements)
     realize.stamp_primitives(occ_manifest, elements)
+    realize.normalize_elements_ext(elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
-    coverage_path = realize.project_html(atoms, elements, occ_manifest, html_path)
+    coverage_path = realize.project_html(
+        atoms, elements, occ_manifest, html_path, meaning_atoms=instance_atoms
+    )
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
     atoms_hash_after = sha256_bytes(atoms_path.read_bytes())
     if atoms_hash_after != atoms_hash_before:
         raise SystemExit("atoms.json changed during cartographer — abort. Cartographer must not rewrite atoms.")
+    if instance_path and instance_hash_before:
+        if sha256_bytes((instance_path / "atoms.json").read_bytes()) != instance_hash_before:
+            raise SystemExit(
+                "alsap_asp9999/atoms.json changed during cartographer — abort. "
+                "Cartographer must not rewrite instance atoms."
+            )
 
     leftover_intent = [
         a["atom_id"] for a in atoms

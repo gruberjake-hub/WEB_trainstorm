@@ -848,4 +848,75 @@ the primitive as coverage-only honesty.
 classifier stand. Working-process block untouched. Single-writer per
 facet stands. Chameleon agent still not stood up.
 
+---
+
+## 2026-08-26 — One worked example on the ALSAP spine from instance atoms
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The short ALSAP lesson now includes **one worked example**
+after Procedure A’s job aid and before the existing reinforce checks.
+The job aid is how; the instance is that it happened. Meaning comes from
+existing instance atoms in `cgen/astellas/projects/alsap_asp9999`
+(fictional ASP-9999). No authored `content.text` on the element.
+`ast_alsap/atoms.json` is unchanged. Instance atoms are not rewritten
+into SOP atoms.
+
+**Which atoms, and why.** Procedure A has **no honest match** in the
+instance store. A’s four steps are process acts (notify SDS / request a
+Lead; identify authors; kick-off; confirm dates). The ten instance
+atoms are filled AST-34037 form values (cover + purpose/safety-profile).
+Citing them as Plan Development would invent a fact. They **do**
+illustrate the ALSAP generally. Seed of two, not ten
+(`agents/realizer/instance_example_v1.md`):
+
+- `atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile`
+  — `conditional_favorable` (the SMT’s selected BR conclusion)
+- `atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale`
+  — the authored judgment (hepatic monitoring; names ASP9999)
+
+**How `composed_from` crosses stores.** Realizer mints two guest extras
+in the ALSAP occurrence store whose `composed_from` is the instance
+`atom_id`. Meaning lookup is a **join catalog** (SOP atoms + sibling
+instance store), not a copy into `ast_alsap/atoms.json`. Join is
+ALSAP-lesson-only (`project.name == "ast_alsap"`). Cartographer
+preserves Realizer-stamped `exemplify` on those extras (an unbound
+`instance_value` with no `belongs_to` would otherwise classify as
+`hook`). Couturier’s existing map dresses `exemplify` as
+`brand.example` / `content_role: example` / `layout_hint: cite`.
+Compiler form is already `tp_body` — not a sixth primitive, not another
+SOP card.
+
+Spine heuristic (`agents/realizer/spine_v1.md`, policy
+`v1_front_matter_callout_procedure_sequence_example_then_checks`) places
+those two beats after Procedure A and before the two existing checks.
+Store gains **two** extra `ele_` (53 / 47 SOP atoms). Instance store
+stays 10 atoms. No procedure-step MCQ. No Chameleon. No `/cgen/alsap`
+hosting.
+
+Idempotent with realize → cartographer → couturier.
+
+**Why:** After PR #21 the spine had opening, why-this callout, front-
+matter, Procedure A as a job-aid, then checks. An ID would show that
+the job happened, from real instance meaning, without dumping the form
+or inventing a Procedure A walkthrough the instance store does not
+contain.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. `--selftest` on
+  all three.
+- Open `realized_lesson.html` — 14 of 53 occurrences (example beats
+  after the job aid, before checks). Open `realized_coverage.html` —
+  full dump (SOP tree; guest extras in the index).
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`.
+
+**Supersedes:** the previous spine block’s live path of twelve
+occurrences as to *membership after Procedure A* — two instance-example
+beats are now on the path; B/C and the dump of the rest stand. Working-
+process block untouched. Single-writer per facet stands. Chameleon
+agent still not stood up.
+
 

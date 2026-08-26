@@ -30,6 +30,13 @@ This pass writes **occurrence intent only** (`move`, `teaches`, `rhetorical`,
 No `reinforce`: this SOP store has no closing/summary atom. Do not mint one.
 No `practice` / `feedback` / `assess`: the atomized SOP has no learner check.
 
+**Instance extras** (guest `ele_` records in the ALSAP occurrence store whose
+`composed_from` is an `alsap_asp9999` atom): Realizer stamps `exemplify`.
+Cartographer **preserves** that extra move (`extra_occurrence_move_preserved`).
+Do not reclassify an unbound `instance_value` (no `belongs_to`) as `hook`.
+Spec: `agents/realizer/instance_example_v1.md`. Not a dump of all ten
+instance atoms.
+
 Closed pedagogical list (must match `intent.enum.json` `dimensions.pedagogical`):
 `hook` · `objective` · `activate` · `present` · `exemplify` · `practice` ·
 `feedback` · `assess` · `reinforce` · `transfer`.
