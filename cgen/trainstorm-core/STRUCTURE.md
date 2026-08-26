@@ -279,12 +279,15 @@ Near-term, in dependency order:
    authored text, `realized_lesson.html`. **1:many seed 2026-08-25** — two ALSAP atoms mint a
    second occurrence; extra `reinforce` projects as a check from the atom. **Lesson spine
    2026-08-25** — default HTML is a short path; `realized_coverage.html` is the dump.
+   **2026-08-26** — that path includes one Procedure A lead present.
    **`tools/render/`** (PNG) remains.
 5. ~~**Cartographer v1**~~ — **done 2026-08-25.** Heuristic compiler writes `move`/`teaches` on the
    ALSAP occurrence store; re-runnable on extras (preserves stamped `move`).
 6. ~~**Couturier v1**~~ — **done 2026-08-25.** Move→look map writes expression style keys; HTML
    clothes the 1:many pairs differently. Extra `reinforce` is a check, not a recap.
-   **Lesson spine v1** — short path is the default HTML; dump is coverage. Next: Dragoman / `atom → primitives`.
+   **Lesson spine v1** — short path is the default HTML; dump is coverage.
+   **2026-08-26** — one Procedure A lead present on that path (no extra
+   `ele_`; no invented procedure check). Next: Dragoman / `atom → primitives`.
 7. **A real `brunswick.reference.course.json`** — still `{"_todo": …}`, and the only thing that would
    prove the course half end to end.
 
