@@ -2,18 +2,19 @@
 
 *A documented selection/sequence of existing occurrences — not fake instructional-design
 genius, and not an LLM call.* Implemented by `tools/realize.py`. Policy id:
-`v1_front_matter_procedure_sequence_then_checks` (extends the earlier
-`v1_front_matter_one_procedure_then_checks` membership: that hop put Procedure
-A’s *lead* on the path; this hop walks A’s **real steps as a job sequence**).
-Spec path stamped on the occurrence manifest as `spine.spec`.
+`v1_front_matter_callout_procedure_sequence_then_checks` (extends the earlier
+`v1_front_matter_procedure_sequence_then_checks` membership: that hop walked
+Procedure A’s real steps as a job sequence; this hop puts **`tp_callout` on
+the path** as why-this / activate clothes of the purpose atom). Spec path
+stamped on the occurrence manifest as `spine.spec`.
 
 The live ALSAP hop already minted `ele_` records, bound `move`/`teaches`
-(Cartographer), dressed them (Couturier), and projected extra `reinforce` as
-checks. Spine v1 then took front-matter only; a later hop added one Plan
-Development present. This hop keeps that opening and puts **Procedure A’s
-real steps** on the path — skip thin A/B/C headings, take every non-thin
-`procedure_step` child of the first Procedures branch, in `object.order`.
-Not B/C. The dump stays coverage.
+(Cartographer), dressed them (Couturier), bound compiler primitives, and
+projected Procedure A as a job-aid. `tp_callout` was in the closed set but
+unused on the spine (coverage `activate` only). This hop keeps that opening
+and job sequence and puts **one callout** on the path — extra
+`ele_sop_ast29080_purpose__activate` of the existing purpose atom. Not B/C.
+The dump stays coverage.
 
 Realizer owns the projection. Cartographer still owns intent. Couturier still
 owns style. Spine **mints no `ele_` ids** and **drops none**. `atoms.json` is
@@ -27,8 +28,8 @@ untouched. Locale packs stay keyed on `atom_id`. Closed vocab still has no
 `bindings.object.belongs_to` + `order` is the SOP tree. Walking it *is* the 47
 card dump. It does not imply a short lesson. Spine v1 **reuses those roles as
 input** (root vs direct child vs descendant; sibling `order`) and then **selects
-a subset**, sequenced as opening → front-matter teaching cards → Procedure A
-job sequence → existing checks.
+a subset**, sequenced as opening → why-this callout of purpose → front-matter
+teaching cards → Procedure A job sequence → existing checks.
 
 The Cartographer object tree already lists Procedure A’s children in `order`.
 The selector takes those non-heading children — it does not invent a parallel
@@ -83,9 +84,10 @@ copula to invert. A cloze of a step is not sibling contrast. A stem such as
 “Which is the first planning step?” would invent a fact. Jake parked a
 distractor-writer agent for later.
 
-So: **present only. No extra `ele_`.** Store stays 50.
-`supports_honest_sibling_check` is the gate (`tools/realize.py`); it is False
-for every A step.
+So: **present only on those atoms. No extra `ele_` for Procedure A.** The
+one new extra this hop is the purpose **activate** callout, not a procedure
+check. `supports_honest_sibling_check` is the gate (`tools/realize.py`); it
+is False for every A step.
 
 ---
 
@@ -96,9 +98,10 @@ for every A step.
 | Role | Which atoms | Which `ele_` | Why |
 |---|---|---|---|
 | Opening | Document root: no `belongs_to` | Primary (`hook` once Cartographer has bound it) then the seeded extra `present` if it exists | Title hook + title present — already seeded on `atom_sop_ast29080` |
-| Front-matter teaching cards | Direct children of the root, `kind` in `procedure` / `form`, **not thin** | Primary occurrence only | Paragraphs an ID would actually say: purpose, scope, what-it-is. Sorted by `object.order`. Purpose may be Cartographer `objective`; that is still a teaching card, not a check. |
+| Why-this callout | Purpose atom `atom_sop_ast29080_purpose` | Seeded extra `activate` (`ele_sop_ast29080_purpose__activate`) | Verified why-this meaning (SOP purpose sentence). Clothes: `tp_callout`. Not invented text. Not the title atom. |
+| Front-matter teaching cards | Direct children of the root, `kind` in `procedure` / `form`, **not thin** | Primary occurrence only | Paragraphs an ID would actually say: purpose (objective / `tp_purpose`), scope, what-it-is. Sorted by `object.order`. |
 | Procedure A job sequence | First Procedures-container branch in `object.order`; skip thin A/B/C heading; take every non-thin `procedure_step` child (`PROCEDURE_SEQUENCE_CAP = 8`) | Primary occurrence only | Doing the work: Plan Development’s four real steps, in `object.order`. Not B/C. |
-| Checks | Spine atoms that already have an extra `reinforce` | Those extras, in the same atom order as their presents | Reuse the two existing checks. Do not mint more. |
+| Checks | Spine atoms that already have an extra `reinforce` | Those extras, in the same atom order as their presents | Reuse the two existing checks. Do not mint a procedure-step MCQ. |
 
 **Off the path (coverage, not deleted)**
 
@@ -109,24 +112,27 @@ for every A step.
 - Other descendants: lists, list items, procedure B/C steps, govdocs.
 - Any 1:1 leftover whose atom is not front-matter or a Procedure A step.
 
-Live ALSAP therefore yields **eleven** occurrences, in this order:
+Live ALSAP therefore yields **twelve** occurrences, in this order:
 
 1. `ele_sop_ast29080` — hook (title)
 2. `ele_sop_ast29080__present` — present extra of the title
-3. `ele_sop_ast29080_purpose` — objective (why this SOP)
-4. `ele_sop_ast29080_scope` — present (who it applies to)
-5. `ele_sop_ast29080_general` — present (what an ALSAP is)
-6. `ele_sop_ast29080_proc_a_s1` — present (notify / request Lead)
-7. `ele_sop_ast29080_proc_a_s2` — present (identify authors and reviewers)
-8. `ele_sop_ast29080_proc_a_s3` — present (15-day kick-off)
-9. `ele_sop_ast29080_proc_a_s4` — present (confirm deliverables and dates)
-10. `ele_sop_ast29080_purpose__reinforce` — check
-11. `ele_sop_ast29080_general__reinforce` — check
+3. `ele_sop_ast29080_purpose__activate` — callout (why this SOP; same atom)
+4. `ele_sop_ast29080_purpose` — objective (purpose-frame of the same atom)
+5. `ele_sop_ast29080_scope` — present (who it applies to)
+6. `ele_sop_ast29080_general` — present (what an ALSAP is)
+7. `ele_sop_ast29080_proc_a_s1` — present (notify / request Lead)
+8. `ele_sop_ast29080_proc_a_s2` — present (identify authors and reviewers)
+9. `ele_sop_ast29080_proc_a_s3` — present (15-day kick-off)
+10. `ele_sop_ast29080_proc_a_s4` — present (confirm deliverables and dates)
+11. `ele_sop_ast29080_purpose__reinforce` — check
+12. `ele_sop_ast29080_general__reinforce` — check
 
-Teachable order is Gagné-shaped and small: gain attention → say the thing
-(purpose / who / what) → walk the Plan Development job sequence → enhance
-retention with the two existing checks. Checks come **after** the teaching
-cards, not interleaved. Not the 20 procedure steps of A+B+C.
+Teachable order is Gagné-shaped and small: gain attention → why-this
+callout → say the thing (purpose-frame / who / what) → walk the Plan
+Development job sequence → enhance retention with the two existing checks.
+Checks come **after** the teaching cards, not interleaved. Not the 20
+procedure steps of A+B+C. Purpose is three clothes of one atom (activate +
+objective + reinforce).
 
 ---
 
@@ -136,11 +142,11 @@ Occurrence manifest `spine`:
 
 ```json
 {
-  "policy": "v1_front_matter_procedure_sequence_then_checks",
+  "policy": "v1_front_matter_callout_procedure_sequence_then_checks",
   "spec": "agents/realizer/spine_v1.md",
-  "element_ids": ["ele_sop_ast29080", "ele_sop_ast29080__present", "…"],
-  "count": 11,
-  "store_count": 50,
+  "element_ids": ["ele_sop_ast29080", "ele_sop_ast29080__present", "ele_sop_ast29080_purpose__activate", "…"],
+  "count": 12,
+  "store_count": 51,
   "note": "Selection of existing ele_ records. Coverage dump keeps the rest."
 }
 ```
@@ -153,14 +159,14 @@ HTML (Realizer projector):
 
 | File | Default experience |
 |---|---|
-| `<project>/realized_lesson.html` | The spine, in the order above. Title hook (heading primitive), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), two checks (`tp_recall`). Link to coverage. |
+| `<project>/realized_lesson.html` | The spine, in the order above. Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), two checks (`tp_recall`). Link to coverage. |
 | `<project>/realized_coverage.html` | Full occurrence dump in SOP document order — still card-like. Link back to the lesson. |
 
 Compiler primitives (`agents/realizer/primitives_v1.md`) are Realizer-owned
-on the occurrence. Spine membership is unchanged; the projector now *uses*
-those primitives instead of dumping every beat into a generic card.
+on the occurrence. The projector *uses* those primitives — callout, heading,
+body, step list, check — instead of dumping every beat into a generic card.
 
-Do not hide coverage by deleting `ele_` records. The store stays 50.
+Do not hide coverage by deleting `ele_` records. The store stays 51.
 
 ---
 
@@ -170,13 +176,15 @@ Do not hide coverage by deleting `ele_` records. The store stays 50.
 - Not a distractor-writer. Checks keep closed-contrast distractors from sibling
   atoms (verbatim). Jake parked a future distractor-writer agent. This hop
   does not mint a procedure-step check.
-- Not a new `retrieve` enum. Not new 1:many (no extra `ele_` this hop).
+- Not a new `retrieve` enum. One extra `ele_` (purpose activate); not 1:many
+  of the SOP.
 - Not Dragoman, Storyline, `.potx`, motion, or `tools/render/` PNG pipelines.
 - Not Cartographer writing sequence; not Couturier picking clothes from the
   spine. Clothes still follow `move`. Realizer binds compiler primitives;
   Couturier still owns `style_ref`.
 - Not procedure B/C and not a full SOP dump.
-- Not Netlify / `/cgen/alsap` hosting (Jake tabled the redirect loop).
+- Not Chameleon and not `audience` keys on the store. Not Netlify /
+  `/cgen/alsap` hosting (Jake tabled the redirect loop).
 
 ---
 

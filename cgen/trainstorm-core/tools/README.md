@@ -18,10 +18,11 @@ A re-run preserves Cartographer-bound intent (`ext.cartographer`), Couturier sty
 occurrences project as a check from the atom (`agents/realizer/check_v1.md`). Default HTML is
 the short lesson spine (`agents/realizer/spine_v1.md`); `realized_coverage.html` is the full
 SOP dump. Realizer also binds compiler primitives (`agents/realizer/primitives_v1.md`) so
-the spine is heading/body/job-aid/check, not a stack of SOP cards. `--no-one-to-many` skips
+the spine is heading/callout/body/job-aid/check, not a stack of SOP cards. `--no-one-to-many` skips
 new extras but still preserves any that exist. `--selftest` checks stable extra ids, the
-check honesty bar, spine membership (front-matter, Procedure A as a job sequence,
-then checks), and the atom → primitives bind (procedure_step → `tp_step`, job-aid HTML).
+check honesty bar, spine membership (why-this callout of purpose, front-matter, Procedure A
+as a job sequence, then checks), and the atom → primitives bind (procedure_step → `tp_step`,
+activate → `tp_callout`, job-aid HTML).
 
 ## Cartographer
 

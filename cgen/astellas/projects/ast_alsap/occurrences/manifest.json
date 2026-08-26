@@ -3,7 +3,7 @@
   "project": "ast_alsap",
   "policy": "v1_one_to_many_seed",
   "default_move": "present",
-  "element_count": 50,
+  "element_count": 51,
   "generated_by": "tools/realize.py",
   "realized_from": {
     "atom_store": "cgen/astellas/projects/ast_alsap/atoms.json",
@@ -13,7 +13,7 @@
   "one_to_many": {
     "spec": "agents/realizer/one_to_many_v1.md",
     "seeded_atom_count": 3,
-    "extra_count": 3,
+    "extra_count": 4,
     "seed": [
       {
         "atom_id": "atom_sop_ast29080",
@@ -24,6 +24,11 @@
         "atom_id": "atom_sop_ast29080_general",
         "extra_element_id": "ele_sop_ast29080_general__reinforce",
         "move": "reinforce"
+      },
+      {
+        "atom_id": "atom_sop_ast29080_purpose",
+        "extra_element_id": "ele_sop_ast29080_purpose__activate",
+        "move": "activate"
       },
       {
         "atom_id": "atom_sop_ast29080_purpose",
@@ -39,7 +44,7 @@
     "tool": "tools/cartographer.py",
     "heuristic": "agents/cartographer/heuristic_v1.md",
     "move_counts": {
-      "activate": 2,
+      "activate": 3,
       "exemplify": 5,
       "hook": 1,
       "objective": 1,
@@ -47,9 +52,9 @@
       "reinforce": 2,
       "transfer": 3
     },
-    "teaches_bound": 45,
+    "teaches_bound": 46,
     "low_confidence": 10,
-    "element_count": 50,
+    "element_count": 51,
     "ontology": "ontology/objectives.json",
     "note": "v1 compiler pass over Realizer occurrences, including extra 1:many records. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Extra occurrences keep Realizer-stamped move. Couturier owns expression style; this tool does not wipe it. After writing move, Realizer refreshes text_primitive (compiler form). Lesson spine is Realizer projection (agents/realizer/spine_v1.md); this tool does not own sequence."
   },
@@ -62,22 +67,23 @@
       "brand.instructional": 36,
       "brand.job": 3,
       "brand.opening": 1,
-      "brand.prior": 2,
+      "brand.prior": 3,
       "brand.purpose": 1,
       "brand.recall": 2
     },
-    "dressed": 50,
+    "dressed": 51,
     "unmapped": 0,
-    "element_count": 50,
+    "element_count": 51,
     "registry": "vocab/primitives.registry.json",
     "note": "v1 map from occurrence move to expression style keys. Couturier mints no ids, does not rewrite atoms or intent, and does not bind motion / layout_primitive / interaction_primitive. Realizer owns text_primitive (compiler form); this tool preserves it and writes style_ref / content_role / layout_hint. HTML reads these keys for clothes; meaning stays on the atom. Lesson spine is Realizer projection; this tool does not pick the path."
   },
   "spine": {
-    "policy": "v1_front_matter_procedure_sequence_then_checks",
+    "policy": "v1_front_matter_callout_procedure_sequence_then_checks",
     "spec": "agents/realizer/spine_v1.md",
     "element_ids": [
       "ele_sop_ast29080",
       "ele_sop_ast29080__present",
+      "ele_sop_ast29080_purpose__activate",
       "ele_sop_ast29080_purpose",
       "ele_sop_ast29080_scope",
       "ele_sop_ast29080_general",
@@ -88,9 +94,9 @@
       "ele_sop_ast29080_purpose__reinforce",
       "ele_sop_ast29080_general__reinforce"
     ],
-    "count": 11,
-    "store_count": 50,
-    "note": "Selection of existing ele_ records in teachable order: document-root opening, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then existing reinforce extras. Spine projector renders compiler primitives (step list / heading / body / check); coverage dump stays card-like. Not an LLM path and not a full object-tree walk."
+    "count": 12,
+    "store_count": 51,
+    "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check); coverage dump stays card-like. Not an LLM path and not a full object-tree walk."
   },
   "primitives": {
     "policy": "v1_atom_to_primitive",
@@ -98,7 +104,7 @@
     "owner": "realizer",
     "counts": {
       "tp_body": 19,
-      "tp_callout": 2,
+      "tp_callout": 3,
       "tp_display": 1,
       "tp_purpose": 1,
       "tp_recall": 2,

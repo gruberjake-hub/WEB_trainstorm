@@ -60,7 +60,7 @@
     {
       "key": "tp_callout",
       "label": "Callout",
-      "description": "Prior-knowledge / aside type. Clothes for activate. Compiler role: callout. Not on the ALSAP spine; filled so the closed set is honest.",
+      "description": "Why-this / aside type. Clothes for activate. Compiler role: callout. On the ALSAP spine as extra `ele_sop_ast29080_purpose__activate` of the purpose atom.",
       "status": "draft",
       "derived_from": "agents/realizer/primitives_v1.md"
     }

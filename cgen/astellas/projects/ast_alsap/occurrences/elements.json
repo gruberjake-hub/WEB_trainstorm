@@ -198,6 +198,76 @@
     }
   },
   {
+    "element_id": "ele_sop_ast29080_purpose__activate",
+    "composed_from": "atom_sop_ast29080_purpose",
+    "source_hash": "sha256:0f12058f6f9dad4d1a7c7bcbb33ab9d0e60bd2683081e69b75cd20aa19bb81f1",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29080",
+      "sequence_index": 0,
+      "group_id": "atom_sop_ast29080_purpose"
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "activate",
+      "teaches": [
+        "obj_explain_alsap_purpose"
+      ],
+      "intended_response": "notice why this exists as a prior frame, not as a new fact"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29080_purpose",
+        "realizer": "tools/realize.py",
+        "policy": "v1_extra_occurrence",
+        "role": "extra",
+        "target_move": "activate",
+        "content_hash": "sha256:0f12058f6f9dad4d1a7c7bcbb33ab9d0e60bd2683081e69b75cd20aa19bb81f1"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "purpose_frame",
+          "extra_occurrence_move_preserved"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "activate",
+        "source_hash": "sha256:0f12058f6f9dad4d1a7c7bcbb33ab9d0e60bd2683081e69b75cd20aa19bb81f1",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_callout"
+        ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "activate",
+        "text_primitive": "tp_callout"
+      }
+    },
+    "expression": {
+      "style_ref": "brand.prior",
+      "text_primitive": "tp_callout",
+      "content_role": "callout",
+      "layout_hint": "callout"
+    }
+  },
+  {
     "element_id": "ele_sop_ast29080_purpose__reinforce",
     "composed_from": "atom_sop_ast29080_purpose",
     "source_hash": "sha256:0f12058f6f9dad4d1a7c7bcbb33ab9d0e60bd2683081e69b75cd20aa19bb81f1",
@@ -342,7 +412,8 @@
     },
     "intent": {
       "rhetorical": "support",
-      "move": "activate"
+      "move": "activate",
+      "intended_response": "notice why this exists as a prior frame, not as a new fact"
     },
     "governance": {
       "version": 1,
@@ -374,7 +445,8 @@
         "source_hash": "sha256:c7fdd207e73bb0f64b7d49776eedc96e165d05310fa7dcb0f71b0d7b5e6cf37e",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_callout"
         ]
       },
       "realizer_primitive": {
@@ -389,7 +461,7 @@
     "expression": {
       "style_ref": "brand.prior",
       "text_primitive": "tp_callout",
-      "content_role": "prior",
+      "content_role": "callout",
       "layout_hint": "callout"
     }
   },
@@ -542,7 +614,8 @@
       "move": "activate",
       "teaches": [
         "obj_identify_alsap_scope"
-      ]
+      ],
+      "intended_response": "notice why this exists as a prior frame, not as a new fact"
     },
     "governance": {
       "version": 1,
@@ -574,7 +647,8 @@
         "source_hash": "sha256:d96fd12809f665acfa6a76a7b9a31bc77c23fd098cddc97d912b1686dad5d361",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_callout"
         ]
       },
       "realizer_primitive": {
@@ -589,7 +663,7 @@
     "expression": {
       "style_ref": "brand.prior",
       "text_primitive": "tp_callout",
-      "content_role": "prior",
+      "content_role": "callout",
       "layout_hint": "callout"
     }
   },
