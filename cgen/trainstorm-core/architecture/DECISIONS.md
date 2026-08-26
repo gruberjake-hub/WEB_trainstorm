@@ -734,4 +734,118 @@ Couturier/Realizer dress clothes, not SOP sentences.
 transform.” Working-process block untouched. Single-writer per facet
 stands (Realizer owns `text_primitive`; Couturier owns `style_ref`).
 
+**Pointer:** a later 2026-08-26 block puts `tp_callout` on the spine as
+why-this / activate clothes of the purpose atom, and splits authoring
+Chameleon from runtime Chameleon in canon.
+
+---
+
+## 2026-08-26 — Authoring Chameleon is in-scope for static artifacts; runtime stays walled
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The Chameleon stub mixed two jobs. They share one facet
+contract; they do not share a wake.
+
+**Authoring Chameleon** is in-scope for a **static course**: an assumed
+audience, so the course is generated around that impression. It would
+write `audience` facets onto **occurrences** (`element.audience`) — not
+onto atoms’ meaning, not PII — using the same keys a later engine would
+read (`segment_scope`, `difficulty`, `variant_group`). Without LRE the
+impression is a documented hypothesis, like Cartographer’s heuristic.
+The wake is a content-pipeline write.
+
+**Runtime Chameleon** (wake on a live learner, pick a variant) stays
+**Learner Response Engine / frontier**. Do not build it. The wake is a
+learner-context event. The facet contract does not change between
+halves.
+
+Chameleon does **not** mint `ele_` (Realizer mints). It does **not**
+rewrite atom meaning (Headwater owns meaning). It does **not** own
+style (Couturier owns `element.expression`). Audience 1:many is
+**another occurrence of the same atom**, not a variant SOP and not a
+parallel meaning node.
+
+**Do not build the agent this hop.** No `chameleon.py`. No variants of
+the SOP. v1, when it happens, is one documented assumed segment on the
+ALSAP lesson. The stub (`agents/chameleon/chameleon_STUB.md` and the
+system-prompt stub it points at) no longer says “writes nothing / do
+not build” for the **authoring** half. Runtime / LRE remains “do not
+build.” **No PII — ever.**
+
+**Why:** A static course still needs an assumed audience. Walling
+*both* halves because runtime is frontier froze a job the production
+pipeline can own. Splitting the wake keeps LRE out of beta without
+pretending the facet does not exist.
+
+**Consequences:**
+- Canon and the stub record the split. No writer, no live `audience`
+  bind, no SOP variants in this hop.
+- Working-process block untouched. Single-writer per facet stands.
+
+**Supersedes:** the stub’s blanket “Chameleon writes nothing / do not
+build” as applied to the *authoring* half. Runtime / LRE wall stands.
+Working-process block untouched.
+
+---
+
+## 2026-08-26 — `tp_callout` on the ALSAP spine: why-this clothes of the purpose atom
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The closed compiler set already had `tp_callout` (clothes
+for `activate`) but it was unused on the short lesson. This hop puts
+**one callout on the spine** as a real ID beat: learner-facing “why
+this / activate” clothes of an **existing** atom.
+
+**Which atom, and why.** Verified against `atoms.json` (not invented
+text): `atom_sop_ast29080_purpose` is *The purpose of this SOP is to
+define the process for planning, developing, executing, maintaining,
+and archiving the ALSAP…* — that is the why-this meaning. The title
+atom (`atom_sop_ast29080`) is the SOP name and already wears hook +
+present. Do not invent a second purpose sentence.
+
+Realizer mints one extra occurrence,
+`ele_sop_ast29080_purpose__activate`, `composed_from` that atom,
+Realizer-stamped `move: activate`. Classifier already maps `activate`
+→ `tp_callout`. Cartographer preserves the extra’s move and still
+binds `teaches` / `rhetorical`. Couturier still owns style
+(`brand.prior`, `layout_hint: callout`) and preserves `text_primitive`.
+The projector kicker is **Why this**. Meaning from the atom via
+`composed_from`. No authored `content.text`. `atoms.json` unchanged.
+
+Spine heuristic (`agents/realizer/spine_v1.md`, policy
+`v1_front_matter_callout_procedure_sequence_then_checks`) places that
+callout after the title opening and **before** the purpose primary
+(objective / `tp_purpose` stays). Then scope, general, Procedure A as
+the existing job-aid, then the two existing checks. No procedure-step
+MCQ. Store gains **one** extra `ele_` (51 / 47). Purpose is now three
+clothes of one atom: activate + objective + reinforce.
+
+Idempotent with realize → cartographer → couturier. Demo remains
+`cgen/astellas/projects/ast_alsap/realized_lesson.html`. Hosting /
+`/cgen/alsap` stays tabled. Not Chameleon — no `audience` keys written
+this hop.
+
+**Why:** PR #20 paid atom → primitives: Procedure A is `tp_step`;
+heading/body/check exist; `tp_callout` was in the closed set but unused
+on the spine. An ID would put a why-this beat on the path, not leave
+the primitive as coverage-only honesty.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. `--selftest` on
+  all three.
+- Open `realized_lesson.html` — 12 of 51 occurrences (why-this
+  callout of purpose, then the rest of the short path). Open
+  `realized_coverage.html` — full dump.
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`.
+
+**Supersedes:** the previous primitives block’s “callout — `activate`
+— not on the spine” as to *spine membership*; the closed set and
+classifier stand. Working-process block untouched. Single-writer per
+facet stands. Chameleon agent still not stood up.
+
 

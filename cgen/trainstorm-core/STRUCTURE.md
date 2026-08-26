@@ -88,7 +88,7 @@ trainstorm-core/
 │   ├── headwater_ingest/                 ✅ meaning + object + source-type (the only agent that WRITES)
 │   ├── alsap_builder/                    ✅ Amanuensis — proposes into `instance`; dispatched 2026-08-20
 │   │   └── 07_examples/dispatch_2026-08-20/findings.md   ✅ first live dispatch record
-│   ├── couturier/ · griot/ · chameleon/  ✅ prompts exist; Couturier v1 has written a binding (`tools/couturier.py`)
+│   ├── couturier/ · griot/ · chameleon/  ✅ Couturier v1 writes style; chameleon is a stub (authoring in-scope as contract, runtime/LRE do not build; no chameleon.py)
 │   ├── localize/                         ✅ Dragoman — ⚠ flat `system.md` still un-`git rm`'d
 │   ├── ingest-decompose/                 ⚠ predecessor of headwater_ingest; retire or merge
 │   ├── cartographer/                     ✅ prompt + heuristic_v1.md; tools/cartographer.py writes occurrence intent

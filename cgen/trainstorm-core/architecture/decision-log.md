@@ -13,6 +13,43 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-26 — Authoring Chameleon vs runtime Chameleon; `tp_callout` on the spine
+
+Two jobs were mixed in the Chameleon stub (“writes nothing / do not
+build”). Jake agreed they split: **runtime** Chameleon (wake on a live
+learner, pick a variant) is Learner Response Engine / frontier.
+**Authoring** Chameleon is in-scope for a static course — assumed
+audience, write `audience` facets onto **occurrences** (not atoms’
+meaning, not PII) so the course is generated around that impression.
+Same keys the engine would later read (`segment_scope`, `difficulty`,
+`variant_group`). Without LRE the impression is a documented
+hypothesis, like Cartographer’s heuristic. The wake differs
+(content-pipeline write vs learner-context event); the facet contract
+does not.
+
+Chameleon does not mint `ele_` (Realizer mints). Headwater owns
+meaning. Couturier owns style. Audience 1:many is another occurrence
+of the same atom, not a variant SOP. This hop does **not** stand up
+the agent: no `chameleon.py`, no SOP variants, no live `audience`
+bind. v1, when it happens, is one documented assumed segment on the
+ALSAP lesson. Stub + system-prompt stub amended so authoring is no
+longer “do not build”; runtime / LRE still is. No PII. Working-process
+block untouched.
+
+Same PR, original build (not Chameleon): PR #20 paid atom → primitives
+but left `tp_callout` unused on the spine. Verified
+`atom_sop_ast29080_purpose` is the why-this sentence; title is the SOP
+name (already hook + present). Realizer mints
+`ele_sop_ast29080_purpose__activate` (`move: activate` → `tp_callout`).
+Spine policy `v1_front_matter_callout_procedure_sequence_then_checks`
+puts that extra after the title opening and before the purpose
+primary. Meaning via `composed_from`. No authored `content.text`. No
+procedure-step MCQ. `atoms.json` untouched. Store 51 / 47. Projector
+kicker **Why this**. Hosting / `/cgen/alsap` stays tabled. Demo remains
+`realized_lesson.html`. Idempotent with realize → cartographer →
+couturier.
+
+---
 ## 2026-08-26 — Atom → primitives (closed compiler form on the occurrence)
 
 The course chain already minted occurrences, bound move/teaches, dressed

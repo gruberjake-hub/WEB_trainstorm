@@ -12,6 +12,7 @@ It reads already-minted `ele_` records, writes only
 `realized_lesson.html` so different moves look like different clothes.
 Default HTML is the short lesson spine; `realized_coverage.html` is the dump.
 Procedure-step primitives project as a job-aid (`layout_hint: job_aid`).
+Activate / `tp_callout` primitives project as a why-this callout.
 
 Never: mint `ele_` / `atom_` ids; copy meaning onto the element; write
 `atoms.json`; write `element.intent`; bind `motion_primitive` (stub),
@@ -84,8 +85,8 @@ MOVE_TO_LOOK = {
     },
     "activate": {
         "style_ref": "brand.prior",
-        "text_primitive": "tp_body",
-        "content_role": "prior",
+        "text_primitive": "tp_callout",
+        "content_role": "callout",
         "layout_hint": "callout",
     },
     "exemplify": {
@@ -160,6 +161,9 @@ def bind_expression(el, atom, closed_style_refs, closed_text_primitives) -> tupl
     if expression.get("text_primitive") == realize.PRIMITIVE_STEP:
         expression["layout_hint"] = "job_aid"
         expression["content_role"] = "step"
+    if expression.get("text_primitive") == realize.PRIMITIVE_CALLOUT:
+        expression["layout_hint"] = "callout"
+        expression["content_role"] = "callout"
     kept = []
     for k in PRESERVED_KEYS:
         if k in existing:
@@ -171,6 +175,8 @@ def bind_expression(el, atom, closed_style_refs, closed_text_primitives) -> tupl
     stamp["flags"] = ["from_move"]
     if expression.get("text_primitive") == realize.PRIMITIVE_STEP:
         stamp["flags"].append("from_primitive_step")
+    if expression.get("text_primitive") == realize.PRIMITIVE_CALLOUT:
+        stamp["flags"].append("from_primitive_callout")
     return expression, stamp
 
 
@@ -396,6 +402,22 @@ def selftest(closed_style_refs, closed_text_primitives):
                     expr["style_ref"] == "brand.instructional", expr.get("style_ref")))
     results.append(("step flagged from_primitive_step",
                     "from_primitive_step" in stamp.get("flags", []), stamp.get("flags")))
+
+    # Realizer-bound callout primitive: preserve form, dress as why-this callout.
+    callout = el("ele_sop_x_purpose__activate", "atom_sop_x_purpose", "activate", extra=True)
+    callout["expression"] = {"text_primitive": "tp_callout"}
+    expr, stamp = bind_expression(callout, a, closed_style_refs, closed_text_primitives)
+    apply_expression(callout, expr, stamp)
+    results.append(("callout primitive is preserved (not overwritten to tp_body)",
+                    expr["text_primitive"] == "tp_callout", expr.get("text_primitive")))
+    results.append(("callout layout_hint is callout",
+                    expr["layout_hint"] == "callout", expr.get("layout_hint")))
+    results.append(("callout content_role is callout",
+                    expr["content_role"] == "callout", expr.get("content_role")))
+    results.append(("callout still wears prior style_ref",
+                    expr["style_ref"] == "brand.prior", expr.get("style_ref")))
+    results.append(("callout flagged from_primitive_callout",
+                    "from_primitive_callout" in stamp.get("flags", []), stamp.get("flags")))
 
     print(f"{'CHECK':<72} RESULT")
     print("-" * 86)

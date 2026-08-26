@@ -16,19 +16,21 @@ the SOP.
 `content.text`. Distractors, if any, are sibling atoms in the same store.
 
 Default HTML is a **short lesson spine** (`agents/realizer/spine_v1.md`): title
-hook, a handful of front-matter teaching cards, Procedure A’s real steps as a
-job sequence (present only), then the existing checks. The full SOP dump is
+hook, a why-this callout of the purpose atom (`tp_callout`), a handful of
+front-matter teaching cards, Procedure A’s real steps as a job sequence
+(present only), then the existing checks. The full SOP dump is
 `realized_coverage.html`. Spine is a selection of existing `ele_` records —
-it mints none and drops none. Procedure-step atoms stay 1:1 (no extra
-`reinforce`): they are imperatives, so they cannot host an honest copula-invert
-sibling check.
+it mints none for membership and drops none. Procedure-step atoms stay 1:1
+(no extra `reinforce`): they are imperatives, so they cannot host an honest
+copula-invert sibling check.
 
 **Atom → primitives** (`agents/realizer/primitives_v1.md`): Realizer binds a
 closed compiler `text_primitive` on the occurrence from atom kind + occurrence
 move (heading / body / step / callout / check). The spine projector renders
-those primitives — Procedure A s1–s4 as one job-aid step list, front-matter as
-heading/body, reinforce as the existing check. Coverage stays card-like.
-Couturier still owns `style_ref`. No authored `content.text`.
+those primitives — why-this as a callout of purpose, Procedure A s1–s4 as one
+job-aid step list, front-matter as heading/body, reinforce as the existing
+check. Coverage stays card-like. Couturier still owns `style_ref`. No authored
+`content.text`.
 
 Idempotency: extra ids are `(primary ele_) + "__" + move`. A re-run accretes
 missing extras and never drops existing extras or Cartographer bindings.
@@ -82,16 +84,18 @@ ELE_ID_RE = re.compile(r"^ele_[A-Za-z0-9_-]+$")
 # Primary occurrence keeps Cartographer's bound move; Realizer stamps `move` only
 # on the extra. Closed pedagogical vocab has no `retrieve`; `reinforce` is Gagné
 # 9a (enhance retention), the legal name for a later placement of the same meaning.
+# Purpose also mints `activate` so the spine can wear tp_callout (why this).
 # Spec: agents/realizer/one_to_many_v1.md
 ONE_TO_MANY_SEED = (
     ("atom_sop_ast29080", "present"),            # title: hook (primary) + present
     ("atom_sop_ast29080_general", "reinforce"),  # what ALSAP is: present + check
+    ("atom_sop_ast29080_purpose", "activate"),   # SOP purpose: why-this callout
     ("atom_sop_ast29080_purpose", "reinforce"),  # SOP purpose: objective + check
 )
 CHECK_SPEC = "agents/realizer/check_v1.md"
 CHECK_POLICY = "v1_check_from_atom"
 SPINE_SPEC = "agents/realizer/spine_v1.md"
-SPINE_POLICY = "v1_front_matter_procedure_sequence_then_checks"
+SPINE_POLICY = "v1_front_matter_callout_procedure_sequence_then_checks"
 PRIMITIVE_SPEC = "agents/realizer/primitives_v1.md"
 PRIMITIVE_POLICY = "v1_atom_to_primitive"
 # Closed compiler vocabulary. Keys must exist in primitives.registry.json.
@@ -557,6 +561,7 @@ KICKER = {
     "retrieval": "Check",
     "purpose": "Purpose",
     "prior": "Already known",
+    "callout": "Why this",
     "example": "Example",
     "handoff": "On the job",
     "step": "Job aid",
@@ -657,6 +662,19 @@ def is_check_occurrence(el) -> bool:
         or expr.get("style_ref") == "brand.recall"
         or expr.get("text_primitive") == "tp_recall"
         or expr.get("layout_hint") == "check"
+    )
+
+
+def is_callout_occurrence(el) -> bool:
+    """Activate / tp_callout extra — why-this clothes, not a check."""
+    if is_check_occurrence(el):
+        return False
+    move = (el.get("intent") or {}).get("move")
+    expr = el.get("expression") or {}
+    return (
+        move == "activate"
+        or expr.get("text_primitive") == PRIMITIVE_CALLOUT
+        or expr.get("layout_hint") == "callout"
     )
 
 
@@ -785,9 +803,10 @@ def spine_atom_ids(atoms) -> list:
 def select_spine(atoms, elements) -> list:
     """Stable ele_ ids in teachable order. Selection of existing occurrences; mints nothing.
 
-    Opening (root primary + non-check extras) → front-matter primaries →
-    first real procedure’s step presents (job sequence) → reinforce extras
-    of spine atoms. Spec: agents/realizer/spine_v1.md
+    Opening (root primary + non-check extras) → why-this activate extras of
+    spine atoms → front-matter primaries → first real procedure’s step
+    presents (job sequence) → reinforce extras of spine atoms.
+    Spec: agents/realizer/spine_v1.md
     """
     by_id = {e["element_id"]: e for e in elements}
     by_cf = defaultdict(list)
@@ -803,6 +822,9 @@ def select_spine(atoms, elements) -> list:
     presents = []
     checks = []
     for i, aid in enumerate(spine_atom_ids(atoms)):
+        callouts = []
+        primaries = []
+        atom_checks = []
         for el in occs_for(aid):
             eid = el["element_id"]
             if eid not in by_id:
@@ -810,12 +832,18 @@ def select_spine(atoms, elements) -> list:
             extra_check = is_extra_element(el) and (
                 (el.get("intent") or {}).get("move") == "reinforce" or is_check_occurrence(el)
             )
+            extra_callout = is_extra_element(el) and is_callout_occurrence(el)
             if extra_check:
-                checks.append(eid)
+                atom_checks.append(eid)
             elif i == 0:
                 opening.append(eid)
+            elif extra_callout:
+                callouts.append(eid)
             elif is_primary_element(el):
-                presents.append(eid)
+                primaries.append(eid)
+        if i != 0:
+            presents.extend(callouts + primaries)
+        checks.extend(atom_checks)
     return opening + presents + checks
 
 
@@ -829,11 +857,12 @@ def apply_spine(manifest, atoms, elements) -> dict:
         "count": len(ids),
         "store_count": len(elements),
         "note": ("Selection of existing ele_ records in teachable order: document-root "
-                 "opening, teachable front-matter primaries (object.order), the first "
-                 "real procedure’s non-thin procedure_step children as a job sequence "
-                 "(not thin A/B/C headings, not B/C), then existing reinforce extras. "
-                 "Spine projector renders compiler primitives (step list / heading / body / "
-                 "check); coverage dump stays card-like. Not an LLM path and not a full "
+                 "opening, why-this activate callout of purpose, teachable front-matter "
+                 "primaries (object.order), the first real procedure’s non-thin "
+                 "procedure_step children as a job sequence (not thin A/B/C headings, "
+                 "not B/C), then existing reinforce extras. Spine projector renders "
+                 "compiler primitives (callout / step list / heading / body / check); "
+                 "coverage dump stays card-like. Not an LLM path and not a full "
                  "object-tree walk."),
     }
     return manifest["spine"]
@@ -1118,6 +1147,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         prim = primitive_class(el)
         prim_cls = f" {prim}" if prim else ""
         kicker = KICKER.get(expr.get("content_role"), "")
+        if expr.get("text_primitive") == PRIMITIVE_CALLOUT:
+            kicker = KICKER.get("callout", "Why this")
         kicker_html = f'<div class="kicker">{esc(kicker)}</div>' if kicker else ""
         meaning_tag = "h2" if expr.get("text_primitive") == PRIMITIVE_HEADING else "p"
         tp = expr.get("text_primitive") or ""
@@ -1310,6 +1341,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         " Realizer bound a closed compiler primitive "
         "(<span class=mono>text_primitive</span>: heading / body / step / callout / check) "
         "from atom kind + occurrence move. The short lesson renders those primitives — "
+        "why-this as a <span class=mono>tp_callout</span> of purpose, "
         "Procedure A as a job-aid step list, front-matter as heading/body, "
         "reinforce as the existing check. Coverage stays card-like. "
         if prim_counts else
@@ -1319,8 +1351,9 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         f" Default HTML is the short lesson spine "
         f"(<span class=mono>{esc(spine.get('policy', SPINE_POLICY))}</span>): "
         f"{spine.get('count', 0)} of {len(elements)} occurrences — document-root opening, "
-        "teachable front-matter primaries, Procedure A as a job sequence, then the "
-        "existing checks. The object tree walk is coverage, not the path. "
+        "why-this callout of purpose, teachable front-matter primaries, Procedure A as "
+        "a job sequence, then the existing checks. The object tree walk is coverage, "
+        "not the path. "
     )
     if cout:
         ctrl_doc = "Couturier v1"
@@ -1444,8 +1477,10 @@ form.check .check-note{font-size:11.5px;color:var(--mut);margin:10px 0 0}
  border-radius:6px}
 .occ.style-purpose .meaning{font-weight:600}
 .occ.style-purpose .kicker{color:#047857}
-.occ.style-prior{background:#f0fdfa;border:1px solid #0f766e;border-radius:6px;font-size:14px}
-.occ.style-prior .kicker{color:#0f766e}
+.occ.style-prior,.occ.prim-callout{background:#f0fdfa;border:1px solid #0f766e;
+ border-left:6px solid #0f766e;border-radius:6px;padding:14px 16px 12px;font-size:14.5px}
+.occ.style-prior .kicker,.occ.prim-callout .kicker{color:#0f766e;opacity:1}
+.occ.prim-callout .meaning{font-size:15.5px;line-height:1.45;margin:4px 0 8px}
 .occ.style-example{background:#faf5ff;border:1px solid #c4b5fd;border-radius:6px;padding:12px 14px 12px 18px}
 .occ.style-example .meaning{font-family:Georgia,Times,serif;font-size:14px}
 .occ.style-example .kicker{color:#6d28d9}
@@ -1572,9 +1607,10 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f"Short lesson — {project_name}",
         "Short lesson",
         f'<a href="{coverage_href}">Full SOP / coverage ({store_n} occurrences)</a>',
-        (f"{spine_n} of {store_n} occurrences · front-matter as heading/body, then "
-         "Procedure A as a job-aid step sequence, then the existing checks. Not B/C "
-         "and not the SOP dump. Heuristic is documented, not an LLM."),
+        (f"{spine_n} of {store_n} occurrences · why-this callout of purpose, "
+         "front-matter as heading/body, then Procedure A as a job-aid step sequence, "
+         "then the existing checks. Not B/C and not the SOP dump. Heuristic is "
+         "documented, not an LLM."),
         "".join(spine_body),
         lesson_details,
     )
@@ -1787,6 +1823,11 @@ def selftest(closed_moves):
                     "ele_sop_ast29080_general__reinforce" in seeded_ids, sorted(seeded_ids)))
     results.append(("seed mints purpose reinforce extra",
                     "ele_sop_ast29080_purpose__reinforce" in seeded_ids, ""))
+    results.append(("seed mints purpose activate callout extra",
+                    "ele_sop_ast29080_purpose__activate" in seeded_ids, ""))
+    results.append(("purpose activate extra is activate not reinforce",
+                    any(e["element_id"] == "ele_sop_ast29080_purpose__activate"
+                        and e["intent"]["move"] == "activate" for e in seeded), ""))
     results.append(("title extra is present not reinforce",
                     any(e["element_id"] == "ele_sop_ast29080__present"
                         and e["intent"]["move"] == "present" for e in seeded), ""))
@@ -1810,9 +1851,17 @@ def selftest(closed_moves):
         "content_role": "retrieval",
         "layout_hint": "check",
     }
+    purp_callout = next(e for e in seeded if e["element_id"] == "ele_sop_ast29080_purpose__activate")
+    purp_callout["expression"] = {
+        "style_ref": "brand.prior",
+        "text_primitive": "tp_callout",
+        "content_role": "callout",
+        "layout_hint": "callout",
+    }
     want_spine = [
         "ele_sop_ast29080",
         "ele_sop_ast29080__present",
+        "ele_sop_ast29080_purpose__activate",
         "ele_sop_ast29080_purpose",
         "ele_sop_ast29080_scope",
         "ele_sop_ast29080_general",
@@ -1878,6 +1927,8 @@ def selftest(closed_moves):
                     classify_text_primitive(general_live, {"intent": {"move": "present"}}) == PRIMITIVE_BODY, ""))
     results.append(("activate is callout tp_callout",
                     classify_text_primitive(thin, {"intent": {"move": "activate"}}) == PRIMITIVE_CALLOUT, ""))
+    results.append(("purpose atom + activate is tp_callout (why-this clothes)",
+                    classify_text_primitive(purpose_live, {"intent": {"move": "activate"}}) == PRIMITIVE_CALLOUT, ""))
     results.append(("objective keeps tp_purpose",
                     classify_text_primitive(purpose_live, {"intent": {"move": "objective"}}) == PRIMITIVE_PURPOSE, ""))
 
@@ -1896,6 +1947,9 @@ def selftest(closed_moves):
                             "ele_sop_ast29080_proc_a_s3",
                             "ele_sop_ast29080_proc_a_s4",
                         )), ""))
+    results.append(("refresh binds tp_callout on purpose activate extra",
+                    (next(e for e in seeded if e["element_id"] == "ele_sop_ast29080_purpose__activate")
+                     .get("expression") or {}).get("text_primitive") == PRIMITIVE_CALLOUT, ""))
     results.append(("refresh does not author content.text",
                     all("content" not in e for e in seeded), ""))
     results.append(("job-aid title is the parent atom (thin A heading)",
@@ -1964,6 +2018,21 @@ def selftest(closed_moves):
                     "prim-heading" in page and "tp_display" in page, ""))
     results.append(("front-matter body primitive is present",
                     "prim-body" in page and "tp_body" in page, ""))
+    results.append(("spine includes purpose activate callout before purpose primary",
+                    "ele_sop_ast29080_purpose__activate" in got_spine
+                    and got_spine.index("ele_sop_ast29080_purpose__activate")
+                    < got_spine.index("ele_sop_ast29080_purpose"), got_spine))
+    results.append(("lesson HTML has why-this callout of the purpose atom",
+                    "ele_sop_ast29080_purpose__activate" in page
+                    and "Why this" in page
+                    and "prim-callout" in page
+                    and "tp_callout" in page, ""))
+    results.append(("callout clothes the purpose atom meaning (not invented text)",
+                    page.split("ele_sop_ast29080_purpose__activate", 1)[-1]
+                    .split("</article>", 1)[0]
+                    .find("The purpose of this SOP is to define the process") != -1, ""))
+    results.append(("callout is not a third check",
+                    page.count('form class="check"') == 2, page.count('form class="check"')))
     results.append(("coverage dump stays card-like (no job-aid grouping)",
                     "class=\"prim prim-step job-aid\"" not in cov_page
                     and "ele_sop_ast29080_proc_a_s1" in cov_page, ""))

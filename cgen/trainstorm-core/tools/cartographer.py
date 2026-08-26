@@ -170,6 +170,8 @@ def bind_intended_response(atom, move: str) -> str | None:
         return "carry the named handoff into the job (notify, deliver outputs, or follow the cited SOP)"
     if move == "reinforce":
         return "attempt a check that retrieves this atom's meaning, not as new information"
+    if move == "activate":
+        return "notice why this exists as a prior frame, not as a new fact"
     return None
 
 

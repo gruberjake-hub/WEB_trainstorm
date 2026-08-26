@@ -11,19 +11,23 @@ Realizer mints `ele_` ids. Cartographer still writes occurrence intent, except i
 
 ## What is seeded (ALSAP live store only)
 
-Two teaching-worthy atoms originally; this hop keeps those and adds **one**
-more so two extras are `reinforce` checks. The other atoms stay 1:1.
+Two teaching-worthy atoms originally; later hops added a purpose
+`reinforce` check and, this hop, a purpose **`activate` callout**. The
+other atoms stay 1:1.
 
 | Atom | Primary `move` (Cartographer) | Extra `ele_` | Extra `move` | Why |
 |---|---|---|---|---|
 | `atom_sop_ast29080` (SOP title) | `hook` | `ele_sop_ast29080__present` | `present` | hook + present of the same meaning |
 | `atom_sop_ast29080_general` (what an ALSAP is) | `present` | `ele_sop_ast29080_general__reinforce` | `reinforce` | present + retrieve/retention of the same meaning — HTML projects this extra as a **check** (`agents/realizer/check_v1.md`) |
-| `atom_sop_ast29080_purpose` (what this SOP is for) | `objective` | `ele_sop_ast29080_purpose__reinforce` | `reinforce` | objective + retrieve/retention — second check, still a seed |
+| `atom_sop_ast29080_purpose` (what this SOP is for) | `objective` | `ele_sop_ast29080_purpose__activate` | `activate` | why-this / activate clothes — HTML projects this extra as a **callout** (`tp_callout`) of the existing purpose sentence |
+| `atom_sop_ast29080_purpose` (same atom) | `objective` | `ele_sop_ast29080_purpose__reinforce` | `reinforce` | objective + retrieve/retention — second check, still a seed |
 
-Closed pedagogical vocab has no `retrieve`. `reinforce` is Gagné 9a (enhance
-retention) — the legal name for a later placement of the same atom. Do not
-invent a new enum value. The extra `reinforce` is a check the reader can
-attempt, not a recap reprint of the atom.
+Purpose therefore wears three clothes: activate + objective + reinforce.
+Closed pedagogical vocab has no `retrieve`. `reinforce` is Gagné 9a
+(enhance retention) — the legal name for a later placement of the same
+atom. Do not invent a new enum value. The extra `reinforce` is a check
+the reader can attempt, not a recap reprint of the atom. The extra
+`activate` is a callout, not a second authored purpose.
 
 Do not mint extras for the whole SOP. Do not duplicate atoms. Do not copy
 `content.text` onto the occurrence.
@@ -66,5 +70,6 @@ Optional: `python3 tools/realize.py --selftest` · `python3 tools/cartographer.p
 Couturier (`python3 tools/couturier.py`) dresses extras; it mints nothing and does not drop them.
 
 The short lesson that *selects* these extras into a teachable order is
-`agents/realizer/spine_v1.md` (front-matter, then Procedure A as a job
-sequence, then these checks). This spec still does not 1:many the SOP.
+`agents/realizer/spine_v1.md` (title opening, purpose activate callout,
+front-matter, Procedure A as a job sequence, then these checks). This spec
+still does not 1:many the SOP.
