@@ -511,8 +511,71 @@ without dumping the SOP.
 - Manifest `spine.element_ids` gains `ele_sop_ast29080_proc_a_s1` before the
   checks. Store stays 50 `ele_` / 47 atoms.
 
+**Pointer:** a later 2026-08-26 block walks Procedure A as a job sequence
+on this spine (still coverage for B/C and the rest of the SOP).
+
 **Supersedes:** the previous spine block’s live path of seven occurrences
 and its “Not the 20 procedure steps” as to *zero* procedure atoms on the
 path — one lead is now on the path; the dump of the rest stands.
 Working-process block untouched. Single-writer per facet stands.
+
+---
+
+## 2026-08-26 — Procedure A as a job sequence on the ALSAP lesson spine
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The short ALSAP lesson now walks **Procedure A’s real steps**
+after front-matter and before the existing checks — a job sequence, not a
+single notify sentence. Spine membership is still a documented heuristic
+(`agents/realizer/spine_v1.md`, policy
+`v1_front_matter_procedure_sequence_then_checks`), not fake ID genius and
+not an LLM call. Realizer projects a stable sequence of **existing** `ele_`
+ids. `atoms.json` unchanged. Store gains **no** extra `ele_`.
+
+**Which atoms, and why.** Object `belongs_to` / `order` already lists
+Procedure A’s children. The first branch under the thin `Procedures.`
+heading is still A — *Plan Development of ALSAP.* An ID teaching that job
+would walk the real A steps, not stop after the GSO notify. The A/B/C
+heading atoms are thin (same bar as check siblings). The four non-thin
+`procedure_step` children, in `object.order`:
+
+- `atom_sop_ast29080_proc_a_s1` — Notify SDS in QSEG / request an ALSAP Lead
+- `atom_sop_ast29080_proc_a_s2` — Collaborate with SMT to identify authors and reviewers
+- `atom_sop_ast29080_proc_a_s3` — Schedule and conduct the kick-off within 15 business days
+- `atom_sop_ast29080_proc_a_s4` — Confirm section deliverables and target dates
+
+A is a handful (4), under `PROCEDURE_SEQUENCE_CAP = 8`, so all four land
+as primary presents. Branches B/C stay coverage.
+
+**No check on those atoms.** Extra `reinforce` would need sibling-atom
+closed contrast (verbatim first sentences / sibling steps). Procedure steps
+are imperatives; they have sibling sentences but no `{subject} is
+{complement}` to invert. Cloze is not sibling contrast. Inventing “which is
+the first planning step?” is a new fact. Jake parked a distractor-writer;
+this hop does not build it. Present only.
+
+Cartographer still owns intent. Couturier still owns style. Closed vocab
+still has no `retrieve`. Idempotent with realize → cartographer → couturier.
+
+**Why:** The previous 2026-08-26 block put one lead present on the spine —
+an ID would still not teach *doing Plan Development*. The four A steps are
+that hop without dumping B/C or the SOP.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`.
+- Open `realized_lesson.html` — 11 of 50 occurrences (front-matter,
+  Procedure A sequence, two existing checks). Open
+  `realized_coverage.html` — full dump.
+- Manifest `spine.element_ids` gains `ele_sop_ast29080_proc_a_s2` /
+  `_s3` / `_s4` after s1 and before the checks. Store stays 50 `ele_` /
+  47 atoms.
+
+**Supersedes:** the previous spine block’s live path of eight occurrences
+and its “one present, cap 1 / later A steps stay coverage” as to *how much
+of A is on the path* — the four real A steps are now on the path; B/C and
+the dump of the rest stand. Working-process block untouched. Single-writer
+per facet stands.
 

@@ -13,6 +13,32 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-26 — Procedure A as a job sequence on the ALSAP lesson spine
+
+The previous 2026-08-26 hop (PR #16) put one Plan Development present
+(`atom_sop_ast29080_proc_a_s1`) on the short path. An ID teaching *Plan
+Development of ALSAP* would walk the real A steps, not stop at the GSO
+notify. This entry records that hop.
+
+`tools/realize.py` extends `agents/realizer/spine_v1.md` (policy
+`v1_front_matter_procedure_sequence_then_checks`): after teachable
+front-matter, take the first Procedures-container branch in `object.order`,
+skip the thin A/B/C heading, take every non-thin `procedure_step` child in
+that order. Live ALSAP Procedure A is a handful (s1 notify Lead, s2 identify
+authors, s3 15-day kick-off, s4 confirm deliverables). Cap 8; 4 is under it,
+so all four land as presents. Branches B/C stay coverage.
+
+No extra `reinforce`. Procedure steps are imperatives; sibling first
+sentences exist but there is no honest copula invert. Cloze is not sibling
+contrast. Distractor-writer stays parked. Store stays 50. `atoms.json`
+untouched. Checks still at the end. Idempotent with realize → cartographer
+→ couturier.
+
+Not this hop: distractor-writer, Dragoman, Storyline, `.potx`, motion, PNG
+pipelines, rewriting SOP/form atoms into elements, 1:many of the procedure
+tree, inventing a `retrieve` enum, procedure B/C on the spine.
+
+---
 ## 2026-08-26 — One real procedure on the ALSAP lesson spine
 
 Spine v1 (PR #15) projected front-matter then the two existing checks.
