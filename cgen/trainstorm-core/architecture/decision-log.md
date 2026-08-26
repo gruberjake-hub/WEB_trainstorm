@@ -13,6 +13,30 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-26 — ALSAP short lesson pages one named scene at a time (player chrome)
+
+After PR #25 the short lesson read as three named scenes (front-matter,
+Procedure A, form BR) but still *scrolled* as one long page. This hop is
+**player chrome only**. Same 16 spine occurrences. Same headings.
+
+**Paging.** Projector shows one named scene at a time (`spine.scenes.paging`,
+policy `v1_one_scene_at_a_time`). Next / Back moves between the three
+scenes. Sequence practice stays in scene 2. Definition/purpose checks stay
+at lesson end — a final player step after Next from scene 3, not a fourth
+scene. Hash is optional. Not an LLM. Not outcome language.
+
+Same 16 `ele_` ids. Same `composed_from`. `atoms.json` untouched. No
+authored `content.text`. No new `ele_`. Coverage dump stays ungrouped and
+unpaged. Couturier still dresses occurrences; Realizer pages the existing
+scene sections.
+
+Store 55 / 47. Membership policy unchanged. No chameleon.py, no Headwater
+outcomes-mode, no LLM distractors, no `/cgen/alsap` hosting, no Procedure
+B, no extra form dump, no extra beats. Idempotent with realize →
+cartographer → couturier.
+
+---
+
 ## 2026-08-26 — ALSAP short lesson reads as three scenes (layout chrome)
 
 After PR #24 the short lesson was a coherent SOP-course seed: front-matter,

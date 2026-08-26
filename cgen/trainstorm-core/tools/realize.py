@@ -29,7 +29,9 @@ existing ASP-9999 atoms — `agents/realizer/instance_example_v1.md`), then the
 existing definition checks. The projector wraps those existing beats in
 **three named scenes** (front-matter / Procedure A / form BR) — layout chrome
 from SOP/form roles already in the graph, not new beats and not outcome
-language. The full SOP dump is `realized_coverage.html`.
+language — and pages **one scene at a time** (Next/Back). Definition/purpose
+checks stay a final step after scene 3, not a fourth scene. The full SOP dump
+is `realized_coverage.html`.
 Spine is a selection of existing `ele_` records — it mints none for membership
 and drops none. Procedure-step atoms stay 1:1 (no extra `reinforce`): they are
 imperatives, so they cannot host an honest copula-invert sibling check. Form
@@ -44,7 +46,8 @@ job-aid step list then a sequence practice of the same four presents, the
 form-field presents as body/`present` clothes, the instance example as
 body/`exemplify` clothes (not a new SOP card), front-matter as heading/body,
 reinforce as the existing definition checks. Scene headings group those
-existing primitives; they do not mint `ele_`.
+existing primitives; they do not mint `ele_`. Player chrome shows one named
+scene at a time (Next/Back); that is still projector grouping, not new meaning.
 Coverage stays card-like. Couturier still owns `style_ref`. No authored
 `content.text`.
 
@@ -150,6 +153,7 @@ PROCEDURE_SEQUENCE_CAP = 8
 # SOP/form roles already used for membership. Not new beats. Not an LLM.
 # Headings are role labels, not invented outcomes. Spec: spine_v1.md.
 SCENE_POLICY = "v1_three_scenes_from_roles"
+PAGING_POLICY = "v1_one_scene_at_a_time"
 SCENE_FRONT_MATTER = "front_matter"
 SCENE_PROCEDURE_A = "procedure_a"
 SCENE_FORM_BR = "form_br"
@@ -1132,7 +1136,9 @@ def apply_spine(manifest, atoms, elements) -> dict:
                  "(projector-only; no extra ele_) plus present clothes on the form-field "
                  "beats and exemplify clothes on the instance beats; coverage dump stays "
                  "card-like. Named scene headings group those existing beats from "
-                 "SOP/form roles (layout chrome, not new meaning). Not an LLM path "
+                 "SOP/form roles (layout chrome, not new meaning). Player chrome "
+                 "pages one named scene at a time (Next/Back); lesson-end checks "
+                 "are a final step, not a fourth scene. Not an LLM path "
                  "and not a full object-tree walk."),
     }
     seq_atoms = procedure_sequence_atoms(atoms)
@@ -1285,10 +1291,22 @@ def stamp_spine_scenes(scenes, lesson_end) -> dict:
         "spec": SPINE_SPEC,
         "scenes": out,
         "lesson_end_checks": list(lesson_end),
+        "paging": {
+            "policy": PAGING_POLICY,
+            "spec": SPINE_SPEC,
+            "scene_count": len(out),
+            "step_count": len(out) + (1 if lesson_end else 0),
+            "lesson_end_is_final_step": bool(lesson_end),
+            "note": ("Player chrome only: one named scene at a time, Next/Back. "
+                     "Definition/purpose checks are a final step after the last "
+                     "scene, not a fourth named scene. Hash is optional. Same "
+                     "membership. Coverage dump stays unpaged."),
+        },
         "note": ("Layout chrome only: named section headings group existing spine "
                  "ele_ records from SOP/form roles already in the graph. Same "
                  "membership. Sequence practice stays in Procedure A. Definition/"
-                 "purpose checks stay at lesson end. Not an LLM. Not outcome language. "
+                 "purpose checks stay at lesson end. Player chrome pages one scene "
+                 "at a time. Not an LLM. Not outcome language. "
                  "Coverage dump stays ungrouped."),
     }
 
@@ -1789,11 +1807,13 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
 
     spine_body = []
     if scene_list:
-        for sc in scene_list:
+        for idx, sc in enumerate(scene_list):
             inner = render_beat_groups(sc.get("element_ids") or [])
+            hidden = "" if idx == 0 else " hidden"
             spine_body.append(
                 f'<section class="scene" data-scene="{esc(sc.get("id") or "")}" '
-                f'data-role="{esc(sc.get("role") or "")}">'
+                f'data-role="{esc(sc.get("role") or "")}" '
+                f'data-player-step="{idx}"{hidden}>'
                 f'<header class="scene-head">'
                 f'<p class="scene-kicker">{esc(sc.get("kicker") or "")}</p>'
                 f'<h2 class="scene-heading">{esc(sc.get("heading") or "")}</h2>'
@@ -1802,13 +1822,34 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
                 f'</section>'
             )
         if lesson_end_ids:
+            end_step = len(scene_list)
             spine_body.append(
-                f'<section class="lesson-end-checks">'
+                f'<section class="lesson-end-checks" data-player-step="{end_step}" '
+                f'data-player-kind="lesson-end" hidden>'
                 f'{"".join(render_beat_groups(lesson_end_ids))}'
                 f'</section>'
             )
+        scene_n = len(scene_list)
+        step_n = scene_n + (1 if lesson_end_ids else 0)
+        first_heading = scene_list[0].get("heading") or ""
+        paging_id = ((scenes_stamp.get("paging") or {}).get("policy") or PAGING_POLICY)
+        player_nav = (
+            f'<nav class="player-nav" aria-label="Scenes">'
+            f'<button type="button" class="player-back" disabled>Back</button>'
+            f'<p class="player-status" aria-live="polite">'
+            f'{esc(first_heading)} · 1 of {scene_n}</p>'
+            f'<button type="button" class="player-next">Next</button>'
+            f'</nav>'
+        )
+        spine_main = (
+            f'<div class="player" data-paging="{esc(paging_id)}" '
+            f'data-scene-count="{scene_n}" data-step-count="{step_n}">'
+            f'{player_nav}'
+            f'{"".join(spine_body)}'
+            f'</div>'
+        )
     else:
-        spine_body.extend(render_beat_groups(spine_ids))
+        spine_main = "".join(render_beat_groups(spine_ids))
     spine_rows = []
     for n, eid in enumerate(spine_ids, 1):
         el = by_eid.get(eid)
@@ -1897,8 +1938,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         "example as body/`exemplify` clothes (form then instance atom via "
         "composed_from), front-matter as heading/body, "
         "reinforce as the existing definition checks. Named scene headings group "
-        "those existing beats (front-matter / Procedure A / form BR); coverage "
-        "stays card-like. "
+        "those existing beats (front-matter / Procedure A / form BR); player "
+        "chrome pages one named scene at a time. Coverage stays card-like. "
         if prim_counts else
         " The atom → primitives hop is owed so beats are clothes, not SOP cards. "
     )
@@ -1910,7 +1951,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         "a job sequence then a sequence practice of those presents, the form "
         "fields those examples fill, a small instance example, then the existing "
         "definition checks. Scene chrome groups those same beats from SOP/form "
-        "roles. The object "
+        "roles; the player shows one named scene at a time (Next/Back). The object "
         "tree walk is coverage, not the path. "
     )
     if cout:
@@ -2061,12 +2102,21 @@ form.check .check-note{font-size:11.5px;color:var(--mut);margin:10px 0 0}
 .job-aid li.step .meaning{grid-column:2;margin:0 0 4px;font-size:15.5px;line-height:1.45}
 .job-aid li.step .join{grid-column:2}
 .job-aid > .join{margin:10px 0 4px}
-.scene{margin:32px 0 28px;padding:4px 0 8px;border-top:3px solid var(--accent)}
+.player{margin:4px 0 24px}
+.player-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;
+ position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:10px 0 12px;
+ margin:0 0 8px;z-index:2}
+.player-nav button{background:#1e3a8a;color:#fff;border:0;border-radius:6px;padding:8px 14px;
+ font:inherit;font-weight:600;cursor:pointer}
+.player-nav button:disabled{background:#e2e8f0;color:#94a3b8;cursor:not-allowed}
+.player-status{margin:0;font-size:13px;color:var(--mut);text-align:center;flex:1}
+.scene{margin:12px 0 8px;padding:4px 0 8px;border-top:3px solid var(--accent)}
 .scene-head{margin:10px 0 16px}
 .scene-kicker{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
  color:var(--accent);margin:0 0 4px}
 .scene-heading{font-size:22px;margin:0;letter-spacing:-.02em;color:var(--ink)}
-.lesson-end-checks{margin:28px 0 8px;padding-top:10px;border-top:1px dashed var(--line)}
+.lesson-end-checks{margin:12px 0 8px;padding-top:10px;border-top:1px dashed var(--line)}
+.scene[hidden],.lesson-end-checks[hidden]{display:none !important}
 .sequence-check{border:2px solid #334155;border-radius:8px;padding:16px 18px 10px;margin:16px 0;
  background:#f1f5f9}
 .sequence-check .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
@@ -2097,7 +2147,7 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
  padding-top:12px}
 """.strip()
 
-    SCRIPT = r"""
+    CHECK_SCRIPT = r"""
 (function () {
   function norm(s) {
     return (s || "").replace(/\s+/g, " ").trim().toLowerCase();
@@ -2167,6 +2217,73 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
 })();
 """.strip()
 
+    PLAYER_SCRIPT = r"""
+(function () {
+  var player = document.querySelector(".player");
+  if (!player) return;
+  var steps = Array.prototype.slice.call(player.querySelectorAll("[data-player-step]"));
+  if (!steps.length) return;
+  steps.sort(function (a, b) {
+    return Number(a.getAttribute("data-player-step")) - Number(b.getAttribute("data-player-step"));
+  });
+  var back = player.querySelector(".player-back");
+  var next = player.querySelector(".player-next");
+  var status = player.querySelector(".player-status");
+  var sceneCount = Number(player.getAttribute("data-scene-count") || 0);
+  var i = 0;
+  function sceneNumber(idx) {
+    var n = 0;
+    for (var k = 0; k <= idx; k++) {
+      if (steps[k].classList.contains("scene")) n++;
+    }
+    return n;
+  }
+  function headingOf(el) {
+    var h = el.querySelector(".scene-heading");
+    return h ? (h.textContent || "").trim() : "";
+  }
+  function hashOf(el) {
+    if (el.classList.contains("scene")) return el.getAttribute("data-scene") || "";
+    if (el.getAttribute("data-player-kind") === "lesson-end") return "lesson-end";
+    return "";
+  }
+  function show(n, writeHash) {
+    if (n < 0) n = 0;
+    if (n > steps.length - 1) n = steps.length - 1;
+    i = n;
+    steps.forEach(function (el, idx) {
+      if (idx === i) el.removeAttribute("hidden");
+      else el.setAttribute("hidden", "");
+    });
+    if (back) back.disabled = i === 0;
+    if (next) next.disabled = i === steps.length - 1;
+    var cur = steps[i];
+    var isScene = cur.classList.contains("scene");
+    if (status) {
+      status.textContent = isScene
+        ? headingOf(cur) + " · " + sceneNumber(i) + " of " + sceneCount
+        : "";
+    }
+    if (writeHash && history.replaceState) {
+      var hash = hashOf(cur);
+      history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
+    }
+  }
+  function stepFromHash() {
+    var hash = (location.hash || "").replace(/^#/, "");
+    if (!hash) return 0;
+    for (var k = 0; k < steps.length; k++) {
+      if (hashOf(steps[k]) === hash) return k;
+    }
+    return 0;
+  }
+  if (back) back.addEventListener("click", function () { show(i - 1, true); });
+  if (next) next.addEventListener("click", function () { show(i + 1, true); });
+  window.addEventListener("hashchange", function () { show(stepFromHash(), false); });
+  show(stepFromHash(), false);
+})();
+""".strip()
+
     foot_common = (
         f"Atom store: {esc(str(rf.get('atom_store', '')))} · "
         f"atoms_sha256 {esc(str(rf.get('atoms_sha256', ''))[:19])}…<br>"
@@ -2181,9 +2298,11 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f"{' Compiler primitives: ' + prim_bits + '.' if prim_bits else ''} "
         f"Spine heuristic: <span class=mono>{esc(SPINE_SPEC)}</span>."
         f"{' Scene chrome: ' + esc(SCENE_POLICY) + '.' if scene_list else ''}"
+        f"{' Player chrome: ' + esc(PAGING_POLICY) + '.' if scene_list else ''}"
     )
 
-    def render_page(page_title, heading, nav, path_line, main, details_html):
+    def render_page(page_title, heading, nav, path_line, main, details_html, extra_script=""):
+        script = CHECK_SCRIPT + (("\n" + extra_script) if extra_script else "")
         return (
             "<!doctype html><html lang=en><head><meta charset=utf-8>"
             "<meta name=viewport content=\"width=device-width,initial-scale=1\">"
@@ -2201,7 +2320,7 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
             f"{main}"
             f"{details_html}"
             f"<div class=foot>{foot_common}</div>"
-            f"</div><script>{SCRIPT}</script></body></html>"
+            f"</div><script>{script}</script></body></html>"
         )
 
     project_name = esc(manifest.get("project", "course"))
@@ -2233,13 +2352,15 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         "Short lesson",
         f'<a href="{coverage_href}">Full SOP / coverage ({store_n} occurrences)</a>',
         (f"{spine_n} of {store_n} occurrences · {scene_path}"
-         "Why-this callout of purpose, front-matter as heading/body, Procedure A as "
+         "One named scene at a time (Next/Back). Why-this callout of purpose, "
+         "front-matter as heading/body, Procedure A as "
          "a job-aid step sequence then a sequence practice of those four presents, "
          "then the form fields those examples fill, then a worked example from the "
          "instance store, then the existing definition checks at lesson end. "
          "Not B/C and not the SOP dump. Heuristic is documented, not an LLM."),
-        "".join(spine_body),
+        spine_main,
         lesson_details,
+        extra_script=PLAYER_SCRIPT,
     )
     coverage_html = render_page(
         f"Coverage dump — {project_name}",
@@ -2605,6 +2726,13 @@ def selftest(closed_moves):
                     and set(sum((s["element_ids"] for s in scenes0.get("scenes") or []), [])
                             + list(scenes0.get("lesson_end_checks") or []))
                     == set(want_spine), ""))
+    paging0 = scenes0.get("paging") or {}
+    results.append(("paging is player chrome on the same scenes",
+                    paging0.get("policy") == PAGING_POLICY
+                    and paging0.get("scene_count") == 2
+                    and paging0.get("step_count") == 3
+                    and paging0.get("lesson_end_is_final_step") is True
+                    and scenes0.get("policy") == SCENE_POLICY, paging0))
 
     # Compiler primitives from atom kind + occurrence move.
     results.append(("procedure_step present is tp_step",
@@ -2772,6 +2900,33 @@ def selftest(closed_moves):
     results.append(("coverage dump has no scene chrome",
                     'class="scene-heading"' not in cov_page
                     and 'class="scene"' not in cov_page, ""))
+    fm_tag = re.search(r'<section class="scene" data-scene="what_an_alsap_is"[^>]*>', page)
+    proc_tag = re.search(r'<section class="scene" data-scene="how_an_alsap_starts"[^>]*>', page)
+    end_tag = re.search(r'<section class="lesson-end-checks"[^>]*>', page)
+    results.append(("lesson HTML has player chrome Next/Back",
+                    'class="player"' in page
+                    and f'data-paging="{PAGING_POLICY}"' in page
+                    and 'class="player-next"' in page
+                    and 'class="player-back"' in page
+                    and 'data-scene-count="2"' in page
+                    and 'data-step-count="3"' in page, ""))
+    results.append(("first scene is the visible player step",
+                    bool(fm_tag) and "hidden" not in fm_tag.group(0)
+                    and fm_tag.group(0).find('data-player-step="0"') != -1,
+                    fm_tag.group(0) if fm_tag else ""))
+    results.append(("later scenes and lesson-end start hidden",
+                    bool(proc_tag) and "hidden" in proc_tag.group(0)
+                    and proc_tag.group(0).find('data-player-step="1"') != -1
+                    and bool(end_tag) and "hidden" in end_tag.group(0)
+                    and end_tag.group(0).find('data-player-kind="lesson-end"') != -1,
+                    (proc_tag.group(0) if proc_tag else "", end_tag.group(0) if end_tag else "")))
+    results.append(("coverage dump has no player chrome",
+                    'class="player"' not in cov_page
+                    and 'class="player-nav"' not in cov_page
+                    and 'class="player-next"' not in cov_page, ""))
+    results.append(("player chrome does not invent a fourth scene heading",
+                    page.count('class="scene-heading">') == 2
+                    and "will be able" not in page.lower(), page.count('class="scene-heading">')))
     results.append(("lesson sequence practice sits after the job aid",
                     page.find('class="prim prim-step job-aid"')
                     < page.find('data-shape="sequence"')
@@ -3098,6 +3253,27 @@ def selftest(closed_moves):
                     and page_form.find('data-scene="benefit_risk_on_the_form"')
                     < page_form.find('class="lesson-end-checks"')
                     < page_form.find("ele_sop_ast29080_purpose__reinforce"), ""))
+    form_paging = form_scenes.get("paging") or {}
+    results.append(("three-scene paging still leaves checks as the final step",
+                    form_paging.get("policy") == PAGING_POLICY
+                    and form_paging.get("scene_count") == 3
+                    and form_paging.get("step_count") == 4
+                    and form_paging.get("lesson_end_is_final_step") is True, form_paging))
+    br_tag = re.search(r'<section class="scene" data-scene="benefit_risk_on_the_form"[^>]*>', page_form)
+    end_form_tag = re.search(r'<section class="lesson-end-checks"[^>]*>', page_form)
+    results.append(("form lesson pages three scenes then lesson-end",
+                    f'data-paging="{PAGING_POLICY}"' in page_form
+                    and 'data-scene-count="3"' in page_form
+                    and 'data-step-count="4"' in page_form
+                    and bool(br_tag) and "hidden" in br_tag.group(0)
+                    and br_tag.group(0).find('data-player-step="2"') != -1
+                    and bool(end_form_tag) and "hidden" in end_form_tag.group(0)
+                    and end_form_tag.group(0).find('data-player-step="3"') != -1, ""))
+    results.append(("form lesson player does not name a fourth scene",
+                    page_form.count('class="scene-heading">What an ALSAP is</h2>') == 1
+                    and page_form.count('class="scene-heading">How an ALSAP starts</h2>') == 1
+                    and page_form.count('class="scene-heading">Benefit-risk on the form</h2>') == 1
+                    and page_form.count('class="scene-heading">') == 3, page_form.count('class="scene-heading">')))
 
     huge_steps = [
         atom(

@@ -136,7 +136,7 @@
     ],
     "count": 16,
     "store_count": 55,
-    "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then the two FORM-AST-34037 BR-field presents those instance examples fill (alsap atoms via composed_from), then a small instance-example seed (alsap_asp9999 atoms via composed_from \u2014 Procedure A has no honest match; these illustrate the ALSAP generally), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check) plus a sequence practice of the Procedure A presents (projector-only; no extra ele_) plus present clothes on the form-field beats and exemplify clothes on the instance beats; coverage dump stays card-like. Named scene headings group those existing beats from SOP/form roles (layout chrome, not new meaning). Not an LLM path and not a full object-tree walk.",
+    "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then the two FORM-AST-34037 BR-field presents those instance examples fill (alsap atoms via composed_from), then a small instance-example seed (alsap_asp9999 atoms via composed_from \u2014 Procedure A has no honest match; these illustrate the ALSAP generally), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check) plus a sequence practice of the Procedure A presents (projector-only; no extra ele_) plus present clothes on the form-field beats and exemplify clothes on the instance beats; coverage dump stays card-like. Named scene headings group those existing beats from SOP/form roles (layout chrome, not new meaning). Player chrome pages one named scene at a time (Next/Back); lesson-end checks are a final step, not a fourth scene. Not an LLM path and not a full object-tree walk.",
     "sequence_check": {
       "shape": "sequence",
       "spec": "agents/realizer/check_v1.md",
@@ -208,7 +208,15 @@
         "ele_sop_ast29080_purpose__reinforce",
         "ele_sop_ast29080_general__reinforce"
       ],
-      "note": "Layout chrome only: named section headings group existing spine ele_ records from SOP/form roles already in the graph. Same membership. Sequence practice stays in Procedure A. Definition/purpose checks stay at lesson end. Not an LLM. Not outcome language. Coverage dump stays ungrouped."
+      "paging": {
+        "policy": "v1_one_scene_at_a_time",
+        "spec": "agents/realizer/spine_v1.md",
+        "scene_count": 3,
+        "step_count": 4,
+        "lesson_end_is_final_step": true,
+        "note": "Player chrome only: one named scene at a time, Next/Back. Definition/purpose checks are a final step after the last scene, not a fourth named scene. Hash is optional. Same membership. Coverage dump stays unpaged."
+      },
+      "note": "Layout chrome only: named section headings group existing spine ele_ records from SOP/form roles already in the graph. Same membership. Sequence practice stays in Procedure A. Definition/purpose checks stay at lesson end. Player chrome pages one scene at a time. Not an LLM. Not outcome language. Coverage dump stays ungrouped."
     }
   },
   "primitives": {

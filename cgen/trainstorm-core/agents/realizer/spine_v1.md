@@ -194,6 +194,28 @@ Coverage dump stays ungrouped (no scene chrome).
 
 ---
 
+## Player chrome (one scene at a time)
+
+Membership and the three named scenes are unchanged. The projector then
+**pages those same sections** so `realized_lesson.html` shows one named
+scene at a time. Policy id: `v1_one_scene_at_a_time`, stamped as
+`spine.scenes.paging`. Next / Back (or equivalent) moves between the
+three scenes. Not new beats. Not new atoms. Not a new `ele_`. Not an
+LLM. Section titles stay the headings above.
+
+Definition/purpose checks are **not a fourth scene**. They stay at lesson
+end (`spine.scenes.lesson_end_checks`) and are a **final player step**
+after the last named scene (Next from scene 3). Back from that step
+returns to scene 3. Sequence practice stays in scene 2 and still works
+when that scene is shown.
+
+Hash (`#what_an_alsap_is`, `#how_an_alsap_starts`,
+`#benefit_risk_on_the_form`, `#lesson-end`) is optional.
+
+Coverage dump stays unpaged (no player chrome).
+
+---
+
 ## What is written
 
 Occurrence manifest `spine`:
@@ -205,7 +227,7 @@ Occurrence manifest `spine`:
   "element_ids": ["ele_sop_ast29080", "ele_sop_ast29080__present", "ele_sop_ast29080_purpose__activate", "…"],
   "count": 16,
   "store_count": 55,
-  "note": "Selection of existing ele_ records. Coverage dump keeps the rest. Sequence practice of Procedure A is projector-only (spine.sequence_check). Form BR presents then instance examples. Scene chrome (spine.scenes) groups those same ids into three named sections."
+  "note": "Selection of existing ele_ records. Coverage dump keeps the rest. Sequence practice of Procedure A is projector-only (spine.sequence_check). Form BR presents then instance examples. Scene chrome (spine.scenes) groups those same ids into three named sections. Player chrome (spine.scenes.paging) shows one named scene at a time; lesson-end checks are a final step, not a fourth scene."
 }
 ```
 
@@ -217,7 +239,7 @@ HTML (Realizer projector):
 
 | File | Default experience |
 |---|---|
-| `<project>/realized_lesson.html` | The spine, in the order above, wrapped as **three named scenes** (What an ALSAP is / How an ALSAP starts / Benefit-risk on the form). Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), a **sequence practice** of those four presents (order the first sentences; in-scene), two form-field presents (`present` / `tp_body`), two example beats (`exemplify` / `brand.example` / `tp_body`), two definition checks (`tp_recall`) at lesson end. Link to coverage. |
+| `<project>/realized_lesson.html` | The spine, in the order above, wrapped as **three named scenes** (What an ALSAP is / How an ALSAP starts / Benefit-risk on the form), **one scene at a time** (Next/Back). Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), a **sequence practice** of those four presents (order the first sentences; in-scene), two form-field presents (`present` / `tp_body`), two example beats (`exemplify` / `brand.example` / `tp_body`), two definition checks (`tp_recall`) at lesson end (final player step, not a fourth scene). Link to coverage. |
 | `<project>/realized_coverage.html` | Full occurrence dump in SOP document order — still card-like. Link back to the lesson. |
 
 Compiler primitives (`agents/realizer/primitives_v1.md`) are Realizer-owned
@@ -256,7 +278,8 @@ Do not hide coverage by deleting `ele_` records. The store stays 55
   if the honest `instantiates` target were missing.
 - Not new scene meaning, not a fourth scene of outcomes, and not a
   one-off HTML edit. Scene headings are projector chrome from the
-  membership heuristic.
+  membership heuristic. Player chrome pages those same headings one at
+  a time; it does not mint a fourth scene.
 
 ---
 
