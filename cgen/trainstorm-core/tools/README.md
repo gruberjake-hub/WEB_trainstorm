@@ -17,11 +17,11 @@ A re-run preserves Cartographer-bound intent (`ext.cartographer`), Couturier sty
 1:many seed (`agents/realizer/one_to_many_v1.md`) on a few ALSAP atoms. Extra `reinforce`
 occurrences project as a check from the atom (`agents/realizer/check_v1.md`). Default HTML is
 the short lesson spine (`agents/realizer/spine_v1.md`); `realized_coverage.html` is the full
-SOP dump. Live rewrite (same files, not a copy): https://trainstorm.ai/cgen/alsap and
-https://trainstorm.ai/cgen/alsap/coverage. `--no-one-to-many` skips
+SOP dump. Realizer also binds compiler primitives (`agents/realizer/primitives_v1.md`) so
+the spine is heading/body/job-aid/check, not a stack of SOP cards. `--no-one-to-many` skips
 new extras but still preserves any that exist. `--selftest` checks stable extra ids, the
-check honesty bar, and spine membership (front-matter, Procedure A as a job sequence,
-then checks).
+check honesty bar, spine membership (front-matter, Procedure A as a job sequence,
+then checks), and the atom → primitives bind (procedure_step → `tp_step`, job-aid HTML).
 
 ## Cartographer
 
@@ -46,8 +46,10 @@ From `cgen/trainstorm-core`:
     python3 tools/couturier.py --project ../astellas/projects/ast_alsap
     python3 tools/couturier.py --selftest
 
-Binds style keys on existing `ele_` records (`style_ref`, `text_primitive`, `content_role`,
-`layout_hint`) from a documented move→look map (`agents/couturier/style_map_v1.md`). Mints no
+Binds style keys on existing `ele_` records (`style_ref`, `content_role`,
+`layout_hint`) from a documented move→look map (`agents/couturier/style_map_v1.md`).
+Preserves Realizer’s `text_primitive` (compiler form). Mints no
 ids. Does not write `atoms.json` or `element.intent`. HTML reads those keys so hook vs present
-vs reinforce do not look like the same card; extra `reinforce` is a check, not a recap.
+vs reinforce do not look like the same card; extra `reinforce` is a check, not a recap;
+procedure steps on the spine are a job-aid, not four body cards.
 HTML default is the short spine; coverage dump is the sibling file. Run realize then cartographer first.

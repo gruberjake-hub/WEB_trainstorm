@@ -23,14 +23,22 @@ it mints none and drops none. Procedure-step atoms stay 1:1 (no extra
 `reinforce`): they are imperatives, so they cannot host an honest copula-invert
 sibling check.
 
+**Atom → primitives** (`agents/realizer/primitives_v1.md`): Realizer binds a
+closed compiler `text_primitive` on the occurrence from atom kind + occurrence
+move (heading / body / step / callout / check). The spine projector renders
+those primitives — Procedure A s1–s4 as one job-aid step list, front-matter as
+heading/body, reinforce as the existing check. Coverage stays card-like.
+Couturier still owns `style_ref`. No authored `content.text`.
+
 Idempotency: extra ids are `(primary ele_) + "__" + move`. A re-run accretes
 missing extras and never drops existing extras or Cartographer bindings.
+Primitive keys recompute from kind + move.
 
 Not this tool: Dragoman (locale packs), Storyline, .potx, PNG pipelines,
-`tools/render/`. Couturier (`tools/couturier.py`) owns style keys on the
-occurrence; a re-realize preserves them. Does not rewrite SOP/form atoms into
-elements — `atoms.json` is read-only. Cartographer still binds `teaches` / rest
-of intent.
+`tools/render/`, Netlify / `/cgen/alsap` hosting. Couturier (`tools/couturier.py`)
+owns style keys on the occurrence; a re-realize preserves them and rebinds
+`text_primitive`. Does not rewrite SOP/form atoms into elements — `atoms.json`
+is read-only. Cartographer still binds `teaches` / rest of intent.
 
 Usage (from `cgen/trainstorm-core`):
 
@@ -84,6 +92,16 @@ CHECK_SPEC = "agents/realizer/check_v1.md"
 CHECK_POLICY = "v1_check_from_atom"
 SPINE_SPEC = "agents/realizer/spine_v1.md"
 SPINE_POLICY = "v1_front_matter_procedure_sequence_then_checks"
+PRIMITIVE_SPEC = "agents/realizer/primitives_v1.md"
+PRIMITIVE_POLICY = "v1_atom_to_primitive"
+# Closed compiler vocabulary. Keys must exist in primitives.registry.json.
+# heading/body/check reuse Couturier v1 look keys; step + callout are this hop.
+PRIMITIVE_HEADING = "tp_display"
+PRIMITIVE_BODY = "tp_body"
+PRIMITIVE_STEP = "tp_step"
+PRIMITIVE_CHECK = "tp_recall"
+PRIMITIVE_CALLOUT = "tp_callout"
+PRIMITIVE_PURPOSE = "tp_purpose"
 # First Procedures-container branch’s non-thin procedure_step children, in
 # object.order. Live ALSAP Procedure A is a handful (4) — all land. Cap only
 # if that branch is huge. Not B/C, not thin A/B/C headings.
@@ -342,6 +360,7 @@ def assemble_elements(atoms, previous, default_move: str, *, mint_extras: bool =
             claimed.add(eid)
 
     apply_group_ids(elements)
+    refresh_text_primitives(elements, atoms_by_id)
     return elements
 
 
@@ -425,6 +444,103 @@ def preserve_couturier_expression(elements, previous):
             el.setdefault("ext", {})["couturier"] = cout
 
 
+def atom_kind_of(atom) -> str:
+    return (atom.get("meaning") or {}).get("kind") or ""
+
+
+def classify_text_primitive(atom, el) -> str:
+    """Closed compiler form from atom object-role + occurrence move.
+
+    Spec: agents/realizer/primitives_v1.md. Not a design system. First match wins.
+    """
+    move = (el.get("intent") or {}).get("move") or ""
+    kind = atom_kind_of(atom)
+    if move == "reinforce":
+        return PRIMITIVE_CHECK
+    if move == "hook":
+        return PRIMITIVE_HEADING
+    if kind == "procedure_step":
+        return PRIMITIVE_STEP
+    if move == "activate":
+        return PRIMITIVE_CALLOUT
+    if move == "objective":
+        return PRIMITIVE_PURPOSE
+    return PRIMITIVE_BODY
+
+
+def bind_text_primitive(el, atom) -> str:
+    """Write Realizer-owned compiler key. Do not wipe Couturier style_ref."""
+    key = classify_text_primitive(atom, el)
+    expr = dict(el.get("expression") or {})
+    expr["text_primitive"] = key
+    el["expression"] = expr
+    ext = el.setdefault("ext", {})
+    ext["realizer_primitive"] = {
+        "policy": PRIMITIVE_POLICY,
+        "tool": REALIZER,
+        "spec": PRIMITIVE_SPEC,
+        "from_kind": atom_kind_of(atom),
+        "from_move": (el.get("intent") or {}).get("move") or "",
+        "text_primitive": key,
+    }
+    return key
+
+
+def refresh_text_primitives(elements, atoms_by_id):
+    """Recompute text_primitive on every occurrence. Pure function of kind + move."""
+    for el in elements:
+        cf = el.get("composed_from")
+        atom = atoms_by_id.get(cf)
+        if atom is None:
+            raise SystemExit(f"{el.get('element_id')}: composed_from {cf} is not in the atom store")
+        bind_text_primitive(el, atom)
+
+
+def primitive_counts(elements):
+    counts = {}
+    for el in elements:
+        tp = (el.get("expression") or {}).get("text_primitive") or "?"
+        counts[tp] = counts.get(tp, 0) + 1
+    return counts
+
+
+def is_step_primitive(el) -> bool:
+    return (el.get("expression") or {}).get("text_primitive") == PRIMITIVE_STEP
+
+
+def stamp_primitives(manifest, elements) -> dict:
+    """Stamp compiler-primitive provenance on the occurrence manifest."""
+    manifest["primitives"] = {
+        "policy": PRIMITIVE_POLICY,
+        "spec": PRIMITIVE_SPEC,
+        "owner": "realizer",
+        "counts": dict(sorted(primitive_counts(elements).items())),
+        "note": ("Closed compiler form on the occurrence (heading/body/step/"
+                 "callout/check). Realizer binds text_primitive from atom kind "
+                 "+ occurrence move. Couturier still owns style_ref."),
+    }
+    return manifest["primitives"]
+
+
+def assert_primitives_registered(elements, closed_text_primitives):
+    hard = []
+    for el in elements:
+        eid = el.get("element_id")
+        tp = (el.get("expression") or {}).get("text_primitive")
+        if not tp:
+            hard.append(f"{eid}: missing text_primitive after Realizer bind")
+        elif tp not in closed_text_primitives:
+            hard.append(f"{eid}: text_primitive {tp!r} is not in primitives.registry.json")
+        stamp = (el.get("ext") or {}).get("realizer_primitive") or {}
+        if stamp.get("policy") != PRIMITIVE_POLICY:
+            hard.append(f"{eid}: missing ext.realizer_primitive.policy={PRIMITIVE_POLICY}")
+    if hard:
+        print("PRIMITIVE VALIDATION FAILURES:", file=sys.stderr)
+        for m in hard:
+            print("  x", m, file=sys.stderr)
+        raise SystemExit(1)
+
+
 CLOTHES_CLASS = {
     "brand.opening": "style-opening",
     "brand.instructional": "style-instructional",
@@ -443,6 +559,7 @@ KICKER = {
     "prior": "Already known",
     "example": "Example",
     "handoff": "On the job",
+    "step": "Job aid",
 }
 
 THIN_HEADING_RE = re.compile(
@@ -715,7 +832,8 @@ def apply_spine(manifest, atoms, elements) -> dict:
                  "opening, teachable front-matter primaries (object.order), the first "
                  "real procedure’s non-thin procedure_step children as a job sequence "
                  "(not thin A/B/C headings, not B/C), then existing reinforce extras. "
-                 "Coverage dump keeps the rest. Not an LLM path and not a full "
+                 "Spine projector renders compiler primitives (step list / heading / body / "
+                 "check); coverage dump stays card-like. Not an LLM path and not a full "
                  "object-tree walk."),
     }
     return manifest["spine"]
@@ -725,6 +843,55 @@ def sibling_coverage_path(lesson_path: pathlib.Path) -> pathlib.Path:
     if lesson_path.name == "realized_lesson.html":
         return lesson_path.with_name("realized_coverage.html")
     return lesson_path.with_name(lesson_path.stem + "_coverage.html")
+
+
+def job_aid_title(first_el, atoms_by_id) -> str:
+    """Parent atom meaning — the thin A/B/C heading skipped as a teaching card."""
+    atom = atoms_by_id.get(first_el.get("composed_from"))
+    if not atom:
+        return ""
+    parent_id = atom_belongs_to(atom)
+    parent = atoms_by_id.get(parent_id) if parent_id else None
+    if not parent:
+        return ""
+    return clean_meaning((parent.get("meaning") or {}).get("source_text") or "")
+
+
+def primitive_class(el) -> str:
+    tp = (el.get("expression") or {}).get("text_primitive") or ""
+    return {
+        PRIMITIVE_HEADING: "prim-heading",
+        PRIMITIVE_BODY: "prim-body",
+        PRIMITIVE_PURPOSE: "prim-body",
+        PRIMITIVE_STEP: "prim-step",
+        PRIMITIVE_CHECK: "prim-check",
+        PRIMITIVE_CALLOUT: "prim-callout",
+    }.get(tp, "")
+
+
+def group_spine_for_project(spine_ids, by_eid):
+    """Consecutive tp_step occurrences become one job-aid run. Other beats stay singles."""
+    groups = []
+    i = 0
+    n = len(spine_ids)
+    while i < n:
+        el = by_eid.get(spine_ids[i])
+        if el is None:
+            i += 1
+            continue
+        if is_step_primitive(el):
+            run = []
+            while i < n:
+                nxt = by_eid.get(spine_ids[i])
+                if nxt is None or not is_step_primitive(nxt):
+                    break
+                run.append(nxt)
+                i += 1
+            groups.append(("job_aid", run))
+        else:
+            groups.append(("card", [el]))
+            i += 1
+    return groups
 
 
 def derive_check(atom, atoms) -> dict | None:
@@ -929,6 +1096,9 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             out.append('<span class="pill extra-occ">extra</span>')
         if is_check_occurrence(el):
             out.append('<span class="pill check-occ">check</span>')
+        tp = expr.get("text_primitive")
+        if tp:
+            out.append(f'<span class="pill primitive" title="expression.text_primitive">{esc(tp)}</span>')
         if expr.get("style_ref"):
             out.append(f'<span class="pill style" title="expression.style_ref">{esc(expr["style_ref"])}</span>')
         for oid in intent.get("teaches") or []:
@@ -945,9 +1115,11 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         expr = el.get("expression") or {}
         clothes = CLOTHES_CLASS.get(expr.get("style_ref"), "")
         clothes_cls = f" {clothes}" if clothes else ""
+        prim = primitive_class(el)
+        prim_cls = f" {prim}" if prim else ""
         kicker = KICKER.get(expr.get("content_role"), "")
         kicker_html = f'<div class="kicker">{esc(kicker)}</div>' if kicker else ""
-        meaning_tag = "h2" if expr.get("text_primitive") == "tp_display" else "p"
+        meaning_tag = "h2" if expr.get("text_primitive") == PRIMITIVE_HEADING else "p"
         tp = expr.get("text_primitive") or ""
         hint = expr.get("layout_hint") or ""
         join_bits = [
@@ -956,8 +1128,9 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         ]
         if expr:
             join_bits.append(
+                f'primitive <span class="mono">{esc(tp)}</span> · '
                 f'clothes <span class="mono">{esc(expr.get("style_ref", ""))}'
-                f' · {esc(tp)} · {esc(expr.get("content_role", ""))}'
+                f' · {esc(expr.get("content_role", ""))}'
                 f' · {esc(hint)}</span>'
             )
         if is_check_occurrence(el):
@@ -971,7 +1144,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         else:
             body = f'<{meaning_tag} class="meaning">{esc(meaning)}</{meaning_tag}>'
         return (
-            f'<article class="occ{extra_cls}{clothes_cls}">'
+            f'<article class="occ{extra_cls}{clothes_cls}{prim_cls}">'
             f'{kicker_html}'
             f'<div class="meta">'
             f'<span class="id">{esc(el["element_id"])}</span>'
@@ -982,6 +1155,45 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             f'{body}'
             f'<div class="join">{" · ".join(join_bits)}</div>'
             f'</article>'
+        )
+
+    def step_item_html(el, atom):
+        meaning = clean_meaning(atom["meaning"]["source_text"])
+        sh = (el.get("source_hash") or "")[:19]
+        expr = el.get("expression") or {}
+        tp = expr.get("text_primitive") or ""
+        join = (
+            f'composed_from <span class="mono">{esc(el["composed_from"])}</span>'
+            f' · source_hash <span class="mono">{esc(sh)}…</span>'
+            f' · primitive <span class="mono">{esc(tp)}</span>'
+        )
+        return (
+            f'<li class="step" data-eid="{esc(el["element_id"])}">'
+            f'<div class="meta">'
+            f'<span class="id">{esc(el["element_id"])}</span>'
+            f'{pills_for(el)}'
+            f'</div>'
+            f'<p class="meaning">{esc(meaning)}</p>'
+            f'<div class="join">{join}</div>'
+            f'</li>'
+        )
+
+    def job_aid_block_html(step_els):
+        title = job_aid_title(step_els[0], by_atom)
+        title_html = f'<h2 class="job-title">{esc(title)}</h2>' if title else ""
+        items = []
+        for el in step_els:
+            items.append(step_item_html(el, by_atom[el["composed_from"]]))
+        return (
+            f'<section class="prim prim-step job-aid">'
+            f'<div class="kicker">Job aid</div>'
+            f'{title_html}'
+            f'<ol class="steps">{"".join(items)}</ol>'
+            f'<p class="join">primitive <span class="mono">{esc(PRIMITIVE_STEP)}</span> · '
+            f'{len(step_els)} steps · meaning from each atom via '
+            f'<span class="mono">composed_from</span> · not authored '
+            f'<span class="mono">content.text</span></p>'
+            f'</section>'
         )
 
     def walk(atom, depth, acc):
@@ -1012,10 +1224,11 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
     by_eid = {e["element_id"]: e for e in elements}
     spine_ids = list(spine.get("element_ids") or [])
     spine_body = []
-    for eid in spine_ids:
-        el = by_eid.get(eid)
-        if el is None:
+    for kind, els in group_spine_for_project(spine_ids, by_eid):
+        if kind == "job_aid":
+            spine_body.append(job_aid_block_html(els))
             continue
+        el = els[0]
         atom = by_atom[el["composed_from"]]
         extra_cls = " extra" if is_extra_element(el) else ""
         spine_body.append(card_html(el, atom, extra_cls))
@@ -1027,11 +1240,13 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         a = by_atom[el["composed_from"]]
         teaches = ", ".join((el.get("intent") or {}).get("teaches") or []) or "—"
         look = (el.get("expression") or {}).get("style_ref") or "—"
+        prim = (el.get("expression") or {}).get("text_primitive") or "—"
         spine_rows.append(
             f"<tr><td>{n}</td>"
             f"<td class=mono>{esc(el['element_id'])}</td>"
             f"<td class=mono>{esc(el['composed_from'])}</td>"
             f"<td>{esc((el.get('intent') or {}).get('move', ''))}</td>"
+            f"<td class=mono>{esc(prim)}</td>"
             f"<td class=mono>{esc(look)}</td>"
             f"<td class=mono>{esc(teaches)}</td>"
             f"<td>{esc(a['meaning'].get('kind', ''))}</td></tr>"
@@ -1083,10 +1298,22 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
     )
     clothes_note = (
         " Couturier dressed each occurrence from its <span class=mono>move</span> "
-        "(<span class=mono>style_ref</span> / <span class=mono>text_primitive</span>) — "
+        "(<span class=mono>style_ref</span>) — "
         "hook vs present vs reinforce must not look like the same card. "
         if cout else
         " Couturier (style keys) is the next hop so different moves look like different clothes. "
+    )
+    prim_manifest = manifest.get("primitives") or {}
+    prim_counts = prim_manifest.get("counts") or primitive_counts(elements)
+    prim_bits = " · ".join(f"{esc(k)} {v}" for k, v in sorted(prim_counts.items()))
+    primitives_note = (
+        " Realizer bound a closed compiler primitive "
+        "(<span class=mono>text_primitive</span>: heading / body / step / callout / check) "
+        "from atom kind + occurrence move. The short lesson renders those primitives — "
+        "Procedure A as a job-aid step list, front-matter as heading/body, "
+        "reinforce as the existing check. Coverage stays card-like. "
+        if prim_counts else
+        " The atom → primitives hop is owed so beats are clothes, not SOP cards. "
     )
     spine_note = (
         f" Default HTML is the short lesson spine "
@@ -1104,7 +1331,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             "<b>Meaning lives on the atom.</b> Clothes come from <span class=mono>element.expression</span> "
             "(Couturier). Intent (<span class=mono>move</span>, <span class=mono>teaches</span>) is "
             "Cartographer’s. The Realizer minted the <span class=mono>ele_</span> ids and copied no authored "
-            f"<span class=mono>content.text</span>.{many_note}{check_note}{clothes_note}{spine_note}"
+            f"<span class=mono>content.text</span>.{many_note}{check_note}{clothes_note}{primitives_note}{spine_note}"
             "Dragoman / Storyline / PNG render are not this hop."
         )
         projector = (f"{esc(REALIZER)} + {esc(cart.get('tool', 'tools/cartographer.py'))} + "
@@ -1119,7 +1346,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             "(<span class=mono>move</span>, <span class=mono>teaches</span>) is Cartographer’s. "
             "v1 is a documented heuristic compiler, not ID genius — low-confidence pills are flagged. "
             "The Realizer minted the <span class=mono>ele_</span> ids and copied no authored "
-            f"<span class=mono>content.text</span>.{many_note}{check_note}{clothes_note}{spine_note}"
+            f"<span class=mono>content.text</span>.{many_note}{check_note}{clothes_note}{primitives_note}{spine_note}"
             "Dragoman / PNG render are not this hop."
         )
         projector = f"{esc(REALIZER)} + {esc(cart.get('tool', 'tools/cartographer.py'))}"
@@ -1133,7 +1360,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             "<b>Meaning lives on the atom.</b> Each card is one occurrence "
             "(<span class=mono>ele_</span>), linked by <span class=mono>composed_from</span>. "
             "The Realizer copied no authored <span class=mono>content.text</span>. Ugly typography "
-            f"is v1.{many_note}{check_note}{clothes_note}{spine_note}"
+            f"is v1.{many_note}{check_note}{clothes_note}{primitives_note}{spine_note}"
             "Dragoman / PNG render are not this hop."
         )
         projector = esc(REALIZER)
@@ -1182,6 +1409,7 @@ h1{font-size:20px;margin:8px 0 4px}
 .pair .occ{background:#fff}
 .occ.extra{background:#fffbeb;border-color:#f59e0b}
 .pill.style{background:#fef3c7;color:#92400e;text-transform:none;letter-spacing:0}
+.pill.primitive{background:#e0e7ff;color:#3730a3;text-transform:none;letter-spacing:0}
 .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
  margin:0 0 8px;color:inherit;opacity:.85}
 .occ.style-opening{background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;
@@ -1223,6 +1451,22 @@ form.check .check-note{font-size:11.5px;color:var(--mut);margin:10px 0 0}
 .occ.style-example .kicker{color:#6d28d9}
 .occ.style-job{background:#fff7ed;border:1px solid #c2410c;border-left:6px solid #c2410c;border-radius:6px}
 .occ.style-job .kicker{color:#c2410c}
+.job-aid{border:2px solid #1e3a8a;border-radius:8px;padding:16px 18px 10px;margin:16px 0;
+ background:#fff}
+.job-aid .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+ color:#1e3a8a;margin:0 0 6px}
+.job-aid .job-title{font-size:18px;margin:0 0 12px;letter-spacing:-.02em}
+.job-aid ol.steps{margin:0;padding:0;list-style:none;counter-reset:step}
+.job-aid li.step{display:grid;grid-template-columns:2.4rem 1fr;gap:10px;padding:12px 0;
+ border-top:1px solid var(--line);counter-increment:step}
+.job-aid li.step::before{content:counter(step);font-weight:700;color:#1e3a8a;font-size:20px;
+ line-height:1.2}
+.job-aid li.step .meta{grid-column:2;display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+ margin:0 0 4px}
+.job-aid li.step .meaning{grid-column:2;margin:0 0 4px;font-size:15.5px;line-height:1.45}
+.job-aid li.step .join{grid-column:2}
+.job-aid > .join{margin:10px 0 4px}
+.occ.prim-heading .meaning,.occ.prim-body .meaning{margin:4px 0 6px}
 tr.pair-row td{background:#eff6ff}
 .meaning{margin:4px 0 6px}
 .join{font-size:12px;color:var(--mut)}
@@ -1283,6 +1527,7 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f"{' 1:many pairs share composed_from.' if extra_n else ''}"
         f"{' Clothes are mixed.' if cout and len(look_counts) > 1 else (' Run tools/couturier.py to dress occurrences.' if not cout else '')}"
         f"{' Extra reinforce occurrences project as a check from the atom (agents/realizer/check_v1.md).' if check_n else ''} "
+        f"{' Compiler primitives: ' + prim_bits + '.' if prim_bits else ''} "
         f"Spine heuristic: <span class=mono>{esc(SPINE_SPEC)}</span>."
     )
 
@@ -1314,7 +1559,7 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f"<details open><summary>Spine membership — {spine_n} ele_ records "
         f"(heuristic <span class=mono>{esc(SPINE_POLICY)}</span>)</summary>"
         "<table><thead><tr><th>#</th><th>element_id</th><th>composed_from</th>"
-        "<th>move</th><th>style_ref</th><th>teaches</th><th>atom kind</th></tr></thead>"
+        "<th>move</th><th>primitive</th><th>style_ref</th><th>teaches</th><th>atom kind</th></tr></thead>"
         f"<tbody>{''.join(spine_rows)}</tbody></table></details>"
     )
     coverage_details = (
@@ -1327,9 +1572,9 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f"Short lesson — {project_name}",
         "Short lesson",
         f'<a href="{coverage_href}">Full SOP / coverage ({store_n} occurrences)</a>',
-        (f"{spine_n} of {store_n} occurrences · front-matter, then Procedure A as a "
-         "job sequence, then the existing checks. Not B/C and not the SOP dump. "
-         "Heuristic is documented, not an LLM."),
+        (f"{spine_n} of {store_n} occurrences · front-matter as heading/body, then "
+         "Procedure A as a job-aid step sequence, then the existing checks. Not B/C "
+         "and not the SOP dump. Heuristic is documented, not an LLM."),
         "".join(spine_body),
         lesson_details,
     )
@@ -1620,6 +1865,43 @@ def selftest(closed_moves):
     results.append(("spine recompute is stable",
                     mf_spine["spine"]["element_ids"] == want_spine, mf_spine["spine"]["element_ids"]))
 
+    # Compiler primitives from atom kind + occurrence move.
+    results.append(("procedure_step present is tp_step",
+                    classify_text_primitive(step, {"intent": {"move": "present"}}) == PRIMITIVE_STEP, ""))
+    results.append(("procedure_step transfer is still tp_step (atom role wins)",
+                    classify_text_primitive(step, {"intent": {"move": "transfer"}}) == PRIMITIVE_STEP, ""))
+    results.append(("hook is heading tp_display",
+                    classify_text_primitive(title_live, {"intent": {"move": "hook"}}) == PRIMITIVE_HEADING, ""))
+    results.append(("reinforce is check tp_recall",
+                    classify_text_primitive(general_live, {"intent": {"move": "reinforce"}}) == PRIMITIVE_CHECK, ""))
+    results.append(("front-matter present is body tp_body",
+                    classify_text_primitive(general_live, {"intent": {"move": "present"}}) == PRIMITIVE_BODY, ""))
+    results.append(("activate is callout tp_callout",
+                    classify_text_primitive(thin, {"intent": {"move": "activate"}}) == PRIMITIVE_CALLOUT, ""))
+    results.append(("objective keeps tp_purpose",
+                    classify_text_primitive(purpose_live, {"intent": {"move": "objective"}}) == PRIMITIVE_PURPOSE, ""))
+
+    store_by_id = {a["atom_id"]: a for a in store}
+    title_el = next(e for e in seeded if e["element_id"] == "ele_sop_ast29080")
+    title_el["intent"]["move"] = "hook"
+    refresh_text_primitives(seeded, store_by_id)
+    results.append(("refresh binds heading on hook",
+                    (title_el.get("expression") or {}).get("text_primitive") == PRIMITIVE_HEADING, ""))
+    results.append(("refresh binds tp_step on all Procedure A presents",
+                    all((next(e for e in seeded if e["element_id"] == eid).get("expression") or {})
+                        .get("text_primitive") == PRIMITIVE_STEP
+                        for eid in (
+                            "ele_sop_ast29080_proc_a_s1",
+                            "ele_sop_ast29080_proc_a_s2",
+                            "ele_sop_ast29080_proc_a_s3",
+                            "ele_sop_ast29080_proc_a_s4",
+                        )), ""))
+    results.append(("refresh does not author content.text",
+                    all("content" not in e for e in seeded), ""))
+    results.append(("job-aid title is the parent atom (thin A heading)",
+                    job_aid_title(next(e for e in seeded if e["element_id"] == "ele_sop_ast29080_proc_a_s1"),
+                                  store_by_id) == "A. Plan Development of ALSAP.", ""))
+
     with tempfile.TemporaryDirectory() as td:
         html_path = pathlib.Path(td) / "realized_lesson.html"
         cov_path = project_html(
@@ -1664,6 +1946,27 @@ def selftest(closed_moves):
                     and "ele_sop_ast29080_proc_a_s2" in cov_page
                     and "ele_sop_ast29080_proc_b_s1" in cov_page, ""))
     results.append(("coverage links back to the lesson", "realized_lesson.html" in cov_page, ""))
+    results.append(("lesson groups Procedure A as one job-aid not four cards",
+                    page.count('class="prim prim-step job-aid"') == 1
+                    and page.count('<li class="step"') == 4
+                    and "A. Plan Development of ALSAP." in page, page.count('<li class="step"')))
+    results.append(("job-aid lists the four A step ids",
+                    all(f'data-eid="{eid}"' in page for eid in (
+                        "ele_sop_ast29080_proc_a_s1",
+                        "ele_sop_ast29080_proc_a_s2",
+                        "ele_sop_ast29080_proc_a_s3",
+                        "ele_sop_ast29080_proc_a_s4",
+                    )), ""))
+    results.append(("job-aid meaning is from the atoms",
+                    "Notify a member of Safety Data Science" in page
+                    and "Collaborate with SMT to identify contributing authors" in page, ""))
+    results.append(("hook occurrence carries heading primitive",
+                    "prim-heading" in page and "tp_display" in page, ""))
+    results.append(("front-matter body primitive is present",
+                    "prim-body" in page and "tp_body" in page, ""))
+    results.append(("coverage dump stays card-like (no job-aid grouping)",
+                    "class=\"prim prim-step job-aid\"" not in cov_page
+                    and "ele_sop_ast29080_proc_a_s1" in cov_page, ""))
 
     huge_steps = [
         atom(
@@ -1757,6 +2060,8 @@ def main():
 
     element_schema = load(schemas / "element.schema.json")
     closed_moves = list(element_schema["properties"]["intent"]["properties"]["move"]["enum"])
+    registry = load(P["vocab_dir"] / "primitives.registry.json")
+    closed_text_primitives = {e["key"] for e in (registry.get("text_primitive") or []) if "key" in e}
     move = args.move
     if move not in closed_moves:
         raise SystemExit(f"--move {move!r} is not in the closed vocab: {closed_moves}")
@@ -1779,6 +2084,7 @@ def main():
     mint_extras = not args.no_one_to_many
     elements = assemble_elements(atoms, previous, move, mint_extras=mint_extras)
     validate_elements(elements, element_schema, atoms_by_id)
+    assert_primitives_registered(elements, closed_text_primitives)
 
     primaries = [e for e in elements if is_primary_element(e)]
     extras = [e for e in elements if is_extra_element(e)]
@@ -1836,9 +2142,10 @@ def main():
         "note": ("Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple "
                  "of teaching-worthy atoms (same composed_from, distinct move, no authored "
                  "content.text). Cartographer owns occurrence intent; Couturier owns expression "
-                 "style. Spine is a documented selection of existing ele_ records "
+                 "style. Realizer binds compiler primitives (text_primitive) from atom kind + "
+                 f"move ({PRIMITIVE_SPEC}). Spine is a documented selection of existing ele_ records "
                  f"({SPINE_SPEC}); the full dump is coverage. A re-realize preserves extras, "
-                 "intent, style, and recomputes the same spine."),
+                 "intent, style, and recomputes the same spine and primitives."),
     }
     if any((e.get("ext") or {}).get("cartographer") for e in elements):
         cart = dict(prev_mf.get("cartographer") or {})
@@ -1860,6 +2167,7 @@ def main():
         cout["element_count"] = len(elements)
         occ_manifest["couturier"] = cout
     apply_spine(occ_manifest, atoms, elements)
+    stamp_primitives(occ_manifest, elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
@@ -1879,6 +2187,7 @@ def main():
     print(f"  occurrences: {elements_path}")
     print(f"  manifest   : {store_dir / 'manifest.json'}")
     print(f"  spine      : {spine_n} of {len(elements)} ({SPINE_POLICY})")
+    print(f"  primitives : {dict(sorted(primitive_counts(elements).items()))}")
     print(f"  lesson HTML: {html_path}  ← open this (short lesson)")
     print(f"  coverage   : {coverage_path}  (full SOP dump)")
     print("  schema     : element.schema.json ALL PASS (no authored content.text)")

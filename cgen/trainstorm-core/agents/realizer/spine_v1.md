@@ -153,8 +153,12 @@ HTML (Realizer projector):
 
 | File | Default experience |
 |---|---|
-| `<project>/realized_lesson.html` | The spine, in the order above. Title hook, front-matter, Procedure A sequence, two checks. Link to coverage. |
-| `<project>/realized_coverage.html` | Full occurrence dump in SOP document order. Link back to the lesson. |
+| `<project>/realized_lesson.html` | The spine, in the order above. Title hook (heading primitive), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), two checks (`tp_recall`). Link to coverage. |
+| `<project>/realized_coverage.html` | Full occurrence dump in SOP document order — still card-like. Link back to the lesson. |
+
+Compiler primitives (`agents/realizer/primitives_v1.md`) are Realizer-owned
+on the occurrence. Spine membership is unchanged; the projector now *uses*
+those primitives instead of dumping every beat into a generic card.
 
 Do not hide coverage by deleting `ele_` records. The store stays 50.
 
@@ -169,8 +173,10 @@ Do not hide coverage by deleting `ele_` records. The store stays 50.
 - Not a new `retrieve` enum. Not new 1:many (no extra `ele_` this hop).
 - Not Dragoman, Storyline, `.potx`, motion, or `tools/render/` PNG pipelines.
 - Not Cartographer writing sequence; not Couturier picking clothes from the
-  spine. Clothes still follow `move`.
+  spine. Clothes still follow `move`. Realizer binds compiler primitives;
+  Couturier still owns `style_ref`.
 - Not procedure B/C and not a full SOP dump.
+- Not Netlify / `/cgen/alsap` hosting (Jake tabled the redirect loop).
 
 ---
 
@@ -184,6 +190,6 @@ python3 tools/couturier.py
 
 Default project is `cgen/astellas/projects/ast_alsap`. Open
 `cgen/astellas/projects/ast_alsap/realized_lesson.html` for the short lesson;
-`realized_coverage.html` for the full SOP dump. Live (Netlify rewrite of those
-same files, not a copy): https://trainstorm.ai/cgen/alsap and
-https://trainstorm.ai/cgen/alsap/coverage.
+`realized_coverage.html` for the full SOP dump. (Public `/cgen/alsap` rewrite
+exists from an earlier hop; Jake tabled that redirect loop — the buried
+projector path is the demo URL this hop uses.)

@@ -13,6 +13,38 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-26 — Atom → primitives (closed compiler form on the occurrence)
+
+The course chain already minted occurrences, bound move/teaches, dressed
+style, and projected a short spine with Procedure A as four presents plus
+two checks. Every beat was still atom text in a styled HTML card. This
+entry records the owed **atom → primitives** hop.
+
+`tools/realize.py` binds a closed five-role compiler vocabulary onto
+`expression.text_primitive` (`agents/realizer/primitives_v1.md`, policy
+`v1_atom_to_primitive`): heading `tp_display`, body `tp_body`, step
+`tp_step`, callout `tp_callout`, check `tp_recall`. Selection is atom
+`meaning.kind` + occurrence `move` — procedure_step → step even when the
+move is present/transfer; reinforce → check; hook → heading. Registry
+`primitives.v0.4` adds `tp_step` and `tp_callout`; the other three keys
+already existed from Couturier v1. Not a design system. Not an LLM call.
+
+Realizer owns the hop. Cartographer refreshes the key after writing move.
+Couturier still owns `style_ref` and preserves `text_primitive`; a step
+gets `layout_hint: job_aid`. The short-lesson projector groups consecutive
+`tp_step` spine beats into one numbered job-aid (Procedure A s1–s4).
+Front-matter is heading/body. Reinforce stays the existing check.
+Coverage dump stays card-like. Meaning via `composed_from`. No authored
+`content.text`. `atoms.json` untouched. Store stays 50.
+
+Idempotent with realize → cartographer → couturier.
+
+Not this hop: Netlify / `/cgen/alsap` hosting (Jake tabled the redirect
+loop; buried projector path stays the demo URL), distractor-writer,
+procedure-step MCQs, 1:many of the SOP, Dragoman, Storyline, `.potx`,
+motion, PNG pipelines.
+
+---
 ## 2026-08-26 — `/cgen/alsap/` rewrite needs `force = true` (Pretty URLs)
 
 PR #18 rewrote `/cgen/alsap/` to the projector file without `force`.

@@ -10,10 +10,11 @@ already-minted `ele_` records, and re-projects `realized_lesson.html`.
 
 Never: mint `ele_` / `atom_` ids; copy meaning onto the element; write
 `atoms.json`; put `teaches` back on atoms; invent `practice`/`assess` this SOP
-does not contain; write `element.expression` (Couturier). Extra 1:many
+does not contain; write Couturier style keys. Extra 1:many
 occurrences keep their Realizer-stamped `move`; Cartographer still binds
-`teaches` / `rhetorical` / `intended_response`. A re-run does not wipe
-Couturier style.
+`teaches` / `rhetorical` / `intended_response`. After writing `move` it
+asks Realizer to refresh `text_primitive` (compiler form depends on move).
+A re-run does not wipe Couturier style.
 
 Usage (from `cgen/trainstorm-core`):
 
@@ -519,7 +520,10 @@ def main():
         raise SystemExit(f"{elements_path} is not a non-empty element list")
     before_ids = {e["element_id"] for e in elements}
     before_expr = {
-        e["element_id"]: dict(e["expression"]) if isinstance(e.get("expression"), dict) else None
+        e["element_id"]: (
+            {k: v for k, v in e["expression"].items() if k != "text_primitive"} or None
+            if isinstance(e.get("expression"), dict) else None
+        )
         for e in elements
     }
 
@@ -534,14 +538,19 @@ def main():
         )
         apply_intent(el, intent, stamp)
 
+    realize.refresh_text_primitives(elements, atoms_by_id)
+
     after_ids = {e["element_id"] for e in elements}
     assert_no_id_minting(before_ids, after_ids)
     for el in elements:
         old_expr = before_expr.get(el["element_id"])
-        new_expr = el.get("expression")
+        new_full = el.get("expression")
+        new_expr = None
+        if isinstance(new_full, dict):
+            new_expr = {k: v for k, v in new_full.items() if k != "text_primitive"} or None
         if old_expr != new_expr:
             raise SystemExit(
-                f"{el['element_id']}: Cartographer must not rewrite expression "
+                f"{el['element_id']}: Cartographer must not rewrite Couturier style "
                 f"(was {old_expr}, now {new_expr})"
             )
     validate_elements(elements, element_schema, atoms_by_id, objective_ids, closed_moves, closed_rhetorical)
@@ -569,6 +578,7 @@ def main():
                  "records. Cartographer writes intent only; it does not mint ele_ ids "
                  "or rewrite atoms. Extra occurrences keep Realizer-stamped move. "
                  "Couturier owns expression style; this tool does not wipe it. "
+                 "After writing move, Realizer refreshes text_primitive (compiler form). "
                  "Lesson spine is Realizer projection (agents/realizer/spine_v1.md); "
                  "this tool does not own sequence."),
     }
@@ -584,6 +594,7 @@ def main():
         return
 
     realize.apply_spine(occ_manifest, atoms, elements)
+    realize.stamp_primitives(occ_manifest, elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
     coverage_path = realize.project_html(atoms, elements, occ_manifest, html_path)

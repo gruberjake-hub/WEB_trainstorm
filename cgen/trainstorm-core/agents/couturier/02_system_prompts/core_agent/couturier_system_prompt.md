@@ -66,9 +66,13 @@ From `cgen/trainstorm-core`. Spec: `agents/couturier/style_map_v1.md`. Policy:
 `v1_move_to_look`. It writes `element.expression` style keys (`style_ref`,
 `text_primitive`, `content_role`, `layout_hint`) on existing `ele_` records,
 stamps `ext.couturier`, re-projects `realized_lesson.html`, and mints no ids.
-It does not bind `motion_primitive` (stub), `layout_primitive` (`.potx`), or
-`interaction_primitive` (Storyline). The rest of this prompt — layer, keys,
-drift checks — is unchanged.
+**As of 2026-08-26** Realizer binds `text_primitive` (compiler form —
+heading / body / step / callout / check; `agents/realizer/primitives_v1.md`).
+You still own the *style* keys (`style_ref`, `content_role`, `layout_hint`)
+and **preserve** `text_primitive`. A bound `tp_step` is dressed
+`layout_hint: job_aid`. It does not bind `motion_primitive` (stub),
+`layout_primitive` (`.potx`), or `interaction_primitive` (Storyline). The
+rest of this prompt — layer, keys, drift checks — is unchanged.
 
 ## The expression boundary — one facet, two writers, split by key
 

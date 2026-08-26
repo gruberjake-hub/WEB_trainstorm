@@ -44,6 +44,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "hook",
+        "text_primitive": "tp_display"
       }
     },
     "expression": {
@@ -102,6 +110,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -164,6 +180,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "objective",
+        "text_primitive": "tp_purpose"
       }
     },
     "expression": {
@@ -225,6 +249,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "reinforce",
+        "text_primitive": "tp_recall"
       }
     },
     "expression": {
@@ -282,6 +314,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -336,11 +376,19 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "activate",
+        "text_primitive": "tp_callout"
       }
     },
     "expression": {
       "style_ref": "brand.prior",
-      "text_primitive": "tp_body",
+      "text_primitive": "tp_callout",
       "content_role": "prior",
       "layout_hint": "callout"
     }
@@ -394,6 +442,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -455,6 +511,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "reinforce",
+        "text_primitive": "tp_recall"
       }
     },
     "expression": {
@@ -512,11 +576,19 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "activate",
+        "text_primitive": "tp_callout"
       }
     },
     "expression": {
       "style_ref": "brand.prior",
-      "text_primitive": "tp_body",
+      "text_primitive": "tp_callout",
       "content_role": "prior",
       "layout_hint": "callout"
     }
@@ -566,6 +638,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -623,6 +703,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -680,6 +768,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -737,6 +833,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -794,6 +898,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -851,6 +963,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -908,6 +1028,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -965,6 +1093,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -1022,6 +1158,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list",
+        "from_move": "exemplify",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -1079,6 +1223,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "exemplify",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -1136,6 +1288,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "exemplify",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -1193,6 +1353,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "exemplify",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -1250,6 +1418,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "exemplify",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -1304,6 +1480,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -1358,6 +1542,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -1412,6 +1604,14 @@
         "flags": [
           "from_move"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
       }
     },
     "expression": {
@@ -1467,15 +1667,24 @@
         "source_hash": "sha256:f293586f0a9e70e0e44fab098c8464183ae1835947c9f4e970159eadda0663fe",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -1527,15 +1736,24 @@
         "source_hash": "sha256:418368a1b021955941f8add57b19c21adaa2d4154e3d37e99eab19dc0aff69b3",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -1587,15 +1805,24 @@
         "source_hash": "sha256:b24f0616974e5ee14c4acd98fdfa59fbc5818be147d8a10c612de4504d100d18",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -1647,15 +1874,24 @@
         "source_hash": "sha256:d87bceded535952aa9eec8ae1ca98d864aafdaf3da9607193b7a0adff03381be",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -1704,15 +1940,24 @@
         "source_hash": "sha256:7c4f73437e1d2636246790da6047f4526e7ac7cc9d2401db06907f8ba1a9c060",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -1764,15 +2009,24 @@
         "source_hash": "sha256:610b77a80259244f2b1261aef96421b36f680c65df8d58265b3d1d83e7ab454f",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -1824,15 +2078,24 @@
         "source_hash": "sha256:584a252b578838882b063dea9a4ed1967bff2dc793bc259cb13a28f4ed63f67e",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -1884,15 +2147,24 @@
         "source_hash": "sha256:a7b4564a5ca9e87dc40c1590886f85dda98b8e76db07198a10ecba5974e00eed",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -1944,15 +2216,24 @@
         "source_hash": "sha256:28b905a007e09643d8992bb6b0971a84c9e7bd391bea4d16bf29537f2662f4f9",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2004,15 +2285,24 @@
         "source_hash": "sha256:67cd8bbfd27bb4b400c77f1877c425786cca494814b882b429b2df53823823a4",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2064,15 +2354,24 @@
         "source_hash": "sha256:f9a86b34c96ddecd5d48393d68e8ab8171578f4036c6747fcd5690aff9149ced",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2125,15 +2424,24 @@
         "source_hash": "sha256:854825a9c7d502f6ee818656888d6f94a9f248edaea838e11e8d8daac1f34398",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "transfer",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.job",
-      "text_primitive": "tp_body",
-      "content_role": "handoff",
-      "layout_hint": "job_rail"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2182,15 +2490,24 @@
         "source_hash": "sha256:80333f87cbbc6e86f9c1920b2d1d66b925cee57dc56287d706285a18d18a7c83",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2242,15 +2559,24 @@
         "source_hash": "sha256:e7db53767e3e392f157ca9c7fe552d58a1150af7df74224aefd7f32cd09862ea",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2302,15 +2628,24 @@
         "source_hash": "sha256:6d954287700b787410f6559a188e601f1e36886efda490f52e8dd4867d419ac0",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2362,15 +2697,24 @@
         "source_hash": "sha256:88fa5adaefb2182a89c289c998e4f7407d7f2e87a86fbfe0b9004c0c5cb08d7d",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2422,15 +2766,24 @@
         "source_hash": "sha256:fb868dc96392a97287703dd797c447199e779c0d5b15b6d8249afa8d72f5417b",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2482,15 +2835,24 @@
         "source_hash": "sha256:3c834cfafab7b2e2f6e5e7cfe333006c6070411118f8cc7ec7cf1d477874ed50",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2542,15 +2904,24 @@
         "source_hash": "sha256:f37a9610043eec1dfb96bfe4b452e8c2061d6d9847fe62f76a5bc20fe08a78c7",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2602,15 +2973,24 @@
         "source_hash": "sha256:6ab2802085ece7fe3ec354c1b44c90967c4b3dbcb92f44df27bc9794212f185d",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2662,15 +3042,24 @@
         "source_hash": "sha256:52c757fd6e98ffb05d96587ebcece3a4ec7bb2d7fc7a71859f0142a865b01f5e",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2722,15 +3111,24 @@
         "source_hash": "sha256:1f99d9fec417f92494d5d4472c595082fb34e296ac60e5478a3f21a7e69ecfac",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2782,15 +3180,24 @@
         "source_hash": "sha256:ef8e0ff9f6d5ad8ab1fa2684331f96ba6b2e4b059019e08ad37682da467ac22c",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.instructional",
-      "text_primitive": "tp_body",
-      "content_role": "body",
-      "layout_hint": "card"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2843,15 +3250,24 @@
         "source_hash": "sha256:e9cec302d8e09f82066e715e26678ff27e8dbf4dee2750bb3a3b788f3e5792ea",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "transfer",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.job",
-      "text_primitive": "tp_body",
-      "content_role": "handoff",
-      "layout_hint": "job_rail"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2904,15 +3320,24 @@
         "source_hash": "sha256:52ef9653f33d080ded1c95515c960b8340e66cb9d884728e36c3aea06a8597aa",
         "confidence": "high",
         "flags": [
-          "from_move"
+          "from_move",
+          "from_primitive_step"
         ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "transfer",
+        "text_primitive": "tp_step"
       }
     },
     "expression": {
       "style_ref": "brand.job",
-      "text_primitive": "tp_body",
-      "content_role": "handoff",
-      "layout_hint": "job_rail"
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   }
 ]
