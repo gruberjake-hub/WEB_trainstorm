@@ -64,3 +64,6 @@ python3 tools/couturier.py
 
 Optional: `python3 tools/realize.py --selftest` · `python3 tools/cartographer.py --selftest`.
 Couturier (`python3 tools/couturier.py`) dresses extras; it mints nothing and does not drop them.
+
+The short lesson that *selects* these extras into a teachable order is
+`agents/realizer/spine_v1.md`. This spec still does not 1:many the SOP.

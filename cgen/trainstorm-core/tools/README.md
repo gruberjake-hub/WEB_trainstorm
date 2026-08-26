@@ -15,9 +15,11 @@ Default project is the live ALSAP SOP store (47 atoms). See the module docstring
 A re-run preserves Cartographer-bound intent (`ext.cartographer`), Couturier style
 (`expression` / `ext.couturier`), and extra 1:many `ele_` records. Default run mints a small
 1:many seed (`agents/realizer/one_to_many_v1.md`) on a few ALSAP atoms. Extra `reinforce`
-occurrences project as a check from the atom (`agents/realizer/check_v1.md`). `--no-one-to-many` skips
-new extras but still preserves any that exist. `--selftest` checks stable extra ids and the
-check honesty bar.
+occurrences project as a check from the atom (`agents/realizer/check_v1.md`). Default HTML is
+the short lesson spine (`agents/realizer/spine_v1.md`); `realized_coverage.html` is the full
+SOP dump. `--no-one-to-many` skips
+new extras but still preserves any that exist. `--selftest` checks stable extra ids, the
+check honesty bar, and spine membership.
 
 ## Cartographer
 
@@ -29,7 +31,8 @@ From `cgen/trainstorm-core`:
 
 Binds `move` / `teaches` / `rhetorical` / `intended_response` on existing `ele_` records (heuristic
 v1, `agents/cartographer/heuristic_v1.md`), validates against `element.schema.json`, leaves
-`atoms.json` untouched, and re-projects `realized_lesson.html`. Extra 1:many occurrences keep
+`atoms.json` untouched, and re-projects `realized_lesson.html` (spine) plus
+`realized_coverage.html` (full dump). Extra 1:many occurrences keep
 their Realizer-stamped `move`; Cartographer still binds the rest of intent. Does not wipe
 Couturier style. Run realize first if `occurrences/elements.json` does not exist.
 
@@ -44,4 +47,5 @@ From `cgen/trainstorm-core`:
 Binds style keys on existing `ele_` records (`style_ref`, `text_primitive`, `content_role`,
 `layout_hint`) from a documented move→look map (`agents/couturier/style_map_v1.md`). Mints no
 ids. Does not write `atoms.json` or `element.intent`. HTML reads those keys so hook vs present
-vs reinforce do not look like the same card; extra `reinforce` is a check, not a recap. Run realize then cartographer first.
+vs reinforce do not look like the same card; extra `reinforce` is a check, not a recap.
+HTML default is the short spine; coverage dump is the sibling file. Run realize then cartographer first.

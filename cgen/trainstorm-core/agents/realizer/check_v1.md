@@ -113,3 +113,7 @@ python3 tools/couturier.py
 ```
 
 Optional: `python3 tools/realize.py --selftest` (includes the honesty bar).
+
+The short lesson path that *uses* these checks is Realizer projection
+(`agents/realizer/spine_v1.md`); this spec does not pick the path or mint
+more extras.

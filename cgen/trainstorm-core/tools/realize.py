@@ -15,6 +15,11 @@ the SOP.
 — a stem + choices or a cloze, not an italic reprint. No authored
 `content.text`. Distractors, if any, are sibling atoms in the same store.
 
+Default HTML is a **short lesson spine** (`agents/realizer/spine_v1.md`): title
+hook, a handful of front-matter teaching cards, the two existing checks. The
+full SOP dump is `realized_coverage.html`. Spine is a selection of existing
+`ele_` records — it mints none and drops none.
+
 Idempotency: extra ids are `(primary ele_) + "__" + move`. A re-run accretes
 missing extras and never drops existing extras or Cartographer bindings.
 
@@ -36,8 +41,9 @@ Default `--project` is the live ALSAP SOP store (47 atoms). Writes (regenerated,
 never hand-edited):
 
     <project>/occurrences/elements.json     occurrence store (does not touch atoms.json)
-    <project>/occurrences/manifest.json     realized_from / source hashes
-    <project>/realized_lesson.html          open in a browser
+    <project>/occurrences/manifest.json     realized_from / source hashes + spine keys
+    <project>/realized_lesson.html          short lesson (spine). Open this.
+    <project>/realized_coverage.html        full SOP dump in document order
 """
 from __future__ import annotations
 
@@ -49,6 +55,7 @@ import os
 import pathlib
 import re
 import sys
+from collections import Counter, defaultdict
 
 import harness_paths
 from jsonschema import Draft202012Validator
@@ -72,6 +79,8 @@ ONE_TO_MANY_SEED = (
 )
 CHECK_SPEC = "agents/realizer/check_v1.md"
 CHECK_POLICY = "v1_check_from_atom"
+SPINE_SPEC = "agents/realizer/spine_v1.md"
+SPINE_POLICY = "v1_front_matter_then_checks"
 
 KIND_TO_TYPE = {
     "procedure": "Section",
@@ -527,6 +536,101 @@ def is_check_occurrence(el) -> bool:
     )
 
 
+def is_thin_teaching_atom(atom) -> bool:
+    """Heading-only or glossary pointer — not a paragraph an ID would teach."""
+    text = clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
+    if len(text) < 50:
+        return True
+    if THIN_HEADING_RE.match(text):
+        return True
+    if GLOSSARY_POINTER_RE.match(text):
+        return True
+    return False
+
+
+def is_front_matter_section(atom, root_id) -> bool:
+    """Direct child of the document root with a teachable procedure/form paragraph."""
+    if not root_id or atom.get("atom_id") == root_id:
+        return False
+    if atom_belongs_to(atom) != root_id:
+        return False
+    kind = (atom.get("meaning") or {}).get("kind")
+    if kind not in ("procedure", "form"):
+        return False
+    return not is_thin_teaching_atom(atom)
+
+
+def spine_atom_ids(atoms) -> list:
+    """Root, then teachable front-matter children in object.order. Not a tree walk."""
+    rs = roots(atoms)
+    if not rs:
+        return []
+    root = rs[0]
+    rid = root["atom_id"]
+    kids_teaching = [a for a in atoms if is_front_matter_section(a, rid)]
+    kids_teaching.sort(key=atom_order)
+    return [rid] + [a["atom_id"] for a in kids_teaching]
+
+
+def select_spine(atoms, elements) -> list:
+    """Stable ele_ ids in teachable order. Selection of existing occurrences; mints nothing.
+
+    Opening (root primary + non-check extras) → front-matter primaries →
+    reinforce extras of those atoms. Spec: agents/realizer/spine_v1.md
+    """
+    by_id = {e["element_id"]: e for e in elements}
+    by_cf = defaultdict(list)
+    for e in elements:
+        by_cf[e["composed_from"]].append(e)
+
+    def occs_for(atom_id):
+        occs = list(by_cf.get(atom_id) or [])
+        occs.sort(key=lambda e: (0 if is_primary_element(e) else 1, e["element_id"]))
+        return occs
+
+    opening = []
+    presents = []
+    checks = []
+    for i, aid in enumerate(spine_atom_ids(atoms)):
+        for el in occs_for(aid):
+            eid = el["element_id"]
+            if eid not in by_id:
+                continue
+            extra_check = is_extra_element(el) and (
+                (el.get("intent") or {}).get("move") == "reinforce" or is_check_occurrence(el)
+            )
+            if extra_check:
+                checks.append(eid)
+            elif i == 0:
+                opening.append(eid)
+            elif is_primary_element(el):
+                presents.append(eid)
+    return opening + presents + checks
+
+
+def apply_spine(manifest, atoms, elements) -> dict:
+    """Stamp spine keys on the occurrence manifest. Pure projection; mints/drops no ele_."""
+    ids = select_spine(atoms, elements)
+    manifest["spine"] = {
+        "policy": SPINE_POLICY,
+        "spec": SPINE_SPEC,
+        "element_ids": ids,
+        "count": len(ids),
+        "store_count": len(elements),
+        "note": ("Selection of existing ele_ records in teachable order: document-root "
+                 "opening, then teachable front-matter primaries (object.order), then "
+                 "existing reinforce extras. Coverage dump keeps the rest. Not an LLM "
+                 "path and not a full object-tree walk."),
+    }
+    return manifest["spine"]
+
+
+def sibling_coverage_path(lesson_path: pathlib.Path) -> pathlib.Path:
+    if lesson_path.name == "realized_lesson.html":
+        return lesson_path.with_name("realized_coverage.html")
+    return lesson_path.with_name(lesson_path.stem + "_coverage.html")
+
+
 def derive_check(atom, atoms) -> dict | None:
     """Project a check from this atom's meaning. Shape is a key, not a second meaning.
 
@@ -697,13 +801,17 @@ def check_body_html(el, atom, atoms, esc) -> str:
 
 
 def project_html(atoms, elements, manifest, out_path: pathlib.Path):
+    """Write the short lesson (spine) and the full SOP dump (coverage)."""
     by_atom = {a["atom_id"]: a for a in atoms}
     esc = html.escape
     cart = manifest.get("cartographer") or {}
     counts = cart.get("move_counts") or move_counts(elements)
     mixed = len([k for k in counts if k != "?"]) > 1
-    from collections import Counter, defaultdict
     cf_counts = Counter(e["composed_from"] for e in elements)
+    spine = apply_spine(manifest, atoms, elements)
+    coverage_path = sibling_coverage_path(out_path)
+    lesson_href = esc(out_path.name)
+    coverage_href = esc(coverage_path.name)
     by_cf = defaultdict(list)
     for e in elements:
         by_cf[e["composed_from"]].append(e)
@@ -805,6 +913,34 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
     for r in roots(atoms):
         walk(r, 0, body)
 
+    by_eid = {e["element_id"]: e for e in elements}
+    spine_ids = list(spine.get("element_ids") or [])
+    spine_body = []
+    for eid in spine_ids:
+        el = by_eid.get(eid)
+        if el is None:
+            continue
+        atom = by_atom[el["composed_from"]]
+        extra_cls = " extra" if is_extra_element(el) else ""
+        spine_body.append(card_html(el, atom, extra_cls))
+    spine_rows = []
+    for n, eid in enumerate(spine_ids, 1):
+        el = by_eid.get(eid)
+        if el is None:
+            continue
+        a = by_atom[el["composed_from"]]
+        teaches = ", ".join((el.get("intent") or {}).get("teaches") or []) or "—"
+        look = (el.get("expression") or {}).get("style_ref") or "—"
+        spine_rows.append(
+            f"<tr><td>{n}</td>"
+            f"<td class=mono>{esc(el['element_id'])}</td>"
+            f"<td class=mono>{esc(el['composed_from'])}</td>"
+            f"<td>{esc((el.get('intent') or {}).get('move', ''))}</td>"
+            f"<td class=mono>{esc(look)}</td>"
+            f"<td class=mono>{esc(teaches)}</td>"
+            f"<td>{esc(a['meaning'].get('kind', ''))}</td></tr>"
+        )
+
     rows = []
     for el in elements:
         a = by_atom[el["composed_from"]]
@@ -827,7 +963,6 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
     rf = manifest.get("realized_from") or {}
     otm = manifest.get("one_to_many") or {}
     cout = manifest.get("couturier") or {}
-    title = f"Realized lesson — {esc(manifest.get('project', 'course'))}"
     count_bits = " · ".join(f"{esc(k)} {v}" for k, v in sorted(counts.items()))
     look_counts = cout.get("look_counts") or {}
     look_bits = " · ".join(f"{esc(k)} {v}" for k, v in sorted(look_counts.items()))
@@ -841,7 +976,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         f" {pair_n} atom"
         + ("s" if pair_n != 1 else "")
         + " carry a second <span class=mono>ele_</span> (same "
-        f"<span class=mono>composed_from</span>, distinct <span class=mono>move</span>) — grouped below. "
+        f"<span class=mono>composed_from</span>, distinct <span class=mono>move</span>). "
         if extra_n else
         " Later 1:many can mint additional elements without changing atom ids. "
     )
@@ -857,6 +992,13 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
         if cout else
         " Couturier (style keys) is the next hop so different moves look like different clothes. "
     )
+    spine_note = (
+        f" Default HTML is the short lesson spine "
+        f"(<span class=mono>{esc(spine.get('policy', SPINE_POLICY))}</span>): "
+        f"{spine.get('count', 0)} of {len(elements)} occurrences — document-root opening, "
+        "teachable front-matter primaries, then the existing checks. "
+        "The object tree walk is coverage, not the path. "
+    )
     if cout:
         ctrl_doc = "Couturier v1"
         ctrl_sub = f'{esc(manifest.get("project", ""))} · occurrence style bound'
@@ -866,7 +1008,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             "<b>Meaning lives on the atom.</b> Clothes come from <span class=mono>element.expression</span> "
             "(Couturier). Intent (<span class=mono>move</span>, <span class=mono>teaches</span>) is "
             "Cartographer’s. The Realizer minted the <span class=mono>ele_</span> ids and copied no authored "
-            f"<span class=mono>content.text</span>.{many_note}{check_note}{clothes_note}"
+            f"<span class=mono>content.text</span>.{many_note}{check_note}{clothes_note}{spine_note}"
             "Dragoman / Storyline / PNG render are not this hop."
         )
         projector = (f"{esc(REALIZER)} + {esc(cart.get('tool', 'tools/cartographer.py'))} + "
@@ -881,7 +1023,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             "(<span class=mono>move</span>, <span class=mono>teaches</span>) is Cartographer’s. "
             "v1 is a documented heuristic compiler, not ID genius — low-confidence pills are flagged. "
             "The Realizer minted the <span class=mono>ele_</span> ids and copied no authored "
-            f"<span class=mono>content.text</span>.{many_note}{check_note}{clothes_note}"
+            f"<span class=mono>content.text</span>.{many_note}{check_note}{clothes_note}{spine_note}"
             "Dragoman / PNG render are not this hop."
         )
         projector = f"{esc(REALIZER)} + {esc(cart.get('tool', 'tools/cartographer.py'))}"
@@ -895,166 +1037,217 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path):
             "<b>Meaning lives on the atom.</b> Each card is one occurrence "
             "(<span class=mono>ele_</span>), linked by <span class=mono>composed_from</span>. "
             "The Realizer copied no authored <span class=mono>content.text</span>. Ugly typography "
-            f"is v1.{many_note}{check_note}{clothes_note}"
+            f"is v1.{many_note}{check_note}{clothes_note}{spine_note}"
             "Dragoman / PNG render are not this hop."
         )
         projector = esc(REALIZER)
-    HTML = f"""<!doctype html><html lang=en><head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>{title}</title>
-<style>
-:root{{--ink:#0f172a;--mut:#64748b;--line:#e2e8f0;--bg:#f8fafc;--accent:#1e3a8a}}
-*{{box-sizing:border-box}}
-body{{font:15px/1.55 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);
- margin:0;background:var(--bg)}}
-.page{{max-width:920px;margin:0 auto;background:#fff;padding:40px 48px;
- box-shadow:0 1px 3px rgba(0,0,0,.08)}}
-.ctrl{{display:flex;justify-content:space-between;align-items:flex-start;
- border-bottom:2px solid var(--accent);padding-bottom:14px;margin-bottom:8px}}
-.ctrl .doc{{font-weight:700;font-size:19px;color:var(--accent)}}
-.ctrl .meta{{text-align:right;font-size:12.5px;color:var(--mut)}}
-.banner{{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;
- font-size:12.5px;color:#1e3a8a;margin:14px 0 22px}}
-h1{{font-size:20px;margin:8px 0 4px}}
-.occ{{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:8px 0}}
-.d1{{margin-left:18px}}.d2{{margin-left:36px}}.d3{{margin-left:54px}}.d4{{margin-left:72px}}
-.occ .meta{{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}}
-.id{{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600}}
-.pill{{background:#1e3a8a;color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;
- text-transform:uppercase;letter-spacing:.03em}}
-.pill.dim{{background:#e2e8f0;color:#334155}}
-.pill.teaches{{background:#e0e7ff;color:#3730a3;text-transform:none;letter-spacing:0}}
-.pill.low{{box-shadow:0 0 0 2px #f59e0b inset}}
-.pill.move-hook{{background:#b45309}}
-.pill.move-objective{{background:#047857}}
-.pill.move-activate{{background:#0f766e}}
-.pill.move-present{{background:#1e3a8a}}
-.pill.move-exemplify{{background:#6d28d9}}
-.pill.move-practice{{background:#be123c}}
-.pill.move-feedback{{background:#9f1239}}
-.pill.move-assess{{background:#7f1d1d}}
-.pill.move-reinforce{{background:#334155}}
-.pill.move-transfer{{background:#c2410c}}
-.pill.extra-occ{{background:#0f766e;text-transform:none}}
-.pill.check-occ{{background:#1e3a8a;text-transform:none}}
-.pair{{border:2px solid #1e3a8a;border-radius:10px;padding:10px 12px 6px;margin:12px 0;
- background:#f1f5f9}}
-.pair-label{{font-size:12px;color:#1e3a8a;font-weight:600;margin:0 0 8px}}
-.pair .occ{{background:#fff}}
-.occ.extra{{background:#fffbeb;border-color:#f59e0b}}
-.pill.style{{background:#fef3c7;color:#92400e;text-transform:none;letter-spacing:0}}
-.kicker{{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
- margin:0 0 8px;color:inherit;opacity:.85}}
-.occ.style-opening{{background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;
- border-radius:4px;padding:28px 24px 22px;text-align:center}}
-.occ.style-opening .id,.occ.style-opening .join,.occ.style-opening .pill.dim{{color:#fde68a}}
-.occ.style-opening .meaning{{font-size:22px;font-weight:700;line-height:1.25;letter-spacing:-.02em;
- margin:8px 0 10px}}
-.occ.style-opening .kicker{{color:#fffbeb;opacity:1}}
-.occ.style-instructional{{background:#fff;border:1px solid #cbd5e1;border-left:5px solid #1e3a8a;
- border-radius:6px;padding:14px 16px}}
-.occ.style-instructional .meaning{{font-size:15px;line-height:1.55}}
-.occ.style-recall{{background:#f1f5f9;border:2px solid #334155;border-radius:6px;padding:16px 18px}}
-.occ.style-recall .kicker{{color:#1e293b;opacity:1}}
-.occ.style-recall form.check .stem{{font-size:16px;font-weight:650;font-style:normal;margin:8px 0 12px;color:var(--ink)}}
-.occ.style-recall form.check .blank{{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
- letter-spacing:.12em;color:#334155}}
-form.check .choice{{display:flex;gap:10px;align-items:flex-start;margin:8px 0;padding:10px 12px;
- border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer}}
-form.check .choice:hover{{border-color:#334155}}
-form.check .choice span{{flex:1}}
-form.check .cloze-in{{width:100%;font:inherit;padding:8px 10px;border:1px solid #94a3b8;border-radius:6px}}
-form.check .check-actions{{margin:12px 0 6px}}
-form.check button{{background:#1e3a8a;color:#fff;border:0;border-radius:6px;padding:8px 14px;
- font:inherit;font-weight:600;cursor:pointer}}
-form.check .feedback{{font-size:13px;margin:8px 0 0}}
-form.check .feedback.ok{{color:#047857;font-weight:650}}
-form.check .feedback.no{{color:#9f1239;font-weight:650}}
-form.check .reveal{{margin:10px 0 0;padding:8px 10px;background:#fff;border-left:3px solid #1e3a8a;
- font-size:13.5px}}
-form.check .check-note{{font-size:11.5px;color:var(--mut);margin:10px 0 0}}
-.occ.style-purpose{{background:#ecfdf5;border:1px solid #059669;border-left:6px solid #047857;
- border-radius:6px}}
-.occ.style-purpose .meaning{{font-weight:600}}
-.occ.style-purpose .kicker{{color:#047857}}
-.occ.style-prior{{background:#f0fdfa;border:1px solid #0f766e;border-radius:6px;font-size:14px}}
-.occ.style-prior .kicker{{color:#0f766e}}
-.occ.style-example{{background:#faf5ff;border:1px solid #c4b5fd;border-radius:6px;padding:12px 14px 12px 18px}}
-.occ.style-example .meaning{{font-family:Georgia,Times,serif;font-size:14px}}
-.occ.style-example .kicker{{color:#6d28d9}}
-.occ.style-job{{background:#fff7ed;border:1px solid #c2410c;border-left:6px solid #c2410c;border-radius:6px}}
-.occ.style-job .kicker{{color:#c2410c}}
-tr.pair-row td{{background:#eff6ff}}
-.meaning{{margin:4px 0 6px}}
-.join{{font-size:12px;color:var(--mut)}}
-.mono{{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px}}
-table{{border-collapse:collapse;width:100%;margin:8px 0;font-size:12.5px}}
-th,td{{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}}
-th{{background:#f1f5f9;font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:#475569}}
-details{{margin-top:28px;border-top:1px dashed var(--line);padding-top:14px}}
-summary{{cursor:pointer;color:var(--mut);font-size:12.5px}}
-.foot{{margin-top:28px;font-size:11.5px;color:var(--mut);border-top:1px solid var(--line);
- padding-top:12px}}
-</style></head><body><div class=page>
-<div class=ctrl>
- <div><div class=doc>{ctrl_doc}</div>
- <div style="font-size:12.5px;color:var(--mut)">{ctrl_sub}</div></div>
- <div class=meta>{ctrl_meta}</div>
-</div>
-<h1>Realized lesson</h1>
-<div class=banner>{banner}</div>
-{''.join(body)}
-<details><summary>Occurrence index — {len(elements)} ele_ records (click to expand)</summary>
-<table><thead><tr><th>element_id</th><th>composed_from</th><th>move</th><th>style_ref</th><th>teaches</th><th>type</th><th>atom kind</th><th>arity</th></tr></thead>
-<tbody>{''.join(rows)}</tbody></table></details>
-<div class=foot>Atom store: {esc(str(rf.get("atom_store", "")))} ·
-atoms_sha256 {esc(str(rf.get("atoms_sha256", ""))[:19])}…<br>
-Projector: {projector} · this HTML is regenerated, never hand-edited.
-Meaning is read from atoms.json. Occurrence intent is Cartographer’s when bound.
-Clothes are Couturier’s when bound (expression keys, not authored text).
-{"Moves are mixed." if mixed else "All moves still share one value — run tools/cartographer.py."}
-{" 1:many pairs share composed_from." if extra_n else ""}
-{" Clothes are mixed." if cout and len(look_counts) > 1 else (" Run tools/couturier.py to dress occurrences." if not cout else "")}
-{" Extra reinforce occurrences project as a check from the atom (agents/realizer/check_v1.md)." if check_n else ""}</div>
-</div>
-<script>
-(function () {{
-  function norm(s) {{
-    return (s || "").replace(/\\s+/g, " ").trim().toLowerCase();
-  }}
-  document.querySelectorAll("form.check").forEach(function (form) {{
-    form.addEventListener("submit", function (e) {{
+
+    STYLE = """
+:root{--ink:#0f172a;--mut:#64748b;--line:#e2e8f0;--bg:#f8fafc;--accent:#1e3a8a}
+*{box-sizing:border-box}
+body{font:15px/1.55 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);
+ margin:0;background:var(--bg)}
+.page{max-width:920px;margin:0 auto;background:#fff;padding:40px 48px;
+ box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.ctrl{display:flex;justify-content:space-between;align-items:flex-start;
+ border-bottom:2px solid var(--accent);padding-bottom:14px;margin-bottom:8px}
+.ctrl .doc{font-weight:700;font-size:19px;color:var(--accent)}
+.ctrl .meta{text-align:right;font-size:12.5px;color:var(--mut)}
+.banner{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;
+ font-size:12.5px;color:#1e3a8a;margin:14px 0 22px}
+h1{font-size:20px;margin:8px 0 4px}
+.nav{font-size:13px;margin:6px 0 10px}
+.nav a{color:var(--accent)}
+.path{font-size:12.5px;color:var(--mut);margin:0 0 14px}
+.occ{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:8px 0}
+.d1{margin-left:18px}.d2{margin-left:36px}.d3{margin-left:54px}.d4{margin-left:72px}
+.occ .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}
+.id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600}
+.pill{background:#1e3a8a;color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;
+ text-transform:uppercase;letter-spacing:.03em}
+.pill.dim{background:#e2e8f0;color:#334155}
+.pill.teaches{background:#e0e7ff;color:#3730a3;text-transform:none;letter-spacing:0}
+.pill.low{box-shadow:0 0 0 2px #f59e0b inset}
+.pill.move-hook{background:#b45309}
+.pill.move-objective{background:#047857}
+.pill.move-activate{background:#0f766e}
+.pill.move-present{background:#1e3a8a}
+.pill.move-exemplify{background:#6d28d9}
+.pill.move-practice{background:#be123c}
+.pill.move-feedback{background:#9f1239}
+.pill.move-assess{background:#7f1d1d}
+.pill.move-reinforce{background:#334155}
+.pill.move-transfer{background:#c2410c}
+.pill.extra-occ{background:#0f766e;text-transform:none}
+.pill.check-occ{background:#1e3a8a;text-transform:none}
+.pair{border:2px solid #1e3a8a;border-radius:10px;padding:10px 12px 6px;margin:12px 0;
+ background:#f1f5f9}
+.pair-label{font-size:12px;color:#1e3a8a;font-weight:600;margin:0 0 8px}
+.pair .occ{background:#fff}
+.occ.extra{background:#fffbeb;border-color:#f59e0b}
+.pill.style{background:#fef3c7;color:#92400e;text-transform:none;letter-spacing:0}
+.kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+ margin:0 0 8px;color:inherit;opacity:.85}
+.occ.style-opening{background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;
+ border-radius:4px;padding:28px 24px 22px;text-align:center}
+.occ.style-opening .id,.occ.style-opening .join,.occ.style-opening .pill.dim{color:#fde68a}
+.occ.style-opening .meaning{font-size:22px;font-weight:700;line-height:1.25;letter-spacing:-.02em;
+ margin:8px 0 10px}
+.occ.style-opening .kicker{color:#fffbeb;opacity:1}
+.occ.style-instructional{background:#fff;border:1px solid #cbd5e1;border-left:5px solid #1e3a8a;
+ border-radius:6px;padding:14px 16px}
+.occ.style-instructional .meaning{font-size:15px;line-height:1.55}
+.occ.style-recall{background:#f1f5f9;border:2px solid #334155;border-radius:6px;padding:16px 18px}
+.occ.style-recall .kicker{color:#1e293b;opacity:1}
+.occ.style-recall form.check .stem{font-size:16px;font-weight:650;font-style:normal;margin:8px 0 12px;color:var(--ink)}
+.occ.style-recall form.check .blank{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+ letter-spacing:.12em;color:#334155}
+form.check .choice{display:flex;gap:10px;align-items:flex-start;margin:8px 0;padding:10px 12px;
+ border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer}
+form.check .choice:hover{border-color:#334155}
+form.check .choice span{flex:1}
+form.check .cloze-in{width:100%;font:inherit;padding:8px 10px;border:1px solid #94a3b8;border-radius:6px}
+form.check .check-actions{margin:12px 0 6px}
+form.check button{background:#1e3a8a;color:#fff;border:0;border-radius:6px;padding:8px 14px;
+ font:inherit;font-weight:600;cursor:pointer}
+form.check .feedback{font-size:13px;margin:8px 0 0}
+form.check .feedback.ok{color:#047857;font-weight:650}
+form.check .feedback.no{color:#9f1239;font-weight:650}
+form.check .reveal{margin:10px 0 0;padding:8px 10px;background:#fff;border-left:3px solid #1e3a8a;
+ font-size:13.5px}
+form.check .check-note{font-size:11.5px;color:var(--mut);margin:10px 0 0}
+.occ.style-purpose{background:#ecfdf5;border:1px solid #059669;border-left:6px solid #047857;
+ border-radius:6px}
+.occ.style-purpose .meaning{font-weight:600}
+.occ.style-purpose .kicker{color:#047857}
+.occ.style-prior{background:#f0fdfa;border:1px solid #0f766e;border-radius:6px;font-size:14px}
+.occ.style-prior .kicker{color:#0f766e}
+.occ.style-example{background:#faf5ff;border:1px solid #c4b5fd;border-radius:6px;padding:12px 14px 12px 18px}
+.occ.style-example .meaning{font-family:Georgia,Times,serif;font-size:14px}
+.occ.style-example .kicker{color:#6d28d9}
+.occ.style-job{background:#fff7ed;border:1px solid #c2410c;border-left:6px solid #c2410c;border-radius:6px}
+.occ.style-job .kicker{color:#c2410c}
+tr.pair-row td{background:#eff6ff}
+.meaning{margin:4px 0 6px}
+.join{font-size:12px;color:var(--mut)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:12.5px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:#475569}
+details{margin-top:28px;border-top:1px dashed var(--line);padding-top:14px}
+summary{cursor:pointer;color:var(--mut);font-size:12.5px}
+.foot{margin-top:28px;font-size:11.5px;color:var(--mut);border-top:1px solid var(--line);
+ padding-top:12px}
+""".strip()
+
+    SCRIPT = r"""
+(function () {
+  function norm(s) {
+    return (s || "").replace(/\s+/g, " ").trim().toLowerCase();
+  }
+  document.querySelectorAll("form.check").forEach(function (form) {
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
       var fb = form.querySelector(".feedback");
       var reveal = form.querySelector(".reveal");
       var shape = form.getAttribute("data-shape");
       var key = form.getAttribute("data-key");
       var ok = false;
-      if (shape === "mcq_siblings") {{
+      if (shape === "mcq_siblings") {
         var picked = form.querySelector("input[type=radio]:checked");
-        if (!picked) {{
+        if (!picked) {
           fb.hidden = false;
           fb.className = "feedback";
           fb.textContent = "Pick an answer to check.";
           return;
-        }}
+        }
         ok = picked.value === "key";
-      }} else {{
+      } else {
         var typed = form.querySelector("input[type=text]");
         ok = typed && norm(typed.value) === norm(key);
-      }}
+      }
       fb.hidden = false;
       fb.className = "feedback " + (ok ? "ok" : "no");
       fb.textContent = ok
         ? "Correct — that wording is this atom."
         : "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom’s own wording.";
       if (reveal) reveal.hidden = false;
-    }});
-  }});
-}})();
-</script>
-</body></html>"""
-    out_path.write_text(HTML)
+    });
+  });
+})();
+""".strip()
+
+    foot_common = (
+        f"Atom store: {esc(str(rf.get('atom_store', '')))} · "
+        f"atoms_sha256 {esc(str(rf.get('atoms_sha256', ''))[:19])}…<br>"
+        f"Projector: {projector} · this HTML is regenerated, never hand-edited. "
+        "Meaning is read from atoms.json. Occurrence intent is Cartographer’s when bound. "
+        "Clothes are Couturier’s when bound (expression keys, not authored text). "
+        f"{'Moves are mixed.' if mixed else 'All moves still share one value — run tools/cartographer.py.'}"
+        f"{' 1:many pairs share composed_from.' if extra_n else ''}"
+        f"{' Clothes are mixed.' if cout and len(look_counts) > 1 else (' Run tools/couturier.py to dress occurrences.' if not cout else '')}"
+        f"{' Extra reinforce occurrences project as a check from the atom (agents/realizer/check_v1.md).' if check_n else ''} "
+        f"Spine heuristic: <span class=mono>{esc(SPINE_SPEC)}</span>."
+    )
+
+    def render_page(page_title, heading, nav, path_line, main, details_html):
+        return (
+            "<!doctype html><html lang=en><head><meta charset=utf-8>"
+            "<meta name=viewport content=\"width=device-width,initial-scale=1\">"
+            f"<title>{page_title}</title>"
+            f"<style>{STYLE}</style></head><body><div class=page>"
+            "<div class=ctrl>"
+            f" <div><div class=doc>{ctrl_doc}</div>"
+            f" <div style=\"font-size:12.5px;color:var(--mut)\">{ctrl_sub}</div></div>"
+            f" <div class=meta>{ctrl_meta}</div>"
+            "</div>"
+            f"<h1>{heading}</h1>"
+            f'<p class="nav">{nav}</p>'
+            f'<p class="path">{path_line}</p>'
+            f"<div class=banner>{banner}</div>"
+            f"{main}"
+            f"{details_html}"
+            f"<div class=foot>{foot_common}</div>"
+            f"</div><script>{SCRIPT}</script></body></html>"
+        )
+
+    project_name = esc(manifest.get("project", "course"))
+    spine_n = spine.get("count", 0)
+    store_n = len(elements)
+    lesson_details = (
+        f"<details open><summary>Spine membership — {spine_n} ele_ records "
+        f"(heuristic <span class=mono>{esc(SPINE_POLICY)}</span>)</summary>"
+        "<table><thead><tr><th>#</th><th>element_id</th><th>composed_from</th>"
+        "<th>move</th><th>style_ref</th><th>teaches</th><th>atom kind</th></tr></thead>"
+        f"<tbody>{''.join(spine_rows)}</tbody></table></details>"
+    )
+    coverage_details = (
+        f"<details><summary>Occurrence index — {store_n} ele_ records (click to expand)</summary>"
+        "<table><thead><tr><th>element_id</th><th>composed_from</th><th>move</th>"
+        "<th>style_ref</th><th>teaches</th><th>type</th><th>atom kind</th><th>arity</th></tr></thead>"
+        f"<tbody>{''.join(rows)}</tbody></table></details>"
+    )
+    lesson_html = render_page(
+        f"Short lesson — {project_name}",
+        "Short lesson",
+        f'<a href="{coverage_href}">Full SOP / coverage ({store_n} occurrences)</a>',
+        (f"{spine_n} of {store_n} occurrences · front-matter of the SOP, then the "
+         "existing checks. Not the procedure dump. Heuristic is documented, not an LLM."),
+        "".join(spine_body),
+        lesson_details,
+    )
+    coverage_html = render_page(
+        f"Coverage dump — {project_name}",
+        "Full SOP / coverage",
+        f'<a href="{lesson_href}">Short lesson (spine)</a>',
+        (f"Every occurrence in document order ({store_n} ele_ records). "
+         "This is coverage, not the course. The short path is the other file."),
+        "".join(body),
+        coverage_details,
+    )
+    out_path.write_text(lesson_html)
+    coverage_path.write_text(coverage_html)
+    return coverage_path
 
 
 def selftest(closed_moves):
@@ -1175,7 +1368,19 @@ def selftest(closed_moves):
     )
     thin = atom("atom_sop_ast29080_roles", "procedure",
                 "Roles and Responsibilities.", "atom_sop_ast29080", 4)
-    store = [title_live, purpose_live, scope_live, general_live, thin]
+    definitions = atom(
+        "atom_sop_ast29080_definitions", "procedure",
+        "For definitions, refer to Vault Quality Glossary, or directly in Vault Quality.",
+        "atom_sop_ast29080", 2,
+    )
+    procedures = atom("atom_sop_ast29080_procedures", "procedure",
+                      "Procedures.", "atom_sop_ast29080", 5)
+    step = atom(
+        "atom_sop_ast29080_proc_a_s1", "procedure_step",
+        "The QSEG Safety Data Science Lead drafts the asset-level plan with SMT input.",
+        "atom_sop_ast29080_procedures", 0,
+    )
+    store = [title_live, purpose_live, scope_live, general_live, thin, definitions, procedures, step]
 
     chk_g = derive_check(general_live, store)
     assert_check_honest(chk_g, general_live, store)
@@ -1219,6 +1424,7 @@ def selftest(closed_moves):
                     sum(1 for e in seeded if e["composed_from"] == "atom_sop_ast29080_roles") == 1, ""))
 
     # HTML: reinforce extra is a form the reader can attempt, not an italic reprint.
+    # Lesson default is the short spine; coverage dump keeps the rest.
     import tempfile
     gen_extra = next(e for e in seeded if e["element_id"] == "ele_sop_ast29080_general__reinforce")
     gen_extra["expression"] = {
@@ -1227,10 +1433,43 @@ def selftest(closed_moves):
         "content_role": "retrieval",
         "layout_hint": "check",
     }
+    purp_extra = next(e for e in seeded if e["element_id"] == "ele_sop_ast29080_purpose__reinforce")
+    purp_extra["expression"] = {
+        "style_ref": "brand.recall",
+        "text_primitive": "tp_recall",
+        "content_role": "retrieval",
+        "layout_hint": "check",
+    }
+    want_spine = [
+        "ele_sop_ast29080",
+        "ele_sop_ast29080__present",
+        "ele_sop_ast29080_purpose",
+        "ele_sop_ast29080_scope",
+        "ele_sop_ast29080_general",
+        "ele_sop_ast29080_purpose__reinforce",
+        "ele_sop_ast29080_general__reinforce",
+    ]
+    got_spine = select_spine(store, seeded)
+    results.append(("spine is the short ALSAP path", got_spine == want_spine, got_spine))
+    results.append(("spine skips thin roles heading", "ele_sop_ast29080_roles" not in got_spine, ""))
+    results.append(("spine skips glossary pointer", "ele_sop_ast29080_definitions" not in got_spine, ""))
+    results.append(("spine skips procedure dump",
+                    "ele_sop_ast29080_procedures" not in got_spine
+                    and "ele_sop_ast29080_proc_a_s1" not in got_spine, ""))
+    results.append(("spine is a subset of existing ele_ ids", set(got_spine) <= seeded_ids, ""))
+    mf_spine = {}
+    apply_spine(mf_spine, store, seeded)
+    apply_spine(mf_spine, store, seeded)
+    results.append(("spine recompute is stable",
+                    mf_spine["spine"]["element_ids"] == want_spine, mf_spine["spine"]["element_ids"]))
+
     with tempfile.TemporaryDirectory() as td:
-        html_path = pathlib.Path(td) / "lesson.html"
-        project_html(store, seeded, {"project": "selftest", "one_to_many": {"seeded_atom_count": 3}}, html_path)
+        html_path = pathlib.Path(td) / "realized_lesson.html"
+        cov_path = project_html(
+            store, seeded, {"project": "selftest", "one_to_many": {"seeded_atom_count": 3}}, html_path
+        )
         page = html_path.read_text()
+        cov_page = pathlib.Path(cov_path).read_text()
     results.append(("HTML check form present for general reinforce",
                     'form class="check"' in page and "ele_sop_ast29080_general__reinforce" in page, ""))
     results.append(("HTML stem is the question invert", "What is the ALSAP?" in page, ""))
@@ -1245,6 +1484,18 @@ def selftest(closed_moves):
                     "This SOP applies to all Astellas and non-Astellas employees" in page, ""))
     results.append(("closed vocab still has no retrieve on extras",
                     all((e.get("intent") or {}).get("move") != "retrieve" for e in seeded), ""))
+    results.append(("lesson HTML is the spine not the dump",
+                    "ele_sop_ast29080_roles" not in page
+                    and "ele_sop_ast29080_proc_a_s1" not in page
+                    and "ele_sop_ast29080_procedures" not in page, ""))
+    results.append(("lesson links to coverage",
+                    "realized_coverage.html" in page and "Full SOP / coverage" in page, ""))
+    results.append(("lesson has both existing checks",
+                    page.count('form class="check"') == 2, page.count('form class="check"')))
+    results.append(("coverage dump keeps roles and steps",
+                    "ele_sop_ast29080_roles" in cov_page
+                    and "ele_sop_ast29080_proc_a_s1" in cov_page, ""))
+    results.append(("coverage links back to the lesson", "realized_lesson.html" in cov_page, ""))
 
     print(f"{'CHECK':<72} RESULT")
     print("-" * 86)
@@ -1283,7 +1534,8 @@ def main():
                "  python3 tools/realize.py --project ../astellas/projects/ast_alsap\n"
                "  python3 tools/realize.py --selftest\n"
                "  python3 tools/cartographer.py\n"
-               "  python3 tools/couturier.py\n",
+               "  python3 tools/couturier.py\n"
+               "Open <project>/realized_lesson.html (short spine) or realized_coverage.html (full dump).\n",
     )
     ap.add_argument("--project", default=None,
                     help=f"Atom store directory containing atoms.json (default: {default_shown})")
@@ -1396,7 +1648,9 @@ def main():
         "note": ("Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple "
                  "of teaching-worthy atoms (same composed_from, distinct move, no authored "
                  "content.text). Cartographer owns occurrence intent; Couturier owns expression "
-                 "style. A re-realize preserves both plus extra ele_ records."),
+                 "style. Spine is a documented selection of existing ele_ records "
+                 f"({SPINE_SPEC}); the full dump is coverage. A re-realize preserves extras, "
+                 "intent, style, and recomputes the same spine."),
     }
     if any((e.get("ext") or {}).get("cartographer") for e in elements):
         cart = dict(prev_mf.get("cartographer") or {})
@@ -1417,23 +1671,28 @@ def main():
         cout["dressed"] = sum(1 for e in elements if e.get("expression"))
         cout["element_count"] = len(elements)
         occ_manifest["couturier"] = cout
+    apply_spine(occ_manifest, atoms, elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
     html_path = pathlib.Path(args.out).resolve() if args.out else project / "realized_lesson.html"
-    project_html(atoms, elements, occ_manifest, html_path)
+    coverage_path = project_html(atoms, elements, occ_manifest, html_path)
+    (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
     atoms_hash_after = sha256_bytes(atoms_path.read_bytes())
     if atoms_hash_after != atoms_hash_before:
         raise SystemExit("atoms.json changed during realize — abort. Realizer must not rewrite atoms.")
 
+    spine_n = (occ_manifest.get("spine") or {}).get("count", 0)
     print(f"Realizer v1 → {len(elements)} elements ({occ_manifest['policy']}, default_move={move})")
     print(f"  atoms      : {atoms_path} ({len(atoms)} records, unchanged)")
     print(f"  primaries  : {len(primaries)}")
     print(f"  extras     : {len(extras)} ({', '.join(e['element_id'] + '=' + (e.get('intent') or {}).get('move', '?') for e in extras) or 'none'})")
     print(f"  occurrences: {elements_path}")
     print(f"  manifest   : {store_dir / 'manifest.json'}")
-    print(f"  lesson HTML: {html_path}")
+    print(f"  spine      : {spine_n} of {len(elements)} ({SPINE_POLICY})")
+    print(f"  lesson HTML: {html_path}  ← open this (short lesson)")
+    print(f"  coverage   : {coverage_path}  (full SOP dump)")
     print("  schema     : element.schema.json ALL PASS (no authored content.text)")
 
 
