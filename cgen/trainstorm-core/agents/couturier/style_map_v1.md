@@ -132,4 +132,6 @@ cards this hop does not put on the default page. **Scene chrome** (three
 named section headings grouping those dressed beats) and **player chrome**
 (one named scene at a time, Next/Back) are Realizer projector grouping
 from SOP/form roles — Couturier does not pick the path, does not write
-`layout_primitive`, and does not mint a scene `ele_`.
+`layout_primitive`, and does not mint a scene `ele_`. Sequence practice and
+the BR closed-choice are also Realizer projector clothes of existing
+dressed beats (no extra `ele_` for Couturier to restyle).

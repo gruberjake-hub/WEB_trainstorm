@@ -542,6 +542,7 @@ def main():
     form_hash_before = (
         sha256_bytes((form_path / "atoms.json").read_bytes()) if form_path else None
     )
+    option_sets = realize.load_option_sets(project)
     atoms_by_id = realize.meaning_catalog(atoms, form_atoms + instance_atoms)
     if len({a["atom_id"] for a in atoms if "atom_id" in a}) != len(atoms):
         raise SystemExit("atom store has missing or duplicate atom_id values")
@@ -624,13 +625,17 @@ def main():
         print("  no files written")
         return
 
-    realize.apply_spine(occ_manifest, atoms, elements)
+    realize.apply_spine(
+        occ_manifest, atoms, elements,
+        meaning_atoms=form_atoms + instance_atoms, option_sets=option_sets,
+    )
     realize.stamp_primitives(occ_manifest, elements)
     realize.normalize_elements_ext(elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
     coverage_path = realize.project_html(
-        atoms, elements, occ_manifest, html_path, meaning_atoms=form_atoms + instance_atoms
+        atoms, elements, occ_manifest, html_path,
+        meaning_atoms=form_atoms + instance_atoms, option_sets=option_sets,
     )
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
 

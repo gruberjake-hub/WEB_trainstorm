@@ -13,6 +13,37 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-26 — Scene 3 BR closed-choice (the fill already shown)
+
+After PR #26 scene 3 taught the FORM-AST-34037 BR fields and showed the
+ASP-9999 fills, then jumped to lesson-end definition checks. An ID would
+practice that fill near the example. This entry records that hop.
+
+**Shape.** `agents/realizer/check_v1.md` gains `closed_choice` beside invert-
+definition `mcq_siblings` / `cloze` and Procedure A `sequence`. Options =
+verbatim value ids of `reg_benefit_risk_profile` (the form field’s
+`options_ref`; full set). Key = instance `selected_value`
+`conditional_favorable` (also `source_text`). Prompt is task clothes:
+*Choose the closed value already shown.* Not “which BR profile is
+required?” Feedback does not invent SOP facts. Stable shuffle so the
+learner can be wrong, then right. Rationale has no `options_ref` — no
+honest closed set; not this check.
+
+**Mint nothing.** Composing from the instance alone hides the options set.
+Composing from the form field alone hides the key. Project from the two
+existing guest `ele_` records (form present + instance exemplify). Store
+stays 55 / 47. `atoms.json` untouched. Spine `element_ids` still 16.
+`spine.br_profile_check` documents the projection. Placement: in-scene 3,
+after field+example, before lesson-end definition checks. Paging from
+PR #26 stays.
+
+Closed vocab: no `retrieve`. Did not stamp `practice` on a fake extra.
+No chameleon.py, no Headwater outcomes-mode, no `/cgen/alsap` hosting,
+no Procedure B, no extra form dump, no 1:many of the SOP, no
+distractor-writer. Idempotent with realize → cartographer → couturier.
+
+---
+
 ## 2026-08-26 — ALSAP short lesson pages one named scene at a time (player chrome)
 
 After PR #25 the short lesson read as three named scenes (front-matter,

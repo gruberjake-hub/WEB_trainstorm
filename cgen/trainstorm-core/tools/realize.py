@@ -14,9 +14,14 @@ the SOP.
 **check** derived from the atom's existing meaning (`agents/realizer/check_v1.md`)
 — a stem + choices or a cloze, not an italic reprint. Procedure A’s four
 presents also project a **sequence** check (order those first sentences;
-correct order is `bindings.object.order`). That check is projector-only: no
-extra `ele_`, because composing it from one atom would be a lie. No authored
-`content.text`. Distractors, if any, are sibling atoms in the same store.
+correct order is `bindings.object.order`). Scene 3’s form present + instance
+fill also project a **closed_choice** of the BR profile (`reg_benefit_risk_profile`
+value ids; key = the instance `selected_value`). Those two checks are
+projector-only: no extra `ele_`. Sequence cannot honestly `composed_from` one
+A step; closed_choice cannot honestly `composed_from` only the form field or
+only the instance fill (options live on the field’s `options_ref`, key lives
+on the instance). No authored `content.text`. Distractors, if any, are sibling
+atoms or the field’s already-governed value set — never an LLM writer.
 
 Default HTML is a **short lesson spine** (`agents/realizer/spine_v1.md`): title
 hook, a why-this callout of the purpose atom (`tp_callout`), a handful of
@@ -29,9 +34,10 @@ existing ASP-9999 atoms — `agents/realizer/instance_example_v1.md`), then the
 existing definition checks. The projector wraps those existing beats in
 **three named scenes** (front-matter / Procedure A / form BR) — layout chrome
 from SOP/form roles already in the graph, not new beats and not outcome
-language — and pages **one scene at a time** (Next/Back). Definition/purpose
-checks stay a final step after scene 3, not a fourth scene. The full SOP dump
-is `realized_coverage.html`.
+language — and pages **one scene at a time** (Next/Back). Scene 3 includes
+the BR closed-choice after the field+example. Definition/purpose checks stay
+a final step after scene 3, not a fourth scene. The full SOP dump is
+`realized_coverage.html`.
 Spine is a selection of existing `ele_` records — it mints none for membership
 and drops none. Procedure-step atoms stay 1:1 (no extra `reinforce`): they are
 imperatives, so they cannot host an honest copula-invert sibling check. Form
@@ -44,7 +50,8 @@ move (heading / body / step / callout / check). The spine projector renders
 those primitives — why-this as a callout of purpose, Procedure A s1–s4 as one
 job-aid step list then a sequence practice of the same four presents, the
 form-field presents as body/`present` clothes, the instance example as
-body/`exemplify` clothes (not a new SOP card), front-matter as heading/body,
+body/`exemplify` clothes (not a new SOP card), a closed-choice of the BR
+profile fill after those presents/examples, front-matter as heading/body,
 reinforce as the existing definition checks. Scene headings group those
 existing primitives; they do not mint `ele_`. Player chrome shows one named
 scene at a time (Next/Back); that is still projector grouping, not new meaning.
@@ -135,6 +142,12 @@ FORM_FIELD_SEED = (
     ("atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile", "present"),
     ("atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale", "present"),
 )
+# Closed-choice of the BR profile fill. Prompt is task clothes (same honesty
+# as the sequence prompt). Options = the form field's options_ref value ids.
+# Key = the instance selected_value. Do not invent a stem.
+BR_CHECK_PROMPT = "Choose the closed value already shown."
+BR_PROFILE_FORM_ATOM_ID = FORM_FIELD_SEED[0][0]
+BR_PROFILE_INSTANCE_ATOM_ID = INSTANCE_EXAMPLE_SEED[0][0]
 PRIMITIVE_SPEC = "agents/realizer/primitives_v1.md"
 PRIMITIVE_POLICY = "v1_atom_to_primitive"
 # Closed compiler vocabulary. Keys must exist in primitives.registry.json.
@@ -188,7 +201,9 @@ SCENE_DEFS = (
         "kicker": "Form",
         "from": (
             "FORM-AST-34037 BR-field presents (Benefit-Risk profile + rationale) "
-            "plus the instance examples that instantiate those fields."
+            "plus the instance examples that instantiate those fields, then an "
+            "in-scene closed-choice of the profile fill (registry value ids; "
+            "key = instance selected_value)."
         ),
     },
 )
@@ -358,6 +373,27 @@ def load_form_field_atoms(sop_project: pathlib.Path | None) -> list:
     if not isinstance(atoms, list):
         return []
     return [a for a in atoms if a.get("atom_id")]
+
+
+def sibling_options_registry(sop_project: pathlib.Path | None) -> pathlib.Path | None:
+    """Client options registry (reg_ ids). ALSAP lesson join only."""
+    if sop_project is None or sop_project.name != "ast_alsap":
+        return None
+    reg = sop_project.parent.parent / "registry" / "options.registry.json"
+    if reg.exists():
+        return reg
+    return None
+
+
+def load_option_sets(sop_project: pathlib.Path | None) -> dict:
+    """Governed value sets keyed by options_ref. Does not rewrite the registry."""
+    path = sibling_options_registry(sop_project)
+    if path is None:
+        return {}
+    data = load(path)
+    if not isinstance(data, dict):
+        return {}
+    return {e["id"]: e for e in (data.get("options") or []) if e.get("id")}
 
 
 def joined_guest_atoms(sop_project: pathlib.Path | None) -> list:
@@ -1113,7 +1149,7 @@ def select_spine(atoms, elements) -> list:
     return opening + presents + form_fields + examples + checks
 
 
-def apply_spine(manifest, atoms, elements) -> dict:
+def apply_spine(manifest, atoms, elements, *, meaning_atoms=None, option_sets=None) -> dict:
     """Stamp spine keys on the occurrence manifest. Pure projection; mints/drops no ele_."""
     ids = select_spine(atoms, elements)
     manifest["spine"] = {
@@ -1133,13 +1169,16 @@ def apply_spine(manifest, atoms, elements) -> dict:
                  "then existing reinforce extras. Spine projector "
                  "renders compiler primitives (callout / step list / heading / body / "
                  "check) plus a sequence practice of the Procedure A presents "
-                 "(projector-only; no extra ele_) plus present clothes on the form-field "
-                 "beats and exemplify clothes on the instance beats; coverage dump stays "
-                 "card-like. Named scene headings group those existing beats from "
-                 "SOP/form roles (layout chrome, not new meaning). Player chrome "
-                 "pages one named scene at a time (Next/Back); lesson-end checks "
-                 "are a final step, not a fourth scene. Not an LLM path "
-                 "and not a full object-tree walk."),
+                 "(projector-only; no extra ele_) plus a closed-choice of the BR "
+                 "profile fill after the form presents and instance examples "
+                 "(projector-only; options_ref value ids; no extra ele_) plus "
+                 "present clothes on the form-field beats and exemplify clothes "
+                 "on the instance beats; coverage dump stays card-like. Named "
+                 "scene headings group those existing beats from SOP/form roles "
+                 "(layout chrome, not new meaning). Player chrome pages one named "
+                 "scene at a time (Next/Back); lesson-end checks are a final "
+                 "step, not a fourth scene. Not an LLM path and not a full "
+                 "object-tree walk."),
     }
     seq_atoms = procedure_sequence_atoms(atoms)
     seq = derive_sequence_check(seq_atoms)
@@ -1159,10 +1198,39 @@ def apply_spine(manifest, atoms, elements) -> dict:
                      "composing this check from one atom would be a lie. Lives in the "
                      "Procedure A scene."),
         }
+    catalog = meaning_catalog(atoms, meaning_atoms)
+    br = derive_br_profile_check(
+        catalog.get(BR_PROFILE_FORM_ATOM_ID),
+        catalog.get(BR_PROFILE_INSTANCE_ATOM_ID),
+        option_sets or {},
+    )
+    if br:
+        assert_br_profile_check_honest(br, catalog, option_sets or {})
+        by_eid_guest = {e["element_id"]: e for e in elements}
+        form_eid = mint_extra_element_id(BR_PROFILE_FORM_ATOM_ID, "present")
+        inst_eid = mint_extra_element_id(BR_PROFILE_INSTANCE_ATOM_ID, "exemplify")
+        from_eids = [eid for eid in (form_eid, inst_eid) if eid in by_eid_guest]
+        manifest["spine"]["br_profile_check"] = {
+            "shape": br["shape"],
+            "spec": CHECK_SPEC,
+            "policy": CHECK_POLICY,
+            "options_ref": br["options_ref"],
+            "key": br["key"],
+            "from_atom_ids": [br["form_atom_id"], br["key_atom_id"]],
+            "from_element_ids": from_eids,
+            "note": ("Projector-only closed-choice of the BR profile fill already "
+                     "shown. Options are the form field’s options_ref value ids "
+                     "(verbatim). Key is the instance selected_value. Prompt is "
+                     "task clothes, not an SOP stem. No extra ele_ — composing "
+                     "from only the form field or only the instance would hide "
+                     "the other half. Lives in the form BR scene."),
+        }
     by_eid = {e["element_id"]: e for e in elements}
     by_atom = {a["atom_id"]: a for a in atoms}
     scenes, lesson_end = group_spine_scenes(ids, by_eid, by_atom)
-    manifest["spine"]["scenes"] = stamp_spine_scenes(scenes, lesson_end)
+    manifest["spine"]["scenes"] = stamp_spine_scenes(
+        scenes, lesson_end, has_br_profile_check=bool(br),
+    )
     return manifest["spine"]
 
 
@@ -1227,7 +1295,8 @@ def spine_scene_role(el, atoms_by_id) -> str:
     Pure function of SOP/form/instance roles already on the graph (atom kind,
     guest stamps, extra reinforce). Not an LLM. Not a new ele_. Definition /
     purpose reinforce extras stay lesson-end unless they are the Procedure A
-    sequence practice (that practice is projector-only and has no ele_).
+    sequence practice or the form-BR closed-choice (those practices are
+    projector-only and have no ele_).
     """
     if is_extra_element(el) and (
         (el.get("intent") or {}).get("move") == "reinforce" or is_check_occurrence(el)
@@ -1272,7 +1341,7 @@ def group_spine_scenes(spine_ids, by_eid, atoms_by_id):
     return scenes, lesson_end
 
 
-def stamp_spine_scenes(scenes, lesson_end) -> dict:
+def stamp_spine_scenes(scenes, lesson_end, *, has_br_profile_check=False) -> dict:
     """Manifest chrome for the three role clusters. Membership is unchanged."""
     out = []
     for s in scenes:
@@ -1284,6 +1353,7 @@ def stamp_spine_scenes(scenes, lesson_end) -> dict:
             "kicker": d.get("kicker") or "",
             "element_ids": list(s["element_ids"]),
             "includes_sequence_check": s["role"] == SCENE_PROCEDURE_A,
+            "includes_br_profile_check": s["role"] == SCENE_FORM_BR and has_br_profile_check,
             "from": d.get("from") or "",
         })
     return {
@@ -1304,7 +1374,8 @@ def stamp_spine_scenes(scenes, lesson_end) -> dict:
         },
         "note": ("Layout chrome only: named section headings group existing spine "
                  "ele_ records from SOP/form roles already in the graph. Same "
-                 "membership. Sequence practice stays in Procedure A. Definition/"
+                 "membership. Sequence practice stays in Procedure A. Form-BR "
+                 "closed-choice stays in Benefit-risk on the form. Definition/"
                  "purpose checks stay at lesson end. Player chrome pages one scene "
                  "at a time. Not an LLM. Not outcome language. "
                  "Coverage dump stays ungrouped."),
@@ -1481,6 +1552,118 @@ def shuffled_sequence_items(items, seed: str) -> list:
     return rotated
 
 
+def option_value_ids(form_atom, option_sets) -> list | None:
+    """Verbatim closed value ids from the form field's options_ref. None if no set."""
+    ref = ((form_atom.get("bindings") or {}).get("form") or {}).get("options_ref")
+    if not ref:
+        return None
+    entry = (option_sets or {}).get(ref)
+    if not entry:
+        return None
+    ids = []
+    seen = set()
+    for v in entry.get("values") or []:
+        vid = v.get("id")
+        if not vid or vid in seen:
+            continue
+        seen.add(vid)
+        ids.append(vid)
+    if len(ids) < 2:
+        return None
+    return ids
+
+
+def derive_br_profile_check(form_atom, instance_atom, option_sets) -> dict | None:
+    """Closed-choice of the instance fill against the form field's options_ref.
+
+    Options = verbatim value ids from the governed set. Key = instance
+    selected_value (must be a member, and must be the atom's source_text).
+    Prompt is task clothes, not an SOP stem. If there is no honest closed
+    set, return None — do not invent options or a fact-asserting stem.
+    """
+    if not form_atom or not instance_atom:
+        return None
+    if (form_atom.get("meaning") or {}).get("kind") != "form_field":
+        return None
+    if (instance_atom.get("meaning") or {}).get("kind") != "instance_value":
+        return None
+    inst = (instance_atom.get("bindings") or {}).get("instance") or {}
+    if inst.get("instantiates") != form_atom.get("atom_id"):
+        return None
+    values = option_value_ids(form_atom, option_sets)
+    if not values:
+        return None
+    key = inst.get("selected_value")
+    src = (instance_atom.get("meaning") or {}).get("source_text") or ""
+    if not key or key != src:
+        return None
+    if key not in values:
+        return None
+    if not phrase_in_atom(key, instance_atom):
+        return None
+    ref = ((form_atom.get("bindings") or {}).get("form") or {}).get("options_ref")
+    return {
+        "shape": "closed_choice",
+        "spec": CHECK_SPEC,
+        "policy": CHECK_POLICY,
+        "prompt": BR_CHECK_PROMPT,
+        "key": key,
+        "key_atom_id": instance_atom["atom_id"],
+        "form_atom_id": form_atom["atom_id"],
+        "options_ref": ref,
+        "choices": [
+            {"text": vid, "correct": vid == key, "from": ref} for vid in values
+        ],
+    }
+
+
+def assert_br_profile_check_honest(check, catalog, option_sets):
+    """Refuse a closed-choice that invented a key, an option, or an SOP stem."""
+    if not check or check.get("shape") != "closed_choice":
+        raise SystemExit("BR profile check derivation returned nothing")
+    if check.get("prompt") != BR_CHECK_PROMPT:
+        raise SystemExit("BR prompt is clothes, not an SOP stem — refusing a new fact")
+    form_atom = catalog.get(check.get("form_atom_id"))
+    inst_atom = catalog.get(check.get("key_atom_id"))
+    if form_atom is None or inst_atom is None:
+        raise SystemExit("BR profile check cites unknown form or instance atom")
+    values = option_value_ids(form_atom, option_sets)
+    if not values:
+        raise SystemExit("BR profile check has no honest closed set — refusing to invent options")
+    if check.get("options_ref") != ((form_atom.get("bindings") or {}).get("form") or {}).get("options_ref"):
+        raise SystemExit("BR profile check options_ref is not the form field’s")
+    if check.get("key") != ((inst_atom.get("bindings") or {}).get("instance") or {}).get("selected_value"):
+        raise SystemExit("BR profile check key is not the instance selected_value")
+    if not phrase_in_atom(check["key"], inst_atom):
+        raise SystemExit("BR profile check key is not in the instance atom — refusing to invent")
+    if check["key"] not in values:
+        raise SystemExit("BR profile check key is not in the form field’s closed set")
+    choice_texts = [c["text"] for c in (check.get("choices") or [])]
+    if choice_texts != values:
+        raise SystemExit("BR profile check options are not the verbatim closed value ids")
+    for c in check.get("choices") or []:
+        if c["text"] not in values:
+            raise SystemExit(f"BR choice {c['text']!r} is not in the closed set")
+        if c.get("from") != check.get("options_ref"):
+            raise SystemExit("BR choice must cite the form field’s options_ref")
+        if c["correct"] and c["text"] != check["key"]:
+            raise SystemExit("BR key choice must be the instance selected_value")
+        if not c["correct"] and c["text"] == check["key"]:
+            raise SystemExit("BR distractor must not be the instance fill")
+
+
+def shuffled_closed_choices(choices, seed: str) -> list:
+    """Stable non-identity permutation so the learner can be wrong, then right."""
+    rotated = stable_rotate(list(choices), seed)
+    original = [c["text"] for c in choices]
+    shown = [c["text"] for c in rotated]
+    if shown == original and len(rotated) > 1:
+        rotated = list(rotated[1:]) + list(rotated[:1])
+    if rotated and rotated[0].get("correct") and len(rotated) > 1:
+        rotated = list(rotated[1:]) + list(rotated[:1])
+    return rotated
+
+
 def stable_rotate(items, seed: str) -> list:
     if not items:
         return []
@@ -1558,13 +1741,16 @@ def check_body_html(el, atom, atoms, esc) -> str:
     )
 
 
-def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_atoms=None):
+def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_atoms=None,
+                 option_sets=None):
     """Write the short lesson (spine) and the full SOP dump (coverage).
 
     `atoms` is the SOP tree (coverage walk / spine SOP membership).
     `meaning_atoms` is an optional join catalog (form-field and instance
     citations) so composed_from can resolve across stores without copying
     into SOP atoms.json.
+    `option_sets` is the governed value sets keyed by options_ref (for the
+    BR closed-choice). Pass explicitly — do not silently invent options.
     """
     catalog = list(atoms)
     if meaning_atoms:
@@ -1578,7 +1764,10 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
     counts = cart.get("move_counts") or move_counts(elements)
     mixed = len([k for k in counts if k != "?"]) > 1
     cf_counts = Counter(e["composed_from"] for e in elements)
-    spine = apply_spine(manifest, atoms, elements)
+    spine = apply_spine(
+        manifest, atoms, elements,
+        meaning_atoms=meaning_atoms, option_sets=option_sets,
+    )
     coverage_path = sibling_coverage_path(out_path)
     lesson_href = esc(out_path.name)
     coverage_href = esc(coverage_path.name)
@@ -1750,6 +1939,46 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
             f'</section>'
         )
 
+    def br_profile_check_html(chk):
+        """Projector-only closed-choice of the instance fill. No extra ele_."""
+        seed = "closed_choice:" + chk["options_ref"] + ":" + chk["key"]
+        shown = shuffled_closed_choices(chk["choices"], seed)
+        labels = []
+        for c in shown:
+            labels.append(
+                f'<label class="choice">'
+                f'<input type="radio" name="br_profile" value="{esc(c["text"])}">'
+                f'<span class="mono">{esc(c["text"])}</span>'
+                f"</label>"
+            )
+        form_eid = mint_extra_element_id(chk["form_atom_id"], "present")
+        inst_eid = mint_extra_element_id(chk["key_atom_id"], "exemplify")
+        return (
+            f'<section class="prim prim-check closed-choice-check">'
+            f'<div class="kicker">Practice</div>'
+            f'<form class="check" data-shape="closed_choice" '
+            f'data-key="{esc(chk["key"])}" '
+            f'data-eid="closed_choice:{esc(chk["key_atom_id"])}">'
+            f'<p class="stem">{esc(chk["prompt"])}</p>'
+            f'{"".join(labels)}'
+            f'<div class="check-actions"><button type="submit">Check</button></div>'
+            f'<p class="feedback" hidden></p>'
+            f'<p class="reveal" hidden><span class="mono">{esc(chk["key"])}</span></p>'
+            f'<p class="check-note">Options are the value ids of '
+            f'<span class="mono">{esc(chk["options_ref"])}</span> on '
+            f'<span class="mono">{esc(chk["form_atom_id"])}</span>. '
+            f'Key is the instance fill '
+            f'(<span class="mono">{esc(chk["key_atom_id"])}</span> '
+            f'<span class="mono">selected_value</span>). Projects the existing '
+            f'<span class="mono">ele_</span> records '
+            f'(<span class="mono">{esc(form_eid)}</span>, '
+            f'<span class="mono">{esc(inst_eid)}</span>) — no extra occurrence, '
+            f'not authored <span class="mono">content.text</span>. '
+            f'Shape <span class="mono">closed_choice</span>.</p>'
+            f'</form>'
+            f'</section>'
+        )
+
     def walk(atom, depth, acc):
         occs = occs_for(atom["atom_id"])
         if not occs:
@@ -1809,6 +2038,15 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
     if scene_list:
         for idx, sc in enumerate(scene_list):
             inner = render_beat_groups(sc.get("element_ids") or [])
+            if sc.get("role") == SCENE_FORM_BR and sc.get("includes_br_profile_check"):
+                br_chk = derive_br_profile_check(
+                    by_atom.get(BR_PROFILE_FORM_ATOM_ID),
+                    by_atom.get(BR_PROFILE_INSTANCE_ATOM_ID),
+                    option_sets or {},
+                )
+                if br_chk:
+                    assert_br_profile_check_honest(br_chk, by_atom, option_sets or {})
+                    inner.append(br_profile_check_html(br_chk))
             hidden = "" if idx == 0 else " hidden"
             spine_body.append(
                 f'<section class="scene" data-scene="{esc(sc.get("id") or "")}" '
@@ -1916,6 +2154,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         "(stem + choices or cloze) derived from the atom — not an italic reprint. "
         "Procedure A’s job-aid presents also project a sequence practice "
         "(order those first sentences; object.order; no extra ele_). "
+        "The form BR presents and instance fill also project a closed-choice "
+        "(options_ref value ids; key = selected_value; no extra ele_). "
         if check_n else ""
     )
     clothes_note = (
@@ -1936,7 +2176,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         "Procedure A as a job-aid step list then a sequence practice of those "
         "presents, a form-field present as body/`present` clothes then a worked "
         "example as body/`exemplify` clothes (form then instance atom via "
-        "composed_from), front-matter as heading/body, "
+        "composed_from), a closed-choice of the BR profile fill in that scene, "
+        "front-matter as heading/body, "
         "reinforce as the existing definition checks. Named scene headings group "
         "those existing beats (front-matter / Procedure A / form BR); player "
         "chrome pages one named scene at a time. Coverage stays card-like. "
@@ -1949,7 +2190,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         f"{spine.get('count', 0)} of {len(elements)} occurrences — document-root opening, "
         "why-this callout of purpose, teachable front-matter primaries, Procedure A as "
         "a job sequence then a sequence practice of those presents, the form "
-        "fields those examples fill, a small instance example, then the existing "
+        "fields those examples fill, a small instance example, a closed-choice "
+        "of that BR profile fill, then the existing "
         "definition checks. Scene chrome groups those same beats from SOP/form "
         "roles; the player shows one named scene at a time (Next/Back). The object "
         "tree walk is coverage, not the path. "
@@ -2133,6 +2375,11 @@ form.check .check-note{font-size:11.5px;color:var(--mut);margin:10px 0 0}
 .sequence-check .seq-text{font-size:14.5px;line-height:1.45}
 .sequence-check ol.reveal{margin:10px 0 0;padding:8px 10px 8px 28px;background:#fff;
  border-left:3px solid #1e3a8a;font-size:13.5px}
+.closed-choice-check{border:2px solid #334155;border-radius:8px;padding:16px 18px 10px;margin:16px 0;
+ background:#f1f5f9}
+.closed-choice-check .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+ color:#1e293b;margin:0 0 6px}
+.closed-choice-check form.check .stem{font-size:16px;font-weight:650;margin:4px 0 12px}
 .occ.prim-heading .meaning,.occ.prim-body .meaning{margin:4px 0 6px}
 tr.pair-row td{background:#eff6ff}
 .meaning{margin:4px 0 6px}
@@ -2190,6 +2437,20 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         fb.textContent = ok
           ? "Correct — that wording is this atom."
           : "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom’s own wording.";
+      } else if (shape === "closed_choice") {
+        var pickedBr = form.querySelector("input[type=radio]:checked");
+        if (!pickedBr) {
+          fb.hidden = false;
+          fb.className = "feedback";
+          fb.textContent = "Pick an answer to check.";
+          return;
+        }
+        ok = pickedBr.value === key;
+        fb.hidden = false;
+        fb.className = "feedback " + (ok ? "ok" : "no");
+        fb.textContent = ok
+          ? "Correct — that is the fill already shown."
+          : "Not yet. Options are the form field’s closed value set; the key is the instance fill already shown.";
       } else if (shape === "sequence") {
         var want = (form.getAttribute("data-order") || "").split(",");
         var got = [];
@@ -2295,6 +2556,7 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f"{' Clothes are mixed.' if cout and len(look_counts) > 1 else (' Run tools/couturier.py to dress occurrences.' if not cout else '')}"
         f"{' Extra reinforce occurrences project as a check from the atom (agents/realizer/check_v1.md).' if check_n else ''} "
         f"{' Procedure A presents also project a sequence practice (same spec; no extra ele_).' if check_n else ''} "
+        f"{' Form BR presents + instance fill also project a closed-choice (same spec; no extra ele_).' if (spine.get('br_profile_check')) else ''} "
         f"{' Compiler primitives: ' + prim_bits + '.' if prim_bits else ''} "
         f"Spine heuristic: <span class=mono>{esc(SPINE_SPEC)}</span>."
         f"{' Scene chrome: ' + esc(SCENE_POLICY) + '.' if scene_list else ''}"
@@ -2356,7 +2618,8 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
          "front-matter as heading/body, Procedure A as "
          "a job-aid step sequence then a sequence practice of those four presents, "
          "then the form fields those examples fill, then a worked example from the "
-         "instance store, then the existing definition checks at lesson end. "
+         "instance store, then a closed-choice of that BR profile fill, then the "
+         "existing definition checks at lesson end. "
          "Not B/C and not the SOP dump. Heuristic is documented, not an LLM."),
         spine_main,
         lesson_details,
@@ -2688,6 +2951,97 @@ def selftest(closed_moves):
     results.append(("sequence shuffle is not identity so the learner can be wrong",
                     [it["atom_id"] for it in shuffled] != seq_chk["correct_ids"],
                     [it["atom_id"] for it in shuffled]))
+
+    fixture_br_options = {
+        "reg_benefit_risk_profile": {
+            "id": "reg_benefit_risk_profile",
+            "values": [
+                {"id": "favorable"},
+                {"id": "unfavorable"},
+                {"id": "uncertain_inconclusive"},
+                {"id": "conditional_favorable"},
+                {"id": "contextual"},
+                {"id": "other_smt_defined"},
+            ],
+        }
+    }
+    br_form = {
+        "atom_id": BR_PROFILE_FORM_ATOM_ID,
+        "meaning": {
+            "source_locale": "en",
+            "source_text": "SMT assessment of the overall Benefit-Risk profile of the asset.",
+            "kind": "form_field",
+        },
+        "bindings": {"form": {"options_ref": "reg_benefit_risk_profile", "field_type": "select_one"}},
+    }
+    br_inst = {
+        "atom_id": BR_PROFILE_INSTANCE_ATOM_ID,
+        "meaning": {
+            "source_locale": "en",
+            "source_text": "conditional_favorable",
+            "kind": "instance_value",
+        },
+        "bindings": {
+            "instance": {
+                "instantiates": BR_PROFILE_FORM_ATOM_ID,
+                "selected_value": "conditional_favorable",
+            }
+        },
+    }
+    br_chk = derive_br_profile_check(br_form, br_inst, fixture_br_options)
+    assert_br_profile_check_honest(
+        br_chk, {br_form["atom_id"]: br_form, br_inst["atom_id"]: br_inst}, fixture_br_options
+    )
+    results.append(("BR check shape is closed_choice not mcq_siblings",
+                    br_chk and br_chk["shape"] == "closed_choice", br_chk and br_chk.get("shape")))
+    results.append(("BR prompt is task clothes not an SOP stem",
+                    br_chk and br_chk["prompt"] == BR_CHECK_PROMPT
+                    and "first planning" not in br_chk["prompt"].lower()
+                    and "should" not in br_chk["prompt"].lower()
+                    and "required" not in br_chk["prompt"].lower(),
+                    br_chk and br_chk.get("prompt")))
+    results.append(("BR key is the instance selected_value already in the atom",
+                    br_chk and br_chk["key"] == "conditional_favorable"
+                    and phrase_in_atom(br_chk["key"], br_inst), br_chk and br_chk.get("key")))
+    results.append(("BR options are the verbatim registry value ids",
+                    br_chk and [c["text"] for c in br_chk["choices"]] == [
+                        "favorable", "unfavorable", "uncertain_inconclusive",
+                        "conditional_favorable", "contextual", "other_smt_defined",
+                    ], br_chk and [c["text"] for c in br_chk["choices"]]))
+    results.append(("BR check of a field with no options_ref is refused",
+                    derive_br_profile_check(
+                        {**br_form, "bindings": {"form": {"field_type": "text_long"}}},
+                        br_inst, fixture_br_options,
+                    ) is None, ""))
+    results.append(("BR check of rationale (no closed set) is refused",
+                    derive_br_profile_check(
+                        {
+                            "atom_id": FORM_FIELD_SEED[1][0],
+                            "meaning": {"kind": "form_field", "source_text": "Rationale."},
+                            "bindings": {"form": {"field_type": "text_long"}},
+                        },
+                        {
+                            "atom_id": INSTANCE_EXAMPLE_SEED[1][0],
+                            "meaning": {"kind": "instance_value", "source_text": "authored judgment"},
+                            "bindings": {"instance": {"instantiates": FORM_FIELD_SEED[1][0]}},
+                        },
+                        fixture_br_options,
+                    ) is None, ""))
+    results.append(("BR check whose key is not in the closed set is refused",
+                    derive_br_profile_check(
+                        br_form,
+                        {**br_inst, "meaning": {**br_inst["meaning"], "source_text": "invented_seventh"},
+                         "bindings": {"instance": {
+                             "instantiates": BR_PROFILE_FORM_ATOM_ID,
+                             "selected_value": "invented_seventh",
+                         }}},
+                        fixture_br_options,
+                    ) is None, ""))
+    br_shown = shuffled_closed_choices(br_chk["choices"], "closed_choice:" + br_chk["options_ref"] + ":" + br_chk["key"])
+    results.append(("BR shuffle is not identity so the learner can be wrong",
+                    [c["text"] for c in br_shown] != [c["text"] for c in br_chk["choices"]]
+                    and not br_shown[0]["correct"],
+                    [c["text"] for c in br_shown]))
     results.append(("spine is a subset of existing ele_ ids", set(got_spine) <= seeded_ids, ""))
     mf_spine = {}
     apply_spine(mf_spine, store, seeded)
@@ -2860,7 +3214,8 @@ def selftest(closed_moves):
                     "class=\"prim prim-step job-aid\"" not in cov_page
                     and "ele_sop_ast29080_proc_a_s1" in cov_page, ""))
     results.append(("coverage dump has no sequence practice (lesson-only projection)",
-                    'data-shape="sequence"' not in cov_page, ""))
+                    'data-shape="sequence"' not in cov_page
+                    and 'data-shape="closed_choice"' not in cov_page, ""))
     results.append(("lesson HTML names two scenes from SOP roles (no form in fixture)",
                     page.count('class="scene-heading">What an ALSAP is</h2>') == 1
                     and page.count('class="scene-heading">How an ALSAP starts</h2>') == 1
@@ -2977,7 +3332,13 @@ def selftest(closed_moves):
             "source_text": "conditional_favorable",
             "kind": "instance_value",
         },
-        "bindings": {"instance": {"instantiates": "atom_form_x", "authored_by": "role_smt"}},
+        "bindings": {
+            "instance": {
+                "instantiates": FORM_FIELD_SEED[0][0],
+                "selected_value": "conditional_favorable",
+                "authored_by": "role_smt",
+            }
+        },
         "governance": {"version": 1, "status": "draft", "owner": "role_smt"},
     }
     rationale_inst = {
@@ -3093,7 +3454,7 @@ def selftest(closed_moves):
         },
         "bindings": {
             "object": {"belongs_to": "atom_form_ast34037_sec_purpose_sec_safety_profile", "order": 3},
-            "form": {"field_type": "select_one"},
+            "form": {"field_type": "select_one", "options_ref": "reg_benefit_risk_profile"},
         },
         "governance": {"version": 1, "status": "draft"},
     }
@@ -3196,8 +3557,10 @@ def selftest(closed_moves):
             store, seeded_form,
             {"project": "selftest", "one_to_many": {"seeded_atom_count": 3}},
             html_path, meaning_atoms=form_store + instance_store,
+            option_sets=fixture_br_options,
         )
         page_form = html_path.read_text()
+        cov_page_form = pathlib.Path(html_path).with_name("realized_coverage.html").read_text()
     results.append(("lesson HTML shows Present kicker on form-field beats",
                     page_form.count(">Present</div>") >= 2
                     and "style-instructional" in page_form
@@ -3221,6 +3584,13 @@ def selftest(closed_moves):
                     page_form.count('class="prim prim-step job-aid"') == 1, ""))
     mf_form = {}
     apply_spine(mf_form, store, seeded_form)
+    results.append(("form spine without option_sets does not invent a BR check",
+                    "br_profile_check" not in (mf_form.get("spine") or {}),
+                    (mf_form.get("spine") or {}).get("br_profile_check")))
+    apply_spine(
+        mf_form, store, seeded_form,
+        meaning_atoms=form_store + instance_store, option_sets=fixture_br_options,
+    )
     form_scenes = (mf_form.get("spine") or {}).get("scenes") or {}
     form_roles = [s["role"] for s in form_scenes.get("scenes") or []]
     results.append(("form fixture yields three scenes from SOP/form roles",
@@ -3274,6 +3644,58 @@ def selftest(closed_moves):
                     and page_form.count('class="scene-heading">How an ALSAP starts</h2>') == 1
                     and page_form.count('class="scene-heading">Benefit-risk on the form</h2>') == 1
                     and page_form.count('class="scene-heading">') == 3, page_form.count('class="scene-heading">')))
+    results.append(("form BR scene includes closed-choice of the instance fill",
+                    any(s["role"] == SCENE_FORM_BR and s.get("includes_br_profile_check")
+                        for s in form_scenes.get("scenes") or [])
+                    and (mf_form.get("spine") or {}).get("br_profile_check", {}).get("key")
+                    == "conditional_favorable"
+                    and (mf_form.get("spine") or {}).get("br_profile_check", {}).get("options_ref")
+                    == "reg_benefit_risk_profile",
+                    (mf_form.get("spine") or {}).get("br_profile_check")))
+    results.append(("form lesson HTML puts BR closed-choice in scene 3 after examples",
+                    'data-shape="closed_choice"' in br_chunk
+                    and br_chunk.find(inst_eids[0]) < br_chunk.find('data-shape="closed_choice"')
+                    and "ele_sop_ast29080_purpose__reinforce" not in br_chunk
+                    and 'data-shape="closed_choice"' not in page_form[end_form:], ""))
+    results.append(("form lesson has sequence + BR closed-choice + two definition checks",
+                    page_form.count('form class="check"') == 4
+                    and page_form.count('data-shape="sequence"') == 1
+                    and page_form.count('data-shape="closed_choice"') == 1
+                    and page_form.count('data-shape="mcq_siblings"') == 2,
+                    page_form.count('form class="check"')))
+    results.append(("BR closed-choice options are the registry ids not invented stems",
+                    "Choose the closed value already shown." in br_chunk
+                    and 'value="conditional_favorable"' in br_chunk
+                    and 'value="favorable"' in br_chunk
+                    and 'value="unfavorable"' in br_chunk
+                    and 'value="uncertain_inconclusive"' in br_chunk
+                    and 'value="contextual"' in br_chunk
+                    and 'value="other_smt_defined"' in br_chunk
+                    and "first planning step" not in page_form.lower()
+                    and "which benefit-risk profile is required" not in page_form.lower()
+                    and "The benefits of the investigational drug outweigh" not in page_form, ""))
+    results.append(("BR closed-choice initial order is shuffled",
+                    (lambda shown: shown != [
+                        "favorable", "unfavorable", "uncertain_inconclusive",
+                        "conditional_favorable", "contextual", "other_smt_defined",
+                    ] and set(shown) == {
+                        "favorable", "unfavorable", "uncertain_inconclusive",
+                        "conditional_favorable", "contextual", "other_smt_defined",
+                    })(re.findall(
+                        r'name="br_profile" value="([^"]+)"',
+                        br_chunk.split('data-shape="closed_choice"', 1)[-1].split("</form>", 1)[0]
+                        if 'data-shape="closed_choice"' in br_chunk else "",
+                    )),
+                    re.findall(r'name="br_profile" value="([^"]+)"', br_chunk)))
+    results.append(("BR feedback does not invent SOP facts",
+                    "Correct — that is the fill already shown." in page_form
+                    and "the instance fill already shown" in page_form
+                    and "SMT should" not in page_form
+                    and "hepatic monitoring" not in page_form.split('data-shape="closed_choice"', 1)[-1]
+                    .split("</form>", 1)[0], ""))
+    results.append(("coverage dump has no BR closed-choice",
+                    'data-shape="closed_choice"' not in cov_page_form
+                    and 'data-shape="sequence"' not in cov_page_form, ""))
 
     huge_steps = [
         atom(
@@ -3453,6 +3875,20 @@ def main():
     seq_live = derive_sequence_check(procedure_sequence_atoms(atoms))
     if seq_live:
         assert_sequence_check_honest(seq_live, atoms)
+    option_sets = load_option_sets(project)
+    if form_atoms and instance_atoms:
+        br_live = derive_br_profile_check(
+            form_by_id.get(BR_PROFILE_FORM_ATOM_ID),
+            instance_by_id.get(BR_PROFILE_INSTANCE_ATOM_ID),
+            option_sets,
+        )
+        if not br_live:
+            raise SystemExit(
+                "No honest closed set for a FORM-AST-34037 BR profile check "
+                "(need form options_ref values + instance selected_value in that set). "
+                "Refusing to invent options or a stem."
+            )
+        assert_br_profile_check_honest(br_live, atoms_by_id, option_sets)
 
     store_dir.mkdir(parents=True, exist_ok=True)
     elements_path = store_dir / "elements.json"
@@ -3528,8 +3964,12 @@ def main():
                  f"({SPINE_SPEC}); the full dump is coverage. Procedure A presents project "
                  "a sequence practice from those four existing ele_ records "
                  "(agents/realizer/check_v1.md); composing that check from one atom "
-                 "would be a lie, so no extra is minted. A re-realize preserves extras, "
-                 "intent, style, and recomputes the same spine and primitives."),
+                 "would be a lie, so no extra is minted. Form BR presents + instance "
+                 "fill project a closed-choice of the profile value (options_ref ids; "
+                 "key = selected_value); composing from only one of those two atoms "
+                 "would hide the other half, so no extra is minted. A re-realize "
+                 "preserves extras, intent, style, and recomputes the same spine "
+                 "and primitives."),
     }
     if any((e.get("ext") or {}).get("cartographer") for e in elements):
         cart = dict(prev_mf.get("cartographer") or {})
@@ -3550,7 +3990,10 @@ def main():
         cout["dressed"] = sum(1 for e in elements if e.get("expression"))
         cout["element_count"] = len(elements)
         occ_manifest["couturier"] = cout
-    apply_spine(occ_manifest, atoms, elements)
+    apply_spine(
+        occ_manifest, atoms, elements,
+        meaning_atoms=form_atoms + instance_atoms, option_sets=option_sets,
+    )
     stamp_primitives(occ_manifest, elements)
     normalize_elements_ext(elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
@@ -3558,7 +4001,8 @@ def main():
 
     html_path = pathlib.Path(args.out).resolve() if args.out else project / "realized_lesson.html"
     coverage_path = project_html(
-        atoms, elements, occ_manifest, html_path, meaning_atoms=form_atoms + instance_atoms
+        atoms, elements, occ_manifest, html_path,
+        meaning_atoms=form_atoms + instance_atoms, option_sets=option_sets,
     )
     (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 

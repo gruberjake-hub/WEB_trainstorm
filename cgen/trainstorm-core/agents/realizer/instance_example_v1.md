@@ -96,7 +96,9 @@ The form atoms those instance values `instantiates` are exactly
 are the referent of this example pair. Do not stretch a cousin field.
 
 Do not mint a procedure-step MCQ. Sequence practice is projector-only
-(`agents/realizer/check_v1.md`). Do not 1:many the SOP. Do not stand up
+(`agents/realizer/check_v1.md`). The BR profile closed-choice in scene 3
+is also projector-only (options_ref ids; key = this instance fill). Do not
+1:many the SOP. Do not stand up
 Chameleon. Do not host `/cgen/alsap`.
 
 ---

@@ -31,7 +31,7 @@ key. Cartographer still owns intent. No authored `content.text`.
 | body | `tp_body` (already registered) | default instructional present; also `exemplify` | title extra, scope, general; **on the spine:** two form-field presents (`brand.instructional`) then two instance-example beats (`brand.example`) |
 | step | `tp_step` | atom `kind == procedure_step` | Procedure A s1–s4 as one job aid |
 | callout | `tp_callout` | `move == activate` | **on the spine:** extra `ele_sop_ast29080_purpose__activate` (why this) |
-| check | `tp_recall` (already registered) | `move == reinforce` | the two existing reinforce extras. Procedure A sequence practice is projector-only (not a third `tp_recall` occurrence). |
+| check | `tp_recall` (already registered) | `move == reinforce` | the two existing reinforce extras. Procedure A sequence practice and the BR closed-choice are projector-only (not extra `tp_recall` occurrences). |
 
 `tp_purpose` stays as Couturier’s look for `objective` (purpose-frame
 front-matter). It is not a sixth compiler role; the projector treats it
@@ -64,7 +64,7 @@ existing presents.
 | callout | **why-this / activate** aside of the purpose atom’s existing meaning. Kicker `Why this`. Not invented text. |
 | body (and `tp_purpose`) | instructional prose / purpose frame. **`present` of a form field** uses this form with Couturier’s instructional look (`brand.instructional` / kicker Present) — the two FORM-AST-34037 BR fields before the instance pair. **`exemplify`** uses this form with Couturier’s example look (`brand.example` / kicker Example) — the two instance beats after those fields. |
 | step | **one** numbered job-aid sequence for a consecutive run (Procedure A s1–s4), not four SOP cards. Sequence title is the parent atom’s meaning (the thin A heading we already skip as a teaching card). Each `li` still joins its own `composed_from`. Immediately after: a **sequence practice** of those same presents (order the first sentences; `object.order`; no extra `ele_`). |
-| check | existing check UI (`agents/realizer/check_v1.md`) |
+| check | existing check UI (`agents/realizer/check_v1.md`). Sequence practice and BR closed-choice are projector-only (no extra `ele_`). |
 
 `realized_coverage.html` stays card-like. Spine is the proof.
 
