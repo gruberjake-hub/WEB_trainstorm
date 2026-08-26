@@ -1132,6 +1132,62 @@ three scenes without adding meaning.
 layout chrome on the existing spine. Working-process block untouched.
 Single-writer per facet stands. Chameleon agent still not stood up.
 
+---
+
+## 2026-08-26 — ALSAP short lesson pages one named scene at a time (player chrome)
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The short ALSAP lesson still has the same ~16 spine
+occurrences, still grouped as the three named scenes from the previous
+block (`v1_three_scenes_from_roles`). The projector now **pages** those
+existing sections so `realized_lesson.html` shows **one named scene at a
+time**. Next / Back moves between:
+
+1. **What an ALSAP is**
+2. **How an ALSAP starts** (Procedure A job-aid + in-scene sequence check)
+3. **Benefit-risk on the form** (form presents + instance examples)
+
+Definition/purpose checks stay at **lesson end**, not a fourth scene —
+a final player step after Next from scene 3. Same headings (documented
+heuristic, not an LLM, not outcome language). Same `composed_from`.
+`atoms.json` unchanged. No authored `content.text`. No new `ele_`.
+Hash deep-link is optional.
+
+Stamped `spine.scenes.paging` policy `v1_one_scene_at_a_time`.
+Membership policy is unchanged
+(`v1_front_matter_callout_procedure_sequence_form_example_then_checks`).
+Coverage dump stays ungrouped and unpaged.
+
+Cartographer still owns intent. Couturier still owns occurrence style;
+player chrome is Realizer projector paging of the existing scene
+sections. Store stays **55 / 47**. Spine membership 16. No chameleon.py.
+No Headwater outcomes-mode. No LLM distractors. No `/cgen/alsap` hosting.
+No Procedure B. No extra form dump. No extra beats.
+
+Idempotent with realize → cartographer → couturier.
+
+**Why:** After PR #25 the short lesson read as three named scenes but
+still *scrolled* as one long page. An ID would page those existing
+scenes without adding meaning.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. `--selftest` on
+  all three.
+- Open `realized_lesson.html` — one named scene at a time; Next/Back;
+  sequence check still in scene 2; definition checks after scene 3.
+  Open `realized_coverage.html` — full dump, no scene or player chrome.
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`.
+
+**Supersedes:** nothing about membership, meaning, clothes, or the three
+scene headings. Adds player chrome on those existing scenes.
+Working-process block untouched. Single-writer per facet stands.
+Chameleon agent still not stood up.
+
+
 
 
 

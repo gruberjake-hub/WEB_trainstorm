@@ -20,7 +20,9 @@ the short lesson spine (`agents/realizer/spine_v1.md`); `realized_coverage.html`
 SOP dump. Realizer also binds compiler primitives (`agents/realizer/primitives_v1.md`) so
 the spine is heading/callout/body/job-aid/example/check, not a stack of SOP cards. The
 projector wraps those existing beats as **three named scenes** (front-matter /
-Procedure A / form BR) from SOP/form roles — layout chrome, not new meaning.
+Procedure A / form BR) from SOP/form roles — layout chrome, not new meaning —
+and pages **one scene at a time** (Next/Back). Definition/purpose checks stay
+a final step after scene 3, not a fourth scene.
 A small
 instance-example seed (`agents/realizer/instance_example_v1.md`) mints two guest `ele_`
 records whose `composed_from` is an `alsap_asp9999` atom_id. A small form-field
