@@ -573,9 +573,60 @@ that hop without dumping B/C or the SOP.
   `_s3` / `_s4` after s1 and before the checks. Store stays 50 `ele_` /
   47 atoms.
 
+**Pointer:** a later 2026-08-26 block publishes this HTML at a short
+public URL (`/cgen/alsap`) via a Netlify rewrite — same projector file,
+not a parallel store.
+
 **Supersedes:** the previous spine block’s live path of eight occurrences
 and its “one present, cap 1 / later A steps stay coverage” as to *how much
 of A is on the path* — the four real A steps are now on the path; B/C and
 the dump of the rest stand. Working-process block untouched. Single-writer
 per facet stands.
+
+---
+
+## 2026-08-26 — ALSAP short lesson public URL: `/cgen/alsap`
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The short ALSAP lesson has a first-class public path on the
+existing Netlify site (`publish = "."`, live https://trainstorm.ai).
+**https://trainstorm.ai/cgen/alsap** (canonical trailing slash
+`/cgen/alsap/`) is a **rewrite** of the projector file
+`cgen/astellas/projects/ast_alsap/realized_lesson.html`. Coverage is
+**https://trainstorm.ai/cgen/alsap/coverage** (same rewrite to
+`realized_coverage.html`). There is no third lesson store and no
+hand-copied HTML. After `python3 tools/realize.py` → `cartographer.py` →
+`couturier.py` from `cgen/trainstorm-core`, that projector file is
+current, so the public URL is current.
+
+`/cgen` (Course Engine player) and `/cgen/lumina` (Lumina) are untouched.
+`_headers` is untouched: **one site-wide CSP** (PR #6). Do not add a
+path-specific CSP for `/cgen/alsap` — Netlify ANDs matching
+`Content-Security-Policy` headers and blacks out the page. The existing
+`/*` policy already allows the projector’s inline script/style
+(`'unsafe-inline'`).
+
+`/cgen` is the player, not a lesson index. No new app shell. Relative
+`href`s in the projector stay sibling filenames so local `file://`
+browsing still works; the rewrite table aliases those names under
+`/cgen/alsap/` plus the short `/coverage` path.
+
+**Why:** After PR #17 the lesson already existed, but only at
+`cgen/astellas/projects/ast_alsap/realized_lesson.html`. Jake should be
+able to send a short, obvious URL. The pipeline already emits the HTML;
+hosting aliases it.
+
+**Consequences:**
+- Live: https://trainstorm.ai/cgen/alsap and
+  https://trainstorm.ai/cgen/alsap/coverage. Buried projector paths still
+  work.
+- `netlify.toml` holds the rewrites. Python tools, `atoms.json`, spine
+  membership, and facet writers are unchanged this hop.
+- No new 1:many. No LLM distractors. No B/C on the spine. No
+  distractor-writer agent.
+
+**Supersedes:** nothing about spine membership, identity, or facet
+ownership. Adds the public URL those blocks did not have. Working-process
+block untouched.
 

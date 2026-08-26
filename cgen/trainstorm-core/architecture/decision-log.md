@@ -13,6 +13,30 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-26 — ALSAP short lesson public URL (`/cgen/alsap`)
+
+After PR #17 the short lesson lived at the buried static path
+`cgen/astellas/projects/ast_alsap/realized_lesson.html`. Jake needed a
+URL he can send. This hop is hosting, not a new projector.
+
+`netlify.toml` rewrites `/cgen/alsap/` (and `/cgen/alsap` → that slash)
+to the projector file Realizer already writes. `/cgen/alsap/coverage`
+rewrites to `realized_coverage.html`. Sibling names
+(`realized_lesson.html` / `realized_coverage.html`) are also rewritten
+under `/cgen/alsap/` so the HTML’s relative `href`s keep working on the
+short URL and as `file://` locally. Not a third lesson store. Not a
+hand-copied HTML. After realize → cartographer → couturier, the public
+entry is current because it *is* that file.
+
+`/cgen` and `/cgen/lumina` untouched. `_headers` untouched — one
+site-wide CSP (PR #6 stacking). `/cgen` is the Course Engine player, not
+a lesson index; no new app shell. `atoms.json` unchanged. Python tools
+unchanged.
+
+Not this hop: Dragoman, Storyline, motion, PNG render, a manifold GUI,
+path-specific CSP, replacing the `/cgen` player.
+
+---
 ## 2026-08-26 — Procedure A as a job sequence on the ALSAP lesson spine
 
 The previous 2026-08-26 hop (PR #16) put one Plan Development present
