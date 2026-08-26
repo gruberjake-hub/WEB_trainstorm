@@ -511,7 +511,12 @@ def main():
     instance_hash_before = (
         sha256_bytes((instance_path / "atoms.json").read_bytes()) if instance_path else None
     )
-    atoms_by_id = realize.meaning_catalog(atoms, instance_atoms)
+    form_atoms = realize.load_form_field_atoms(project)
+    form_path = realize.sibling_form_project(project)
+    form_hash_before = (
+        sha256_bytes((form_path / "atoms.json").read_bytes()) if form_path else None
+    )
+    atoms_by_id = realize.meaning_catalog(atoms, form_atoms + instance_atoms)
     if len({a["atom_id"] for a in atoms if "atom_id" in a}) != len(atoms):
         raise SystemExit("atom store has missing or duplicate atom_id values")
 
@@ -594,7 +599,7 @@ def main():
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
     coverage_path = realize.project_html(
-        atoms, elements, occ_manifest, html_path, meaning_atoms=instance_atoms
+        atoms, elements, occ_manifest, html_path, meaning_atoms=form_atoms + instance_atoms
     )
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
@@ -606,6 +611,12 @@ def main():
             raise SystemExit(
                 "alsap_asp9999/atoms.json changed during couturier — abort. "
                 "Couturier must not rewrite instance atoms."
+            )
+    if form_path and form_hash_before:
+        if sha256_bytes((form_path / "atoms.json").read_bytes()) != form_hash_before:
+            raise SystemExit(
+                "alsap/atoms.json changed during couturier — abort. "
+                "Couturier must not rewrite form atoms."
             )
 
     print(f"Couturier v1 → {len(elements)} elements ({POLICY})")

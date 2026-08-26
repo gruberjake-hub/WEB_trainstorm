@@ -20,10 +20,14 @@ the short lesson spine (`agents/realizer/spine_v1.md`); `realized_coverage.html`
 SOP dump. Realizer also binds compiler primitives (`agents/realizer/primitives_v1.md`) so
 the spine is heading/callout/body/job-aid/example/check, not a stack of SOP cards. A small
 instance-example seed (`agents/realizer/instance_example_v1.md`) mints two guest `ele_`
-records whose `composed_from` is an `alsap_asp9999` atom_id. `--no-one-to-many` skips
+records whose `composed_from` is an `alsap_asp9999` atom_id. A small form-field
+present seed (`agents/realizer/form_field_present_v1.md`) mints two guest `ele_`
+records whose `composed_from` is an `alsap` FORM-AST-34037 field atom_id (the
+referent of those instance examples). `--no-one-to-many` skips
 new extras but still preserves any that exist. `--selftest` checks stable extra ids, the
 check honesty bar, spine membership (why-this callout of purpose, front-matter, Procedure A
-as a job sequence, sequence practice of those presents, instance example, then checks), and the atom → primitives bind (procedure_step → `tp_step`,
+as a job sequence, sequence practice of those presents, form BR-field presents, instance
+example, then checks), and the atom → primitives bind (procedure_step → `tp_step`,
 activate → `tp_callout`, job-aid HTML).
 
 ## Cartographer

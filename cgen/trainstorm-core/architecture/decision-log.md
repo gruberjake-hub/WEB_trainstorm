@@ -13,6 +13,33 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-26 — Form BR-field present before the instance examples
+
+After PR #23 the short lesson walked Procedure A as a job-aid, practiced
+that order, then showed two ASP-9999 filled FORM-AST-34037 values that
+do **not** illustrate A. An ID would show the field those values fill
+before the filled example. This entry records that hop.
+
+**Which atoms.** The instance examples `instantiates` exactly
+`atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile` and
+`atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale`.
+Meaning join, not a cousin. Not `f_br_guidance`. Not phrasing examples.
+If those field atoms were missing, stop.
+
+**Cross-store.** Guest `ele_` records in the ALSAP occurrence store
+`composed_from` the form `atom_id`. Catalog joins SOP + `alsap` +
+`alsap_asp9999`. No copy into `ast_alsap/atoms.json`. Clothes: `present`
+→ `brand.instructional` / kicker Present / `tp_body`. Placement: both
+form presents, then both instance examples (do not split the example
+pair). Spine policy
+`v1_front_matter_callout_procedure_sequence_form_example_then_checks`.
+Store 55 / 47. Spine 16. Form and instance stores untouched. No
+chameleon.py, no Headwater outcomes-mode, no LLM distractors, no
+procedure-step MCQ, no `/cgen/alsap` hosting.
+
+Idempotent with realize → cartographer → couturier.
+
+---
 ## 2026-08-26 — Procedure A sequence practice (order the four existing step atoms)
 
 After PR #22 the short lesson walked Procedure A as a job-aid, then showed

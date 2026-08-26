@@ -3420,6 +3420,136 @@
     }
   },
   {
+    "element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present",
+    "composed_from": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+    "source_hash": "sha256:ca909c20c93c195a2ac708050702b25c008cac34ccf495778807b3feb400aa4c",
+    "type": "Statement",
+    "structure": {
+      "sequence_index": 3
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+        "realizer": "tools/realize.py",
+        "policy": "v1_form_field_present_seed",
+        "role": "extra",
+        "target_move": "present",
+        "content_hash": "sha256:ca909c20c93c195a2ac708050702b25c008cac34ccf495778807b3feb400aa4c",
+        "form_store": "alsap",
+        "form_spec": "agents/realizer/form_field_present_v1.md"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "form_field_as_present",
+          "extra_occurrence_move_preserved"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:ca909c20c93c195a2ac708050702b25c008cac34ccf495778807b3feb400aa4c",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_field",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
+    }
+  },
+  {
+    "element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present",
+    "composed_from": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+    "source_hash": "sha256:08661ef80dc02ee438cf201e56db933475734745ab9f7108307fcfcc3d7b68d6",
+    "type": "Statement",
+    "structure": {
+      "sequence_index": 4
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+        "realizer": "tools/realize.py",
+        "policy": "v1_form_field_present_seed",
+        "role": "extra",
+        "target_move": "present",
+        "content_hash": "sha256:08661ef80dc02ee438cf201e56db933475734745ab9f7108307fcfcc3d7b68d6",
+        "form_store": "alsap",
+        "form_spec": "agents/realizer/form_field_present_v1.md"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "form_field_as_present",
+          "extra_occurrence_move_preserved"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:08661ef80dc02ee438cf201e56db933475734745ab9f7108307fcfcc3d7b68d6",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_field",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
+    }
+  },
+  {
     "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify",
     "composed_from": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
     "source_hash": "sha256:be0af1b9d04b8820307fdc8c5fc2e7243fb07bad68ed2b9165a16705c4becb6a",

@@ -921,7 +921,9 @@ agent still not stood up.
 
 **Pointer:** a later 2026-08-26 block projects a sequence practice of
 Procedure A’s four presents after the job aid (projector-only; no extra
-`ele_`). The instance example stays `exemplify` after that practice.
+`ele_`). The instance example stays `exemplify` after that practice. A
+still later 2026-08-26 block puts the two FORM-AST-34037 BR-field
+presents those examples fill immediately before this example pair.
 
 ---
 
@@ -991,5 +993,81 @@ sequence practice of the four existing presents is now on the path.
 Working-process block untouched. Single-writer per facet stands.
 Chameleon agent still not stood up.
 
+**Pointer:** a later 2026-08-26 block puts the two FORM-AST-34037 BR-field
+presents those instance examples fill after this sequence practice and
+before the instance pair.
+
+---
+
+## 2026-08-26 — Form BR-field present before the instance examples
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The short ALSAP lesson now presents the **form fields** the
+two ASP-9999 instance examples fill, immediately after Procedure A’s
+sequence practice and **before** those instance beats. Here is the field;
+here is a filled one. Meaning comes from existing form atoms in
+`cgen/astellas/projects/alsap` (FORM-AST-34037). Guest `ele_` records in
+the ALSAP occurrence store `composed_from` those form `atom_id`s. No
+authored `content.text`. SOP and form `atoms.json` unchanged. Instance
+atoms unchanged.
+
+**Which atoms, and why.** The two instance examples already on the spine
+`composed_from` instance atoms whose `bindings.instance.instantiates` is
+exactly:
+
+- `atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile`
+  — *SMT assessment of the overall Benefit-Risk profile of the asset.*
+- `atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale`
+  — *Rationale and phrasing for the selected Benefit-Risk profile.*
+
+That is a meaning join, not a cousin. Do not stretch `f_br_guidance`
+(instructional transient) or the phrasing-example section. If those two
+field atoms were missing, stop.
+
+**How `composed_from` crosses stores.** Realizer mints two guest extras
+(`…__present`) in the ALSAP occurrence store. Meaning lookup is a join
+catalog (SOP + form `alsap` + instance `alsap_asp9999`). Join is
+ALSAP-lesson-only. Cartographer preserves Realizer-stamped `present` and
+classifies `form_field` as present / specify; empty `teaches` is honest
+(not a SOP objective). Couturier dresses `present` as
+`brand.instructional` / `content_role: body` / kicker Present. Compiler
+form is already `tp_body`. Guest extras do not stamp `structure.parent_id`
+at a form-section `ele_` never minted here.
+
+**Placement.** Both form-field presents, then both instance examples —
+not interleaved. The two instance beats are already one worked example
+(judgment name + reason). Inserting a form-present between them would
+split that pair. Gagné-ish: job aid → sequence practice → form BR present
+→ instance examples → definition checks. Spine policy
+`v1_front_matter_callout_procedure_sequence_form_example_then_checks`.
+Store gains **two** extra `ele_` (55 / 47 SOP atoms). Spine membership
+16. Not a form dump. No procedure-step MCQ. No chameleon.py. No Headwater
+outcomes-mode. No `/cgen/alsap` hosting.
+
+Idempotent with realize → cartographer → couturier.
+
+**Why:** After PR #23 the spine taught Procedure A, then showed filled
+FORM-AST-34037 values that do not illustrate A. An ID would show the
+field those values fill, from real form meaning, before the filled
+example.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. `--selftest` on
+  all three.
+- Open `realized_lesson.html` — 16 of 55 occurrences (form BR presents
+  after the sequence practice, before the instance examples). Open
+  `realized_coverage.html` — full dump (SOP tree; guest extras in the
+  index).
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`.
+
+**Supersedes:** the previous spine block’s live path of fourteen
+occurrences as to *membership after Procedure A* — two form-field
+presents are now on the path before the instance pair; B/C and the dump
+of the rest stand. Working-process block untouched. Single-writer per
+facet stands. Chameleon agent still not stood up.
 
 

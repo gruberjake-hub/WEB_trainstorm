@@ -2,29 +2,32 @@
 
 *A documented selection/sequence of existing occurrences — not fake instructional-design
 genius, and not an LLM call.* Implemented by `tools/realize.py`. Policy id:
-`v1_front_matter_callout_procedure_sequence_example_then_checks` (extends the
-earlier `v1_front_matter_callout_procedure_sequence_then_checks` membership:
-that hop put `tp_callout` on the path; this hop puts **one worked example**
-after Procedure A’s job aid, before the existing checks). Spec path
-stamped on the occurrence manifest as `spine.spec`.
+`v1_front_matter_callout_procedure_sequence_form_example_then_checks` (extends the
+earlier `v1_front_matter_callout_procedure_sequence_example_then_checks`
+membership: that hop put two instance-example beats after Procedure A;
+this hop puts **the form fields those examples fill** immediately before
+them). Spec path stamped on the occurrence manifest as `spine.spec`.
 
 The live ALSAP hop already minted `ele_` records, bound `move`/`teaches`
 (Cartographer), dressed them (Couturier), bound compiler primitives, put
 `tp_callout` on purpose, and projected Procedure A as a job-aid. The job
-aid is **how**. This hop puts **that it happened**: two guest `ele_` records
-in the ALSAP occurrence store whose `composed_from` is an instance
-`atom_id` from `alsap_asp9999` (`agents/realizer/instance_example_v1.md`).
-Not B/C. The dump stays coverage.
+aid is **how**. The instance is **that it happened** — two guest `ele_`
+records whose `composed_from` is an instance `atom_id` from `alsap_asp9999`
+(`agents/realizer/instance_example_v1.md`). Those beats are filled
+FORM-AST-34037 values; they do not illustrate A. This hop puts **the
+field**: two guest `ele_` records whose `composed_from` is a form `atom_id`
+from `alsap` (`agents/realizer/form_field_present_v1.md`). Then: here is
+the field, here is a filled one. Not B/C. The dump stays coverage.
 
 Realizer owns the projection. Cartographer still owns intent. Couturier still
-owns style. Spine **mints no `ele_` ids for membership** (the instance extras
-are minted by the instance-example seed, then selected) and **drops none**.
-`atoms.json` (SOP and instance) is untouched. Locale packs stay keyed on
-`atom_id`. Closed vocab still has no `retrieve`; extra `reinforce` stays a
-check (`agents/realizer/check_v1.md`). Procedure A’s four presents also
-project a **sequence** practice (order those first sentences; object.order)
-immediately after the job aid, before the instance example. That practice
-mints no `ele_`.
+owns style. Spine **mints no `ele_` ids for membership** (form-present and
+instance-example extras are minted by their seeds, then selected) and
+**drops none**. `atoms.json` (SOP, form, and instance) is untouched. Locale
+packs stay keyed on `atom_id`. Closed vocab still has no `retrieve`; extra
+`reinforce` stays a check (`agents/realizer/check_v1.md`). Procedure A’s
+four presents also project a **sequence** practice (order those first
+sentences; object.order) immediately after the job aid, before the form
+presents. That practice mints no `ele_`.
 
 ---
 
@@ -35,7 +38,8 @@ card dump. It does not imply a short lesson. Spine v1 **reuses those roles as
 input** (root vs direct child vs descendant; sibling `order`) and then **selects
 a subset**, sequenced as opening → why-this callout of purpose → front-matter
 teaching cards → Procedure A job sequence → sequence practice of those
-presents → instance example → existing definition checks.
+presents → form BR-field presents → instance examples → existing definition
+checks.
 
 The Cartographer object tree already lists Procedure A’s children in `order`.
 The selector takes those non-heading children — it does not invent a parallel
@@ -96,8 +100,8 @@ is also a lie (that atom is skipped as a teaching card). Project the
 check from the four existing present `ele_` records, same honesty as the
 job-aid grouping. `supports_honest_sibling_check` stays False for every A
 step (that gate is the invert-definition MCQ). Guest extras this hop
-does not mint: the two instance **exemplify** beats remain from the
-instance-example seed.
+does not mint: the two form **present** beats and the two instance
+**exemplify** beats remain from their seeds.
 
 The projector kicker is **Practice**. Closed vocab still has no
 `retrieve`. Did not stamp `practice` on a fake extra.
@@ -114,8 +118,9 @@ The projector kicker is **Practice**. Closed vocab still has no
 | Why-this callout | Purpose atom `atom_sop_ast29080_purpose` | Seeded extra `activate` (`ele_sop_ast29080_purpose__activate`) | Verified why-this meaning (SOP purpose sentence). Clothes: `tp_callout`. Not invented text. Not the title atom. |
 | Front-matter teaching cards | Direct children of the root, `kind` in `procedure` / `form`, **not thin** | Primary occurrence only | Paragraphs an ID would actually say: purpose (objective / `tp_purpose`), scope, what-it-is. Sorted by `object.order`. |
 | Procedure A job sequence | First Procedures-container branch in `object.order`; skip thin A/B/C heading; take every non-thin `procedure_step` child (`PROCEDURE_SEQUENCE_CAP = 8`) | Primary occurrence only | Doing the work: Plan Development’s four real steps, in `object.order`. Not B/C. |
-| Sequence practice | Same four A-step atoms | **No new `ele_`.** Projector-only check of the four presents (`shape: sequence`) | Gagné-ish: practice the steps near the job aid. Items = first sentences. Order = `object.order`. Instance example stays `exemplify` after this. |
-| Worked example | Two instance atoms from sibling `alsap_asp9999` (see `instance_example_v1.md`) | Guest extras `…__exemplify` | **Procedure A has no honest match** in the instance store (plan-development acts vs filled AST-34037 values). These two illustrate the ALSAP generally: selected BR profile `conditional_favorable` + the authored rationale. `composed_from` is the instance `atom_id`. Clothes: `exemplify` / `brand.example` / `tp_body`. Not another SOP card. Not the other eight instance atoms. |
+| Sequence practice | Same four A-step atoms | **No new `ele_`.** Projector-only check of the four presents (`shape: sequence`) | Gagné-ish: practice the steps near the job aid. Items = first sentences. Order = `object.order`. Form presents then instance examples follow. |
+| Form BR present | The two FORM-AST-34037 field atoms those instance values `instantiates` (see `form_field_present_v1.md`) | Guest extras `…__present` | Honest referent of the two instance examples already on the spine: BR profile field + rationale field. `composed_from` is the form `atom_id`. Clothes: `present` / `brand.instructional` / `tp_body`. Not a form dump. Not `f_br_guidance` or phrasing-example cousins. |
+| Worked example | Two instance atoms from sibling `alsap_asp9999` (see `instance_example_v1.md`) | Guest extras `…__exemplify` | **Procedure A has no honest match** in the instance store (plan-development acts vs filled AST-34037 values). These two illustrate the ALSAP generally: selected BR profile `conditional_favorable` + the authored rationale. `composed_from` is the instance `atom_id`. Clothes: `exemplify` / `brand.example` / `tp_body`. Not another SOP card. Not the other eight instance atoms. Sit **after** the form-field presents. |
 | Checks | Spine atoms that already have an extra `reinforce` | Those extras, in the same atom order as their presents | Reuse the two existing definition checks. Do not mint a procedure-step MCQ. |
 
 **Off the path (coverage, not deleted)**
@@ -127,7 +132,7 @@ The projector kicker is **Practice**. Closed vocab still has no
 - Other descendants: lists, list items, procedure B/C steps, govdocs.
 - Any 1:1 leftover whose atom is not front-matter or a Procedure A step.
 
-Live ALSAP therefore yields **fourteen** occurrences, in this order:
+Live ALSAP therefore yields **sixteen** occurrences, in this order:
 
 1. `ele_sop_ast29080` — hook (title)
 2. `ele_sop_ast29080__present` — present extra of the title
@@ -139,20 +144,24 @@ Live ALSAP therefore yields **fourteen** occurrences, in this order:
 8. `ele_sop_ast29080_proc_a_s2` — present (identify authors and reviewers)
 9. `ele_sop_ast29080_proc_a_s3` — present (15-day kick-off)
 10. `ele_sop_ast29080_proc_a_s4` — present (confirm deliverables and dates)
-11. `ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify` — example (selected BR profile)
-12. `ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify` — example (authored rationale)
-13. `ele_sop_ast29080_purpose__reinforce` — check
-14. `ele_sop_ast29080_general__reinforce` — check
+11. `ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present` — present (BR profile field)
+12. `ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present` — present (BR rationale field)
+13. `ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify` — example (selected BR profile)
+14. `ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify` — example (authored rationale)
+15. `ele_sop_ast29080_purpose__reinforce` — check
+16. `ele_sop_ast29080_general__reinforce` — check
 
 Teachable order is Gagné-shaped and small: gain attention → why-this
 callout → say the thing (purpose-frame / who / what) → walk the Plan
 Development job sequence → practice that order (projector-only sequence
-check) → show that an ALSAP happened (instance, `exemplify`) → enhance
-retention with the two existing definition checks.
-The sequence practice sits **after** the job aid and **before** the
-instance example. Definition checks stay at the end. Not the 20
-procedure steps of A+B+C. Purpose is three clothes of one atom
-(activate + objective + reinforce).
+check) → present the form fields those examples fill → show a filled
+ALSAP (instance, `exemplify`) → enhance retention with the two existing
+definition checks.
+The sequence practice sits **after** the job aid and **before** the form
+presents. Form presents sit **before** the instance example pair (not
+interleaved: those two beats are one worked example). Definition checks
+stay at the end. Not the 20 procedure steps of A+B+C. Purpose is three
+clothes of one atom (activate + objective + reinforce).
 
 ---
 
@@ -162,12 +171,12 @@ Occurrence manifest `spine`:
 
 ```json
 {
-  "policy": "v1_front_matter_callout_procedure_sequence_example_then_checks",
+  "policy": "v1_front_matter_callout_procedure_sequence_form_example_then_checks",
   "spec": "agents/realizer/spine_v1.md",
   "element_ids": ["ele_sop_ast29080", "ele_sop_ast29080__present", "ele_sop_ast29080_purpose__activate", "…"],
-  "count": 14,
-  "store_count": 53,
-  "note": "Selection of existing ele_ records. Coverage dump keeps the rest. Sequence practice of Procedure A is projector-only (spine.sequence_check)."
+  "count": 16,
+  "store_count": 55,
+  "note": "Selection of existing ele_ records. Coverage dump keeps the rest. Sequence practice of Procedure A is projector-only (spine.sequence_check). Form BR presents then instance examples."
 }
 ```
 
@@ -179,17 +188,18 @@ HTML (Realizer projector):
 
 | File | Default experience |
 |---|---|
-| `<project>/realized_lesson.html` | The spine, in the order above. Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), a **sequence practice** of those four presents (order the first sentences), two example beats (`exemplify` / `brand.example` / `tp_body`), two definition checks (`tp_recall`). Link to coverage. |
+| `<project>/realized_lesson.html` | The spine, in the order above. Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), a **sequence practice** of those four presents (order the first sentences), two form-field presents (`present` / `tp_body`), two example beats (`exemplify` / `brand.example` / `tp_body`), two definition checks (`tp_recall`). Link to coverage. |
 | `<project>/realized_coverage.html` | Full occurrence dump in SOP document order — still card-like. Link back to the lesson. |
 
 Compiler primitives (`agents/realizer/primitives_v1.md`) are Realizer-owned
 on the occurrence. The projector *uses* those primitives — callout, heading,
 body, step list, check — instead of dumping every beat into a generic card.
-The instance beats reuse **body** + Couturier’s existing **example** look.
-Not a sixth compiler role.
+The form-field presents reuse **body** + Couturier’s existing **present**
+look. The instance beats reuse **body** + Couturier’s existing **example**
+look. Not a sixth compiler role.
 
-Do not hide coverage by deleting `ele_` records. The store stays 53
-(51 SOP-side + 2 guest instance extras).
+Do not hide coverage by deleting `ele_` records. The store stays 55
+(51 SOP-side + 2 guest form extras + 2 guest instance extras).
 
 ---
 
@@ -210,9 +220,11 @@ Do not hide coverage by deleting `ele_` records. The store stays 53
 - Not procedure B/C and not a full SOP dump.
 - Not Chameleon and not `audience` keys on the store. Not Netlify /
   `/cgen/alsap` hosting (Jake tabled the redirect loop).
-- Not rewriting instance atoms into SOP atoms. Not dumping all ten
-  instance atoms onto the spine. Not inventing a Procedure A match that
-  the instance store does not contain.
+- Not rewriting instance or form atoms into SOP atoms. Not dumping all
+  ten instance atoms or the whole FORM-AST-34037 onto the spine. Not
+  inventing a Procedure A match that the instance store does not contain.
+  Not stretching a cousin form field (`f_br_guidance`, phrasing examples)
+  if the honest `instantiates` target were missing.
 
 ---
 
