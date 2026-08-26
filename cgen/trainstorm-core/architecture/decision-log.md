@@ -13,6 +13,35 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-26 — ALSAP short lesson reads as three scenes (layout chrome)
+
+After PR #24 the short lesson was a coherent SOP-course seed: front-matter,
+Procedure A job-aid + sequence check, form BR presents + ASP-9999 examples,
+definition/purpose checks. It still *looked* like sixteen stacked cards.
+This hop is **layout only**.
+
+**Scenes.** Documented heuristic from SOP/form roles already in the graph
+(`spine.scenes`, policy `v1_three_scenes_from_roles`), not an LLM and not
+outcome language:
+
+1. **What an ALSAP is** — front-matter cluster (title, why-this callout,
+   purpose, scope, general).
+2. **How an ALSAP starts** — Procedure A job-aid. Sequence practice stays
+   in-scene.
+3. **Benefit-risk on the form** — FORM-AST-34037 BR-field presents then
+   the instance examples that fill them.
+
+Definition/purpose checks stay at lesson end (not a fourth scene). Same
+16 `ele_` ids. Same `composed_from`. `atoms.json` untouched. No authored
+`content.text`. No new `ele_`. Coverage dump stays ungrouped. Couturier
+still dresses occurrences; Realizer groups them.
+
+Store 55 / 47. Membership policy unchanged. No chameleon.py, no Headwater
+outcomes-mode, no LLM distractors, no `/cgen/alsap` hosting, no Procedure
+B, no extra form dump. Idempotent with realize → cartographer → couturier.
+
+---
+
 ## 2026-08-26 — Form BR-field present before the instance examples
 
 After PR #23 the short lesson walked Procedure A as a job-aid, practiced

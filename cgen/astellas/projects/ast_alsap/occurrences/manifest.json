@@ -136,7 +136,7 @@
     ],
     "count": 16,
     "store_count": 55,
-    "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then the two FORM-AST-34037 BR-field presents those instance examples fill (alsap atoms via composed_from), then a small instance-example seed (alsap_asp9999 atoms via composed_from \u2014 Procedure A has no honest match; these illustrate the ALSAP generally), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check) plus a sequence practice of the Procedure A presents (projector-only; no extra ele_) plus present clothes on the form-field beats and exemplify clothes on the instance beats; coverage dump stays card-like. Not an LLM path and not a full object-tree walk.",
+    "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then the two FORM-AST-34037 BR-field presents those instance examples fill (alsap atoms via composed_from), then a small instance-example seed (alsap_asp9999 atoms via composed_from \u2014 Procedure A has no honest match; these illustrate the ALSAP generally), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check) plus a sequence practice of the Procedure A presents (projector-only; no extra ele_) plus present clothes on the form-field beats and exemplify clothes on the instance beats; coverage dump stays card-like. Named scene headings group those existing beats from SOP/form roles (layout chrome, not new meaning). Not an LLM path and not a full object-tree walk.",
     "sequence_check": {
       "shape": "sequence",
       "spec": "agents/realizer/check_v1.md",
@@ -153,7 +153,62 @@
         "ele_sop_ast29080_proc_a_s3",
         "ele_sop_ast29080_proc_a_s4"
       ],
-      "note": "Projector-only practice of the Procedure A presents already on the spine. Items are those atoms\u2019 first sentences. Correct order is bindings.object.order (already taught). No extra ele_ \u2014 composing this check from one atom would be a lie."
+      "note": "Projector-only practice of the Procedure A presents already on the spine. Items are those atoms\u2019 first sentences. Correct order is bindings.object.order (already taught). No extra ele_ \u2014 composing this check from one atom would be a lie. Lives in the Procedure A scene."
+    },
+    "scenes": {
+      "policy": "v1_three_scenes_from_roles",
+      "spec": "agents/realizer/spine_v1.md",
+      "scenes": [
+        {
+          "id": "what_an_alsap_is",
+          "role": "front_matter",
+          "heading": "What an ALSAP is",
+          "kicker": "Front matter",
+          "element_ids": [
+            "ele_sop_ast29080",
+            "ele_sop_ast29080__present",
+            "ele_sop_ast29080_purpose__activate",
+            "ele_sop_ast29080_purpose",
+            "ele_sop_ast29080_scope",
+            "ele_sop_ast29080_general"
+          ],
+          "includes_sequence_check": false,
+          "from": "Document-root opening, why-this callout of purpose, and teachable front-matter primaries (purpose / scope / general). Those atoms are the SOP\u2019s definitional front-matter."
+        },
+        {
+          "id": "how_an_alsap_starts",
+          "role": "procedure_a",
+          "heading": "How an ALSAP starts",
+          "kicker": "Procedure A",
+          "element_ids": [
+            "ele_sop_ast29080_proc_a_s1",
+            "ele_sop_ast29080_proc_a_s2",
+            "ele_sop_ast29080_proc_a_s3",
+            "ele_sop_ast29080_proc_a_s4"
+          ],
+          "includes_sequence_check": true,
+          "from": "First Procedures-container branch in object.order (thin heading: A. Plan Development of ALSAP.). Job-aid presents plus the in-scene sequence practice of those presents."
+        },
+        {
+          "id": "benefit_risk_on_the_form",
+          "role": "form_br",
+          "heading": "Benefit-risk on the form",
+          "kicker": "Form",
+          "element_ids": [
+            "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present",
+            "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present",
+            "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify",
+            "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify"
+          ],
+          "includes_sequence_check": false,
+          "from": "FORM-AST-34037 BR-field presents (Benefit-Risk profile + rationale) plus the instance examples that instantiate those fields."
+        }
+      ],
+      "lesson_end_checks": [
+        "ele_sop_ast29080_purpose__reinforce",
+        "ele_sop_ast29080_general__reinforce"
+      ],
+      "note": "Layout chrome only: named section headings group existing spine ele_ records from SOP/form roles already in the graph. Same membership. Sequence practice stays in Procedure A. Definition/purpose checks stay at lesson end. Not an LLM. Not outcome language. Coverage dump stays ungrouped."
     }
   },
   "primitives": {

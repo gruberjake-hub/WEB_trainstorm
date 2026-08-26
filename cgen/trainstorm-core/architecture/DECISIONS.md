@@ -1070,4 +1070,68 @@ presents are now on the path before the instance pair; B/C and the dump
 of the rest stand. Working-process block untouched. Single-writer per
 facet stands. Chameleon agent still not stood up.
 
+---
+
+## 2026-08-26 — ALSAP short lesson reads as three scenes (layout chrome)
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The short ALSAP lesson still has the same ~16 spine
+occurrences (front-matter, Procedure A job-aid + sequence practice, form
+BR presents + ASP-9999 examples, definition/purpose checks). The
+projector now wraps those **existing** beats in three named section
+headings so the page reads as three scenes, not sixteen stacked cards.
+Layout only. Same `composed_from`. `atoms.json` unchanged. No authored
+`content.text`. No new `ele_`.
+
+**Scenes (documented heuristic, not an LLM, not outcome language):**
+
+1. **What an ALSAP is** — `front_matter`: document-root opening, why-this
+   callout of purpose, teachable front-matter primaries (purpose / scope /
+   general). Those atoms are the SOP’s definitional front-matter.
+2. **How an ALSAP starts** — `procedure_a`: first Procedures-container
+   branch in `object.order` (thin heading *A. Plan Development of ALSAP.*).
+   Job-aid presents. Sequence practice stays **in-scene** (it is practice
+   of those presents; projector-only, no extra `ele_`).
+3. **Benefit-risk on the form** — `form_br`: FORM-AST-34037 BR-field
+   presents (Benefit-Risk profile + rationale) plus the instance examples
+   that instantiate those fields.
+
+Definition/purpose reinforce extras stay at **lesson end**, not a fourth
+scene. Headings are role labels of those clusters, not “will be able to…”
+copy. Stamped `spine.scenes` policy `v1_three_scenes_from_roles`.
+Membership policy is unchanged
+(`v1_front_matter_callout_procedure_sequence_form_example_then_checks`).
+Coverage dump stays ungrouped.
+
+Cartographer still owns intent. Couturier still owns occurrence style;
+scene chrome is Realizer projector grouping of dressed beats. Store stays
+**55 / 47**. Spine membership 16. No chameleon.py. No Headwater
+outcomes-mode. No LLM distractors. No `/cgen/alsap` hosting. No Procedure
+B. No extra form dump.
+
+Idempotent with realize → cartographer → couturier.
+
+**Why:** After PR #24 the short lesson was a coherent SOP-course seed
+(front-matter, Procedure A, form BR, examples, checks) that still *looked*
+like sixteen stacked cards. An ID would group those existing beats as
+three scenes without adding meaning.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. `--selftest` on
+  all three.
+- Open `realized_lesson.html` — three named section headings grouping
+  the same 16 occurrences. Open `realized_coverage.html` — full dump,
+  no scene chrome.
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`.
+
+**Supersedes:** nothing about membership, meaning, or clothes. Adds
+layout chrome on the existing spine. Working-process block untouched.
+Single-writer per facet stands. Chameleon agent still not stood up.
+
+
+
 

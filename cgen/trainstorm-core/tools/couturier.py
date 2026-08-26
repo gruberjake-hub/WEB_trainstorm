@@ -13,6 +13,8 @@ It reads already-minted `ele_` records, writes only
 Default HTML is the short lesson spine; `realized_coverage.html` is the dump.
 Procedure-step primitives project as a job-aid (`layout_hint: job_aid`).
 Activate / `tp_callout` primitives project as a why-this callout.
+Scene chrome (named section headings) is Realizer projector grouping of
+those dressed beats; Couturier still writes only occurrence style keys.
 
 Never: mint `ele_` / `atom_` ids; copy meaning onto the element; write
 `atoms.json`; write `element.intent`; bind `motion_primitive` (stub),

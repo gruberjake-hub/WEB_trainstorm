@@ -18,7 +18,10 @@ A re-run preserves Cartographer-bound intent (`ext.cartographer`), Couturier sty
 occurrences project as a check from the atom (`agents/realizer/check_v1.md`). Default HTML is
 the short lesson spine (`agents/realizer/spine_v1.md`); `realized_coverage.html` is the full
 SOP dump. Realizer also binds compiler primitives (`agents/realizer/primitives_v1.md`) so
-the spine is heading/callout/body/job-aid/example/check, not a stack of SOP cards. A small
+the spine is heading/callout/body/job-aid/example/check, not a stack of SOP cards. The
+projector wraps those existing beats as **three named scenes** (front-matter /
+Procedure A / form BR) from SOP/form roles — layout chrome, not new meaning.
+A small
 instance-example seed (`agents/realizer/instance_example_v1.md`) mints two guest `ele_`
 records whose `composed_from` is an `alsap_asp9999` atom_id. A small form-field
 present seed (`agents/realizer/form_field_present_v1.md`) mints two guest `ele_`
