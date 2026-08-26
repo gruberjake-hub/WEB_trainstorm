@@ -33,7 +33,7 @@
     ],
     "note": "Small honest seed, not the whole SOP. Extra ele_ ids are stable. Re-run accretes missing extras and never drops existing extras, Cartographer bindings, or Couturier style. Extra reinforce occurrences project as a check from the atom (agents/realizer/check_v1.md)."
   },
-  "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). Cartographer owns occurrence intent; Couturier owns expression style. Spine is a documented selection of existing ele_ records (agents/realizer/spine_v1.md); the full dump is coverage. A re-realize preserves extras, intent, style, and recomputes the same spine.",
+  "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). Cartographer owns occurrence intent; Couturier owns expression style. Realizer binds compiler primitives (text_primitive) from atom kind + move (agents/realizer/primitives_v1.md). Spine is a documented selection of existing ele_ records (agents/realizer/spine_v1.md); the full dump is coverage. A re-realize preserves extras, intent, style, and recomputes the same spine and primitives.",
   "cartographer": {
     "policy": "v1_heuristic_compiler",
     "tool": "tools/cartographer.py",
@@ -51,7 +51,7 @@
     "low_confidence": 10,
     "element_count": 50,
     "ontology": "ontology/objectives.json",
-    "note": "v1 compiler pass over Realizer occurrences, including extra 1:many records. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Extra occurrences keep Realizer-stamped move. Couturier owns expression style; this tool does not wipe it. Lesson spine is Realizer projection (agents/realizer/spine_v1.md); this tool does not own sequence."
+    "note": "v1 compiler pass over Realizer occurrences, including extra 1:many records. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Extra occurrences keep Realizer-stamped move. Couturier owns expression style; this tool does not wipe it. After writing move, Realizer refreshes text_primitive (compiler form). Lesson spine is Realizer projection (agents/realizer/spine_v1.md); this tool does not own sequence."
   },
   "couturier": {
     "policy": "v1_move_to_look",
@@ -70,7 +70,7 @@
     "unmapped": 0,
     "element_count": 50,
     "registry": "vocab/primitives.registry.json",
-    "note": "v1 map from occurrence move to expression style keys. Couturier mints no ids, does not rewrite atoms or intent, and does not bind motion / layout_primitive / interaction_primitive. HTML reads these keys for clothes; meaning stays on the atom. Lesson spine is Realizer projection; this tool does not pick the path."
+    "note": "v1 map from occurrence move to expression style keys. Couturier mints no ids, does not rewrite atoms or intent, and does not bind motion / layout_primitive / interaction_primitive. Realizer owns text_primitive (compiler form); this tool preserves it and writes style_ref / content_role / layout_hint. HTML reads these keys for clothes; meaning stays on the atom. Lesson spine is Realizer projection; this tool does not pick the path."
   },
   "spine": {
     "policy": "v1_front_matter_procedure_sequence_then_checks",
@@ -90,6 +90,20 @@
     ],
     "count": 11,
     "store_count": 50,
-    "note": "Selection of existing ele_ records in teachable order: document-root opening, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then existing reinforce extras. Coverage dump keeps the rest. Not an LLM path and not a full object-tree walk."
+    "note": "Selection of existing ele_ records in teachable order: document-root opening, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then existing reinforce extras. Spine projector renders compiler primitives (step list / heading / body / check); coverage dump stays card-like. Not an LLM path and not a full object-tree walk."
+  },
+  "primitives": {
+    "policy": "v1_atom_to_primitive",
+    "spec": "agents/realizer/primitives_v1.md",
+    "owner": "realizer",
+    "counts": {
+      "tp_body": 19,
+      "tp_callout": 2,
+      "tp_display": 1,
+      "tp_purpose": 1,
+      "tp_recall": 2,
+      "tp_step": 25
+    },
+    "note": "Closed compiler form on the occurrence (heading/body/step/callout/check). Realizer binds text_primitive from atom kind + occurrence move. Couturier still owns style_ref."
   }
 }

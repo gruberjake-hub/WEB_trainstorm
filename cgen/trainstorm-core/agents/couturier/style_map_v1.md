@@ -15,7 +15,13 @@ Couturier writes **style keys on existing `ele_` records**. It never mints
 `atom_id`. Style is keyed on `element_id`.
 
 The map is from Cartographer's `intent.move` (already on the occurrence).
-`teaches` does not change clothes in v1.
+`teaches` does not change clothes in v1. **As of 2026-08-26** Realizer binds
+`text_primitive` (compiler form: heading / body / step / callout / check)
+from atom kind + move (`agents/realizer/primitives_v1.md`). Couturier
+**preserves** that key. The `text_primitive` column below is the fallback
+when Realizer has not bound yet, and still the look for moves that are not
+a procedure-step. A bound `tp_step` is dressed `layout_hint: job_aid` /
+`content_role: step`, still `brand.instructional`.
 
 ---
 
@@ -41,7 +47,7 @@ until those moves exist.
 | move | `style_ref` | `text_primitive` | `content_role` | `layout_hint` | What Jake should see |
 |---|---|---|---|---|---|
 | `hook` | `brand.opening` | `tp_display` | `title` | `banner` | large centered opening, not a body card |
-| `present` | `brand.instructional` | `tp_body` | `body` | `card` | instructional body card |
+| `present` | `brand.instructional` | `tp_body` (or `tp_step` if Realizer bound a procedure_step) | `body` (or `step`) | `card` (or `job_aid`) | instructional body card — or a job-aid line |
 | `reinforce` | `brand.recall` | `tp_recall` | `retrieval` | `check` | a check the reader can attempt (stem + choices or cloze), not a quoted recap |
 | `objective` | `brand.purpose` | `tp_purpose` | `purpose` | `purpose_bar` | purpose frame |
 | `activate` | `brand.prior` | `tp_body` | `prior` | `callout` | prior-knowledge callout |

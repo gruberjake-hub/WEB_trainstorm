@@ -1,7 +1,21 @@
 {
-  "registry_version": "primitives.v0.3",
+  "registry_version": "primitives.v0.4",
   "status": "partial",
-  "note": "Governed keys referenced by element.expression. layout_primitive and interaction_primitive are seeded from the layout engine's first real .potx (astellas_v1, GEN607). Couturier v1 (2026-08-25) seeded a handful of style_ref + text_primitive look keys mapped from occurrence move — not a design system. motion_primitive remains empty (stub; not this hop). A registered key is the value an element carries in expression.*; layout keys also equal the layout-engine template_manifest layout id.",
+  "note": "Governed keys referenced by element.expression. layout_primitive and interaction_primitive are seeded from the layout engine's first real .potx (astellas_v1, GEN607). Couturier v1 (2026-08-25) seeded a handful of style_ref + text_primitive look keys mapped from occurrence move — not a design system. Realizer v1 (2026-08-26) binds a closed compiler vocabulary onto text_primitive from atom kind + occurrence move (agents/realizer/primitives_v1.md): heading / body / step / callout / check. tp_step and tp_callout are the two keys that hop filled; heading/body/check reuse the existing look keys. motion_primitive remains empty (stub; not this hop). A registered key is the value an element carries in expression.*; layout keys also equal the layout-engine template_manifest layout id.",
+  "compiler_vocabulary": {
+    "policy": "v1_atom_to_primitive",
+    "spec": "agents/realizer/primitives_v1.md",
+    "owner": "realizer",
+    "closed_list": true,
+    "note": "Tiny compiler form, not a design system. Realizer selects the text_primitive; Couturier still owns style_ref. tp_purpose is an existing objective look, not a sixth compiler role.",
+    "members": [
+      {"role": "heading", "text_primitive": "tp_display"},
+      {"role": "body", "text_primitive": "tp_body"},
+      {"role": "step", "text_primitive": "tp_step"},
+      {"role": "callout", "text_primitive": "tp_callout"},
+      {"role": "check", "text_primitive": "tp_recall"}
+    ]
+  },
   "governance": {
     "closed_list": true,
     "rule": "element.expression.* may only reference keys defined here. New keys require a version bump and an entry — the validator rejects anything else.",
@@ -32,9 +46,23 @@
     {
       "key": "tp_recall",
       "label": "Recall",
-      "description": "Check / retrieval type. Clothes for reinforce (retrieve/retention) — a check the reader can attempt, not a quoted recap and not a first teaching.",
+      "description": "Check / retrieval type. Clothes for reinforce (retrieve/retention) — a check the reader can attempt, not a quoted recap and not a first teaching. Compiler role: check.",
       "status": "draft",
       "derived_from": "agents/couturier/style_map_v1.md"
+    },
+    {
+      "key": "tp_step",
+      "label": "Step",
+      "description": "One line of a job sequence. Clothes for a procedure_step — a numbered job-aid item, not a body card of the SOP sentence. Compiler role: step.",
+      "status": "draft",
+      "derived_from": "agents/realizer/primitives_v1.md"
+    },
+    {
+      "key": "tp_callout",
+      "label": "Callout",
+      "description": "Prior-knowledge / aside type. Clothes for activate. Compiler role: callout. Not on the ALSAP spine; filled so the closed set is honest.",
+      "status": "draft",
+      "derived_from": "agents/realizer/primitives_v1.md"
     }
   ],
   "motion_primitive": [],

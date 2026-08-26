@@ -178,6 +178,8 @@ same atom) can accrete more `ele_` records without changing atom ids. Cartograph
 blocker. The `atom → primitives` hop remains owed; this hop realizes the atom store directly so the
 course chain can start.
 
+**Pointer:** a later 2026-08-26 block pays that hop (`agents/realizer/primitives_v1.md`).
+
 **Why:** Schemas already enforce 1:many (previous block / PR #9). The course half had never run —
 no writer of occurrence nodes. This is that writer.
 
@@ -575,7 +577,8 @@ that hop without dumping B/C or the SOP.
 
 **Pointer:** a later 2026-08-26 block publishes this HTML at a short
 public URL (`/cgen/alsap`) via a Netlify rewrite — same projector file,
-not a parallel store.
+not a parallel store. Jake tabled that redirect loop; a later block on
+the same day pays the atom → primitives hop on this spine.
 
 **Supersedes:** the previous spine block’s live path of eight occurrences
 and its “one present, cap 1 / later A steps stay coverage” as to *how much
@@ -666,4 +669,69 @@ Python tools and `atoms.json` untouched.
 rewrites as to *whether Pretty URLs will honor them*. The public path,
 projector file, and “no parallel store” clauses stand. Working-process
 block untouched.
+
+---
+
+## 2026-08-26 — Atom → primitives: closed compiler form on the occurrence
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** A real, small **atom → primitives** hop now exists. Realizer
+binds a **closed, tiny** compiler vocabulary onto
+`element.expression.text_primitive` from atom object-role (`meaning.kind`)
+plus occurrence `move`. Keys live in `vocab/primitives.registry.json` v0.4
+(`compiler_vocabulary` + `text_primitive`). Spec:
+`agents/realizer/primitives_v1.md`, policy `v1_atom_to_primitive`. Not a
+design system. Not an LLM call. Not the 11 script-primitive types.
+
+Closed set (five roles):
+
+| Role | Key | Spine use |
+|---|---|---|
+| heading | `tp_display` (already registered) | title `hook` |
+| body | `tp_body` (already registered) | title extra, scope, general |
+| step | `tp_step` (this hop) | Procedure A s1–s4 |
+| callout | `tp_callout` (this hop) | `activate` — not on the spine |
+| check | `tp_recall` (already registered) | the two existing `reinforce` extras |
+
+`tp_purpose` stays as the existing objective look (purpose-frame
+front-matter). It is not a sixth compiler role.
+
+**Who owns the hop.** Realizer reads atoms and binds the primitive key on
+the occurrence. After Cartographer writes `move`, it asks Realizer to
+refresh that key (form depends on move). **Couturier still owns style**
+(`style_ref`, `content_role`, `layout_hint`) and preserves `text_primitive`.
+A procedure-step primitive is dressed `layout_hint: job_aid`, not `card`.
+No authored `content.text`. `atoms.json` unchanged. Store stays 50 `ele_`
+/ 47 atoms. Locale packs stay keyed on `atom_id`.
+
+**HTML.** `realized_lesson.html` renders those primitives: Procedure A
+s1–s4 as **one numbered job-aid**, front-matter as heading/body, reinforce
+as the existing check. Meaning still comes from the atom via
+`composed_from`. Coverage dump stays card-like. Spine membership is
+unchanged.
+
+**Why:** The course chain worked, but every beat was still atom text
+dumped into a styled HTML card. Primitives are the compiler vocabulary so
+Couturier/Realizer dress clothes, not SOP sentences.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. `--selftest` on all
+  three.
+- Open `cgen/astellas/projects/ast_alsap/realized_lesson.html` — job aid,
+  not four Procedure A cards. Open `realized_coverage.html` — dump still
+  card-like.
+- Registry `primitives.v0.4`. Manifest stamps `primitives.counts`.
+- **Not this hop:** Netlify / `/cgen/alsap` hosting (Jake tabled the
+  redirect loop; buried projector path stays the demo URL). No distractor-
+  writer. No procedure-step MCQs. No 1:many of the SOP. No Dragoman,
+  Storyline, `.potx`, motion, PNG render.
+
+**Supersedes:** the Realizer v1 clause that the `atom → primitives` hop
+“remains owed”; STRUCTURE.md’s “first hop of the pipeline has no listed
+transform.” Working-process block untouched. Single-writer per facet
+stands (Realizer owns `text_primitive`; Couturier owns `style_ref`).
+
 

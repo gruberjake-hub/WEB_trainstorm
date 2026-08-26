@@ -88,7 +88,10 @@ have opinions about content; she has opinions about form, and they are all in th
 - **Temperature:** low. *(absorbs: prompt-pack compiler, CREATOR's compile function)*
 - **v1 code:** `tools/realize.py` — one primary occurrence per atom plus a small 1:many seed
   (two ALSAP atoms mint a second `ele_`). No authored `content.text`. HTML projection reads
-  meaning from the atom and groups extras that share `composed_from`. Couturier v1
+  meaning from the atom and groups extras that share `composed_from`. As of 2026-08-26 she
+  also binds a closed compiler `text_primitive` on the occurrence
+  (`agents/realizer/primitives_v1.md`) so the short lesson can render heading / body /
+  step / check instead of SOP cards. Couturier v1
   (`tools/couturier.py`) then dresses those occurrences (expression style keys) and mints
   nothing.
 

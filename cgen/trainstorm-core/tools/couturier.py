@@ -3,12 +3,15 @@
 Couturier v1 — bind occurrence style keys on an existing Realizer store.
 
 Couturier owns style on the occurrence's expression facet: `style_ref`,
-`text_primitive`, `content_role`, `layout_hint`. v1 is a documented map from
+`content_role`, `layout_hint`. v1 is a documented map from
 `intent.move` (`agents/couturier/style_map_v1.md`), not a design system and
-not ID genius. It reads already-minted `ele_` records, writes only
-`element.expression` (+ `ext.couturier` provenance), and re-projects
+not ID genius. Realizer binds the compiler `text_primitive` (heading / body /
+step / callout / check); Couturier preserves that key and still writes clothes.
+It reads already-minted `ele_` records, writes only
+`element.expression` style keys (+ `ext.couturier` provenance), and re-projects
 `realized_lesson.html` so different moves look like different clothes.
 Default HTML is the short lesson spine; `realized_coverage.html` is the dump.
+Procedure-step primitives project as a job-aid (`layout_hint: job_aid`).
 
 Never: mint `ele_` / `atom_` ids; copy meaning onto the element; write
 `atoms.json`; write `element.intent`; bind `motion_primitive` (stub),
@@ -46,8 +49,11 @@ import realize
 POLICY = "v1_move_to_look"
 COUTURIER = "tools/couturier.py"
 SPEC = "agents/couturier/style_map_v1.md"
-OWNED_KEYS = ("style_ref", "text_primitive", "content_role", "layout_hint")
+STYLE_KEYS = ("style_ref", "content_role", "layout_hint")
+# text_primitive is Realizer-owned (compiler form). Couturier preserves it.
+OWNED_KEYS = STYLE_KEYS
 PRESERVED_KEYS = ("motion_primitive", "layout_primitive", "interaction_primitive")
+PRIMITIVE_KEY = "text_primitive"
 
 # move → clothes. Closed pedagogical values this SOP actually uses.
 # Unmapped (practice / feedback / assess): do not invent a look.
@@ -136,6 +142,9 @@ def bind_expression(el, atom, closed_style_refs, closed_text_primitives) -> tupl
     if look is None:
         stamp["flags"] = ["look_unmapped"]
         stamp["confidence"] = "low"
+        existing = el.get("expression") or {}
+        if existing.get("text_primitive"):
+            return {"text_primitive": existing["text_primitive"]}, stamp
         return None, stamp
     if look["style_ref"] not in closed_style_refs:
         raise SystemExit(f"{el.get('element_id')}: style_ref {look['style_ref']!r} is not in the registry")
@@ -145,6 +154,12 @@ def bind_expression(el, atom, closed_style_refs, closed_text_primitives) -> tupl
         )
     expression = dict(look)
     existing = el.get("expression") or {}
+    # Realizer owns compiler form. Keep it; do not overwrite from the move→look table.
+    if existing.get("text_primitive"):
+        expression["text_primitive"] = existing["text_primitive"]
+    if expression.get("text_primitive") == realize.PRIMITIVE_STEP:
+        expression["layout_hint"] = "job_aid"
+        expression["content_role"] = "step"
     kept = []
     for k in PRESERVED_KEYS:
         if k in existing:
@@ -154,6 +169,8 @@ def bind_expression(el, atom, closed_style_refs, closed_text_primitives) -> tupl
         stamp["preserved_foreign_keys"] = kept
     stamp["confidence"] = "high"
     stamp["flags"] = ["from_move"]
+    if expression.get("text_primitive") == realize.PRIMITIVE_STEP:
+        stamp["flags"].append("from_primitive_step")
     return expression, stamp
 
 
@@ -193,14 +210,14 @@ def validate_elements(elements, schema, atoms_by_id, closed_style_refs, closed_t
         flags = stamp.get("flags") or []
         if "look_unmapped" in flags:
             if expr:
-                extra = set(expr) & set(OWNED_KEYS)
+                extra = set(expr) & set(STYLE_KEYS)
                 if extra:
                     hard.append(f"{eid}: unmapped look must not bind style keys {sorted(extra)}")
             continue
         if not expr:
             hard.append(f"{eid}: dressed occurrence is missing expression")
             continue
-        extra = set(expr) - set(OWNED_KEYS) - set(PRESERVED_KEYS)
+        extra = set(expr) - set(STYLE_KEYS) - set(PRESERVED_KEYS) - {PRIMITIVE_KEY}
         if extra:
             hard.append(f"{eid}: expression has ungoverned keys {sorted(extra)}")
         sr = expr.get("style_ref")
@@ -364,6 +381,22 @@ def selftest(closed_style_refs, closed_text_primitives):
     again, stamp2 = bind_expression(hook, a, closed_style_refs, closed_text_primitives)
     results.append(("re-bind is stable", again == hook["expression"], again))
 
+    # Realizer-bound step primitive: preserve form, dress as job_aid.
+    step = el("ele_sop_x_s1", "atom_sop_x_s1", "present")
+    step["expression"] = {"text_primitive": "tp_step"}
+    expr, stamp = bind_expression(step, a, closed_style_refs, closed_text_primitives)
+    apply_expression(step, expr, stamp)
+    results.append(("step primitive is preserved (not overwritten to tp_body)",
+                    expr["text_primitive"] == "tp_step", expr.get("text_primitive")))
+    results.append(("step layout_hint is job_aid",
+                    expr["layout_hint"] == "job_aid", expr.get("layout_hint")))
+    results.append(("step content_role is step",
+                    expr["content_role"] == "step", expr.get("content_role")))
+    results.append(("step still wears instructional style_ref",
+                    expr["style_ref"] == "brand.instructional", expr.get("style_ref")))
+    results.append(("step flagged from_primitive_step",
+                    "from_primitive_step" in stamp.get("flags", []), stamp.get("flags")))
+
     print(f"{'CHECK':<72} RESULT")
     print("-" * 86)
     ok = True
@@ -455,6 +488,8 @@ def main():
         for e in elements
     }
 
+    realize.refresh_text_primitives(elements, atoms_by_id)
+
     unmapped = []
     dressed = 0
     for el in elements:
@@ -500,7 +535,9 @@ def main():
         "registry": "vocab/primitives.registry.json",
         "note": ("v1 map from occurrence move to expression style keys. Couturier "
                  "mints no ids, does not rewrite atoms or intent, and does not bind "
-                 "motion / layout_primitive / interaction_primitive. HTML reads these "
+                 "motion / layout_primitive / interaction_primitive. Realizer owns "
+                 "text_primitive (compiler form); this tool preserves it and writes "
+                 "style_ref / content_role / layout_hint. HTML reads these "
                  "keys for clothes; meaning stays on the atom. Lesson spine is Realizer "
                  "projection; this tool does not pick the path."),
     }
@@ -515,6 +552,7 @@ def main():
         return
 
     realize.apply_spine(occ_manifest, atoms, elements)
+    realize.stamp_primitives(occ_manifest, elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
     coverage_path = realize.project_html(atoms, elements, occ_manifest, html_path)

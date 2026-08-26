@@ -266,7 +266,9 @@ occurrence intent on that mixed store and re-projects `realized_lesson.html`. Co
 has written style keys on those occurrences (`tools/couturier.py`); the default HTML is now a
 short lesson spine (`agents/realizer/spine_v1.md`) with the SOP dump as coverage.
 Dragoman and `tools/render/`
-PNG pipelines are unbuilt. The `atom → primitives` hop is still owed — v1 realizes atoms directly.
+PNG pipelines are unbuilt. The `atom → primitives` hop is **landed 2026-08-26**
+(`agents/realizer/primitives_v1.md`): Realizer binds a closed compiler
+`text_primitive` on the occurrence; the spine projector renders those clothes.
 
 Near-term, in dependency order:
 
@@ -274,7 +276,9 @@ Near-term, in dependency order:
    meaning, `ele_` for an occurrence, `composed_from` between them. See `architecture/DECISIONS.md`.
 2. ~~**Land the PENDING restitch**~~ — **done 2026-08-25.** `atom.intent` empty and closed;
    `teaches` + `intended_response` on the occurrence. See `architecture/DECISIONS.md`.
-3. **`atom → primitives`** — the first hop of the pipeline has no listed transform at all.
+3. ~~**`atom → primitives`**~~ — **done 2026-08-26.** Closed compiler form
+   (`heading` / `body` / `step` / `callout` / `check`) on the occurrence;
+   spine projector uses it. See `architecture/DECISIONS.md`.
 4. ~~**`tools/realize.py`**~~ — **done 2026-08-25, v1.** One `ele_` per atom, `composed_from`, no
    authored text, `realized_lesson.html`. **1:many seed 2026-08-25** — two ALSAP atoms mint a
    second occurrence; extra `reinforce` projects as a check from the atom. **Lesson spine
@@ -288,8 +292,9 @@ Near-term, in dependency order:
    clothes the 1:many pairs differently. Extra `reinforce` is a check, not a recap.
    **Lesson spine v1** — short path is the default HTML; dump is coverage.
    **2026-08-26** — Procedure A’s real steps as a job sequence on that path
-   (no extra `ele_`; no invented procedure check). Next: Dragoman /
-   `atom → primitives`.
+   (no extra `ele_`; no invented procedure check). **Same day — atom →
+   primitives:** those steps project as a job-aid, not four SOP cards.
+   Next: Dragoman / `tools/render/`.
 7. **A real `brunswick.reference.course.json`** — still `{"_todo": …}`, and the only thing that would
    prove the course half end to end.
 
