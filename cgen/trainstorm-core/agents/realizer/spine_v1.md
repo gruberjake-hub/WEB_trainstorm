@@ -184,4 +184,6 @@ python3 tools/couturier.py
 
 Default project is `cgen/astellas/projects/ast_alsap`. Open
 `cgen/astellas/projects/ast_alsap/realized_lesson.html` for the short lesson;
-`realized_coverage.html` for the full SOP dump.
+`realized_coverage.html` for the full SOP dump. Live (Netlify rewrite of those
+same files, not a copy): https://trainstorm.ai/cgen/alsap and
+https://trainstorm.ai/cgen/alsap/coverage.

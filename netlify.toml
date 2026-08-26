@@ -9,3 +9,46 @@
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
+
+# ALSAP short lesson — rewrite to the HTML Realizer/Cartographer/Couturier already
+# write. Not a third lesson store and not a hand-copied file. After
+#   python3 tools/realize.py && python3 tools/cartographer.py && python3 tools/couturier.py
+# from cgen/trainstorm-core, this public path is current.
+# Do not add a second Content-Security-Policy for these paths (PR #6: Netlify
+# ANDs matching CSPs and blacks out the page). Site-wide CSP stays in `_headers`.
+# Do not collide with /cgen (course player) or /cgen/lumina.
+
+# Sibling names the projected HTML already uses (relative hrefs).
+[[redirects]]
+  from = "/cgen/alsap/realized_coverage.html"
+  to = "/cgen/astellas/projects/ast_alsap/realized_coverage.html"
+  status = 200
+
+[[redirects]]
+  from = "/cgen/alsap/realized_lesson.html"
+  to = "/cgen/astellas/projects/ast_alsap/realized_lesson.html"
+  status = 200
+
+# Short coverage alias. File-like (no trailing slash) so relative
+# href="realized_lesson.html" resolves as a sibling under /cgen/alsap/.
+[[redirects]]
+  from = "/cgen/alsap/coverage/"
+  to = "/cgen/alsap/coverage"
+  status = 301
+
+[[redirects]]
+  from = "/cgen/alsap/coverage"
+  to = "/cgen/astellas/projects/ast_alsap/realized_coverage.html"
+  status = 200
+
+# Canonical public lesson URL. Trailing slash so relative
+# href="realized_coverage.html" stays under /cgen/alsap/.
+[[redirects]]
+  from = "/cgen/alsap"
+  to = "/cgen/alsap/"
+  status = 301
+
+[[redirects]]
+  from = "/cgen/alsap/"
+  to = "/cgen/astellas/projects/ast_alsap/realized_lesson.html"
+  status = 200

@@ -17,7 +17,8 @@ A re-run preserves Cartographer-bound intent (`ext.cartographer`), Couturier sty
 1:many seed (`agents/realizer/one_to_many_v1.md`) on a few ALSAP atoms. Extra `reinforce`
 occurrences project as a check from the atom (`agents/realizer/check_v1.md`). Default HTML is
 the short lesson spine (`agents/realizer/spine_v1.md`); `realized_coverage.html` is the full
-SOP dump. `--no-one-to-many` skips
+SOP dump. Live rewrite (same files, not a copy): https://trainstorm.ai/cgen/alsap and
+https://trainstorm.ai/cgen/alsap/coverage. `--no-one-to-many` skips
 new extras but still preserves any that exist. `--selftest` checks stable extra ids, the
 check honesty bar, and spine membership (front-matter, Procedure A as a job sequence,
 then checks).
