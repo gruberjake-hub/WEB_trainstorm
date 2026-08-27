@@ -327,6 +327,19 @@
         "from_kind": "procedure",
         "from_move": "reinforce",
         "text_primitive": "tp_recall"
+      },
+      "check": {
+        "shape": "invert_definition",
+        "spec": "agents/realizer/check_v1.md",
+        "policy": "v1_check_shapes_on_graph",
+        "operands": {
+          "key_atom_id": "atom_sop_ast29080_purpose",
+          "contrast_atom_ids": [
+            "atom_sop_ast29080_scope",
+            "atom_sop_ast29080_general"
+          ],
+          "host_element_id": "ele_sop_ast29080_purpose__reinforce"
+        }
       }
     },
     "expression": {
@@ -591,6 +604,19 @@
         "from_kind": "procedure",
         "from_move": "reinforce",
         "text_primitive": "tp_recall"
+      },
+      "check": {
+        "shape": "invert_definition",
+        "spec": "agents/realizer/check_v1.md",
+        "policy": "v1_check_shapes_on_graph",
+        "operands": {
+          "key_atom_id": "atom_sop_ast29080_general",
+          "contrast_atom_ids": [
+            "atom_sop_ast29080_purpose",
+            "atom_sop_ast29080_scope"
+          ],
+          "host_element_id": "ele_sop_ast29080_general__reinforce"
+        }
       }
     },
     "expression": {

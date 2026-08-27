@@ -11,33 +11,37 @@ stable extra ids. The rest of the store stays 1:1. Not a full ID treatment of
 the SOP.
 
 `reinforce` extras (Gagné 9a; closed vocab has no `retrieve`) project as a
-**check** derived from the atom's existing meaning (`agents/realizer/check_v1.md`)
-— a stem + choices or a cloze, not an italic reprint. Procedure A’s four
-presents also project a **sequence** check (order those first sentences;
-correct order is `bindings.object.order`). Scene 3’s form present + instance
-fill also project a **closed_choice** of the BR profile (`reg_benefit_risk_profile`
-value ids; key = the instance `selected_value`). Those two checks are
-projector-only: no extra `ele_`. Sequence cannot honestly `composed_from` one
-A step; closed_choice cannot honestly `composed_from` only the form field or
-only the instance fill (options live on the field’s `options_ref`, key lives
-on the instance). No authored `content.text`. Distractors, if any, are sibling
-atoms or the field’s already-governed value set — never an LLM writer.
+**check** (`agents/realizer/check_v1.md`). Three closed shapes live on the
+graph (`vocab/check-shape.enum.json`): `invert_definition` (sibling first
+sentences), `sequence_order` (Procedure A `object.order`), `closed_choice`
+(`reg_benefit_risk_profile` + instance `selected_value`). Realizer stamps
+`ext.check` / `manifest.checks` (shape + operand refs). The projector
+**reads** those records; it does not re-discover pedagogy by if-atom-id.
+Sequence and closed-choice are projector-only: no extra `ele_`. Sequence
+cannot honestly `composed_from` one A step; closed_choice cannot honestly
+`composed_from` only the form field or only the instance fill (options live
+on the field’s `options_ref`, key lives on the instance). No authored
+`content.text`. Prefer keys/refs over copying option strings. Distractors,
+if any, are sibling atoms or the field’s already-governed value set — never
+an LLM writer.
 
 Default HTML is a **short lesson spine** (`agents/realizer/spine_v1.md`): title
 hook, a why-this callout of the purpose atom (`tp_callout`), a handful of
 front-matter teaching cards, Procedure A’s real steps as a job sequence
-(present only), a sequence practice of those four presents, two form-field
-presents from the sibling form store (the BR profile / rationale fields the
-instance examples fill — `agents/realizer/form_field_present_v1.md`), one
-worked example from the sibling instance store (two `exemplify` extras of
-existing ASP-9999 atoms — `agents/realizer/instance_example_v1.md`), then the
-existing definition checks. The projector wraps those existing beats in
-**three named scenes** (front-matter / Procedure A / form BR) — layout chrome
-from SOP/form roles already in the graph, not new beats and not outcome
-language — and pages **one scene at a time** (Next/Back). Scene 3 includes
-the BR closed-choice after the field+example. Definition/purpose checks stay
-a final step after scene 3, not a fourth scene. The full SOP dump is
-`realized_coverage.html`.
+(present only), a sequence practice of those four presents (`sequence_order`
+read from `manifest.checks`), two form-field presents from the sibling form
+store (the BR profile / rationale fields the instance examples fill —
+`agents/realizer/form_field_present_v1.md`), one worked example from the
+sibling instance store (two `exemplify` extras of existing ASP-9999 atoms —
+`agents/realizer/instance_example_v1.md`), then a `closed_choice` of the BR
+profile (projector-only, after the field+example), then the existing
+definition checks (`invert_definition`). The projector wraps those existing
+beats in **three named scenes** (front-matter / Procedure A / form BR) —
+layout chrome from SOP/form roles already in the graph, not new beats and
+not outcome language — and pages **one scene at a time** (Next/Back).
+Scene 3 includes the BR closed-choice after the field+example.
+Definition/purpose checks stay a final step after scene 3, not a fourth
+scene. The full SOP dump is `realized_coverage.html`.
 Spine is a selection of existing `ele_` records — it mints none for membership
 and drops none. Procedure-step atoms stay 1:1 (no extra `reinforce`): they are
 imperatives, so they cannot host an honest copula-invert sibling check. Form
@@ -120,6 +124,14 @@ ONE_TO_MANY_SEED = (
 )
 CHECK_SPEC = "agents/realizer/check_v1.md"
 CHECK_POLICY = "v1_check_from_atom"
+CHECK_SHAPE_SPEC = "vocab/check-shape.enum.json"
+CHECK_SHAPE_POLICY = "v1_check_shapes_on_graph"
+SHAPE_INVERT = "invert_definition"
+SHAPE_SEQUENCE = "sequence_order"
+SHAPE_CLOSED = "closed_choice"
+CHECK_SHAPES = (SHAPE_INVERT, SHAPE_SEQUENCE, SHAPE_CLOSED)
+# Render of invert_definition when contrast_atom_ids is empty — not a fourth shape.
+RENDER_CLOZE = "cloze"
 SPINE_SPEC = "agents/realizer/spine_v1.md"
 SPINE_POLICY = "v1_front_matter_callout_procedure_sequence_form_example_then_checks"
 INSTANCE_EXAMPLE_SPEC = "agents/realizer/instance_example_v1.md"
@@ -263,6 +275,26 @@ def load(p):
 
 def sha256_bytes(b: bytes) -> str:
     return "sha256:" + hashlib.sha256(b).hexdigest()
+
+
+def load_options_registry(registry_dir) -> dict:
+    """Client options registry keyed by reg_ id. Empty if the file is absent."""
+    if not registry_dir:
+        return {}
+    p = pathlib.Path(registry_dir) / "options.registry.json"
+    if not p.exists():
+        return {}
+    data = load(p)
+    return {e["id"]: e for e in (data.get("options") or []) if isinstance(e, dict) and e.get("id")}
+
+
+def load_check_shape_ids(vocab_dir) -> list:
+    """Closed check-shape vocab. Missing file is a hard fail in main; selftest uses CHECK_SHAPES."""
+    p = pathlib.Path(vocab_dir) / "check-shape.enum.json"
+    if not p.exists():
+        return list(CHECK_SHAPES)
+    data = load(p)
+    return [s["id"] for s in (data.get("shapes") or []) if s.get("id")]
 
 
 def mint_element_id(atom_id: str) -> str:
@@ -523,7 +555,7 @@ def append_guest_extras(elements, claimed, prev, mint_extras, *, seed, atoms_by_
     return elements, claimed
 
 
-EXT_KEY_ORDER = ("realized_from", "cartographer", "couturier", "realizer_primitive")
+EXT_KEY_ORDER = ("realized_from", "cartographer", "couturier", "realizer_primitive", "check")
 
 
 def normalize_element_ext(el):
@@ -548,7 +580,7 @@ def normalize_elements_ext(elements):
 
 
 def assemble_elements(atoms, previous, default_move: str, *, mint_extras: bool = True,
-                      instance_atoms=None, form_atoms=None) -> list:
+                      instance_atoms=None, form_atoms=None, options_registry=None) -> list:
     """
     Mint one primary per SOP atom, then extra occurrences from the seed and from
     any extras already in the store. Never drop an existing extra. Preserve
@@ -629,6 +661,11 @@ def assemble_elements(atoms, previous, default_move: str, *, mint_extras: bool =
 
     apply_group_ids(elements)
     refresh_text_primitives(elements, atoms_by_id)
+    bind_check_shapes(
+        elements, atoms,
+        meaning_atoms=list(form_by_id.values()) + list(instance_by_id.values()),
+        options_registry=options_registry,
+    )
     normalize_elements_ext(elements)
     return elements
 
@@ -920,14 +957,27 @@ def phrase_in_atom(phrase: str, atom) -> bool:
 
 
 def is_check_occurrence(el) -> bool:
+    """True when this occurrence hosts a stamped check shape, or is the
+    legacy reinforce/recall surface. Membership of lesson-end checks is
+    still `move == reinforce` (closed_choice stays in the form scene)."""
+    rec = hosted_check(el)
+    if rec and rec.get("shape") in CHECK_SHAPES:
+        return True
     move = (el.get("intent") or {}).get("move")
     expr = el.get("expression") or {}
     return (
         move == "reinforce"
         or expr.get("style_ref") == "brand.recall"
-        or expr.get("text_primitive") == "tp_recall"
+        or expr.get("text_primitive") == PRIMITIVE_CHECK
         or expr.get("layout_hint") == "check"
     )
+
+
+def hosted_check(el) -> dict | None:
+    rec = (el.get("ext") or {}).get("check")
+    if isinstance(rec, dict) and rec.get("shape") in CHECK_SHAPES:
+        return rec
+    return None
 
 
 def is_callout_occurrence(el) -> bool:
@@ -1037,19 +1087,43 @@ def procedure_sequence_atoms(atoms) -> list:
     return []
 
 
+def invert_operands(atom, atoms) -> dict | None:
+    """Operand refs for invert_definition. Contrast ids only — no copied strings."""
+    src = (atom.get("meaning") or {}).get("source_text") or ""
+    sentence = first_sentence(src)
+    if not sentence or not copula_parts(sentence):
+        return None
+    contrast = []
+    for sib in sibling_atoms(atom, atoms):
+        sib_sent = first_sentence((sib.get("meaning") or {}).get("source_text") or "")
+        if not sib_sent:
+            continue
+        if strip_period(sib_sent).lower() == strip_period(sentence).lower():
+            continue
+        if not phrase_in_atom(sib_sent, sib):
+            continue
+        contrast.append(sib["atom_id"])
+        if len(contrast) >= 2:
+            break
+    return {
+        "key_atom_id": atom["atom_id"],
+        "contrast_atom_ids": contrast,
+    }
+
+
 def supports_honest_sibling_check(atom, atoms) -> bool:
     """True only for a copula invert plus two sibling first-sentences.
 
     Procedure steps are imperatives — no `{subject} is {complement}` — so this
     is False and we do not mint an extra `reinforce` of one step. Cloze is not
     sibling contrast. Sequence practice of a procedure_step *group* is a
-    different shape (`derive_sequence_check`); it mints no extra `ele_`.
+    different shape (`sequence_order`); it mints no extra `ele_`.
     """
     sentence = first_sentence((atom.get("meaning") or {}).get("source_text") or "")
     if not copula_parts(sentence):
         return False
-    chk = derive_check(atom, atoms)
-    return bool(chk and chk.get("shape") == "mcq_siblings")
+    ops = invert_operands(atom, atoms)
+    return bool(ops and ops.get("contrast_atom_ids"))
 
 
 def spine_atom_ids(atoms) -> list:
@@ -1130,7 +1204,7 @@ def select_spine(atoms, elements) -> list:
             if eid not in by_id:
                 continue
             extra_check = is_extra_element(el) and (
-                (el.get("intent") or {}).get("move") == "reinforce" or is_check_occurrence(el)
+                (el.get("intent") or {}).get("move") == "reinforce"
             )
             extra_callout = is_extra_element(el) and is_callout_occurrence(el)
             if extra_check:
@@ -1187,49 +1261,56 @@ def apply_spine(manifest, atoms, elements, *, meaning_atoms=None, option_sets=No
         by_cf = {e.get("composed_from"): e for e in elements if is_primary_element(e)}
         from_eids = [by_cf[aid]["element_id"] for aid in seq["correct_ids"] if aid in by_cf]
         manifest["spine"]["sequence_check"] = {
-            "shape": seq["shape"],
+            "shape": SHAPE_SEQUENCE,
             "spec": CHECK_SPEC,
             "policy": CHECK_POLICY,
             "from_atom_ids": seq["correct_ids"],
             "from_element_ids": from_eids,
+            "see": "checks",
             "note": ("Projector-only practice of the Procedure A presents already on "
                      "the spine. Items are those atoms’ first sentences. Correct order "
                      "is bindings.object.order (already taught). No extra ele_ — "
                      "composing this check from one atom would be a lie. Lives in the "
-                     "Procedure A scene."),
+                     "Procedure A scene. First-class record is manifest.checks "
+                     f"shape {SHAPE_SEQUENCE}."),
         }
     catalog = meaning_catalog(atoms, meaning_atoms)
-    br = derive_br_profile_check(
-        catalog.get(BR_PROFILE_FORM_ATOM_ID),
-        catalog.get(BR_PROFILE_INSTANCE_ATOM_ID),
-        option_sets or {},
-    )
-    if br:
-        assert_br_profile_check_honest(br, catalog, option_sets or {})
-        by_eid_guest = {e["element_id"]: e for e in elements}
-        form_eid = mint_extra_element_id(BR_PROFILE_FORM_ATOM_ID, "present")
-        inst_eid = mint_extra_element_id(BR_PROFILE_INSTANCE_ATOM_ID, "exemplify")
-        from_eids = [eid for eid in (form_eid, inst_eid) if eid in by_eid_guest]
-        manifest["spine"]["br_profile_check"] = {
-            "shape": br["shape"],
-            "spec": CHECK_SPEC,
-            "policy": CHECK_POLICY,
-            "options_ref": br["options_ref"],
-            "key": br["key"],
-            "from_atom_ids": [br["form_atom_id"], br["key_atom_id"]],
-            "from_element_ids": from_eids,
-            "note": ("Projector-only closed-choice of the BR profile fill already "
-                     "shown. Options are the form field’s options_ref value ids "
-                     "(verbatim). Key is the instance selected_value. Prompt is "
-                     "task clothes, not an SOP stem. No extra ele_ — composing "
-                     "from only the form field or only the instance would hide "
-                     "the other half. Lives in the form BR scene."),
-        }
+    registry = option_sets or {}
+    cc = closed_choice_record(elements, catalog, registry)
+    has_br = False
+    if cc:
+        ops = cc["operands"]
+        form_atom = catalog.get(ops.get("form_atom_id"))
+        inst_atom = catalog.get(ops.get("instance_atom_id"))
+        br = derive_br_profile_check(form_atom, inst_atom, registry)
+        if br:
+            has_br = True
+            assert_br_profile_check_honest(br, catalog, registry)
+            from_eids = [eid for eid in (
+                ops.get("form_element_id"), ops.get("instance_element_id"),
+            ) if eid]
+            manifest["spine"]["br_profile_check"] = {
+                "shape": SHAPE_CLOSED,
+                "spec": CHECK_SPEC,
+                "policy": CHECK_SHAPE_POLICY,
+                "see": "checks",
+                "options_ref": ops.get("options_ref"),
+                "key": br["key"],
+                "from_atom_ids": [ops.get("form_atom_id"), ops.get("instance_atom_id")],
+                "from_element_ids": from_eids,
+                "note": ("Projector-only closed-choice of the BR profile fill already "
+                         "shown. Options are the form field’s options_ref value ids "
+                         "(verbatim). Key is the instance selected_value. Prompt is "
+                         "task clothes, not an SOP stem. No extra ele_ — composing "
+                         "from only the form field or only the instance would hide "
+                         "the other half. Lives in the form BR scene. First-class "
+                         f"record is manifest.checks shape {SHAPE_CLOSED}."),
+            }
     by_eid = {e["element_id"]: e for e in elements}
     by_atom = {a["atom_id"]: a for a in atoms}
     scenes, lesson_end = group_spine_scenes(ids, by_eid, by_atom)
     manifest["spine"]["scenes"] = stamp_spine_scenes(
-        scenes, lesson_end, has_br_profile_check=bool(br),
+        scenes, lesson_end, has_br_profile_check=has_br,
     )
     return manifest["spine"]
 
@@ -1298,9 +1379,7 @@ def spine_scene_role(el, atoms_by_id) -> str:
     sequence practice or the form-BR closed-choice (those practices are
     projector-only and have no ele_).
     """
-    if is_extra_element(el) and (
-        (el.get("intent") or {}).get("move") == "reinforce" or is_check_occurrence(el)
-    ):
+    if is_extra_element(el) and (el.get("intent") or {}).get("move") == "reinforce":
         return SCENE_LESSON_END
     atom = atoms_by_id.get(el.get("composed_from")) or {}
     kind = (atom.get("meaning") or {}).get("kind") or ""
@@ -1412,9 +1491,9 @@ def derive_check(atom, atoms) -> dict | None:
         if key not in src_clean:
             return None
         stem = question_stem(subject)
-        shape = "mcq_siblings" if distractors else "cloze"
+        render = "mcq" if distractors else RENDER_CLOZE
         cloze_lead = cloze_blank = cloze_tail = None
-        if shape == "cloze":
+        if render == RENDER_CLOZE:
             # Type-in of the complement; stem still the question invert.
             cloze_lead, cloze_blank, cloze_tail = "", key, ""
     else:
@@ -1429,10 +1508,15 @@ def derive_check(atom, atoms) -> dict | None:
         if key not in src_clean:
             return None
         stem = f"{cloze_lead}______{cloze_tail}."
-        shape = "mcq_siblings" if distractors else "cloze"
+        render = "mcq" if distractors else RENDER_CLOZE
 
+    ops = invert_operands(atom, atoms) or {
+        "key_atom_id": atom["atom_id"],
+        "contrast_atom_ids": [d["from_atom_id"] for d in distractors],
+    }
     check = {
-        "shape": shape,
+        "shape": SHAPE_INVERT,
+        "render": render,
         "spec": CHECK_SPEC,
         "policy": CHECK_POLICY,
         "stem": stem,
@@ -1440,10 +1524,11 @@ def derive_check(atom, atoms) -> dict | None:
         "key_atom_id": atom["atom_id"],
         "sentence": sentence,
         "choices": [],
-        "cloze_lead": cloze_lead if shape == "cloze" else None,
-        "cloze_tail": cloze_tail if shape == "cloze" else None,
+        "cloze_lead": cloze_lead if render == RENDER_CLOZE else None,
+        "cloze_tail": cloze_tail if render == RENDER_CLOZE else None,
+        "operands": ops,
     }
-    if shape == "mcq_siblings":
+    if render == "mcq":
         check["choices"] = (
             [{"text": key, "correct": True, "from_atom_id": atom["atom_id"]}]
             + [{"text": d["text"], "correct": False, "from_atom_id": d["from_atom_id"]} for d in distractors]
@@ -1502,18 +1587,22 @@ def derive_sequence_check(step_atoms) -> dict | None:
     if len(set(orders)) != len(orders):
         return None
     return {
-        "shape": "sequence",
+        "shape": SHAPE_SEQUENCE,
         "spec": CHECK_SPEC,
         "policy": CHECK_POLICY,
         "prompt": "Put these in the order already taught.",
         "items": items,
         "correct_ids": [it["atom_id"] for it in items],
+        "operands": {
+            "atom_ids": [it["atom_id"] for it in items],
+            "order_from": "bindings.object.order",
+        },
     }
 
 
 def assert_sequence_check_honest(check, atoms):
     """Refuse a sequence projection that invented wording or order."""
-    if not check or check.get("shape") != "sequence":
+    if not check or check.get("shape") != SHAPE_SEQUENCE:
         raise SystemExit("sequence check derivation returned nothing")
     if check.get("prompt") != "Put these in the order already taught.":
         raise SystemExit("sequence prompt is clothes, not an SOP stem — refusing a new fact")
@@ -1540,6 +1629,260 @@ def assert_sequence_check_honest(check, atoms):
         prev = o
     if check.get("correct_ids") != [it["atom_id"] for it in check["items"]]:
         raise SystemExit("sequence correct_ids must follow the sorted items")
+
+
+def option_values(entry) -> list:
+    if not isinstance(entry, dict):
+        return []
+    return [v for v in (entry.get("values") or []) if isinstance(v, dict) and v.get("id")]
+
+
+def closed_choice_operands(el, catalog, options_registry) -> dict | None:
+    """Operand refs for closed_choice. Registry id + atom ids — no copied labels."""
+    atom = catalog.get(el.get("composed_from"))
+    if not atom:
+        return None
+    inst = (atom.get("bindings") or {}).get("instance") or {}
+    sv = inst.get("selected_value")
+    form_id = inst.get("instantiates")
+    if not sv or not form_id:
+        return None
+    form = catalog.get(form_id)
+    if not form:
+        return None
+    options_ref = ((form.get("bindings") or {}).get("form") or {}).get("options_ref")
+    if not options_ref:
+        return None
+    entry = (options_registry or {}).get(options_ref)
+    values = option_values(entry)
+    if not any(v.get("id") == sv for v in values):
+        return None
+    return {
+        "options_ref": options_ref,
+        "instance_atom_id": atom["atom_id"],
+        "form_atom_id": form_id,
+        "key_from": "bindings.instance.selected_value",
+        "instance_element_id": el["element_id"],
+    }
+
+
+def closed_choice_record(elements, catalog, options_registry) -> dict | None:
+    """Projector-only closed_choice from graph refs. No extra ele_, no ext.check host."""
+    rec = None
+    for el in elements:
+        realized = (el.get("ext") or {}).get("realized_from") or {}
+        if not realized.get("instance_store"):
+            continue
+        ops = closed_choice_operands(el, catalog, options_registry or {})
+        if not ops:
+            continue
+        form_eid = None
+        for e in elements:
+            if e.get("composed_from") == ops["form_atom_id"] and is_extra_element(e):
+                if (e.get("intent") or {}).get("move") == "present":
+                    form_eid = e["element_id"]
+                    break
+        ops = dict(ops)
+        ops["form_element_id"] = form_eid
+        rec = {
+            "shape": SHAPE_CLOSED,
+            "host_element_id": None,
+            "placement": "after_form_br",
+            "operands": ops,
+        }
+        break
+    return rec
+
+
+def ext_check_stamp(shape, operands) -> dict:
+    return {
+        "shape": shape,
+        "spec": CHECK_SPEC,
+        "policy": CHECK_SHAPE_POLICY,
+        "operands": operands,
+    }
+
+
+def bind_check_shapes(elements, atoms, *, meaning_atoms=None, options_registry=None) -> list:
+    """Stamp ext.check on host ele_ records. Returns the manifest checks index.
+
+    Operand refs only. Projector resolves wording from the graph.
+    """
+    extra = list(meaning_atoms or [])
+    catalog = meaning_catalog(list(atoms), extra)
+    records = []
+
+    for el in elements:
+        if not is_extra_element(el):
+            continue
+        if (el.get("intent") or {}).get("move") != "reinforce":
+            continue
+        atom = catalog.get(el.get("composed_from"))
+        if atom is None:
+            continue
+        ops = invert_operands(atom, atoms)
+        if not ops:
+            el.get("ext", {}).pop("check", None)
+            continue
+        ops = dict(ops)
+        ops["host_element_id"] = el["element_id"]
+        el.setdefault("ext", {})["check"] = ext_check_stamp(SHAPE_INVERT, ops)
+        records.append({
+            "shape": SHAPE_INVERT,
+            "host_element_id": el["element_id"],
+            "operands": ops,
+        })
+
+    seq_atoms = procedure_sequence_atoms(atoms)
+    seq = derive_sequence_check(seq_atoms)
+    if seq:
+        by_primary = {e.get("composed_from"): e for e in elements if is_primary_element(e)}
+        from_eids = [by_primary[aid]["element_id"]
+                     for aid in seq["correct_ids"] if aid in by_primary]
+        ops = {
+            "atom_ids": list(seq["correct_ids"]),
+            "element_ids": from_eids,
+            "order_from": "bindings.object.order",
+        }
+        records.append({
+            "shape": SHAPE_SEQUENCE,
+            "host_element_id": None,
+            "placement": "after_job_aid",
+            "operands": ops,
+        })
+
+    rec = closed_choice_record(elements, catalog, options_registry or {})
+    if rec:
+        records.append(rec)
+    for el in elements:
+        host = hosted_check(el)
+        if host and host.get("shape") == SHAPE_CLOSED:
+            el.get("ext", {}).pop("check", None)
+
+    return records
+
+
+def stamp_checks(manifest, atoms, elements, *, meaning_atoms=None, options_registry=None) -> list:
+    """Write manifest.checks and bind ext.check. Idempotent."""
+    records = bind_check_shapes(
+        elements, atoms, meaning_atoms=meaning_atoms, options_registry=options_registry
+    )
+    manifest["checks"] = {
+        "policy": CHECK_SHAPE_POLICY,
+        "spec": CHECK_SPEC,
+        "vocab": CHECK_SHAPE_SPEC,
+        "checks": records,
+        "note": ("Closed shapes on the graph. Projector reads these records "
+                 "(and ext.check on host ele_ records). Operands are refs — "
+                 "atoms, ele_, options_ref, object.order — not copied option "
+                 "strings. invert_definition hosts on extra reinforce; "
+                 "sequence_order is projector-only of the Procedure A presents; "
+                 "closed_choice is projector-only of the form present + instance "
+                 "fill (options_ref value ids; key = selected_value)."),
+    }
+    return records
+
+
+def manifest_check(manifest, shape, *, host_element_id=None) -> dict | None:
+    for rec in ((manifest.get("checks") or {}).get("checks") or []):
+        if rec.get("shape") != shape:
+            continue
+        if host_element_id is not None and rec.get("host_element_id") != host_element_id:
+            continue
+        return rec
+    return None
+
+
+def resolve_invert_definition(operands, catalog) -> dict | None:
+    """Wording from operand atom_ids. Refuses if a ref does not resolve."""
+    key_id = (operands or {}).get("key_atom_id")
+    atom = catalog.get(key_id)
+    if atom is None:
+        return None
+    atoms = [atom]
+    for sid in operands.get("contrast_atom_ids") or []:
+        sib = catalog.get(sid)
+        if sib is None:
+            raise SystemExit(f"invert_definition contrast {sid} is not on the graph")
+        atoms.append(sib)
+    # derive_check hunts siblings in `atoms`; pass the full catalog values so
+    # belongs_to still finds them, but the stamped contrast ids are the source
+    # of truth for which distractors land.
+    chk = derive_check(atom, list(catalog.values()))
+    if not chk or chk.get("shape") != SHAPE_INVERT:
+        return None
+    want = list(operands.get("contrast_atom_ids") or [])
+    if want:
+        got = [c["from_atom_id"] for c in chk.get("choices") or [] if not c.get("correct")]
+        if got != want:
+            # Rebuild choices strictly from stamped contrast ids.
+            key = chk["key"]
+            choices = [{"text": key, "correct": True, "from_atom_id": key_id}]
+            for sid in want:
+                sib = catalog[sid]
+                sent = first_sentence((sib.get("meaning") or {}).get("source_text") or "")
+                if not sent or not phrase_in_atom(sent, sib):
+                    raise SystemExit(f"invert_definition contrast {sid} has no honest first sentence")
+                choices.append({"text": sent, "correct": False, "from_atom_id": sid})
+            chk = dict(chk)
+            chk["choices"] = choices
+            chk["render"] = "mcq"
+    chk["operands"] = operands
+    return chk
+
+
+def resolve_sequence_order(operands, catalog) -> dict | None:
+    ids = list((operands or {}).get("atom_ids") or [])
+    step_atoms = []
+    for aid in ids:
+        src = catalog.get(aid)
+        if src is None:
+            raise SystemExit(f"sequence_order atom {aid} is not on the graph")
+        step_atoms.append(src)
+    chk = derive_sequence_check(step_atoms)
+    if chk:
+        chk["operands"] = operands
+    return chk
+
+
+def resolve_closed_choice(operands, catalog, options_registry) -> dict | None:
+    inst = catalog.get((operands or {}).get("instance_atom_id"))
+    form = catalog.get((operands or {}).get("form_atom_id"))
+    options_ref = (operands or {}).get("options_ref")
+    if not inst or not form or not options_ref:
+        return None
+    chk = derive_br_profile_check(form, inst, options_registry or {})
+    if not chk:
+        return None
+    form_ref = ((form.get("bindings") or {}).get("form") or {}).get("options_ref")
+    if form_ref != options_ref:
+        raise SystemExit(
+            f"closed_choice options_ref {options_ref} is not the form atom’s options_ref {form_ref}"
+        )
+    if (operands or {}).get("key_from") == "bindings.instance.selected_value":
+        sv = ((inst.get("bindings") or {}).get("instance") or {}).get("selected_value")
+        if not sv:
+            raise SystemExit("closed_choice key_from selected_value is missing on the instance atom")
+        if chk.get("key") != sv:
+            raise SystemExit("closed_choice selected_value drifted from the instance atom")
+    chk = dict(chk)
+    chk["operands"] = operands
+    return chk
+
+
+def resolve_check(record, catalog, options_registry=None) -> dict | None:
+    """Resolved render payload from a stamped check record. Graph only."""
+    if not record:
+        return None
+    shape = record.get("shape")
+    ops = record.get("operands") or {}
+    if shape == SHAPE_INVERT:
+        return resolve_invert_definition(ops, catalog)
+    if shape == SHAPE_SEQUENCE:
+        return resolve_sequence_order(ops, catalog)
+    if shape == SHAPE_CLOSED:
+        return resolve_closed_choice(ops, catalog, options_registry or {})
+    raise SystemExit(f"unknown check shape {shape!r} — not in {CHECK_SHAPE_SPEC}")
 
 
 def shuffled_sequence_items(items, seed: str) -> list:
@@ -1671,33 +2014,41 @@ def stable_rotate(items, seed: str) -> list:
     return items[n:] + items[:n]
 
 
-def check_body_html(el, atom, atoms, esc) -> str:
-    """Occurrence body for reinforce: a check the reader can attempt."""
-    chk = derive_check(atom, atoms)
-    if chk:
-        assert_check_honest(chk, atom, atoms)
-    eid = el["element_id"]
+def check_body_html(el, catalog, options_registry, esc) -> str | None:
+    """Occurrence body from a stamped check shape. None if this ele_ hosts none."""
+    rec = hosted_check(el)
+    if not rec:
+        return None
+    chk = resolve_check(rec, catalog, options_registry)
     if not chk:
-        # Last-resort cloze of whatever text exists — still from this atom.
-        meaning = clean_meaning(atom["meaning"]["source_text"])
-        return (
-            f'<form class="check" data-shape="cloze" data-key="{esc(meaning)}" data-eid="{esc(eid)}">'
-            f'<p class="stem">Recall this atom’s wording.</p>'
-            f'<input type="text" class="cloze-in" autocomplete="off" aria-label="Your recall">'
-            f'<div class="check-actions"><button type="submit">Check</button></div>'
-            f'<p class="feedback" hidden></p>'
-            f'<p class="reveal" hidden>{esc(meaning)}</p>'
-            f"</form>"
-        )
-    reveal = esc(chk["sentence"])
+        return None
+    eid = el["element_id"]
+    shape = chk["shape"]
+    if shape == SHAPE_INVERT:
+        atom = catalog.get(chk.get("key_atom_id") or rec["operands"]["key_atom_id"])
+        if atom:
+            assert_check_honest(chk, atom, list(catalog.values()))
+        return invert_check_html(el, chk, esc)
+    if shape == SHAPE_CLOSED:
+        return closed_choice_html(el, chk, esc)
+    return None
+
+
+def invert_check_html(el, chk, esc) -> str:
+    eid = el["element_id"]
+    reveal = esc(chk.get("sentence") or chk.get("key") or "")
+    ops = chk.get("operands") or {}
+    contrast = ops.get("contrast_atom_ids") or []
     src_note = (
-        f'<p class="check-note">Key is this atom '
-        f'(<span class="mono">{esc(chk["key_atom_id"])}</span>). '
-        f'Distractors, if any, are sibling atoms in this store. '
-        f'Shape <span class="mono">{esc(chk["shape"])}</span> — '
-        f'not authored <span class="mono">content.text</span>.</p>'
+        f'<p class="check-note">Key is atom '
+        f'<span class="mono">{esc(chk.get("key_atom_id") or ops.get("key_atom_id") or "")}</span>. '
+        f'Contrast, if any, is sibling atoms '
+        f'({", ".join(esc(a) for a in contrast) or "none"}). '
+        f'Shape <span class="mono">{esc(SHAPE_INVERT)}</span> — '
+        f'read from <span class="mono">ext.check</span>, not authored '
+        f'<span class="mono">content.text</span>.</p>'
     )
-    if chk["shape"] == "mcq_siblings":
+    if chk.get("render") == "mcq" or chk.get("choices"):
         choices = stable_rotate(list(chk["choices"]), eid)
         labels = []
         for c in choices:
@@ -1709,7 +2060,8 @@ def check_body_html(el, atom, atoms, esc) -> str:
                 f"</label>"
             )
         return (
-            f'<form class="check" data-shape="mcq_siblings" data-key="key" data-eid="{esc(eid)}">'
+            f'<form class="check" data-shape="{esc(SHAPE_INVERT)}" data-key="key" '
+            f'data-eid="{esc(eid)}">'
             f'<p class="stem">{esc(chk["stem"])}</p>'
             f'{"".join(labels)}'
             f'<div class="check-actions"><button type="submit">Check</button></div>'
@@ -1718,7 +2070,6 @@ def check_body_html(el, atom, atoms, esc) -> str:
             f"{src_note}"
             f"</form>"
         )
-    # cloze
     lead = esc(chk.get("cloze_lead") or "")
     tail = esc(chk.get("cloze_tail") or "")
     stem = chk["stem"]
@@ -1730,7 +2081,8 @@ def check_body_html(el, atom, atoms, esc) -> str:
     else:
         stem_block = f'<p class="stem">{esc(stem)}</p>'
     return (
-        f'<form class="check" data-shape="cloze" data-key="{esc(chk["key"])}" data-eid="{esc(eid)}">'
+        f'<form class="check" data-shape="{esc(SHAPE_INVERT)}" data-render="{esc(RENDER_CLOZE)}" '
+        f'data-key="{esc(chk["key"])}" data-eid="{esc(eid)}">'
         f"{stem_block}"
         f'<input type="text" class="cloze-in" autocomplete="off" aria-label="Your recall">'
         f'<div class="check-actions"><button type="submit">Check</button></div>'
@@ -1741,17 +2093,62 @@ def check_body_html(el, atom, atoms, esc) -> str:
     )
 
 
+def closed_choice_html(el, chk, esc) -> str:
+    eid = el["element_id"]
+    ops = chk.get("operands") or {}
+    choices = stable_rotate(list(chk["choices"]), eid)
+    if [c.get("id") or c.get("text") for c in choices] == [
+        c.get("id") or c.get("text") for c in chk["choices"]
+    ] and len(choices) > 1:
+        choices = list(choices[1:]) + list(choices[:1])
+    labels = []
+    for c in choices:
+        vid = c.get("id") or c["text"]
+        labels.append(
+            f'<label class="choice">'
+            f'<input type="radio" name="{esc(eid)}" value="{esc(vid)}">'
+            f'<span class="mono">{esc(c["text"])}</span>'
+            f"</label>"
+        )
+    src_note = (
+        f'<p class="check-note">Key is <span class="mono">selected_value</span> '
+        f'<span class="mono">{esc(chk["key"])}</span> on '
+        f'<span class="mono">{esc(ops.get("instance_atom_id") or chk.get("key_atom_id") or "")}</span>. '
+        f'Choices resolve from <span class="mono">{esc(ops.get("options_ref") or chk.get("options_ref") or "")}</span> '
+        f'(form atom <span class="mono">{esc(ops.get("form_atom_id") or chk.get("form_atom_id") or "")}</span>). '
+        f'Shape <span class="mono">{esc(SHAPE_CLOSED)}</span> — labels are not on the element.</p>'
+    )
+    return (
+        f'<form class="check" data-shape="{esc(SHAPE_CLOSED)}" '
+        f'data-key="{esc(chk["key"])}" data-eid="{esc(eid)}">'
+        f'<p class="stem">{esc(chk.get("prompt") or chk.get("stem") or "")}</p>'
+        f'{"".join(labels)}'
+        f'<div class="check-actions"><button type="submit">Check</button></div>'
+        f'<p class="feedback" hidden></p>'
+        f'<p class="reveal" hidden><span class="mono">{esc(chk["key"])}</span></p>'
+        f"{src_note}"
+        f"</form>"
+    )
+
+
 def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_atoms=None,
-                 option_sets=None):
+                 option_sets=None, options_registry=None):
     """Write the short lesson (spine) and the full SOP dump (coverage).
 
     `atoms` is the SOP tree (coverage walk / spine SOP membership).
     `meaning_atoms` is an optional join catalog (form-field and instance
     citations) so composed_from can resolve across stores without copying
     into SOP atoms.json.
-    `option_sets` is the governed value sets keyed by options_ref (for the
-    BR closed-choice). Pass explicitly — do not silently invent options.
+    `option_sets` / `options_registry` are the governed value sets keyed by
+    options_ref (for closed_choice). Pass explicitly — do not silently invent
+    options. Projector reads stamped check shapes; it does not re-discover
+    pedagogy by if-atom-id.
     """
+    registry = options_registry if options_registry is not None else (option_sets or {})
+    options_registry = registry
+    option_sets = option_sets if option_sets is not None else registry
+    stamp_checks(manifest, atoms, elements,
+                 meaning_atoms=meaning_atoms, options_registry=options_registry)
     catalog = list(atoms)
     if meaning_atoms:
         seen = {a["atom_id"] for a in catalog}
@@ -1822,6 +2219,9 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         kicker = KICKER.get(expr.get("content_role"), "")
         if expr.get("text_primitive") == PRIMITIVE_CALLOUT:
             kicker = KICKER.get("callout", "Why this")
+        rec = hosted_check(el)
+        if rec:
+            kicker = "Check"
         kicker_html = f'<div class="kicker">{esc(kicker)}</div>' if kicker else ""
         meaning_tag = "h2" if expr.get("text_primitive") == PRIMITIVE_HEADING else "p"
         tp = expr.get("text_primitive") or ""
@@ -1837,14 +2237,15 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
                 f' · {esc(expr.get("content_role", ""))}'
                 f' · {esc(hint)}</span>'
             )
-        if is_check_occurrence(el):
-            chk = derive_check(atom, atoms)
-            if chk:
-                join_bits.append(
-                    f'check <span class="mono">{esc(chk["shape"])}</span> · '
-                    f'key from this atom · distractors from siblings'
-                )
-            body = check_body_html(el, atom, atoms, esc)
+        rec = hosted_check(el)
+        if rec:
+            join_bits.append(
+                f'check <span class="mono">{esc(rec.get("shape") or "")}</span> · '
+                f'operands on the graph'
+            )
+            body = check_body_html(el, by_atom, options_registry, esc)
+            if not body:
+                body = f'<{meaning_tag} class="meaning">{esc(meaning)}</{meaning_tag}>'
         else:
             body = f'<{meaning_tag} class="meaning">{esc(meaning)}</{meaning_tag}>'
         return (
@@ -1921,7 +2322,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         return (
             f'<section class="prim prim-check sequence-check">'
             f'<div class="kicker">Practice</div>'
-            f'<form class="check" data-shape="sequence" '
+            f'<form class="check" data-shape="{esc(SHAPE_SEQUENCE)}" '
             f'data-order="{esc(",".join(chk["correct_ids"]))}" '
             f'data-eid="sequence:{esc(chk["correct_ids"][0])}">'
             f'<p class="stem">{esc(chk["prompt"])}</p>'
@@ -1934,7 +2335,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
             f'(already taught). Projects the present '
             f'<span class="mono">ele_</span> records ({from_ids}) — no extra '
             f'occurrence, not authored <span class="mono">content.text</span>. '
-            f'Shape <span class="mono">sequence</span>.</p>'
+            f'Shape <span class="mono">{esc(SHAPE_SEQUENCE)}</span> read from '
+            f'<span class="mono">manifest.checks</span>.</p>'
             f'</form>'
             f'</section>'
         )
@@ -1974,7 +2376,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
             f'(<span class="mono">{esc(form_eid)}</span>, '
             f'<span class="mono">{esc(inst_eid)}</span>) — no extra occurrence, '
             f'not authored <span class="mono">content.text</span>. '
-            f'Shape <span class="mono">closed_choice</span>.</p>'
+            f'Shape <span class="mono">{esc(SHAPE_CLOSED)}</span> read from '
+            f'<span class="mono">manifest.checks</span>.</p>'
             f'</form>'
             f'</section>'
         )
@@ -2009,14 +2412,17 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
 
     def render_beat_groups(ids):
         chunks = []
+        seq_rec = manifest_check(manifest, SHAPE_SEQUENCE)
         for kind, els in group_spine_for_project(ids, by_eid):
             if kind == "job_aid":
                 chunks.append(job_aid_block_html(els))
-                seq_atoms = [by_atom[el["composed_from"]] for el in els]
-                seq_chk = derive_sequence_check(seq_atoms)
-                if seq_chk:
-                    assert_sequence_check_honest(seq_chk, catalog)
-                    chunks.append(sequence_check_html(els, seq_chk))
+                want = list((seq_rec or {}).get("operands", {}).get("element_ids") or [])
+                got = [e["element_id"] for e in els]
+                if seq_rec and want and got == want:
+                    seq_chk = resolve_check(seq_rec, by_atom, options_registry)
+                    if seq_chk:
+                        assert_sequence_check_honest(seq_chk, catalog)
+                        chunks.append(sequence_check_html(els, seq_chk))
                 continue
             el = els[0]
             atom = by_atom[el["composed_from"]]
@@ -2039,14 +2445,12 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         for idx, sc in enumerate(scene_list):
             inner = render_beat_groups(sc.get("element_ids") or [])
             if sc.get("role") == SCENE_FORM_BR and sc.get("includes_br_profile_check"):
-                br_chk = derive_br_profile_check(
-                    by_atom.get(BR_PROFILE_FORM_ATOM_ID),
-                    by_atom.get(BR_PROFILE_INSTANCE_ATOM_ID),
-                    option_sets or {},
-                )
-                if br_chk:
-                    assert_br_profile_check_honest(br_chk, by_atom, option_sets or {})
-                    inner.append(br_profile_check_html(br_chk))
+                cc_rec = manifest_check(manifest, SHAPE_CLOSED)
+                if cc_rec:
+                    br_chk = resolve_check(cc_rec, by_atom, options_registry)
+                    if br_chk:
+                        assert_br_profile_check_honest(br_chk, by_atom, options_registry or {})
+                        inner.append(br_profile_check_html(br_chk))
             hidden = "" if idx == 0 else " hidden"
             spine_body.append(
                 f'<section class="scene" data-scene="{esc(sc.get("id") or "")}" '
@@ -2423,7 +2827,7 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
       var shape = form.getAttribute("data-shape");
       var key = form.getAttribute("data-key");
       var ok = false;
-      if (shape === "mcq_siblings") {
+      if (shape === "invert_definition" && !form.querySelector(".cloze-in")) {
         var picked = form.querySelector("input[type=radio]:checked");
         if (!picked) {
           fb.hidden = false;
@@ -2438,20 +2842,20 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
           ? "Correct — that wording is this atom."
           : "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom’s own wording.";
       } else if (shape === "closed_choice") {
-        var pickedBr = form.querySelector("input[type=radio]:checked");
-        if (!pickedBr) {
+        var pickedChoice = form.querySelector("input[type=radio]:checked");
+        if (!pickedChoice) {
           fb.hidden = false;
           fb.className = "feedback";
           fb.textContent = "Pick an answer to check.";
           return;
         }
-        ok = pickedBr.value === key;
+        ok = pickedChoice.value === key;
         fb.hidden = false;
         fb.className = "feedback " + (ok ? "ok" : "no");
         fb.textContent = ok
           ? "Correct — that is the fill already shown."
           : "Not yet. Options are the form field’s closed value set; the key is the instance fill already shown.";
-      } else if (shape === "sequence") {
+      } else if (shape === "sequence_order") {
         var want = (form.getAttribute("data-order") || "").split(",");
         var got = [];
         form.querySelectorAll(".sequence-items li").forEach(function (li) {
@@ -2801,8 +3205,8 @@ def selftest(closed_moves):
 
     chk_g = derive_check(general_live, store)
     assert_check_honest(chk_g, general_live, store)
-    results.append(("general check shape is mcq_siblings",
-                    chk_g and chk_g["shape"] == "mcq_siblings", chk_g and chk_g.get("shape")))
+    results.append(("general check shape is invert_definition",
+                    chk_g and chk_g["shape"] == SHAPE_INVERT, chk_g and chk_g.get("shape")))
     results.append(("general stem is question invert of this atom",
                     chk_g and chk_g["stem"] == "What is the ALSAP?", chk_g and chk_g.get("stem")))
     results.append(("general key is the complement in this atom",
@@ -2818,8 +3222,8 @@ def selftest(closed_moves):
 
     chk_p = derive_check(purpose_live, store)
     assert_check_honest(chk_p, purpose_live, store)
-    results.append(("purpose check shape is mcq_siblings",
-                    chk_p and chk_p["shape"] == "mcq_siblings", chk_p and chk_p.get("shape")))
+    results.append(("purpose check shape is invert_definition",
+                    chk_p and chk_p["shape"] == SHAPE_INVERT, chk_p and chk_p.get("shape")))
     results.append(("purpose stem is question invert of this atom",
                     chk_p and chk_p["stem"] == "What is the purpose of this SOP?",
                     chk_p and chk_p.get("stem")))
@@ -2920,8 +3324,8 @@ def selftest(closed_moves):
                      for s in (step, step2, step3, step4)]))
     seq_chk = derive_sequence_check([step, step2, step3, step4])
     assert_sequence_check_honest(seq_chk, store)
-    results.append(("procedure A sequence shape is sequence not mcq",
-                    seq_chk and seq_chk["shape"] == "sequence", seq_chk and seq_chk.get("shape")))
+    results.append(("procedure A sequence shape is sequence_order not invert",
+                    seq_chk and seq_chk["shape"] == SHAPE_SEQUENCE, seq_chk and seq_chk.get("shape")))
     results.append(("sequence items are first sentences of the four A atoms",
                     seq_chk and [it["atom_id"] for it in seq_chk["items"]] == [
                         "atom_sop_ast29080_proc_a_s1",
@@ -3046,6 +3450,7 @@ def selftest(closed_moves):
     mf_spine = {}
     apply_spine(mf_spine, store, seeded)
     apply_spine(mf_spine, store, seeded)
+    stamp_checks(mf_spine, store, seeded)
     results.append(("spine recompute is stable",
                     mf_spine["spine"]["element_ids"] == want_spine, mf_spine["spine"]["element_ids"]))
     scenes0 = (mf_spine.get("spine") or {}).get("scenes") or {}
@@ -3168,8 +3573,8 @@ def selftest(closed_moves):
                     "realized_coverage.html" in page and "Full SOP / coverage" in page, ""))
     results.append(("lesson has two definition checks plus one sequence practice",
                     page.count('form class="check"') == 3
-                    and page.count('data-shape="sequence"') == 1
-                    and page.count('data-shape="mcq_siblings"') == 2, page.count('form class="check"')))
+                    and page.count('data-shape="sequence_order"') == 1
+                    and page.count(f'data-shape="{SHAPE_INVERT}"') == 2, page.count('form class="check"')))
     results.append(("coverage dump keeps roles and later steps",
                     "ele_sop_ast29080_roles" in cov_page
                     and "ele_sop_ast29080_proc_a_s1" in cov_page
@@ -3214,7 +3619,7 @@ def selftest(closed_moves):
                     "class=\"prim prim-step job-aid\"" not in cov_page
                     and "ele_sop_ast29080_proc_a_s1" in cov_page, ""))
     results.append(("coverage dump has no sequence practice (lesson-only projection)",
-                    'data-shape="sequence"' not in cov_page
+                    'data-shape="sequence_order"' not in cov_page
                     and 'data-shape="closed_choice"' not in cov_page, ""))
     results.append(("lesson HTML names two scenes from SOP roles (no form in fixture)",
                     page.count('class="scene-heading">What an ALSAP is</h2>') == 1
@@ -3244,7 +3649,7 @@ def selftest(closed_moves):
     results.append(("Procedure A scene holds the job-aid and the sequence practice",
                     "ele_sop_ast29080_proc_a_s1" in proc_chunk
                     and "ele_sop_ast29080_proc_a_s4" in proc_chunk
-                    and 'data-shape="sequence"' in proc_chunk
+                    and 'data-shape="sequence_order"' in proc_chunk
                     and "ele_sop_ast29080_purpose__reinforce" not in proc_chunk, ""))
     results.append(("definition checks sit after the scenes at lesson end",
                     "ele_sop_ast29080_purpose__reinforce" in end_chunk
@@ -3284,7 +3689,7 @@ def selftest(closed_moves):
                     and "will be able" not in page.lower(), page.count('class="scene-heading">')))
     results.append(("lesson sequence practice sits after the job aid",
                     page.find('class="prim prim-step job-aid"')
-                    < page.find('data-shape="sequence"')
+                    < page.find('data-shape="sequence_order"')
                     < page.find("ele_sop_ast29080_purpose__reinforce"), ""))
     results.append(("lesson sequence items are the four A first sentences",
                     'data-atom="atom_sop_ast29080_proc_a_s1"' in page
@@ -3300,7 +3705,7 @@ def selftest(closed_moves):
     results.append(("lesson sequence kicker is Practice not a new retrieve enum",
                     ">Practice</div>" in page
                     and "retrieve" not in page, ""))
-    seq_section = page.split('data-shape="sequence"', 1)[-1].split("</form>", 1)[0]
+    seq_section = page.split('data-shape="sequence_order"', 1)[-1].split("</form>", 1)[0]
     shown_ids = re.findall(r'data-atom="([^"]+)"', seq_section)
     results.append(("lesson sequence initial order is shuffled",
                     shown_ids != [
@@ -3437,12 +3842,12 @@ def selftest(closed_moves):
                     page_inst.count('class="prim prim-step job-aid"') == 1, ""))
     results.append(("instance example sits after sequence practice and before definition checks",
                     page_inst.find("ele_sop_ast29080_proc_a_s4")
-                    < page_inst.find('data-shape="sequence"')
+                    < page_inst.find('data-shape="sequence_order"')
                     < page_inst.find(inst_eids[0])
                     < page_inst.find("ele_sop_ast29080_purpose__reinforce"), ""))
     results.append(("instance lesson has sequence practice plus two definition checks",
                     page_inst.count('form class="check"') == 3
-                    and page_inst.count('data-shape="sequence"') == 1, page_inst.count('form class="check"')))
+                    and page_inst.count('data-shape="sequence_order"') == 1, page_inst.count('form class="check"')))
 
     profile_form = {
         "atom_id": FORM_FIELD_SEED[0][0],
@@ -3487,9 +3892,21 @@ def selftest(closed_moves):
         "governance": {"version": 1, "status": "draft"},
     }
     form_store = [profile_form, rationale_form, unused_form]
+    options_fixture = {
+        "reg_benefit_risk_profile": {
+            "id": "reg_benefit_risk_profile",
+            "values": [
+                {"id": "favorable", "label": "Favorable Benefit-Risk Profile"},
+                {"id": "unfavorable", "label": "Unfavorable Benefit-Risk Profile"},
+                {"id": "conditional_favorable", "label": "Conditional Favorable Benefit-Risk Profile"},
+                {"id": "uncertain_inconclusive", "label": "Uncertain or Inconclusive Benefit-Risk Profile"},
+            ],
+        }
+    }
     seeded_form = assemble_elements(
         store, [], DEFAULT_MOVE, mint_extras=True,
         instance_atoms=instance_store, form_atoms=form_store,
+        options_registry=options_fixture,
     )
     form_eids = [
         mint_extra_element_id(FORM_FIELD_SEED[0][0], "present"),
@@ -3558,6 +3975,7 @@ def selftest(closed_moves):
             {"project": "selftest", "one_to_many": {"seeded_atom_count": 3}},
             html_path, meaning_atoms=form_store + instance_store,
             option_sets=fixture_br_options,
+            options_registry=fixture_br_options,
         )
         page_form = html_path.read_text()
         cov_page_form = pathlib.Path(html_path).with_name("realized_coverage.html").read_text()
@@ -3573,7 +3991,7 @@ def selftest(closed_moves):
                     and unused_form_eid not in page_form, ""))
     results.append(("form present sits after sequence practice and before instance examples",
                     page_form.find("ele_sop_ast29080_proc_a_s4")
-                    < page_form.find('data-shape="sequence"')
+                    < page_form.find('data-shape="sequence_order"')
                     < page_form.find(form_eids[0])
                     < page_form.find(inst_eids[0])
                     < page_form.find("ele_sop_ast29080_purpose__reinforce"), ""))
@@ -3591,6 +4009,9 @@ def selftest(closed_moves):
         mf_form, store, seeded_form,
         meaning_atoms=form_store + instance_store, option_sets=fixture_br_options,
     )
+    stamp_checks(mf_form, store, seeded_form,
+                 meaning_atoms=form_store + instance_store,
+                 options_registry=fixture_br_options)
     form_scenes = (mf_form.get("spine") or {}).get("scenes") or {}
     form_roles = [s["role"] for s in form_scenes.get("scenes") or []]
     results.append(("form fixture yields three scenes from SOP/form roles",
@@ -3659,9 +4080,9 @@ def selftest(closed_moves):
                     and 'data-shape="closed_choice"' not in page_form[end_form:], ""))
     results.append(("form lesson has sequence + BR closed-choice + two definition checks",
                     page_form.count('form class="check"') == 4
-                    and page_form.count('data-shape="sequence"') == 1
+                    and page_form.count('data-shape="sequence_order"') == 1
                     and page_form.count('data-shape="closed_choice"') == 1
-                    and page_form.count('data-shape="mcq_siblings"') == 2,
+                    and page_form.count(f'data-shape="{SHAPE_INVERT}"') == 2,
                     page_form.count('form class="check"')))
     results.append(("BR closed-choice options are the registry ids not invented stems",
                     "Choose the closed value already shown." in br_chunk
@@ -3695,7 +4116,100 @@ def selftest(closed_moves):
                     .split("</form>", 1)[0], ""))
     results.append(("coverage dump has no BR closed-choice",
                     'data-shape="closed_choice"' not in cov_page_form
-                    and 'data-shape="sequence"' not in cov_page_form, ""))
+                    and 'data-shape="sequence_order"' not in cov_page_form, ""))
+
+    # Check shapes are first-class on the graph; projector reads operands, not if-atom-id.
+    gen_host = next(e for e in seeded if e["element_id"] == "ele_sop_ast29080_general__reinforce")
+    gen_stamp = hosted_check(gen_host)
+    results.append(("invert_definition is stamped on the general reinforce extra",
+                    gen_stamp and gen_stamp.get("shape") == SHAPE_INVERT
+                    and gen_stamp.get("operands", {}).get("key_atom_id")
+                    == "atom_sop_ast29080_general", gen_stamp))
+    results.append(("invert operands are atom_ids not copied option strings",
+                    gen_stamp and "contrast_atom_ids" in (gen_stamp.get("operands") or {})
+                    and "central cross-functional framework"
+                    not in json.dumps(gen_stamp.get("operands") or {}),
+                    gen_stamp and gen_stamp.get("operands")))
+    resolved_inv = resolve_check(gen_stamp, store_by_id)
+    results.append(("invert operands resolve from the graph",
+                    resolved_inv and resolved_inv["stem"] == "What is the ALSAP?"
+                    and "central cross-functional framework" in resolved_inv["key"]
+                    and {c["from_atom_id"] for c in resolved_inv["choices"] if not c["correct"]}
+                    == set(gen_stamp["operands"]["contrast_atom_ids"]),
+                    resolved_inv and resolved_inv.get("key", "")[:40]))
+    results.append(("HTML invert stem is the resolved graph wording not a hardcoded string on the element",
+                    resolved_inv and resolved_inv["stem"] in page
+                    and "content" not in gen_host, ""))
+
+    seq_stamp = manifest_check(mf_spine, SHAPE_SEQUENCE) or manifest_check(mf_form, SHAPE_SEQUENCE)
+    results.append(("sequence_order is on the manifest checks index",
+                    seq_stamp and seq_stamp.get("shape") == SHAPE_SEQUENCE
+                    and seq_stamp.get("operands", {}).get("atom_ids") == [
+                        "atom_sop_ast29080_proc_a_s1",
+                        "atom_sop_ast29080_proc_a_s2",
+                        "atom_sop_ast29080_proc_a_s3",
+                        "atom_sop_ast29080_proc_a_s4",
+                    ]
+                    and seq_stamp.get("operands", {}).get("order_from") == "bindings.object.order",
+                    seq_stamp))
+    resolved_seq = resolve_check(seq_stamp, store_by_id)
+    results.append(("sequence operands resolve first sentences from the graph",
+                    resolved_seq and resolved_seq["items"][0]["text"].startswith("Notify a member")
+                    and all(it["text"] in page for it in resolved_seq["items"]),
+                    resolved_seq and [it["text"][:30] for it in (resolved_seq or {}).get("items") or []]))
+
+    cc_host = next(e for e in seeded_form if e["element_id"] == inst_eids[0])
+    cc_stamp = manifest_check(mf_form, SHAPE_CLOSED)
+    results.append(("closed_choice is on the manifest checks index (projector-only)",
+                    cc_stamp and cc_stamp.get("shape") == SHAPE_CLOSED
+                    and cc_stamp.get("host_element_id") is None
+                    and cc_stamp.get("operands", {}).get("options_ref") == "reg_benefit_risk_profile"
+                    and cc_stamp.get("operands", {}).get("key_from")
+                    == "bindings.instance.selected_value"
+                    and cc_stamp.get("operands", {}).get("instance_atom_id")
+                    == INSTANCE_EXAMPLE_SEED[0][0]
+                    and hosted_check(cc_host) is None, cc_stamp))
+    results.append(("closed_choice operands do not copy option labels onto the element",
+                    cc_stamp and "Conditional Favorable" not in json.dumps(cc_stamp)
+                    and "content" not in cc_host
+                    and "assessment" not in cc_host, cc_stamp))
+    form_catalog = {a["atom_id"]: a for a in store + form_store + instance_store}
+    resolved_cc = resolve_check(cc_stamp, form_catalog, fixture_br_options)
+    results.append(("closed_choice operands resolve selected_value + registry from the graph",
+                    resolved_cc and resolved_cc["key"] == "conditional_favorable"
+                    and resolved_cc["prompt"] == BR_CHECK_PROMPT
+                    and {c["text"] for c in resolved_cc["choices"]}
+                    == {
+                        "favorable", "unfavorable", "conditional_favorable",
+                        "uncertain_inconclusive", "contextual", "other_smt_defined",
+                    },
+                    resolved_cc and resolved_cc.get("key")))
+    results.append(("HTML closed_choice is a read of those resolved operands",
+                    resolved_cc and f'data-shape="{SHAPE_CLOSED}"' in page_form
+                    and resolved_cc["prompt"] in page_form
+                    and 'value="conditional_favorable"' in page_form
+                    and 'value="unfavorable"' in page_form
+                    and br_chunk.find(f'data-shape="{SHAPE_CLOSED}"') != -1, ""))
+    results.append(("form lesson has invert + sequence_order + closed_choice",
+                    page_form.count('form class="check"') == 4
+                    and page_form.count(f'data-shape="{SHAPE_INVERT}"') == 2
+                    and page_form.count(f'data-shape="{SHAPE_SEQUENCE}"') == 1
+                    and page_form.count(f'data-shape="{SHAPE_CLOSED}"') == 1,
+                    page_form.count('form class="check"')))
+    results.append(("closed_choice stays in the form BR scene not lesson end",
+                    f'data-shape="{SHAPE_CLOSED}"' in br_chunk
+                    and inst_eids[0] in br_chunk
+                    and f'data-shape="{SHAPE_CLOSED}"' not in page_form[end_form:], ""))
+    results.append(("rationale extra stays an example (not a fourth check host)",
+                    hosted_check(next(e for e in seeded_form if e["element_id"] == inst_eids[1]))
+                    is None, ""))
+    results.append(("closed vocab of shapes is invert_definition / sequence_order / closed_choice",
+                    set(CHECK_SHAPES) == {SHAPE_INVERT, SHAPE_SEQUENCE, SHAPE_CLOSED}
+                    and all(r.get("shape") in CHECK_SHAPES
+                            for r in (mf_form.get("checks") or {}).get("checks") or []),
+                    (mf_form.get("checks") or {}).get("checks")))
+    results.append(("spine membership is still 16 with form+instance",
+                    len(got_spine_form) == 16, got_spine_form))
 
     huge_steps = [
         atom(
@@ -3797,6 +4311,13 @@ def main():
     closed_moves = list(element_schema["properties"]["intent"]["properties"]["move"]["enum"])
     registry = load(P["vocab_dir"] / "primitives.registry.json")
     closed_text_primitives = {e["key"] for e in (registry.get("text_primitive") or []) if "key" in e}
+    closed_check_shapes = load_check_shape_ids(P["vocab_dir"])
+    if set(closed_check_shapes) != set(CHECK_SHAPES):
+        raise SystemExit(
+            f"vocab/check-shape.enum.json {closed_check_shapes} does not match "
+            f"realize.py {list(CHECK_SHAPES)}"
+        )
+    options_registry = load_options_registry(P["registry_dir"])
     move = args.move
     if move not in closed_moves:
         raise SystemExit(f"--move {move!r} is not in the closed vocab: {closed_moves}")
@@ -3849,6 +4370,7 @@ def main():
     elements = assemble_elements(
         atoms, previous, move, mint_extras=mint_extras,
         instance_atoms=instance_atoms, form_atoms=form_atoms,
+        options_registry=options_registry,
     )
     atoms_by_id = meaning_catalog(atoms, form_atoms + instance_atoms)
     validate_elements(elements, element_schema, atoms_by_id)
@@ -3867,15 +4389,21 @@ def main():
             raise SystemExit(f"{aid}: 1:many occurrences must have distinct moves; got {sorted(mvset)}")
 
     for e in extras:
-        if (e.get("intent") or {}).get("move") != "reinforce":
-            continue
-        atom = atoms_by_id[e["composed_from"]]
-        chk = derive_check(atom, atoms)
-        assert_check_honest(chk, atom, atoms)
+        rec = hosted_check(e)
+        if rec and rec.get("shape") == SHAPE_INVERT:
+            atom = atoms_by_id[e["composed_from"]]
+            chk = resolve_check(rec, atoms_by_id)
+            assert_check_honest(chk, atom, atoms)
+        elif (e.get("intent") or {}).get("move") == "reinforce":
+            atom = atoms_by_id[e["composed_from"]]
+            chk = derive_check(atom, atoms)
+            assert_check_honest(chk, atom, atoms)
     seq_live = derive_sequence_check(procedure_sequence_atoms(atoms))
     if seq_live:
         assert_sequence_check_honest(seq_live, atoms)
     option_sets = load_option_sets(project)
+    if not options_registry:
+        options_registry = option_sets
     if form_atoms and instance_atoms:
         br_live = derive_br_profile_check(
             form_by_id.get(BR_PROFILE_FORM_ATOM_ID),
@@ -3961,15 +4489,16 @@ def main():
                  f"({INSTANCE_EXAMPLE_SPEC}). Cartographer owns occurrence intent; Couturier owns expression "
                  "style. Realizer binds compiler primitives (text_primitive) from atom kind + "
                  f"move ({PRIMITIVE_SPEC}). Spine is a documented selection of existing ele_ records "
-                 f"({SPINE_SPEC}); the full dump is coverage. Procedure A presents project "
-                 "a sequence practice from those four existing ele_ records "
-                 "(agents/realizer/check_v1.md); composing that check from one atom "
-                 "would be a lie, so no extra is minted. Form BR presents + instance "
-                 "fill project a closed-choice of the profile value (options_ref ids; "
-                 "key = selected_value); composing from only one of those two atoms "
-                 "would hide the other half, so no extra is minted. A re-realize "
-                 "preserves extras, intent, style, and recomputes the same spine "
-                 "and primitives."),
+                 f"({SPINE_SPEC}); the full dump is coverage. Check shapes "
+                 f"({SHAPE_INVERT}, {SHAPE_SEQUENCE}, {SHAPE_CLOSED}) live on "
+                 "ext.check / manifest.checks (vocab/check-shape.enum.json). "
+                 "Procedure A sequence_order is projector-only of those four "
+                 "presents; composing it from one atom would be a lie. "
+                 "closed_choice is projector-only of the form present + instance "
+                 "fill (options_ref ids; key = selected_value); composing from "
+                 "only one of those two atoms would hide the other half. "
+                 "A re-realize preserves extras, intent, style, and recomputes "
+                 "the same spine, primitives, and check shapes."),
     }
     if any((e.get("ext") or {}).get("cartographer") for e in elements):
         cart = dict(prev_mf.get("cartographer") or {})
@@ -3994,6 +4523,11 @@ def main():
         occ_manifest, atoms, elements,
         meaning_atoms=form_atoms + instance_atoms, option_sets=option_sets,
     )
+    stamp_checks(
+        occ_manifest, atoms, elements,
+        meaning_atoms=form_atoms + instance_atoms,
+        options_registry=options_registry or option_sets,
+    )
     stamp_primitives(occ_manifest, elements)
     normalize_elements_ext(elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
@@ -4002,7 +4536,8 @@ def main():
     html_path = pathlib.Path(args.out).resolve() if args.out else project / "realized_lesson.html"
     coverage_path = project_html(
         atoms, elements, occ_manifest, html_path,
-        meaning_atoms=form_atoms + instance_atoms, option_sets=option_sets,
+        meaning_atoms=form_atoms + instance_atoms,
+        option_sets=option_sets, options_registry=options_registry or option_sets,
     )
     (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 

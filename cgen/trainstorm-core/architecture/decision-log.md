@@ -13,6 +13,42 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-27 — Check shapes first-class on the graph
+
+After PR #27 the short ALSAP lesson already had three honest check
+kinds in the projector: invert-definition MCQ from sibling first
+sentences, Procedure A sequence from `object.order`, and a BR
+closed-choice from `reg_benefit_risk_profile` + instance
+`selected_value`. They lived as Python/HTML branches
+(`mcq_siblings` / `sequence` / `derive_br_profile_check` by atom id).
+This hop **names them on the graph**. Main had moved (PR #26 paging,
+PR #27 projector-only closed-choice); this rebase keeps that newer
+behavior and stops special-casing HTML by atom id.
+
+**Where they live.** Closed vocab `vocab/check-shape.enum.json`:
+`invert_definition`, `sequence_order`, `closed_choice`. Host records
+on `ext.check` (definition extras). Projector-only `sequence_order`
+and `closed_choice` on `manifest.checks` (minting an extra `ele_` from
+one A step, or from only the form field / only the instance, is still
+a lie). Operands are refs — atom ids, `ele_` ids, `options_ref`,
+`order_from` — not copied option strings. Projector reads the stamp
+and resolves wording. Cloze is a render of `invert_definition` when
+contrast is empty. Closed-choice options stay verbatim value ids;
+prompt stays task clothes (*Choose the closed value already shown.*).
+
+**Unchanged.** 16 spine `ele_` ids. 55 / 47. Same paging
+(`v1_one_scene_at_a_time`). Same three scenes. `atoms.json` untouched.
+No authored `content.text`. No Procedure B. No chameleon.py, no
+Headwater outcomes-mode, no `/cgen/alsap` hosting, no quiz engine, no
+LLM distractors, no new agent. Cartographer owns intent. Couturier
+owns style. Idempotent realize → cartographer → couturier. Wrong then
+right on all three kinds.
+
+Hypothesis verified: `ext` was enough; `element.assessment` stays
+empty of option labels.
+
+---
+
 ## 2026-08-26 — Scene 3 BR closed-choice (the fill already shown)
 
 After PR #26 scene 3 taught the FORM-AST-34037 BR fields and showed the
