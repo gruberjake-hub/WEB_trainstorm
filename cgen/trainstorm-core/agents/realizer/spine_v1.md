@@ -223,6 +223,11 @@ when that scene is shown.
 Hash (`#what_an_alsap_is`, `#how_an_alsap_starts`,
 `#benefit_risk_on_the_form`, `#lesson-end`) is optional.
 
+A lesson whose `scene_ids` are a single scene and whose
+`lesson_end_check_ids` are empty is still `v1_one_scene_at_a_time`:
+the projector suppresses Next/Back (pager disabled) because there is
+nowhere to page. Live: `ast_alsap_br` → `realized_lesson_br.html`.
+
 Coverage dump stays unpaged (no player chrome).
 
 ---
@@ -251,7 +256,8 @@ HTML (Realizer projector):
 | File | Default experience |
 |---|---|
 | `<project>/realized_lesson.html` | A **read of the lesson node** (`manifest.lessons`, default `{project}_short`): the spine, in the order above, wrapped as **three named scenes** read from that lesson’s `scene_ids` → `spine.scenes` (What an ALSAP is / How an ALSAP starts / Benefit-risk on the form), **one scene at a time** (Next/Back). Title heuristic is the document-root atom. Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), a **sequence practice** of those four presents (order the first sentences; in-scene), two form-field presents (`present` / `tp_body`), two example beats (`exemplify` / `brand.example` / `tp_body`), a **closed-choice** of the BR profile fill (in-scene 3), two definition checks (`tp_recall`) at lesson end (final player step, not a fourth scene). Link to coverage. |
-| `<project>/realized_coverage.html` | Full occurrence dump in SOP document order — still card-like. Link back to the lesson. |
+| `<project>/realized_lesson_br.html` | A **read of** `ast_alsap_br`: the same form BR scene (`benefit_risk_on_the_form`) — presents + instance examples + in-scene closed-choice. One scene, pager disabled (single step). Invert-definition extras stay on the short lesson. Path is derived from `lesson_id`; `realize.py` is not forked for ALSAP. Same title heuristic (document-root atom). |
+| `<project>/realized_coverage.html` | Full occurrence dump in SOP document order — still card-like. Link back to the default short lesson. Not a third lesson node. |
 
 Compiler primitives (`agents/realizer/primitives_v1.md`) are Realizer-owned
 on the occurrence. The projector *uses* those primitives — callout, heading,
@@ -307,6 +313,7 @@ python3 tools/couturier.py
 
 Default project is `cgen/astellas/projects/ast_alsap`. Open
 `cgen/astellas/projects/ast_alsap/realized_lesson.html` for the short lesson;
+`realized_lesson_br.html` for the BR subset (`--lesson ast_alsap_br`);
 `realized_coverage.html` for the full SOP dump. (Public `/cgen/alsap` rewrite
 exists from an earlier hop; Jake tabled that redirect loop — the buried
 projector path is the demo URL this hop uses.)

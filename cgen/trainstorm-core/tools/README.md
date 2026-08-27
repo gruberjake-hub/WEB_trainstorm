@@ -24,10 +24,14 @@ records (`agents/realizer/scenes_v1.md`) group those existing beats as **three n
 scenes** (front-matter / Procedure A / form BR) on `spine.scenes` / `ext.scene`.
 The projector **reads** that list and pages **one scene at a time** (Next/Back).
 A **lesson** record (`agents/realizer/lesson_v1.md`) on `manifest.lessons`
-points at those scenes; `realized_lesson.html` is a read of that node
-(default `{project}_short`, or `--lesson`). Definition/purpose checks stay
-a final step after scene 3, not a fourth scene. Coverage dump stays a
-second projection, not a second lesson.
+points at those scenes; `realized_lesson.html` is a read of the default
+node (`{project}_short`, or `--lesson`). A second record `ast_alsap_br`
+points at the form BR scene only and projects to `realized_lesson_br.html`
+(path derived from `lesson_id`; pager disabled — one scene).
+Definition/purpose checks stay a final step after scene 3 on the short
+lesson, not a fourth scene, and are **not** forced onto the BR lesson.
+Coverage dump stays a second projection, not a third lesson.
+`--lesson ast_alsap_br` regenerates the BR file.
 A small
 instance-example seed (`agents/realizer/instance_example_v1.md`) mints two guest `ele_`
 records whose `composed_from` is an `alsap_asp9999` atom_id. A small form-field
@@ -41,7 +45,7 @@ example, then checks), that check operands resolve from the graph (not hardcoded
 and the atom → primitives bind (procedure_step → `tp_step`,
 activate → `tp_callout`, job-aid HTML). Scene operands (ordered `ele_` refs)
 resolve from the graph, not hardcoded HTML. Lesson → scenes → `element_ids`
-resolve from the graph. Scene 3 also projects a closed-choice
+resolve from the graph (default and extras). Scene 3 also projects a closed-choice
 of the BR profile fill (`options_ref` value ids; key = instance
 `selected_value`; projector-only `closed_choice` on `manifest.checks`).
 

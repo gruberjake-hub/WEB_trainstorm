@@ -1,0 +1,297 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>SOP-AST-29080 — Plan, Develop, Execute, Maintain, and Archive the Asset Level Safety Assessment Plan (ALSAP). — ast_alsap</title><style>:root{--ink:#0f172a;--mut:#64748b;--line:#e2e8f0;--bg:#f8fafc;--accent:#1e3a8a}
+*{box-sizing:border-box}
+body{font:15px/1.55 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);
+ margin:0;background:var(--bg)}
+.page{max-width:920px;margin:0 auto;background:#fff;padding:40px 48px;
+ box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.ctrl{display:flex;justify-content:space-between;align-items:flex-start;
+ border-bottom:2px solid var(--accent);padding-bottom:14px;margin-bottom:8px}
+.ctrl .doc{font-weight:700;font-size:19px;color:var(--accent)}
+.ctrl .meta{text-align:right;font-size:12.5px;color:var(--mut)}
+.banner{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;
+ font-size:12.5px;color:#1e3a8a;margin:14px 0 22px}
+h1{font-size:20px;margin:8px 0 4px}
+.nav{font-size:13px;margin:6px 0 10px}
+.nav a{color:var(--accent)}
+.path{font-size:12.5px;color:var(--mut);margin:0 0 14px}
+.occ{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:8px 0}
+.d1{margin-left:18px}.d2{margin-left:36px}.d3{margin-left:54px}.d4{margin-left:72px}
+.occ .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}
+.id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600}
+.pill{background:#1e3a8a;color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;
+ text-transform:uppercase;letter-spacing:.03em}
+.pill.dim{background:#e2e8f0;color:#334155}
+.pill.teaches{background:#e0e7ff;color:#3730a3;text-transform:none;letter-spacing:0}
+.pill.low{box-shadow:0 0 0 2px #f59e0b inset}
+.pill.move-hook{background:#b45309}
+.pill.move-objective{background:#047857}
+.pill.move-activate{background:#0f766e}
+.pill.move-present{background:#1e3a8a}
+.pill.move-exemplify{background:#6d28d9}
+.pill.move-practice{background:#be123c}
+.pill.move-feedback{background:#9f1239}
+.pill.move-assess{background:#7f1d1d}
+.pill.move-reinforce{background:#334155}
+.pill.move-transfer{background:#c2410c}
+.pill.extra-occ{background:#0f766e;text-transform:none}
+.pill.form-occ{background:#0369a1;text-transform:none}
+.pill.instance-occ{background:#6d28d9;text-transform:none}
+.pill.check-occ{background:#1e3a8a;text-transform:none}
+.pair{border:2px solid #1e3a8a;border-radius:10px;padding:10px 12px 6px;margin:12px 0;
+ background:#f1f5f9}
+.pair-label{font-size:12px;color:#1e3a8a;font-weight:600;margin:0 0 8px}
+.pair .occ{background:#fff}
+.occ.extra{background:#fffbeb;border-color:#f59e0b}
+.pill.style{background:#fef3c7;color:#92400e;text-transform:none;letter-spacing:0}
+.pill.primitive{background:#e0e7ff;color:#3730a3;text-transform:none;letter-spacing:0}
+.kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+ margin:0 0 8px;color:inherit;opacity:.85}
+.occ.style-opening{background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;
+ border-radius:4px;padding:28px 24px 22px;text-align:center}
+.occ.style-opening .id,.occ.style-opening .join,.occ.style-opening .pill.dim{color:#fde68a}
+.occ.style-opening .meaning{font-size:22px;font-weight:700;line-height:1.25;letter-spacing:-.02em;
+ margin:8px 0 10px}
+.occ.style-opening .kicker{color:#fffbeb;opacity:1}
+.occ.style-instructional{background:#fff;border:1px solid #cbd5e1;border-left:5px solid #1e3a8a;
+ border-radius:6px;padding:14px 16px}
+.occ.style-instructional .meaning{font-size:15px;line-height:1.55}
+.occ.style-recall{background:#f1f5f9;border:2px solid #334155;border-radius:6px;padding:16px 18px}
+.occ.style-recall .kicker{color:#1e293b;opacity:1}
+.occ.style-recall form.check .stem{font-size:16px;font-weight:650;font-style:normal;margin:8px 0 12px;color:var(--ink)}
+.occ.style-recall form.check .blank{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+ letter-spacing:.12em;color:#334155}
+form.check .choice{display:flex;gap:10px;align-items:flex-start;margin:8px 0;padding:10px 12px;
+ border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer}
+form.check .choice:hover{border-color:#334155}
+form.check .choice span{flex:1}
+form.check .cloze-in{width:100%;font:inherit;padding:8px 10px;border:1px solid #94a3b8;border-radius:6px}
+form.check .check-actions{margin:12px 0 6px}
+form.check button{background:#1e3a8a;color:#fff;border:0;border-radius:6px;padding:8px 14px;
+ font:inherit;font-weight:600;cursor:pointer}
+form.check .feedback{font-size:13px;margin:8px 0 0}
+form.check .feedback.ok{color:#047857;font-weight:650}
+form.check .feedback.no{color:#9f1239;font-weight:650}
+form.check .reveal{margin:10px 0 0;padding:8px 10px;background:#fff;border-left:3px solid #1e3a8a;
+ font-size:13.5px}
+form.check .check-note{font-size:11.5px;color:var(--mut);margin:10px 0 0}
+.occ.style-purpose{background:#ecfdf5;border:1px solid #059669;border-left:6px solid #047857;
+ border-radius:6px}
+.occ.style-purpose .meaning{font-weight:600}
+.occ.style-purpose .kicker{color:#047857}
+.occ.style-prior,.occ.prim-callout{background:#f0fdfa;border:1px solid #0f766e;
+ border-left:6px solid #0f766e;border-radius:6px;padding:14px 16px 12px;font-size:14.5px}
+.occ.style-prior .kicker,.occ.prim-callout .kicker{color:#0f766e;opacity:1}
+.occ.prim-callout .meaning{font-size:15.5px;line-height:1.45;margin:4px 0 8px}
+.occ.style-example{background:#faf5ff;border:1px solid #c4b5fd;border-radius:6px;padding:12px 14px 12px 18px}
+.occ.style-example .meaning{font-family:Georgia,Times,serif;font-size:14px}
+.occ.style-example .kicker{color:#6d28d9}
+.occ.style-job{background:#fff7ed;border:1px solid #c2410c;border-left:6px solid #c2410c;border-radius:6px}
+.occ.style-job .kicker{color:#c2410c}
+.job-aid{border:2px solid #1e3a8a;border-radius:8px;padding:16px 18px 10px;margin:16px 0;
+ background:#fff}
+.job-aid .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+ color:#1e3a8a;margin:0 0 6px}
+.job-aid .job-title{font-size:18px;margin:0 0 12px;letter-spacing:-.02em}
+.job-aid ol.steps{margin:0;padding:0;list-style:none;counter-reset:step}
+.job-aid li.step{display:grid;grid-template-columns:2.4rem 1fr;gap:10px;padding:12px 0;
+ border-top:1px solid var(--line);counter-increment:step}
+.job-aid li.step::before{content:counter(step);font-weight:700;color:#1e3a8a;font-size:20px;
+ line-height:1.2}
+.job-aid li.step .meta{grid-column:2;display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+ margin:0 0 4px}
+.job-aid li.step .meaning{grid-column:2;margin:0 0 4px;font-size:15.5px;line-height:1.45}
+.job-aid li.step .join{grid-column:2}
+.job-aid > .join{margin:10px 0 4px}
+.player{margin:4px 0 24px}
+.player-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;
+ position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:10px 0 12px;
+ margin:0 0 8px;z-index:2}
+.player[data-paging-chrome="suppressed"] .player-nav{display:none}
+.player-nav button{background:#1e3a8a;color:#fff;border:0;border-radius:6px;padding:8px 14px;
+ font:inherit;font-weight:600;cursor:pointer}
+.player-nav button:disabled{background:#e2e8f0;color:#94a3b8;cursor:not-allowed}
+.player-status{margin:0;font-size:13px;color:var(--mut);text-align:center;flex:1}
+.scene{margin:12px 0 8px;padding:4px 0 8px;border-top:3px solid var(--accent)}
+.scene-head{margin:10px 0 16px}
+.scene-kicker{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+ color:var(--accent);margin:0 0 4px}
+.scene-heading{font-size:22px;margin:0;letter-spacing:-.02em;color:var(--ink)}
+.lesson-end-checks{margin:12px 0 8px;padding-top:10px;border-top:1px dashed var(--line)}
+.scene[hidden],.lesson-end-checks[hidden]{display:none !important}
+.sequence-check{border:2px solid #334155;border-radius:8px;padding:16px 18px 10px;margin:16px 0;
+ background:#f1f5f9}
+.sequence-check .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+ color:#1e293b;margin:0 0 6px}
+.sequence-check form.check .stem{font-size:16px;font-weight:650;margin:4px 0 12px}
+.sequence-check ol.sequence-items{margin:0;padding:0;list-style:none}
+.sequence-check ol.sequence-items li{display:grid;grid-template-columns:auto 1fr;gap:10px;
+ align-items:start;padding:10px 12px;margin:8px 0;background:#fff;border:1px solid var(--line);
+ border-radius:6px}
+.sequence-check .seq-move{display:flex;flex-direction:column;gap:4px}
+.sequence-check .seq-move button{background:#e2e8f0;color:#0f172a;border:0;border-radius:4px;
+ padding:4px 8px;font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.sequence-check .seq-move button:hover{background:#cbd5e1}
+.sequence-check .seq-text{font-size:14.5px;line-height:1.45}
+.sequence-check ol.reveal{margin:10px 0 0;padding:8px 10px 8px 28px;background:#fff;
+ border-left:3px solid #1e3a8a;font-size:13.5px}
+.closed-choice-check{border:2px solid #334155;border-radius:8px;padding:16px 18px 10px;margin:16px 0;
+ background:#f1f5f9}
+.closed-choice-check .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+ color:#1e293b;margin:0 0 6px}
+.closed-choice-check form.check .stem{font-size:16px;font-weight:650;margin:4px 0 12px}
+.occ.prim-heading .meaning,.occ.prim-body .meaning{margin:4px 0 6px}
+tr.pair-row td{background:#eff6ff}
+.meaning{margin:4px 0 6px}
+.join{font-size:12px;color:var(--mut)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:12.5px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:#475569}
+details{margin-top:28px;border-top:1px dashed var(--line);padding-top:14px}
+summary{cursor:pointer;color:var(--mut);font-size:12.5px}
+.foot{margin-top:28px;font-size:11.5px;color:var(--mut);border-top:1px solid var(--line);
+ padding-top:12px}</style></head><body><div class=page><div class=ctrl> <div><div class=doc>Couturier v1</div> <div style="font-size:12.5px;color:var(--mut)">ast_alsap · occurrence style bound</div></div> <div class=meta>55 occurrences · 8 extras on 3 atoms · 2 checks · brand.example 7 · brand.instructional 38 · brand.job 3 · brand.opening 1 · brand.prior 3 · brand.purpose 1 · brand.recall 2<br>policy v1_move_to_look</div></div><h1>SOP-AST-29080 — Plan, Develop, Execute, Maintain, and Archive the Asset Level Safety Assessment Plan (ALSAP).</h1><p class="nav"><a href="realized_coverage.html">Full SOP / coverage (55 occurrences)</a></p><p class="path">16 of 55 occurrences · lesson <span class=mono>ast_alsap_br</span> · 1 scene (Benefit-risk on the form) grouping the same beats. One named scene (pager disabled — this lesson is a single step). Read from the lesson node and its scenes — not a hard-coded ALSAP trio. Not B/C and not the SOP dump. Heuristic is documented, not an LLM.</p><div class=banner><b>Meaning lives on the atom.</b> Clothes come from <span class=mono>element.expression</span> (Couturier). Intent (<span class=mono>move</span>, <span class=mono>teaches</span>) is Cartographer’s. The Realizer minted the <span class=mono>ele_</span> ids and copied no authored <span class=mono>content.text</span>. 3 atoms carry a second <span class=mono>ele_</span> (same <span class=mono>composed_from</span>, distinct <span class=mono>move</span>).  Extra <span class=mono>reinforce</span> occurrences render as a check (stem + choices or cloze) derived from the atom — not an italic reprint. Procedure A’s job-aid presents also project a sequence practice (order those first sentences; object.order; no extra ele_). The form BR presents and instance fill also project a closed-choice (options_ref value ids; key = selected_value; no extra ele_).  Couturier dressed each occurrence from its <span class=mono>move</span> (<span class=mono>style_ref</span>) — hook vs present vs reinforce must not look like the same card.  Realizer bound a closed compiler primitive (<span class=mono>text_primitive</span>: heading / body / step / callout / check) from atom kind + occurrence move. The short lesson renders those primitives — why-this as a <span class=mono>tp_callout</span> of purpose, Procedure A as a job-aid step list then a sequence practice of those presents, a form-field present as body/`present` clothes then a worked example as body/`exemplify` clothes (form then instance atom via composed_from), a closed-choice of the BR profile fill in that scene, front-matter as heading/body, reinforce as the existing definition checks. Scene records on <span class=mono>spine.scenes</span> group those existing beats (front-matter / Procedure A / form BR); player chrome pages that list one named scene at a time. Coverage stays card-like.  Default HTML is the short lesson spine (<span class=mono>v1_front_matter_callout_procedure_sequence_form_example_then_checks</span>): 16 of 55 occurrences — document-root opening, why-this callout of purpose, teachable front-matter primaries, Procedure A as a job sequence then a sequence practice of those presents, the form fields those examples fill, a small instance example, a closed-choice of that BR profile fill, then the existing definition checks. A lesson record on <span class=mono>manifest.lessons</span> points at <span class=mono>spine.scenes</span>; the player shows that lesson’s named scenes (this lesson is a single step; pager disabled). The object tree walk is coverage, not a second lesson node. Dragoman / Storyline / PNG render are not this hop.</div><div class="player" data-lesson="ast_alsap_br" data-paging="v1_one_scene_at_a_time" data-paging-chrome="suppressed" data-scene-count="1" data-step-count="1"><section class="scene" data-scene="benefit_risk_on_the_form" data-role="form_br" data-player-step="0"><header class="scene-head"><p class="scene-kicker">Form</p><h2 class="scene-heading">Benefit-risk on the form</h2></header><article class="occ extra style-instructional prim-body"><div class="kicker">Present</div><div class="meta"><span class="id">ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present</span><span class="pill move-present">present</span><span class="pill extra-occ">extra</span><span class="pill form-occ">form</span><span class="pill primitive" title="expression.text_primitive">tp_body</span><span class="pill style" title="expression.style_ref">brand.instructional</span><span class="pill dim">Statement</span><span class="pill dim">form_field</span></div><p class="meaning">SMT assessment of the overall Benefit-Risk profile of the asset.</p><div class="join">composed_from <span class="mono">atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile</span> · source_hash <span class="mono">sha256:ca909c20c93c…</span> · primitive <span class="mono">tp_body</span> · clothes <span class="mono">brand.instructional · body · card</span></div></article><article class="occ extra style-instructional prim-body"><div class="kicker">Present</div><div class="meta"><span class="id">ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present</span><span class="pill move-present">present</span><span class="pill extra-occ">extra</span><span class="pill form-occ">form</span><span class="pill primitive" title="expression.text_primitive">tp_body</span><span class="pill style" title="expression.style_ref">brand.instructional</span><span class="pill dim">Statement</span><span class="pill dim">form_field</span></div><p class="meaning">Rationale and phrasing for the selected Benefit-Risk profile.</p><div class="join">composed_from <span class="mono">atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale</span> · source_hash <span class="mono">sha256:08661ef80dc0…</span> · primitive <span class="mono">tp_body</span> · clothes <span class="mono">brand.instructional · body · card</span></div></article><article class="occ extra style-example prim-body"><div class="kicker">Example</div><div class="meta"><span class="id">ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify</span><span class="pill move-exemplify">exemplify</span><span class="pill extra-occ">extra</span><span class="pill instance-occ">instance</span><span class="pill primitive" title="expression.text_primitive">tp_body</span><span class="pill style" title="expression.style_ref">brand.example</span><span class="pill teaches" title="obj_explain_alsap_purpose">explain_alsap_purpose</span><span class="pill dim">Course</span><span class="pill dim">instance_value</span></div><p class="meaning">conditional_favorable</p><div class="join">composed_from <span class="mono">atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile</span> · source_hash <span class="mono">sha256:be0af1b9d04b…</span> · primitive <span class="mono">tp_body</span> · clothes <span class="mono">brand.example · example · cite</span></div></article><article class="occ extra style-example prim-body"><div class="kicker">Example</div><div class="meta"><span class="id">ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify</span><span class="pill move-exemplify">exemplify</span><span class="pill extra-occ">extra</span><span class="pill instance-occ">instance</span><span class="pill primitive" title="expression.text_primitive">tp_body</span><span class="pill style" title="expression.style_ref">brand.example</span><span class="pill teaches" title="obj_explain_alsap_purpose">explain_alsap_purpose</span><span class="pill dim">Course</span><span class="pill dim">instance_value</span></div><p class="meaning">The benefit-risk profile of ASP9999 is favorable provided the additional hepatic monitoring described in the risk management plan is in place. Across 412 participants the observed transaminase elevations were reversible and detected by scheduled monitoring in every case; the SMT judges the residual risk acceptable for the proposed indication on that condition, and will re-assess when the Phase 3 dataset matures.</p><div class="join">composed_from <span class="mono">atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale</span> · source_hash <span class="mono">sha256:1687a021cb2f…</span> · primitive <span class="mono">tp_body</span> · clothes <span class="mono">brand.example · example · cite</span></div></article><section class="prim prim-check closed-choice-check"><div class="kicker">Practice</div><form class="check" data-shape="closed_choice" data-key="conditional_favorable" data-eid="closed_choice:atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile"><p class="stem">Choose the closed value already shown.</p><label class="choice"><input type="radio" name="br_profile" value="unfavorable"><span class="mono">unfavorable</span></label><label class="choice"><input type="radio" name="br_profile" value="uncertain_inconclusive"><span class="mono">uncertain_inconclusive</span></label><label class="choice"><input type="radio" name="br_profile" value="conditional_favorable"><span class="mono">conditional_favorable</span></label><label class="choice"><input type="radio" name="br_profile" value="contextual"><span class="mono">contextual</span></label><label class="choice"><input type="radio" name="br_profile" value="other_smt_defined"><span class="mono">other_smt_defined</span></label><label class="choice"><input type="radio" name="br_profile" value="favorable"><span class="mono">favorable</span></label><div class="check-actions"><button type="submit">Check</button></div><p class="feedback" hidden></p><p class="reveal" hidden><span class="mono">conditional_favorable</span></p><p class="check-note">Options are the value ids of <span class="mono">reg_benefit_risk_profile</span> on <span class="mono">atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile</span>. Key is the instance fill (<span class="mono">atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile</span> <span class="mono">selected_value</span>). Projects the existing <span class="mono">ele_</span> records (<span class="mono">ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present</span>, <span class="mono">ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify</span>) — no extra occurrence, not authored <span class="mono">content.text</span>. Shape <span class="mono">closed_choice</span> read from <span class="mono">manifest.checks</span>.</p></form></section></section></div><details open><summary>Spine membership — 16 ele_ records (heuristic <span class=mono>v1_front_matter_callout_procedure_sequence_form_example_then_checks</span>)</summary><table><thead><tr><th>#</th><th>element_id</th><th>composed_from</th><th>move</th><th>primitive</th><th>style_ref</th><th>teaches</th><th>atom kind</th><th>scene</th></tr></thead><tbody><tr><td>1</td><td class=mono>ele_sop_ast29080</td><td class=mono>atom_sop_ast29080</td><td>hook</td><td class=mono>tp_display</td><td class=mono>brand.opening</td><td class=mono>obj_explain_alsap_purpose</td><td>procedure</td><td>—</td></tr><tr><td>2</td><td class=mono>ele_sop_ast29080__present</td><td class=mono>atom_sop_ast29080</td><td>present</td><td class=mono>tp_body</td><td class=mono>brand.instructional</td><td class=mono>obj_explain_alsap_purpose</td><td>procedure</td><td>—</td></tr><tr><td>3</td><td class=mono>ele_sop_ast29080_purpose__activate</td><td class=mono>atom_sop_ast29080_purpose</td><td>activate</td><td class=mono>tp_callout</td><td class=mono>brand.prior</td><td class=mono>obj_explain_alsap_purpose</td><td>procedure</td><td>—</td></tr><tr><td>4</td><td class=mono>ele_sop_ast29080_purpose</td><td class=mono>atom_sop_ast29080_purpose</td><td>objective</td><td class=mono>tp_purpose</td><td class=mono>brand.purpose</td><td class=mono>obj_explain_alsap_purpose</td><td>procedure</td><td>—</td></tr><tr><td>5</td><td class=mono>ele_sop_ast29080_scope</td><td class=mono>atom_sop_ast29080_scope</td><td>present</td><td class=mono>tp_body</td><td class=mono>brand.instructional</td><td class=mono>obj_identify_alsap_scope</td><td>procedure</td><td>—</td></tr><tr><td>6</td><td class=mono>ele_sop_ast29080_general</td><td class=mono>atom_sop_ast29080_general</td><td>present</td><td class=mono>tp_body</td><td class=mono>brand.instructional</td><td class=mono>obj_explain_alsap_purpose</td><td>procedure</td><td>—</td></tr><tr><td>7</td><td class=mono>ele_sop_ast29080_proc_a_s1</td><td class=mono>atom_sop_ast29080_proc_a_s1</td><td>present</td><td class=mono>tp_step</td><td class=mono>brand.instructional</td><td class=mono>obj_execute_alsap_plan</td><td>procedure_step</td><td>—</td></tr><tr><td>8</td><td class=mono>ele_sop_ast29080_proc_a_s2</td><td class=mono>atom_sop_ast29080_proc_a_s2</td><td>present</td><td class=mono>tp_step</td><td class=mono>brand.instructional</td><td class=mono>obj_execute_alsap_plan</td><td>procedure_step</td><td>—</td></tr><tr><td>9</td><td class=mono>ele_sop_ast29080_proc_a_s3</td><td class=mono>atom_sop_ast29080_proc_a_s3</td><td>present</td><td class=mono>tp_step</td><td class=mono>brand.instructional</td><td class=mono>obj_execute_alsap_plan</td><td>procedure_step</td><td>—</td></tr><tr><td>10</td><td class=mono>ele_sop_ast29080_proc_a_s4</td><td class=mono>atom_sop_ast29080_proc_a_s4</td><td>present</td><td class=mono>tp_step</td><td class=mono>brand.instructional</td><td class=mono>obj_execute_alsap_plan</td><td>procedure_step</td><td>—</td></tr><tr><td>11</td><td class=mono>ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present</td><td class=mono>atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile</td><td>present</td><td class=mono>tp_body</td><td class=mono>brand.instructional</td><td class=mono>—</td><td>form_field</td><td>Benefit-risk on the form</td></tr><tr><td>12</td><td class=mono>ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present</td><td class=mono>atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale</td><td>present</td><td class=mono>tp_body</td><td class=mono>brand.instructional</td><td class=mono>—</td><td>form_field</td><td>Benefit-risk on the form</td></tr><tr><td>13</td><td class=mono>ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify</td><td class=mono>atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile</td><td>exemplify</td><td class=mono>tp_body</td><td class=mono>brand.example</td><td class=mono>obj_explain_alsap_purpose</td><td>instance_value</td><td>Benefit-risk on the form</td></tr><tr><td>14</td><td class=mono>ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify</td><td class=mono>atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale</td><td>exemplify</td><td class=mono>tp_body</td><td class=mono>brand.example</td><td class=mono>obj_explain_alsap_purpose</td><td>instance_value</td><td>Benefit-risk on the form</td></tr><tr><td>15</td><td class=mono>ele_sop_ast29080_purpose__reinforce</td><td class=mono>atom_sop_ast29080_purpose</td><td>reinforce</td><td class=mono>tp_recall</td><td class=mono>brand.recall</td><td class=mono>obj_explain_alsap_purpose</td><td>procedure</td><td>—</td></tr><tr><td>16</td><td class=mono>ele_sop_ast29080_general__reinforce</td><td class=mono>atom_sop_ast29080_general</td><td>reinforce</td><td class=mono>tp_recall</td><td class=mono>brand.recall</td><td class=mono>obj_explain_alsap_purpose</td><td>procedure</td><td>—</td></tr></tbody></table></details><div class=foot>Atom store: cgen/astellas/projects/ast_alsap/atoms.json · atoms_sha256 sha256:93b278fbdaff…<br>Projector: tools/realize.py + tools/cartographer.py + tools/couturier.py · this HTML is regenerated, never hand-edited. Meaning is read from atoms.json. Occurrence intent is Cartographer’s when bound. Clothes are Couturier’s when bound (expression keys, not authored text). Moves are mixed. 1:many pairs share composed_from. Clothes are mixed. Extra reinforce occurrences project as a check from the atom (agents/realizer/check_v1.md).  Procedure A presents also project a sequence practice (same spec; no extra ele_).  Form BR presents + instance fill also project a closed-choice (same spec; no extra ele_).  Compiler primitives: tp_body 23 · tp_callout 3 · tp_display 1 · tp_purpose 1 · tp_recall 2 · tp_step 25. Spine heuristic: <span class=mono>agents/realizer/spine_v1.md</span>. Lesson: v1_lesson_on_graph (agents/realizer/lesson_v1.md). Scenes: v1_scenes_on_graph (agents/realizer/scenes_v1.md). Player: v1_one_scene_at_a_time.</div></div><script>(function () {
+  function norm(s) {
+    return (s || "").replace(/\s+/g, " ").trim().toLowerCase();
+  }
+  document.querySelectorAll("form.check").forEach(function (form) {
+    form.querySelectorAll(".seq-up").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var li = btn.closest("li");
+        if (li && li.previousElementSibling) {
+          li.parentNode.insertBefore(li, li.previousElementSibling);
+        }
+      });
+    });
+    form.querySelectorAll(".seq-down").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var li = btn.closest("li");
+        if (li && li.nextElementSibling) {
+          li.parentNode.insertBefore(li.nextElementSibling, li);
+        }
+      });
+    });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var fb = form.querySelector(".feedback");
+      var reveal = form.querySelector(".reveal");
+      var shape = form.getAttribute("data-shape");
+      var key = form.getAttribute("data-key");
+      var ok = false;
+      if (shape === "invert_definition" && !form.querySelector(".cloze-in")) {
+        var picked = form.querySelector("input[type=radio]:checked");
+        if (!picked) {
+          fb.hidden = false;
+          fb.className = "feedback";
+          fb.textContent = "Pick an answer to check.";
+          return;
+        }
+        ok = picked.value === "key";
+        fb.hidden = false;
+        fb.className = "feedback " + (ok ? "ok" : "no");
+        fb.textContent = ok
+          ? "Correct — that wording is this atom."
+          : "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom’s own wording.";
+      } else if (shape === "closed_choice") {
+        var pickedChoice = form.querySelector("input[type=radio]:checked");
+        if (!pickedChoice) {
+          fb.hidden = false;
+          fb.className = "feedback";
+          fb.textContent = "Pick an answer to check.";
+          return;
+        }
+        ok = pickedChoice.value === key;
+        fb.hidden = false;
+        fb.className = "feedback " + (ok ? "ok" : "no");
+        fb.textContent = ok
+          ? "Correct — that is the fill already shown."
+          : "Not yet. Options are the form field’s closed value set; the key is the instance fill already shown.";
+      } else if (shape === "sequence_order") {
+        var want = (form.getAttribute("data-order") || "").split(",");
+        var got = [];
+        form.querySelectorAll(".sequence-items li").forEach(function (li) {
+          got.push(li.getAttribute("data-atom"));
+        });
+        ok = got.join(",") === want.join(",");
+        fb.hidden = false;
+        fb.className = "feedback " + (ok ? "ok" : "no");
+        fb.textContent = ok
+          ? "Correct — that is the order of these atoms."
+          : "Not yet. The order is the sequence already taught (these atoms’ object.order).";
+      } else {
+        var typed = form.querySelector("input[type=text]");
+        ok = typed && norm(typed.value) === norm(key);
+        fb.hidden = false;
+        fb.className = "feedback " + (ok ? "ok" : "no");
+        fb.textContent = ok
+          ? "Correct — that wording is this atom."
+          : "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom’s own wording.";
+      }
+      if (reveal) reveal.hidden = false;
+    });
+  });
+})();
+(function () {
+  var player = document.querySelector(".player");
+  if (!player) return;
+  var steps = Array.prototype.slice.call(player.querySelectorAll("[data-player-step]"));
+  if (!steps.length) return;
+  steps.sort(function (a, b) {
+    return Number(a.getAttribute("data-player-step")) - Number(b.getAttribute("data-player-step"));
+  });
+  var back = player.querySelector(".player-back");
+  var next = player.querySelector(".player-next");
+  var status = player.querySelector(".player-status");
+  var sceneCount = Number(player.getAttribute("data-scene-count") || 0);
+  var i = 0;
+  function sceneNumber(idx) {
+    var n = 0;
+    for (var k = 0; k <= idx; k++) {
+      if (steps[k].classList.contains("scene")) n++;
+    }
+    return n;
+  }
+  function headingOf(el) {
+    var h = el.querySelector(".scene-heading");
+    return h ? (h.textContent || "").trim() : "";
+  }
+  function hashOf(el) {
+    if (el.classList.contains("scene")) return el.getAttribute("data-scene") || "";
+    if (el.getAttribute("data-player-kind") === "lesson-end") return "lesson-end";
+    return "";
+  }
+  function show(n, writeHash) {
+    if (n < 0) n = 0;
+    if (n > steps.length - 1) n = steps.length - 1;
+    i = n;
+    steps.forEach(function (el, idx) {
+      if (idx === i) el.removeAttribute("hidden");
+      else el.setAttribute("hidden", "");
+    });
+    if (back) back.disabled = i === 0;
+    if (next) next.disabled = i === steps.length - 1;
+    var cur = steps[i];
+    var isScene = cur.classList.contains("scene");
+    if (status) {
+      status.textContent = isScene
+        ? headingOf(cur) + " · " + sceneNumber(i) + " of " + sceneCount
+        : "";
+    }
+    if (writeHash && history.replaceState) {
+      var hash = hashOf(cur);
+      history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
+    }
+  }
+  function stepFromHash() {
+    var hash = (location.hash || "").replace(/^#/, "");
+    if (!hash) return 0;
+    for (var k = 0; k < steps.length; k++) {
+      if (hashOf(steps[k]) === hash) return k;
+    }
+    return 0;
+  }
+  if (back) back.addEventListener("click", function () { show(i - 1, true); });
+  if (next) next.addEventListener("click", function () { show(i + 1, true); });
+  window.addEventListener("hashchange", function () { show(stepFromHash(), false); });
+  show(stepFromHash(), false);
+})();</script></body></html>
