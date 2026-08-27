@@ -19,11 +19,11 @@ occurrences project as a check from a stamped `invert_definition` shape
 (`agents/realizer/check_v1.md`). Default HTML is
 the short lesson spine (`agents/realizer/spine_v1.md`); `realized_coverage.html` is the full
 SOP dump. Realizer also binds compiler primitives (`agents/realizer/primitives_v1.md`) so
-the spine is heading/callout/body/job-aid/example/check, not a stack of SOP cards. The
-projector wraps those existing beats as **three named scenes** (front-matter /
-Procedure A / form BR) from SOP/form roles — layout chrome, not new meaning —
-and pages **one scene at a time** (Next/Back). Definition/purpose checks stay
-a final step after scene 3, not a fourth scene.
+the spine is heading/callout/body/job-aid/example/check, not a stack of SOP cards. Scene
+records (`agents/realizer/scenes_v1.md`) group those existing beats as **three named
+scenes** (front-matter / Procedure A / form BR) on `spine.scenes` / `ext.scene`.
+The projector **reads** that list and pages **one scene at a time** (Next/Back).
+Definition/purpose checks stay a final step after scene 3, not a fourth scene.
 A small
 instance-example seed (`agents/realizer/instance_example_v1.md`) mints two guest `ele_`
 records whose `composed_from` is an `alsap_asp9999` atom_id. A small form-field
@@ -35,7 +35,8 @@ check honesty bar, spine membership (why-this callout of purpose, front-matter, 
 as a job sequence, sequence practice of those presents, form BR-field presents, instance
 example, then checks), that check operands resolve from the graph (not hardcoded HTML),
 and the atom → primitives bind (procedure_step → `tp_step`,
-activate → `tp_callout`, job-aid HTML). Scene 3 also projects a closed-choice
+activate → `tp_callout`, job-aid HTML). Scene operands (ordered `ele_` refs)
+resolve from the graph, not hardcoded HTML. Scene 3 also projects a closed-choice
 of the BR profile fill (`options_ref` value ids; key = instance
 `selected_value`; projector-only `closed_choice` on `manifest.checks`).
 

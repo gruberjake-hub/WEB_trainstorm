@@ -612,7 +612,7 @@ def main():
                  "Couturier owns expression style; this tool does not wipe it. "
                  "After writing move, Realizer refreshes text_primitive (compiler form). "
                  "Lesson spine is Realizer projection (agents/realizer/spine_v1.md); "
-                 "this tool does not own sequence."),
+                 "this tool does not own sequence. Does not wipe ext.check or ext.scene."),
     }
 
     html_path = pathlib.Path(args.out).resolve() if args.out else project / "realized_lesson.html"

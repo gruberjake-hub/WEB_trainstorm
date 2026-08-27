@@ -52,6 +52,12 @@
         "from_kind": "procedure",
         "from_move": "hook",
         "text_primitive": "tp_display"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -118,6 +124,12 @@
         "from_kind": "procedure",
         "from_move": "present",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -188,6 +200,12 @@
         "from_kind": "procedure",
         "from_move": "objective",
         "text_primitive": "tp_purpose"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -258,6 +276,12 @@
         "from_kind": "procedure",
         "from_move": "activate",
         "text_primitive": "tp_callout"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -405,6 +429,12 @@
         "from_kind": "procedure",
         "from_move": "present",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -535,6 +565,12 @@
         "from_kind": "procedure",
         "from_move": "present",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -1783,6 +1819,12 @@
         "from_kind": "procedure_step",
         "from_move": "present",
         "text_primitive": "tp_step"
+      },
+      "scene": {
+        "id": "how_an_alsap_starts",
+        "role": "procedure_a",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -1852,6 +1894,12 @@
         "from_kind": "procedure_step",
         "from_move": "present",
         "text_primitive": "tp_step"
+      },
+      "scene": {
+        "id": "how_an_alsap_starts",
+        "role": "procedure_a",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -1921,6 +1969,12 @@
         "from_kind": "procedure_step",
         "from_move": "present",
         "text_primitive": "tp_step"
+      },
+      "scene": {
+        "id": "how_an_alsap_starts",
+        "role": "procedure_a",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -1990,6 +2044,12 @@
         "from_kind": "procedure_step",
         "from_move": "present",
         "text_primitive": "tp_step"
+      },
+      "scene": {
+        "id": "how_an_alsap_starts",
+        "role": "procedure_a",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -3501,6 +3561,12 @@
         "from_kind": "form_field",
         "from_move": "present",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "benefit_risk_on_the_form",
+        "role": "form_br",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -3566,6 +3632,12 @@
         "from_kind": "form_field",
         "from_move": "present",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "benefit_risk_on_the_form",
+        "role": "form_br",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -3632,6 +3704,12 @@
         "from_kind": "instance_value",
         "from_move": "exemplify",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "benefit_risk_on_the_form",
+        "role": "form_br",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -3698,6 +3776,12 @@
         "from_kind": "instance_value",
         "from_move": "exemplify",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "benefit_risk_on_the_form",
+        "role": "form_br",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {

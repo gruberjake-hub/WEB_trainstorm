@@ -35,10 +35,12 @@ store (the BR profile / rationale fields the instance examples fill —
 sibling instance store (two `exemplify` extras of existing ASP-9999 atoms —
 `agents/realizer/instance_example_v1.md`), then a `closed_choice` of the BR
 profile (projector-only, after the field+example), then the existing
-definition checks (`invert_definition`). The projector wraps those existing
-beats in **three named scenes** (front-matter / Procedure A / form BR) —
-layout chrome from SOP/form roles already in the graph, not new beats and
-not outcome language — and pages **one scene at a time** (Next/Back).
+definition checks (`invert_definition`). Scene membership and order are
+first-class on the graph (`vocab/scene.enum.json`): Realizer stamps
+`spine.scenes` / `ext.scene` (id, title heuristic, ordered `ele_` refs,
+in-scene check-shape refs). The projector **reads** that list to wrap
+and page; it does not re-discover scenes by if-atom-id. Same three scenes
+(front-matter / Procedure A / form BR), **one at a time** (Next/Back).
 Scene 3 includes the BR closed-choice after the field+example.
 Definition/purpose checks stay a final step after scene 3, not a fourth
 scene. The full SOP dump is `realized_coverage.html`.
@@ -56,11 +58,10 @@ job-aid step list then a sequence practice of the same four presents, the
 form-field presents as body/`present` clothes, the instance example as
 body/`exemplify` clothes (not a new SOP card), a closed-choice of the BR
 profile fill after those presents/examples, front-matter as heading/body,
-reinforce as the existing definition checks. Scene headings group those
+reinforce as the existing definition checks. Scene records group those
 existing primitives; they do not mint `ele_`. Player chrome shows one named
-scene at a time (Next/Back); that is still projector grouping, not new meaning.
-Coverage stays card-like. Couturier still owns `style_ref`. No authored
-`content.text`.
+scene at a time (Next/Back) by reading `spine.scenes`. Coverage stays
+card-like. Couturier still owns `style_ref`. No authored `content.text`.
 
 Idempotency: extra ids are `(primary ele_) + "__" + move`. A re-run accretes
 missing extras and never drops existing extras or Cartographer bindings.
@@ -174,9 +175,13 @@ PRIMITIVE_PURPOSE = "tp_purpose"
 # object.order. Live ALSAP Procedure A is a handful (4) — all land. Cap only
 # if that branch is huge. Not B/C, not thin A/B/C headings.
 PROCEDURE_SEQUENCE_CAP = 8
-# Layout chrome only: group existing spine ele_ into three scenes from
-# SOP/form roles already used for membership. Not new beats. Not an LLM.
-# Headings are role labels, not invented outcomes. Spec: spine_v1.md.
+# First-class scene records: group existing spine ele_ into three scenes
+# from SOP/form roles already used for membership. Not new beats. Not an
+# LLM. Headings are the documented title heuristic, not invented outcomes.
+# Spec: agents/realizer/scenes_v1.md. Projector reads spine.scenes.
+SCENE_SPEC = "agents/realizer/scenes_v1.md"
+SCENE_VOCAB = "vocab/scene.enum.json"
+SCENE_GRAPH_POLICY = "v1_scenes_on_graph"
 SCENE_POLICY = "v1_three_scenes_from_roles"
 PAGING_POLICY = "v1_one_scene_at_a_time"
 SCENE_FRONT_MATTER = "front_matter"
@@ -295,6 +300,18 @@ def load_check_shape_ids(vocab_dir) -> list:
         return list(CHECK_SHAPES)
     data = load(p)
     return [s["id"] for s in (data.get("shapes") or []) if s.get("id")]
+
+
+SCENE_ROLES = (SCENE_FRONT_MATTER, SCENE_PROCEDURE_A, SCENE_FORM_BR)
+
+
+def load_scene_role_ids(vocab_dir) -> list:
+    """Closed scene-role vocab. Missing file is a hard fail in main; selftest uses SCENE_ROLES."""
+    p = pathlib.Path(vocab_dir) / "scene.enum.json"
+    if not p.exists():
+        return list(SCENE_ROLES)
+    data = load(p)
+    return [s["id"] for s in (data.get("roles") or []) if s.get("id")]
 
 
 def mint_element_id(atom_id: str) -> str:
@@ -555,7 +572,7 @@ def append_guest_extras(elements, claimed, prev, mint_extras, *, seed, atoms_by_
     return elements, claimed
 
 
-EXT_KEY_ORDER = ("realized_from", "cartographer", "couturier", "realizer_primitive", "check")
+EXT_KEY_ORDER = ("realized_from", "cartographer", "couturier", "realizer_primitive", "check", "scene")
 
 
 def normalize_element_ext(el):
@@ -1247,12 +1264,12 @@ def apply_spine(manifest, atoms, elements, *, meaning_atoms=None, option_sets=No
                  "profile fill after the form presents and instance examples "
                  "(projector-only; options_ref value ids; no extra ele_) plus "
                  "present clothes on the form-field beats and exemplify clothes "
-                 "on the instance beats; coverage dump stays card-like. Named "
-                 "scene headings group those existing beats from SOP/form roles "
-                 "(layout chrome, not new meaning). Player chrome pages one named "
-                 "scene at a time (Next/Back); lesson-end checks are a final "
-                 "step, not a fourth scene. Not an LLM path and not a full "
-                 "object-tree walk."),
+                 "on the instance beats; coverage dump stays card-like. Scene "
+                 "records (spine.scenes / ext.scene) group those existing beats "
+                 "from SOP/form roles — first-class on the graph, not chrome "
+                 "rediscovery. Player chrome pages that list one named scene at "
+                 "a time (Next/Back); lesson-end checks are a final step, not a "
+                 "fourth scene. Not an LLM path and not a full object-tree walk."),
     }
     seq_atoms = procedure_sequence_atoms(atoms)
     seq = derive_sequence_check(seq_atoms)
@@ -1310,8 +1327,11 @@ def apply_spine(manifest, atoms, elements, *, meaning_atoms=None, option_sets=No
     by_atom = {a["atom_id"]: a for a in atoms}
     scenes, lesson_end = group_spine_scenes(ids, by_eid, by_atom)
     manifest["spine"]["scenes"] = stamp_spine_scenes(
-        scenes, lesson_end, has_br_profile_check=has_br,
+        scenes, lesson_end,
+        sequence_check=bool(seq),
+        closed_choice=has_br,
     )
+    bind_scene_membership(elements, manifest["spine"]["scenes"])
     return manifest["spine"]
 
 
@@ -1420,45 +1440,130 @@ def group_spine_scenes(spine_ids, by_eid, atoms_by_id):
     return scenes, lesson_end
 
 
-def stamp_spine_scenes(scenes, lesson_end, *, has_br_profile_check=False) -> dict:
-    """Manifest chrome for the three role clusters. Membership is unchanged."""
+def stamp_spine_scenes(scenes, lesson_end, *, sequence_check=False,
+                       closed_choice=False) -> dict:
+    """First-class scene records. Membership is unchanged. Projector reads these."""
     out = []
     for s in scenes:
         d = SCENE_DEFS_BY_ROLE.get(s["role"]) or {}
+        checks = []
+        if s["role"] == SCENE_PROCEDURE_A and sequence_check:
+            checks.append({"shape": SHAPE_SEQUENCE, "see": "checks"})
+        if s["role"] == SCENE_FORM_BR and closed_choice:
+            checks.append({"shape": SHAPE_CLOSED, "see": "checks"})
         out.append({
             "id": d.get("id") or s["role"],
             "role": s["role"],
             "heading": d.get("heading") or s["role"],
             "kicker": d.get("kicker") or "",
             "element_ids": list(s["element_ids"]),
-            "includes_sequence_check": s["role"] == SCENE_PROCEDURE_A,
-            "includes_br_profile_check": s["role"] == SCENE_FORM_BR and has_br_profile_check,
+            "checks": checks,
             "from": d.get("from") or "",
         })
     return {
-        "policy": SCENE_POLICY,
-        "spec": SPINE_SPEC,
+        "policy": SCENE_GRAPH_POLICY,
+        "heuristic": SCENE_POLICY,
+        "spec": SCENE_SPEC,
+        "vocab": SCENE_VOCAB,
         "scenes": out,
         "lesson_end_checks": list(lesson_end),
         "paging": {
             "policy": PAGING_POLICY,
-            "spec": SPINE_SPEC,
+            "spec": SCENE_SPEC,
             "scene_count": len(out),
             "step_count": len(out) + (1 if lesson_end else 0),
             "lesson_end_is_final_step": bool(lesson_end),
-            "note": ("Player chrome only: one named scene at a time, Next/Back. "
-                     "Definition/purpose checks are a final step after the last "
-                     "scene, not a fourth named scene. Hash is optional. Same "
-                     "membership. Coverage dump stays unpaged."),
+            "note": ("Player UX on the first-class scene list: one named scene "
+                     "at a time, Next/Back. Definition/purpose checks are a "
+                     "final step after the last scene, not a fourth named scene. "
+                     "Hash is optional. Same membership. Coverage dump stays unpaged."),
         },
-        "note": ("Layout chrome only: named section headings group existing spine "
-                 "ele_ records from SOP/form roles already in the graph. Same "
-                 "membership. Sequence practice stays in Procedure A. Form-BR "
-                 "closed-choice stays in Benefit-risk on the form. Definition/"
-                 "purpose checks stay at lesson end. Player chrome pages one scene "
-                 "at a time. Not an LLM. Not outcome language. "
+        "note": ("First-class scene records: ordered ele_ refs plus in-scene "
+                 "check-shape refs. Projector reads this list to wrap/page; it "
+                 "does not re-discover scenes by if-atom-id. Sequence practice "
+                 "stays in Procedure A. Form-BR closed-choice stays in "
+                 "Benefit-risk on the form. Definition/purpose checks stay at "
+                 "lesson end. Not an LLM. Not outcome language. "
                  "Coverage dump stays ungrouped."),
     }
+
+
+def bind_scene_membership(elements, scenes_stamp):
+    """Stamp ext.scene on member ele_ records. Clears stale stamps. Idempotent."""
+    by_eid = {e["element_id"]: e for e in elements}
+    claimed = set()
+    for sc in (scenes_stamp or {}).get("scenes") or []:
+        sid = sc.get("id") or ""
+        role = sc.get("role") or ""
+        if role and role not in SCENE_ROLES:
+            raise SystemExit(f"scene {sid!r} role {role!r} is not in {SCENE_VOCAB}")
+        rec = {
+            "id": sid,
+            "role": role,
+            "spec": SCENE_SPEC,
+            "policy": SCENE_GRAPH_POLICY,
+        }
+        for eid in sc.get("element_ids") or []:
+            el = by_eid.get(eid)
+            if el is None:
+                raise SystemExit(f"scene {sid} element {eid} is not on the graph")
+            el.setdefault("ext", {})["scene"] = dict(rec)
+            claimed.add(eid)
+    for el in elements:
+        if el.get("element_id") not in claimed:
+            ext = el.get("ext")
+            if isinstance(ext, dict):
+                ext.pop("scene", None)
+
+
+def hosted_scene(el) -> dict | None:
+    rec = (el.get("ext") or {}).get("scene")
+    if isinstance(rec, dict) and rec.get("id") and rec.get("role") in SCENE_ROLES:
+        return rec
+    return None
+
+
+def resolve_scene(record, by_eid) -> dict:
+    """Membership from stamped element_ids. Refuses if a ref does not resolve."""
+    if not record:
+        raise SystemExit("scene record is missing")
+    sid = record.get("id") or ""
+    role = record.get("role") or ""
+    if role not in SCENE_ROLES:
+        raise SystemExit(f"scene {sid!r} role {role!r} is not in {SCENE_VOCAB}")
+    ids = list(record.get("element_ids") or [])
+    if not ids:
+        raise SystemExit(f"scene {sid} has no element_ids")
+    els = []
+    for eid in ids:
+        el = by_eid.get(eid)
+        if el is None:
+            raise SystemExit(f"scene {sid} element {eid} is not on the graph")
+        els.append(el)
+    heading = record.get("heading") or ""
+    if not heading:
+        raise SystemExit(f"scene {sid} has no heading (title heuristic)")
+    return {
+        "id": sid,
+        "role": role,
+        "heading": heading,
+        "kicker": record.get("kicker") or "",
+        "element_ids": ids,
+        "elements": els,
+        "checks": list(record.get("checks") or []),
+        "from": record.get("from") or "",
+    }
+
+
+def scene_check_refs(scene) -> list:
+    """In-scene check-shape refs from the stamped scene record."""
+    refs = []
+    for cref in scene.get("checks") or []:
+        if isinstance(cref, dict) and cref.get("shape"):
+            refs.append(cref["shape"])
+        elif isinstance(cref, str):
+            refs.append(cref)
+    return refs
 
 
 def derive_check(atom, atoms) -> dict | None:
@@ -2141,8 +2246,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
     into SOP atoms.json.
     `option_sets` / `options_registry` are the governed value sets keyed by
     options_ref (for closed_choice). Pass explicitly — do not silently invent
-    options. Projector reads stamped check shapes; it does not re-discover
-    pedagogy by if-atom-id.
+    options. Projector reads stamped check shapes and scene records; it
+    does not re-discover pedagogy or scenes by if-atom-id.
     """
     registry = options_registry if options_registry is not None else (option_sets or {})
     options_registry = registry
@@ -2412,22 +2517,35 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
 
     def render_beat_groups(ids):
         chunks = []
-        seq_rec = manifest_check(manifest, SHAPE_SEQUENCE)
         for kind, els in group_spine_for_project(ids, by_eid):
             if kind == "job_aid":
                 chunks.append(job_aid_block_html(els))
-                want = list((seq_rec or {}).get("operands", {}).get("element_ids") or [])
-                got = [e["element_id"] for e in els]
-                if seq_rec and want and got == want:
-                    seq_chk = resolve_check(seq_rec, by_atom, options_registry)
-                    if seq_chk:
-                        assert_sequence_check_honest(seq_chk, catalog)
-                        chunks.append(sequence_check_html(els, seq_chk))
                 continue
             el = els[0]
             atom = by_atom[el["composed_from"]]
             extra_cls = " extra" if is_extra_element(el) else ""
             chunks.append(card_html(el, atom, extra_cls))
+        return chunks
+
+    def render_scene_checks(scene):
+        """In-scene projector-only checks from the stamped scene record."""
+        chunks = []
+        for shape in scene_check_refs(scene):
+            rec = manifest_check(manifest, shape)
+            if not rec:
+                continue
+            chk = resolve_check(rec, by_atom, options_registry)
+            if not chk:
+                continue
+            if shape == SHAPE_SEQUENCE:
+                assert_sequence_check_honest(chk, catalog)
+                want = list((rec.get("operands") or {}).get("element_ids") or [])
+                step_els = [by_eid[eid] for eid in want if eid in by_eid]
+                if step_els:
+                    chunks.append(sequence_check_html(step_els, chk))
+            elif shape == SHAPE_CLOSED:
+                assert_br_profile_check_honest(chk, by_atom, options_registry or {})
+                chunks.append(br_profile_check_html(chk))
         return chunks
 
     scenes_stamp = spine.get("scenes") or {}
@@ -2443,22 +2561,17 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
     spine_body = []
     if scene_list:
         for idx, sc in enumerate(scene_list):
-            inner = render_beat_groups(sc.get("element_ids") or [])
-            if sc.get("role") == SCENE_FORM_BR and sc.get("includes_br_profile_check"):
-                cc_rec = manifest_check(manifest, SHAPE_CLOSED)
-                if cc_rec:
-                    br_chk = resolve_check(cc_rec, by_atom, options_registry)
-                    if br_chk:
-                        assert_br_profile_check_honest(br_chk, by_atom, options_registry or {})
-                        inner.append(br_profile_check_html(br_chk))
+            resolved = resolve_scene(sc, by_eid)
+            inner = render_beat_groups(resolved["element_ids"])
+            inner.extend(render_scene_checks(resolved))
             hidden = "" if idx == 0 else " hidden"
             spine_body.append(
-                f'<section class="scene" data-scene="{esc(sc.get("id") or "")}" '
-                f'data-role="{esc(sc.get("role") or "")}" '
+                f'<section class="scene" data-scene="{esc(resolved["id"])}" '
+                f'data-role="{esc(resolved["role"])}" '
                 f'data-player-step="{idx}"{hidden}>'
                 f'<header class="scene-head">'
-                f'<p class="scene-kicker">{esc(sc.get("kicker") or "")}</p>'
-                f'<h2 class="scene-heading">{esc(sc.get("heading") or "")}</h2>'
+                f'<p class="scene-kicker">{esc(resolved["kicker"])}</p>'
+                f'<h2 class="scene-heading">{esc(resolved["heading"])}</h2>'
                 f'</header>'
                 f'{"".join(inner)}'
                 f'</section>'
@@ -2582,9 +2695,10 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         "example as body/`exemplify` clothes (form then instance atom via "
         "composed_from), a closed-choice of the BR profile fill in that scene, "
         "front-matter as heading/body, "
-        "reinforce as the existing definition checks. Named scene headings group "
-        "those existing beats (front-matter / Procedure A / form BR); player "
-        "chrome pages one named scene at a time. Coverage stays card-like. "
+        "reinforce as the existing definition checks. Scene records on "
+        "<span class=mono>spine.scenes</span> group those existing beats "
+        "(front-matter / Procedure A / form BR); player chrome pages that "
+        "list one named scene at a time. Coverage stays card-like. "
         if prim_counts else
         " The atom → primitives hop is owed so beats are clothes, not SOP cards. "
     )
@@ -2596,9 +2710,9 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         "a job sequence then a sequence practice of those presents, the form "
         "fields those examples fill, a small instance example, a closed-choice "
         "of that BR profile fill, then the existing "
-        "definition checks. Scene chrome groups those same beats from SOP/form "
-        "roles; the player shows one named scene at a time (Next/Back). The object "
-        "tree walk is coverage, not the path. "
+        "definition checks. Scene records on <span class=mono>spine.scenes</span> "
+        "group those same beats; the player shows one named scene at a time "
+        "(Next/Back). The object tree walk is coverage, not the path. "
     )
     if cout:
         ctrl_doc = "Couturier v1"
@@ -2963,8 +3077,8 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f"{' Form BR presents + instance fill also project a closed-choice (same spec; no extra ele_).' if (spine.get('br_profile_check')) else ''} "
         f"{' Compiler primitives: ' + prim_bits + '.' if prim_bits else ''} "
         f"Spine heuristic: <span class=mono>{esc(SPINE_SPEC)}</span>."
-        f"{' Scene chrome: ' + esc(SCENE_POLICY) + '.' if scene_list else ''}"
-        f"{' Player chrome: ' + esc(PAGING_POLICY) + '.' if scene_list else ''}"
+        f"{' Scenes: ' + esc(SCENE_GRAPH_POLICY) + ' (' + esc(SCENE_SPEC) + ').' if scene_list else ''}"
+        f"{' Player: ' + esc(PAGING_POLICY) + '.' if scene_list else ''}"
     )
 
     def render_page(page_title, heading, nav, path_line, main, details_html, extra_script=""):
@@ -3469,9 +3583,9 @@ def selftest(closed_moves):
                         "ele_sop_ast29080_purpose__reinforce",
                         "ele_sop_ast29080_general__reinforce",
                     ], scenes0.get("lesson_end_checks")))
-    results.append(("Procedure A scene includes sequence-check flag and the four presents",
+    results.append(("Procedure A scene lists sequence_order and the four presents",
                     any(s["role"] == SCENE_PROCEDURE_A
-                        and s.get("includes_sequence_check")
+                        and SHAPE_SEQUENCE in scene_check_refs(s)
                         and s["element_ids"] == [
                             "ele_sop_ast29080_proc_a_s1",
                             "ele_sop_ast29080_proc_a_s2",
@@ -3481,17 +3595,37 @@ def selftest(closed_moves):
                         for s in scenes0.get("scenes") or []),
                     [s for s in scenes0.get("scenes") or [] if s["role"] == SCENE_PROCEDURE_A]))
     results.append(("scene grouping does not change spine membership",
-                    scenes0.get("policy") == SCENE_POLICY
+                    scenes0.get("policy") == SCENE_GRAPH_POLICY
+                    and scenes0.get("heuristic") == SCENE_POLICY
                     and set(sum((s["element_ids"] for s in scenes0.get("scenes") or []), [])
                             + list(scenes0.get("lesson_end_checks") or []))
                     == set(want_spine), ""))
     paging0 = scenes0.get("paging") or {}
-    results.append(("paging is player chrome on the same scenes",
+    results.append(("paging still pages the first-class scene list",
                     paging0.get("policy") == PAGING_POLICY
                     and paging0.get("scene_count") == 2
                     and paging0.get("step_count") == 3
                     and paging0.get("lesson_end_is_final_step") is True
-                    and scenes0.get("policy") == SCENE_POLICY, paging0))
+                    and scenes0.get("policy") == SCENE_GRAPH_POLICY, paging0))
+    seeded_by_eid = {e["element_id"]: e for e in seeded}
+    resolved_scenes0 = [resolve_scene(s, seeded_by_eid) for s in scenes0.get("scenes") or []]
+    results.append(("scene operands resolve from the graph (not hardcoded HTML)",
+                    resolved_scenes0
+                    and all(el["element_id"] in seeded_by_eid for sc in resolved_scenes0
+                            for el in sc["elements"])
+                    and [el["element_id"] for el in resolved_scenes0[0]["elements"]]
+                    == scenes0["scenes"][0]["element_ids"],
+                    [sc["element_ids"] for sc in resolved_scenes0]))
+    fm_host = next(e for e in seeded if e["element_id"] == "ele_sop_ast29080")
+    proc_host = next(e for e in seeded if e["element_id"] == "ele_sop_ast29080_proc_a_s1")
+    end_host = next(e for e in seeded if e["element_id"] == "ele_sop_ast29080_purpose__reinforce")
+    results.append(("ext.scene is stamped on scene members not lesson-end checks",
+                    hosted_scene(fm_host)
+                    and hosted_scene(fm_host).get("id") == "what_an_alsap_is"
+                    and hosted_scene(proc_host)
+                    and hosted_scene(proc_host).get("id") == "how_an_alsap_starts"
+                    and hosted_scene(end_host) is None,
+                    (hosted_scene(fm_host), hosted_scene(end_host))))
 
     # Compiler primitives from atom kind + occurrence move.
     results.append(("procedure_step present is tp_step",
@@ -3687,6 +3821,13 @@ def selftest(closed_moves):
     results.append(("player chrome does not invent a fourth scene heading",
                     page.count('class="scene-heading">') == 2
                     and "will be able" not in page.lower(), page.count('class="scene-heading">')))
+    results.append(("HTML scene headings are a read of spine.scenes not a hardcoded string",
+                    all(f'data-scene="{s["id"]}"' in page
+                        and f'class="scene-heading">{s["heading"]}</h2>' in page
+                        for s in scenes0.get("scenes") or [])
+                    and all(eid in page for s in scenes0.get("scenes") or []
+                            for eid in s["element_ids"]),
+                    [s.get("id") for s in scenes0.get("scenes") or []]))
     results.append(("lesson sequence practice sits after the job aid",
                     page.find('class="prim prim-step job-aid"')
                     < page.find('data-shape="sequence_order"')
@@ -4065,8 +4206,9 @@ def selftest(closed_moves):
                     and page_form.count('class="scene-heading">How an ALSAP starts</h2>') == 1
                     and page_form.count('class="scene-heading">Benefit-risk on the form</h2>') == 1
                     and page_form.count('class="scene-heading">') == 3, page_form.count('class="scene-heading">')))
-    results.append(("form BR scene includes closed-choice of the instance fill",
-                    any(s["role"] == SCENE_FORM_BR and s.get("includes_br_profile_check")
+    results.append(("form BR scene lists closed_choice of the instance fill",
+                    any(s["role"] == SCENE_FORM_BR
+                        and SHAPE_CLOSED in scene_check_refs(s)
                         for s in form_scenes.get("scenes") or [])
                     and (mf_form.get("spine") or {}).get("br_profile_check", {}).get("key")
                     == "conditional_favorable"
@@ -4200,6 +4342,27 @@ def selftest(closed_moves):
                     f'data-shape="{SHAPE_CLOSED}"' in br_chunk
                     and inst_eids[0] in br_chunk
                     and f'data-shape="{SHAPE_CLOSED}"' not in page_form[end_form:], ""))
+    form_by_eid = {e["element_id"]: e for e in seeded_form}
+    resolved_form_scenes = [resolve_scene(s, form_by_eid) for s in form_scenes.get("scenes") or []]
+    results.append(("three-scene operands resolve from the graph",
+                    len(resolved_form_scenes) == 3
+                    and resolved_form_scenes[2]["id"] == "benefit_risk_on_the_form"
+                    and resolved_form_scenes[2]["element_ids"] == form_eids + inst_eids
+                    and SHAPE_CLOSED in scene_check_refs(resolved_form_scenes[2])
+                    and SHAPE_SEQUENCE in scene_check_refs(resolved_form_scenes[1]),
+                    [sc["id"] for sc in resolved_form_scenes]))
+    results.append(("HTML three-scene wrap is a read of those resolved records",
+                    all(f'data-scene="{sc["id"]}"' in page_form
+                        and f'class="scene-heading">{sc["heading"]}</h2>' in page_form
+                        for sc in resolved_form_scenes)
+                    and all(eid in page_form for eid in resolved_form_scenes[2]["element_ids"]),
+                    [sc["heading"] for sc in resolved_form_scenes]))
+    br_member = next(e for e in seeded_form if e["element_id"] == form_eids[0])
+    results.append(("form BR members carry ext.scene",
+                    hosted_scene(br_member)
+                    and hosted_scene(br_member).get("id") == "benefit_risk_on_the_form"
+                    and hosted_scene(br_member).get("role") == SCENE_FORM_BR,
+                    hosted_scene(br_member)))
     results.append(("rationale extra stays an example (not a fourth check host)",
                     hosted_check(next(e for e in seeded_form if e["element_id"] == inst_eids[1]))
                     is None, ""))
@@ -4208,6 +4371,11 @@ def selftest(closed_moves):
                     and all(r.get("shape") in CHECK_SHAPES
                             for r in (mf_form.get("checks") or {}).get("checks") or []),
                     (mf_form.get("checks") or {}).get("checks")))
+    results.append(("closed vocab of scene roles is front_matter / procedure_a / form_br",
+                    set(SCENE_ROLES) == {SCENE_FRONT_MATTER, SCENE_PROCEDURE_A, SCENE_FORM_BR}
+                    and all(s.get("role") in SCENE_ROLES
+                            for s in form_scenes.get("scenes") or []),
+                    [s.get("role") for s in form_scenes.get("scenes") or []]))
     results.append(("spine membership is still 16 with form+instance",
                     len(got_spine_form) == 16, got_spine_form))
 
@@ -4316,6 +4484,12 @@ def main():
         raise SystemExit(
             f"vocab/check-shape.enum.json {closed_check_shapes} does not match "
             f"realize.py {list(CHECK_SHAPES)}"
+        )
+    closed_scene_roles = load_scene_role_ids(P["vocab_dir"])
+    if set(closed_scene_roles) != set(SCENE_ROLES):
+        raise SystemExit(
+            f"vocab/scene.enum.json {closed_scene_roles} does not match "
+            f"realize.py {list(SCENE_ROLES)}"
         )
     options_registry = load_options_registry(P["registry_dir"])
     move = args.move
@@ -4492,13 +4666,15 @@ def main():
                  f"({SPINE_SPEC}); the full dump is coverage. Check shapes "
                  f"({SHAPE_INVERT}, {SHAPE_SEQUENCE}, {SHAPE_CLOSED}) live on "
                  "ext.check / manifest.checks (vocab/check-shape.enum.json). "
+                 "Scene records (id, title heuristic, ordered ele_ refs) live on "
+                 "spine.scenes / ext.scene (vocab/scene.enum.json). "
                  "Procedure A sequence_order is projector-only of those four "
                  "presents; composing it from one atom would be a lie. "
                  "closed_choice is projector-only of the form present + instance "
                  "fill (options_ref ids; key = selected_value); composing from "
                  "only one of those two atoms would hide the other half. "
                  "A re-realize preserves extras, intent, style, and recomputes "
-                 "the same spine, primitives, and check shapes."),
+                 "the same spine, primitives, check shapes, and scenes."),
     }
     if any((e.get("ext") or {}).get("cartographer") for e in elements):
         cart = dict(prev_mf.get("cartographer") or {})
@@ -4565,6 +4741,8 @@ def main():
     print(f"  occurrences: {elements_path}")
     print(f"  manifest   : {store_dir / 'manifest.json'}")
     print(f"  spine      : {spine_n} of {len(elements)} ({SPINE_POLICY})")
+    scenes_n = len(((occ_manifest.get("spine") or {}).get("scenes") or {}).get("scenes") or [])
+    print(f"  scenes     : {scenes_n} ({SCENE_GRAPH_POLICY})")
     print(f"  form       : {FORM_PROJECT_NAME} ({len(form_atoms)} atoms joined for meaning; "
           f"{sum(1 for e in extras if (e.get('ext') or {}).get('realized_from', {}).get('form_store'))} guest ele_)")
     print(f"  instance   : {INSTANCE_PROJECT_NAME} ({len(instance_atoms)} atoms joined for meaning; "

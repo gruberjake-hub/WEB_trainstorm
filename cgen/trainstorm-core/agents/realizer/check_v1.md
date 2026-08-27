@@ -272,7 +272,7 @@ this check. Shape + operand refs live on `manifest.checks`.
 | Agent | Still owns | This hop |
 |---|---|---|
 | Realizer | `ele_` ids; HTML projection; compiler `text_primitive` | Binds `ext.check` + `manifest.checks` (shape + operand refs). Projector **reads** those records to render invert-definition, sequence_order, and closed_choice. |
-| Cartographer | occurrence intent | Does not mint `practice`/`assess`; extra `reinforce` move stays Realizer-stamped; A-step primaries stay `present`; form/instance extras keep Realizer-stamped `present` / `exemplify`. Does not wipe `ext.check`. |
+| Cartographer | occurrence intent | Does not mint `practice`/`assess`; extra `reinforce` move stays Realizer-stamped; A-step primaries stay `present`; form/instance extras keep Realizer-stamped `present` / `exemplify`. Does not wipe `ext.check` or `ext.scene`. |
 | Couturier | expression style keys | `layout_hint` for `reinforce` is `check`; still `brand.recall` / `tp_recall`. Sequence practice and BR closed-choice are projector clothes of existing beats |
 
 Re-running realize → cartographer → couturier keeps extra `ele_` ids,
