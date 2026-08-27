@@ -78,8 +78,8 @@ export function SequenceOrder({ props, emit }) {
     const correct = got.join(",") === want;
     feedback.hidden = false;
     feedback.textContent = correct
-      ? (props.feedback?.correct || "Correct — that is the order of these atoms.")
-      : (props.feedback?.incorrect || "Not yet. The order is the sequence already taught (these atoms’ object.order).");
+      ? (props.feedback?.correct || "Correct — that’s the order on the job aid already shown.")
+      : (props.feedback?.incorrect || "Not yet. Use the sequence on the job aid above.");
     emit("SEQUENCE_ANSWERED", { id: props.id || "sequence", correct, order: got });
   });
 

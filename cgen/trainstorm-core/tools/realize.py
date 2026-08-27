@@ -178,9 +178,31 @@ FORM_FIELD_SEED = (
     ("atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale", "present"),
 )
 # Closed-choice of the BR profile fill. Prompt is task clothes (same honesty
-# as the sequence prompt). Options = the form field's options_ref value ids.
+# as the sequence prompt). Options = the form field's options_ref value ids
+# on the graph; learner-visible labels are an engine/sidecar projection.
 # Key = the instance selected_value. Do not invent a stem.
-BR_CHECK_PROMPT = "Choose the closed value already shown."
+SEQUENCE_PROMPT = "Put these in the order already taught."
+BR_CHECK_PROMPT = "Choose the value already shown on the example."
+# Projector clothes on the disposable engine JSON adapter — not an ele_,
+# not Couturier writing style_ref onto a present occurrence.
+PROJECTOR_CHECK_STYLE_REF = "brand.recall"
+INVERT_MCQ_FEEDBACK = {
+    "correct": "Correct — that’s the wording from this definition.",
+    "incorrect": (
+        "Not yet. The other options are other sentences from this lesson, "
+        "not this definition."
+    ),
+}
+CLOSED_MCQ_FEEDBACK = {
+    "correct": "Correct — that’s the value already shown on the example.",
+    "incorrect": (
+        "Not yet. Pick the value from the example already shown."
+    ),
+}
+SEQUENCE_FEEDBACK = {
+    "correct": "Correct — that’s the order on the job aid already shown.",
+    "incorrect": "Not yet. Use the sequence on the job aid above.",
+}
 BR_PROFILE_FORM_ATOM_ID = FORM_FIELD_SEED[0][0]
 BR_PROFILE_INSTANCE_ATOM_ID = INSTANCE_EXAMPLE_SEED[0][0]
 PRIMITIVE_SPEC = "agents/realizer/primitives_v1.md"
@@ -2390,7 +2412,7 @@ def derive_sequence_check(step_atoms) -> dict | None:
         "shape": SHAPE_SEQUENCE,
         "spec": CHECK_SPEC,
         "policy": CHECK_POLICY,
-        "prompt": "Put these in the order already taught.",
+        "prompt": SEQUENCE_PROMPT,
         "items": items,
         "correct_ids": [it["atom_id"] for it in items],
         "operands": {
@@ -2404,7 +2426,7 @@ def assert_sequence_check_honest(check, atoms):
     """Refuse a sequence projection that invented wording or order."""
     if not check or check.get("shape") != SHAPE_SEQUENCE:
         raise SystemExit("sequence check derivation returned nothing")
-    if check.get("prompt") != "Put these in the order already taught.":
+    if check.get("prompt") != SEQUENCE_PROMPT:
         raise SystemExit("sequence prompt is clothes, not an SOP stem — refusing a new fact")
     by_id = {a["atom_id"]: a for a in atoms}
     prev = None
@@ -2716,6 +2738,48 @@ def option_value_ids(form_atom, option_sets) -> list | None:
     return ids
 
 
+def option_value_label(options_ref, value_id, option_sets) -> str:
+    """Registry `label` for a governed value id. Never `description`. Missing → id."""
+    vid = value_id or ""
+    if not vid:
+        return ""
+    entry = (option_sets or {}).get(options_ref) or {}
+    for v in entry.get("values") or []:
+        if v.get("id") == vid:
+            label = (v.get("label") or "").strip()
+            return label or vid
+    return vid
+
+
+def closed_choice_display(choice, chk, option_sets) -> tuple[str, str]:
+    """(governed id, learner-visible text). Labels are projector clothes, not graph facts."""
+    vid = choice.get("id") or choice.get("text") or ""
+    ref = chk.get("options_ref") or choice.get("from")
+    return vid, option_value_label(ref, vid, option_sets)
+
+
+def invert_feedback(chk=None) -> dict:
+    """Learner task-clothes. May quote the key (⊆ the atom). No atom / ele_ / sibling store."""
+    key = ((chk or {}).get("key") or "").strip()
+    correct = INVERT_MCQ_FEEDBACK["correct"]
+    if key:
+        correct = (
+            "Correct — that’s the wording from this definition "
+            f"(“{key}”)."
+        )
+    return {
+        "correct": correct,
+        "incorrect": INVERT_MCQ_FEEDBACK["incorrect"],
+    }
+
+
+def check_feedback_attrs(esc, feedback) -> str:
+    return (
+        f'data-feedback-correct="{esc(feedback["correct"])}" '
+        f'data-feedback-incorrect="{esc(feedback["incorrect"])}"'
+    )
+
+
 def derive_br_profile_check(form_atom, instance_atom, option_sets) -> dict | None:
     """Closed-choice of the instance fill against the form field's options_ref.
 
@@ -2830,7 +2894,7 @@ def check_body_html(el, catalog, options_registry, esc) -> str | None:
             assert_check_honest(chk, atom, list(catalog.values()))
         return invert_check_html(el, chk, esc)
     if shape == SHAPE_CLOSED:
-        return closed_choice_html(el, chk, esc)
+        return closed_choice_html(el, chk, esc, options_registry)
     return None
 
 
@@ -2839,6 +2903,7 @@ def invert_check_html(el, chk, esc) -> str:
     reveal = esc(chk.get("sentence") or chk.get("key") or "")
     ops = chk.get("operands") or {}
     contrast = ops.get("contrast_atom_ids") or []
+    fb_attrs = check_feedback_attrs(esc, invert_feedback(chk))
     src_note = (
         f'<p class="check-note">Key is atom '
         f'<span class="mono">{esc(chk.get("key_atom_id") or ops.get("key_atom_id") or "")}</span>. '
@@ -2861,7 +2926,7 @@ def invert_check_html(el, chk, esc) -> str:
             )
         return (
             f'<form class="check" data-shape="{esc(SHAPE_INVERT)}" data-key="key" '
-            f'data-eid="{esc(eid)}">'
+            f'data-eid="{esc(eid)}" {fb_attrs}>'
             f'<p class="stem">{esc(chk["stem"])}</p>'
             f'{"".join(labels)}'
             f'<div class="check-actions"><button type="submit">Check</button></div>'
@@ -2882,7 +2947,7 @@ def invert_check_html(el, chk, esc) -> str:
         stem_block = f'<p class="stem">{esc(stem)}</p>'
     return (
         f'<form class="check" data-shape="{esc(SHAPE_INVERT)}" data-render="{esc(RENDER_CLOZE)}" '
-        f'data-key="{esc(chk["key"])}" data-eid="{esc(eid)}">'
+        f'data-key="{esc(chk["key"])}" data-eid="{esc(eid)}" {fb_attrs}>'
         f"{stem_block}"
         f'<input type="text" class="cloze-in" autocomplete="off" aria-label="Your recall">'
         f'<div class="check-actions"><button type="submit">Check</button></div>'
@@ -2893,7 +2958,7 @@ def invert_check_html(el, chk, esc) -> str:
     )
 
 
-def closed_choice_html(el, chk, esc) -> str:
+def closed_choice_html(el, chk, esc, option_sets=None) -> str:
     eid = el["element_id"]
     ops = chk.get("operands") or {}
     choices = stable_rotate(list(chk["choices"]), eid)
@@ -2902,12 +2967,13 @@ def closed_choice_html(el, chk, esc) -> str:
     ] and len(choices) > 1:
         choices = list(choices[1:]) + list(choices[:1])
     labels = []
+    key_label = option_value_label(chk.get("options_ref"), chk.get("key"), option_sets)
     for c in choices:
-        vid = c.get("id") or c["text"]
+        vid, shown = closed_choice_display(c, chk, option_sets)
         labels.append(
             f'<label class="choice">'
             f'<input type="radio" name="{esc(eid)}" value="{esc(vid)}">'
-            f'<span class="mono">{esc(c["text"])}</span>'
+            f'<span>{esc(shown)}</span>'
             f"</label>"
         )
     src_note = (
@@ -2918,40 +2984,18 @@ def closed_choice_html(el, chk, esc) -> str:
         f'(form atom <span class="mono">{esc(ops.get("form_atom_id") or chk.get("form_atom_id") or "")}</span>). '
         f'Shape <span class="mono">{esc(SHAPE_CLOSED)}</span> — labels are not on the element.</p>'
     )
+    fb_attrs = check_feedback_attrs(esc, CLOSED_MCQ_FEEDBACK)
     return (
         f'<form class="check" data-shape="{esc(SHAPE_CLOSED)}" '
-        f'data-key="{esc(chk["key"])}" data-eid="{esc(eid)}">'
+        f'data-key="{esc(chk["key"])}" data-eid="{esc(eid)}" {fb_attrs}>'
         f'<p class="stem">{esc(chk.get("prompt") or chk.get("stem") or "")}</p>'
         f'{"".join(labels)}'
         f'<div class="check-actions"><button type="submit">Check</button></div>'
         f'<p class="feedback" hidden></p>'
-        f'<p class="reveal" hidden><span class="mono">{esc(chk["key"])}</span></p>'
+        f'<p class="reveal" hidden>{esc(key_label)}</p>'
         f"{src_note}"
         f"</form>"
     )
-
-
-INVERT_MCQ_FEEDBACK = {
-    "correct": "Correct — that wording is this atom.",
-    "incorrect": (
-        "Not yet. Distractors (if any) are sibling atoms in this store; "
-        "the key is this atom’s own wording."
-    ),
-}
-CLOSED_MCQ_FEEDBACK = {
-    "correct": "Correct — that is the fill already shown.",
-    "incorrect": (
-        "Not yet. Options are the form field’s closed value set; "
-        "the key is the instance fill already shown."
-    ),
-}
-SEQUENCE_FEEDBACK = {
-    "correct": "Correct — that is the order of these atoms.",
-    "incorrect": (
-        "Not yet. The order is the sequence already taught "
-        "(these atoms’ object.order)."
-    ),
-}
 
 
 def lesson_player_json_path(html_path: pathlib.Path) -> pathlib.Path:
@@ -3058,7 +3102,7 @@ def _engine_invert_component(el, chk) -> dict:
                 "kicker": "Check",
                 "stem": chk["stem"],
                 "choices": options,
-                "feedback": dict(INVERT_MCQ_FEEDBACK),
+                "feedback": invert_feedback(chk),
             },
             "meta": meta,
         }
@@ -3069,7 +3113,7 @@ def _engine_invert_component(el, chk) -> dict:
             "kicker": "Check",
             "stem": chk["stem"],
             "key": chk["key"],
-            "feedback": dict(INVERT_MCQ_FEEDBACK),
+            "feedback": invert_feedback(chk),
         },
         "meta": {**meta, "render": RENDER_CLOZE},
     }
@@ -3095,17 +3139,22 @@ def _engine_sequence_component(chk) -> dict:
             "shape": SHAPE_SEQUENCE,
             "from": "manifest.checks",
             "atom_ids": list(chk["correct_ids"]),
+            "style_ref": PROJECTOR_CHECK_STYLE_REF,
         },
     }
 
 
-def _engine_closed_choice_component(chk) -> dict:
+def _engine_closed_choice_component(chk, options_registry=None) -> dict:
     seed = "closed_choice:" + chk["options_ref"] + ":" + chk["key"]
     shown = shuffled_closed_choices(chk["choices"], seed)
-    options = [
-        {"id": c["text"], "text": c["text"], "correct": bool(c.get("correct"))}
-        for c in shown
-    ]
+    options = []
+    for c in shown:
+        vid, shown_text = closed_choice_display(c, chk, options_registry)
+        options.append({
+            "id": vid,
+            "text": shown_text,
+            "correct": bool(c.get("correct")),
+        })
     return {
         "type": "MCQ",
         "props": {
@@ -3121,6 +3170,7 @@ def _engine_closed_choice_component(chk) -> dict:
             "options_ref": chk.get("options_ref"),
             "key_atom_id": chk.get("key_atom_id"),
             "form_atom_id": chk.get("form_atom_id"),
+            "style_ref": PROJECTOR_CHECK_STYLE_REF,
         },
     }
 
@@ -3160,7 +3210,7 @@ def _engine_scene_checks(scene, manifest, by_eid, by_atom, options_registry) -> 
             comps.append(_engine_sequence_component(chk))
         elif shape == SHAPE_CLOSED:
             assert_br_profile_check_honest(chk, by_atom, options_registry or {})
-            comps.append(_engine_closed_choice_component(chk))
+            comps.append(_engine_closed_choice_component(chk, options_registry))
     return comps
 
 
@@ -3461,12 +3511,14 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         reveal = "".join(f'<li>{esc(it["text"])}</li>' for it in chk["items"])
         from_ids = ", ".join(esc(el["element_id"]) for el in step_els)
         from_atoms = ", ".join(f'<span class="mono">{esc(i)}</span>' for i in chk["correct_ids"])
+        clothes = CLOTHES_CLASS.get(PROJECTOR_CHECK_STYLE_REF, "")
+        fb_attrs = check_feedback_attrs(esc, SEQUENCE_FEEDBACK)
         return (
-            f'<section class="prim prim-check sequence-check">'
+            f'<section class="prim prim-check sequence-check {clothes}">'
             f'<div class="kicker">Practice</div>'
             f'<form class="check" data-shape="{esc(SHAPE_SEQUENCE)}" '
             f'data-order="{esc(",".join(chk["correct_ids"]))}" '
-            f'data-eid="sequence:{esc(chk["correct_ids"][0])}">'
+            f'data-eid="sequence:{esc(chk["correct_ids"][0])}" {fb_attrs}>'
             f'<p class="stem">{esc(chk["prompt"])}</p>'
             f'<ol class="sequence-items">{"".join(rows)}</ol>'
             f'<div class="check-actions"><button type="submit">Check</button></div>'
@@ -3488,26 +3540,30 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         seed = "closed_choice:" + chk["options_ref"] + ":" + chk["key"]
         shown = shuffled_closed_choices(chk["choices"], seed)
         labels = []
+        key_label = option_value_label(chk["options_ref"], chk["key"], options_registry)
         for c in shown:
+            vid, shown_text = closed_choice_display(c, chk, options_registry)
             labels.append(
                 f'<label class="choice">'
-                f'<input type="radio" name="br_profile" value="{esc(c["text"])}">'
-                f'<span class="mono">{esc(c["text"])}</span>'
+                f'<input type="radio" name="br_profile" value="{esc(vid)}">'
+                f'<span>{esc(shown_text)}</span>'
                 f"</label>"
             )
         form_eid = mint_extra_element_id(chk["form_atom_id"], "present")
         inst_eid = mint_extra_element_id(chk["key_atom_id"], "exemplify")
+        clothes = CLOTHES_CLASS.get(PROJECTOR_CHECK_STYLE_REF, "")
+        fb_attrs = check_feedback_attrs(esc, CLOSED_MCQ_FEEDBACK)
         return (
-            f'<section class="prim prim-check closed-choice-check">'
+            f'<section class="prim prim-check closed-choice-check {clothes}">'
             f'<div class="kicker">Practice</div>'
             f'<form class="check" data-shape="closed_choice" '
             f'data-key="{esc(chk["key"])}" '
-            f'data-eid="closed_choice:{esc(chk["key_atom_id"])}">'
+            f'data-eid="closed_choice:{esc(chk["key_atom_id"])}" {fb_attrs}>'
             f'<p class="stem">{esc(chk["prompt"])}</p>'
             f'{"".join(labels)}'
             f'<div class="check-actions"><button type="submit">Check</button></div>'
             f'<p class="feedback" hidden></p>'
-            f'<p class="reveal" hidden><span class="mono">{esc(chk["key"])}</span></p>'
+            f'<p class="reveal" hidden>{esc(key_label)}</p>'
             f'<p class="check-note">Options are the value ids of '
             f'<span class="mono">{esc(chk["options_ref"])}</span> on '
             f'<span class="mono">{esc(chk["form_atom_id"])}</span>. '
@@ -3930,7 +3986,7 @@ form.check .check-note{font-size:11.5px;color:var(--mut);margin:10px 0 0}
 .scene-heading{font-size:22px;margin:0;letter-spacing:-.02em;color:var(--ink)}
 .lesson-end-checks{margin:12px 0 8px;padding-top:10px;border-top:1px dashed var(--line)}
 .scene[hidden],.lesson-end-checks[hidden]{display:none !important}
-.sequence-check{border:2px solid #334155;border-radius:8px;padding:16px 18px 10px;margin:16px 0;
+.sequence-check,.sequence-check.style-recall,.closed-choice-check.style-recall{border:2px solid #334155;border-radius:8px;padding:16px 18px 10px;margin:16px 0;
  background:#f1f5f9}
 .sequence-check .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
  color:#1e293b;margin:0 0 6px}
@@ -3970,6 +4026,17 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
   function norm(s) {
     return (s || "").replace(/\s+/g, " ").trim().toLowerCase();
   }
+  function fallbackCopy(shape, ok) {
+    if (shape === "sequence_order") return ok ? __SEQ_OK__ : __SEQ_NO__;
+    if (shape === "closed_choice") return ok ? __CLOSED_OK__ : __CLOSED_NO__;
+    return ok ? __INVERT_OK__ : __INVERT_NO__;
+  }
+  function applyFeedback(form, fb, ok, shape) {
+    fb.hidden = false;
+    fb.className = "feedback " + (ok ? "ok" : "no");
+    var attr = ok ? "data-feedback-correct" : "data-feedback-incorrect";
+    fb.textContent = form.getAttribute(attr) || fallbackCopy(shape, ok);
+  }
   document.querySelectorAll("form.check").forEach(function (form) {
     form.querySelectorAll(".seq-up").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -4003,11 +4070,7 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
           return;
         }
         ok = picked.value === "key";
-        fb.hidden = false;
-        fb.className = "feedback " + (ok ? "ok" : "no");
-        fb.textContent = ok
-          ? "Correct — that wording is this atom."
-          : "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom’s own wording.";
+        applyFeedback(form, fb, ok, shape);
       } else if (shape === "closed_choice") {
         var pickedChoice = form.querySelector("input[type=radio]:checked");
         if (!pickedChoice) {
@@ -4017,11 +4080,7 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
           return;
         }
         ok = pickedChoice.value === key;
-        fb.hidden = false;
-        fb.className = "feedback " + (ok ? "ok" : "no");
-        fb.textContent = ok
-          ? "Correct — that is the fill already shown."
-          : "Not yet. Options are the form field’s closed value set; the key is the instance fill already shown.";
+        applyFeedback(form, fb, ok, shape);
       } else if (shape === "sequence_order") {
         var want = (form.getAttribute("data-order") || "").split(",");
         var got = [];
@@ -4029,25 +4088,26 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
           got.push(li.getAttribute("data-atom"));
         });
         ok = got.join(",") === want.join(",");
-        fb.hidden = false;
-        fb.className = "feedback " + (ok ? "ok" : "no");
-        fb.textContent = ok
-          ? "Correct — that is the order of these atoms."
-          : "Not yet. The order is the sequence already taught (these atoms’ object.order).";
+        applyFeedback(form, fb, ok, shape);
       } else {
         var typed = form.querySelector("input[type=text]");
         ok = typed && norm(typed.value) === norm(key);
-        fb.hidden = false;
-        fb.className = "feedback " + (ok ? "ok" : "no");
-        fb.textContent = ok
-          ? "Correct — that wording is this atom."
-          : "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom’s own wording.";
+        applyFeedback(form, fb, ok, shape);
       }
       if (reveal) reveal.hidden = false;
     });
   });
 })();
 """.strip()
+    CHECK_SCRIPT = (
+        CHECK_SCRIPT
+        .replace("__INVERT_OK__", json.dumps(INVERT_MCQ_FEEDBACK["correct"]))
+        .replace("__INVERT_NO__", json.dumps(INVERT_MCQ_FEEDBACK["incorrect"]))
+        .replace("__CLOSED_OK__", json.dumps(CLOSED_MCQ_FEEDBACK["correct"]))
+        .replace("__CLOSED_NO__", json.dumps(CLOSED_MCQ_FEEDBACK["incorrect"]))
+        .replace("__SEQ_OK__", json.dumps(SEQUENCE_FEEDBACK["correct"]))
+        .replace("__SEQ_NO__", json.dumps(SEQUENCE_FEEDBACK["incorrect"]))
+    )
 
     PLAYER_SCRIPT = r"""
 (function () {
@@ -4544,12 +4604,21 @@ def selftest(closed_moves):
         "reg_benefit_risk_profile": {
             "id": "reg_benefit_risk_profile",
             "values": [
-                {"id": "favorable"},
-                {"id": "unfavorable"},
-                {"id": "uncertain_inconclusive"},
-                {"id": "conditional_favorable"},
-                {"id": "contextual"},
-                {"id": "other_smt_defined"},
+                {
+                    "id": "favorable",
+                    "label": "Favorable Benefit-Risk Profile",
+                    "description": (
+                        "The benefits of the investigational drug outweigh "
+                        "the known and potential risks."
+                    ),
+                },
+                {"id": "unfavorable", "label": "Unfavorable Benefit-Risk Profile"},
+                {"id": "uncertain_inconclusive",
+                 "label": "Uncertain or Inconclusive Benefit-Risk Profile"},
+                {"id": "conditional_favorable",
+                 "label": "Conditional Favorable Benefit-Risk Profile"},
+                {"id": "contextual", "label": "Contextual Benefit-Risk Profile"},
+                {"id": "other_smt_defined", "label": "Other as defined by the SMT"},
             ],
         }
     }
@@ -4630,6 +4699,22 @@ def selftest(closed_moves):
                     [c["text"] for c in br_shown] != [c["text"] for c in br_chk["choices"]]
                     and not br_shown[0]["correct"],
                     [c["text"] for c in br_shown]))
+    results.append(("closed-choice display uses registry label and never description",
+                    option_value_label("reg_benefit_risk_profile", "conditional_favorable",
+                                       fixture_br_options)
+                    == "Conditional Favorable Benefit-Risk Profile"
+                    and option_value_label("reg_benefit_risk_profile", "favorable",
+                                           fixture_br_options)
+                    == "Favorable Benefit-Risk Profile"
+                    and "outweigh" not in option_value_label(
+                        "reg_benefit_risk_profile", "favorable", fixture_br_options
+                    ), ""))
+    results.append(("closed-choice display falls back to the id when the label is missing",
+                    option_value_label("reg_benefit_risk_profile", "favorable", {
+                        "reg_benefit_risk_profile": {"values": [{"id": "favorable"}]}
+                    }) == "favorable"
+                    and option_value_label("missing_ref", "favorable", fixture_br_options)
+                    == "favorable", ""))
     results.append(("spine is a subset of existing ele_ ids", set(got_spine) <= seeded_ids, ""))
     mf_spine = {}
     apply_spine(mf_spine, store, seeded)
@@ -5092,6 +5177,8 @@ def selftest(closed_moves):
     results.append(("lesson sequence kicker is Practice not a new retrieve enum",
                     ">Practice</div>" in page
                     and "retrieve" not in page, ""))
+    results.append(("lesson sequence practice wears recall clothes without minting ele_",
+                    "sequence-check style-recall" in page, ""))
     seq_section = page.split('data-shape="sequence_order"', 1)[-1].split("</form>", 1)[0]
     shown_ids = re.findall(r'data-atom="([^"]+)"', seq_section)
     results.append(("lesson sequence initial order is shuffled",
@@ -5466,6 +5553,8 @@ def selftest(closed_moves):
                     and br_chunk.find(inst_eids[0]) < br_chunk.find('data-shape="closed_choice"')
                     and "ele_sop_ast29080_purpose__reinforce" not in br_chunk
                     and 'data-shape="closed_choice"' not in page_form[end_form:], ""))
+    results.append(("form closed-choice practice wears recall clothes without minting ele_",
+                    "closed-choice-check style-recall" in br_chunk, ""))
     results.append(("form lesson has sequence + BR closed-choice + two definition checks",
                     page_form.count('form class="check"') == 4
                     and page_form.count('data-shape="sequence_order"') == 1
@@ -5473,7 +5562,7 @@ def selftest(closed_moves):
                     and page_form.count(f'data-shape="{SHAPE_INVERT}"') == 2,
                     page_form.count('form class="check"')))
     results.append(("BR closed-choice options are the registry ids not invented stems",
-                    "Choose the closed value already shown." in br_chunk
+                    BR_CHECK_PROMPT in br_chunk
                     and 'value="conditional_favorable"' in br_chunk
                     and 'value="favorable"' in br_chunk
                     and 'value="unfavorable"' in br_chunk
@@ -5482,6 +5571,11 @@ def selftest(closed_moves):
                     and 'value="other_smt_defined"' in br_chunk
                     and "first planning step" not in page_form.lower()
                     and "which benefit-risk profile is required" not in page_form.lower()
+                    and "The benefits of the investigational drug outweigh" not in page_form, ""))
+    results.append(("BR closed-choice learner text is the registry label not the id or description",
+                    "<span>Conditional Favorable Benefit-Risk Profile</span>" in br_chunk
+                    and "<span>Favorable Benefit-Risk Profile</span>" in br_chunk
+                    and "<span>conditional_favorable</span>" not in br_chunk
                     and "The benefits of the investigational drug outweigh" not in page_form, ""))
     results.append(("BR closed-choice initial order is shuffled",
                     (lambda shown: shown != [
@@ -5497,8 +5591,8 @@ def selftest(closed_moves):
                     )),
                     re.findall(r'name="br_profile" value="([^"]+)"', br_chunk)))
     results.append(("BR feedback does not invent SOP facts",
-                    "Correct — that is the fill already shown." in page_form
-                    and "the instance fill already shown" in page_form
+                    CLOSED_MCQ_FEEDBACK["correct"] in page_form
+                    and CLOSED_MCQ_FEEDBACK["incorrect"] in page_form
                     and "SMT should" not in page_form
                     and "hepatic monitoring" not in page_form.split('data-shape="closed_choice"', 1)[-1]
                     .split("</form>", 1)[0], ""))
@@ -5683,15 +5777,58 @@ def selftest(closed_moves):
         if c["type"] == "MCQ"
     ]
     results.append(("engine projection meaning is from atoms not authored content.text",
-                    seq_comp["props"]["prompt"] == "Put these in the order already taught."
+                    seq_comp["props"]["prompt"] == SEQUENCE_PROMPT
                     and any("Notify a member of Safety Data Science" in (it.get("text") or "")
                             for it in seq_comp["props"]["items"])
                     and closed_comp["props"]["stem"] == BR_CHECK_PROMPT
-                    and any(o.get("text") == "conditional_favorable" and o.get("correct")
+                    and any(o.get("id") == "conditional_favorable" and o.get("correct")
+                            and o.get("text") == "Conditional Favorable Benefit-Risk Profile"
                             for o in closed_comp["props"]["choices"])
                     and "What is the ALSAP?" in invert_stems
                     and all("content" not in e for e in seeded_form),
                     invert_stems))
+    def _learner_copy_ok(*parts):
+        blob = " ".join(p or "" for p in parts)
+        if re.search(r"\batoms?\b", blob, re.I):
+            return False
+        low = blob.lower()
+        for token in ("ele_", "object.order", "sibling", "closed value set",
+                      "closed set", "registry", "selected_value"):
+            if token in blob or token in low:
+                return False
+        return True
+    closed_ids = [o.get("id") for o in closed_comp["props"]["choices"]]
+    closed_texts = [o.get("text") for o in closed_comp["props"]["choices"]]
+    invert_fb = [
+        c["props"].get("feedback") or {}
+        for c in engine_form["scenes"][3]["components"]
+        if c["type"] == "MCQ"
+    ]
+    results.append(("engine closed-choice keys on the governed id and shows the registry label",
+                    "conditional_favorable" in closed_ids
+                    and "Conditional Favorable Benefit-Risk Profile" in closed_texts
+                    and "conditional_favorable" not in closed_texts
+                    and "The benefits of the investigational drug outweigh"
+                    not in json.dumps(closed_comp),
+                    {"ids": closed_ids, "texts": closed_texts}))
+    results.append(("engine projector-only checks wear recall clothes without minting ele_",
+                    (seq_comp.get("meta") or {}).get("style_ref") == PROJECTOR_CHECK_STYLE_REF
+                    and (closed_comp.get("meta") or {}).get("style_ref") == PROJECTOR_CHECK_STYLE_REF
+                    and all("content" not in e for e in seeded_form),
+                    {"seq": (seq_comp.get("meta") or {}).get("style_ref"),
+                     "closed": (closed_comp.get("meta") or {}).get("style_ref")}))
+    results.append(("engine check feedback is learner task-clothes not compiler jargon",
+                    _learner_copy_ok(seq_comp["props"]["feedback"]["correct"],
+                                     seq_comp["props"]["feedback"]["incorrect"],
+                                     closed_comp["props"]["feedback"]["correct"],
+                                     closed_comp["props"]["feedback"]["incorrect"],
+                                     *[f.get("correct", "") for f in invert_fb],
+                                     *[f.get("incorrect", "") for f in invert_fb])
+                    and any("wording from this definition" in (f.get("correct") or "")
+                            for f in invert_fb)
+                    and "job aid already shown" in seq_comp["props"]["feedback"]["correct"]
+                    and "already shown on the example" in closed_comp["props"]["feedback"]["correct"],
+                    invert_fb))
     results.append(("engine projection without overlay does not invent a pack name",
                     "theme" not in (engine_form.get("meta") or {}),
                     engine_form.get("meta")))
