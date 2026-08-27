@@ -228,8 +228,8 @@
               "atom_sop_ast29080_proc_a_s4"
             ],
             "feedback": {
-              "correct": "Correct \u2014 that is the order of these atoms.",
-              "incorrect": "Not yet. The order is the sequence already taught (these atoms\u2019 object.order)."
+              "correct": "Correct \u2014 that\u2019s the order on the job aid already shown.",
+              "incorrect": "Not yet. Use the sequence on the job aid above."
             }
           },
           "meta": {
@@ -240,7 +240,8 @@
               "atom_sop_ast29080_proc_a_s2",
               "atom_sop_ast29080_proc_a_s3",
               "atom_sop_ast29080_proc_a_s4"
-            ]
+            ],
+            "style_ref": "brand.recall"
           }
         }
       ]
@@ -320,42 +321,42 @@
           "props": {
             "id": "closed_choice:atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
             "kicker": "Practice",
-            "stem": "Choose the closed value already shown.",
+            "stem": "Choose the value already shown on the example.",
             "choices": [
               {
                 "id": "unfavorable",
-                "text": "unfavorable",
+                "text": "Unfavorable Benefit-Risk Profile",
                 "correct": false
               },
               {
                 "id": "uncertain_inconclusive",
-                "text": "uncertain_inconclusive",
+                "text": "Uncertain or Inconclusive Benefit-Risk Profile",
                 "correct": false
               },
               {
                 "id": "conditional_favorable",
-                "text": "conditional_favorable",
+                "text": "Conditional Favorable Benefit-Risk Profile",
                 "correct": true
               },
               {
                 "id": "contextual",
-                "text": "contextual",
+                "text": "Contextual Benefit-Risk Profile",
                 "correct": false
               },
               {
                 "id": "other_smt_defined",
-                "text": "other_smt_defined",
+                "text": "Other as defined by the SMT",
                 "correct": false
               },
               {
                 "id": "favorable",
-                "text": "favorable",
+                "text": "Favorable Benefit-Risk Profile",
                 "correct": false
               }
             ],
             "feedback": {
-              "correct": "Correct \u2014 that is the fill already shown.",
-              "incorrect": "Not yet. Options are the form field\u2019s closed value set; the key is the instance fill already shown."
+              "correct": "Correct \u2014 that\u2019s the value already shown on the example.",
+              "incorrect": "Not yet. Pick the value from the example already shown."
             }
           },
           "meta": {
@@ -363,7 +364,8 @@
             "from": "manifest.checks",
             "options_ref": "reg_benefit_risk_profile",
             "key_atom_id": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
-            "form_atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile"
+            "form_atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "style_ref": "brand.recall"
           }
         }
       ]
@@ -397,8 +399,8 @@
               }
             ],
             "feedback": {
-              "correct": "Correct \u2014 that wording is this atom.",
-              "incorrect": "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom\u2019s own wording."
+              "correct": "Correct \u2014 that\u2019s the wording from this definition (\u201cto define the process for planning, developing, executing, maintaining, and archiving the Asset Level Safety Assessment Plan (ALSAP) for use in asset-level safety monitoring during clinical development\u201d).",
+              "incorrect": "Not yet. The other options are other sentences from this lesson, not this definition."
             }
           },
           "meta": {
@@ -434,8 +436,8 @@
               }
             ],
             "feedback": {
-              "correct": "Correct \u2014 that wording is this atom.",
-              "incorrect": "Not yet. Distractors (if any) are sibling atoms in this store; the key is this atom\u2019s own wording."
+              "correct": "Correct \u2014 that\u2019s the wording from this definition (\u201cthe central cross-functional framework for ongoing identification, evaluation, and communication of emerging safety risks at the asset level\u201d).",
+              "incorrect": "Not yet. The other options are other sentences from this lesson, not this definition."
             }
           },
           "meta": {

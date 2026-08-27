@@ -126,8 +126,8 @@
               "atom_sop_ast29080_proc_a_s4"
             ],
             "feedback": {
-              "correct": "Correct \u2014 that is the order of these atoms.",
-              "incorrect": "Not yet. The order is the sequence already taught (these atoms\u2019 object.order)."
+              "correct": "Correct \u2014 that\u2019s the order on the job aid already shown.",
+              "incorrect": "Not yet. Use the sequence on the job aid above."
             }
           },
           "meta": {
@@ -138,7 +138,8 @@
               "atom_sop_ast29080_proc_a_s2",
               "atom_sop_ast29080_proc_a_s3",
               "atom_sop_ast29080_proc_a_s4"
-            ]
+            ],
+            "style_ref": "brand.recall"
           }
         }
       ]
