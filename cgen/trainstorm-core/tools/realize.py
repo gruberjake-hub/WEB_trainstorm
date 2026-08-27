@@ -1738,18 +1738,18 @@ def hydrate_lesson_record(raw, manifest, atoms, elements, computed_default, *, i
         "title_from": title_from,
         "scenes": {"see": "spine.scenes"},
         "scene_ids": scene_ids,
-        "lesson_end_check_ids": end_ids,
-        "paging": paging,
-        "default": bool(is_default),
-        "from": raw.get("from") or (
-            computed_default.get("from") if is_default else (
-                "Catalog record: ordered scene id refs into spine.scenes. "
-                "Title heuristic is the document-root atom. Not a Course ele_."
-            )
-        ),
     }
     if is_default:
         rec["lesson_end_checks"] = {"see": "spine.scenes.lesson_end_checks"}
+    rec["lesson_end_check_ids"] = end_ids
+    rec["paging"] = paging
+    rec["default"] = bool(is_default)
+    rec["from"] = raw.get("from") or (
+        computed_default.get("from") if is_default else (
+            "Catalog record: ordered scene id refs into spine.scenes. "
+            "Title heuristic is the document-root atom. Not a Course ele_."
+        )
+    )
     return rec
 
 
