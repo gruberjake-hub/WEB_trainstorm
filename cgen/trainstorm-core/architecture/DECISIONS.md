@@ -1382,3 +1382,72 @@ and the paging UX stand; the records now live on `spine.scenes` /
 stands. Working-process block untouched. Single-writer per facet
 stands. Chameleon agent still not stood up.
 
+---
+
+## 2026-08-27 — The short lesson is a graph object that points at `spine.scenes`
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The ALSAP short lesson is now a **first-class lesson
+record** on the occurrence manifest, so a later agent can emit another
+lesson by writing a lesson record, not by forking HTML. No new ALSAP
+beats. No Procedure B. Spine stays **16** of **55**. Same three scenes.
+Same paging (`v1_one_scene_at_a_time`). Same checks. `atoms.json`
+unchanged. No authored `content.text`. No new agent. Not a LMS. Not
+SCORM. Not a course catalog UI.
+
+**Where it lives.** `manifest.lessons` is the index (analogous to
+`manifest.checks` / `spine.scenes`). Spec: `agents/realizer/lesson_v1.md`.
+Policy `v1_lesson_on_graph`. Default lesson id `{project}_short` (live:
+`ast_alsap_short`). Fields: `lesson_id`, title heuristic + `title_from`
+(document-root atom), `scene_ids` refs into `spine.scenes`,
+`lesson_end_check_ids`, paging pointer. Lesson records mint **no**
+`ele_`. `element.schema.json` already names `Course` / `Module` /
+`Scene` as occurrence types — this hop does not mint a `Course`
+occurrence (no honest `composed_from` for a container; the document-root
+`ele_` is already `type: Course`). Older `cgen/schema/course.schema.json`
+is the authored-text course chain, not this constitution.
+
+Title heuristic (closed, not an LLM, not outcome language): the
+document-root atom already on the spine.
+
+Projector **reads** the selected lesson (`--lesson` or the default) then
+its scenes and checks. It does not hard-code “the ALSAP lesson is these
+three headings.” Coverage dump stays a second projection of the store,
+not a second lesson node. Extra lesson records are preserved on re-stamp;
+only the default is recomputed.
+
+Cartographer still owns intent. Couturier still owns style. Realizer
+binds the lesson record the way it binds scenes and check shapes. Closed
+pedagogical vocab still has no `retrieve`. No chameleon.py. No Headwater
+outcomes-mode. No `/cgen/alsap` hosting.
+
+Idempotent with realize → cartographer → couturier.
+
+**Why:** After PR #29 scene membership lived on the graph, but the
+lesson itself was still projector convention (`realize.py` knew this
+project). An ID would name the lesson so the next hop can emit another
+one from scene refs, while keeping the same 16 beats, three scenes,
+pager, and checks.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. Optional
+  `--lesson ast_alsap_short`. `--selftest` on all three (includes:
+  lesson → scenes → element_ids resolve from the graph, not hardcoded
+  HTML).
+- Open `realized_lesson.html` — a read of `ast_alsap_short` + its
+  scenes + checks. Same pager: What an ALSAP is → How an ALSAP starts
+  → Benefit-risk on the form → lesson-end definition checks. Open
+  `realized_coverage.html` — full dump, not a second lesson.
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`;
+  check-shape and scenes selftests still green.
+
+**Supersedes:** the previous scene block’s “projector reads
+`spine.scenes`” as to *which object the HTML is* — membership still
+lives on `spine.scenes`; the lesson node now points at that list and
+the projector reads the lesson. Working-process block untouched.
+Single-writer per facet stands. Chameleon agent still not stood up.
+

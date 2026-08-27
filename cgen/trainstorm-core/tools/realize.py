@@ -38,12 +38,14 @@ profile (projector-only, after the field+example), then the existing
 definition checks (`invert_definition`). Scene membership and order are
 first-class on the graph (`vocab/scene.enum.json`): Realizer stamps
 `spine.scenes` / `ext.scene` (id, title heuristic, ordered `ele_` refs,
-in-scene check-shape refs). The projector **reads** that list to wrap
-and page; it does not re-discover scenes by if-atom-id. Same three scenes
-(front-matter / Procedure A / form BR), **one at a time** (Next/Back).
-Scene 3 includes the BR closed-choice after the field+example.
-Definition/purpose checks stay a final step after scene 3, not a fourth
-scene. The full SOP dump is `realized_coverage.html`.
+in-scene check-shape refs). A **lesson** record (`agents/realizer/lesson_v1.md`)
+points at that list. The projector **reads the lesson node** (default, or
+`--lesson`) then its scenes and checks; it does not hard-code “the ALSAP
+lesson is these three headings.” Same three scenes (front-matter /
+Procedure A / form BR), **one at a time** (Next/Back). Scene 3 includes
+the BR closed-choice after the field+example. Definition/purpose checks
+stay a final step after scene 3, not a fourth scene. The full SOP dump
+is `realized_coverage.html` (a second projection, not a second lesson).
 Spine is a selection of existing `ele_` records — it mints none for membership
 and drops none. Procedure-step atoms stay 1:1 (no extra `reinforce`): they are
 imperatives, so they cannot host an honest copula-invert sibling check. Form
@@ -59,9 +61,11 @@ form-field presents as body/`present` clothes, the instance example as
 body/`exemplify` clothes (not a new SOP card), a closed-choice of the BR
 profile fill after those presents/examples, front-matter as heading/body,
 reinforce as the existing definition checks. Scene records group those
-existing primitives; they do not mint `ele_`. Player chrome shows one named
-scene at a time (Next/Back) by reading `spine.scenes`. Coverage stays
-card-like. Couturier still owns `style_ref`. No authored `content.text`.
+existing primitives; they do not mint `ele_`. The lesson record mints no
+`ele_` either (not a `Course` occurrence — no honest `composed_from` for
+a container). Player chrome shows one named scene at a time (Next/Back)
+by reading the selected lesson’s scenes. Coverage stays card-like.
+Couturier still owns `style_ref`. No authored `content.text`.
 
 Idempotency: extra ids are `(primary ele_) + "__" + move`. A re-run accretes
 missing extras and never drops existing extras or Cartographer bindings.
@@ -77,6 +81,7 @@ Usage (from `cgen/trainstorm-core`):
 
     python tools/realize.py
     python tools/realize.py --project ../astellas/projects/ast_alsap
+    python tools/realize.py --lesson ast_alsap_short
     python tools/realize.py --selftest
     python tools/cartographer.py          # re-runnable on the mixed store
     python tools/couturier.py             # dresses existing ele_; mints nothing
@@ -225,6 +230,8 @@ SCENE_DEFS = (
     },
 )
 SCENE_DEFS_BY_ROLE = {d["role"]: d for d in SCENE_DEFS}
+LESSON_SPEC = "agents/realizer/lesson_v1.md"
+LESSON_POLICY = "v1_lesson_on_graph"
 
 KIND_TO_TYPE = {
     "procedure": "Section",
@@ -1267,7 +1274,9 @@ def apply_spine(manifest, atoms, elements, *, meaning_atoms=None, option_sets=No
                  "on the instance beats; coverage dump stays card-like. Scene "
                  "records (spine.scenes / ext.scene) group those existing beats "
                  "from SOP/form roles — first-class on the graph, not chrome "
-                 "rediscovery. Player chrome pages that list one named scene at "
+                 "rediscovery. A lesson record (manifest.lessons) points at that "
+                 "list; the projector reads the lesson node, not a hard-coded "
+                 "ALSAP trio. Player chrome pages that list one named scene at "
                  "a time (Next/Back); lesson-end checks are a final step, not a "
                  "fourth scene. Not an LLM path and not a full object-tree walk."),
     }
@@ -1332,6 +1341,7 @@ def apply_spine(manifest, atoms, elements, *, meaning_atoms=None, option_sets=No
         closed_choice=has_br,
     )
     bind_scene_membership(elements, manifest["spine"]["scenes"])
+    stamp_lessons(manifest, atoms, elements)
     return manifest["spine"]
 
 
@@ -1564,6 +1574,161 @@ def scene_check_refs(scene) -> list:
         elif isinstance(cref, str):
             refs.append(cref)
     return refs
+
+
+def default_lesson_id(manifest) -> str:
+    """Stable default lesson_id. Project-specific, not a closed enum."""
+    proj = (manifest.get("project") or "").strip() or "course"
+    slug = re.sub(r"[^A-Za-z0-9_-]+", "_", proj).strip("_") or "course"
+    return f"{slug}_short"
+
+
+def lesson_title_heuristic(atoms, elements, spine_ids):
+    """Title from the document-root atom already on the spine. Ref, not invented copy."""
+    by_eid = {e["element_id"]: e for e in elements}
+    by_atom = {a["atom_id"]: a for a in atoms}
+    if not spine_ids:
+        return "", None
+    el = by_eid.get(spine_ids[0])
+    if not el:
+        return "", None
+    aid = el.get("composed_from")
+    atom = by_atom.get(aid) if aid else None
+    if not atom:
+        return "", None
+    text = clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
+    sent = first_sentence(text) or text
+    return sent, aid
+
+
+def build_default_lesson(manifest, atoms, elements) -> dict:
+    """Pure function of spine.scenes + document-root title. Mints no ele_."""
+    spine = manifest.get("spine") or {}
+    scenes_stamp = spine.get("scenes") or {}
+    scene_ids = [s["id"] for s in scenes_stamp.get("scenes") or [] if s.get("id")]
+    end_ids = list(scenes_stamp.get("lesson_end_checks") or [])
+    spine_ids = list(spine.get("element_ids") or [])
+    title, title_from = lesson_title_heuristic(atoms, elements, spine_ids)
+    lid = default_lesson_id(manifest)
+    if not title:
+        title = lid
+    return {
+        "lesson_id": lid,
+        "title": title,
+        "title_from": title_from,
+        "scenes": {"see": "spine.scenes"},
+        "scene_ids": scene_ids,
+        "lesson_end_checks": {"see": "spine.scenes.lesson_end_checks"},
+        "lesson_end_check_ids": end_ids,
+        "paging": {"see": "spine.scenes.paging"},
+        "default": True,
+        "from": (
+            "Document-root atom first sentence (title heuristic) plus the "
+            "first-class scene list already on spine.scenes. Not an LLM. "
+            "Not outcome language. Not a Course ele_ — no honest composed_from "
+            "for a container."
+        ),
+    }
+
+
+def stamp_lessons(manifest, atoms, elements) -> dict:
+    """First-class lesson records. Recomputes the default; preserves extras."""
+    default = build_default_lesson(manifest, atoms, elements)
+    block = manifest.get("lessons") if isinstance(manifest.get("lessons"), dict) else {}
+    existing = list(block.get("lessons") or [])
+    extras = [
+        L for L in existing
+        if isinstance(L, dict) and L.get("lesson_id") and L["lesson_id"] != default["lesson_id"]
+    ]
+    manifest["lessons"] = {
+        "policy": LESSON_POLICY,
+        "spec": LESSON_SPEC,
+        "default": default["lesson_id"],
+        "lessons": [default] + extras,
+        "note": ("First-class lesson records: id, title heuristic, ordered scene "
+                 "id refs into spine.scenes, lesson-end ele_ refs, paging pointer. "
+                 "Projector reads the selected lesson (default or --lesson) to "
+                 "wrap/page; it does not assume the ALSAP trio. Extra lesson "
+                 "records are preserved on re-stamp. Not a LMS. Not SCORM. "
+                 "Not a Course ele_. Coverage dump stays a second projection."),
+    }
+    return manifest["lessons"]
+
+
+def select_lesson_record(manifest, lesson_id=None) -> dict:
+    block = manifest.get("lessons") if isinstance(manifest.get("lessons"), dict) else {}
+    lessons = [L for L in (block.get("lessons") or []) if isinstance(L, dict)]
+    if not lessons:
+        raise SystemExit("no lesson record on the graph (manifest.lessons)")
+    if lesson_id:
+        for rec in lessons:
+            if rec.get("lesson_id") == lesson_id:
+                return rec
+        raise SystemExit(f"lesson {lesson_id!r} is not on the graph")
+    default_id = block.get("default")
+    if default_id:
+        for rec in lessons:
+            if rec.get("lesson_id") == default_id:
+                return rec
+    for rec in lessons:
+        if rec.get("default"):
+            return rec
+    return lessons[0]
+
+
+def _follow_paging(rec, scenes_stamp) -> dict:
+    paging = rec.get("paging")
+    if isinstance(paging, dict) and paging.get("see"):
+        return dict(scenes_stamp.get("paging") or {})
+    if isinstance(paging, dict) and paging.get("policy"):
+        return dict(paging)
+    return dict(scenes_stamp.get("paging") or {})
+
+
+def resolve_lesson(manifest, by_eid, *, lesson_id=None, atoms_by_id=None) -> dict:
+    """Lesson → scenes → element_ids. Refuses if a ref does not resolve."""
+    rec = select_lesson_record(manifest, lesson_id)
+    lid = rec.get("lesson_id") or ""
+    if not lid:
+        raise SystemExit("lesson record has no lesson_id")
+    scenes_stamp = (manifest.get("spine") or {}).get("scenes") or {}
+    by_sid = {s.get("id"): s for s in scenes_stamp.get("scenes") or [] if s.get("id")}
+    scene_ids = list(rec.get("scene_ids") or [])
+    if not scene_ids:
+        scene_ids = [s.get("id") for s in scenes_stamp.get("scenes") or [] if s.get("id")]
+    resolved_scenes = []
+    for sid in scene_ids:
+        sc = by_sid.get(sid)
+        if sc is None:
+            raise SystemExit(f"lesson {lid} scene {sid} is not on spine.scenes")
+        resolved_scenes.append(resolve_scene(sc, by_eid))
+    if "lesson_end_check_ids" in rec:
+        end_ids = list(rec.get("lesson_end_check_ids") or [])
+    else:
+        end_ids = list(scenes_stamp.get("lesson_end_checks") or [])
+    for eid in end_ids:
+        if eid not in by_eid:
+            raise SystemExit(f"lesson {lid} lesson_end_check {eid} is not on the graph")
+    title = rec.get("title") or ""
+    title_from = rec.get("title_from")
+    if not title and atoms_by_id and title_from:
+        atom = atoms_by_id.get(title_from)
+        if atom:
+            text = clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
+            title = first_sentence(text) or text
+    if not title:
+        raise SystemExit(f"lesson {lid} has no title (heuristic or ref)")
+    if "will be able" in title.lower() or "learning outcome" in title.lower():
+        raise SystemExit(f"lesson {lid} title is outcome language: {title!r}")
+    return {
+        "lesson_id": lid,
+        "title": title,
+        "title_from": title_from,
+        "scenes": resolved_scenes,
+        "lesson_end_checks": end_ids,
+        "paging": _follow_paging(rec, scenes_stamp),
+        "record": rec,
+    }
 
 
 def derive_check(atom, atoms) -> dict | None:
@@ -2237,8 +2402,8 @@ def closed_choice_html(el, chk, esc) -> str:
 
 
 def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_atoms=None,
-                 option_sets=None, options_registry=None):
-    """Write the short lesson (spine) and the full SOP dump (coverage).
+                 option_sets=None, options_registry=None, lesson_id=None):
+    """Write the short lesson (selected lesson node) and the full SOP dump (coverage).
 
     `atoms` is the SOP tree (coverage walk / spine SOP membership).
     `meaning_atoms` is an optional join catalog (form-field and instance
@@ -2246,8 +2411,10 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
     into SOP atoms.json.
     `option_sets` / `options_registry` are the governed value sets keyed by
     options_ref (for closed_choice). Pass explicitly — do not silently invent
-    options. Projector reads stamped check shapes and scene records; it
-    does not re-discover pedagogy or scenes by if-atom-id.
+    options. Projector reads the selected lesson node, then its stamped
+    scenes and check shapes; it does not re-discover pedagogy or assume
+    “the ALSAP lesson is these three headings.”
+    `lesson_id` selects `manifest.lessons` (default lesson if omitted).
     """
     registry = options_registry if options_registry is not None else (option_sets or {})
     options_registry = registry
@@ -2514,6 +2681,11 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
 
     by_eid = {e["element_id"]: e for e in elements}
     spine_ids = list(spine.get("element_ids") or [])
+    lesson = resolve_lesson(manifest, by_eid, lesson_id=lesson_id, atoms_by_id=by_atom)
+    scene_list = list(lesson["scenes"])
+    lesson_end_ids = list(lesson["lesson_end_checks"])
+    lesson_title = lesson["title"]
+    lesson_key = lesson["lesson_id"]
 
     def render_beat_groups(ids):
         chunks = []
@@ -2548,9 +2720,6 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
                 chunks.append(br_profile_check_html(chk))
         return chunks
 
-    scenes_stamp = spine.get("scenes") or {}
-    scene_list = list(scenes_stamp.get("scenes") or [])
-    lesson_end_ids = list(scenes_stamp.get("lesson_end_checks") or [])
     eid_to_scene = {}
     for sc in scene_list:
         for eid in sc.get("element_ids") or []:
@@ -2587,7 +2756,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         scene_n = len(scene_list)
         step_n = scene_n + (1 if lesson_end_ids else 0)
         first_heading = scene_list[0].get("heading") or ""
-        paging_id = ((scenes_stamp.get("paging") or {}).get("policy") or PAGING_POLICY)
+        paging_id = ((lesson.get("paging") or {}).get("policy") or PAGING_POLICY)
         player_nav = (
             f'<nav class="player-nav" aria-label="Scenes">'
             f'<button type="button" class="player-back" disabled>Back</button>'
@@ -2597,7 +2766,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
             f'</nav>'
         )
         spine_main = (
-            f'<div class="player" data-paging="{esc(paging_id)}" '
+            f'<div class="player" data-lesson="{esc(lesson_key)}" '
+            f'data-paging="{esc(paging_id)}" '
             f'data-scene-count="{scene_n}" data-step-count="{step_n}">'
             f'{player_nav}'
             f'{"".join(spine_body)}'
@@ -2710,9 +2880,10 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         "a job sequence then a sequence practice of those presents, the form "
         "fields those examples fill, a small instance example, a closed-choice "
         "of that BR profile fill, then the existing "
-        "definition checks. Scene records on <span class=mono>spine.scenes</span> "
-        "group those same beats; the player shows one named scene at a time "
-        "(Next/Back). The object tree walk is coverage, not the path. "
+        "definition checks. A lesson record on <span class=mono>manifest.lessons</span> "
+        "points at <span class=mono>spine.scenes</span>; the player shows that "
+        "lesson’s named scenes one at a time (Next/Back). The object tree walk "
+        "is coverage, not a second lesson node. "
     )
     if cout:
         ctrl_doc = "Couturier v1"
@@ -3077,6 +3248,7 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f"{' Form BR presents + instance fill also project a closed-choice (same spec; no extra ele_).' if (spine.get('br_profile_check')) else ''} "
         f"{' Compiler primitives: ' + prim_bits + '.' if prim_bits else ''} "
         f"Spine heuristic: <span class=mono>{esc(SPINE_SPEC)}</span>."
+        f"{' Lesson: ' + esc(LESSON_POLICY) + ' (' + esc(LESSON_SPEC) + ').' if lesson_key else ''}"
         f"{' Scenes: ' + esc(SCENE_GRAPH_POLICY) + ' (' + esc(SCENE_SPEC) + ').' if scene_list else ''}"
         f"{' Player: ' + esc(PAGING_POLICY) + '.' if scene_list else ''}"
     )
@@ -3123,21 +3295,21 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
     scene_headings = [sc.get("heading") for sc in scene_list if sc.get("heading")]
     scene_path = (
         (f"{len(scene_list)} scene" + ("s" if len(scene_list) != 1 else "")
-         + (" (" + ", ".join(scene_headings) + ")" if scene_headings else "")
+         + (" (" + ", ".join(esc(h) for h in scene_headings) + ")" if scene_headings else "")
          + " grouping the same beats. ")
         if scene_list else ""
     )
+    end_bit = " Lesson-end checks are a final step." if lesson_end_ids else ""
+    lesson_heading = esc(lesson_title)
     lesson_html = render_page(
-        f"Short lesson — {project_name}",
-        "Short lesson",
+        f"{lesson_heading} — {project_name}",
+        lesson_heading,
         f'<a href="{coverage_href}">Full SOP / coverage ({store_n} occurrences)</a>',
-        (f"{spine_n} of {store_n} occurrences · {scene_path}"
-         "One named scene at a time (Next/Back). Why-this callout of purpose, "
-         "front-matter as heading/body, Procedure A as "
-         "a job-aid step sequence then a sequence practice of those four presents, "
-         "then the form fields those examples fill, then a worked example from the "
-         "instance store, then a closed-choice of that BR profile fill, then the "
-         "existing definition checks at lesson end. "
+        (f"{spine_n} of {store_n} occurrences · lesson <span class=mono>{esc(lesson_key)}</span> · "
+         f"{scene_path}"
+         "One named scene at a time (Next/Back)."
+         f"{end_bit} "
+         "Read from the lesson node and its scenes — not a hard-coded ALSAP trio. "
          "Not B/C and not the SOP dump. Heuristic is documented, not an LLM."),
         spine_main,
         lesson_details,
@@ -3146,9 +3318,9 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
     coverage_html = render_page(
         f"Coverage dump — {project_name}",
         "Full SOP / coverage",
-        f'<a href="{lesson_href}">Short lesson (spine)</a>',
+        f'<a href="{lesson_href}">{lesson_heading}</a>',
         (f"Every occurrence in document order ({store_n} ele_ records). "
-         "This is coverage, not the course. The short path is the other file."),
+         "This is coverage, not a second lesson node. The short path is the other file."),
         "".join(body),
         coverage_details,
     )
@@ -3626,6 +3798,59 @@ def selftest(closed_moves):
                     and hosted_scene(proc_host).get("id") == "how_an_alsap_starts"
                     and hosted_scene(end_host) is None,
                     (hosted_scene(fm_host), hosted_scene(end_host))))
+    lessons0 = mf_spine.get("lessons") or {}
+    default0 = (lessons0.get("lessons") or [{}])[0]
+    store_atoms = {a["atom_id"]: a for a in store}
+    resolved_lesson0 = resolve_lesson(mf_spine, seeded_by_eid, atoms_by_id=store_atoms)
+    flat0 = [eid for sc in resolved_lesson0["scenes"] for eid in sc["element_ids"]] + list(
+        resolved_lesson0["lesson_end_checks"]
+    )
+    results.append(("default lesson record points at spine.scenes",
+                    lessons0.get("policy") == LESSON_POLICY
+                    and lessons0.get("spec") == LESSON_SPEC
+                    and lessons0.get("default") == "course_short"
+                    and default0.get("lesson_id") == "course_short"
+                    and default0.get("scene_ids") == [s["id"] for s in scenes0.get("scenes") or []]
+                    and default0.get("scenes") == {"see": "spine.scenes"}
+                    and default0.get("title_from") == "atom_sop_ast29080"
+                    and "will be able" not in (default0.get("title") or "").lower(),
+                    default0))
+    results.append(("lesson → scenes → element_ids resolve from the graph",
+                    resolved_lesson0["lesson_id"] == "course_short"
+                    and [sc["id"] for sc in resolved_lesson0["scenes"]]
+                    == [s["id"] for s in scenes0.get("scenes") or []]
+                    and flat0 == want_spine
+                    and all(eid in seeded_by_eid for eid in flat0),
+                    {"scene_ids": [sc["id"] for sc in resolved_lesson0["scenes"]], "flat": flat0}))
+    results.append(("lesson title heuristic is the document-root atom not outcome language",
+                    resolved_lesson0["title_from"] == "atom_sop_ast29080"
+                    and "SOP-X" not in resolved_lesson0["title"]
+                    and "Plan, Develop, Execute" in resolved_lesson0["title"]
+                    and "will be able" not in resolved_lesson0["title"].lower(),
+                    resolved_lesson0["title"]))
+    mf_spine.setdefault("lessons", {}).setdefault("lessons", []).append({
+        "lesson_id": "front_only",
+        "title": "Front matter only",
+        "title_from": "atom_sop_ast29080",
+        "scene_ids": ["what_an_alsap_is"],
+        "lesson_end_check_ids": [],
+    })
+    apply_spine(mf_spine, store, seeded)
+    kept_ids = [L.get("lesson_id") for L in (mf_spine.get("lessons") or {}).get("lessons") or []]
+    results.append(("re-stamp preserves extra lesson records and recomputes the default",
+                    "front_only" in kept_ids
+                    and kept_ids[0] == "course_short"
+                    and (mf_spine.get("lessons") or {}).get("default") == "course_short",
+                    kept_ids))
+    resolved_front = resolve_lesson(
+        mf_spine, seeded_by_eid, lesson_id="front_only", atoms_by_id=store_atoms
+    )
+    results.append(("extra lesson resolves a subset of scenes not the hard-coded trio",
+                    resolved_front["lesson_id"] == "front_only"
+                    and [sc["id"] for sc in resolved_front["scenes"]] == ["what_an_alsap_is"]
+                    and not resolved_front["lesson_end_checks"]
+                    and resolved_front["title"] == "Front matter only",
+                    [sc["id"] for sc in resolved_front["scenes"]]))
 
     # Compiler primitives from atom kind + occurrence move.
     results.append(("procedure_step present is tp_step",
@@ -3763,6 +3988,33 @@ def selftest(closed_moves):
                     ">Front matter</p>" in page
                     and ">Procedure A</p>" in page
                     and "will be able" not in page.lower(), ""))
+    results.append(("lesson HTML is a read of the default lesson node",
+                    'data-lesson="selftest_short"' in page
+                    and "Plan, Develop, Execute" in page
+                    and page.find("<h1>") != -1
+                    and "will be able" not in page[page.find("<h1>"):page.find("</h1>") + 5].lower(),
+                    ""))
+    mf_front = {"project": "selftest"}
+    apply_spine(mf_front, store, seeded)
+    mf_front["lessons"]["lessons"].append({
+        "lesson_id": "front_only",
+        "title": "Front matter only",
+        "title_from": "atom_sop_ast29080",
+        "scene_ids": ["what_an_alsap_is"],
+        "lesson_end_check_ids": [],
+    })
+    with tempfile.TemporaryDirectory() as td_front:
+        front_path = pathlib.Path(td_front) / "realized_lesson.html"
+        project_html(store, seeded, mf_front, front_path, lesson_id="front_only")
+        page_front = front_path.read_text()
+    results.append(("projector reads --lesson scene_ids not a hard-coded ALSAP trio",
+                    'data-lesson="front_only"' in page_front
+                    and page_front.count('class="scene"') == 1
+                    and 'data-scene="what_an_alsap_is"' in page_front
+                    and 'data-scene="how_an_alsap_starts"' not in page_front
+                    and "Benefit-risk on the form" not in page_front
+                    and "<h1>Front matter only</h1>" in page_front
+                    and 'class="lesson-end-checks"' not in page_front, ""))
     fm_start = page.find('data-scene="what_an_alsap_is"')
     proc_start = page.find('data-scene="how_an_alsap_starts"')
     end_start = page.find('class="lesson-end-checks"')
@@ -4378,6 +4630,22 @@ def selftest(closed_moves):
                     [s.get("role") for s in form_scenes.get("scenes") or []]))
     results.append(("spine membership is still 16 with form+instance",
                     len(got_spine_form) == 16, got_spine_form))
+    resolved_form_lesson = resolve_lesson(
+        mf_form, form_by_eid, atoms_by_id=form_catalog
+    )
+    form_flat = [
+        eid for sc in resolved_form_lesson["scenes"] for eid in sc["element_ids"]
+    ] + list(resolved_form_lesson["lesson_end_checks"])
+    results.append(("form lesson → three scenes → 16 element_ids resolve from the graph",
+                    resolved_form_lesson["lesson_id"] == "course_short"
+                    and [sc["id"] for sc in resolved_form_lesson["scenes"]]
+                    == ["what_an_alsap_is", "how_an_alsap_starts", "benefit_risk_on_the_form"]
+                    and form_flat == got_spine_form
+                    and len(form_flat) == 16, form_flat))
+    results.append(("form lesson HTML is a read of that lesson node",
+                    'data-lesson="selftest_short"' in page_form
+                    and page_form.count('class="scene"') == 3
+                    and 'data-scene="benefit_risk_on_the_form"' in page_form, ""))
 
     huge_steps = [
         atom(
@@ -4441,6 +4709,7 @@ def main():
                "  python tools/realize.py\n"
                "  python3 tools/realize.py --project ../astellas/projects/ast_alsap\n"
                "  python3 tools/realize.py --selftest\n"
+               "  python3 tools/realize.py --lesson ast_alsap_short\n"
                "  python3 tools/cartographer.py\n"
                "  python3 tools/couturier.py\n"
                "Open <project>/realized_lesson.html (short spine) or realized_coverage.html (full dump).\n",
@@ -4450,6 +4719,8 @@ def main():
     ap.add_argument("--core", default=None, help="trainstorm-core (schemas + vocab); usually auto-detected")
     ap.add_argument("--registry", default=None, help="Client registry; usually auto-derived from --project")
     ap.add_argument("--out", help="HTML output path (default: <project>/realized_lesson.html)")
+    ap.add_argument("--lesson", default=None,
+                    help="Lesson id from occurrences/manifest.json lessons (default: the project's default lesson)")
     ap.add_argument("--store", help="Occurrence store directory (default: <project>/occurrences)")
     ap.add_argument("--move", default=DEFAULT_MOVE,
                     help=f"Closed pedagogical move for every v1 primary occurrence (default: {DEFAULT_MOVE})")
@@ -4668,13 +4939,17 @@ def main():
                  "ext.check / manifest.checks (vocab/check-shape.enum.json). "
                  "Scene records (id, title heuristic, ordered ele_ refs) live on "
                  "spine.scenes / ext.scene (vocab/scene.enum.json). "
+                 "The lesson record (id, title heuristic, scene id refs) lives on "
+                 "manifest.lessons (agents/realizer/lesson_v1.md) and points at "
+                 "spine.scenes — not a Course ele_, not a LMS. "
                  "Procedure A sequence_order is projector-only of those four "
                  "presents; composing it from one atom would be a lie. "
                  "closed_choice is projector-only of the form present + instance "
                  "fill (options_ref ids; key = selected_value); composing from "
                  "only one of those two atoms would hide the other half. "
                  "A re-realize preserves extras, intent, style, and recomputes "
-                 "the same spine, primitives, check shapes, and scenes."),
+                 "the same spine, primitives, check shapes, scenes, and default "
+                 "lesson (extra lesson records are kept)."),
     }
     if any((e.get("ext") or {}).get("cartographer") for e in elements):
         cart = dict(prev_mf.get("cartographer") or {})
@@ -4714,6 +4989,7 @@ def main():
         atoms, elements, occ_manifest, html_path,
         meaning_atoms=form_atoms + instance_atoms,
         option_sets=option_sets, options_registry=options_registry or option_sets,
+        lesson_id=args.lesson,
     )
     (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
