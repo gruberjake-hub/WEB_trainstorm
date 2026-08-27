@@ -7,12 +7,13 @@
     "spec": "agents/realizer/lesson_v1.md",
     "engine_policy": "v1_engine_reads_lesson_projection",
     "graph": "occurrences/",
-    "note": "Course Engine v1 at /cgen reads this projection of the occurrence lesson node (lesson \u2192 scene_ids \u2192 element_ids \u2192 atoms via composed_from; check shapes from manifest.checks). Meaning is resolved from atoms at realize time. Not a hand-authored SCORM package. Not cgen/schema/course.schema.json as a rival constitution. Sidecar HTML stays a projector. Rebuild with realize \u2192 cartographer \u2192 couturier."
+    "note": "Course Engine v1 at /cgen reads this projection of the occurrence lesson node (lesson \u2192 scene_ids \u2192 element_ids \u2192 atoms via composed_from; check shapes from manifest.checks). Meaning is resolved from atoms at realize time. meta.theme is the client overlay pack (cgen/brands/<theme>/) \u2014 player chrome, not Couturier style_ref. Not a hand-authored SCORM package. Not cgen/schema/course.schema.json as a rival constitution. Sidecar HTML stays a projector. Rebuild with realize \u2192 cartographer \u2192 couturier."
   },
   "meta": {
     "id": "ast_alsap_br",
     "title": "SOP-AST-29080 \u2014 Plan, Develop, Execute, Maintain, and Archive the Asset Level Safety Assessment Plan (ALSAP).",
-    "title_from": "atom_sop_ast29080"
+    "title_from": "atom_sop_ast29080",
+    "theme": "astellas"
   },
   "nav": {
     "linear": true,

@@ -13,6 +13,37 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-27 — Astellas brand pack is player chrome at `/cgen`
+
+Couturier v1 already wrote pedagogical look keys on occurrences
+(`style_ref`: `brand.opening` / `brand.instructional` / `brand.recall`
+/ …). Those are **roles**, not hex or fonts. `style_map_v1.md` already
+said brand token resolution (`brands/<client>/`) is later. This hop is
+that later — **as player chrome**, not as occurrence 1:many.
+
+The pack was already on main (`cgen/brands/astellas/`: tokens, layout,
+components, constraints, logos). Course Engine already had loaders
+(`brandLoader.js` / `themeLoader.js` / `applyBrand`) and they were
+unwired: lesson JSON `meta` had id/title only, fetch paths
+`../../brands/` 404 from `/cgen`, no `#brandLogo`. Engine chrome used
+`--bg/--panel/--text` (grey system-ui); Astellas tokens use
+`--color-bg` etc.
+
+**What `/cgen` reads.** Realize copies the overlay client name
+(`cgen/astellas/projects/…`, same axis as the client registry) onto
+every `realized_lesson*.json` as `meta.theme`. Runtime loads
+`cgen/brands/<theme>/` from that field. Logo from
+`astellas-brand.json` `logos.primary`. Engine vars alias the pack
+tokens. Unused `runtimeConfig.js` hardcoded astellas is gone —
+projection meta wins. Sidecar HTML keeps stand-in clothes. Lumina
+untouched. Brunswick not this hop. Couturier map untouched.
+
+Hypothesis verified: the socket was unwired + `meta.theme` missing.
+The overlay folder was already the client constitution; no parallel
+theme field on `lessons.json`.
+
+---
+
 ## 2026-08-27 — `/cgen` plays the ALSAP lesson node (engine projection)
 
 The Course Engine at `/cgen` (`index.html` + `engine/`) did not load a

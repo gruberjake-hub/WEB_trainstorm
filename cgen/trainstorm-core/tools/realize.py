@@ -105,6 +105,7 @@ never hand-edited):
     <project>/occurrences/lessons.json      closed project catalog (source of truth; not rewritten)
     <project>/realized_lesson.html          short lesson (default {project}_short). Open this.
     <project>/realized_lesson.json          Course Engine projection of that lesson. /cgen reads this.
+                                            meta.theme is the overlay client pack (player chrome).
     <project>/realized_lesson_br.html       BR subset (path derived from lesson_id)
     <project>/realized_lesson_plan.html     Procedure A subset (path derived from lesson_id)
     <project>/realized_coverage.html        full SOP dump in document order
@@ -264,7 +265,9 @@ ENGINE_PLAYER_NOTE = (
     "Course Engine v1 at /cgen reads this projection of the occurrence "
     "lesson node (lesson → scene_ids → element_ids → atoms via composed_from; "
     "check shapes from manifest.checks). Meaning is resolved from atoms at "
-    "realize time. Not a hand-authored SCORM package. Not "
+    "realize time. meta.theme is the client overlay pack "
+    "(cgen/brands/<theme>/) — player chrome, not Couturier style_ref. "
+    "Not a hand-authored SCORM package. Not "
     "cgen/schema/course.schema.json as a rival constitution. Sidecar HTML "
     "stays a projector. Rebuild with realize → cartographer → couturier."
 )
@@ -298,6 +301,22 @@ def repo_default_project():
     """Sibling live ALSAP SOP store: cgen/astellas/projects/ast_alsap."""
     p = pathlib.Path(__file__).resolve().parent.parent.parent / "astellas" / "projects" / "ast_alsap"
     return p if (p / "atoms.json").exists() else None
+
+
+def overlay_client_name(project):
+    """Client overlay folder: cgen/<client>/projects/<proj>.
+
+    Same axis as harness_paths (registry = project/../..). Pack files live
+    at cgen/brands/<client>/. Not a per-lesson catalog field and not a
+    player hardcoded string.
+    """
+    if project is None:
+        return None
+    p = pathlib.Path(project).resolve()
+    if p.parent.name == "projects":
+        name = p.parent.parent.name
+        return name or None
+    return None
 
 
 def argv_has_flag(name):
@@ -2113,17 +2132,23 @@ def iter_lesson_ids(manifest) -> list:
 
 def project_lesson_htmls(atoms, elements, manifest, project, *, meaning_atoms=None,
                          option_sets=None, options_registry=None, lesson_id=None,
-                         out=None, lesson_catalog=None, scene_catalog=None):
+                         out=None, lesson_catalog=None, scene_catalog=None,
+                         theme=None):
     """Write lesson HTML. Default pass emits every catalog/stamp record.
 
     `--lesson` regenerates that one file. `--out` writes one path.
     Coverage dump is written once (default lesson) and is not a lesson node.
     Extra records project to a path derived from `lesson_id`.
+    `theme` is the client brand pack name (`cgen/brands/<theme>/`), copied
+    onto every lesson JSON projection's `meta.theme`. Default: overlay
+    folder (`cgen/<client>/projects/<proj>`).
     """
+    if not theme:
+        theme = overlay_client_name(project)
     html_kw = dict(
         meaning_atoms=meaning_atoms, option_sets=option_sets,
         options_registry=options_registry, lesson_catalog=lesson_catalog,
-        scene_catalog=scene_catalog,
+        scene_catalog=scene_catalog, theme=theme,
     )
     if out:
         path = pathlib.Path(out).resolve()
@@ -3122,7 +3147,7 @@ def _engine_scene_checks(scene, manifest, by_eid, by_atom, options_registry) -> 
 
 
 def build_engine_course(atoms, elements, manifest, *, meaning_atoms=None,
-                        options_registry=None, lesson_id=None) -> dict:
+                        options_registry=None, lesson_id=None, theme=None) -> dict:
     """Project the selected lesson node into Course Engine v1 runtime JSON.
 
     Same graph walk as the HTML sidecar: lesson → scenes → element_ids →
@@ -3130,6 +3155,9 @@ def build_engine_course(atoms, elements, manifest, *, meaning_atoms=None,
     manifest.checks. The engine cannot consume occurrence files as-is
     (Heading/Body/MCQ + linear scenes). This file is that adapter —
     rebuilt by realize.py, not a hand-authored package.
+
+    `theme` is player chrome (which `cgen/brands/<theme>/` pack to load),
+    copied from the client overlay. Not Couturier `style_ref`.
     """
     catalog = list(atoms)
     if meaning_atoms:
@@ -3181,6 +3209,13 @@ def build_engine_course(atoms, elements, manifest, *, meaning_atoms=None,
             ),
         })
     lid = lesson["lesson_id"]
+    meta = {
+        "id": lid,
+        "title": lesson["title"],
+        "title_from": lesson.get("title_from"),
+    }
+    if theme:
+        meta["theme"] = theme
     return {
         "generated_by": REALIZER,
         "projection_of": {
@@ -3192,11 +3227,7 @@ def build_engine_course(atoms, elements, manifest, *, meaning_atoms=None,
             "graph": "occurrences/",
             "note": ENGINE_PLAYER_NOTE,
         },
-        "meta": {
-            "id": lid,
-            "title": lesson["title"],
-            "title_from": lesson.get("title_from"),
-        },
+        "meta": meta,
         "nav": {
             "linear": True,
             "showProgress": True,
@@ -3212,7 +3243,8 @@ def build_engine_course(atoms, elements, manifest, *, meaning_atoms=None,
 
 def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_atoms=None,
                  option_sets=None, options_registry=None, lesson_id=None,
-                 write_coverage=True, lesson_catalog=None, scene_catalog=None):
+                 write_coverage=True, lesson_catalog=None, scene_catalog=None,
+                 theme=None):
     """Write the short lesson (selected lesson node) and the full SOP dump (coverage).
 
     `atoms` is the SOP tree (coverage walk / spine SOP membership).
@@ -4162,11 +4194,14 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
     )
     out_path.write_text(lesson_html)
     json_path = lesson_player_json_path(out_path)
+    if not theme:
+        theme = overlay_client_name(out_path.parent)
     course = build_engine_course(
         atoms, elements, manifest,
         meaning_atoms=meaning_atoms,
         options_registry=options_registry,
         lesson_id=lesson_id,
+        theme=theme,
     )
     json_path.write_text(json.dumps(course, indent=2) + "\n")
     if write_coverage:
@@ -5639,6 +5674,29 @@ def selftest(closed_moves):
                     and "What is the ALSAP?" in invert_stems
                     and all("content" not in e for e in seeded_form),
                     invert_stems))
+    results.append(("engine projection without overlay does not invent a pack name",
+                    "theme" not in (engine_form.get("meta") or {}),
+                    engine_form.get("meta")))
+    engine_themed = build_engine_course(
+        store, seeded_form, mf_form,
+        meaning_atoms=form_store + instance_store,
+        options_registry=fixture_br_options,
+        theme="astellas",
+    )
+    results.append(("engine projection meta.theme is the overlay pack not Couturier style_ref",
+                    engine_themed["meta"].get("theme") == "astellas"
+                    and engine_themed["meta"].get("id") == "course_short"
+                    and engine_themed["meta"].get("title_from")
+                    == engine_form["meta"].get("title_from"),
+                    engine_themed["meta"]))
+    results.append(("overlay client name is cgen/<client>/projects/<proj>",
+                    overlay_client_name(
+                        pathlib.Path("/tmp/cgen/astellas/projects/ast_alsap")
+                    ) == "astellas"
+                    and overlay_client_name(pathlib.Path("/tmp/scratch")) is None,
+                    overlay_client_name(
+                        pathlib.Path("/tmp/cgen/astellas/projects/ast_alsap")
+                    )))
     mf_form["lessons"]["lessons"].append({
         "lesson_id": "course_br",
         "title": resolved_form_lesson["title"],
@@ -5816,6 +5874,23 @@ def selftest(closed_moves):
                     and "realized_lesson_br.json" in names_all
                     and "realized_lesson_plan.json" in names_all,
                     names_all))
+    with tempfile.TemporaryDirectory() as td_overlay:
+        overlay_proj = pathlib.Path(td_overlay) / "astellas" / "projects" / "course"
+        overlay_proj.mkdir(parents=True)
+        _, selected_ov, extra_ov = project_lesson_htmls(
+            store, seeded_form, mf_form_cat, overlay_proj,
+            meaning_atoms=form_store + instance_store,
+            option_sets=fixture_br_options, options_registry=fixture_br_options,
+            lesson_catalog=cat_form,
+        )
+        stamped_themes = [
+            json.loads(p.with_suffix(".json").read_text()).get("meta", {}).get("theme")
+            for p in [selected_ov, *extra_ov]
+        ]
+    results.append(("all catalog lesson JSON projections copy overlay client as meta.theme",
+                    stamped_themes == ["astellas", "astellas", "astellas"]
+                    and len(extra_ov) == 2,
+                    stamped_themes))
 
     cat_scenes_small = {
         "policy": SCENE_CATALOG_POLICY,
