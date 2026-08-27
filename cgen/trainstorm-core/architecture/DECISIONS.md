@@ -1765,3 +1765,55 @@ This hop wires the existing pack into the existing socket.
 a role; this file’s working-process block is untouched. Single-writer
 per facet stands. Chameleon agent still not stood up.
 
+---
+
+## 2026-08-27 — Course Engine resolves Couturier `style_ref` as role classes inside loaded player chrome
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Course Engine v1 at `/cgen` resolves Couturier `style_ref`
+on lesson-JSON component `meta` into the same closed role classes the
+HTML sidecar already uses (`realize.py` `CLOTHES_CLASS`: `brand.opening`
+→ `style-opening`, instructional / recall / purpose / prior / example /
+job). Runtime stamps that class on the mounted component (and passes
+`meta` in). Unmapped or missing `style_ref`: no class, no invented look.
+Roles stay pedagogical. Tokens stay the pack (`cgen/brands/<theme>/`).
+Do not stamp hex or fonts onto `ele_` records. Do not fuse client
+identity into Couturier. Same Heading / Body / MCQ / StepList /
+SequenceOrder / Cloze. No new `ele_` / `atom_` ids. Couturier still
+mints nothing. Invert checks copy the occurrence’s existing
+`brand.recall` onto engine JSON meta so lesson-end is dressed as
+recall; projector-only sequence / closed-choice stay checks without
+an invented `style_ref`.
+
+**URL (parked, not this hop).** `/cgen` plus default
+`./astellas/projects/ast_alsap/realized_lesson.json` (and the existing
+`?course=` escape hatch in `src/main.js`) is a **stand-in loader**.
+A future URL names client + course (which pack + which lesson
+projection). Not a catalog UI. Do not implement pretty paths, Netlify
+rewrites, or revive `/cgen/alsap` (tabled redirect loop).
+
+**Why:** JSON components already carried `meta.style_ref`. The player
+dropped `node.meta` in `gotoScene`, so `/cgen` was Astellas chrome
+around identical cards. Jake: Couturier = roles, pack = chrome.
+
+**Consequences:**
+- After merge Jake opens **https://trainstorm.ai/cgen**: scene 1
+  opening / instructional / why-this are visibly different roles
+  inside Astellas chrome (logo + white / Arial / red). Scene 2
+  sequence and scene 3 closed-choice still play. Lesson-end invert
+  is still a check, dressed as recall.
+- `style_ref` remains on JSON meta only. Couturier map / `ele_` ids
+  unchanged.
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `cartographer.py` then `couturier.py`. `--selftest` / `validate_atoms`
+  on ast_alsap / alsap / alsap_asp9999 stay green.
+- `/cgen/lumina` untouched. `netlify.toml` `/cgen/alsap` rewrite
+  stays tabled. `_headers` untouched. No catalog UI. No chameleon.py.
+  No Headwater outcomes-mode. No LLM distractors. No Procedure B.
+  Claude remains a co-builder.
+
+**Supersedes:** nothing about pack-as-chrome, lesson catalogs, or
+paging. Working-process block untouched. Single-writer per facet
+stands. Chameleon agent still not stood up.
+

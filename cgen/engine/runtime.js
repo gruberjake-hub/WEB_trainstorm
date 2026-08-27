@@ -6,6 +6,8 @@ import { getAdapter } from "./scorm.js";
 import { loadTheme } from "./themeLoader.js";
 import { loadBrand, brandPackUrl, themeFromMeta } from "./brandLoader.js";
 
+import { roleClassFromMeta } from "./styleRef.js";
+
 import { Heading } from "./components/Heading.js";
 import { Body } from "./components/Body.js";
 import { RevealCards } from "./components/RevealCards.js";
@@ -186,12 +188,17 @@ export class Runtime {
       const Cmp = COMPONENTS[node.type];
       if (!Cmp) continue;
 
+      const meta = node.meta || {};
       const el = Cmp({
         props: node.props || {},
         store: this.store,
         emit: (type, payload) =>
-          this.dispatch({ type, payload })
+          this.dispatch({ type, payload }),
+        meta
       });
+
+      const role = roleClassFromMeta(meta);
+      if (role) el.classList.add(role);
 
       this.mount.appendChild(el);
     }

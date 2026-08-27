@@ -1,6 +1,8 @@
 import { Runtime } from "../engine/runtime.js";
 
-/** Default: occurrence-graph projection of ast_alsap_short. Not a catalog UI. */
+/** Stand-in loader for /cgen: ast_alsap_short projection. Not a catalog UI.
+ *  Future URL names client + course (pack + which lesson). `?course=` stays
+ *  an escape hatch. Do not treat this default path as the contract. */
 const DEFAULT_COURSE = "./astellas/projects/ast_alsap/realized_lesson.json";
 
 function courseUrl() {

@@ -2963,6 +2963,19 @@ def _engine_atom_text(atom) -> str:
     return clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
 
 
+def _engine_expr_meta(el) -> dict:
+    """Copy Couturier role keys onto engine JSON meta. Do not invent a look."""
+    expr = el.get("expression") or {}
+    meta = {}
+    tp = expr.get("text_primitive")
+    ref = expr.get("style_ref")
+    if tp:
+        meta["text_primitive"] = tp
+    if ref:
+        meta["style_ref"] = ref
+    return meta
+
+
 def _engine_present_component(el, atom) -> dict:
     """Heading/Body from atom meaning + occurrence primitive. No authored content.text."""
     expr = el.get("expression") or {}
@@ -2976,7 +2989,7 @@ def _engine_present_component(el, atom) -> dict:
         "element_id": el.get("element_id"),
         "composed_from": el.get("composed_from"),
         "text_primitive": tp,
-        "style_ref": expr.get("style_ref"),
+        **_engine_expr_meta(el),
     }
     if tp == PRIMITIVE_HEADING:
         return {
@@ -3001,6 +3014,14 @@ def _engine_step_list_component(step_els, by_atom) -> dict:
             "text": _engine_atom_text(atom),
         })
     title = job_aid_title(step_els[0], by_atom)
+    refs = [(el.get("expression") or {}).get("style_ref") for el in step_els]
+    meta = {
+        "element_ids": [el["element_id"] for el in step_els],
+        "composed_from": [el["composed_from"] for el in step_els],
+        "text_primitive": PRIMITIVE_STEP,
+    }
+    if refs and refs[0] and all(r == refs[0] for r in refs):
+        meta["style_ref"] = refs[0]
     return {
         "type": "StepList",
         "props": {
@@ -3008,11 +3029,7 @@ def _engine_step_list_component(step_els, by_atom) -> dict:
             "title": title,
             "items": items,
         },
-        "meta": {
-            "element_ids": [el["element_id"] for el in step_els],
-            "composed_from": [el["composed_from"] for el in step_els],
-            "text_primitive": PRIMITIVE_STEP,
-        },
+        "meta": meta,
     }
 
 
@@ -3023,6 +3040,7 @@ def _engine_invert_component(el, chk) -> dict:
         "composed_from": el.get("composed_from"),
         "shape": SHAPE_INVERT,
         "from": "manifest.checks",
+        **_engine_expr_meta(el),
     }
     if chk.get("render") == "mcq" or chk.get("choices"):
         shown = stable_rotate(list(chk["choices"]), eid)
@@ -5689,6 +5707,50 @@ def selftest(closed_moves):
                     and engine_themed["meta"].get("title_from")
                     == engine_form["meta"].get("title_from"),
                     engine_themed["meta"]))
+    planted = json.loads(json.dumps(seeded_form))
+    for e in planted:
+        eid = e.get("element_id") or ""
+        expr = e.setdefault("expression", {})
+        if eid == "ele_sop_ast29080":
+            expr["style_ref"] = "brand.opening"
+        elif eid.endswith("__activate"):
+            expr["style_ref"] = "brand.prior"
+        elif eid == "ele_sop_ast29080_purpose":
+            expr["style_ref"] = "brand.purpose"
+        elif eid.endswith("__reinforce"):
+            expr["style_ref"] = "brand.recall"
+        elif (e.get("intent") or {}).get("move") == "present" and not expr.get("style_ref"):
+            expr["style_ref"] = "brand.instructional"
+    engine_roles = build_engine_course(
+        store, planted, mf_form,
+        meaning_atoms=form_store + instance_store,
+        options_registry=fixture_br_options,
+    )
+    sc1_refs = [
+        (c.get("meta") or {}).get("style_ref")
+        for c in engine_roles["scenes"][0]["components"]
+    ]
+    end_refs = [
+        (c.get("meta") or {}).get("style_ref")
+        for c in engine_roles["scenes"][3]["components"]
+        if c.get("type") in ("MCQ", "Cloze")
+    ]
+    step_ref = next(
+        ((c.get("meta") or {}).get("style_ref")
+         for c in engine_roles["scenes"][1]["components"] if c.get("type") == "StepList"),
+        None,
+    )
+    scene_head = engine_roles["scenes"][0]["components"][0]
+    results.append(("engine projection copies occurrence style_ref onto component meta",
+                    "brand.opening" in sc1_refs
+                    and "brand.instructional" in sc1_refs
+                    and "brand.prior" in sc1_refs
+                    and "brand.purpose" in sc1_refs
+                    and end_refs.count("brand.recall") == 2
+                    and step_ref == "brand.instructional"
+                    and "style_ref" not in (scene_head.get("meta") or {})
+                    and all("class" not in c for s in engine_roles["scenes"] for c in s["components"]),
+                    {"scene1": sc1_refs, "end": end_refs, "step": step_ref}))
     results.append(("overlay client name is cgen/<client>/projects/<proj>",
                     overlay_client_name(
                         pathlib.Path("/tmp/cgen/astellas/projects/ast_alsap")
