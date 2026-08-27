@@ -80,7 +80,7 @@ missing extras and never drops existing extras or Cartographer bindings.
 Primitive keys recompute from kind + move.
 
 Not this tool: Dragoman (locale packs), Storyline, .potx, PNG pipelines,
-`tools/render/`, Netlify / `/cgen/alsap` hosting. Couturier (`tools/couturier.py`)
+`tools/render/`, Netlify / `/cgen/alsap` hosting (tabled). Couturier (`tools/couturier.py`)
 owns style keys on the occurrence; a re-realize preserves them and rebinds
 `text_primitive`. Does not rewrite SOP/form atoms into elements — `atoms.json`
 is read-only. Cartographer still binds `teaches` / rest of intent.
@@ -104,6 +104,7 @@ never hand-edited):
     <project>/occurrences/scenes.json       closed project catalog (source of truth; not rewritten)
     <project>/occurrences/lessons.json      closed project catalog (source of truth; not rewritten)
     <project>/realized_lesson.html          short lesson (default {project}_short). Open this.
+    <project>/realized_lesson.json          Course Engine projection of that lesson. /cgen reads this.
     <project>/realized_lesson_br.html       BR subset (path derived from lesson_id)
     <project>/realized_lesson_plan.html     Procedure A subset (path derived from lesson_id)
     <project>/realized_coverage.html        full SOP dump in document order
@@ -255,6 +256,18 @@ LESSON_CATALOG_FILENAME = "lessons.json"
 LESSON_CATALOG_POLICY = "v1_lesson_catalog"
 DEFAULT_LESSON_HTML_NAME = "realized_lesson.html"
 DEFAULT_COVERAGE_HTML_NAME = "realized_coverage.html"
+# Course Engine v1 at /cgen reads this JSON projection of the lesson node.
+# Same membership as the HTML sidecar. Not a hand-authored SCORM package
+# and not cgen/schema/course.schema.json as a rival constitution.
+ENGINE_PLAYER_POLICY = "v1_engine_reads_lesson_projection"
+ENGINE_PLAYER_NOTE = (
+    "Course Engine v1 at /cgen reads this projection of the occurrence "
+    "lesson node (lesson → scene_ids → element_ids → atoms via composed_from; "
+    "check shapes from manifest.checks). Meaning is resolved from atoms at "
+    "realize time. Not a hand-authored SCORM package. Not "
+    "cgen/schema/course.schema.json as a rival constitution. Sidecar HTML "
+    "stays a projector. Rebuild with realize → cartographer → couturier."
+)
 
 KIND_TO_TYPE = {
     "procedure": "Section",
@@ -2893,6 +2906,310 @@ def closed_choice_html(el, chk, esc) -> str:
     )
 
 
+INVERT_MCQ_FEEDBACK = {
+    "correct": "Correct — that wording is this atom.",
+    "incorrect": (
+        "Not yet. Distractors (if any) are sibling atoms in this store; "
+        "the key is this atom’s own wording."
+    ),
+}
+CLOSED_MCQ_FEEDBACK = {
+    "correct": "Correct — that is the fill already shown.",
+    "incorrect": (
+        "Not yet. Options are the form field’s closed value set; "
+        "the key is the instance fill already shown."
+    ),
+}
+SEQUENCE_FEEDBACK = {
+    "correct": "Correct — that is the order of these atoms.",
+    "incorrect": (
+        "Not yet. The order is the sequence already taught "
+        "(these atoms’ object.order)."
+    ),
+}
+
+
+def lesson_player_json_path(html_path: pathlib.Path) -> pathlib.Path:
+    """Sibling of the HTML sidecar. Same stem, .json. Not a third store."""
+    return pathlib.Path(html_path).with_suffix(".json")
+
+
+def _engine_atom_text(atom) -> str:
+    return clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
+
+
+def _engine_present_component(el, atom) -> dict:
+    """Heading/Body from atom meaning + occurrence primitive. No authored content.text."""
+    expr = el.get("expression") or {}
+    tp = expr.get("text_primitive") or ""
+    role = expr.get("content_role") or ""
+    kicker = KICKER.get(role, "")
+    if tp == PRIMITIVE_CALLOUT:
+        kicker = KICKER.get("callout", "Why this")
+    text = _engine_atom_text(atom)
+    meta = {
+        "element_id": el.get("element_id"),
+        "composed_from": el.get("composed_from"),
+        "text_primitive": tp,
+        "style_ref": expr.get("style_ref"),
+    }
+    if tp == PRIMITIVE_HEADING:
+        return {
+            "type": "Heading",
+            "props": {"level": 2, "text": text, "kicker": kicker},
+            "meta": meta,
+        }
+    return {
+        "type": "Body",
+        "props": {"text": text, "kicker": kicker},
+        "meta": meta,
+    }
+
+
+def _engine_step_list_component(step_els, by_atom) -> dict:
+    items = []
+    for el in step_els:
+        atom = by_atom[el["composed_from"]]
+        items.append({
+            "id": el["element_id"],
+            "composed_from": el["composed_from"],
+            "text": _engine_atom_text(atom),
+        })
+    title = job_aid_title(step_els[0], by_atom)
+    return {
+        "type": "StepList",
+        "props": {
+            "kicker": KICKER.get("step", "Job aid"),
+            "title": title,
+            "items": items,
+        },
+        "meta": {
+            "element_ids": [el["element_id"] for el in step_els],
+            "composed_from": [el["composed_from"] for el in step_els],
+            "text_primitive": PRIMITIVE_STEP,
+        },
+    }
+
+
+def _engine_invert_component(el, chk) -> dict:
+    eid = el["element_id"]
+    meta = {
+        "element_id": eid,
+        "composed_from": el.get("composed_from"),
+        "shape": SHAPE_INVERT,
+        "from": "manifest.checks",
+    }
+    if chk.get("render") == "mcq" or chk.get("choices"):
+        shown = stable_rotate(list(chk["choices"]), eid)
+        options = []
+        for c in shown:
+            options.append({
+                "id": "key" if c.get("correct") else "d:" + (c.get("from_atom_id") or ""),
+                "text": c["text"],
+                "correct": bool(c.get("correct")),
+            })
+        return {
+            "type": "MCQ",
+            "props": {
+                "id": eid,
+                "kicker": "Check",
+                "stem": chk["stem"],
+                "choices": options,
+                "feedback": dict(INVERT_MCQ_FEEDBACK),
+            },
+            "meta": meta,
+        }
+    return {
+        "type": "Cloze",
+        "props": {
+            "id": eid,
+            "kicker": "Check",
+            "stem": chk["stem"],
+            "key": chk["key"],
+            "feedback": dict(INVERT_MCQ_FEEDBACK),
+        },
+        "meta": {**meta, "render": RENDER_CLOZE},
+    }
+
+
+def _engine_sequence_component(chk) -> dict:
+    seed = "sequence:" + ",".join(chk["correct_ids"])
+    shown = shuffled_sequence_items(chk["items"], seed)
+    return {
+        "type": "SequenceOrder",
+        "props": {
+            "id": "sequence:" + chk["correct_ids"][0],
+            "kicker": "Practice",
+            "prompt": chk["prompt"],
+            "items": [
+                {"id": it["atom_id"], "text": it["text"]}
+                for it in shown
+            ],
+            "correctIds": list(chk["correct_ids"]),
+            "feedback": dict(SEQUENCE_FEEDBACK),
+        },
+        "meta": {
+            "shape": SHAPE_SEQUENCE,
+            "from": "manifest.checks",
+            "atom_ids": list(chk["correct_ids"]),
+        },
+    }
+
+
+def _engine_closed_choice_component(chk) -> dict:
+    seed = "closed_choice:" + chk["options_ref"] + ":" + chk["key"]
+    shown = shuffled_closed_choices(chk["choices"], seed)
+    options = [
+        {"id": c["text"], "text": c["text"], "correct": bool(c.get("correct"))}
+        for c in shown
+    ]
+    return {
+        "type": "MCQ",
+        "props": {
+            "id": "closed_choice:" + chk["key_atom_id"],
+            "kicker": "Practice",
+            "stem": chk["prompt"],
+            "choices": options,
+            "feedback": dict(CLOSED_MCQ_FEEDBACK),
+        },
+        "meta": {
+            "shape": SHAPE_CLOSED,
+            "from": "manifest.checks",
+            "options_ref": chk.get("options_ref"),
+            "key_atom_id": chk.get("key_atom_id"),
+            "form_atom_id": chk.get("form_atom_id"),
+        },
+    }
+
+
+def _engine_components_for_ids(ids, by_eid, by_atom, options_registry) -> list:
+    comps = []
+    for kind, els in group_spine_for_project(ids, by_eid):
+        if kind == "job_aid":
+            comps.append(_engine_step_list_component(els, by_atom))
+            continue
+        el = els[0]
+        rec = hosted_check(el)
+        if rec:
+            chk = resolve_check(rec, by_atom, options_registry)
+            if chk and chk.get("shape") == SHAPE_INVERT:
+                atom = by_atom.get(chk.get("key_atom_id") or el.get("composed_from"))
+                if atom:
+                    assert_check_honest(chk, atom, list(by_atom.values()))
+                comps.append(_engine_invert_component(el, chk))
+                continue
+        atom = by_atom[el["composed_from"]]
+        comps.append(_engine_present_component(el, atom))
+    return comps
+
+
+def _engine_scene_checks(scene, manifest, by_eid, by_atom, options_registry) -> list:
+    comps = []
+    for shape in scene_check_refs(scene):
+        rec = manifest_check(manifest, shape)
+        if not rec:
+            continue
+        chk = resolve_check(rec, by_atom, options_registry)
+        if not chk:
+            continue
+        if shape == SHAPE_SEQUENCE:
+            assert_sequence_check_honest(chk, list(by_atom.values()))
+            comps.append(_engine_sequence_component(chk))
+        elif shape == SHAPE_CLOSED:
+            assert_br_profile_check_honest(chk, by_atom, options_registry or {})
+            comps.append(_engine_closed_choice_component(chk))
+    return comps
+
+
+def build_engine_course(atoms, elements, manifest, *, meaning_atoms=None,
+                        options_registry=None, lesson_id=None) -> dict:
+    """Project the selected lesson node into Course Engine v1 runtime JSON.
+
+    Same graph walk as the HTML sidecar: lesson → scenes → element_ids →
+    atoms via composed_from; in-scene and lesson-end checks from
+    manifest.checks. The engine cannot consume occurrence files as-is
+    (Heading/Body/MCQ + linear scenes). This file is that adapter —
+    rebuilt by realize.py, not a hand-authored package.
+    """
+    catalog = list(atoms)
+    if meaning_atoms:
+        seen = {a["atom_id"] for a in catalog}
+        for a in meaning_atoms:
+            if a.get("atom_id") and a["atom_id"] not in seen:
+                catalog.append(a)
+    by_atom = {a["atom_id"]: a for a in catalog}
+    by_eid = {e["element_id"]: e for e in elements}
+    lesson = resolve_lesson(manifest, by_eid, lesson_id=lesson_id, atoms_by_id=by_atom)
+    registry = options_registry or {}
+    scenes_out = []
+    order = []
+    for sc in lesson["scenes"]:
+        resolved = resolve_scene(sc, by_eid)
+        comps = []
+        heading = resolved.get("heading") or ""
+        kicker = resolved.get("kicker") or ""
+        if heading:
+            comps.append({
+                "type": "Heading",
+                "props": {"level": 2, "text": heading, "kicker": kicker},
+                "meta": {"scene_id": resolved["id"], "role": resolved.get("role")},
+            })
+        comps.extend(_engine_components_for_ids(
+            resolved["element_ids"], by_eid, by_atom, registry
+        ))
+        comps.extend(_engine_scene_checks(
+            resolved, manifest, by_eid, by_atom, registry
+        ))
+        sid = resolved["id"]
+        order.append(sid)
+        scenes_out.append({
+            "id": sid,
+            "title": heading,
+            "kind": "scene",
+            "role": resolved.get("role"),
+            "components": comps,
+        })
+    end_ids = list(lesson["lesson_end_checks"])
+    if end_ids:
+        order.append(SCENE_LESSON_END)
+        scenes_out.append({
+            "id": SCENE_LESSON_END,
+            "title": "",
+            "kind": SCENE_LESSON_END,
+            "components": _engine_components_for_ids(
+                end_ids, by_eid, by_atom, registry
+            ),
+        })
+    lid = lesson["lesson_id"]
+    return {
+        "generated_by": REALIZER,
+        "projection_of": {
+            "kind": "lesson",
+            "lesson_id": lid,
+            "policy": LESSON_POLICY,
+            "spec": LESSON_SPEC,
+            "engine_policy": ENGINE_PLAYER_POLICY,
+            "graph": "occurrences/",
+            "note": ENGINE_PLAYER_NOTE,
+        },
+        "meta": {
+            "id": lid,
+            "title": lesson["title"],
+            "title_from": lesson.get("title_from"),
+        },
+        "nav": {
+            "linear": True,
+            "showProgress": True,
+            "startSceneId": order[0] if order else None,
+            "sceneOrder": order,
+        },
+        "paging": dict(lesson.get("paging") or {}),
+        "scenes": scenes_out,
+        "vars": {"ccOn": False, "completedScenes": []},
+        "rules": [],
+    }
+
+
 def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_atoms=None,
                  option_sets=None, options_registry=None, lesson_id=None,
                  write_coverage=True, lesson_catalog=None, scene_catalog=None):
@@ -3844,6 +4161,14 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         coverage_details,
     )
     out_path.write_text(lesson_html)
+    json_path = lesson_player_json_path(out_path)
+    course = build_engine_course(
+        atoms, elements, manifest,
+        meaning_atoms=meaning_atoms,
+        options_registry=options_registry,
+        lesson_id=lesson_id,
+    )
+    json_path.write_text(json.dumps(course, indent=2) + "\n")
     if write_coverage:
         coverage_path.write_text(coverage_html)
     return coverage_path
@@ -4444,7 +4769,8 @@ def selftest(closed_moves):
         derive_lesson_paging, project_html, project_lesson_htmls,
         lesson_html_filename, select_lesson_record, resolve_lesson,
         stamp_spine_scenes_from_catalog, hydrate_scene_record,
-        load_scene_catalog, resolve_scene,
+        load_scene_catalog, resolve_scene, build_engine_course,
+        lesson_player_json_path,
     )
     projector_src = "\n".join(inspect.getsource(fn) for fn in projector_fns)
     results.append(("projector does not special-case extra lesson ids",
@@ -5261,6 +5587,58 @@ def selftest(closed_moves):
                     'data-lesson="selftest_short"' in page_form
                     and page_form.count('class="scene"') == 3
                     and 'data-scene="benefit_risk_on_the_form"' in page_form, ""))
+    engine_form = build_engine_course(
+        store, seeded_form, mf_form,
+        meaning_atoms=form_store + instance_store,
+        options_registry=fixture_br_options,
+    )
+    engine_ids = [s["id"] for s in engine_form.get("scenes") or []]
+    engine_types = {
+        s["id"]: [c.get("type") for c in s.get("components") or []]
+        for s in engine_form.get("scenes") or []
+    }
+    results.append(("engine projection is a read of the lesson node not a SCORM package",
+                    engine_form.get("generated_by") == REALIZER
+                    and (engine_form.get("projection_of") or {}).get("lesson_id") == "course_short"
+                    and (engine_form.get("projection_of") or {}).get("engine_policy")
+                    == ENGINE_PLAYER_POLICY
+                    and "module" not in engine_form
+                    and engine_ids == [
+                        "what_an_alsap_is", "how_an_alsap_starts",
+                        "benefit_risk_on_the_form", SCENE_LESSON_END,
+                    ],
+                    engine_ids))
+    results.append(("engine projection has pager steps: three named scenes plus lesson-end",
+                    engine_form["scenes"][0]["kind"] == "scene"
+                    and engine_form["scenes"][3]["kind"] == SCENE_LESSON_END
+                    and (engine_form.get("nav") or {}).get("sceneOrder") == engine_ids
+                    and "SequenceOrder" in engine_types.get("how_an_alsap_starts", [])
+                    and "StepList" in engine_types.get("how_an_alsap_starts", [])
+                    and engine_types.get("benefit_risk_on_the_form", []).count("MCQ") == 1
+                    and engine_types.get(SCENE_LESSON_END, []).count("MCQ") == 2,
+                    engine_types))
+    seq_comp = next(
+        (c for c in engine_form["scenes"][1]["components"] if c["type"] == "SequenceOrder"),
+        {"props": {}},
+    )
+    closed_comp = next(
+        (c for c in engine_form["scenes"][2]["components"] if c["type"] == "MCQ"),
+        {"props": {}},
+    )
+    invert_stems = [
+        c["props"].get("stem") for c in engine_form["scenes"][3]["components"]
+        if c["type"] == "MCQ"
+    ]
+    results.append(("engine projection meaning is from atoms not authored content.text",
+                    seq_comp["props"]["prompt"] == "Put these in the order already taught."
+                    and any("Notify a member of Safety Data Science" in (it.get("text") or "")
+                            for it in seq_comp["props"]["items"])
+                    and closed_comp["props"]["stem"] == BR_CHECK_PROMPT
+                    and any(o.get("text") == "conditional_favorable" and o.get("correct")
+                            for o in closed_comp["props"]["choices"])
+                    and "What is the ALSAP?" in invert_stems
+                    and all("content" not in e for e in seeded_form),
+                    invert_stems))
     mf_form["lessons"]["lessons"].append({
         "lesson_id": "course_br",
         "title": resolved_form_lesson["title"],
@@ -5313,6 +5691,18 @@ def selftest(closed_moves):
                     and 'data-scene-count="1"' in page_br
                     and 'data-step-count="1"' in page_br
                     and not br_cov.exists(), ""))
+    engine_br = build_engine_course(
+        store, seeded_form, mf_form,
+        meaning_atoms=form_store + instance_store,
+        options_registry=fixture_br_options, lesson_id="course_br",
+    )
+    br_types = [c.get("type") for s in engine_br.get("scenes") or [] for c in s.get("components") or []]
+    results.append(("engine BR subset is one named scene with closed_choice and no lesson-end",
+                    [s["id"] for s in engine_br.get("scenes") or []] == ["benefit_risk_on_the_form"]
+                    and "MCQ" in br_types
+                    and "SequenceOrder" not in br_types
+                    and SCENE_LESSON_END not in [s["id"] for s in engine_br.get("scenes") or []],
+                    [s["id"] for s in engine_br.get("scenes") or []]))
     apply_spine(
         mf_form, store, seeded_form,
         meaning_atoms=form_store + instance_store, option_sets=fixture_br_options,
@@ -5403,7 +5793,7 @@ def selftest(closed_moves):
     results.append(("--lesson regenerates only that catalog file",
                     selected_one.name == "realized_lesson_plan.html"
                     and not extra_one
-                    and names_one == {"realized_lesson_plan.html"},
+                    and names_one == {"realized_lesson_plan.html", "realized_lesson_plan.json"},
                     names_one))
     with tempfile.TemporaryDirectory() as td_all:
         _, selected_all, extra_all = project_lesson_htmls(
@@ -5421,7 +5811,10 @@ def selftest(closed_moves):
                     and DEFAULT_COVERAGE_HTML_NAME in names_all
                     and "realized_lesson.html" in names_all
                     and "realized_lesson_br.html" in names_all
-                    and "realized_lesson_plan.html" in names_all,
+                    and "realized_lesson_plan.html" in names_all
+                    and "realized_lesson.json" in names_all
+                    and "realized_lesson_br.json" in names_all
+                    and "realized_lesson_plan.json" in names_all,
                     names_all))
 
     cat_scenes_small = {
@@ -5628,7 +6021,7 @@ def main():
         str(repo_default_project()) if repo_default_project() else "(pass --project)"
     )
     ap = argparse.ArgumentParser(
-        description="Realizer v1 — mint occurrence elements (1:1 default + small 1:many seed) and project a lesson HTML.",
+        description="Realizer v1 — mint occurrence elements (1:1 default + small 1:many seed) and project lesson HTML plus the Course Engine JSON /cgen reads.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="From cgen/trainstorm-core:\n"
                "  python tools/realize.py\n"
@@ -5640,6 +6033,7 @@ def main():
                "  python3 tools/cartographer.py\n"
                "  python3 tools/couturier.py\n"
                "Open <project>/realized_lesson.html (short spine), "
+               "realized_lesson.json (Course Engine projection; /cgen loads this), "
                "realized_lesson_br.html (BR subset), "
                "realized_lesson_plan.html (Procedure A subset), "
                "or realized_coverage.html (full dump).\n",
@@ -5964,8 +6358,10 @@ def main():
           f"{sum(1 for e in extras if (e.get('ext') or {}).get('realized_from', {}).get('instance_store'))} guest ele_)")
     print(f"  primitives : {dict(sorted(primitive_counts(elements).items()))}")
     print(f"  lesson HTML: {html_path}  ← open this")
+    print(f"  lesson JSON: {lesson_player_json_path(html_path)}  ← /cgen reads this")
     for extra_html in extra_htmls:
         print(f"  extra HTML : {extra_html}")
+        print(f"  extra JSON : {lesson_player_json_path(extra_html)}")
     print(f"  coverage   : {coverage_path}  (full SOP dump)")
     print("  schema     : element.schema.json ALL PASS (no authored content.text)")
 

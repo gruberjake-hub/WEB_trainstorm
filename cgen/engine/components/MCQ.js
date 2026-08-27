@@ -2,6 +2,13 @@ export function MCQ({ props, emit }) {
   const wrap = document.createElement("section");
   wrap.setAttribute("aria-label", "Knowledge check");
 
+  if (props.kicker) {
+    const kicker = document.createElement("p");
+    kicker.className = "kicker";
+    kicker.textContent = props.kicker;
+    wrap.appendChild(kicker);
+  }
+
   // ✅ Backward-compatible normalization (supports old + new schemas)
   const stemText = props.stem ?? props.question ?? props.prompt ?? "";
   const choices = props.choices ?? props.options ?? [];

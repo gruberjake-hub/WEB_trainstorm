@@ -651,8 +651,10 @@ def main():
     print(f"  occurrences  : {elements_path}")
     print(f"  manifest     : {mf_path}")
     print(f"  lesson HTML  : {html_path}")
+    print(f"  lesson JSON  : {realize.lesson_player_json_path(html_path)}")
     for extra_html in extra_htmls:
         print(f"  extra HTML   : {extra_html}")
+        print(f"  extra JSON   : {realize.lesson_player_json_path(extra_html)}")
     print(f"  coverage     : {coverage_path}")
     print(f"  looks        : {dict(sorted(look_counts.items()))}")
     print(f"  dressed      : {dressed}  ·  unmapped: {len(unmapped)}")
