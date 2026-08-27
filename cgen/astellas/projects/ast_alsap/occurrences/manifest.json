@@ -74,7 +74,7 @@
     ],
     "note": "The two instance examples instantiate exactly these FORM-AST-34037 fields (BR profile + rationale). Guest ele_ records composed_from the form atom_id. Not a form dump. Not f_br_guidance or phrasing cousins. Meaning catalog joins the sibling alsap store; SOP and form atoms.json are not copied into."
   },
-  "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). A small form-field present seed mints guest ele_ records whose composed_from is an alsap form atom_id (agents/realizer/form_field_present_v1.md). A small instance-example seed mints guest ele_ records whose composed_from is an alsap_asp9999 atom_id (agents/realizer/instance_example_v1.md). Cartographer owns occurrence intent; Couturier owns expression style. Realizer binds compiler primitives (text_primitive) from atom kind + move (agents/realizer/primitives_v1.md). Spine is a documented selection of existing ele_ records (agents/realizer/spine_v1.md); the full dump is coverage. Check shapes (invert_definition, sequence_order, closed_choice) live on ext.check / manifest.checks (vocab/check-shape.enum.json). Scene records (id, title heuristic, ordered ele_ refs) live on spine.scenes / ext.scene (vocab/scene.enum.json). Procedure A sequence_order is projector-only of those four presents; composing it from one atom would be a lie. closed_choice is projector-only of the form present + instance fill (options_ref ids; key = selected_value); composing from only one of those two atoms would hide the other half. A re-realize preserves extras, intent, style, and recomputes the same spine, primitives, check shapes, and scenes.",
+  "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). A small form-field present seed mints guest ele_ records whose composed_from is an alsap form atom_id (agents/realizer/form_field_present_v1.md). A small instance-example seed mints guest ele_ records whose composed_from is an alsap_asp9999 atom_id (agents/realizer/instance_example_v1.md). Cartographer owns occurrence intent; Couturier owns expression style. Realizer binds compiler primitives (text_primitive) from atom kind + move (agents/realizer/primitives_v1.md). Spine is a documented selection of existing ele_ records (agents/realizer/spine_v1.md); the full dump is coverage. Check shapes (invert_definition, sequence_order, closed_choice) live on ext.check / manifest.checks (vocab/check-shape.enum.json). Scene records (id, title heuristic, ordered ele_ refs) live on spine.scenes / ext.scene (vocab/scene.enum.json). The lesson record (id, title heuristic, scene id refs) lives on manifest.lessons (agents/realizer/lesson_v1.md) and points at spine.scenes \u2014 not a Course ele_, not a LMS. Procedure A sequence_order is projector-only of those four presents; composing it from one atom would be a lie. closed_choice is projector-only of the form present + instance fill (options_ref ids; key = selected_value); composing from only one of those two atoms would hide the other half. A re-realize preserves extras, intent, style, and recomputes the same spine, primitives, check shapes, scenes, and default lesson (extra lesson records are kept).",
   "cartographer": {
     "policy": "v1_heuristic_compiler",
     "tool": "tools/cartographer.py",
@@ -92,7 +92,7 @@
     "low_confidence": 10,
     "element_count": 55,
     "ontology": "ontology/objectives.json",
-    "note": "v1 compiler pass over Realizer occurrences, including extra 1:many records. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Extra occurrences keep Realizer-stamped move. Couturier owns expression style; this tool does not wipe it. After writing move, Realizer refreshes text_primitive (compiler form). Lesson spine is Realizer projection (agents/realizer/spine_v1.md); this tool does not own sequence. Does not wipe ext.check or ext.scene."
+    "note": "v1 compiler pass over Realizer occurrences, including extra 1:many records. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Extra occurrences keep Realizer-stamped move. Couturier owns expression style; this tool does not wipe it. After writing move, Realizer refreshes text_primitive (compiler form). Lesson spine is Realizer projection (agents/realizer/spine_v1.md); this tool does not own sequence. Does not wipe ext.check, ext.scene, or manifest.lessons."
   },
   "couturier": {
     "policy": "v1_move_to_look",
@@ -111,7 +111,7 @@
     "unmapped": 0,
     "element_count": 55,
     "registry": "vocab/primitives.registry.json",
-    "note": "v1 map from occurrence move to expression style keys. Couturier mints no ids, does not rewrite atoms or intent, and does not bind motion / layout_primitive / interaction_primitive. Realizer owns text_primitive (compiler form); this tool preserves it and writes style_ref / content_role / layout_hint. HTML reads these keys for clothes; meaning stays on the atom. Lesson spine is Realizer projection; this tool does not pick the path."
+    "note": "v1 map from occurrence move to expression style keys. Couturier mints no ids, does not rewrite atoms or intent, and does not bind motion / layout_primitive / interaction_primitive. Realizer owns text_primitive (compiler form); this tool preserves it and writes style_ref / content_role / layout_hint. HTML reads these keys for clothes; meaning stays on the atom. Lesson spine is Realizer projection; this tool does not pick the path. Does not wipe manifest.lessons."
   },
   "spine": {
     "policy": "v1_front_matter_callout_procedure_sequence_form_example_then_checks",
@@ -136,7 +136,7 @@
     ],
     "count": 16,
     "store_count": 55,
-    "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then the two FORM-AST-34037 BR-field presents those instance examples fill (alsap atoms via composed_from), then a small instance-example seed (alsap_asp9999 atoms via composed_from \u2014 Procedure A has no honest match; these illustrate the ALSAP generally), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check) plus a sequence practice of the Procedure A presents (projector-only; no extra ele_) plus a closed-choice of the BR profile fill after the form presents and instance examples (projector-only; options_ref value ids; no extra ele_) plus present clothes on the form-field beats and exemplify clothes on the instance beats; coverage dump stays card-like. Scene records (spine.scenes / ext.scene) group those existing beats from SOP/form roles \u2014 first-class on the graph, not chrome rediscovery. Player chrome pages that list one named scene at a time (Next/Back); lesson-end checks are a final step, not a fourth scene. Not an LLM path and not a full object-tree walk.",
+    "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then the two FORM-AST-34037 BR-field presents those instance examples fill (alsap atoms via composed_from), then a small instance-example seed (alsap_asp9999 atoms via composed_from \u2014 Procedure A has no honest match; these illustrate the ALSAP generally), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check) plus a sequence practice of the Procedure A presents (projector-only; no extra ele_) plus a closed-choice of the BR profile fill after the form presents and instance examples (projector-only; options_ref value ids; no extra ele_) plus present clothes on the form-field beats and exemplify clothes on the instance beats; coverage dump stays card-like. Scene records (spine.scenes / ext.scene) group those existing beats from SOP/form roles \u2014 first-class on the graph, not chrome rediscovery. A lesson record (manifest.lessons) points at that list; the projector reads the lesson node, not a hard-coded ALSAP trio. Player chrome pages that list one named scene at a time (Next/Back); lesson-end checks are a final step, not a fourth scene. Not an LLM path and not a full object-tree walk.",
     "sequence_check": {
       "shape": "sequence_order",
       "spec": "agents/realizer/check_v1.md",
@@ -248,6 +248,39 @@
       },
       "note": "First-class scene records: ordered ele_ refs plus in-scene check-shape refs. Projector reads this list to wrap/page; it does not re-discover scenes by if-atom-id. Sequence practice stays in Procedure A. Form-BR closed-choice stays in Benefit-risk on the form. Definition/purpose checks stay at lesson end. Not an LLM. Not outcome language. Coverage dump stays ungrouped."
     }
+  },
+  "lessons": {
+    "policy": "v1_lesson_on_graph",
+    "spec": "agents/realizer/lesson_v1.md",
+    "default": "ast_alsap_short",
+    "lessons": [
+      {
+        "lesson_id": "ast_alsap_short",
+        "title": "SOP-AST-29080 \u2014 Plan, Develop, Execute, Maintain, and Archive the Asset Level Safety Assessment Plan (ALSAP).",
+        "title_from": "atom_sop_ast29080",
+        "scenes": {
+          "see": "spine.scenes"
+        },
+        "scene_ids": [
+          "what_an_alsap_is",
+          "how_an_alsap_starts",
+          "benefit_risk_on_the_form"
+        ],
+        "lesson_end_checks": {
+          "see": "spine.scenes.lesson_end_checks"
+        },
+        "lesson_end_check_ids": [
+          "ele_sop_ast29080_purpose__reinforce",
+          "ele_sop_ast29080_general__reinforce"
+        ],
+        "paging": {
+          "see": "spine.scenes.paging"
+        },
+        "default": true,
+        "from": "Document-root atom first sentence (title heuristic) plus the first-class scene list already on spine.scenes. Not an LLM. Not outcome language. Not a Course ele_ \u2014 no honest composed_from for a container."
+      }
+    ],
+    "note": "First-class lesson records: id, title heuristic, ordered scene id refs into spine.scenes, lesson-end ele_ refs, paging pointer. Projector reads the selected lesson (default or --lesson) to wrap/page; it does not assume the ALSAP trio. Extra lesson records are preserved on re-stamp. Not a LMS. Not SCORM. Not a Course ele_. Coverage dump stays a second projection."
   },
   "checks": {
     "policy": "v1_check_shapes_on_graph",

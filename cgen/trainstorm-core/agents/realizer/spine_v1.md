@@ -179,8 +179,10 @@ role vocab: `vocab/scene.enum.json`. Not new beats. Not new atoms. Not
 a new `ele_`. Not an LLM. Not invented outcome language (“will be able
 to…”).
 
-The projector **reads** `spine.scenes` to wrap and page. It does not
-re-discover scenes by hard-coded atom ids.
+The projector **reads the selected lesson node** (`manifest.lessons`,
+spec `agents/realizer/lesson_v1.md`), then those `spine.scenes` records,
+to wrap and page. It does not assume “the ALSAP lesson is these three
+headings.” `--lesson` (or the project default) selects the record.
 
 Heuristic — SOP/form roles already used for membership:
 
@@ -248,7 +250,7 @@ HTML (Realizer projector):
 
 | File | Default experience |
 |---|---|
-| `<project>/realized_lesson.html` | The spine, in the order above, wrapped as **three named scenes** read from `spine.scenes` (What an ALSAP is / How an ALSAP starts / Benefit-risk on the form), **one scene at a time** (Next/Back). Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), a **sequence practice** of those four presents (order the first sentences; in-scene), two form-field presents (`present` / `tp_body`), two example beats (`exemplify` / `brand.example` / `tp_body`), a **closed-choice** of the BR profile fill (in-scene 3), two definition checks (`tp_recall`) at lesson end (final player step, not a fourth scene). Link to coverage. |
+| `<project>/realized_lesson.html` | A **read of the lesson node** (`manifest.lessons`, default `{project}_short`): the spine, in the order above, wrapped as **three named scenes** read from that lesson’s `scene_ids` → `spine.scenes` (What an ALSAP is / How an ALSAP starts / Benefit-risk on the form), **one scene at a time** (Next/Back). Title heuristic is the document-root atom. Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), a **sequence practice** of those four presents (order the first sentences; in-scene), two form-field presents (`present` / `tp_body`), two example beats (`exemplify` / `brand.example` / `tp_body`), a **closed-choice** of the BR profile fill (in-scene 3), two definition checks (`tp_recall`) at lesson end (final player step, not a fourth scene). Link to coverage. |
 | `<project>/realized_coverage.html` | Full occurrence dump in SOP document order — still card-like. Link back to the lesson. |
 
 Compiler primitives (`agents/realizer/primitives_v1.md`) are Realizer-owned
@@ -288,8 +290,10 @@ Do not hide coverage by deleting `ele_` records. The store stays 55
   if the honest `instantiates` target were missing.
 - Not new scene meaning, not a fourth scene of outcomes, and not a
   one-off HTML edit. Scene records are first-class on `spine.scenes` /
-  `ext.scene`. Player chrome pages that list one at a time; it does not
-  mint a fourth scene.
+  `ext.scene`. A lesson record on `manifest.lessons` points at that list.
+  Player chrome pages the selected lesson’s scenes one at a time; it
+  does not mint a fourth scene. Coverage dump is a second projection,
+  not a second lesson node.
 
 ---
 

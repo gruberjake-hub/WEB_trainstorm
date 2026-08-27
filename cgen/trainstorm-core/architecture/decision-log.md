@@ -13,6 +13,40 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-27 — Lesson is a graph object that points at `spine.scenes`
+
+After PR #29 scene membership lived on `spine.scenes` / `ext.scene`.
+The short ALSAP lesson was still a projector convention:
+`realized_lesson.html` was “the” lesson because `realize.py` knew this
+project. This hop **names the lesson on the graph**. Same 16 spine
+occurrences. Same three scenes. Same paging UX. Same checks.
+
+**Where it lives.** `manifest.lessons` is the index — `lesson_id`,
+title heuristic (`title_from` = document-root atom), ordered `scene_ids`
+into `spine.scenes`, `lesson_end_check_ids`, paging pointer. Analogous
+to `manifest.checks`. No `Course` `ele_` (no honest `composed_from` for
+a container; `element.schema.json` already names the type; the SOP root
+occurrence is already `type: Course`). Not a rival `course.schema.json`.
+Not a LMS. Not SCORM. Not a catalog UI. Projector reads the selected
+lesson (`--lesson` or default `{project}_short`) then its scenes. It
+does not assume the ALSAP trio. Extra lesson records are preserved on
+re-stamp. Coverage dump stays a second projection, not a second lesson
+node.
+
+**Unchanged.** 16 spine `ele_` ids. 55 / 47. Same paging
+(`v1_one_scene_at_a_time`). Same three scenes. `atoms.json` untouched.
+No authored `content.text`. No Procedure B. No chameleon.py, no
+Headwater outcomes-mode, no `/cgen/alsap` hosting, no quiz engine, no
+LLM distractors, no new agent. Cartographer owns intent. Couturier
+owns style. Idempotent realize → cartographer → couturier. Sequence
+check in scene 2; BR closed-choice in scene 3; invert_definition at
+end.
+
+Hypothesis verified: a sibling lesson record on the occurrence
+manifest was enough; minting a Course `ele_` would have been a lie.
+
+---
+
 ## 2026-08-27 — Scene membership and order first-class on the graph
 
 After PR #28 the three check kinds lived on `ext.check` /

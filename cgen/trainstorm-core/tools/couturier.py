@@ -461,6 +461,8 @@ def main():
     ap.add_argument("--core", default=None, help="trainstorm-core (schemas + vocab)")
     ap.add_argument("--registry", default=None)
     ap.add_argument("--out", help="HTML output path (default: <project>/realized_lesson.html)")
+    ap.add_argument("--lesson", default=None,
+                    help="Lesson id from occurrences/manifest.json lessons (default: the project's default lesson)")
     ap.add_argument("--store", help="Occurrence store directory (default: <project>/occurrences)")
     ap.add_argument("--selftest", action="store_true", help="Run the style-map fixture and exit")
     ap.add_argument("--dry-run", action="store_true", help="Bind and validate; do not write the store or HTML")
@@ -584,7 +586,8 @@ def main():
                  "text_primitive (compiler form); this tool preserves it and writes "
                  "style_ref / content_role / layout_hint. HTML reads these "
                  "keys for clothes; meaning stays on the atom. Lesson spine is Realizer "
-                 "projection; this tool does not pick the path."),
+                 "projection; this tool does not pick the path. Does not wipe "
+                 "manifest.lessons."),
     }
 
     html_path = pathlib.Path(args.out).resolve() if args.out else project / "realized_lesson.html"
@@ -613,6 +616,7 @@ def main():
         atoms, elements, occ_manifest, html_path,
         meaning_atoms=form_atoms + instance_atoms,
         option_sets=option_sets, options_registry=option_sets,
+        lesson_id=args.lesson,
     )
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
 

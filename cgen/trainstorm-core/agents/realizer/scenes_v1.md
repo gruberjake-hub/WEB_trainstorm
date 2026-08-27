@@ -127,4 +127,5 @@ python3 tools/couturier.py
 ```
 
 Optional: `python3 tools/realize.py --selftest` asserts scene operands
-resolve from the graph (not hardcoded HTML).
+resolve from the graph (not hardcoded HTML). A later hop names the
+**lesson** that points at this list (`agents/realizer/lesson_v1.md`).
