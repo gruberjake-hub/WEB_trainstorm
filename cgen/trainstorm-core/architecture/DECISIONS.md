@@ -1187,6 +1187,72 @@ scene headings. Adds player chrome on those existing scenes.
 Working-process block untouched. Single-writer per facet stands.
 Chameleon agent still not stood up.
 
+---
+
+## 2026-08-26 — Scene 3 BR closed-choice: the fill already shown, from the form field’s value set
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** After scene 3 teaches the FORM-AST-34037 BR profile + rationale
+fields and shows the ASP-9999 fills, the short ALSAP lesson now includes
+**one honest check** of that profile fill. Options are the verbatim value
+**ids** of `reg_benefit_risk_profile` (the form field’s `options_ref`).
+Key is the existing instance fill `conditional_favorable` (`selected_value`
+= `source_text`). Prompt is task clothes: *Choose the closed value already
+shown.* Not “which BR profile is required?” (that invents a fact). Not LLM
+distractors. Jake parked a distractor-writer; this hop does not build it.
+`atoms.json` unchanged. No authored `content.text`.
+
+**Composition choice — mint nothing.** Prefer one extra `ele_` with
+`move: reinforce` if that extra can honestly `composed_from` one atom.
+Composing from the instance fill alone hides the options set (it lives on
+the form field). Composing from the form field alone hides the key (it
+lives on the instance). So: **no new `ele_`.** Project from the two
+existing guest records already on the spine (form present + instance
+exemplify). Documented as `spine.br_profile_check`. Store stays **55 / 47**.
+Spine membership 16. The rationale field is `text_long` with no
+`options_ref` — no honest closed set; do not MCQ it.
+
+**Shape.** New check shape `closed_choice` in `agents/realizer/check_v1.md`
+(alongside invert-definition `mcq_siblings` / `cloze` and Procedure A
+`sequence`). Full governed set, not a cherry-picked pair, not phrasing-
+example cousins, not registry description prose. Feedback names the fill
+already shown; it does not invent SOP facts. Initial display is a stable
+non-identity permutation so the learner can be wrong, then right.
+
+**Placement.** In-scene 3 (Benefit-risk on the form), after the field+
+example, before lesson-end definition checks. Paging from PR #26 stays:
+three named scenes, one at a time; definition/purpose checks remain the
+final player step, not a fourth scene.
+
+Cartographer still owns intent. Couturier still owns style. Closed vocab
+still has no `retrieve`. No chameleon.py. No Headwater outcomes-mode.
+No `/cgen/alsap` hosting. No Procedure B. No extra form dump. No 1:many
+of the SOP. Idempotent with realize → cartographer → couturier.
+
+**Why:** After PR #26 scene 3 taught the fields and showed the fills, then
+jumped to lesson-end definition checks. An ID would let the learner
+**practice the closed value just shown**, without inventing a BR-profile
+MCQ or minting a dishonest extra.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. `--selftest` on
+  all three.
+- Open `realized_lesson.html` — scene 3: form BR presents, instance
+  examples, then closed-choice; Next still opens lesson-end definition
+  checks. Open `realized_coverage.html` — full dump, no closed-choice form.
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`.
+
+**Supersedes:** the previous spine / scene blocks’ “scene 3 has no elicit”
+as to *a closed-choice of the existing fill* — that practice is now
+in-scene. The refusal to invent a stem, to write LLM distractors, and to
+stretch cousin fields stands. Working-process block untouched.
+Single-writer per facet stands. Chameleon agent still not stood up.
+
+
 
 
 

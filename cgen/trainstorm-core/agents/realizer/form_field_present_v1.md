@@ -91,7 +91,9 @@ them would split that example. Gagné-ish: here are the fields this form
 asks for; here is a filled ALSAP.
 
 Do not mint a procedure-step MCQ. Sequence practice is projector-only
-(`agents/realizer/check_v1.md`). Do not 1:many the SOP. Do not dump the
+(`agents/realizer/check_v1.md`). Scene 3 now also projects a closed-choice
+of the BR profile fill from these two presents plus the instance pair
+(same spec; no extra `ele_`). Do not 1:many the SOP. Do not dump the
 form. Do not stand up Chameleon. Do not host `/cgen/alsap`.
 
 ---

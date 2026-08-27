@@ -33,7 +33,9 @@ new extras but still preserves any that exist. `--selftest` checks stable extra 
 check honesty bar, spine membership (why-this callout of purpose, front-matter, Procedure A
 as a job sequence, sequence practice of those presents, form BR-field presents, instance
 example, then checks), and the atom → primitives bind (procedure_step → `tp_step`,
-activate → `tp_callout`, job-aid HTML).
+activate → `tp_callout`, job-aid HTML). Scene 3 also projects a closed-choice
+of the BR profile fill (`options_ref` value ids; key = instance
+`selected_value`; projector-only).
 
 ## Cartographer
 

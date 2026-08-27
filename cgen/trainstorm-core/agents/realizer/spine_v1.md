@@ -27,7 +27,9 @@ packs stay keyed on `atom_id`. Closed vocab still has no `retrieve`; extra
 `reinforce` stays a check (`agents/realizer/check_v1.md`). Procedure A’s
 four presents also project a **sequence** practice (order those first
 sentences; object.order) immediately after the job aid, before the form
-presents. That practice mints no `ele_`.
+presents. That practice mints no `ele_`. Scene 3’s form present + instance
+fill also project a **closed_choice** of the BR profile (options_ref value
+ids; key = instance `selected_value`). That practice mints no `ele_`.
 
 ---
 
@@ -121,6 +123,7 @@ The projector kicker is **Practice**. Closed vocab still has no
 | Sequence practice | Same four A-step atoms | **No new `ele_`.** Projector-only check of the four presents (`shape: sequence`) | Gagné-ish: practice the steps near the job aid. Items = first sentences. Order = `object.order`. Form presents then instance examples follow. |
 | Form BR present | The two FORM-AST-34037 field atoms those instance values `instantiates` (see `form_field_present_v1.md`) | Guest extras `…__present` | Honest referent of the two instance examples already on the spine: BR profile field + rationale field. `composed_from` is the form `atom_id`. Clothes: `present` / `brand.instructional` / `tp_body`. Not a form dump. Not `f_br_guidance` or phrasing-example cousins. |
 | Worked example | Two instance atoms from sibling `alsap_asp9999` (see `instance_example_v1.md`) | Guest extras `…__exemplify` | **Procedure A has no honest match** in the instance store (plan-development acts vs filled AST-34037 values). These two illustrate the ALSAP generally: selected BR profile `conditional_favorable` + the authored rationale. `composed_from` is the instance `atom_id`. Clothes: `exemplify` / `brand.example` / `tp_body`. Not another SOP card. Not the other eight instance atoms. Sit **after** the form-field presents. |
+| BR profile closed-choice | Same form field + instance fill already on the spine | **No new `ele_`.** Projector-only check (`shape: closed_choice`) | Options = `reg_benefit_risk_profile` value ids. Key = instance `selected_value` (`conditional_favorable`). Prompt is task clothes. In-scene 3, after the field+example. Rationale has no closed set — not this check. |
 | Checks | Spine atoms that already have an extra `reinforce` | Those extras, in the same atom order as their presents | Reuse the two existing definition checks. Do not mint a procedure-step MCQ. |
 
 **Off the path (coverage, not deleted)**
@@ -180,7 +183,7 @@ Heuristic — SOP/form roles already used for membership:
 |---|---|---|---|---|
 | 1 | `front_matter` | **What an ALSAP is** | Front matter | Document-root opening, why-this callout of purpose, teachable front-matter primaries (purpose / scope / general) |
 | 2 | `procedure_a` | **How an ALSAP starts** | Procedure A | Procedure A job-aid presents (`tp_step`). The projector-only sequence practice stays **in-scene** (it is practice of those presents). |
-| 3 | `form_br` | **Benefit-risk on the form** | Form | FORM-AST-34037 BR-field presents + the instance examples that instantiate those fields |
+| 3 | `form_br` | **Benefit-risk on the form** | Form | FORM-AST-34037 BR-field presents + the instance examples that instantiate those fields. The projector-only closed-choice of the profile fill stays **in-scene**. |
 
 Headings are the documented labels of those role clusters. Scene 2’s
 first-procedure branch already has the thin parent *A. Plan Development
@@ -188,7 +191,8 @@ of ALSAP.* (job-aid title). Scene 3’s field atoms already say
 *Benefit-Risk profile*. Scene 1 is the SOP’s definitional front-matter.
 Do not mint a fourth scene for the two definition/purpose checks —
 they stay at **lesson end** (`spine.scenes.lesson_end_checks`) unless a
-check clearly belongs in-scene (the sequence practice does).
+check clearly belongs in-scene (the sequence practice does; the BR
+closed-choice does).
 
 Coverage dump stays ungrouped (no scene chrome).
 
@@ -227,7 +231,7 @@ Occurrence manifest `spine`:
   "element_ids": ["ele_sop_ast29080", "ele_sop_ast29080__present", "ele_sop_ast29080_purpose__activate", "…"],
   "count": 16,
   "store_count": 55,
-  "note": "Selection of existing ele_ records. Coverage dump keeps the rest. Sequence practice of Procedure A is projector-only (spine.sequence_check). Form BR presents then instance examples. Scene chrome (spine.scenes) groups those same ids into three named sections. Player chrome (spine.scenes.paging) shows one named scene at a time; lesson-end checks are a final step, not a fourth scene."
+  "note": "Selection of existing ele_ records. Coverage dump keeps the rest. Sequence practice of Procedure A is projector-only (spine.sequence_check). Form BR presents then instance examples then a projector-only closed-choice of the profile fill (spine.br_profile_check). Scene chrome (spine.scenes) groups those same ids into three named sections. Player chrome (spine.scenes.paging) shows one named scene at a time; lesson-end checks are a final step, not a fourth scene."
 }
 ```
 
@@ -239,7 +243,7 @@ HTML (Realizer projector):
 
 | File | Default experience |
 |---|---|
-| `<project>/realized_lesson.html` | The spine, in the order above, wrapped as **three named scenes** (What an ALSAP is / How an ALSAP starts / Benefit-risk on the form), **one scene at a time** (Next/Back). Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), a **sequence practice** of those four presents (order the first sentences; in-scene), two form-field presents (`present` / `tp_body`), two example beats (`exemplify` / `brand.example` / `tp_body`), two definition checks (`tp_recall`) at lesson end (final player step, not a fourth scene). Link to coverage. |
+| `<project>/realized_lesson.html` | The spine, in the order above, wrapped as **three named scenes** (What an ALSAP is / How an ALSAP starts / Benefit-risk on the form), **one scene at a time** (Next/Back). Title hook (heading primitive), why-this callout (`tp_callout` of purpose), front-matter (body/purpose), Procedure A as **one job-aid step sequence** (`tp_step`), a **sequence practice** of those four presents (order the first sentences; in-scene), two form-field presents (`present` / `tp_body`), two example beats (`exemplify` / `brand.example` / `tp_body`), a **closed-choice** of the BR profile fill (in-scene 3), two definition checks (`tp_recall`) at lesson end (final player step, not a fourth scene). Link to coverage. |
 | `<project>/realized_coverage.html` | Full occurrence dump in SOP document order — still card-like. Link back to the lesson. |
 
 Compiler primitives (`agents/realizer/primitives_v1.md`) are Realizer-owned
@@ -259,9 +263,10 @@ Do not hide coverage by deleting `ele_` records. The store stays 55
 - Not an ID genius and not an LLM path-picker.
 - Not a distractor-writer. Definition checks keep closed-contrast distractors from sibling
   atoms (verbatim). Sequence practice uses the four A first sentences and
-  `object.order`. Jake parked a future distractor-writer agent. This hop
+  `object.order`. BR closed-choice uses the form field’s `options_ref` value
+  ids and the instance `selected_value`. Jake parked a future distractor-writer agent. This hop
   does not mint a procedure-step MCQ and does not invent “which is the first
-  planning step?”
+  planning step?” or “which BR profile is required?”
 - Not a new `retrieve` enum. No extra `ele_` for Procedure A. Not 1:many
   of the SOP.
 - Not Dragoman, Storyline, `.potx`, motion, or `tools/render/` PNG pipelines.
