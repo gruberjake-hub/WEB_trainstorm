@@ -1,11 +1,14 @@
 :root{
-  --brand:#f7f8f8;
-  --bg:#ebecf3;
-  --panel:#b2b3b4;
-  --text:#e9ecf1;
-  --muted:#a8b0bf;
-  --focus: 2px solid var(--brand);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  /* Thin aliases: a loaded brand pack's tokens.css defines --color-* /
+     --font-body. Fallbacks keep unthemed chrome until a pack loads.
+     Do not duplicate the client palette here. */
+  --brand: var(--color-accent, #f7f8f8);
+  --bg: var(--color-bg, #ebecf3);
+  --panel: var(--color-panel, #b2b3b4);
+  --text: var(--color-text, #e9ecf1);
+  --muted: var(--color-text-muted, #a8b0bf);
+  --focus: 2px solid var(--color-focus, var(--brand));
+  font-family: var(--font-body, system-ui, -apple-system, Segoe UI, Roboto, Arial);
 }
 body{ margin:0; background:var(--bg); color:var(--text); }
 .app{ max-width:980px; margin:0 auto; padding:0; }
@@ -13,6 +16,8 @@ body{ margin:0; background:var(--bg); color:var(--text); }
   background:var(--panel); border-radius:14px; padding:12px 14px;
   display:flex; align-items:center; justify-content:space-between; gap:12px;
 }
+.brand{ display:flex; align-items:center; gap:12px; min-width:0; }
+.brand img{ height:28px; max-width:160px; object-fit:contain; }
 .stage{
   margin:14px 0; background:var(--panel); border-radius:14px; padding:48px 56px;
 

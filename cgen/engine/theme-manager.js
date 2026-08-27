@@ -1,8 +1,8 @@
-import { loadBrand } from "./brandLoader.js";
+import { loadBrand, brandPackUrl, themeFromMeta } from "./brandLoader.js";
 import { loadTheme } from "./themeLoader.js";
 
 export async function applyBranding(meta = {}) {
-  const brandName = meta.client || meta.brand || meta.theme;
+  const brandName = themeFromMeta(meta);
 
   if (!brandName) {
     console.warn("No brand specified in course meta");
@@ -16,15 +16,17 @@ export async function applyBranding(meta = {}) {
   loadTheme(brandName);
 
   // 3. Apply brand identity to shell (logo, metadata)
-  if (brand && brand.logos && brand.logos.primary) {
-    const logoEl = document.getElementById("brandLogo");
+  const packName = brand?.brand || brandName;
+  const logo = brand?.logos?.primary || brand?.logos?.inverse || null;
+  const logoEl = document.getElementById("brandLogo");
 
-    if (logoEl) {
-      logoEl.src = `../../brands/${brand.brand}/${brand.logos.primary.src}`;
-      logoEl.alt = brand.logos.primary.alt || brand.brand;
-    }
+  if (logoEl && logo?.src) {
+    logoEl.src = brandPackUrl(packName, logo.src);
+    logoEl.alt = logo.alt || packName;
+    logoEl.hidden = false;
+  }
 
-    // Optional: expose brand to runtime later
+  if (brand) {
     window.__ACTIVE_BRAND__ = brand;
   }
 

@@ -1,13 +1,13 @@
+import { brandPackUrl } from "./brandLoader.js";
+
 export function loadTheme(themeName) {
   if (!themeName) return;
 
-  const basePath = "../../brands/" + themeName;
-
   const stylesheets = [
-    `${basePath}/${themeName}-tokens.css`,
-    `${basePath}/${themeName}-layout.css`,
-    `${basePath}/${themeName}-components.css`
-  ];
+    `${themeName}-tokens.css`,
+    `${themeName}-layout.css`,
+    `${themeName}-components.css`
+  ].map((name) => brandPackUrl(themeName, name));
 
   stylesheets.forEach(href => {
     if (document.querySelector(`link[href="${href}"]`)) return;

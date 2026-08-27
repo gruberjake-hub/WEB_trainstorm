@@ -2,9 +2,9 @@ import { Store } from "./store.js";
 import { RulesEngine } from "./rules.js";
 import { getAdapter } from "./scorm.js";
 
-/* NEW: theme + brand loaders */
+/* Theme + brand loaders: pack from lesson-projection meta.theme */
 import { loadTheme } from "./themeLoader.js";
-import { loadBrand } from "./brandLoader.js";
+import { loadBrand, brandPackUrl, themeFromMeta } from "./brandLoader.js";
 
 import { Heading } from "./components/Heading.js";
 import { Body } from "./components/Body.js";
@@ -37,7 +37,8 @@ export class Runtime {
        NEW: declarative theme + brand
        ------------------------------- */
 
-    const theme = this.course?.meta?.theme;
+    const theme = themeFromMeta(this.course?.meta);
+    this.themeName = theme;
 
     // 1️⃣ Load CSS immediately (synchronous side-effect)
     loadTheme(theme);
@@ -48,6 +49,11 @@ export class Runtime {
 
     // 3️⃣ Cache the logo slot (shell owns the slot)
     this.brandLogoEl = document.getElementById("brandLogo");
+
+    if (theme) {
+      const app = document.getElementById("app");
+      app?.classList.add(`brand-${theme}`);
+    }
 
     /* -------------------------------
        Persistence, rules, state
@@ -123,8 +129,10 @@ export class Runtime {
 
     if (!logo?.src) return;
 
-    this.brandLogoEl.src = `../../brands/${brand.brand}/${logo.src}`;
-    this.brandLogoEl.alt = logo.alt || brand.brand;
+    const pack = brand.brand || this.themeName;
+    this.brandLogoEl.src = brandPackUrl(pack, logo.src);
+    this.brandLogoEl.alt = logo.alt || pack;
+    this.brandLogoEl.hidden = false;
   }
 
   /* ======================================================

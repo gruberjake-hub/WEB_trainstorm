@@ -1699,3 +1699,69 @@ parallel authored ALSAP, not this graph.
 check shapes. Working-process block untouched. Single-writer per facet
 stands. Chameleon agent still not stood up.
 
+---
+
+## 2026-08-27 — Astellas brand pack is Course Engine player chrome at `/cgen`
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Client brand packs live at `cgen/brands/<client>/` and are
+**player chrome** for Course Engine v1 at `/cgen`: tokens, logos,
+layout/components CSS, constraints. They are not fused with Couturier
+occurrence style. Couturier `style_ref` values (`brand.opening` /
+`brand.instructional` / `brand.recall` / …) remain pedagogical **roles**
+on `ele_` records (`agents/couturier/style_map_v1.md`). Brand token
+resolution is this hop: the player loads `cgen/brands/<theme>/`, not hex
+or fonts stamped onto occurrences.
+
+**Which pack.** Source of truth is the **ALSAP project overlay**, not
+each occurrence and not a player hardcoded string. The overlay folder
+(`cgen/astellas/projects/<proj>`) is already the client axis
+(`harness_paths.py`: registry = `project/../..`). Realize copies that
+client name onto every lesson JSON projection as `meta.theme` (live:
+`"astellas"`). All three catalog lessons share it. `lessons.json` does
+not grow a per-lesson brand field. Runtime reads `course.meta.theme`
+(aliases `meta.brand` / `meta.client` only as fallback). Deleted the
+unused `runtimeConfig.js` hardcoded `astellas` path; graph/projection
+meta wins.
+
+**Engine socket.** Loaders stay under `cgen/engine/`. Fetch and
+stylesheet hrefs resolve `cgen/brands/<name>/` from `/cgen` and
+`/cgen/index.html` (via `import.meta.url` against the engine module).
+`#brandLogo` in `cgen/index.html` takes `logos.primary` from
+`astellas-brand.json` (`assets/logo-primary.png` relative to the pack).
+Engine chrome variables (`--bg` / `--panel` / `--text` / `--brand` /
+`--font-body`) alias the pack’s semantic tokens after tokens.css loads
+(white/clinical surfaces, Arial, red accent, extra-dark-gray text,
+visible focus). Respect `astellas-constraints.md`: calm, no playful UI,
+chrome mostly neutral, red for emphasis/active. Do not restyle Lumina.
+Do not invent a second CSP. Sidecar HTML keeps stand-in clothes; `/cgen`
+is where client chrome lands. Brunswick is a different pack shape; not
+this hop.
+
+This is **not** occurrence 1:many. No new `ele_` / `atom_` ids.
+Couturier still mints nothing. Single-writer per facet stands.
+
+**Why:** Couturier v1 already wrote role keys and said brand token
+resolution (`brands/<client>/`) is later. Course Engine already had
+loaders and `applyBrand`, but `meta` had no theme, fetch paths
+`../../brands/` 404’d from `/cgen`, and there was no `#brandLogo`.
+This hop wires the existing pack into the existing socket.
+
+**Consequences:**
+- After `python3 tools/realize.py` → `cartographer.py` →
+  `couturier.py` from `cgen/trainstorm-core`, every
+  `realized_lesson*.json` carries `meta.theme: "astellas"`.
+- After merge Jake opens **https://trainstorm.ai/cgen**: tokens + logo
+  from `cgen/brands/astellas/` (no 404); chrome reads as Astellas;
+  scenes/checks still play.
+- `--selftest` / existing gates stay green. `/cgen/lumina` untouched.
+  `netlify.toml` `/cgen/alsap` rewrite untouched (still tabled).
+  `_headers` untouched. No catalog UI. No chameleon.py. No Headwater
+  outcomes-mode. No LLM distractors. No Procedure B.
+
+**Supersedes:** the style_map clause that brand token resolution is
+“later” as to *player chrome at `/cgen`* — occurrence `style_ref` stays
+a role; this file’s working-process block is untouched. Single-writer
+per facet stands. Chameleon agent still not stood up.
+

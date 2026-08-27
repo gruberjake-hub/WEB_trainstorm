@@ -195,3 +195,11 @@ asserts catalog records resolve `scene_ids` from the graph and that
 extra lesson ids are not hardcoded in the projector. The engine
 projection selftest asserts three named scenes, in-scene
 `sequence_order` + `closed_choice`, and lesson-end `invert_definition`.
+
+**Player chrome (not occurrence style).** `realized_lesson.json`
+`meta.theme` is the client overlay folder (`cgen/<client>/projects/<proj>`,
+same axis as the client registry). Course Engine loaders under
+`cgen/engine/` resolve `cgen/brands/<theme>/` (tokens, logos, constraints).
+Couturier `style_ref` (`brand.opening` / `brand.instructional` / …) stays
+a pedagogical role. Sidecar HTML keeps stand-in clothes; `/cgen` is where
+client chrome lands. Not occurrence 1:many.

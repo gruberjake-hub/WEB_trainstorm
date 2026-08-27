@@ -41,7 +41,9 @@ Realize also writes a **JSON projection** of the same lesson node
 through the existing engine (Heading / Body / StepList / SequenceOrder /
 MCQ). Meaning is still from atoms. This is not a hand-authored SCORM
 package and not `cgen/schema/course.schema.json` as a rival constitution.
-Sidecar HTML stays a projector. `/cgen/lumina` and the tabled
+`meta.theme` on that JSON is the client overlay pack
+(`cgen/brands/<theme>/`) — player chrome at `/cgen`, not Couturier
+`style_ref`. Sidecar HTML stays a projector (stand-in clothes). `/cgen/lumina` and the tabled
 `/cgen/alsap` rewrite are untouched.
 Definition/purpose checks stay a final step after scene 3 on the short
 lesson, not a fourth scene, and are **not** forced onto subset lessons.
