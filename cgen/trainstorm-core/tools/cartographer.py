@@ -486,7 +486,7 @@ def main():
     ap.add_argument("--registry", default=None)
     ap.add_argument("--out", help="HTML output path (default: derived from --lesson; default lesson is <project>/realized_lesson.html)")
     ap.add_argument("--lesson", default=None,
-                    help="Lesson id from occurrences/manifest.json lessons (default: the project's default lesson)")
+                    help="Lesson id from the project catalog (occurrences/lessons.json), stamped onto manifest.lessons. Default pass emits all catalog lessons; --lesson regenerates that file.")
     ap.add_argument("--store", help="Occurrence store directory (default: <project>/occurrences)")
     ap.add_argument("--selftest", action="store_true", help="Run the heuristic fixture and exit")
     ap.add_argument("--dry-run", action="store_true", help="Bind and validate; do not write the store or HTML")
@@ -615,9 +615,13 @@ def main():
                  "After writing move, Realizer refreshes text_primitive (compiler form). "
                  "Lesson spine is Realizer projection (agents/realizer/spine_v1.md); "
                  "this tool does not own sequence. Does not wipe ext.check, ext.scene, "
-                 "or manifest.lessons."),
+                 "or manifest.lessons. Re-stamps lesson records from the project "
+                 "catalog (occurrences/lessons.json) when present."),
     }
 
+    lesson_catalog = realize.load_lesson_catalog(store_dir)
+    if lesson_catalog:
+        realize.stamp_lessons(occ_manifest, atoms, elements, lesson_catalog=lesson_catalog)
     html_path = realize.lesson_html_path(
         project, occ_manifest, args.lesson, out=args.out
     )
@@ -633,6 +637,7 @@ def main():
     realize.apply_spine(
         occ_manifest, atoms, elements,
         meaning_atoms=form_atoms + instance_atoms, option_sets=option_sets,
+        lesson_catalog=lesson_catalog,
     )
     realize.stamp_checks(
         occ_manifest, atoms, elements,
@@ -647,7 +652,7 @@ def main():
         atoms, elements, occ_manifest, project,
         meaning_atoms=form_atoms + instance_atoms,
         option_sets=option_sets, options_registry=option_sets,
-        lesson_id=args.lesson, out=args.out,
+        lesson_id=args.lesson, out=args.out, lesson_catalog=lesson_catalog,
     )
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
 

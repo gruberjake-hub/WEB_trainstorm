@@ -138,7 +138,7 @@ trainstorm-core/
 │   ├── project_socket.py                 ✅ template → INTAKE CONTRACT (json + client-facing html)
 │   ├── lint.py · validate_objectives.py  ✅
 │   ├── localize/ · chat-capture/ · visual-assets/           ✅
-│   ├── realize.py                        ✅ Realizer v1 — atoms → occurrences (1 ele_ per atom + small 1:many seed) + realized_lesson.html (spine) + realized_coverage.html
+│   ├── realize.py                        ✅ Realizer v1 — atoms → occurrences (1 ele_ per atom + small 1:many seed) + realized_lesson.html (spine) + extra lesson HTML from occurrences/lessons.json + realized_coverage.html
 │   ├── cartographer.py                   ✅ Cartographer v1 — occurrence intent on existing ele_ records (preserves extra moves)
 │   ├── couturier.py                      ✅ Couturier v1 — occurrence style keys on existing ele_ records (mints nothing)
 │   └── render/                           ⬜ element → HTML → PNG — NOT this hop (no PNG pipeline)

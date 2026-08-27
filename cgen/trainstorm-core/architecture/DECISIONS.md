@@ -1512,3 +1512,68 @@ three scenes, and the paging policy stand; a second record now points
 at a subset. Working-process block untouched. Single-writer per facet
 stands. Chameleon agent still not stood up.
 
+---
+
+## 2026-08-27 — Lesson records are a closed project catalog, not ALSAP branches in `realize.py`
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Lesson records are **project data**. Source of truth is
+`occurrences/lessons.json` (closed catalog). Realizer **reads** that
+file and stamps the runtime view onto `manifest.lessons`. Adding a
+lesson is appending a catalog record (`lesson_id`, `scene_ids`,
+optional `lesson_end_check_ids`, optional `paging`). Realize does not
+special-case `ast_alsap_br` / `ast_alsap_plan` in Python. No new ALSAP
+beats. No Procedure B. Spine stays **16** of **55**. Same 47 atoms.
+No authored `content.text`. No `Course` `ele_`. Not a LMS. Not SCORM.
+Not a course catalog UI. Coverage dump stays a dump.
+
+**Third lesson.** `ast_alsap_plan` points only at `how_an_alsap_starts`
+(Procedure A job-aid + in-scene `sequence_order`). Pager off (single
+scene). HTML derived from `lesson_id`: `realized_lesson_plan.html`.
+Invert-definition extras stay on `ast_alsap_short`. Default remains
+`ast_alsap_short` (pages 1–2–3 then lesson-end). `ast_alsap_br` stays
+the form BR scene.
+
+**Where it lives.** Spec still `agents/realizer/lesson_v1.md`. Catalog
+policy `v1_lesson_catalog`. Stamped block keeps `v1_lesson_on_graph`.
+Title heuristic is still the document-root atom. One-scene records
+keep paging policy `v1_one_scene_at_a_time` and suppress Next/Back.
+Default pass emits all catalog lessons. `--lesson <id>` regenerates
+that file.
+
+Cartographer still owns intent. Couturier still owns style. Closed
+pedagogical vocab still has no `retrieve`. No chameleon.py. No
+Headwater outcomes-mode. No `/cgen/alsap` hosting. No Procedure B.
+
+Idempotent with realize → cartographer → couturier.
+
+**Why:** PR #31 proved two lessons on one store, but extras still lived
+as carry-across on the generated manifest — a later agent still had to
+touch `realize.py` or hand-edit a regenerated file. An ID would make
+the catalog the write path so the next hop appends JSON.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. Default pass
+  emits `realized_lesson.html` (short, pages 1–2–3),
+  `realized_lesson_br.html` (scene 3), `realized_lesson_plan.html`
+  (scene 2). `python3 tools/realize.py --lesson ast_alsap_plan`
+  regenerates that file. `--selftest` on all three (catalog records
+  resolve; no extra lesson_id hardcoded in the projector).
+- Open `realized_lesson.html` — still the short path. Open
+  `realized_lesson_br.html` — BR scene only. Open
+  `realized_lesson_plan.html` — Procedure A only. Open
+  `realized_coverage.html` — full dump, not a fourth lesson.
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`;
+  check-shape, scenes, and lesson selftests still green.
+
+**Supersedes:** the previous second-lesson block’s “carry extra records
+from the previous stamp” as to *where extras are authored* — they now
+live in the catalog; `manifest.lessons` remains the stamped runtime
+view; the two existing records, three scenes, and paging policy stand.
+Working-process block untouched. Single-writer per facet stands.
+Chameleon agent still not stood up.
+
