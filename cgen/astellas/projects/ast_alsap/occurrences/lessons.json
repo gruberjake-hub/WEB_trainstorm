@@ -1,0 +1,38 @@
+{
+  "store": "lessons",
+  "project": "ast_alsap",
+  "policy": "v1_lesson_catalog",
+  "spec": "agents/realizer/lesson_v1.md",
+  "default": "ast_alsap_short",
+  "lessons": [
+    {
+      "lesson_id": "ast_alsap_short",
+      "default": true,
+      "scene_ids": [
+        "what_an_alsap_is",
+        "how_an_alsap_starts",
+        "benefit_risk_on_the_form"
+      ],
+      "lesson_end_check_ids": [
+        "ele_sop_ast29080_purpose__reinforce",
+        "ele_sop_ast29080_general__reinforce"
+      ],
+      "from": "Default lesson: all three spine.scenes plus invert-definition extras at lesson end. Title heuristic is the document-root atom. Not a Course ele_."
+    },
+    {
+      "lesson_id": "ast_alsap_br",
+      "scene_ids": [
+        "benefit_risk_on_the_form"
+      ],
+      "from": "Subset of spine.scenes: Benefit-risk on the form (form_br) — form presents + instance examples + in-scene closed_choice. Invert-definition extras stay on ast_alsap_short; they close front-matter, not this form cluster. Title heuristic is the document-root atom. Not a Course ele_."
+    },
+    {
+      "lesson_id": "ast_alsap_plan",
+      "scene_ids": [
+        "how_an_alsap_starts"
+      ],
+      "from": "Subset of spine.scenes: How an ALSAP starts (procedure_a) — job-aid presents + in-scene sequence_order. Invert-definition extras stay on ast_alsap_short. Title heuristic is the document-root atom. Not a Course ele_."
+    }
+  ],
+  "note": "Closed project catalog. Source of truth for lesson records. Realizer reads this file and stamps manifest.lessons (runtime view). Adding a lesson is appending a record (lesson_id, scene_ids, optional lesson_end_check_ids, optional paging). Not a LMS. Not SCORM. Not a catalog UI. Coverage dump stays a dump, not a fourth lesson."
+}

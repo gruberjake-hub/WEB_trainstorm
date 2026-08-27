@@ -13,6 +13,39 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-27 — Lesson catalog is project data; third lesson is Procedure A
+
+PR #31 proved two lesson records on one store (`ast_alsap_short`,
+`ast_alsap_br`). Extras still lived as carry-across on the generated
+occurrence manifest — adding a third would have been a Python branch
+or a hand-edit of a regenerated file. This hop **lifts the catalog
+into a closed project file**. Same 16 spine occurrences. Same three
+scenes. Same 55 / 47.
+
+**Where it lives.** `occurrences/lessons.json` is the source of truth
+(policy `v1_lesson_catalog`). Realizer reads it and stamps
+`manifest.lessons` (runtime view, policy `v1_lesson_on_graph`). Adding
+a lesson is appending a record: `lesson_id`, `scene_ids`, optional
+`lesson_end_check_ids`, optional `paging`. Realize does not
+special-case extra lesson ids. Third id `ast_alsap_plan` points at
+`how_an_alsap_starts` (job-aid + in-scene `sequence_order`). One scene
+→ pager disabled. HTML derived from lesson_id:
+`realized_lesson_plan.html`. Default pass emits all catalog lessons.
+`--lesson <id>` regenerates that file. Coverage dump stays a dump, not
+a fourth lesson. Not a catalog UI.
+
+**Unchanged.** 16 spine `ele_` ids. 55 / 47. Same three scenes.
+`atoms.json` untouched. No authored `content.text`. No Procedure B. No
+chameleon.py, no Headwater outcomes-mode, no `/cgen/alsap` hosting, no
+quiz engine, no LLM distractors, no new agent. Cartographer owns
+intent. Couturier owns style. Idempotent realize → cartographer →
+couturier.
+
+Hypothesis verified: a closed catalog file was enough; forking
+`realize.py` for a third ALSAP lesson would have been a lie.
+
+---
+
 ## 2026-08-27 — Second lesson record: BR-only from the same store
 
 PR #30 named one lesson on the graph (`ast_alsap_short`) so a later

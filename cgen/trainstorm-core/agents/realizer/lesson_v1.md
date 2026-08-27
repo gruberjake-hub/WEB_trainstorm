@@ -56,9 +56,14 @@ lesson.
 
 Where they live:
 
-- **Manifest:** `lessons` is the index (default + ordered lesson objects).
-  Analogous to `manifest.checks`. Sibling of `spine` / `checks` — not a
-  second `atoms.json`.
+- **Manifest:** `lessons` is the **stamped runtime view** (default +
+  ordered lesson objects). Analogous to `manifest.checks`. Sibling of
+  `spine` / `checks` — not a second `atoms.json`.
+- **Project catalog:** `occurrences/lessons.json` is the **source of
+  truth**. Closed file. Realizer reads it; it does not rewrite it.
+  Adding a lesson is appending a record (`lesson_id`, `scene_ids`,
+  optional `lesson_end_check_ids`, optional `paging`). Realize does
+  not special-case extra lesson ids in Python.
 - **Occurrence store:** no `ext.lesson`, no `Course`/`Module` `ele_`.
   Scene membership stays `ext.scene`. Check shapes stay `ext.check`.
 - Coverage dump stays a **second projection** of the store, not a second
@@ -102,12 +107,15 @@ Do not create a rival course schema. Do not invent a catalog UI.
   assume “the ALSAP lesson is these three headings.” `--lesson` (or the
   default) selects the record.
 - A later agent emits another lesson by writing a lesson record
-  (`lesson_id` + `scene_ids` + title) that points at existing
-  `spine.scenes`. Realizer re-stamp **preserves** extra lesson records
-  and only recomputes the default. It does not fork HTML. Extra
-  `scene_ids` may be a subset. `lesson_end_check_ids` stay empty unless
-  those invert-definition extras honestly belong on that lesson.
-- Coverage dump stays ungrouped and unpaged, and is **not** a third lesson.
+(`lesson_id` + `scene_ids` + title) that points at existing
+`spine.scenes`. **That write is a catalog row**, not a Python
+branch: `occurrences/lessons.json` is the closed project file;
+Realizer **reads** it and stamps `manifest.lessons`. Extra
+`scene_ids` may be a subset. `lesson_end_check_ids` stay empty unless
+those invert-definition extras honestly belong on that lesson.
+A missing catalog (fixtures) still preserves extras already on the
+stamp and only recomputes the default.
+- Coverage dump stays ungrouped and unpaged, and is **not** a lesson node.
 
 ---
 
@@ -115,17 +123,18 @@ Do not create a rival course schema. Do not invent a catalog UI.
 
 | Agent | Still owns | This hop |
 |---|---|---|
-| Realizer | `ele_` ids; HTML projection; compiler `text_primitive`; check shapes; `spine.scenes` | Binds `manifest.lessons` (id, title heuristic, scene id refs, lesson-end refs, paging pointer). Projector **reads** that node to wrap/page. |
+| Realizer | `ele_` ids; HTML projection; compiler `text_primitive`; check shapes; `spine.scenes` | **Reads** `occurrences/lessons.json` and stamps `manifest.lessons`. Projector **reads** that node to wrap/page. Does not special-case extra lesson ids. |
 | Cartographer | occurrence intent | Does not pick the path. Does not wipe `manifest.lessons`, `ext.scene`, or `ext.check`. |
 | Couturier | expression style keys | Does not mint a lesson `ele_`. Does not write `layout_primitive`. Lesson wrap/page is Realizer reading the stamp of existing scenes. |
 
 Re-running realize → cartographer → couturier keeps extra `ele_` ids,
-intent, style, check shapes, scene records, and extra lesson records
-(pure function of spine + document-root title for the default). Extra
-lesson HTML is a sibling file derived from `lesson_id`
-(`ast_alsap_br` → `realized_lesson_br.html`). A lesson with one scene
-and no lesson-end checks has paging chrome suppressed (same
-`v1_one_scene_at_a_time` policy; nowhere to page).
+intent, style, check shapes, scene records, and stamps lesson records
+from the catalog (pure function of catalog rows + spine + document-root
+title). Extra lesson HTML is a sibling file derived from `lesson_id`
+(`{project}_{suffix}` → `realized_lesson_{suffix}.html`). A lesson with
+one scene and no lesson-end checks has paging chrome suppressed (same
+`v1_one_scene_at_a_time` policy; nowhere to page). Default pass emits
+every catalog lesson. `--lesson <id>` regenerates that file.
 
 ---
 
@@ -142,21 +151,24 @@ and no lesson-end checks has paging chrome suppressed (same
 
 ---
 
-## A second lesson is another record (not a fork)
+## Lessons are catalog rows (not Python branches)
 
-Live ALSAP proves the lesson node is not a singleton:
+Live ALSAP proves the lesson node is not a singleton, and that a third
+record is an append to the catalog — not a fork of `realize.py`:
 
 | `lesson_id` | `scene_ids` | lesson-end invert_definition | HTML |
 |---|---|---|---|
 | `ast_alsap_short` (default) | all three scenes | yes (definitional close of front-matter) | `realized_lesson.html` |
 | `ast_alsap_br` | `benefit_risk_on_the_form` only | no — those checks do not belong on this form cluster | `realized_lesson_br.html` |
+| `ast_alsap_plan` | `how_an_alsap_starts` only | no — those checks do not belong on Procedure A | `realized_lesson_plan.html` |
 
 Same 55 `ele_` / 47 atoms. No new pedagogy atoms. No authored
 `content.text`. Title heuristic is still the document-root atom (scene
-heading stays on the scene record). The BR closed-choice stays in-scene
-on `form_br`. Realize rebuilds the occurrence manifest from scratch and
-**carries** extra lesson records from the previous stamp so they are not
-dropped.
+heading stays on the scene record). In-scene checks stay on the scene
+(`sequence_order` on Procedure A; `closed_choice` on form BR). Catalog
+path: `cgen/astellas/projects/ast_alsap/occurrences/lessons.json`.
+Realize reads that file and stamps `manifest.lessons`. A one-scene
+record suppresses Next/Back.
 
 ---
 
@@ -167,12 +179,12 @@ python3 tools/realize.py
 python3 tools/cartographer.py
 python3 tools/couturier.py
 python3 tools/realize.py --lesson ast_alsap_br
+python3 tools/realize.py --lesson ast_alsap_plan
 ```
 
-Default project: `cgen/astellas/projects/ast_alsap`. Default lesson
-`ast_alsap_short` → `realized_lesson.html`. `--lesson ast_alsap_br`
-regenerates `realized_lesson_br.html` (path derived from `lesson_id`;
-the projector is not forked for ALSAP). A default realize / cartographer
-/ couturier pass also emits extra lesson HTML so both files stay a read
-of their nodes. `--selftest` asserts both lesson_ids resolve `scene_ids`
-from the graph (not hardcoded HTML).
+Default project: `cgen/astellas/projects/ast_alsap`. Default pass emits
+all catalog lessons. Default lesson `ast_alsap_short` →
+`realized_lesson.html`. `--lesson <id>` regenerates that file (path
+derived from `lesson_id`; the projector is not forked). `--selftest`
+asserts catalog records resolve `scene_ids` from the graph and that
+extra lesson ids are not hardcoded in the projector.
