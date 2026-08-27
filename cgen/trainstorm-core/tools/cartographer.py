@@ -484,7 +484,7 @@ def main():
                     help=f"Atom + occurrence store directory (default: {default_shown})")
     ap.add_argument("--core", default=None, help="trainstorm-core (schemas + vocab + ontology)")
     ap.add_argument("--registry", default=None)
-    ap.add_argument("--out", help="HTML output path (default: <project>/realized_lesson.html)")
+    ap.add_argument("--out", help="HTML output path (default: derived from --lesson; default lesson is <project>/realized_lesson.html)")
     ap.add_argument("--lesson", default=None,
                     help="Lesson id from occurrences/manifest.json lessons (default: the project's default lesson)")
     ap.add_argument("--store", help="Occurrence store directory (default: <project>/occurrences)")
@@ -618,7 +618,9 @@ def main():
                  "or manifest.lessons."),
     }
 
-    html_path = pathlib.Path(args.out).resolve() if args.out else project / "realized_lesson.html"
+    html_path = realize.lesson_html_path(
+        project, occ_manifest, args.lesson, out=args.out
+    )
 
     if args.dry_run:
         print(f"Cartographer v1 DRY-RUN → {len(elements)} elements ({POLICY})")
@@ -641,11 +643,11 @@ def main():
     realize.normalize_elements_ext(elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
-    coverage_path = realize.project_html(
-        atoms, elements, occ_manifest, html_path,
+    coverage_path, html_path, extra_htmls = realize.project_lesson_htmls(
+        atoms, elements, occ_manifest, project,
         meaning_atoms=form_atoms + instance_atoms,
         option_sets=option_sets, options_registry=option_sets,
-        lesson_id=args.lesson,
+        lesson_id=args.lesson, out=args.out,
     )
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
@@ -677,7 +679,9 @@ def main():
     print(f"  atoms        : {atoms_path} ({len(atoms)} records, unchanged)")
     print(f"  occurrences  : {elements_path}")
     print(f"  manifest     : {mf_path}")
-    print(f"  lesson HTML  : {html_path}  ← short spine")
+    print(f"  lesson HTML  : {html_path}")
+    for extra_html in extra_htmls:
+        print(f"  extra HTML   : {extra_html}")
     print(f"  coverage     : {coverage_path}")
     print(f"  moves        : {dict(sorted(move_counts.items()))}")
     print(f"  teaches bound: {teaches_bound}  ·  low-confidence: {low_n}")

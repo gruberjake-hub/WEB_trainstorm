@@ -1451,3 +1451,64 @@ lives on `spine.scenes`; the lesson node now points at that list and
 the projector reads the lesson. Working-process block untouched.
 Single-writer per facet stands. Chameleon agent still not stood up.
 
+---
+
+## 2026-08-27 — A second lesson record proves the lesson node is not a singleton
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The ALSAP occurrence store now holds **two** lesson
+records on `manifest.lessons`. Default remains `ast_alsap_short` (all
+three `spine.scenes`). Second id `ast_alsap_br` points only at
+`benefit_risk_on_the_form` (form presents + instance examples +
+in-scene `closed_choice`). Invert-definition extras stay on the short
+lesson; they are the definitional close of front-matter, not this form
+cluster. Same **55** `ele_` / **47** atoms. No new pedagogy atoms. No
+authored `content.text`. No `Course` `ele_`. Not a LMS. Not SCORM. Not
+a course catalog UI. Coverage dump stays a dump, not a third lesson.
+
+**Where it lives.** Same contract: `agents/realizer/lesson_v1.md`,
+policy `v1_lesson_on_graph`. Extra records are preserved on re-stamp
+(realize carries them across a fresh occurrence-manifest rebuild).
+Projector reads `--lesson` and writes a sibling HTML **derived from
+`lesson_id`** (`ast_alsap_br` → `realized_lesson_br.html`). It does not
+fork `realize.py` for ALSAP. A one-scene lesson with empty
+`lesson_end_check_ids` keeps paging policy `v1_one_scene_at_a_time`
+and **suppresses** Next/Back (single step; nowhere to page).
+
+Title heuristic is still the document-root atom (`title_from`:
+`atom_sop_ast29080`). The scene heading stays on the scene record.
+
+Cartographer still owns intent. Couturier still owns style. Closed
+pedagogical vocab still has no `retrieve`. No chameleon.py. No
+Headwater outcomes-mode. No `/cgen/alsap` hosting. No Procedure B.
+
+Idempotent with realize → cartographer → couturier.
+
+**Why:** PR #30 put one lesson on the graph so a later agent could emit
+another by writing a record, not forking HTML. This hop **is** that
+later agent. One record would have left “lesson” a singleton in
+practice.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. Default lesson
+  `ast_alsap_short` → `realized_lesson.html` (pages 1–2–3 then
+  lesson-end checks). `python3 tools/realize.py --lesson ast_alsap_br`
+  regenerates `realized_lesson_br.html` (one scene, pager disabled).
+  A default pass also emits extra lesson HTML. `--selftest` on all
+  three (both lesson_ids resolve `scene_ids` from the graph).
+- Open `realized_lesson.html` — still the short path. Open
+  `realized_lesson_br.html` — BR scene only. Open
+  `realized_coverage.html` — full dump, not a third lesson.
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`;
+  check-shape, scenes, and lesson selftests still green.
+
+**Supersedes:** the previous lesson-on-graph block’s “one default
+lesson on this project” as to *how many records* — the default, the
+three scenes, and the paging policy stand; a second record now points
+at a subset. Working-process block untouched. Single-writer per facet
+stands. Chameleon agent still not stood up.
+

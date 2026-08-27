@@ -104,8 +104,10 @@ Do not create a rival course schema. Do not invent a catalog UI.
 - A later agent emits another lesson by writing a lesson record
   (`lesson_id` + `scene_ids` + title) that points at existing
   `spine.scenes`. Realizer re-stamp **preserves** extra lesson records
-  and only recomputes the default. It does not fork HTML.
-- Coverage dump stays ungrouped and unpaged.
+  and only recomputes the default. It does not fork HTML. Extra
+  `scene_ids` may be a subset. `lesson_end_check_ids` stay empty unless
+  those invert-definition extras honestly belong on that lesson.
+- Coverage dump stays ungrouped and unpaged, and is **not** a third lesson.
 
 ---
 
@@ -119,7 +121,11 @@ Do not create a rival course schema. Do not invent a catalog UI.
 
 Re-running realize → cartographer → couturier keeps extra `ele_` ids,
 intent, style, check shapes, scene records, and extra lesson records
-(pure function of spine + document-root title for the default).
+(pure function of spine + document-root title for the default). Extra
+lesson HTML is a sibling file derived from `lesson_id`
+(`ast_alsap_br` → `realized_lesson_br.html`). A lesson with one scene
+and no lesson-end checks has paging chrome suppressed (same
+`v1_one_scene_at_a_time` policy; nowhere to page).
 
 ---
 
@@ -132,6 +138,25 @@ intent, style, check shapes, scene records, and extra lesson records
 - Not Chameleon, not Headwater outcomes-mode, not `/cgen/alsap` hosting.
 - Not rewriting `atoms.json` or authored `content.text`.
 - Not a rival `course.schema.json`.
+- Not a course catalog UI and not a third lesson minted from the coverage dump.
+
+---
+
+## A second lesson is another record (not a fork)
+
+Live ALSAP proves the lesson node is not a singleton:
+
+| `lesson_id` | `scene_ids` | lesson-end invert_definition | HTML |
+|---|---|---|---|
+| `ast_alsap_short` (default) | all three scenes | yes (definitional close of front-matter) | `realized_lesson.html` |
+| `ast_alsap_br` | `benefit_risk_on_the_form` only | no — those checks do not belong on this form cluster | `realized_lesson_br.html` |
+
+Same 55 `ele_` / 47 atoms. No new pedagogy atoms. No authored
+`content.text`. Title heuristic is still the document-root atom (scene
+heading stays on the scene record). The BR closed-choice stays in-scene
+on `form_br`. Realize rebuilds the occurrence manifest from scratch and
+**carries** extra lesson records from the previous stamp so they are not
+dropped.
 
 ---
 
@@ -141,8 +166,13 @@ intent, style, check shapes, scene records, and extra lesson records
 python3 tools/realize.py
 python3 tools/cartographer.py
 python3 tools/couturier.py
+python3 tools/realize.py --lesson ast_alsap_br
 ```
 
-Optional: `--lesson ast_alsap_short` (default lesson on this project).
-`python3 tools/realize.py --selftest` asserts lesson → scenes →
-`element_ids` resolve from the graph (not hardcoded HTML).
+Default project: `cgen/astellas/projects/ast_alsap`. Default lesson
+`ast_alsap_short` → `realized_lesson.html`. `--lesson ast_alsap_br`
+regenerates `realized_lesson_br.html` (path derived from `lesson_id`;
+the projector is not forked for ALSAP). A default realize / cartographer
+/ couturier pass also emits extra lesson HTML so both files stay a read
+of their nodes. `--selftest` asserts both lesson_ids resolve `scene_ids`
+from the graph (not hardcoded HTML).

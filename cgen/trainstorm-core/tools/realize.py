@@ -44,8 +44,13 @@ points at that list. The projector **reads the lesson node** (default, or
 lesson is these three headings.” Same three scenes (front-matter /
 Procedure A / form BR), **one at a time** (Next/Back). Scene 3 includes
 the BR closed-choice after the field+example. Definition/purpose checks
-stay a final step after scene 3, not a fourth scene. The full SOP dump
-is `realized_coverage.html` (a second projection, not a second lesson).
+stay a final step after scene 3, not a fourth scene. Extra lesson records
+are a subset of those same `spine.scenes` (live: `ast_alsap_br` is the
+form BR scene only). The projector writes a second HTML derived from
+`lesson_id` (live: `realized_lesson_br.html`); it does not fork this
+file for ALSAP. A one-scene lesson has the pager disabled (single step).
+The full SOP dump is `realized_coverage.html` (a second projection, not
+a third lesson).
 Spine is a selection of existing `ele_` records — it mints none for membership
 and drops none. Procedure-step atoms stay 1:1 (no extra `reinforce`): they are
 imperatives, so they cannot host an honest copula-invert sibling check. Form
@@ -82,6 +87,7 @@ Usage (from `cgen/trainstorm-core`):
     python tools/realize.py
     python tools/realize.py --project ../astellas/projects/ast_alsap
     python tools/realize.py --lesson ast_alsap_short
+    python tools/realize.py --lesson ast_alsap_br
     python tools/realize.py --selftest
     python tools/cartographer.py          # re-runnable on the mixed store
     python tools/couturier.py             # dresses existing ele_; mints nothing
@@ -91,7 +97,8 @@ never hand-edited):
 
     <project>/occurrences/elements.json     occurrence store (does not touch atoms.json)
     <project>/occurrences/manifest.json     realized_from / source hashes + spine keys
-    <project>/realized_lesson.html          short lesson (spine). Open this.
+    <project>/realized_lesson.html          short lesson (default {project}_short). Open this.
+    <project>/realized_lesson_br.html       BR subset lesson (ast_alsap_br; path derived from lesson_id)
     <project>/realized_coverage.html        full SOP dump in document order
 """
 from __future__ import annotations
@@ -232,6 +239,8 @@ SCENE_DEFS = (
 SCENE_DEFS_BY_ROLE = {d["role"]: d for d in SCENE_DEFS}
 LESSON_SPEC = "agents/realizer/lesson_v1.md"
 LESSON_POLICY = "v1_lesson_on_graph"
+DEFAULT_LESSON_HTML_NAME = "realized_lesson.html"
+DEFAULT_COVERAGE_HTML_NAME = "realized_coverage.html"
 
 KIND_TO_TYPE = {
     "procedure": "Section",
@@ -1346,8 +1355,8 @@ def apply_spine(manifest, atoms, elements, *, meaning_atoms=None, option_sets=No
 
 
 def sibling_coverage_path(lesson_path: pathlib.Path) -> pathlib.Path:
-    if lesson_path.name == "realized_lesson.html":
-        return lesson_path.with_name("realized_coverage.html")
+    if lesson_path.name == DEFAULT_LESSON_HTML_NAME or lesson_path.name.startswith("realized_lesson_"):
+        return lesson_path.with_name(DEFAULT_COVERAGE_HTML_NAME)
     return lesson_path.with_name(lesson_path.stem + "_coverage.html")
 
 
@@ -1576,11 +1585,15 @@ def scene_check_refs(scene) -> list:
     return refs
 
 
+def project_slug(manifest) -> str:
+    """Stable project slug used in default lesson_id and derived HTML names."""
+    proj = (manifest.get("project") or "").strip() or "course"
+    return re.sub(r"[^A-Za-z0-9_-]+", "_", proj).strip("_") or "course"
+
+
 def default_lesson_id(manifest) -> str:
     """Stable default lesson_id. Project-specific, not a closed enum."""
-    proj = (manifest.get("project") or "").strip() or "course"
-    slug = re.sub(r"[^A-Za-z0-9_-]+", "_", proj).strip("_") or "course"
-    return f"{slug}_short"
+    return f"{project_slug(manifest)}_short"
 
 
 def lesson_title_heuristic(atoms, elements, spine_ids):
@@ -1649,8 +1662,10 @@ def stamp_lessons(manifest, atoms, elements) -> dict:
                  "id refs into spine.scenes, lesson-end ele_ refs, paging pointer. "
                  "Projector reads the selected lesson (default or --lesson) to "
                  "wrap/page; it does not assume the ALSAP trio. Extra lesson "
-                 "records are preserved on re-stamp. Not a LMS. Not SCORM. "
-                 "Not a Course ele_. Coverage dump stays a second projection."),
+                 "records are preserved on re-stamp and project to a sibling HTML "
+                 "derived from lesson_id (not a fork of this file). Not a LMS. "
+                 "Not SCORM. Not a Course ele_. Coverage dump stays a second "
+                 "projection, not a third lesson."),
     }
     return manifest["lessons"]
 
@@ -1674,6 +1689,138 @@ def select_lesson_record(manifest, lesson_id=None) -> dict:
         if rec.get("default"):
             return rec
     return lessons[0]
+
+
+def carry_previous_lesson_records(occ_manifest, prev_mf) -> None:
+    """Realize rebuilds the occurrence manifest; extra lesson records live on prev.
+
+    stamp_lessons preserves extras already on `manifest.lessons`. Without this
+    carry, a fresh realize dict would drop them. Does not invent a lesson.
+    """
+    prev = prev_mf.get("lessons") if isinstance((prev_mf or {}).get("lessons"), dict) else {}
+    prev_lessons = [
+        L for L in (prev.get("lessons") or [])
+        if isinstance(L, dict) and L.get("lesson_id")
+    ]
+    if not prev_lessons:
+        return
+    occ_manifest["lessons"] = {
+        "policy": prev.get("policy") or LESSON_POLICY,
+        "spec": prev.get("spec") or LESSON_SPEC,
+        "default": prev.get("default"),
+        "lessons": prev_lessons,
+        "note": prev.get("note"),
+    }
+
+
+def lesson_html_filename(manifest, lesson_id=None) -> str:
+    """Default lesson → realized_lesson.html; extras → realized_lesson_{suffix}.html.
+
+    Suffix is the lesson_id with the project slug prefix stripped
+    (`ast_alsap_br` → `realized_lesson_br.html`). Not an ALSAP fork.
+    """
+    rec = select_lesson_record(manifest, lesson_id)
+    lid = rec.get("lesson_id") or ""
+    default_id = (manifest.get("lessons") or {}).get("default") or default_lesson_id(manifest)
+    if rec.get("default") or lid == default_id:
+        return DEFAULT_LESSON_HTML_NAME
+    slug = project_slug(manifest)
+    suffix = lid
+    prefix = f"{slug}_"
+    if lid.startswith(prefix):
+        suffix = lid[len(prefix):]
+    suffix = re.sub(r"[^A-Za-z0-9_-]+", "_", suffix).strip("_") or lid
+    return f"realized_lesson_{suffix}.html"
+
+
+def lesson_html_path(project, manifest, lesson_id=None, *, out=None) -> pathlib.Path:
+    if out:
+        return pathlib.Path(out).resolve()
+    return pathlib.Path(project) / lesson_html_filename(manifest, lesson_id)
+
+
+def iter_lesson_ids(manifest) -> list:
+    block = manifest.get("lessons") if isinstance(manifest.get("lessons"), dict) else {}
+    ids = []
+    seen = set()
+    for L in block.get("lessons") or []:
+        if not isinstance(L, dict):
+            continue
+        lid = L.get("lesson_id")
+        if not lid or lid in seen:
+            continue
+        seen.add(lid)
+        ids.append(lid)
+    return ids
+
+
+def project_lesson_htmls(atoms, elements, manifest, project, *, meaning_atoms=None,
+                         option_sets=None, options_registry=None, lesson_id=None,
+                         out=None):
+    """Write lesson HTML. `--out` writes one path; otherwise every lesson record.
+
+    Coverage dump is written once (default lesson) and is not a third lesson.
+    Extra records project to a path derived from `lesson_id`.
+    """
+    if out:
+        path = pathlib.Path(out).resolve()
+        rec = select_lesson_record(manifest, lesson_id)
+        default_id = (manifest.get("lessons") or {}).get("default")
+        write_coverage = (
+            path.name == DEFAULT_LESSON_HTML_NAME
+            or rec.get("default")
+            or rec.get("lesson_id") == default_id
+        )
+        coverage = project_html(
+            atoms, elements, manifest, path,
+            meaning_atoms=meaning_atoms, option_sets=option_sets,
+            options_registry=options_registry, lesson_id=lesson_id,
+            write_coverage=write_coverage,
+        )
+        return coverage, path, []
+
+    ids = iter_lesson_ids(manifest)
+    if lesson_id and lesson_id not in ids:
+        # Resolve now so a missing id fails the same way as --lesson on a singleton.
+        select_lesson_record(manifest, lesson_id)
+    if not ids:
+        path = pathlib.Path(project) / DEFAULT_LESSON_HTML_NAME
+        coverage = project_html(
+            atoms, elements, manifest, path,
+            meaning_atoms=meaning_atoms, option_sets=option_sets,
+            options_registry=options_registry, lesson_id=lesson_id,
+        )
+        return coverage, path, []
+
+    default_id = (manifest.get("lessons") or {}).get("default") or default_lesson_id(manifest)
+    ordered = []
+    if lesson_id:
+        ordered.append(lesson_id)
+    if default_id not in ordered:
+        ordered.append(default_id)
+    for lid in ids:
+        if lid not in ordered:
+            ordered.append(lid)
+
+    coverage_path = None
+    selected_path = None
+    extra_paths = []
+    for lid in ordered:
+        path = pathlib.Path(project) / lesson_html_filename(manifest, lid)
+        is_default = lid == default_id
+        cov = project_html(
+            atoms, elements, manifest, path,
+            meaning_atoms=meaning_atoms, option_sets=option_sets,
+            options_registry=options_registry, lesson_id=lid,
+            write_coverage=is_default,
+        )
+        if is_default:
+            coverage_path = cov
+        if selected_path is None:
+            selected_path = path
+        elif path != selected_path:
+            extra_paths.append(path)
+    return coverage_path, selected_path, extra_paths
 
 
 def _follow_paging(rec, scenes_stamp) -> dict:
@@ -2402,7 +2549,8 @@ def closed_choice_html(el, chk, esc) -> str:
 
 
 def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_atoms=None,
-                 option_sets=None, options_registry=None, lesson_id=None):
+                 option_sets=None, options_registry=None, lesson_id=None,
+                 write_coverage=True):
     """Write the short lesson (selected lesson node) and the full SOP dump (coverage).
 
     `atoms` is the SOP tree (coverage walk / spine SOP membership).
@@ -2415,6 +2563,9 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
     scenes and check shapes; it does not re-discover pedagogy or assume
     “the ALSAP lesson is these three headings.”
     `lesson_id` selects `manifest.lessons` (default lesson if omitted).
+    Extra lesson records write a sibling HTML derived from `lesson_id`;
+    this function does not fork for ALSAP. Coverage dump is not a third lesson.
+    `write_coverage` is false when projecting an extra lesson onto a derived path.
     """
     registry = options_registry if options_registry is not None else (option_sets or {})
     options_registry = registry
@@ -2438,8 +2589,13 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         meaning_atoms=meaning_atoms, option_sets=option_sets,
     )
     coverage_path = sibling_coverage_path(out_path)
-    lesson_href = esc(out_path.name)
+    derived_lesson_html = (
+        out_path.name == DEFAULT_LESSON_HTML_NAME
+        or out_path.name.startswith("realized_lesson_")
+    )
     coverage_href = esc(coverage_path.name)
+    # Coverage dump links to the default short lesson, not a catalog of extras.
+    lesson_href = esc(DEFAULT_LESSON_HTML_NAME if derived_lesson_html else out_path.name)
     by_cf = defaultdict(list)
     for e in elements:
         by_cf[e["composed_from"]].append(e)
@@ -2728,6 +2884,8 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         eid_to_scene[eid] = "lesson-end"
 
     spine_body = []
+    step_n = 0
+    scene_n = 0
     if scene_list:
         for idx, sc in enumerate(scene_list):
             resolved = resolve_scene(sc, by_eid)
@@ -2757,17 +2915,22 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         step_n = scene_n + (1 if lesson_end_ids else 0)
         first_heading = scene_list[0].get("heading") or ""
         paging_id = ((lesson.get("paging") or {}).get("policy") or PAGING_POLICY)
-        player_nav = (
-            f'<nav class="player-nav" aria-label="Scenes">'
-            f'<button type="button" class="player-back" disabled>Back</button>'
-            f'<p class="player-status" aria-live="polite">'
-            f'{esc(first_heading)} · 1 of {scene_n}</p>'
-            f'<button type="button" class="player-next">Next</button>'
-            f'</nav>'
-        )
+        chrome = "suppressed" if step_n <= 1 else "next_back"
+        if step_n <= 1:
+            player_nav = ""
+        else:
+            player_nav = (
+                f'<nav class="player-nav" aria-label="Scenes">'
+                f'<button type="button" class="player-back" disabled>Back</button>'
+                f'<p class="player-status" aria-live="polite">'
+                f'{esc(first_heading)} · 1 of {scene_n}</p>'
+                f'<button type="button" class="player-next">Next</button>'
+                f'</nav>'
+            )
         spine_main = (
             f'<div class="player" data-lesson="{esc(lesson_key)}" '
             f'data-paging="{esc(paging_id)}" '
+            f'data-paging-chrome="{esc(chrome)}" '
             f'data-scene-count="{scene_n}" data-step-count="{step_n}">'
             f'{player_nav}'
             f'{"".join(spine_body)}'
@@ -2882,7 +3045,10 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         "of that BR profile fill, then the existing "
         "definition checks. A lesson record on <span class=mono>manifest.lessons</span> "
         "points at <span class=mono>spine.scenes</span>; the player shows that "
-        "lesson’s named scenes one at a time (Next/Back). The object tree walk "
+        "lesson’s named scenes"
+        + (" one at a time (Next/Back). " if step_n > 1 else
+           " (this lesson is a single step; pager disabled). ")
+        + "The object tree walk "
         "is coverage, not a second lesson node. "
     )
     if cout:
@@ -3037,6 +3203,7 @@ form.check .check-note{font-size:11.5px;color:var(--mut);margin:10px 0 0}
 .player-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;
  position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:10px 0 12px;
  margin:0 0 8px;z-index:2}
+.player[data-paging-chrome="suppressed"] .player-nav{display:none}
 .player-nav button{background:#1e3a8a;color:#fff;border:0;border-radius:6px;padding:8px 14px;
  font:inherit;font-weight:600;cursor:pointer}
 .player-nav button:disabled{background:#e2e8f0;color:#94a3b8;cursor:not-allowed}
@@ -3300,6 +3467,10 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         if scene_list else ""
     )
     end_bit = " Lesson-end checks are a final step." if lesson_end_ids else ""
+    if step_n <= 1:
+        page_bit = "One named scene (pager disabled — this lesson is a single step)."
+    else:
+        page_bit = "One named scene at a time (Next/Back)."
     lesson_heading = esc(lesson_title)
     lesson_html = render_page(
         f"{lesson_heading} — {project_name}",
@@ -3307,7 +3478,7 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         f'<a href="{coverage_href}">Full SOP / coverage ({store_n} occurrences)</a>',
         (f"{spine_n} of {store_n} occurrences · lesson <span class=mono>{esc(lesson_key)}</span> · "
          f"{scene_path}"
-         "One named scene at a time (Next/Back)."
+         f"{page_bit}"
          f"{end_bit} "
          "Read from the lesson node and its scenes — not a hard-coded ALSAP trio. "
          "Not B/C and not the SOP dump. Heuristic is documented, not an LLM."),
@@ -3325,7 +3496,8 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
         coverage_details,
     )
     out_path.write_text(lesson_html)
-    coverage_path.write_text(coverage_html)
+    if write_coverage:
+        coverage_path.write_text(coverage_html)
     return coverage_path
 
 
@@ -3851,6 +4023,29 @@ def selftest(closed_moves):
                     and not resolved_front["lesson_end_checks"]
                     and resolved_front["title"] == "Front matter only",
                     [sc["id"] for sc in resolved_front["scenes"]]))
+    rebuilt = {"project": "course"}
+    carry_previous_lesson_records(rebuilt, mf_spine)
+    apply_spine(rebuilt, store, seeded)
+    rebuilt_ids = [L.get("lesson_id") for L in (rebuilt.get("lessons") or {}).get("lessons") or []]
+    results.append(("realize-style rebuild carries extra lesson records from previous manifest",
+                    "front_only" in rebuilt_ids
+                    and rebuilt_ids[0] == "course_short"
+                    and (rebuilt.get("lessons") or {}).get("default") == "course_short",
+                    rebuilt_ids))
+    named = {
+        "project": "ast_alsap",
+        "lessons": {
+            "default": "ast_alsap_short",
+            "lessons": [
+                {"lesson_id": "ast_alsap_short", "default": True, "scene_ids": ["what_an_alsap_is"]},
+                {"lesson_id": "ast_alsap_br", "scene_ids": ["benefit_risk_on_the_form"]},
+            ],
+        },
+    }
+    results.append(("extra lesson html filename is derived from lesson_id not a fork",
+                    lesson_html_filename(named, "ast_alsap_short") == DEFAULT_LESSON_HTML_NAME
+                    and lesson_html_filename(named, "ast_alsap_br") == "realized_lesson_br.html"
+                    and lesson_html_filename(named) == DEFAULT_LESSON_HTML_NAME, ""))
 
     # Compiler primitives from atom kind + occurrence move.
     results.append(("procedure_step present is tp_step",
@@ -4015,6 +4210,13 @@ def selftest(closed_moves):
                     and "Benefit-risk on the form" not in page_front
                     and "<h1>Front matter only</h1>" in page_front
                     and 'class="lesson-end-checks"' not in page_front, ""))
+    results.append(("single-scene extra lesson suppresses the pager",
+                    'data-paging-chrome="suppressed"' in page_front
+                    and 'data-scene-count="1"' in page_front
+                    and 'data-step-count="1"' in page_front
+                    and 'class="player-nav"' not in page_front
+                    and 'class="player-next"' not in page_front
+                    and "pager disabled" in page_front, ""))
     fm_start = page.find('data-scene="what_an_alsap_is"')
     proc_start = page.find('data-scene="how_an_alsap_starts"')
     end_start = page.find('class="lesson-end-checks"')
@@ -4646,6 +4848,71 @@ def selftest(closed_moves):
                     'data-lesson="selftest_short"' in page_form
                     and page_form.count('class="scene"') == 3
                     and 'data-scene="benefit_risk_on_the_form"' in page_form, ""))
+    mf_form["lessons"]["lessons"].append({
+        "lesson_id": "course_br",
+        "title": resolved_form_lesson["title"],
+        "title_from": resolved_form_lesson["title_from"],
+        "scene_ids": ["benefit_risk_on_the_form"],
+        "lesson_end_check_ids": [],
+        "paging": {
+            "policy": PAGING_POLICY,
+            "scene_count": 1,
+            "step_count": 1,
+            "lesson_end_is_final_step": False,
+            "chrome": "suppressed",
+        },
+    })
+    resolved_br = resolve_lesson(
+        mf_form, form_by_eid, lesson_id="course_br", atoms_by_id=form_catalog
+    )
+    results.append(("BR subset lesson_id resolves only the form_br scene from the graph",
+                    resolved_br["lesson_id"] == "course_br"
+                    and [sc["id"] for sc in resolved_br["scenes"]] == ["benefit_risk_on_the_form"]
+                    and not resolved_br["lesson_end_checks"]
+                    and SHAPE_CLOSED in scene_check_refs(resolved_br["scenes"][0]),
+                    [sc["id"] for sc in resolved_br["scenes"]]))
+    results.append(("BR subset lesson html filename is derived from lesson_id",
+                    lesson_html_filename(mf_form, "course_br") == "realized_lesson_br.html"
+                    and lesson_html_filename(mf_form, "course_short") == DEFAULT_LESSON_HTML_NAME,
+                    lesson_html_filename(mf_form, "course_br")))
+    with tempfile.TemporaryDirectory() as td_br:
+        br_path = pathlib.Path(td_br) / "realized_lesson_br.html"
+        project_html(
+            store, seeded_form, mf_form, br_path, lesson_id="course_br",
+            meaning_atoms=form_store + instance_store,
+            option_sets=fixture_br_options, options_registry=fixture_br_options,
+            write_coverage=False,
+        )
+        page_br = br_path.read_text()
+        br_cov = pathlib.Path(td_br) / DEFAULT_COVERAGE_HTML_NAME
+    results.append(("BR subset HTML is a read of that lesson node",
+                    'data-lesson="course_br"' in page_br
+                    and page_br.count('class="scene"') == 1
+                    and 'data-scene="benefit_risk_on_the_form"' in page_br
+                    and 'data-scene="what_an_alsap_is"' not in page_br
+                    and 'data-scene="how_an_alsap_starts"' not in page_br
+                    and 'class="lesson-end-checks"' not in page_br
+                    and 'data-shape="closed_choice"' in page_br
+                    and 'data-shape="sequence_order"' not in page_br
+                    and f'data-shape="{SHAPE_INVERT}"' not in page_br
+                    and 'data-paging-chrome="suppressed"' in page_br
+                    and 'class="player-nav"' not in page_br
+                    and 'data-scene-count="1"' in page_br
+                    and 'data-step-count="1"' in page_br
+                    and not br_cov.exists(), ""))
+    apply_spine(
+        mf_form, store, seeded_form,
+        meaning_atoms=form_store + instance_store, option_sets=fixture_br_options,
+    )
+    kept_form_ids = [L.get("lesson_id") for L in (mf_form.get("lessons") or {}).get("lessons") or []]
+    results.append(("re-stamp keeps the BR subset lesson and does not force lesson-end onto it",
+                    "course_br" in kept_form_ids
+                    and kept_form_ids[0] == "course_short"
+                    and (mf_form.get("lessons") or {}).get("default") == "course_short"
+                    and not resolve_lesson(
+                        mf_form, form_by_eid, lesson_id="course_br", atoms_by_id=form_catalog
+                    )["lesson_end_checks"],
+                    kept_form_ids))
 
     huge_steps = [
         atom(
@@ -4710,15 +4977,17 @@ def main():
                "  python3 tools/realize.py --project ../astellas/projects/ast_alsap\n"
                "  python3 tools/realize.py --selftest\n"
                "  python3 tools/realize.py --lesson ast_alsap_short\n"
+               "  python3 tools/realize.py --lesson ast_alsap_br\n"
                "  python3 tools/cartographer.py\n"
                "  python3 tools/couturier.py\n"
-               "Open <project>/realized_lesson.html (short spine) or realized_coverage.html (full dump).\n",
+               "Open <project>/realized_lesson.html (short spine), realized_lesson_br.html "
+               "(BR subset), or realized_coverage.html (full dump).\n",
     )
     ap.add_argument("--project", default=None,
                     help=f"Atom store directory containing atoms.json (default: {default_shown})")
     ap.add_argument("--core", default=None, help="trainstorm-core (schemas + vocab); usually auto-detected")
     ap.add_argument("--registry", default=None, help="Client registry; usually auto-derived from --project")
-    ap.add_argument("--out", help="HTML output path (default: <project>/realized_lesson.html)")
+    ap.add_argument("--out", help="HTML output path (default: derived from --lesson; default lesson is <project>/realized_lesson.html)")
     ap.add_argument("--lesson", default=None,
                     help="Lesson id from occurrences/manifest.json lessons (default: the project's default lesson)")
     ap.add_argument("--store", help="Occurrence store directory (default: <project>/occurrences)")
@@ -4949,7 +5218,8 @@ def main():
                  "only one of those two atoms would hide the other half. "
                  "A re-realize preserves extras, intent, style, and recomputes "
                  "the same spine, primitives, check shapes, scenes, and default "
-                 "lesson (extra lesson records are kept)."),
+                 "lesson (extra lesson records are kept and project to a sibling "
+                 "HTML derived from lesson_id)."),
     }
     if any((e.get("ext") or {}).get("cartographer") for e in elements):
         cart = dict(prev_mf.get("cartographer") or {})
@@ -4970,6 +5240,7 @@ def main():
         cout["dressed"] = sum(1 for e in elements if e.get("expression"))
         cout["element_count"] = len(elements)
         occ_manifest["couturier"] = cout
+    carry_previous_lesson_records(occ_manifest, prev_mf)
     apply_spine(
         occ_manifest, atoms, elements,
         meaning_atoms=form_atoms + instance_atoms, option_sets=option_sets,
@@ -4984,12 +5255,11 @@ def main():
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
-    html_path = pathlib.Path(args.out).resolve() if args.out else project / "realized_lesson.html"
-    coverage_path = project_html(
-        atoms, elements, occ_manifest, html_path,
+    coverage_path, html_path, extra_htmls = project_lesson_htmls(
+        atoms, elements, occ_manifest, project,
         meaning_atoms=form_atoms + instance_atoms,
         option_sets=option_sets, options_registry=options_registry or option_sets,
-        lesson_id=args.lesson,
+        lesson_id=args.lesson, out=args.out,
     )
     (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
@@ -5024,7 +5294,9 @@ def main():
     print(f"  instance   : {INSTANCE_PROJECT_NAME} ({len(instance_atoms)} atoms joined for meaning; "
           f"{sum(1 for e in extras if (e.get('ext') or {}).get('realized_from', {}).get('instance_store'))} guest ele_)")
     print(f"  primitives : {dict(sorted(primitive_counts(elements).items()))}")
-    print(f"  lesson HTML: {html_path}  ← open this (short lesson)")
+    print(f"  lesson HTML: {html_path}  ← open this")
+    for extra_html in extra_htmls:
+        print(f"  extra HTML : {extra_html}")
     print(f"  coverage   : {coverage_path}  (full SOP dump)")
     print("  schema     : element.schema.json ALL PASS (no authored content.text)")
 

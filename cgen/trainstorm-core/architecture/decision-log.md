@@ -13,6 +13,36 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-27 — Second lesson record: BR-only from the same store
+
+PR #30 named one lesson on the graph (`ast_alsap_short`) so a later
+agent could emit another by writing a record, not forking HTML. This
+hop writes that second record. Same 16 spine occurrences. Same three
+scenes on `spine.scenes`. Same 55 / 47.
+
+**Where it lives.** `manifest.lessons` now has two objects.
+`ast_alsap_short` (default) still lists all three scene ids and the
+invert-definition extras. `ast_alsap_br` lists only
+`benefit_risk_on_the_form`. Those invert-definition extras do **not**
+belong on the BR lesson (they close front-matter, not the form
+cluster); the in-scene `closed_choice` does. Projector derives
+`realized_lesson_br.html` from the lesson_id. One scene → pager
+disabled (same `v1_one_scene_at_a_time` policy). Realize carries extra
+lesson records across a fresh manifest rebuild. Coverage dump stays a
+second projection, not a third lesson. Not a catalog UI.
+
+**Unchanged.** 16 spine `ele_` ids. 55 / 47. Same three scenes.
+`atoms.json` untouched. No authored `content.text`. No Procedure B. No
+chameleon.py, no Headwater outcomes-mode, no `/cgen/alsap` hosting, no
+quiz engine, no LLM distractors, no new agent. Cartographer owns
+intent. Couturier owns style. Idempotent realize → cartographer →
+couturier.
+
+Hypothesis verified: a second lesson record on the same occurrence
+store was enough; forking `realize.py` for ALSAP would have been a lie.
+
+---
+
 ## 2026-08-27 — Lesson is a graph object that points at `spine.scenes`
 
 After PR #29 scene membership lived on `spine.scenes` / `ext.scene`.

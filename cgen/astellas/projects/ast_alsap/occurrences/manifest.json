@@ -278,9 +278,31 @@
         },
         "default": true,
         "from": "Document-root atom first sentence (title heuristic) plus the first-class scene list already on spine.scenes. Not an LLM. Not outcome language. Not a Course ele_ \u2014 no honest composed_from for a container."
+      },
+      {
+        "lesson_id": "ast_alsap_br",
+        "title": "SOP-AST-29080 \u2014 Plan, Develop, Execute, Maintain, and Archive the Asset Level Safety Assessment Plan (ALSAP).",
+        "title_from": "atom_sop_ast29080",
+        "scenes": {
+          "see": "spine.scenes"
+        },
+        "scene_ids": [
+          "benefit_risk_on_the_form"
+        ],
+        "lesson_end_check_ids": [],
+        "paging": {
+          "policy": "v1_one_scene_at_a_time",
+          "scene_count": 1,
+          "step_count": 1,
+          "lesson_end_is_final_step": false,
+          "chrome": "suppressed",
+          "note": "Same paging policy as the short lesson. This record has one scene and no lesson-end invert_definition checks, so Next/Back is not shown. The in-scene closed_choice stays on the form_br scene."
+        },
+        "default": false,
+        "from": "Subset of spine.scenes: the form_br scene (Benefit-risk on the form) already on the graph \u2014 form presents + instance examples + in-scene closed_choice. Invert-definition extras stay on ast_alsap_short; they are the definitional close of front-matter, not this form cluster. Title heuristic is the document-root atom (same as the short lesson; the scene heading stays on the scene record). Not a Course ele_. Not a third coverage dump."
       }
     ],
-    "note": "First-class lesson records: id, title heuristic, ordered scene id refs into spine.scenes, lesson-end ele_ refs, paging pointer. Projector reads the selected lesson (default or --lesson) to wrap/page; it does not assume the ALSAP trio. Extra lesson records are preserved on re-stamp. Not a LMS. Not SCORM. Not a Course ele_. Coverage dump stays a second projection."
+    "note": "First-class lesson records: id, title heuristic, ordered scene id refs into spine.scenes, lesson-end ele_ refs, paging pointer. Projector reads the selected lesson (default or --lesson) to wrap/page; it does not assume the ALSAP trio. Extra lesson records are preserved on re-stamp and project to a sibling HTML derived from lesson_id. Not a LMS. Not SCORM. Not a Course ele_. Coverage dump stays a second projection, not a third lesson."
   },
   "checks": {
     "policy": "v1_check_shapes_on_graph",
