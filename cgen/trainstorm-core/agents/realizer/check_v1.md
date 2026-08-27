@@ -1,45 +1,67 @@
-# Realizer check projection v1 — `reinforce` as a check, not a recap
+# Realizer check projection v1 — shapes on the graph
 
 *Traditional ID’s third move is a check.* Couturier already dresses
-`reinforce` as `brand.recall` / `tp_recall`. This spec is how the HTML
-projector **renders** a check from atom meaning — not a new agent, not a
-second meaning store, not a new pedagogical enum.
+`reinforce` as `brand.recall` / `tp_recall`. This spec is how a check is
+**named on the occurrence store** and how the HTML projector **reads**
+that record — not a new agent, not a second meaning store, not a new
+pedagogical enum, not a quiz engine.
 
-Implemented in `tools/realize.py` (`derive_check`, `derive_sequence_check`,
-`derive_br_profile_check`, `project_html`). Policy id: `v1_check_from_atom`. Closed vocab stays
+Implemented in `tools/realize.py`. Closed pedagogical vocab stays
 `reinforce` (Gagné 9a). Do not invent `retrieve`. `practice` exists on the
 closed list; this hop does **not** stamp it on a new `ele_`.
 
 Question clothes are occurrence-level (`intent.move`, Couturier
 `layout_hint: check`) **or** projector-only (sequence practice of existing
 presents; closed-choice of existing form present + instance fill). **No authored
-`content.text` on the element.** Stem, key, distractors, sequence items, and
-closed value ids are computed at project time from the atom store and the
-governed options registry.
+`content.text` on the element.** Prefer keys/refs over copying option
+strings. Stem, key, distractors, sequence items, and closed value ids are
+**resolved** from the graph at project time, from the stamped operands —
+not invented in HTML.
+
+Policy ids: `v1_check_from_atom` (honesty bar, unchanged) and
+`v1_check_shapes_on_graph` (the shape is a first-class record).
+Closed shape vocab: `vocab/check-shape.enum.json`.
 
 ---
 
 ## Three shapes (not three meanings)
 
-| Shape | When | What the learner does | Honesty |
-|---|---|---|---|
-| `mcq_siblings` / `cloze` | Extra `reinforce` of a definitional atom that has `{subject} is {complement}` | Invert-definition MCQ (or cloze fallback) | Key ⊆ this atom. Distractors ⊆ sibling first sentences. Stem is a grammatical invert, not a new SOP fact. |
-| `sequence` | A `procedure_step` group that already has `bindings.object.order` (Procedure A s1–s4) | Order those four first sentences | Items = verbatim first sentences. Correct order = Cartographer `object.order` (the sequence already taught). No invented stem. |
-| `closed_choice` | Form field with `options_ref` + instance fill of that field already on the spine (FORM-AST-34037 BR profile) | Pick the closed value already shown | Options = verbatim value **ids** of the governed set. Key = instance `selected_value` (also the atom’s `source_text`). Prompt is task clothes, not an SOP stem. If there is no honest closed set, stop. |
+Closed list. A later agent emits the same checks by writing the same
+`shape` + operand refs. The projector does **not** re-discover pedagogy
+by `if atom_id` / `if move == reinforce` / `if this is a job-aid`.
 
-Definition checks stay as they are. Sequence is for procedure_step groups
-that already have order — not a copula invert, and not “which is the first
-planning step?” (that would invent a fact; PR #16 correctly refused it).
-Closed-choice is for a **select_one** form field whose options already live
-in the client registry and whose instance fill is already taught — not
-“which BR profile is required?” and not LLM distractors. Jake parked a
+| Shape | When | Operands (refs) | What the learner does |
+|---|---|---|---|
+| `invert_definition` | Extra `reinforce` of a definitional atom that has `{subject} is {complement}` | `key_atom_id`, `contrast_atom_ids` (siblings), `host_element_id` | Invert-definition MCQ. Cloze is a **render** of this shape when `contrast_atom_ids` is empty — not a fourth shape. Was `mcq_siblings` / `cloze`. |
+| `sequence_order` | A `procedure_step` group that already has `bindings.object.order` (Procedure A s1–s4) | `atom_ids`, `element_ids` of those presents, `order_from: bindings.object.order` | Order those first sentences. Was `sequence`. Projector-only: no extra `ele_`. |
+| `closed_choice` | Form field with `options_ref` + instance fill of that field already on the spine (FORM-AST-34037 BR profile) | `options_ref`, `instance_atom_id`, `form_atom_id`, `key_from: bindings.instance.selected_value` | Pick the closed value already shown. Options = verbatim value **ids** of the governed set. Key = instance `selected_value`. Prompt is task clothes, not an SOP stem. Projector-only: no extra `ele_`. |
+
+Where they live:
+
+- **Occurrence store:** `ext.check` on invert-definition host `ele_` records
+  (the two definition extras). `ext` is the sanctioned extension; do not put
+  option labels on `element.assessment`.
+- **Manifest:** `checks[]` is the index of every shape, including
+  projector-only `sequence_order` and `closed_choice`. `spine.sequence_check`
+  and `spine.br_profile_check` remain pointers (`see: checks`).
+
+Cartographer still owns `intent` (`rhetorical`, `move`, `teaches`,
+`intended_response`). Couturier still owns style. Realizer binds the
+check shape, the way it binds `text_primitive`.
+
+Definition checks stay invert-definition. Sequence is for procedure_step
+groups that already have order — not a copula invert, and not “which is
+the first planning step?” (that would invent a fact; PR #16 correctly
+refused it). Closed-choice is for a **select_one** form field whose options
+already live in the client registry and whose instance fill is already taught —
+not “which BR profile is required?” and not LLM distractors. Jake parked a
 distractor-writer; this hop does not build it. LLM distractors stay parked.
 
 ---
 
 ## Honesty bar (same as Amanuensis: no fabricated evidence)
 
-**Definition checks (`mcq_siblings` / `cloze`)**
+**Definition checks (`invert_definition`; cloze is a render)**
 
 - **Key** is a substring of *this* atom’s `meaning.source_text` (after the
   usual Headwater-note trim). If a candidate key is not in the atom, it is
@@ -56,7 +78,7 @@ distractor-writer; this hop does not build it. LLM distractors stay parked.
 - Thin headings and glossary pointers are not used as siblings
   (`Roles and Responsibilities.`, `Procedures.`, `For definitions, refer…`).
 
-**Sequence checks (`sequence`)**
+**Sequence checks (`sequence_order`)**
 
 - **Items** are the first sentences of the procedure_step atoms in the
   group (`atom_sop_ast29080_proc_a_s1` … `_s4`). Verbatim. Each item ⊆ that
@@ -76,25 +98,29 @@ distractor-writer; this hop does not build it. LLM distractors stay parked.
   field’s `bindings.form.options_ref` (`reg_benefit_risk_profile` on
   FORM-AST-34037). Verbatim. The full set — not a cherry-picked pair, not
   phrasing-example cousin sentences, not registry `description` prose.
+  Do not copy labels onto the element.
 - **Key** is the instance atom’s `bindings.instance.selected_value`, which
   the gate already requires to equal `meaning.source_text`. It must be a
-  member of that set. Live fill: `conditional_favorable`.
+  member of that set. Live fill: `conditional_favorable`. An id, never
+  copied prose.
 - **Prompt** is task clothes, not an SOP stem: *Choose the closed value
   already shown.* Do not author “Which Benefit-Risk profile is required?”
   or “When should SMT select conditional_favorable?”
 - **Feedback** names the fill already shown / the field’s closed set. It
   does not invent SOP facts (“SMT should…”, rationale implications).
+- **Host** is projector-only (`manifest.checks`). Composing from the
+  instance extra would hide `options_ref`. Composing from the form field
+  would hide `selected_value`. No extra minted.
 - Initial display is a **stable non-identity permutation** so the learner
   can be wrong, then right.
 - The rationale field is `text_long` with no `options_ref`. It has **no
   honest closed set**. Do not MCQ it. Do not invent distractor rationales.
 
-Shape is a key (`mcq_siblings` | `cloze` | `sequence` | `closed_choice`), not a second
-meaning. It is **not** written onto the element. Couturier records
-`reinforce` surfaces as `layout_hint: check`. Sequence practice and the BR
-closed-choice are projector-only (see composition choices below). Do not put option labels
-on `element.assessment`. Do not bind `interaction_primitive` (Storyline;
-not this hop).
+Shape is a key (`invert_definition` | `sequence_order` | `closed_choice`)
+stored on the graph. Couturier still records `reinforce` surfaces as
+`layout_hint: check`. Sequence practice and the BR closed-choice are
+projector-only. Do not put option labels on `element.assessment`. Do not
+bind `interaction_primitive` (Storyline; not this hop).
 
 ---
 
@@ -237,7 +263,7 @@ Options (verbatim registry ids, full set):
 
 Prompt (clothes, not a fact): **Choose the closed value already shown.**
 Not “which BR profile is required?” Rationale has no closed set — not
-this check.
+this check. Shape + operand refs live on `manifest.checks`.
 
 ---
 
@@ -245,13 +271,13 @@ this check.
 
 | Agent | Still owns | This hop |
 |---|---|---|
-| Realizer | `ele_` ids; HTML projection | Derives and renders definition checks from extra `reinforce`; derives and renders sequence practice from the four Procedure A presents; derives and renders BR closed-choice from the existing form present + instance fill |
-| Cartographer | occurrence intent | Does not mint `practice`/`assess`; extra `reinforce` move stays Realizer-stamped; A-step primaries stay `present`; form/instance extras keep Realizer-stamped `present` / `exemplify` |
+| Realizer | `ele_` ids; HTML projection; compiler `text_primitive` | Binds `ext.check` + `manifest.checks` (shape + operand refs). Projector **reads** those records to render invert-definition, sequence_order, and closed_choice. |
+| Cartographer | occurrence intent | Does not mint `practice`/`assess`; extra `reinforce` move stays Realizer-stamped; A-step primaries stay `present`; form/instance extras keep Realizer-stamped `present` / `exemplify`. Does not wipe `ext.check`. |
 | Couturier | expression style keys | `layout_hint` for `reinforce` is `check`; still `brand.recall` / `tp_recall`. Sequence practice and BR closed-choice are projector clothes of existing beats |
 
 Re-running realize → cartographer → couturier keeps extra `ele_` ids,
-intent, style, and the same check projection (pure function of store +
-move + object.order).
+intent, style, and the same check records (pure function of store +
+move + object.order + options_ref / selected_value).
 
 ---
 
@@ -269,4 +295,6 @@ The short lesson path that *uses* these checks is Realizer projection
 (`agents/realizer/spine_v1.md`). Sequence practice sits after the job aid
 and before the form presents (Gagné-ish: practice the steps near the
 job aid). BR closed-choice sits in scene 3 after the field+example.
-Definition checks stay at the end.
+Definition checks stay at the end. Optional:
+`python3 tools/realize.py --selftest` asserts a check’s operands resolve
+from the graph (not hardcoded HTML).

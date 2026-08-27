@@ -1213,9 +1213,9 @@ exemplify). Documented as `spine.br_profile_check`. Store stays **55 / 47**.
 Spine membership 16. The rationale field is `text_long` with no
 `options_ref` — no honest closed set; do not MCQ it.
 
-**Shape.** New check shape `closed_choice` in `agents/realizer/check_v1.md`
-(alongside invert-definition `mcq_siblings` / `cloze` and Procedure A
-`sequence`). Full governed set, not a cherry-picked pair, not phrasing-
+**Shape.** Check shape `closed_choice` in `agents/realizer/check_v1.md`
+(alongside invert-definition `invert_definition` and Procedure A
+`sequence_order`). Full governed set, not a cherry-picked pair, not phrasing-
 example cousins, not registry description prose. Feedback names the fill
 already shown; it does not invent SOP facts. Initial display is a stable
 non-identity permutation so the learner can be wrong, then right.
@@ -1252,7 +1252,68 @@ in-scene. The refusal to invent a stem, to write LLM distractors, and to
 stretch cousin fields stands. Working-process block untouched.
 Single-writer per facet stands. Chameleon agent still not stood up.
 
+---
 
+## 2026-08-27 — Check shapes are first-class on the graph
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The three honest ALSAP check kinds are now a **closed
+shape vocab** on the occurrence store / manifest, so a later agent can
+emit the same checks without special-casing `realize.py` HTML branches.
+No new ALSAP beats. No Procedure B. Spine stays **16** of **55**. Same
+paging (`v1_one_scene_at_a_time`). `atoms.json` unchanged. No authored
+`content.text`. No new agent. No quiz engine. No LLM distractors.
+
+**Shapes** (`vocab/check-shape.enum.json`):
+
+| Shape | Operands (refs, not copied strings) | Host |
+|---|---|---|
+| `invert_definition` | `key_atom_id`, `contrast_atom_ids` (sibling first sentences) | Extra `reinforce` `ele_` |
+| `sequence_order` | `atom_ids` + `element_ids` of Procedure A presents; `order_from: bindings.object.order` | Projector-only (composing from one atom is a lie) |
+| `closed_choice` | `options_ref` (`reg_benefit_risk_profile`), `instance_atom_id` (`selected_value`), `form_atom_id` | Projector-only of the existing form present + instance fill (composing from one atom hides the other half). Options are value **ids**. Prompt is task clothes. |
+
+`ext.check` holds invert-definition host records. `manifest.checks` is the
+index (including projector-only `sequence_order` and `closed_choice`).
+`spine.sequence_check` and `spine.br_profile_check` remain pointers
+(`see: checks`). Projector **reads** the stamped shape and resolves
+wording from the graph. It does not re-discover pedagogy by if-atom-id.
+Cloze is a **render** of `invert_definition` when `contrast_atom_ids` is
+empty — not a fourth shape. Option strings are not copied onto the element.
+
+Cartographer still owns intent (`rhetorical` / `move` / `teaches` /
+`intended_response`). Couturier still owns style. Realizer binds the
+check shape the way it binds `text_primitive`. Closed pedagogical vocab
+still has no `retrieve`. No chameleon.py. No Headwater outcomes-mode.
+No `/cgen/alsap` hosting.
+
+Idempotent with realize → cartographer → couturier.
+
+**Why:** After PR #27 the three kinds already existed as Python/HTML
+branches (`mcq_siblings` / `sequence` / `derive_br_profile_check` by atom
+id). An ID would name them on the graph so the next hop can emit the same
+checks from operand refs, while keeping PR #26 paging and PR #27’s
+projector-only closed-choice honesty.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. `--selftest` on
+  all three (includes: a check’s operands resolve from the graph, not
+  hardcoded HTML).
+- Open `realized_lesson.html` — one named scene at a time; wrong then
+  right on invert_definition, sequence_order, and closed_choice. Open
+  `realized_coverage.html` — full dump; sequence_order and closed_choice
+  stay lesson-only.
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`.
+
+**Supersedes:** the previous check-projection blocks’ “shape is not
+written onto the element” as to *storage* — the honesty bar stands;
+the shape + operand refs now live on `ext.check` / `manifest.checks`.
+Paging and projector-only closed-choice placement from the 2026-08-26
+blocks stand. Working-process block untouched. Single-writer per facet
+stands. Chameleon agent still not stood up.
 
 
 

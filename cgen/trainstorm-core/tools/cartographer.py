@@ -629,13 +629,19 @@ def main():
         occ_manifest, atoms, elements,
         meaning_atoms=form_atoms + instance_atoms, option_sets=option_sets,
     )
+    realize.stamp_checks(
+        occ_manifest, atoms, elements,
+        meaning_atoms=form_atoms + instance_atoms,
+        options_registry=option_sets,
+    )
     realize.stamp_primitives(occ_manifest, elements)
     realize.normalize_elements_ext(elements)
     elements_path.write_text(json.dumps(elements, indent=2) + "\n")
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
     coverage_path = realize.project_html(
         atoms, elements, occ_manifest, html_path,
-        meaning_atoms=form_atoms + instance_atoms, option_sets=option_sets,
+        meaning_atoms=form_atoms + instance_atoms,
+        option_sets=option_sets, options_registry=option_sets,
     )
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
 

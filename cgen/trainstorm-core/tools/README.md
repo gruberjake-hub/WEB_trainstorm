@@ -15,7 +15,8 @@ Default project is the live ALSAP SOP store (47 atoms). See the module docstring
 A re-run preserves Cartographer-bound intent (`ext.cartographer`), Couturier style
 (`expression` / `ext.couturier`), and extra 1:many `ele_` records. Default run mints a small
 1:many seed (`agents/realizer/one_to_many_v1.md`) on a few ALSAP atoms. Extra `reinforce`
-occurrences project as a check from the atom (`agents/realizer/check_v1.md`). Default HTML is
+occurrences project as a check from a stamped `invert_definition` shape
+(`agents/realizer/check_v1.md`). Default HTML is
 the short lesson spine (`agents/realizer/spine_v1.md`); `realized_coverage.html` is the full
 SOP dump. Realizer also binds compiler primitives (`agents/realizer/primitives_v1.md`) so
 the spine is heading/callout/body/job-aid/example/check, not a stack of SOP cards. The
@@ -32,10 +33,11 @@ referent of those instance examples). `--no-one-to-many` skips
 new extras but still preserves any that exist. `--selftest` checks stable extra ids, the
 check honesty bar, spine membership (why-this callout of purpose, front-matter, Procedure A
 as a job sequence, sequence practice of those presents, form BR-field presents, instance
-example, then checks), and the atom → primitives bind (procedure_step → `tp_step`,
+example, then checks), that check operands resolve from the graph (not hardcoded HTML),
+and the atom → primitives bind (procedure_step → `tp_step`,
 activate → `tp_callout`, job-aid HTML). Scene 3 also projects a closed-choice
 of the BR profile fill (`options_ref` value ids; key = instance
-`selected_value`; projector-only).
+`selected_value`; projector-only `closed_choice` on `manifest.checks`).
 
 ## Cartographer
 

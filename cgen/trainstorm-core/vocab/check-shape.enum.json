@@ -1,0 +1,49 @@
+{
+  "vocabulary_version": "check-shape.v1",
+  "status": "draft_for_build",
+  "owner": "realizer",
+  "description": "Closed vocabulary of honest check SHAPES. A shape is a named way to resolve a check from graph operands (atoms, ele_ records, registry refs, object.order) — not a second meaning store, not a quiz engine, and not LLM distractors. Realizer stamps the shape + operand refs on the occurrence (ext.check) and/or the occurrence manifest (checks). The HTML projector READS the stamped shape; it does not re-discover pedagogy by if-atom-id.",
+  "governance": {
+    "closed_list": true,
+    "rule": "A check record may only use ids defined here. New values require a version bump and an entry. Do not copy option strings or authored stems onto the element. Prefer keys/refs. Jake parked a distractor-writer; this vocab does not add one.",
+    "field": "ext.check.shape and manifest.checks[].shape"
+  },
+  "shapes": [
+    {
+      "id": "invert_definition",
+      "label": "Invert definition",
+      "definition": "Grammatical invert of a definitional first sentence ({subject} is {complement} → What is {subject}?). Key ⊆ the host atom. Contrast ⊆ sibling first sentences in the same store (verbatim). Cloze is a RENDER of this shape when contrast_atom_ids is empty — not a fourth shape.",
+      "operands": {
+        "key_atom_id": "atom_id whose first sentence is inverted; the key is that atom’s complement",
+        "contrast_atom_ids": "sibling atom_ids whose first sentences are closed-contrast distractors; empty → cloze render",
+        "host_element_id": "the extra reinforce ele_ that hosts this check"
+      },
+      "honesty": "Key in this atom. Distractors in sibling atoms. Stem is a question transform, not a new SOP fact."
+    },
+    {
+      "id": "sequence_order",
+      "label": "Sequence order",
+      "definition": "Order the first sentences of a procedure_step group. Correct order is bindings.object.order (already taught). Projector-only when composing from one atom would be a lie.",
+      "operands": {
+        "atom_ids": "procedure_step atom_ids in object.order",
+        "element_ids": "the existing present ele_ records those atoms occupy (no extra minted)",
+        "order_from": "bindings.object.order"
+      },
+      "honesty": "Items ⊆ those atoms’ first sentences. Order is object.order. Prompt is task clothes, not an SOP stem."
+    },
+    {
+      "id": "closed_choice",
+      "label": "Closed choice",
+      "definition": "Pick one value from a governed options registry. Key is the instance atom’s selected_value. Options are the verbatim value ids of options_ref on the form atom that instance instantiates. Projector-only when composing from one atom would hide the other half. Prompt is task clothes, not an SOP stem. Do not copy labels onto the element.",
+      "operands": {
+        "options_ref": "reg_ id in the client options registry",
+        "instance_atom_id": "atom_id that carries bindings.instance.selected_value",
+        "form_atom_id": "atom_id that instance instantiates; carries bindings.form.options_ref",
+        "key_from": "bindings.instance.selected_value",
+        "form_element_id": "existing form-field present ele_ (no extra minted)",
+        "instance_element_id": "existing instance exemplify ele_ (no extra minted)"
+      },
+      "honesty": "Key is the recorded selected_value. Choices are the closed registry value ids. Prompt is task clothes. No invented seventh option."
+    }
+  ]
+}
