@@ -1,0 +1,163 @@
+{
+  "generated_by": "tools/realize.py",
+  "projection_of": {
+    "kind": "lesson",
+    "lesson_id": "ast_alsap_br",
+    "policy": "v1_lesson_on_graph",
+    "spec": "agents/realizer/lesson_v1.md",
+    "engine_policy": "v1_engine_reads_lesson_projection",
+    "graph": "occurrences/",
+    "note": "Course Engine v1 at /cgen reads this projection of the occurrence lesson node (lesson \u2192 scene_ids \u2192 element_ids \u2192 atoms via composed_from; check shapes from manifest.checks). Meaning is resolved from atoms at realize time. Not a hand-authored SCORM package. Not cgen/schema/course.schema.json as a rival constitution. Sidecar HTML stays a projector. Rebuild with realize \u2192 cartographer \u2192 couturier."
+  },
+  "meta": {
+    "id": "ast_alsap_br",
+    "title": "SOP-AST-29080 \u2014 Plan, Develop, Execute, Maintain, and Archive the Asset Level Safety Assessment Plan (ALSAP).",
+    "title_from": "atom_sop_ast29080"
+  },
+  "nav": {
+    "linear": true,
+    "showProgress": true,
+    "startSceneId": "benefit_risk_on_the_form",
+    "sceneOrder": [
+      "benefit_risk_on_the_form"
+    ]
+  },
+  "paging": {
+    "policy": "v1_one_scene_at_a_time",
+    "scene_count": 1,
+    "step_count": 1,
+    "lesson_end_is_final_step": false,
+    "chrome": "suppressed",
+    "note": "Same paging policy as the default lesson. This record has one scene and no lesson-end invert_definition checks, so Next/Back is not shown. In-scene checks stay on the scene record."
+  },
+  "scenes": [
+    {
+      "id": "benefit_risk_on_the_form",
+      "title": "Benefit-risk on the form",
+      "kind": "scene",
+      "role": "form_br",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Benefit-risk on the form",
+            "kicker": "Form"
+          },
+          "meta": {
+            "scene_id": "benefit_risk_on_the_form",
+            "role": "form_br"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "SMT assessment of the overall Benefit-Risk profile of the asset.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present",
+            "composed_from": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Rationale and phrasing for the selected Benefit-Risk profile.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present",
+            "composed_from": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "conditional_favorable",
+            "kicker": "Example"
+          },
+          "meta": {
+            "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify",
+            "composed_from": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.example"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "The benefit-risk profile of ASP9999 is favorable provided the additional hepatic monitoring described in the risk management plan is in place. Across 412 participants the observed transaminase elevations were reversible and detected by scheduled monitoring in every case; the SMT judges the residual risk acceptable for the proposed indication on that condition, and will re-assess when the Phase 3 dataset matures.",
+            "kicker": "Example"
+          },
+          "meta": {
+            "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify",
+            "composed_from": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.example"
+          }
+        },
+        {
+          "type": "MCQ",
+          "props": {
+            "id": "closed_choice:atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "kicker": "Practice",
+            "stem": "Choose the closed value already shown.",
+            "choices": [
+              {
+                "id": "unfavorable",
+                "text": "unfavorable",
+                "correct": false
+              },
+              {
+                "id": "uncertain_inconclusive",
+                "text": "uncertain_inconclusive",
+                "correct": false
+              },
+              {
+                "id": "conditional_favorable",
+                "text": "conditional_favorable",
+                "correct": true
+              },
+              {
+                "id": "contextual",
+                "text": "contextual",
+                "correct": false
+              },
+              {
+                "id": "other_smt_defined",
+                "text": "other_smt_defined",
+                "correct": false
+              },
+              {
+                "id": "favorable",
+                "text": "favorable",
+                "correct": false
+              }
+            ],
+            "feedback": {
+              "correct": "Correct \u2014 that is the fill already shown.",
+              "incorrect": "Not yet. Options are the form field\u2019s closed value set; the key is the instance fill already shown."
+            }
+          },
+          "meta": {
+            "shape": "closed_choice",
+            "from": "manifest.checks",
+            "options_ref": "reg_benefit_risk_profile",
+            "key_atom_id": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+            "form_atom_id": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile"
+          }
+        }
+      ]
+    }
+  ],
+  "vars": {
+    "ccOn": false,
+    "completedScenes": []
+  },
+  "rules": []
+}
