@@ -21,11 +21,15 @@ the short lesson spine (`agents/realizer/spine_v1.md`); `realized_coverage.html`
 SOP dump. Realizer also binds compiler primitives (`agents/realizer/primitives_v1.md`) so
 the spine is heading/callout/body/job-aid/example/check, not a stack of SOP cards. Scene
 records (`agents/realizer/scenes_v1.md`) group those existing beats as **three named
-scenes** (front-matter / Procedure A / form BR) on `spine.scenes` / `ext.scene`.
-The projector **reads** that list and pages **one scene at a time** (Next/Back).
+scenes** (front-matter / Procedure A / form BR). Source of truth is the
+project catalog (`occurrences/scenes.json`); `spine.scenes` / `ext.scene`
+is the stamped runtime view. The grouping heuristic may still propose a
+default when no catalog exists. The projector **reads** that list and pages
+**one scene at a time** (Next/Back).
 A **lesson** record (`agents/realizer/lesson_v1.md`) on `manifest.lessons`
 is the stamped runtime view of the project catalog
-(`occurrences/lessons.json`). `realized_lesson.html` is a read of the
+(`occurrences/lessons.json`). Lessons point at `scene_ids` only.
+`realized_lesson.html` is a read of the
 default node (`{project}_short`, or `--lesson`). Extra catalog records
 project to a sibling HTML derived from `lesson_id` (pager disabled when
 the record is one scene). Live ALSAP: `ast_alsap_short` (pages 1–2–3),
@@ -47,9 +51,9 @@ check honesty bar, spine membership (why-this callout of purpose, front-matter, 
 as a job sequence, sequence practice of those presents, form BR-field presents, instance
 example, then checks), that check operands resolve from the graph (not hardcoded HTML),
 and the atom → primitives bind (procedure_step → `tp_step`,
-activate → `tp_callout`, job-aid HTML). Scene operands (ordered `ele_` refs)
-resolve from the graph, not hardcoded HTML. Lesson → scenes → `element_ids`
-resolve from the graph (catalog records; no extra lesson id hardcoded in
+activate → `tp_callout`, job-aid HTML). Scene catalog `element_ids`
+resolve from the graph, not hardcoded HTML. Lesson catalog `scene_ids`
+resolve from that stamp (no extra lesson id hardcoded in
 the projector). Scene 3 also projects a closed-choice
 of the BR profile fill (`options_ref` value ids; key = instance
 `selected_value`; projector-only `closed_choice` on `manifest.checks`).

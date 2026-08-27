@@ -13,6 +13,39 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-27 — Scene catalog is project data
+
+PR #32 lifted lesson records into `occurrences/lessons.json`. Scene
+membership was still a spine heuristic inside Realizer (`SCENE_DEFS`,
+three ALSAP headings). This hop **lifts scenes into a closed project
+file**. Same 16 spine occurrences. Same three scenes. Same three
+lessons. Same 55 / 47.
+
+**Where it lives.** `occurrences/scenes.json` is the source of truth
+(policy `v1_scene_catalog`). Realizer reads it and stamps
+`spine.scenes` (runtime view, policy `v1_scenes_on_graph`). Adding a
+scene is appending a record: `id`, title heuristic/ref, ordered
+`element_ids`, in-scene checks. Realize does not special-case the
+three ALSAP headings beyond reading the catalog. Lessons keep pointing
+at `scene_ids` only. Membership is the list PR #29 already stamped —
+not a rival grouping. Heuristic `v1_three_scenes_from_roles` may still
+propose a default when the file is absent (fixtures / first mint).
+Live path is read-the-file. Coverage dump stays a dump. Not a catalog
+UI.
+
+**Unchanged.** 16 spine `ele_` ids. 55 / 47. Same three scenes. Same
+three lessons. HTML should feel unchanged (short pages 1–2–3; br and
+plan single-scene). `atoms.json` untouched. No authored `content.text`.
+No Procedure B. No chameleon.py, no Headwater outcomes-mode, no
+`/cgen/alsap` hosting, no quiz engine, no LLM distractors, no new
+agent. Cartographer owns intent. Couturier owns style. Idempotent
+realize → cartographer → couturier.
+
+Hypothesis verified: a closed catalog file was enough; forking
+`realize.py` for a fourth ALSAP scene heading would have been a lie.
+
+---
+
 ## 2026-08-27 — Lesson catalog is project data; third lesson is Procedure A
 
 PR #31 proved two lesson records on one store (`ast_alsap_short`,

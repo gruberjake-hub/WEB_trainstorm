@@ -1,0 +1,68 @@
+{
+  "store": "scenes",
+  "project": "ast_alsap",
+  "policy": "v1_scene_catalog",
+  "spec": "agents/realizer/scenes_v1.md",
+  "vocab": "vocab/scene.enum.json",
+  "scenes": [
+    {
+      "id": "what_an_alsap_is",
+      "role": "front_matter",
+      "heading": "What an ALSAP is",
+      "kicker": "Front matter",
+      "element_ids": [
+        "ele_sop_ast29080",
+        "ele_sop_ast29080__present",
+        "ele_sop_ast29080_purpose__activate",
+        "ele_sop_ast29080_purpose",
+        "ele_sop_ast29080_scope",
+        "ele_sop_ast29080_general"
+      ],
+      "checks": [],
+      "from": "Document-root opening, why-this callout of purpose, and teachable front-matter primaries (purpose / scope / general). Those atoms are the SOP’s definitional front-matter."
+    },
+    {
+      "id": "how_an_alsap_starts",
+      "role": "procedure_a",
+      "heading": "How an ALSAP starts",
+      "kicker": "Procedure A",
+      "element_ids": [
+        "ele_sop_ast29080_proc_a_s1",
+        "ele_sop_ast29080_proc_a_s2",
+        "ele_sop_ast29080_proc_a_s3",
+        "ele_sop_ast29080_proc_a_s4"
+      ],
+      "checks": [
+        {
+          "shape": "sequence_order",
+          "see": "checks"
+        }
+      ],
+      "from": "First Procedures-container branch in object.order (thin heading: A. Plan Development of ALSAP.). Job-aid presents plus the in-scene sequence practice of those presents."
+    },
+    {
+      "id": "benefit_risk_on_the_form",
+      "role": "form_br",
+      "heading": "Benefit-risk on the form",
+      "kicker": "Form",
+      "element_ids": [
+        "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present",
+        "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present",
+        "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify",
+        "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify"
+      ],
+      "checks": [
+        {
+          "shape": "closed_choice",
+          "see": "checks"
+        }
+      ],
+      "from": "FORM-AST-34037 BR-field presents (Benefit-Risk profile + rationale) plus the instance examples that instantiate those fields, then an in-scene closed-choice of the profile fill (registry value ids; key = instance selected_value)."
+    }
+  ],
+  "lesson_end_check_ids": [
+    "ele_sop_ast29080_purpose__reinforce",
+    "ele_sop_ast29080_general__reinforce"
+  ],
+  "note": "Closed project catalog. Source of truth for scene records. Realizer reads this file and stamps spine.scenes (runtime view). Adding a scene is appending a record (id, title heuristic/ref, ordered element_ids, in-scene checks). Membership is the same list PR #29 already stamped on spine.scenes / ext.scene — not a rival grouping. Lessons point at scene_ids only. Not a catalog UI. Coverage dump stays a dump."
+}

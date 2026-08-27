@@ -12,9 +12,11 @@ on the spine (`agents/realizer/spine_v1.md`). In-scene checks are shape
 refs into `manifest.checks` (`agents/realizer/check_v1.md`) — not a
 parallel pedagogy.
 
-Policy ids: `v1_three_scenes_from_roles` (the grouping heuristic, unchanged)
-and `v1_scenes_on_graph` (the scene is a first-class record). Closed role
-vocab: `vocab/scene.enum.json`. Paging stays `v1_one_scene_at_a_time`.
+Policy ids: `v1_three_scenes_from_roles` (the grouping heuristic, still
+the proposal when no catalog exists), `v1_scenes_on_graph` (the scene is
+a first-class stamped record), and `v1_scene_catalog` (the closed project
+file). Closed role vocab: `vocab/scene.enum.json`. Paging stays
+`v1_one_scene_at_a_time`.
 
 ---
 
@@ -27,8 +29,10 @@ roles at project time. A later agent could not emit a paged lesson
 without special-casing `realize.py`.
 
 This hop **promotes `spine.scenes`** (already stamped for paging policy)
-to the source of truth — ordered scene objects with `element_ids` —
-analogous to `manifest.checks`. The projector **reads** that list to wrap
+to a first-class record — ordered scene objects with `element_ids` —
+analogous to `manifest.checks`. A later hop lifts that stamp into a
+**project catalog** (`occurrences/scenes.json`): Realizer **reads** the
+file and stamps the runtime view. The projector **reads** that list to wrap
 and page. It does not re-discover scenes by hard-coded atom ids.
 
 No new ALSAP beats. Same 16 spine occurrences. Same three scenes. Same
@@ -62,13 +66,23 @@ player step after Next from scene 3.
 
 Where they live:
 
-- **Manifest:** `spine.scenes` is the index (ordered scene objects +
-  `lesson_end_checks` + `paging`). Analogous to `manifest.checks`.
+- **Project catalog:** `occurrences/scenes.json` is the **source of
+  truth**. Closed file. Realizer reads it; it does not rewrite it.
+  Adding a scene is appending a record (`id`, title heuristic/ref,
+  ordered `element_ids`, in-scene checks). Realize does not special-case
+  the three ALSAP headings in Python beyond reading the catalog.
+- **Manifest:** `spine.scenes` is the **stamped runtime view** (ordered
+  scene objects + `lesson_end_checks` + `paging`). Analogous to
+  `manifest.lessons` / `manifest.checks`.
 - **Occurrence store:** `ext.scene` on member `ele_` records (`id` +
   `role`). Lesson-end invert-definition hosts are **not** scene members.
   Coverage-only occurrences have no `ext.scene`.
 - Paging (`v1_one_scene_at_a_time`) is player UX **on that list**, not a
   second membership heuristic.
+- A missing catalog (fixtures) still **proposes** the default grouping
+  from the spine heuristic (`v1_three_scenes_from_roles`). Live ALSAP
+  path is read-the-file. Membership is the list PR #29 already stamped
+  — not a rival grouping.
 
 Cartographer still owns `intent`. Couturier still owns style. Realizer
 binds the scene record the way it binds check shapes and `text_primitive`.
@@ -89,6 +103,8 @@ binds the scene record the way it binds check shapes and `text_primitive`.
   placement come from `spine.scenes`. The projector does not ask
   `if atom_id` / `if role == form_br` to decide which heading a beat
   wears, or whether sequence_order / closed_choice land in that scene.
+  A later agent adds a scene by appending a catalog row, not a Python
+  branch.
 - Coverage dump stays ungrouped and unpaged.
 
 ---
@@ -97,13 +113,14 @@ binds the scene record the way it binds check shapes and `text_primitive`.
 
 | Agent | Still owns | This hop |
 |---|---|---|
-| Realizer | `ele_` ids; HTML projection; compiler `text_primitive`; check shapes | Binds `spine.scenes` + `ext.scene` (id, role, ordered `element_ids`, in-scene check refs). Projector **reads** those records to wrap/page. |
-| Cartographer | occurrence intent | Does not pick the path. Does not wipe `ext.scene` or `ext.check`. |
+| Realizer | `ele_` ids; HTML projection; compiler `text_primitive`; check shapes | **Reads** `occurrences/scenes.json` and stamps `spine.scenes` + `ext.scene`. Heuristic still proposes a default when no catalog exists. Projector **reads** those records to wrap/page. Does not special-case the three ALSAP headings beyond reading the catalog. |
+| Cartographer | occurrence intent | Does not pick the path. Does not wipe `ext.scene` or `ext.check`. Re-stamps scenes from the catalog when present. |
 | Couturier | expression style keys | Does not mint a scene `ele_`. Does not write `layout_primitive`. Scene wrap/page is Realizer reading the stamp of dressed beats. |
 
 Re-running realize → cartographer → couturier keeps extra `ele_` ids,
-intent, style, check shapes, and the same scene records (pure function
-of spine membership + SOP/form roles).
+intent, style, check shapes, and stamps the same scene records from the
+catalog (pure function of catalog rows + spine membership). Lessons keep
+pointing at `scene_ids` only.
 
 ---
 
@@ -115,6 +132,27 @@ of spine membership + SOP/form roles).
 - Not Chameleon, not Headwater outcomes-mode, not `/cgen/alsap` hosting.
 - Not a quiz engine and not LLM distractors.
 - Not rewriting `atoms.json` or authored `content.text`.
+- Not a course catalog UI and not a rival scene list beside PR #29 membership.
+
+---
+
+## Scenes are catalog rows (not Python branches)
+
+Live ALSAP keeps the three scenes PR #29 already stamped. Source of
+truth is now the project file:
+
+Path: `cgen/astellas/projects/ast_alsap/occurrences/scenes.json`.
+Realize reads that file and stamps `spine.scenes`. Lessons keep
+pointing at `scene_ids` only (`occurrences/lessons.json`).
+
+| `id` | role | in-scene check |
+|---|---|---|
+| `what_an_alsap_is` | `front_matter` | none |
+| `how_an_alsap_starts` | `procedure_a` | `sequence_order` |
+| `benefit_risk_on_the_form` | `form_br` | `closed_choice` |
+
+Same 55 `ele_` / 47 atoms. Same headings. Same membership. Adding a
+scene is appending a JSON record, not a `realize.py` branch.
 
 ---
 
@@ -126,6 +164,7 @@ python3 tools/cartographer.py
 python3 tools/couturier.py
 ```
 
-Optional: `python3 tools/realize.py --selftest` asserts scene operands
-resolve from the graph (not hardcoded HTML). A later hop names the
+Optional: `python3 tools/realize.py --selftest` asserts scene catalog
+`element_ids` resolve from the graph (not hardcoded HTML) and lesson
+catalog `scene_ids` resolve from that stamp. A later hop named the
 **lesson** that points at this list (`agents/realizer/lesson_v1.md`).

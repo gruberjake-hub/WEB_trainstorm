@@ -171,13 +171,16 @@ clothes of one atom (activate + objective + reinforce).
 ## Scenes (first-class on the graph)
 
 Membership above is unchanged. Scene records live on `spine.scenes`
-(source of truth, analogous to `manifest.checks`) with ordered `ele_`
-refs and optional in-scene check-shape refs. Spec:
-`agents/realizer/scenes_v1.md`. Policy ids: `v1_three_scenes_from_roles`
-(the grouping heuristic) and `v1_scenes_on_graph` (the record). Closed
-role vocab: `vocab/scene.enum.json`. Not new beats. Not new atoms. Not
-a new `ele_`. Not an LLM. Not invented outcome language (“will be able
-to…”).
+(stamped runtime view, analogous to `manifest.lessons` / `manifest.checks`)
+with ordered `ele_` refs and optional in-scene check-shape refs. Spec:
+`agents/realizer/scenes_v1.md`. Source of truth is the project catalog
+(`occurrences/scenes.json`) when present; the grouping heuristic
+(`v1_three_scenes_from_roles`) still proposes a default when no catalog
+exists. Policy ids: `v1_three_scenes_from_roles` (heuristic),
+`v1_scenes_on_graph` (the stamped record), `v1_scene_catalog` (the file).
+Closed role vocab: `vocab/scene.enum.json`. Not new beats. Not new atoms.
+Not a new `ele_`. Not an LLM. Not invented outcome language (“will be able
+to…”). Lessons point at `scene_ids` only.
 
 The projector **reads the selected lesson node** (`manifest.lessons`,
 spec `agents/realizer/lesson_v1.md`), then those `spine.scenes` records,
@@ -243,7 +246,7 @@ Occurrence manifest `spine`:
   "element_ids": ["ele_sop_ast29080", "ele_sop_ast29080__present", "ele_sop_ast29080_purpose__activate", "…"],
   "count": 16,
   "store_count": 55,
-  "note": "Selection of existing ele_ records. Coverage dump keeps the rest. Sequence practice of Procedure A is projector-only (spine.sequence_check). Form BR presents then instance examples then a projector-only closed-choice of the profile fill (spine.br_profile_check). Scene records (spine.scenes) are first-class ordered groupings of those same ids. Player chrome (spine.scenes.paging) shows one named scene at a time; lesson-end checks are a final step, not a fourth scene."
+  "note": "Selection of existing ele_ records. Coverage dump keeps the rest. Sequence practice of Procedure A is projector-only (spine.sequence_check). Form BR presents then instance examples then a projector-only closed-choice of the profile fill (spine.br_profile_check). Scene records (spine.scenes) are the stamped runtime view of the project catalog (occurrences/scenes.json) when present. Player chrome (spine.scenes.paging) shows one named scene at a time; lesson-end checks are a final step, not a fourth scene."
 }
 ```
 
