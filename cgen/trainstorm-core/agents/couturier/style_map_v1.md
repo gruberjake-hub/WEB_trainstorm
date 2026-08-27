@@ -128,10 +128,10 @@ Optional: `python3 tools/couturier.py --selftest` · `--project` like the others
 
 The short lesson path is Realizer projection (`agents/realizer/spine_v1.md`).
 Couturier still dresses every occurrence from `move`, including coverage
-cards this hop does not put on the default page. **Scene chrome** (three
-named section headings grouping those dressed beats) and **player chrome**
-(one named scene at a time, Next/Back) are Realizer projector grouping
-from SOP/form roles — Couturier does not pick the path, does not write
-`layout_primitive`, and does not mint a scene `ele_`. Sequence practice and
-the BR closed-choice are also Realizer projector clothes of existing
-dressed beats (no extra `ele_` for Couturier to restyle).
+cards this hop does not put on the default page. **Scene records**
+(`agents/realizer/scenes_v1.md`: three named sections grouping those
+dressed beats) and **player chrome** (one named scene at a time, Next/Back)
+are Realizer reading `spine.scenes` — Couturier does not pick the path,
+does not write `layout_primitive`, and does not mint a scene `ele_`.
+Sequence practice and the BR closed-choice are also Realizer projector
+clothes of existing dressed beats (no extra `ele_` for Couturier to restyle).

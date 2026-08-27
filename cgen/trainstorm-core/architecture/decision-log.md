@@ -13,6 +13,38 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-27 — Scene membership and order first-class on the graph
+
+After PR #28 the three check kinds lived on `ext.check` /
+`manifest.checks`. Scenes and one-at-a-time paging were still projector
+chrome: three named ALSAP headings plus a pager, membership recomputed
+from SOP/form roles at project time. This hop **names them on the
+graph**. Same 16 spine occurrences. Same three scenes. Same paging UX.
+
+**Where they live.** `spine.scenes` is the source of truth — ordered
+scene objects with `element_ids` — analogous to `manifest.checks`.
+Closed roles `vocab/scene.enum.json`: `front_matter` / `procedure_a` /
+`form_br`. Member occurrences carry `ext.scene`. In-scene checks are
+shape refs into `manifest.checks` (`sequence_order` in scene 2,
+`closed_choice` in scene 3). Invert-definition extras stay lesson-end,
+not a fourth scene. Projector reads the stamp to wrap/page. It does
+not re-discover scenes by if-atom-id. Headings stay the documented
+title heuristic, not outcome language.
+
+**Unchanged.** 16 spine `ele_` ids. 55 / 47. Same paging
+(`v1_one_scene_at_a_time`). Same three scenes. `atoms.json` untouched.
+No authored `content.text`. No Procedure B. No chameleon.py, no
+Headwater outcomes-mode, no `/cgen/alsap` hosting, no quiz engine, no
+LLM distractors, no new agent. Cartographer owns intent. Couturier
+owns style. Idempotent realize → cartographer → couturier. Sequence
+check in scene 2; BR closed-choice in scene 3; invert_definition at
+end.
+
+Hypothesis verified: `spine.scenes` was enough; no parallel scene
+meaning store.
+
+---
+
 ## 2026-08-27 — Check shapes first-class on the graph
 
 After PR #27 the short ALSAP lesson already had three honest check

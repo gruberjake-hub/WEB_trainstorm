@@ -1315,6 +1315,70 @@ Paging and projector-only closed-choice placement from the 2026-08-26
 blocks stand. Working-process block untouched. Single-writer per facet
 stands. Chameleon agent still not stood up.
 
+---
 
+## 2026-08-27 — Scene membership and order are first-class on the graph
 
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Scene membership and order are now **first-class records**
+on the occurrence store / manifest, so a later agent can emit a paged
+lesson without special-casing `realize.py`. No new ALSAP beats. No
+Procedure B. Spine stays **16** of **55**. Same three scenes. Same
+paging (`v1_one_scene_at_a_time`). `atoms.json` unchanged. No authored
+`content.text`. No new agent.
+
+**Where they live.** `spine.scenes` is the source of truth (ordered scene
+objects with `element_ids`), analogous to `manifest.checks`. Closed role
+vocab `vocab/scene.enum.json`: `front_matter` / `procedure_a` / `form_br`.
+Spec: `agents/realizer/scenes_v1.md`. Policy `v1_scenes_on_graph`
+(heuristic `v1_three_scenes_from_roles` unchanged). Member occurrences
+carry `ext.scene` (`id` + `role`). In-scene checks are `{shape, see:
+checks}` refs into `manifest.checks` — not a parallel pedagogy.
+Lesson-end invert-definition extras stay `spine.scenes.lesson_end_checks`,
+not a fourth scene.
+
+Title heuristic (closed, not an LLM, not outcome language):
+
+1. **What an ALSAP is** — `front_matter`
+2. **How an ALSAP starts** — `procedure_a` (sequence_order in-scene)
+3. **Benefit-risk on the form** — `form_br` (closed_choice in-scene)
+
+Projector **reads** that list to wrap and page. It does not re-discover
+scenes by hard-coded atom ids. Player chrome is unchanged: one named
+scene at a time; Next from scene 3 still opens lesson-end definition
+checks.
+
+Cartographer still owns intent. Couturier still owns style. Realizer
+binds the scene record the way it binds check shapes. Closed pedagogical
+vocab still has no `retrieve`. No chameleon.py. No Headwater
+outcomes-mode. No `/cgen/alsap` hosting.
+
+Idempotent with realize → cartographer → couturier.
+
+**Why:** After PR #28 the three check kinds lived on the graph, but
+scenes and paging were still projector chrome (three named ALSAP
+headings + pager). An ID would name membership on the graph so the next
+hop can emit the same paged lesson from ordered `ele_` refs.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. `--selftest` on
+  all three (includes: scene operands resolve from the graph, not
+  hardcoded HTML).
+- Open `realized_lesson.html` — What an ALSAP is → How an ALSAP starts
+  → Benefit-risk on the form → lesson-end definition checks. Sequence
+  check in scene 2; BR closed-choice in scene 3; invert_definition at
+  end. Open `realized_coverage.html` — full dump, no scene wrap.
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`;
+  check-shape selftests still green.
+
+**Supersedes:** the previous scene / paging blocks’ “layout chrome /
+player chrome” as to *storage* — the three headings, the membership,
+and the paging UX stand; the records now live on `spine.scenes` /
+`ext.scene`. Check-shape storage from the previous 2026-08-27 block
+stands. Working-process block untouched. Single-writer per facet
+stands. Chameleon agent still not stood up.
 

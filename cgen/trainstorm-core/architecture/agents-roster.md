@@ -94,7 +94,9 @@ have opinions about content; she has opinions about form, and they are all in th
   step / check instead of SOP cards. As of 2026-08-27 she also stamps closed
   check shapes (`invert_definition` / `sequence_order` / `closed_choice`) on
   `ext.check` / `manifest.checks` (`agents/realizer/check_v1.md`); the projector
-  reads those records. Couturier v1
+  reads those records. As of 2026-08-27 she also stamps scene records
+  (`spine.scenes` / `ext.scene`, `agents/realizer/scenes_v1.md`) so wrap and
+  page read ordered `ele_` refs, not hard-coded atom ids. Couturier v1
   (`tools/couturier.py`) then dresses those occurrences (expression style keys) and mints
   nothing.
 

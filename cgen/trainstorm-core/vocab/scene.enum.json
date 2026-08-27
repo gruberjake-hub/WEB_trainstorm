@@ -1,0 +1,61 @@
+{
+  "vocabulary_version": "scene.v1",
+  "status": "draft_for_build",
+  "owner": "realizer",
+  "description": "Closed vocabulary of first-class SCENE records. A scene is an ordered grouping of existing ele_ / occurrence refs plus optional in-scene check-shape refs — not a second meaning store, not an LLM path, and not invented outcome language. Realizer stamps the record on spine.scenes (source of truth, analogous to manifest.checks) and membership on ext.scene. The HTML projector READS those records to wrap and page; it does not re-discover scenes by if-atom-id.",
+  "governance": {
+    "closed_list": true,
+    "rule": "A scene record may only use roles defined here. New roles require a version bump and an entry. Headings are the documented title heuristic for that role, not “will be able to…” copy. Membership is ordered element_ids (refs), not copied atom text. In-scene checks are shape refs into manifest.checks, not a parallel pedagogy. Lesson-end definition checks are not a fourth scene.",
+    "field": "ext.scene.role and spine.scenes.scenes[].role"
+  },
+  "roles": [
+    {
+      "id": "front_matter",
+      "label": "Front matter",
+      "title_heuristic": "What an ALSAP is",
+      "kicker": "Front matter",
+      "definition": "Document-root opening, why-this callout of purpose, and teachable front-matter primaries (purpose / scope / general). Those atoms are the SOP’s definitional front-matter.",
+      "operands": {
+        "element_ids": "ordered ele_ refs already on the spine for this cluster"
+      }
+    },
+    {
+      "id": "procedure_a",
+      "label": "Procedure A",
+      "title_heuristic": "How an ALSAP starts",
+      "kicker": "Procedure A",
+      "definition": "First Procedures-container branch in object.order (thin heading: A. Plan Development of ALSAP.). Job-aid presents. The projector-only sequence_order check of those presents stays in-scene (a check-shape ref, not a new ele_).",
+      "operands": {
+        "element_ids": "ordered present ele_ refs of the Procedure A steps",
+        "checks": "shape refs into manifest.checks (sequence_order)"
+      }
+    },
+    {
+      "id": "form_br",
+      "label": "Form",
+      "title_heuristic": "Benefit-risk on the form",
+      "kicker": "Form",
+      "definition": "FORM-AST-34037 BR-field presents plus the instance examples that instantiate those fields. The projector-only closed_choice of the profile fill stays in-scene (a check-shape ref, not a new ele_).",
+      "operands": {
+        "element_ids": "ordered form-present then instance-exemplify ele_ refs",
+        "checks": "shape refs into manifest.checks (closed_choice)"
+      }
+    }
+  ],
+  "record": {
+    "id": "stable scene id (lesson-specific; not a closed enum)",
+    "role": "one of roles[].id",
+    "heading": "title heuristic for that role — stamped, then read by the projector",
+    "kicker": "short role label",
+    "element_ids": "ordered ele_ refs; must resolve on the occurrence store",
+    "checks": "optional list of {shape, see: checks} pointing at manifest.checks — in-scene projector-only checks",
+    "from": "documented heuristic provenance, not outcome language"
+  },
+  "not_a_scene": {
+    "lesson_end_checks": "Definition/purpose invert_definition extras stay at spine.scenes.lesson_end_checks. They are a final player step after the last named scene, not a fourth role."
+  },
+  "paging": {
+    "policy": "v1_one_scene_at_a_time",
+    "definition": "Player UX on the first-class scene list: one named scene at a time, Next/Back. Not a second membership heuristic."
+  }
+}
