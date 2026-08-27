@@ -91,7 +91,8 @@
               "atom_sop_ast29080_proc_a_s3",
               "atom_sop_ast29080_proc_a_s4"
             ],
-            "text_primitive": "tp_step"
+            "text_primitive": "tp_step",
+            "style_ref": "brand.instructional"
           }
         },
         {

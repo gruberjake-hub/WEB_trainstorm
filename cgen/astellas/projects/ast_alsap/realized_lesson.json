@@ -193,7 +193,8 @@
               "atom_sop_ast29080_proc_a_s3",
               "atom_sop_ast29080_proc_a_s4"
             ],
-            "text_primitive": "tp_step"
+            "text_primitive": "tp_step",
+            "style_ref": "brand.instructional"
           }
         },
         {
@@ -404,7 +405,9 @@
             "element_id": "ele_sop_ast29080_purpose__reinforce",
             "composed_from": "atom_sop_ast29080_purpose",
             "shape": "invert_definition",
-            "from": "manifest.checks"
+            "from": "manifest.checks",
+            "text_primitive": "tp_recall",
+            "style_ref": "brand.recall"
           }
         },
         {
@@ -439,7 +442,9 @@
             "element_id": "ele_sop_ast29080_general__reinforce",
             "composed_from": "atom_sop_ast29080_general",
             "shape": "invert_definition",
-            "from": "manifest.checks"
+            "from": "manifest.checks",
+            "text_primitive": "tp_recall",
+            "style_ref": "brand.recall"
           }
         }
       ]

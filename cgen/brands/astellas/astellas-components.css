@@ -187,3 +187,11 @@ button:active, .btn:active {
   background: var(--color-accent);
   margin: var(--space-3) 0 var(--space-5) 0;
 }
+
+/* Couturier pedagogical roles (.style-opening, .style-instructional,
+   .style-recall, .style-purpose, .style-prior, .style-example, .style-job)
+   are stamped by the engine from meta.style_ref — same closed map as
+   realize.py CLOTHES_CLASS. Their look lives in engine/styles.css and
+   uses these pack tokens (accent, surface, heading font, spacing).
+   Do not fuse client identity into Couturier keys. Chrome stays calm:
+   Arial, mostly neutral, red for emphasis. */

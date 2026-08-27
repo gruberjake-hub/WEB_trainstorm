@@ -51,10 +51,117 @@ p{ margin:0 0 12px; color:var(--text); }
 .stepList{ margin:16px 0; }
 .stepList .steps{ margin:8px 0 0; padding-left:22px; }
 .stepList .steps li{ margin:6px 0; }
-.sequenceOrder, section[aria-label="Knowledge check"]{ margin:16px 0; }
-.sequenceOrder .stem, section[aria-label="Knowledge check"] .stem{
+.sequenceOrder, section[aria-label="Knowledge check"]{
+  margin: var(--space-6, 1.5rem) 0;
+  padding: var(--space-5, 1.25rem);
+  border: 2px solid var(--color-border-strong, var(--color-border, rgba(0,0,0,.18)));
+  background: var(--color-surface, var(--panel));
+  border-radius: var(--radius-lg, 14px);
+}
+.sequenceOrder .stem, section[aria-label="Knowledge check"] .stem,
+section[aria-label="Knowledge check"] > p:not(.kicker):not(.feedback){
   font-weight:650; margin:4px 0 12px;
 }
+
+/* Couturier roles (closed map in styleRef.js === realize.py CLOTHES_CLASS).
+   Look uses loaded pack tokens, not a second palette. Missing/unmapped: no class. */
+.style-opening{
+  text-align: center;
+  padding: var(--space-8, 2rem) var(--space-6, 1.5rem) var(--space-6, 1.5rem);
+  margin: 0 0 var(--space-6, 1.5rem);
+  background: transparent;
+  border: 0;
+}
+.style-opening .kicker{ color: var(--color-accent, var(--brand)); opacity: 1; }
+.style-opening h1, .style-opening h2, .style-opening h3{
+  font-family: var(--font-heading, inherit);
+  font-size: var(--text-2xl, 1.75rem);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: var(--line-height-heading, 1.2);
+  letter-spacing: -0.02em;
+  margin: var(--space-1, 0.25rem) 0 var(--space-4, 1rem);
+}
+.style-opening::after{
+  content: "";
+  display: block;
+  width: 72px;
+  height: 4px;
+  margin: var(--space-3, 0.75rem) auto 0;
+  border-radius: 999px;
+  background: var(--color-accent, var(--brand));
+}
+.style-instructional{
+  background: var(--color-panel, var(--panel));
+  border: 1px solid var(--color-border, rgba(0,0,0,.12));
+  border-left: 4px solid var(--color-border-strong, var(--color-border, rgba(0,0,0,.22)));
+  border-radius: var(--radius-md, 10px);
+  padding: var(--space-4, 1rem) var(--space-5, 1.25rem);
+  margin: 0 0 var(--space-4, 1rem);
+}
+.style-instructional .kicker{ margin-bottom: var(--space-2, 0.5rem); }
+.style-instructional p, .style-instructional li{
+  font-size: var(--text-md, 1rem);
+  line-height: var(--line-height-body, 1.55);
+}
+.stepList.style-instructional{
+  border-left-width: 6px;
+  padding: var(--space-5, 1.25rem) var(--space-5, 1.25rem) var(--space-4, 1rem);
+}
+.style-recall{
+  background: var(--color-surface, var(--panel));
+  border: 2px solid var(--color-border-strong, var(--color-text, var(--text)));
+  border-radius: var(--radius-lg, 14px);
+  padding: var(--space-5, 1.25rem) var(--space-5, 1.25rem) var(--space-4, 1rem);
+  margin: var(--space-6, 1.5rem) 0;
+}
+.style-recall .kicker{
+  color: var(--color-text, var(--text));
+  opacity: 1;
+}
+.style-recall > p:not(.kicker):not(.feedback),
+.style-recall .stem{
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: var(--font-weight-semibold, 600);
+}
+.style-purpose{
+  background: color-mix(in srgb, var(--color-accent, var(--brand)) 6%, var(--color-panel, var(--panel)));
+  border: 1px solid var(--color-border, rgba(0,0,0,.12));
+  border-left: 6px solid var(--color-accent, var(--brand));
+  border-radius: var(--radius-md, 10px);
+  padding: var(--space-4, 1rem) var(--space-5, 1.25rem);
+  margin: 0 0 var(--space-4, 1rem);
+}
+.style-purpose .kicker{ color: var(--color-accent, var(--brand)); opacity: 1; }
+.style-purpose p{ font-weight: var(--font-weight-semibold, 600); }
+.style-prior{
+  background: var(--color-surface, var(--panel));
+  border: 1px solid var(--color-border, rgba(0,0,0,.12));
+  border-left: 4px solid var(--color-text-muted, var(--muted));
+  border-radius: var(--radius-md, 10px);
+  padding: var(--space-4, 1rem) var(--space-5, 1.25rem);
+  margin: 0 0 var(--space-4, 1rem);
+  font-size: var(--text-sm, 0.875rem);
+}
+.style-prior .kicker{ color: var(--color-text-muted, var(--muted)); opacity: 1; }
+.style-example{
+  background: var(--color-panel, var(--panel));
+  border: 1px solid var(--color-border, rgba(0,0,0,.12));
+  border-left: 3px solid var(--color-border-strong, var(--color-border, rgba(0,0,0,.22)));
+  border-radius: var(--radius-sm, 6px);
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  margin: 0 0 var(--space-4, 1rem) var(--space-4, 1rem);
+  font-size: var(--text-sm, 0.875rem);
+}
+.style-example .kicker{ opacity: 1; }
+.style-job{
+  background: var(--color-surface, var(--panel));
+  border: 1px solid var(--color-border, rgba(0,0,0,.12));
+  border-left: 6px solid var(--color-text, var(--text));
+  border-radius: var(--radius-md, 10px);
+  padding: var(--space-5, 1.25rem);
+  margin: var(--space-5, 1.25rem) 0;
+}
+.style-job .kicker{ color: var(--color-text, var(--text)); opacity: 1; }
 .sequence-items{ list-style:none; margin:0 0 12px; padding:0; }
 .sequence-items li{
   display:flex; gap:12px; align-items:flex-start; margin:8px 0;
