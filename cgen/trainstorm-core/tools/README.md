@@ -35,6 +35,14 @@ project to a sibling HTML derived from `lesson_id` (pager disabled when
 the record is one scene). Live ALSAP: `ast_alsap_short` (pages 1–2–3),
 `ast_alsap_br` (scene 3), `ast_alsap_plan` (scene 2). Adding a lesson is
 appending a catalog row; Realize does not special-case those ids.
+The Course Engine at `/cgen` cannot consume occurrence files as-is.
+Realize also writes a **JSON projection** of the same lesson node
+(`realized_lesson.json`, sibling of the HTML). `/cgen` loads that file
+through the existing engine (Heading / Body / StepList / SequenceOrder /
+MCQ). Meaning is still from atoms. This is not a hand-authored SCORM
+package and not `cgen/schema/course.schema.json` as a rival constitution.
+Sidecar HTML stays a projector. `/cgen/lumina` and the tabled
+`/cgen/alsap` rewrite are untouched.
 Definition/purpose checks stay a final step after scene 3 on the short
 lesson, not a fourth scene, and are **not** forced onto subset lessons.
 Coverage dump stays a second projection, not a lesson node.

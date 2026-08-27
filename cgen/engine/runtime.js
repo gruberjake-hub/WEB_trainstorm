@@ -10,8 +10,11 @@ import { Heading } from "./components/Heading.js";
 import { Body } from "./components/Body.js";
 import { RevealCards } from "./components/RevealCards.js";
 import { MCQ } from "./components/MCQ.js";
+import { StepList } from "./components/StepList.js";
+import { SequenceOrder } from "./components/SequenceOrder.js";
+import { Cloze } from "./components/Cloze.js";
 
-const COMPONENTS = { Heading, Body, RevealCards, MCQ };
+const COMPONENTS = { Heading, Body, RevealCards, MCQ, StepList, SequenceOrder, Cloze };
 
 export class Runtime {
   constructor(opts) {
@@ -96,9 +99,12 @@ export class Runtime {
 
     this.dispatch({ type: "COURSE_INIT" });
 
-    const startId =
+    const wanted =
       this.store.state.runtime?.sceneId ||
       this.course.nav?.startSceneId;
+    const startId = this.course.scenes.some(s => s.id === wanted)
+      ? wanted
+      : (this.course.nav?.startSceneId || this.course.scenes[0]?.id);
 
     this.gotoScene(startId);
   }
@@ -157,6 +163,10 @@ export class Runtime {
 
     this.store.set("runtime.sceneId", sceneId);
     this.store.set("runtime.sceneTitle", scene.title || "");
+    const completed = this.store.get("vars.completedScenes") || [];
+    if (!completed.includes(sceneId)) {
+      this.store.set("vars.completedScenes", [...completed, sceneId]);
+    }
     this.store.save();
 
     this.mount.innerHTML = "";

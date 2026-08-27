@@ -125,7 +125,7 @@ stamp and only recomputes the default.
 
 | Agent | Still owns | This hop |
 |---|---|---|
-| Realizer | `ele_` ids; HTML projection; compiler `text_primitive`; check shapes; **reads** `occurrences/scenes.json` and stamps `spine.scenes` | **Reads** `occurrences/lessons.json` and stamps `manifest.lessons`. Projector **reads** that node to wrap/page. Does not special-case extra lesson ids. |
+| Realizer | `ele_` ids; HTML projection; compiler `text_primitive`; check shapes; **reads** `occurrences/scenes.json` and stamps `spine.scenes` | **Reads** `occurrences/lessons.json` and stamps `manifest.lessons`. Projector **reads** that node to wrap/page. Also writes a Course Engine JSON projection (`realized_lesson.json`) of the same node for `/cgen`. Does not special-case extra lesson ids. |
 | Cartographer | occurrence intent | Does not pick the path. Does not wipe `manifest.lessons`, `ext.scene`, or `ext.check`. |
 | Couturier | expression style keys | Does not mint a lesson `ele_`. Does not write `layout_primitive`. Lesson wrap/page is Realizer reading the stamp of existing scenes. |
 
@@ -148,7 +148,9 @@ every catalog lesson. `--lesson <id>` regenerates that file.
 - Not a LMS, not SCORM, not a course catalog UI.
 - Not Chameleon, not Headwater outcomes-mode, not `/cgen/alsap` hosting.
 - Not rewriting `atoms.json` or authored `content.text`.
-- Not a rival `course.schema.json`.
+- Not a rival `course.schema.json`. `/cgen` reads a **projection** of this
+  lesson node (`realized_lesson.json`), rebuilt by Realize — not a
+  hand-authored SCORM package and not a third constitution.
 - Not a course catalog UI and not a third lesson minted from the coverage dump.
 
 ---
@@ -186,7 +188,10 @@ python3 tools/realize.py --lesson ast_alsap_plan
 
 Default project: `cgen/astellas/projects/ast_alsap`. Default pass emits
 all catalog lessons. Default lesson `ast_alsap_short` →
-`realized_lesson.html`. `--lesson <id>` regenerates that file (path
+`realized_lesson.html` plus `realized_lesson.json`. `/cgen` loads that
+JSON through Course Engine v1. `--lesson <id>` regenerates that file (path
 derived from `lesson_id`; the projector is not forked). `--selftest`
 asserts catalog records resolve `scene_ids` from the graph and that
-extra lesson ids are not hardcoded in the projector.
+extra lesson ids are not hardcoded in the projector. The engine
+projection selftest asserts three named scenes, in-scene
+`sequence_order` + `closed_choice`, and lesson-end `invert_definition`.

@@ -1643,3 +1643,59 @@ the three existing scenes, headings, paging policy, and lesson records
 stand. Working-process block untouched. Single-writer per facet stands.
 Chameleon agent still not stood up.
 
+---
+
+## 2026-08-27 — Course Engine v1 at `/cgen` plays the ALSAP lesson node
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** `/cgen` (Course Engine v1) plays the default occurrence
+lesson `ast_alsap_short`. The engine cannot consume
+`lessons.json` / `scenes.json` / `elements.json` as-is (it expects
+linear scenes of Heading / Body / MCQ). The **minimum adapter** is a
+JSON **projection of that lesson node**, rebuilt by `realize.py` as
+`realized_lesson.json` (sibling of the HTML sidecar). `/cgen` loads
+that file through the existing player chrome. Meaning is still from
+atoms via `composed_from`. No authored `content.text` on elements.
+Sidecar HTML stays a projector. This is **not** a hand-authored SCORM
+package and **not** `cgen/schema/course.schema.json` as a rival
+constitution. `/cgen/lumina` is untouched. The tabled `/cgen/alsap`
+Netlify rewrite is untouched (not revived). No catalog UI. No
+chameleon. No Headwater outcomes-mode. No Procedure B. No new CSP
+stacking (PR #6: one site-wide CSP).
+
+**Where it lives.** Same graph walk as the HTML projector: lesson →
+`scene_ids` → `element_ids` → atoms; in-scene `sequence_order` and
+`closed_choice` plus lesson-end `invert_definition` from
+`manifest.checks`. Engine pager steps are the three named scenes plus
+lesson-end as a final step (not a fourth named scene on the graph).
+Sequence practice needed a `SequenceOrder` component (MCQ would have
+been a lie). Job-aid presents are `StepList`. Invert-definition and
+closed-choice use existing `MCQ`. `/cgen/src/main.js` fetches
+`./astellas/projects/ast_alsap/realized_lesson.json` by default.
+
+Idempotent with realize → cartographer → couturier: sidecars **and**
+the JSON `/cgen` reads. `atoms.json` unchanged.
+
+**Why:** Jake was living only in sidecar `realized_lesson.html`. The
+Course Engine at `/cgen` already existed (`index.html` + `engine/`)
+but `src/main.js` was missing, and `courses/demo/course.json` is a
+parallel authored ALSAP, not this graph.
+
+**Consequences:**
+- After merge Jake opens **https://trainstorm.ai/cgen** (or `/cgen/`).
+  That plays `ast_alsap_short`: three scenes, pager, in-scene sequence
+  + closed-choice, lesson-end invert_definition.
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default pass still emits HTML sidecars **and** `realized_lesson.json`
+  (plus br/plan JSON siblings). `--selftest` covers the projection.
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`.
+- `/cgen/lumina` untouched. `netlify.toml` `/cgen/alsap` rewrite
+  untouched (still tabled). `_headers` untouched.
+
+**Supersedes:** nothing about the lesson/scene catalogs, paging, or
+check shapes. Working-process block untouched. Single-writer per facet
+stands. Chameleon agent still not stood up.
+

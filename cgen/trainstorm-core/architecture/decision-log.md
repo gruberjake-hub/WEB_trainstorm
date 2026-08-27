@@ -13,6 +13,41 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-27 — `/cgen` plays the ALSAP lesson node (engine projection)
+
+The Course Engine at `/cgen` (`index.html` + `engine/`) did not load a
+course: `src/main.js` was missing, and `courses/demo/course.json` is a
+parallel authored ALSAP, not the occurrence graph. This hop **points
+that existing player at the lesson record**. Same 16 spine
+occurrences. Same three scenes. Same three lessons. Same 55 / 47.
+
+**What `/cgen` reads.** The engine cannot honestly consume occurrence
+files as-is (Heading / Body / RevealCards / MCQ; linear `scenes[]`).
+The minimum adapter is a JSON **projection of the lesson node**,
+rebuilt by `realize.py` (`realized_lesson.json`, sibling of the HTML
+sidecar). Documented as a projection of the graph, not a hand-authored
+SCORM package, not `course.schema.json` as a third constitution.
+`/cgen/src/main.js` fetches that file. Sequence practice is a new
+`SequenceOrder` component (mapping it to MCQ would be a lie). Job-aid
+presents are `StepList`. Invert-definition and closed-choice stay MCQ.
+Lesson-end invert_definition is a final pager step, not a fourth named
+scene on the graph. Meaning still from atoms via `composed_from`. No
+authored `content.text`.
+
+**Unchanged.** `/cgen/lumina`. Tabled `/cgen/alsap` rewrite
+(`netlify.toml` not revived). One site-wide CSP. Sidecar HTML still
+emitted. `atoms.json` untouched. No catalog UI, chameleon, Headwater
+outcomes-mode, Procedure B, quiz engine, LLM distractors, new agent.
+Cartographer owns intent. Couturier owns style. Idempotent realize →
+cartographer → couturier emits sidecars **and** the JSON `/cgen` reads.
+
+Hypothesis verified: `cgen/` had a course JSON shape (the engine
+runtime, not `course.schema.json`). Mapping `manifest.lessons` into
+that shape via Realize was enough; loading `elements.json` in the
+browser would have duplicated the honesty bar.
+
+---
+
 ## 2026-08-27 — Scene catalog is project data
 
 PR #32 lifted lesson records into `occurrences/lessons.json`. Scene
