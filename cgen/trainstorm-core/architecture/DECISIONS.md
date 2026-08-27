@@ -1577,3 +1577,69 @@ view; the two existing records, three scenes, and paging policy stand.
 Working-process block untouched. Single-writer per facet stands.
 Chameleon agent still not stood up.
 
+---
+
+## 2026-08-27 — Scene records are a closed project catalog, not ALSAP headings in `realize.py`
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Scene membership is **project data**. Source of truth is
+`occurrences/scenes.json` (closed catalog). Realizer **reads** that
+file and stamps the runtime view onto `spine.scenes`. Adding a scene
+is appending a catalog record (`id`, title heuristic/ref, ordered
+`element_ids`, in-scene checks). Realize does not special-case the
+three ALSAP scene headings in Python beyond reading the catalog. Lessons
+keep pointing at `scene_ids` only. No new ALSAP beats. No Procedure B.
+Spine stays **16** of **55**. Same 47 atoms. Same three scenes. Same
+three lessons. No authored `content.text`. No `Scene` `ele_`. Not a
+catalog UI. Coverage dump stays a dump.
+
+**Where it lives.** Spec still `agents/realizer/scenes_v1.md`. Catalog
+policy `v1_scene_catalog`. Stamped block keeps `v1_scenes_on_graph`.
+Grouping heuristic `v1_three_scenes_from_roles` may still **propose** a
+default catalog when the file is absent (fixtures / first mint). Live
+path is read-the-file. Membership is the list PR #29 already stamped on
+`spine.scenes` / `ext.scene` — not a rival grouping. Headings stay the
+documented title heuristic, not outcome language. In-scene checks stay
+shape refs (`sequence_order` on Procedure A; `closed_choice` on form
+BR). Lesson-end invert-definition extras stay `lesson_end_check_ids`,
+not a fourth scene.
+
+Default realize → cartographer → couturier emits all catalog lessons.
+HTML should feel unchanged: short pages 1–2–3; br and plan single-scene.
+
+Cartographer still owns intent. Couturier still owns style. Closed
+pedagogical vocab still has no `retrieve`. No chameleon.py. No
+Headwater outcomes-mode. No `/cgen/alsap` hosting. No Procedure B.
+
+Idempotent with realize → cartographer → couturier.
+
+**Why:** PR #32 lifted lessons into a closed catalog, but scenes were
+still a spine heuristic inside Realizer (`SCENE_DEFS` / three ALSAP
+headings). An ID would make adding a scene an append to JSON, the same
+write path as adding a lesson.
+
+**Consequences:**
+- From `cgen/trainstorm-core`: `python3 tools/realize.py` then
+  `python3 tools/cartographer.py` then `python3 tools/couturier.py`.
+  Default project `cgen/astellas/projects/ast_alsap`. Default pass
+  emits `realized_lesson.html` (short, pages 1–2–3),
+  `realized_lesson_br.html` (scene 3), `realized_lesson_plan.html`
+  (scene 2). `--selftest` on all three (scene catalog `element_ids`
+  resolve from the graph; lesson catalog `scene_ids` resolve; no ALSAP
+  headings hardcoded on the catalog stamp path).
+- Open `realized_lesson.html` — still the short path. Open
+  `realized_lesson_br.html` — BR scene only. Open
+  `realized_lesson_plan.html` — Procedure A only. Open
+  `realized_coverage.html` — full dump, not a fourth lesson.
+- Gates stay green: `validate_atoms` on ast_alsap / alsap /
+  alsap_asp9999; existing selftests; elements vs `element.schema.json`;
+  check-shape, scenes, and lesson selftests still green.
+
+**Supersedes:** the previous scenes-on-graph block’s “`spine.scenes` is
+the source of truth” as to *where membership is authored* — it now
+lives in the catalog; `spine.scenes` remains the stamped runtime view;
+the three existing scenes, headings, paging policy, and lesson records
+stand. Working-process block untouched. Single-writer per facet stands.
+Chameleon agent still not stood up.
+

@@ -13,7 +13,9 @@ on `spine.scenes`, plus `lesson_end_checks` (existing `ele_` refs). In-scene
 checks stay shape refs into `manifest.checks`.
 
 Policy id: `v1_lesson_on_graph`. Paging stays `v1_one_scene_at_a_time`
-on `spine.scenes.paging`. Scene heuristic stays `v1_three_scenes_from_roles`.
+on `spine.scenes.paging`. Scene records come from the project catalog
+(`occurrences/scenes.json`) when present; heuristic stays
+`v1_three_scenes_from_roles` as the proposal when no catalog exists.
 
 ---
 
@@ -123,7 +125,7 @@ stamp and only recomputes the default.
 
 | Agent | Still owns | This hop |
 |---|---|---|
-| Realizer | `ele_` ids; HTML projection; compiler `text_primitive`; check shapes; `spine.scenes` | **Reads** `occurrences/lessons.json` and stamps `manifest.lessons`. Projector **reads** that node to wrap/page. Does not special-case extra lesson ids. |
+| Realizer | `ele_` ids; HTML projection; compiler `text_primitive`; check shapes; **reads** `occurrences/scenes.json` and stamps `spine.scenes` | **Reads** `occurrences/lessons.json` and stamps `manifest.lessons`. Projector **reads** that node to wrap/page. Does not special-case extra lesson ids. |
 | Cartographer | occurrence intent | Does not pick the path. Does not wipe `manifest.lessons`, `ext.scene`, or `ext.check`. |
 | Couturier | expression style keys | Does not mint a lesson `ele_`. Does not write `layout_primitive`. Lesson wrap/page is Realizer reading the stamp of existing scenes. |
 

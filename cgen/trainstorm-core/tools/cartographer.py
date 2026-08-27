@@ -615,11 +615,13 @@ def main():
                  "After writing move, Realizer refreshes text_primitive (compiler form). "
                  "Lesson spine is Realizer projection (agents/realizer/spine_v1.md); "
                  "this tool does not own sequence. Does not wipe ext.check, ext.scene, "
-                 "or manifest.lessons. Re-stamps lesson records from the project "
-                 "catalog (occurrences/lessons.json) when present."),
+                 "or manifest.lessons. Re-stamps scene records from the project "
+                 "catalog (occurrences/scenes.json) when present. Re-stamps lesson "
+                 "records from the project catalog (occurrences/lessons.json) when present."),
     }
 
     lesson_catalog = realize.load_lesson_catalog(store_dir)
+    scene_catalog = realize.load_scene_catalog(store_dir)
     if lesson_catalog:
         realize.stamp_lessons(occ_manifest, atoms, elements, lesson_catalog=lesson_catalog)
     html_path = realize.lesson_html_path(
@@ -637,7 +639,7 @@ def main():
     realize.apply_spine(
         occ_manifest, atoms, elements,
         meaning_atoms=form_atoms + instance_atoms, option_sets=option_sets,
-        lesson_catalog=lesson_catalog,
+        lesson_catalog=lesson_catalog, scene_catalog=scene_catalog,
     )
     realize.stamp_checks(
         occ_manifest, atoms, elements,
@@ -653,6 +655,7 @@ def main():
         meaning_atoms=form_atoms + instance_atoms,
         option_sets=option_sets, options_registry=option_sets,
         lesson_id=args.lesson, out=args.out, lesson_catalog=lesson_catalog,
+        scene_catalog=scene_catalog,
     )
     mf_path.write_text(json.dumps(occ_manifest, indent=2) + "\n")
 

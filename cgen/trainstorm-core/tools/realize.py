@@ -36,10 +36,13 @@ sibling instance store (two `exemplify` extras of existing ASP-9999 atoms —
 `agents/realizer/instance_example_v1.md`), then a `closed_choice` of the BR
 profile (projector-only, after the field+example), then the existing
 definition checks (`invert_definition`). Scene membership and order are
-first-class on the graph (`vocab/scene.enum.json`): Realizer stamps
-`spine.scenes` / `ext.scene` (id, title heuristic, ordered `ele_` refs,
-in-scene check-shape refs). A **lesson** record (`agents/realizer/lesson_v1.md`)
-points at that list. The projector **reads the lesson node** (default, or
+first-class on the graph (`vocab/scene.enum.json`): the project catalog
+(`occurrences/scenes.json`) is the source of truth; Realizer **reads**
+that file and stamps `spine.scenes` / `ext.scene` (id, title heuristic,
+ordered `ele_` refs, in-scene check-shape refs). The spine heuristic may
+still propose a default grouping when no catalog exists (fixtures /
+first mint). A **lesson** record (`agents/realizer/lesson_v1.md`)
+points at those scene ids. The projector **reads the lesson node** (default, or
 `--lesson`) then its scenes and checks; it does not hard-code “the ALSAP
 lesson is these three headings.” Same three scenes (front-matter /
 Procedure A / form BR), **one at a time** (Next/Back). Scene 3 includes
@@ -98,6 +101,7 @@ never hand-edited):
 
     <project>/occurrences/elements.json     occurrence store (does not touch atoms.json)
     <project>/occurrences/manifest.json     realized_from / source hashes + spine keys
+    <project>/occurrences/scenes.json       closed project catalog (source of truth; not rewritten)
     <project>/occurrences/lessons.json      closed project catalog (source of truth; not rewritten)
     <project>/realized_lesson.html          short lesson (default {project}_short). Open this.
     <project>/realized_lesson_br.html       BR subset (path derived from lesson_id)
@@ -191,14 +195,18 @@ PRIMITIVE_PURPOSE = "tp_purpose"
 # object.order. Live ALSAP Procedure A is a handful (4) — all land. Cap only
 # if that branch is huge. Not B/C, not thin A/B/C headings.
 PROCEDURE_SEQUENCE_CAP = 8
-# First-class scene records: group existing spine ele_ into three scenes
-# from SOP/form roles already used for membership. Not new beats. Not an
-# LLM. Headings are the documented title heuristic, not invented outcomes.
+# First-class scene records: group existing spine ele_ into named scenes.
+# Live path reads occurrences/scenes.json and stamps spine.scenes.
+# Heuristic below still proposes a default grouping when no catalog exists
+# (fixtures / first mint). Not new beats. Not an LLM. Headings are the
+# documented title heuristic, not invented outcomes.
 # Spec: agents/realizer/scenes_v1.md. Projector reads spine.scenes.
 SCENE_SPEC = "agents/realizer/scenes_v1.md"
 SCENE_VOCAB = "vocab/scene.enum.json"
 SCENE_GRAPH_POLICY = "v1_scenes_on_graph"
 SCENE_POLICY = "v1_three_scenes_from_roles"
+SCENE_CATALOG_FILENAME = "scenes.json"
+SCENE_CATALOG_POLICY = "v1_scene_catalog"
 PAGING_POLICY = "v1_one_scene_at_a_time"
 SCENE_FRONT_MATTER = "front_matter"
 SCENE_PROCEDURE_A = "procedure_a"
@@ -1263,7 +1271,7 @@ def select_spine(atoms, elements) -> list:
 
 
 def apply_spine(manifest, atoms, elements, *, meaning_atoms=None, option_sets=None,
-                lesson_catalog=None) -> dict:
+                lesson_catalog=None, scene_catalog=None) -> dict:
     """Stamp spine keys on the occurrence manifest. Pure projection; mints/drops no ele_."""
     ids = select_spine(atoms, elements)
     manifest["spine"] = {
@@ -1290,10 +1298,12 @@ def apply_spine(manifest, atoms, elements, *, meaning_atoms=None, option_sets=No
                  "on the instance beats; coverage dump stays card-like. Scene "
                  "records (spine.scenes / ext.scene) group those existing beats "
                  "from SOP/form roles — first-class on the graph, not chrome "
-                 "rediscovery. A lesson record (manifest.lessons) points at that "
-                 "list; the projector reads the lesson node, not a hard-coded "
-                 "ALSAP trio. Lesson records come from the project catalog "
-                 "(occurrences/lessons.json) when present. Player chrome pages "
+                 "rediscovery. Scene records come from the project catalog "
+                 "(occurrences/scenes.json) when present; spine.scenes is the "
+                 "stamped runtime view. A lesson record (manifest.lessons) points "
+                 "at those scene ids; the projector reads the lesson node, not a "
+                 "hard-coded ALSAP trio. Lesson records come from the project "
+                 "catalog (occurrences/lessons.json) when present. Player chrome pages "
                  "that list one named scene at a time (Next/Back); lesson-end "
                  "checks are a final step, not a fourth scene. Not an LLM path "
                  "and not a full object-tree walk."),
@@ -1353,11 +1363,17 @@ def apply_spine(manifest, atoms, elements, *, meaning_atoms=None, option_sets=No
     by_eid = {e["element_id"]: e for e in elements}
     by_atom = {a["atom_id"]: a for a in atoms}
     scenes, lesson_end = group_spine_scenes(ids, by_eid, by_atom)
-    manifest["spine"]["scenes"] = stamp_spine_scenes(
+    proposed = stamp_spine_scenes(
         scenes, lesson_end,
         sequence_check=bool(seq),
         closed_choice=has_br,
     )
+    if scene_catalog:
+        manifest["spine"]["scenes"] = stamp_spine_scenes_from_catalog(
+            proposed, scene_catalog, by_eid, spine_ids=ids,
+        )
+    else:
+        manifest["spine"]["scenes"] = proposed
     bind_scene_membership(elements, manifest["spine"]["scenes"])
     stamp_lessons(manifest, atoms, elements, lesson_catalog=lesson_catalog)
     return manifest["spine"]
@@ -1470,7 +1486,7 @@ def group_spine_scenes(spine_ids, by_eid, atoms_by_id):
 
 def stamp_spine_scenes(scenes, lesson_end, *, sequence_check=False,
                        closed_choice=False) -> dict:
-    """First-class scene records. Membership is unchanged. Projector reads these."""
+    """Heuristic proposal. Membership is unchanged. Used when no catalog exists."""
     out = []
     for s in scenes:
         d = SCENE_DEFS_BY_ROLE.get(s["role"]) or {}
@@ -1488,7 +1504,32 @@ def stamp_spine_scenes(scenes, lesson_end, *, sequence_check=False,
             "checks": checks,
             "from": d.get("from") or "",
         })
-    return {
+    return _scenes_block(out, lesson_end, catalog=False)
+
+
+def _scenes_block(out, lesson_end, *, catalog=False, catalog_policy=None) -> dict:
+    note = (
+        "First-class scene records: ordered ele_ refs plus in-scene "
+        "check-shape refs. Projector reads this list to wrap/page; it "
+        "does not re-discover scenes by if-atom-id. Sequence practice "
+        "stays in Procedure A. Form-BR closed-choice stays in "
+        "Benefit-risk on the form. Definition/purpose checks stay at "
+        "lesson end. Not an LLM. Not outcome language. "
+        "Coverage dump stays ungrouped."
+    )
+    if catalog:
+        note = (
+            "First-class scene records: ordered ele_ refs plus in-scene "
+            "check-shape refs. Source of truth is the project catalog "
+            "(occurrences/scenes.json); this block is the stamped runtime "
+            "view. Adding a scene is appending a catalog record (id, title "
+            "heuristic/ref, ordered element_ids, in-scene checks). Lessons "
+            "point at scene_ids only. Projector reads this list to wrap/page; "
+            "it does not re-discover scenes by if-atom-id. Definition/purpose "
+            "checks stay at lesson end. Not an LLM. Not outcome language. "
+            "Coverage dump stays ungrouped."
+        )
+    block = {
         "policy": SCENE_GRAPH_POLICY,
         "heuristic": SCENE_POLICY,
         "spec": SCENE_SPEC,
@@ -1506,14 +1547,138 @@ def stamp_spine_scenes(scenes, lesson_end, *, sequence_check=False,
                      "final step after the last scene, not a fourth named scene. "
                      "Hash is optional. Same membership. Coverage dump stays unpaged."),
         },
-        "note": ("First-class scene records: ordered ele_ refs plus in-scene "
-                 "check-shape refs. Projector reads this list to wrap/page; it "
-                 "does not re-discover scenes by if-atom-id. Sequence practice "
-                 "stays in Procedure A. Form-BR closed-choice stays in "
-                 "Benefit-risk on the form. Definition/purpose checks stay at "
-                 "lesson end. Not an LLM. Not outcome language. "
-                 "Coverage dump stays ungrouped."),
+        "note": note,
     }
+    if catalog:
+        block["catalog"] = {
+            "see": f"occurrences/{SCENE_CATALOG_FILENAME}",
+            "policy": catalog_policy or SCENE_CATALOG_POLICY,
+        }
+    return block
+
+
+def scene_catalog_path(store_dir) -> pathlib.Path:
+    return pathlib.Path(store_dir) / SCENE_CATALOG_FILENAME
+
+
+def load_scene_catalog(store_dir) -> dict | None:
+    """Read the closed project scene catalog. None if the file is absent (fixtures)."""
+    path = scene_catalog_path(store_dir)
+    if not path.exists():
+        return None
+    data = json.loads(path.read_text())
+    if not isinstance(data, dict):
+        raise SystemExit(f"{path} is not a scene catalog object")
+    scenes = [s for s in (data.get("scenes") or []) if isinstance(s, dict) and s.get("id")]
+    if not scenes:
+        raise SystemExit(f"{path} has no scene records")
+    seen = set()
+    for rec in scenes:
+        sid = rec["id"]
+        if sid in seen:
+            raise SystemExit(f"{path} has duplicate scene id {sid}")
+        seen.add(sid)
+    return data
+
+
+def _normalize_scene_checks(raw_checks) -> list:
+    checks = []
+    for cref in raw_checks or []:
+        if isinstance(cref, dict) and cref.get("shape"):
+            rec = {"shape": cref["shape"], "see": cref.get("see") or "checks"}
+            checks.append(rec)
+        elif isinstance(cref, str) and cref:
+            checks.append({"shape": cref, "see": "checks"})
+    return checks
+
+
+def hydrate_scene_record(raw, computed_by_id, computed_by_role) -> dict:
+    """Stamp one catalog row onto a runtime scene record. Mints no ele_."""
+    sid = raw.get("id") or ""
+    if not sid:
+        raise SystemExit("scene catalog record is missing id")
+    role = raw.get("role") or ""
+    fallback = computed_by_id.get(sid) or computed_by_role.get(role) or {}
+    role = role or fallback.get("role") or ""
+    if role not in SCENE_ROLES:
+        raise SystemExit(f"scene catalog {sid!r} role {role!r} is not in {SCENE_VOCAB}")
+    defs = SCENE_DEFS_BY_ROLE.get(role) or {}
+    heading = raw.get("heading") or raw.get("title") or fallback.get("heading") or defs.get("heading") or role
+    kicker = raw.get("kicker") or fallback.get("kicker") or defs.get("kicker") or ""
+    element_ids = list(raw.get("element_ids") or fallback.get("element_ids") or [])
+    if not element_ids:
+        raise SystemExit(f"scene catalog {sid} has no element_ids")
+    if "checks" in raw:
+        checks = _normalize_scene_checks(raw.get("checks") or [])
+    else:
+        checks = _normalize_scene_checks(fallback.get("checks") or [])
+    from_txt = raw.get("from") or fallback.get("from") or defs.get("from") or ""
+    return {
+        "id": sid,
+        "role": role,
+        "heading": heading,
+        "kicker": kicker,
+        "element_ids": element_ids,
+        "checks": checks,
+        "from": from_txt,
+    }
+
+
+def stamp_spine_scenes_from_catalog(computed, scene_catalog, by_eid, *, spine_ids) -> dict:
+    """Catalog is the source of truth. Stamps runtime view onto spine.scenes."""
+    raw_scenes = [
+        s for s in (scene_catalog.get("scenes") or [])
+        if isinstance(s, dict) and s.get("id")
+    ]
+    if not raw_scenes:
+        raise SystemExit("scene catalog has no scene records")
+    computed_by_id = {s["id"]: s for s in computed.get("scenes") or [] if s.get("id")}
+    computed_by_role = {}
+    for s in computed.get("scenes") or []:
+        role = s.get("role")
+        if role and role not in computed_by_role:
+            computed_by_role[role] = s
+    out = []
+    seen = set()
+    for raw in raw_scenes:
+        sid = raw["id"]
+        if sid in seen:
+            raise SystemExit(f"scene catalog has duplicate id {sid}")
+        seen.add(sid)
+        rec = hydrate_scene_record(raw, computed_by_id, computed_by_role)
+        for eid in rec["element_ids"]:
+            if eid not in by_eid:
+                raise SystemExit(f"scene catalog {sid} element {eid} is not on the graph")
+        out.append(rec)
+    if "lesson_end_check_ids" in scene_catalog:
+        lesson_end = list(scene_catalog.get("lesson_end_check_ids") or [])
+    elif "lesson_end_checks" in scene_catalog:
+        lesson_end = list(scene_catalog.get("lesson_end_checks") or [])
+    else:
+        lesson_end = list(computed.get("lesson_end_checks") or [])
+    for eid in lesson_end:
+        if eid not in by_eid:
+            raise SystemExit(f"scene catalog lesson_end_check {eid} is not on the graph")
+    claimed = []
+    for s in out:
+        claimed.extend(s["element_ids"])
+    claimed.extend(lesson_end)
+    spine_set = set(spine_ids)
+    claimed_set = set(claimed)
+    if len(claimed) != len(claimed_set):
+        raise SystemExit("scene catalog membership overlaps (not a partition)")
+    if claimed_set != spine_set:
+        missing = sorted(spine_set - claimed_set)
+        extra = sorted(claimed_set - spine_set)
+        raise SystemExit(
+            "scene catalog membership is not a partition of spine.element_ids"
+            + (f"; missing {missing}" if missing else "")
+            + (f"; extra {extra}" if extra else "")
+        )
+    return _scenes_block(
+        out, lesson_end, catalog=True,
+        catalog_policy=scene_catalog.get("policy") or SCENE_CATALOG_POLICY,
+    )
 
 
 def bind_scene_membership(elements, scenes_stamp):
@@ -1935,7 +2100,7 @@ def iter_lesson_ids(manifest) -> list:
 
 def project_lesson_htmls(atoms, elements, manifest, project, *, meaning_atoms=None,
                          option_sets=None, options_registry=None, lesson_id=None,
-                         out=None, lesson_catalog=None):
+                         out=None, lesson_catalog=None, scene_catalog=None):
     """Write lesson HTML. Default pass emits every catalog/stamp record.
 
     `--lesson` regenerates that one file. `--out` writes one path.
@@ -1945,6 +2110,7 @@ def project_lesson_htmls(atoms, elements, manifest, project, *, meaning_atoms=No
     html_kw = dict(
         meaning_atoms=meaning_atoms, option_sets=option_sets,
         options_registry=options_registry, lesson_catalog=lesson_catalog,
+        scene_catalog=scene_catalog,
     )
     if out:
         path = pathlib.Path(out).resolve()
@@ -2729,7 +2895,7 @@ def closed_choice_html(el, chk, esc) -> str:
 
 def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_atoms=None,
                  option_sets=None, options_registry=None, lesson_id=None,
-                 write_coverage=True, lesson_catalog=None):
+                 write_coverage=True, lesson_catalog=None, scene_catalog=None):
     """Write the short lesson (selected lesson node) and the full SOP dump (coverage).
 
     `atoms` is the SOP tree (coverage walk / spine SOP membership).
@@ -2767,7 +2933,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
     spine = apply_spine(
         manifest, atoms, elements,
         meaning_atoms=meaning_atoms, option_sets=option_sets,
-        lesson_catalog=lesson_catalog,
+        lesson_catalog=lesson_catalog, scene_catalog=scene_catalog,
     )
     coverage_path = sibling_coverage_path(out_path)
     derived_lesson_html = (
@@ -4277,11 +4443,21 @@ def selftest(closed_moves):
         stamp_lessons, stamp_lessons_from_catalog, hydrate_lesson_record,
         derive_lesson_paging, project_html, project_lesson_htmls,
         lesson_html_filename, select_lesson_record, resolve_lesson,
+        stamp_spine_scenes_from_catalog, hydrate_scene_record,
+        load_scene_catalog, resolve_scene,
     )
     projector_src = "\n".join(inspect.getsource(fn) for fn in projector_fns)
     results.append(("projector does not special-case extra lesson ids",
                     "ast_alsap_br" not in projector_src
                     and "ast_alsap_plan" not in projector_src,
+                    ""))
+    catalog_scene_src = "\n".join(inspect.getsource(fn) for fn in (
+        stamp_spine_scenes_from_catalog, hydrate_scene_record, load_scene_catalog,
+    ))
+    results.append(("scene catalog path does not special-case the three ALSAP headings",
+                    "What an ALSAP is" not in catalog_scene_src
+                    and "How an ALSAP starts" not in catalog_scene_src
+                    and "Benefit-risk on the form" not in catalog_scene_src,
                     ""))
 
     # Compiler primitives from atom kind + occurrence move.
@@ -5248,6 +5424,154 @@ def selftest(closed_moves):
                     and "realized_lesson_plan.html" in names_all,
                     names_all))
 
+    cat_scenes_small = {
+        "policy": SCENE_CATALOG_POLICY,
+        "scenes": [
+            {
+                "id": "opening",
+                "role": SCENE_FRONT_MATTER,
+                "heading": "Opening",
+                "kicker": "Front matter",
+                "element_ids": [
+                    "ele_sop_ast29080",
+                    "ele_sop_ast29080__present",
+                    "ele_sop_ast29080_purpose__activate",
+                    "ele_sop_ast29080_purpose",
+                    "ele_sop_ast29080_scope",
+                    "ele_sop_ast29080_general",
+                ],
+                "checks": [],
+            },
+            {
+                "id": "plan",
+                "role": SCENE_PROCEDURE_A,
+                "heading": "The plan",
+                "kicker": "Procedure A",
+                "element_ids": [
+                    "ele_sop_ast29080_proc_a_s1",
+                    "ele_sop_ast29080_proc_a_s2",
+                    "ele_sop_ast29080_proc_a_s3",
+                    "ele_sop_ast29080_proc_a_s4",
+                ],
+                "checks": [{"shape": SHAPE_SEQUENCE, "see": "checks"}],
+            },
+        ],
+        "lesson_end_check_ids": [
+            "ele_sop_ast29080_purpose__reinforce",
+            "ele_sop_ast29080_general__reinforce",
+        ],
+    }
+    mf_sc = {"project": "course"}
+    apply_spine(mf_sc, store, seeded, scene_catalog=cat_scenes_small)
+    stamped_sc = (mf_sc.get("spine") or {}).get("scenes") or {}
+    stamped_ids = [s.get("id") for s in stamped_sc.get("scenes") or []]
+    stamped_headings = [s.get("heading") for s in stamped_sc.get("scenes") or []]
+    results.append(("scene catalog stamps runtime view and does not use heuristic headings",
+                    stamped_ids == ["opening", "plan"]
+                    and stamped_headings == ["Opening", "The plan"]
+                    and stamped_sc.get("catalog", {}).get("see")
+                    == f"occurrences/{SCENE_CATALOG_FILENAME}"
+                    and stamped_sc.get("policy") == SCENE_GRAPH_POLICY
+                    and stamped_sc.get("heuristic") == SCENE_POLICY
+                    and stamped_sc.get("lesson_end_checks") == [
+                        "ele_sop_ast29080_purpose__reinforce",
+                        "ele_sop_ast29080_general__reinforce",
+                    ],
+                    {"ids": stamped_ids, "headings": stamped_headings}))
+    resolved_sc = [resolve_scene(s, seeded_by_eid) for s in stamped_sc.get("scenes") or []]
+    results.append(("scene catalog resolves element_ids from the graph",
+                    resolved_sc
+                    and [el["element_id"] for el in resolved_sc[0]["elements"]]
+                    == cat_scenes_small["scenes"][0]["element_ids"]
+                    and [el["element_id"] for el in resolved_sc[1]["elements"]]
+                    == cat_scenes_small["scenes"][1]["element_ids"]
+                    and SHAPE_SEQUENCE in scene_check_refs(resolved_sc[1])
+                    and set(sum((s["element_ids"] for s in stamped_sc.get("scenes") or []), [])
+                            + list(stamped_sc.get("lesson_end_checks") or []))
+                    == set(want_spine),
+                    [sc["element_ids"] for sc in resolved_sc]))
+    opening_host = next(e for e in seeded if e["element_id"] == "ele_sop_ast29080")
+    plan_host = next(e for e in seeded if e["element_id"] == "ele_sop_ast29080_proc_a_s1")
+    results.append(("scene catalog stamps ext.scene from catalog ids not the ALSAP trio",
+                    hosted_scene(opening_host)
+                    and hosted_scene(opening_host).get("id") == "opening"
+                    and hosted_scene(plan_host)
+                    and hosted_scene(plan_host).get("id") == "plan",
+                    (hosted_scene(opening_host), hosted_scene(plan_host))))
+    cat_lessons_on_scenes = {
+        "policy": LESSON_CATALOG_POLICY,
+        "default": "course_short",
+        "lessons": [
+            {"lesson_id": "course_short", "default": True,
+             "scene_ids": ["opening", "plan"]},
+            {"lesson_id": "course_plan", "scene_ids": ["plan"]},
+        ],
+    }
+    apply_spine(
+        mf_sc, store, seeded,
+        lesson_catalog=cat_lessons_on_scenes, scene_catalog=cat_scenes_small,
+    )
+    resolved_plan_sc = resolve_lesson(
+        mf_sc, seeded_by_eid, lesson_id="course_plan", atoms_by_id=store_atoms
+    )
+    results.append(("lesson catalog resolves scene_ids from the scene catalog stamp",
+                    resolved_plan_sc["lesson_id"] == "course_plan"
+                    and [sc["id"] for sc in resolved_plan_sc["scenes"]] == ["plan"]
+                    and resolved_plan_sc["scenes"][0]["heading"] == "The plan"
+                    and not resolved_plan_sc["lesson_end_checks"],
+                    [sc["id"] for sc in resolved_plan_sc["scenes"]]))
+    with tempfile.TemporaryDirectory() as td_sc:
+        sc_path = pathlib.Path(td_sc) / SCENE_CATALOG_FILENAME
+        sc_path.write_text(json.dumps(cat_scenes_small, indent=2) + "\n")
+        loaded_sc = load_scene_catalog(td_sc)
+    results.append(("scene catalog file loads as project data",
+                    loaded_sc is not None
+                    and [s["id"] for s in loaded_sc["scenes"]] == ["opening", "plan"]
+                    and loaded_sc.get("policy") == SCENE_CATALOG_POLICY,
+                    loaded_sc))
+    cat_scenes_form = {
+        "policy": SCENE_CATALOG_POLICY,
+        "scenes": [
+            {
+                "id": s["id"],
+                "role": s["role"],
+                "heading": s["heading"],
+                "kicker": s["kicker"],
+                "element_ids": list(s["element_ids"]),
+                "checks": list(s.get("checks") or []),
+                "from": s.get("from") or "",
+            }
+            for s in form_scenes.get("scenes") or []
+        ],
+        "lesson_end_check_ids": list(form_scenes.get("lesson_end_checks") or []),
+    }
+    mf_form_sc = {"project": "course"}
+    apply_spine(
+        mf_form_sc, store, seeded_form,
+        meaning_atoms=form_store + instance_store, option_sets=fixture_br_options,
+        scene_catalog=cat_scenes_form, lesson_catalog=cat_form,
+    )
+    form_sc_stamp = (mf_form_sc.get("spine") or {}).get("scenes") or {}
+    results.append(("form scene catalog stamps the same three ids already on the graph",
+                    [s["id"] for s in form_sc_stamp.get("scenes") or []]
+                    == ["what_an_alsap_is", "how_an_alsap_starts", "benefit_risk_on_the_form"]
+                    and form_sc_stamp.get("catalog", {}).get("see")
+                    == f"occurrences/{SCENE_CATALOG_FILENAME}"
+                    and [s["element_ids"] for s in form_sc_stamp.get("scenes") or []]
+                    == [s["element_ids"] for s in form_scenes.get("scenes") or []],
+                    [s["id"] for s in form_sc_stamp.get("scenes") or []]))
+    resolved_form_from_cat = resolve_lesson(
+        mf_form_sc, form_by_eid, atoms_by_id=form_catalog
+    )
+    results.append(("form lesson catalog still resolves scene_ids after scene catalog stamp",
+                    resolved_form_from_cat["lesson_id"] == "course_short"
+                    and [sc["id"] for sc in resolved_form_from_cat["scenes"]]
+                    == ["what_an_alsap_is", "how_an_alsap_starts", "benefit_risk_on_the_form"]
+                    and len([eid for sc in resolved_form_from_cat["scenes"]
+                             for eid in sc["element_ids"]]
+                            + list(resolved_form_from_cat["lesson_end_checks"])) == 16,
+                    [sc["id"] for sc in resolved_form_from_cat["scenes"]]))
+
     huge_steps = [
         atom(
             f"atom_sop_ast29080_proc_a_s{i}", "procedure_step",
@@ -5544,7 +5868,8 @@ def main():
                  f"({SHAPE_INVERT}, {SHAPE_SEQUENCE}, {SHAPE_CLOSED}) live on "
                  "ext.check / manifest.checks (vocab/check-shape.enum.json). "
                  "Scene records (id, title heuristic, ordered ele_ refs) live on "
-                 "spine.scenes / ext.scene (vocab/scene.enum.json). "
+                 "spine.scenes / ext.scene (vocab/scene.enum.json), stamped from "
+                 "the project catalog (occurrences/scenes.json) when present. "
                  "The lesson record (id, title heuristic, scene id refs) lives on "
                  "manifest.lessons (agents/realizer/lesson_v1.md), stamped from "
                  "the project catalog (occurrences/lessons.json) when present, "
@@ -5555,7 +5880,8 @@ def main():
                  "fill (options_ref ids; key = selected_value); composing from "
                  "only one of those two atoms would hide the other half. "
                  "A re-realize preserves extras, intent, style, and recomputes "
-                 "the same spine, primitives, check shapes, scenes, and stamps "
+                 "the same spine, primitives, check shapes, stamps scene records "
+                 "from the catalog (or the heuristic if none), and stamps "
                  "lesson records from the catalog (HTML derived from lesson_id)."),
     }
     if any((e.get("ext") or {}).get("cartographer") for e in elements):
@@ -5578,12 +5904,13 @@ def main():
         cout["element_count"] = len(elements)
         occ_manifest["couturier"] = cout
     lesson_catalog = load_lesson_catalog(store_dir)
+    scene_catalog = load_scene_catalog(store_dir)
     if lesson_catalog is None:
         carry_previous_lesson_records(occ_manifest, prev_mf)
     apply_spine(
         occ_manifest, atoms, elements,
         meaning_atoms=form_atoms + instance_atoms, option_sets=option_sets,
-        lesson_catalog=lesson_catalog,
+        lesson_catalog=lesson_catalog, scene_catalog=scene_catalog,
     )
     stamp_checks(
         occ_manifest, atoms, elements,
@@ -5600,6 +5927,7 @@ def main():
         meaning_atoms=form_atoms + instance_atoms,
         option_sets=option_sets, options_registry=options_registry or option_sets,
         lesson_id=args.lesson, out=args.out, lesson_catalog=lesson_catalog,
+        scene_catalog=scene_catalog,
     )
     (store_dir / "manifest.json").write_text(json.dumps(occ_manifest, indent=2) + "\n")
 
@@ -5628,7 +5956,8 @@ def main():
     print(f"  manifest   : {store_dir / 'manifest.json'}")
     print(f"  spine      : {spine_n} of {len(elements)} ({SPINE_POLICY})")
     scenes_n = len(((occ_manifest.get("spine") or {}).get("scenes") or {}).get("scenes") or [])
-    print(f"  scenes     : {scenes_n} ({SCENE_GRAPH_POLICY})")
+    scenes_src = SCENE_CATALOG_FILENAME if scene_catalog else SCENE_POLICY
+    print(f"  scenes     : {scenes_n} ({SCENE_GRAPH_POLICY}, {scenes_src})")
     print(f"  form       : {FORM_PROJECT_NAME} ({len(form_atoms)} atoms joined for meaning; "
           f"{sum(1 for e in extras if (e.get('ext') or {}).get('realized_from', {}).get('form_store'))} guest ele_)")
     print(f"  instance   : {INSTANCE_PROJECT_NAME} ({len(instance_atoms)} atoms joined for meaning; "
