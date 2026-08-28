@@ -1817,3 +1817,68 @@ around identical cards. Jake: Couturier = roles, pack = chrome.
 paging. Working-process block untouched. Single-writer per facet
 stands. Chameleon agent still not stood up.
 
+---
+
+## 2026-08-27 — Learner-facing check copy is a Realizer projection of graph operands
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Learner-facing check copy at `/cgen` is a **Realizer
+projection** of graph operands: task clothes + registry labels in the
+disposable Course Engine JSON. The graph stays honest (ids, no LLM, no
+invented SOP facts). Compiler vocabulary (`atom`, `ele_`,
+`object.order`, sibling store, “closed value set” as jargon) does not
+appear in `/cgen`. The element store still holds ids/refs. Projector-only
+checks (`sequence_order`, `closed_choice`) may wear recall clothes
+(`meta.style_ref: brand.recall`) on the JSON adapter — not by minting an
+`ele_`, not by writing `style_ref` onto a present occurrence, not by a
+new Couturier map row. Couturier.py / `style_map_v1.md` unchanged.
+
+**What the learner sees.** Invert-definition feedback names the wording
+from this definition (may quote the key, which ⊆ the atom); incorrect
+says the other options are other sentences from this lesson, not this
+definition. Sequence feedback names the order on the job aid already
+shown. Closed-choice feedback names the value already shown on the
+example. Closed-choice prompt drops “closed” (compiler-speak) and stays
+task clothes pointing at the example. Display labels for closed-choice
+are the registry `label` for each governed id (`options.registry.json`);
+never `description`. Missing label falls back to the id. Submitting
+still keys on the id. Sidecar HTML uses the same copy so the two
+projectors do not drift.
+
+**Honesty bar, unchanged** (`agents/realizer/check_v1.md`): no LLM
+distractors; invert distractors stay sibling first sentences, verbatim;
+sequence items stay atom first sentences, order from
+`bindings.object.order`; closed-choice options stay governed value ids
+on the occurrence / `ext.check`; do not author “Which Benefit-Risk
+profile is required?” or “Which is the first planning step?”; do not
+invent SOP rules in feedback (“SMT should…”, “the first planning step
+is…”).
+
+**Why:** Live `realized_lesson.json` leaked compiler vocabulary into
+learner feedback and showed snake_case ids as closed-choice text.
+Invert checks already wore `brand.recall`; projector-only sequence and
+closed-choice sat undressed next to them. Labels already existed on the
+governed registry; copying them onto the element would have been a
+second meaning store.
+
+**Consequences:**
+- After `python3 tools/realize.py` → `cartographer.py` →
+  `couturier.py` from `cgen/trainstorm-core`, `/cgen` closed-choice
+  shows labels such as “Conditional Favorable Benefit-Risk Profile”;
+  sequence and invert feedback are learner-facing; scene 2/3 practice
+  blocks wear `style-recall`.
+- `--selftest` / `validate_atoms` on ast_alsap / alsap / alsap_asp9999
+  stay green. No authored `content.text` on elements.
+- `/cgen/lumina` untouched. Pretty client/course URLs parked.
+  `netlify.toml` `/cgen/alsap` rewrite stays tabled. No chameleon.py.
+  No Headwater outcomes-mode. No Procedure B. No LLM distractors.
+  Claude remains a co-builder.
+
+**Supersedes:** the check_v1 clauses that feedback “names object.order”
+or “the field’s closed set” as learner-visible copy, and the #36 clause
+that projector-only sequence / closed-choice stay undressed. Graph
+operands, ids on the element store, and the honesty bar stand.
+Working-process block untouched. Single-writer per facet stands.
+
+

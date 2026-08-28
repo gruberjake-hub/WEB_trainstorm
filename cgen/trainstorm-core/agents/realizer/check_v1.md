@@ -34,7 +34,7 @@ by `if atom_id` / `if move == reinforce` / `if this is a job-aid`.
 |---|---|---|---|
 | `invert_definition` | Extra `reinforce` of a definitional atom that has `{subject} is {complement}` | `key_atom_id`, `contrast_atom_ids` (siblings), `host_element_id` | Invert-definition MCQ. Cloze is a **render** of this shape when `contrast_atom_ids` is empty — not a fourth shape. Was `mcq_siblings` / `cloze`. |
 | `sequence_order` | A `procedure_step` group that already has `bindings.object.order` (Procedure A s1–s4) | `atom_ids`, `element_ids` of those presents, `order_from: bindings.object.order` | Order those first sentences. Was `sequence`. Projector-only: no extra `ele_`. |
-| `closed_choice` | Form field with `options_ref` + instance fill of that field already on the spine (FORM-AST-34037 BR profile) | `options_ref`, `instance_atom_id`, `form_atom_id`, `key_from: bindings.instance.selected_value` | Pick the closed value already shown. Options = verbatim value **ids** of the governed set. Key = instance `selected_value`. Prompt is task clothes, not an SOP stem. Projector-only: no extra `ele_`. |
+| `closed_choice` | Form field with `options_ref` + instance fill of that field already on the spine (FORM-AST-34037 BR profile) | `options_ref`, `instance_atom_id`, `form_atom_id`, `key_from: bindings.instance.selected_value` | Pick the value already shown on the example. Options = verbatim value **ids** of the governed set. Key = instance `selected_value`. Learner-visible **labels** are a Realizer projection into the engine JSON (registry `label`, never `description`); they are not copied onto the element. Prompt is task clothes, not an SOP stem. Projector-only: no extra `ele_`. |
 
 Where they live:
 
@@ -72,6 +72,11 @@ distractor-writer; this hop does not build it. LLM distractors stay parked.
 - **Distractors**, if any, are first sentences of **sibling atoms in the
   same store** (same `belongs_to`). Verbatim. Closed contrast, not invented
   misconceptions.
+- **Feedback** is learner task-clothes: correct names the wording from
+  this definition (may quote the key already used as the correct choice —
+  that string ⊆ the atom); incorrect says the other options are other
+  sentences from this lesson, not this definition. Do not say atom /
+  `ele_` / sibling store.
 - If two usable siblings are not available, the shape falls back to a
   **cloze** of this atom’s first sentence (no distractors). Still a check
   the reader can attempt.
@@ -87,8 +92,10 @@ distractor-writer; this hop does not build it. LLM distractors stay parked.
   sequence already taught on the job aid. Not a new ranking.
 - **Prompt** is task clothes, not an SOP stem: *Put these in the order
   already taught.* Do not author “Which is the first planning step?”
-- **Feedback** names object.order / the taught sequence. It does not
-  invent SOP facts (“the first planning step is…”).
+- **Feedback** is learner task-clothes projected by Realizer: correct
+  names the order on the job aid already shown; incorrect points the
+  learner back to that sequence. It does not say `object.order` / atoms,
+  and it does not invent SOP facts (“the first planning step is…”).
 - Initial display is a **stable non-identity permutation** so the learner
   can be wrong, then right.
 
@@ -98,19 +105,30 @@ distractor-writer; this hop does not build it. LLM distractors stay parked.
   field’s `bindings.form.options_ref` (`reg_benefit_risk_profile` on
   FORM-AST-34037). Verbatim. The full set — not a cherry-picked pair, not
   phrasing-example cousin sentences, not registry `description` prose.
-  Do not copy labels onto the element.
+  Do not copy labels onto the element. The Course Engine projection (and
+  the sidecar HTML) may **resolve** each id to that registry entry’s
+  `label` for learner-visible text; if a label is missing, fall back to
+  the id. Submitting still keys on the id.
 - **Key** is the instance atom’s `bindings.instance.selected_value`, which
   the gate already requires to equal `meaning.source_text`. It must be a
   member of that set. Live fill: `conditional_favorable`. An id, never
   copied prose.
-- **Prompt** is task clothes, not an SOP stem: *Choose the closed value
-  already shown.* Do not author “Which Benefit-Risk profile is required?”
-  or “When should SMT select conditional_favorable?”
-- **Feedback** names the fill already shown / the field’s closed set. It
-  does not invent SOP facts (“SMT should…”, rationale implications).
+- **Prompt** is task clothes, not an SOP stem: *Choose the value already
+  shown on the example.* Do not author “Which Benefit-Risk profile is
+  required?” or “When should SMT select conditional_favorable?” Drop
+  “closed” — that word is compiler-speak.
+- **Feedback** is learner task-clothes: correct names the value already
+  shown on the example; incorrect points the learner back to that
+  example. It does not say “closed value set” / registry, and it does
+  not invent SOP facts (“SMT should…”, rationale implications).
 - **Host** is projector-only (`manifest.checks`). Composing from the
   instance extra would hide `options_ref`. Composing from the form field
   would hide `selected_value`. No extra minted.
+- **Clothes on the JSON adapter.** Projector-only sequence and
+  closed-choice components wear `meta.style_ref: brand.recall` in the
+  disposable engine JSON so `/cgen` dresses them as recall checks. That
+  is not minting an `ele_`, not writing `style_ref` onto a present
+  occurrence, and not a new Couturier map row.
 - Initial display is a **stable non-identity permutation** so the learner
   can be wrong, then right.
 - The rationale field is `text_long` with no `options_ref`. It has **no
@@ -261,9 +279,11 @@ Options (verbatim registry ids, full set):
 5. `contextual`
 6. `other_smt_defined`
 
-Prompt (clothes, not a fact): **Choose the closed value already shown.**
+Prompt (clothes, not a fact): **Choose the value already shown on the example.**
 Not “which BR profile is required?” Rationale has no closed set — not
-this check. Shape + operand refs live on `manifest.checks`.
+this check. Shape + operand refs live on `manifest.checks`. Learner-
+visible choice text is the registry `label` for each id, projected into
+the engine JSON / sidecar — not stored on the element.
 
 ---
 
@@ -271,9 +291,9 @@ this check. Shape + operand refs live on `manifest.checks`.
 
 | Agent | Still owns | This hop |
 |---|---|---|
-| Realizer | `ele_` ids; HTML projection; compiler `text_primitive` | Binds `ext.check` + `manifest.checks` (shape + operand refs). Projector **reads** those records to render invert-definition, sequence_order, and closed_choice. |
+| Realizer | `ele_` ids; HTML projection; compiler `text_primitive` | Binds `ext.check` + `manifest.checks` (shape + operand refs). Projector **reads** those records to render invert-definition, sequence_order, and closed_choice. Learner-facing check copy (stems/prompts already on the graph operands; feedback; closed-choice display labels) is this projector. Projector-only checks may wear `brand.recall` on the engine JSON adapter. |
 | Cartographer | occurrence intent | Does not mint `practice`/`assess`; extra `reinforce` move stays Realizer-stamped; A-step primaries stay `present`; form/instance extras keep Realizer-stamped `present` / `exemplify`. Does not wipe `ext.check` or `ext.scene`. |
-| Couturier | expression style keys | `layout_hint` for `reinforce` is `check`; still `brand.recall` / `tp_recall`. Sequence practice and BR closed-choice are projector clothes of existing beats |
+| Couturier | expression style keys | `layout_hint` for `reinforce` is `check`; still `brand.recall` / `tp_recall`. Sequence practice and BR closed-choice are projector clothes of existing beats. Couturier.py / `style_map_v1.md` unchanged. |
 
 Re-running realize → cartographer → couturier keeps extra `ele_` ids,
 intent, style, and the same check records (pure function of store +

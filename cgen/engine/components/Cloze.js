@@ -40,8 +40,8 @@ export function Cloze({ props, emit }) {
     const correct = typed === key;
     feedback.hidden = false;
     feedback.textContent = correct
-      ? (props.feedback?.correct || "Correct — that wording is this atom.")
-      : (props.feedback?.incorrect || "Not yet. The key is this atom’s own wording.");
+      ? (props.feedback?.correct || "Correct — that’s the wording from this definition.")
+      : (props.feedback?.incorrect || "Not yet. The other options are other sentences from this lesson, not this definition.");
     emit("CLOZE_ANSWERED", { id: props.id || "cloze", correct });
   });
 
