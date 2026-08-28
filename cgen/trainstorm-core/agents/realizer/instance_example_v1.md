@@ -42,6 +42,12 @@ example` / `layout_hint: cite`. Compiler form is already `tp_body` (closed
 set; primitives have body/callout/step — this is body, not a new SOP card
 and not a sixth compiler role).
 
+Learner-visible fill for a governed option id is the same Realizer
+projection as closed-choice: registry `label` via `option_value_label`,
+never `description`. The atom stays `conditional_favorable`. Missing
+label falls back to the id. Do not invent a sentence around the fill.
+The rationale beat is `text_long` — leave the prose atom.
+
 **Not cited** (the other eight): cover asset code / version / author
 (metadata; the rationale already names ASP9999); duplicate narrative
 `asset_code`; participant count `412`; prevalent AEs; SAEs. Those are

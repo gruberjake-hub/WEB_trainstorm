@@ -79,7 +79,7 @@
         {
           "type": "Body",
           "props": {
-            "text": "conditional_favorable",
+            "text": "Conditional Favorable Benefit-Risk Profile",
             "kicker": "Example"
           },
           "meta": {

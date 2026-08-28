@@ -112,7 +112,11 @@ distractor-writer; this hop does not build it. LLM distractors stay parked.
 - **Key** is the instance atom’s `bindings.instance.selected_value`, which
   the gate already requires to equal `meaning.source_text`. It must be a
   member of that set. Live fill: `conditional_favorable`. An id, never
-  copied prose.
+  copied prose. The **example body** above this check (the `exemplify`
+  beat of that same fill) uses the same registry-`label` projection as
+  the choice display, so the example and the check wear the same clothes.
+  The atom stays the id. Do not invent a sentence around the fill
+  (“ASP-9999 has a Conditional Favorable profile”, “SMT should select…”).
 - **Prompt** is task clothes, not an SOP stem: *Choose the value already
   shown on the example.* Do not author “Which Benefit-Risk profile is
   required?” or “When should SMT select conditional_favorable?” Drop

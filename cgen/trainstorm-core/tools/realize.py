@@ -66,9 +66,11 @@ move (heading / body / step / callout / check). The spine projector renders
 those primitives — why-this as a callout of purpose, Procedure A s1–s4 as one
 job-aid step list then a sequence practice of the same four presents, the
 form-field presents as body/`present` clothes, the instance example as
-body/`exemplify` clothes (not a new SOP card), a closed-choice of the BR
-profile fill after those presents/examples, front-matter as heading/body,
-reinforce as the existing definition checks. Scene records group those
+body/`exemplify` clothes (not a new SOP card; a fill that is a governed
+option id shows the registry `label`, same helper as closed-choice), a
+closed-choice of the BR profile fill after those presents/examples,
+front-matter as heading/body, reinforce as the existing definition checks.
+Scene records group those
 existing primitives; they do not mint `ele_`. The lesson record mints no
 `ele_` either (not a `Course` occurrence — no honest `composed_from` for
 a container). Player chrome shows one named scene at a time (Next/Back)
@@ -179,8 +181,10 @@ FORM_FIELD_SEED = (
 )
 # Closed-choice of the BR profile fill. Prompt is task clothes (same honesty
 # as the sequence prompt). Options = the form field's options_ref value ids
-# on the graph; learner-visible labels are an engine/sidecar projection.
-# Key = the instance selected_value. Do not invent a stem.
+# on the graph; learner-visible labels are an engine/sidecar projection
+# (`option_value_label`). Instance-fill example bodies that are those same
+# ids use the same helper. Key = the instance selected_value. Do not invent
+# a stem.
 SEQUENCE_PROMPT = "Put these in the order already taught."
 BR_CHECK_PROMPT = "Choose the value already shown on the example."
 # Projector clothes on the disposable engine JSON adapter — not an ele_,
@@ -2758,6 +2762,36 @@ def closed_choice_display(choice, chk, option_sets) -> tuple[str, str]:
     return vid, option_value_label(ref, vid, option_sets)
 
 
+def instance_fill_display(el, atom, catalog, option_sets) -> str:
+    """Learner-visible instance-fill body.
+
+    When this occurrence’s atom is an instance fill whose source_text equals
+    a selected_value id in the form field’s options_ref set, show the
+    registry `label` (same helper as closed-choice). Never `description`.
+    Missing label → id. Graph / element store stay the id. Non-option
+    fills (rationale prose, form presents) stay source_text.
+    """
+    src = clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
+    if not el:
+        return src
+    move = ((el.get("intent") or {}).get("move") or "")
+    if move and move != "exemplify":
+        return src
+    if (atom.get("meaning") or {}).get("kind") != "instance_value":
+        return src
+    cat = catalog if isinstance(catalog, dict) else {
+        a["atom_id"]: a for a in (catalog or [])
+        if isinstance(a, dict) and a.get("atom_id")
+    }
+    ops = closed_choice_operands(el, cat, option_sets or {})
+    if not ops:
+        return src
+    sv = ((atom.get("bindings") or {}).get("instance") or {}).get("selected_value")
+    if not sv or sv != src:
+        return src
+    return option_value_label(ops["options_ref"], sv, option_sets)
+
+
 def invert_feedback(chk=None) -> dict:
     """Learner task-clothes. May quote the key (⊆ the atom). No atom / ele_ / sibling store."""
     key = ((chk or {}).get("key") or "").strip()
@@ -3020,7 +3054,7 @@ def _engine_expr_meta(el) -> dict:
     return meta
 
 
-def _engine_present_component(el, atom) -> dict:
+def _engine_present_component(el, atom, catalog=None, option_sets=None) -> dict:
     """Heading/Body from atom meaning + occurrence primitive. No authored content.text."""
     expr = el.get("expression") or {}
     tp = expr.get("text_primitive") or ""
@@ -3028,7 +3062,7 @@ def _engine_present_component(el, atom) -> dict:
     kicker = KICKER.get(role, "")
     if tp == PRIMITIVE_CALLOUT:
         kicker = KICKER.get("callout", "Why this")
-    text = _engine_atom_text(atom)
+    text = instance_fill_display(el, atom, catalog, option_sets)
     meta = {
         "element_id": el.get("element_id"),
         "composed_from": el.get("composed_from"),
@@ -3192,7 +3226,7 @@ def _engine_components_for_ids(ids, by_eid, by_atom, options_registry) -> list:
                 comps.append(_engine_invert_component(el, chk))
                 continue
         atom = by_atom[el["composed_from"]]
-        comps.append(_engine_present_component(el, atom))
+        comps.append(_engine_present_component(el, atom, by_atom, options_registry))
     return comps
 
 
@@ -3400,7 +3434,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         return "".join(out)
 
     def card_html(el, atom, extra_cls):
-        meaning = clean_meaning(atom["meaning"]["source_text"])
+        meaning = instance_fill_display(el, atom, by_atom, options_registry)
         kind = atom["meaning"].get("kind", "")
         sh = (el.get("source_hash") or "")[:19]
         expr = el.get("expression") or {}
@@ -4715,6 +4749,50 @@ def selftest(closed_moves):
                     }) == "favorable"
                     and option_value_label("missing_ref", "favorable", fixture_br_options)
                     == "favorable", ""))
+    fill_el = {
+        "element_id": mint_extra_element_id(BR_PROFILE_INSTANCE_ATOM_ID, "exemplify"),
+        "composed_from": BR_PROFILE_INSTANCE_ATOM_ID,
+        "intent": {"move": "exemplify"},
+    }
+    fill_cat = {br_form["atom_id"]: br_form, br_inst["atom_id"]: br_inst}
+    results.append(("instance-fill display uses registry label and never description",
+                    instance_fill_display(fill_el, br_inst, fill_cat, fixture_br_options)
+                    == "Conditional Favorable Benefit-Risk Profile"
+                    and "outweigh" not in instance_fill_display(
+                        fill_el, br_inst, fill_cat, fixture_br_options
+                    ), ""))
+    results.append(("instance-fill display falls back to the id when the label is missing",
+                    instance_fill_display(fill_el, br_inst, fill_cat, {
+                        "reg_benefit_risk_profile": {
+                            "values": [{"id": "conditional_favorable"}],
+                        }
+                    }) == "conditional_favorable", ""))
+    results.append(("instance-fill display falls back to the id without a form catalog",
+                    instance_fill_display(fill_el, br_inst, {br_inst["atom_id"]: br_inst},
+                                          fixture_br_options)
+                    == "conditional_favorable", ""))
+    rationale_atom = {
+        "atom_id": INSTANCE_EXAMPLE_SEED[1][0],
+        "meaning": {
+            "kind": "instance_value",
+            "source_text": (
+                "The benefit-risk profile of ASP9999 is favorable provided "
+                "the additional hepatic monitoring."
+            ),
+        },
+        "bindings": {"instance": {"instantiates": FORM_FIELD_SEED[1][0]}},
+    }
+    results.append(("instance-fill display leaves rationale prose untouched",
+                    instance_fill_display(
+                        {
+                            "element_id": mint_extra_element_id(
+                                INSTANCE_EXAMPLE_SEED[1][0], "exemplify"
+                            ),
+                            "composed_from": INSTANCE_EXAMPLE_SEED[1][0],
+                            "intent": {"move": "exemplify"},
+                        },
+                        rationale_atom, fill_cat, fixture_br_options,
+                    ).startswith("The benefit-risk profile of ASP9999"), ""))
     results.append(("spine is a subset of existing ele_ ids", set(got_spine) <= seeded_ids, ""))
     mf_spine = {}
     apply_spine(mf_spine, store, seeded)
@@ -5577,6 +5655,23 @@ def selftest(closed_moves):
                     and "<span>Favorable Benefit-Risk Profile</span>" in br_chunk
                     and "<span>conditional_favorable</span>" not in br_chunk
                     and "The benefits of the investigational drug outweigh" not in page_form, ""))
+    profile_card = (
+        br_chunk.split(inst_eids[0], 1)[-1].split("</article>", 1)[0]
+        if inst_eids[0] in br_chunk else ""
+    )
+    rationale_card = (
+        br_chunk.split(inst_eids[1], 1)[-1].split("</article>", 1)[0]
+        if inst_eids[1] in br_chunk else ""
+    )
+    results.append(("instance-fill example body is the registry label not the id",
+                    ">Conditional Favorable Benefit-Risk Profile<" in profile_card
+                    and "conditional_favorable" not in profile_card
+                    and "The benefits of the investigational drug outweigh" not in profile_card
+                    and "SMT should" not in profile_card, profile_card[:200]))
+    results.append(("rationale example body stays the prose atom",
+                    "The benefit-risk profile of ASP9999 is favorable provided" in rationale_card
+                    and "Conditional Favorable Benefit-Risk Profile" not in rationale_card,
+                    rationale_card[:120]))
     results.append(("BR closed-choice initial order is shuffled",
                     (lambda shown: shown != [
                         "favorable", "unfavorable", "uncertain_inconclusive",
@@ -5811,6 +5906,33 @@ def selftest(closed_moves):
                     and "The benefits of the investigational drug outweigh"
                     not in json.dumps(closed_comp),
                     {"ids": closed_ids, "texts": closed_texts}))
+    br_bodies = [
+        c for c in engine_form["scenes"][2]["components"] if c.get("type") == "Body"
+    ]
+    profile_ex = br_bodies[2] if len(br_bodies) > 2 else {"props": {}, "meta": {}}
+    rationale_ex = br_bodies[3] if len(br_bodies) > 3 else {"props": {}, "meta": {}}
+    results.append(("engine instance-fill example shows the registry label not the id",
+                    (profile_ex.get("props") or {}).get("text")
+                    == "Conditional Favorable Benefit-Risk Profile"
+                    and (profile_ex.get("meta") or {}).get("composed_from")
+                    == INSTANCE_EXAMPLE_SEED[0][0]
+                    and (profile_ex.get("props") or {}).get("kicker") == "Example"
+                    and "conditional_favorable" not in json.dumps(profile_ex.get("props") or {})
+                    and "The benefits of the investigational drug outweigh"
+                    not in json.dumps(profile_ex),
+                    (profile_ex.get("props") or {}).get("text")))
+    results.append(("engine rationale example stays the prose atom",
+                    ((rationale_ex.get("props") or {}).get("text") or "").startswith(
+                        "The benefit-risk profile of ASP9999 is favorable provided"
+                    )
+                    and (rationale_ex.get("meta") or {}).get("composed_from")
+                    == INSTANCE_EXAMPLE_SEED[1][0],
+                    ((rationale_ex.get("props") or {}).get("text") or "")[:80]))
+    results.append(("engine instance-fill does not stamp the label onto the element",
+                    all("content" not in e for e in seeded_form
+                        if e.get("element_id") in inst_eids)
+                    and next(e for e in seeded_form if e["element_id"] == inst_eids[0]
+                             )["composed_from"] == INSTANCE_EXAMPLE_SEED[0][0], ""))
     results.append(("engine projector-only checks wear recall clothes without minting ele_",
                     (seq_comp.get("meta") or {}).get("style_ref") == PROJECTOR_CHECK_STYLE_REF
                     and (closed_comp.get("meta") or {}).get("style_ref") == PROJECTOR_CHECK_STYLE_REF
@@ -5960,6 +6082,19 @@ def selftest(closed_moves):
                     and "SequenceOrder" not in br_types
                     and SCENE_LESSON_END not in [s["id"] for s in engine_br.get("scenes") or []],
                     [s["id"] for s in engine_br.get("scenes") or []]))
+    br_subset_bodies = [
+        c for s in engine_br.get("scenes") or []
+        for c in s.get("components") or [] if c.get("type") == "Body"
+    ]
+    results.append(("engine BR subset instance-fill shows the registry label",
+                    any((c.get("props") or {}).get("text")
+                        == "Conditional Favorable Benefit-Risk Profile"
+                        and (c.get("props") or {}).get("kicker") == "Example"
+                        for c in br_subset_bodies)
+                    and any(((c.get("props") or {}).get("text") or "").startswith(
+                        "The benefit-risk profile of ASP9999"
+                    ) for c in br_subset_bodies),
+                    [((c.get("props") or {}).get("text") or "")[:40] for c in br_subset_bodies]))
     apply_spine(
         mf_form, store, seeded_form,
         meaning_atoms=form_store + instance_store, option_sets=fixture_br_options,

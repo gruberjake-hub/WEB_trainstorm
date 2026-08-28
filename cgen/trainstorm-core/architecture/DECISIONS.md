@@ -1882,3 +1882,51 @@ operands, ids on the element store, and the honesty bar stand.
 Working-process block untouched. Single-writer per facet stands.
 
 
+## 2026-08-28 — Instance fills that are governed option ids get the same Realizer label projection as closed-choice
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** When Realizer projects an `exemplify` / instance-fill body
+whose `meaning.source_text` equals a `selected_value` id that is a
+member of the form field’s `options_ref` set (`options.registry.json`,
+already on the check/form graph), learner-visible text is the registry
+**`label`**. Same helper as closed-choice (`option_value_label` in
+`realize.py`). Never `description`. Missing label falls back to the id
+(honest). The graph keeps the id: atom `source_text` / `selected_value`
+stay `conditional_favorable`; no authored `content.text` on the element;
+no label stamped onto `ele_`. Sidecar HTML uses the same projection so
+the two projectors do not drift.
+
+The example body stays the fill, dressed. Do not invent a sentence
+(“ASP-9999 has a Conditional Favorable profile”, “SMT should select…”).
+If context is needed, use kickers/meta already on the graph. The
+rationale beat is `text_long` with no `options_ref` — leave that prose
+atom. Closed-choice still keys on the governed id.
+
+**Why:** After #37, scene 3’s check showed “Conditional Favorable
+Benefit-Risk Profile” while the Example body above it still spoke
+`conditional_favorable`. Same leftover: the fill is a governed option
+id; the projector copied the id instead of the registry label.
+
+**Honesty bar, unchanged:** no LLM; no new distractors; no pretty URLs;
+no `/cgen/alsap` rewrite; no Lumina / Brunswick / chameleon / Procedure
+B / Headwater outcomes-mode. Couturier map unchanged. Do not weaken
+`check_v1`. `validate_atoms` on ast_alsap / alsap / alsap_asp9999 stays
+green. Rebuild with realize → cartographer → couturier.
+
+**Consequences:**
+- After `python3 tools/realize.py` → `cartographer.py` →
+  `couturier.py` from `cgen/trainstorm-core`, scene 3’s example body
+  shows “Conditional Favorable Benefit-Risk Profile”; the closed-choice
+  still keys on `conditional_favorable`; rationale example stays the
+  prose atom.
+- `--selftest` on realize / cartographer / couturier stays green.
+- Claude remains a co-builder.
+
+**Supersedes:** the #37 note that the EXAMPLE body still shows the
+instance atom’s `source_text` (`conditional_favorable`) as learner-
+visible copy. Graph operands, ids on the element store, closed-choice
+keying on the id, and the honesty bar stand. Working-process block
+untouched.
+
+
