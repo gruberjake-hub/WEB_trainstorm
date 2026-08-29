@@ -35,8 +35,9 @@ analogous to `manifest.checks`. A later hop lifts that stamp into a
 file and stamps the runtime view. The projector **reads** that list to wrap
 and page. It does not re-discover scenes by hard-coded atom ids.
 
-No new ALSAP beats. Same 16 spine occurrences. Same three scenes. Same
-paging UX. `atoms.json` unchanged. No authored `content.text`.
+No new ALSAP beats. Same three scenes. Same paging UX. `atoms.json`
+unchanged. No authored `content.text`. Scene 1 membership is the catalog
+row — including listed-below children when that present already says so.
 
 ---
 
@@ -56,7 +57,7 @@ Title heuristic (closed, not an LLM):
 
 | Role | Heading | Which existing beats |
 |---|---|---|
-| `front_matter` | **What an ALSAP is** | Document-root opening, why-this callout of purpose, teachable front-matter primaries |
+| `front_matter` | **What an ALSAP is** | Document-root opening, why-this callout of purpose, teachable front-matter primaries, and catalog-claimed children a present already says are listed below |
 | `procedure_a` | **How an ALSAP starts** | Procedure A job-aid presents. `sequence_order` stays in-scene. |
 | `form_br` | **Benefit-risk on the form** | FORM-AST-34037 BR-field presents + instance examples. `closed_choice` stays in-scene. |
 
@@ -151,8 +152,9 @@ pointing at `scene_ids` only (`occurrences/lessons.json`).
 | `how_an_alsap_starts` | `procedure_a` | `sequence_order` |
 | `benefit_risk_on_the_form` | `form_br` | `closed_choice` |
 
-Same 55 `ele_` / 47 atoms. Same headings. Same membership. Adding a
-scene is appending a JSON record, not a `realize.py` branch.
+Same 55 `ele_` / 47 atoms. Same headings. Membership is the catalog
+row (front-matter may include listed-below children). Adding a scene
+is appending a JSON record, not a `realize.py` branch.
 
 ---
 

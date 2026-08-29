@@ -120,6 +120,66 @@
           }
         },
         {
+          "type": "StepList",
+          "props": {
+            "kicker": "Scope list",
+            "title": "Organizations in scope of this SOP.",
+            "ordered": false,
+            "items": [
+              {
+                "id": "ele_sop_ast29080_scope_orgs_0",
+                "composed_from": "atom_sop_ast29080_scope_orgs_0",
+                "text": "Biopharma & Ophthalmology Development (BOD)"
+              },
+              {
+                "id": "ele_sop_ast29080_scope_orgs_1",
+                "composed_from": "atom_sop_ast29080_scope_orgs_1",
+                "text": "Clinical Operations & Quantitative Science (COQS)"
+              },
+              {
+                "id": "ele_sop_ast29080_scope_orgs_2",
+                "composed_from": "atom_sop_ast29080_scope_orgs_2",
+                "text": "Early Development & Translational Science (EDTS)"
+              },
+              {
+                "id": "ele_sop_ast29080_scope_orgs_3",
+                "composed_from": "atom_sop_ast29080_scope_orgs_3",
+                "text": "Global Medical Affairs (MA)"
+              },
+              {
+                "id": "ele_sop_ast29080_scope_orgs_4",
+                "composed_from": "atom_sop_ast29080_scope_orgs_4",
+                "text": "Oncology Development (OD)"
+              },
+              {
+                "id": "ele_sop_ast29080_scope_orgs_5",
+                "composed_from": "atom_sop_ast29080_scope_orgs_5",
+                "text": "Regulatory Affairs & Pharmacovigilance (RAPV)"
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_sop_ast29080_scope_orgs_0",
+              "ele_sop_ast29080_scope_orgs_1",
+              "ele_sop_ast29080_scope_orgs_2",
+              "ele_sop_ast29080_scope_orgs_3",
+              "ele_sop_ast29080_scope_orgs_4",
+              "ele_sop_ast29080_scope_orgs_5"
+            ],
+            "composed_from": [
+              "atom_sop_ast29080_scope_orgs_0",
+              "atom_sop_ast29080_scope_orgs_1",
+              "atom_sop_ast29080_scope_orgs_2",
+              "atom_sop_ast29080_scope_orgs_3",
+              "atom_sop_ast29080_scope_orgs_4",
+              "atom_sop_ast29080_scope_orgs_5"
+            ],
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
           "type": "Body",
           "props": {
             "text": "The ALSAP is the central cross-functional framework for ongoing identification, evaluation, and communication of emerging safety risks at the asset level. It operationalizes the existing safety governance documents listed below, integrating them into an actionable, data-driven plan for aggregate monitoring across all relevant clinical trials. Only one ALSAP exists per asset. It must meet ALCOA+ standards and is reviewed annually by the SMT, with ad hoc updates triggered by emerging signals, regulatory changes, milestones, data-quality concerns, or external safety events.",
@@ -130,6 +190,52 @@
             "composed_from": "atom_sop_ast29080_general",
             "text_primitive": "tp_body",
             "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "StepList",
+          "props": {
+            "kicker": "The documents listed",
+            "title": "Existing safety governance documents the ALSAP operationalizes.",
+            "ordered": false,
+            "items": [
+              {
+                "id": "ele_sop_ast29080_general_govdocs_0",
+                "composed_from": "atom_sop_ast29080_general_govdocs_0",
+                "text": "Safe First Dosing Guidance (SFDG): establishes initial safety considerations prior to First in Human (FIH)."
+              },
+              {
+                "id": "ele_sop_ast29080_general_govdocs_1",
+                "composed_from": "atom_sop_ast29080_general_govdocs_1",
+                "text": "Development Risk Management Plan (DRMP): defines regulatory risk strategy prior to Phase 2."
+              },
+              {
+                "id": "ele_sop_ast29080_general_govdocs_2",
+                "composed_from": "atom_sop_ast29080_general_govdocs_2",
+                "text": "Investigator Brochure (IB): summarizes known and potential risks for investigators."
+              },
+              {
+                "id": "ele_sop_ast29080_general_govdocs_3",
+                "composed_from": "atom_sop_ast29080_general_govdocs_3",
+                "text": "Safety Management Team (SMT) minutes: capture ongoing safety decisions across the program."
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_sop_ast29080_general_govdocs_0",
+              "ele_sop_ast29080_general_govdocs_1",
+              "ele_sop_ast29080_general_govdocs_2",
+              "ele_sop_ast29080_general_govdocs_3"
+            ],
+            "composed_from": [
+              "atom_sop_ast29080_general_govdocs_0",
+              "atom_sop_ast29080_general_govdocs_1",
+              "atom_sop_ast29080_general_govdocs_2",
+              "atom_sop_ast29080_general_govdocs_3"
+            ],
+            "text_primitive": "tp_body",
+            "style_ref": "brand.example"
           }
         }
       ]

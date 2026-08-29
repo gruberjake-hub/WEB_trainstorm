@@ -16,10 +16,20 @@
         "ele_sop_ast29080_purpose__activate",
         "ele_sop_ast29080_purpose",
         "ele_sop_ast29080_scope",
-        "ele_sop_ast29080_general"
+        "ele_sop_ast29080_scope_orgs_0",
+        "ele_sop_ast29080_scope_orgs_1",
+        "ele_sop_ast29080_scope_orgs_2",
+        "ele_sop_ast29080_scope_orgs_3",
+        "ele_sop_ast29080_scope_orgs_4",
+        "ele_sop_ast29080_scope_orgs_5",
+        "ele_sop_ast29080_general",
+        "ele_sop_ast29080_general_govdocs_0",
+        "ele_sop_ast29080_general_govdocs_1",
+        "ele_sop_ast29080_general_govdocs_2",
+        "ele_sop_ast29080_general_govdocs_3"
       ],
       "checks": [],
-      "from": "Document-root opening, why-this callout of purpose, and teachable front-matter primaries (purpose / scope / general). Those atoms are the SOP’s definitional front-matter."
+      "from": "Document-root opening, why-this callout of purpose, teachable front-matter primaries (purpose / scope / general), and the in-scope org / governance-doc children those presents already say are listed below. Thin list-container headings stay skipped."
     },
     {
       "id": "how_an_alsap_starts",

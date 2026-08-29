@@ -1929,4 +1929,44 @@ visible copy. Graph operands, ids on the element store, closed-choice
 keying on the id, and the honesty bar stand. Working-process block
 untouched.
 
+---
+
+## 2026-08-29 — Short-lesson scene 1 includes the children “listed below”
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The short-lesson front-matter scene (`what_an_alsap_is`)
+includes the in-scope org children and the governance-doc children
+because those presents already say “listed below.” Thin list-container
+headings stay skipped. Membership is the scene catalog
+(`occurrences/scenes.json`). The projector groups consecutive
+`list_item` siblings as lists (one org list under the scope body; one
+doc list under the general body), the same way consecutive `tp_step`
+presents are already one StepList. No new `ele_` / `atom_` ids. No new
+check. No new Couturier map row. Kickers are one list label each (scope
+list / the documents listed), not stacked Present cards. Verbatim atom
+text. No Procedure B/C. Claude remains a co-builder.
+
+**Why:** Scene 1 said the organizations and the governance documents
+were listed below, then showed an empty page. The child atoms and
+occurrences already existed. Catalog append is the membership source;
+realize.py does not fork a hardcoded ALSAP id list.
+
+**Consequences:**
+- After `python3 tools/realize.py` → `cartographer.py` →
+  `couturier.py` from `cgen/trainstorm-core`, `/cgen` scene 1 shows
+  six org names as one list after scope and four governance docs as
+  one list after general. Still three named scenes + lesson-end
+  checks.
+- `--selftest` / `validate_atoms` on ast_alsap / alsap / alsap_asp9999
+  stay green. Coverage dump keeps the rest.
+- `/cgen/lumina` untouched. Pretty URLs parked. `netlify.toml`
+  `/cgen/alsap` rewrite stays tabled. No chameleon.py. No Headwater
+  outcomes-mode. No LLM. Working-process block untouched.
+
+**Supersedes:** the spine / scene clauses that front-matter is purpose /
+scope / general **only**, and that lists / govdocs stay coverage-only
+even when a present already names them. Heuristic spine without a
+catalog still skips those descendants. Single-writer per facet stands.
+
 
