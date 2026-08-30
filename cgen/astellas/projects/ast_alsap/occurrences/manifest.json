@@ -301,6 +301,7 @@
           "see": "spine.scenes.paging"
         },
         "default": true,
+        "projection": "realized_lesson.json",
         "from": "Default lesson: all three spine.scenes plus invert-definition extras at lesson end. Title heuristic is the document-root atom. Not a Course ele_."
       },
       {
@@ -323,6 +324,7 @@
           "note": "Same paging policy as the default lesson. This record has one scene and no lesson-end invert_definition checks, so Next/Back is not shown. In-scene checks stay on the scene record."
         },
         "default": false,
+        "projection": "realized_lesson_br.json",
         "from": "Subset of spine.scenes: Benefit-risk on the form (form_br) \u2014 form presents + instance examples + in-scene closed_choice. Invert-definition extras stay on ast_alsap_short; they close front-matter, not this form cluster. Title heuristic is the document-root atom. Not a Course ele_."
       },
       {
@@ -345,6 +347,7 @@
           "note": "Same paging policy as the default lesson. This record has one scene and no lesson-end invert_definition checks, so Next/Back is not shown. In-scene checks stay on the scene record."
         },
         "default": false,
+        "projection": "realized_lesson_plan.json",
         "from": "Subset of spine.scenes: How an ALSAP starts (procedure_a) \u2014 job-aid presents + in-scene sequence_order. Invert-definition extras stay on ast_alsap_short. Title heuristic is the document-root atom. Not a Course ele_."
       }
     ],
