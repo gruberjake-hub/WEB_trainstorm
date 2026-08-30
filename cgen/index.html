@@ -14,7 +14,7 @@
         <div class="title" id="courseTitle">Course</div>
       </div>
       <div class="controls">
-        <button id="ccToggle" class="btn" aria-pressed="true">CC</button>
+        <button id="ccToggle" class="btn" aria-pressed="true" hidden>CC</button>
       </div>
     </header>
 
@@ -31,7 +31,7 @@
 
     <main id="stage" class="stage" tabindex="-1"></main>
 
-    <footer class="footer">
+    <footer class="footer" hidden>
       <audio id="vo" preload="metadata" controls></audio>
       <!-- Captions are handled via <track> inside audio -->
     </footer>

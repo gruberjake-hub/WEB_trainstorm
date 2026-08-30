@@ -1969,4 +1969,39 @@ scope / general **only**, and that lists / govdocs stay coverage-only
 even when a present already names them. Heuristic spine without a
 catalog still skips those descendants. Single-writer per facet stands.
 
+---
+
+## 2026-08-29 — Course Engine caption/voiceover chrome follows the lesson projection
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Course Engine chrome for captions and voiceover (`#ccToggle`
+and the footer `<audio>`) is shown only when the loaded lesson projection
+has voiceover (or captions/tracks) on a scene. `/cgen` ALSAP
+(`realized_lesson.json`) has none, so CC and the empty audio bar are
+hidden. The player is brand header + scene pager + stage. Runtime
+audio/CC wiring stays; a future lesson with `scene.voiceover` shows the
+chrome again. Read from the course JSON — not an ALSAP special-case.
+Document `<title>` becomes the lesson title once the course loads
+(fallback remains generic). Sidecar HTML stays a projector (no fake
+audio bar). Claude remains a co-builder.
+
+**Why:** The ALSAP short lesson at `/cgen` was wearing unused Course
+Engine chrome: a CC button and an empty audio footer that do nothing
+because scenes have no voiceover. That leftover was the loudest
+unfinished thing on the stakeholder URL.
+
+**Consequences:**
+- After merge, https://trainstorm.ai/cgen has no CC button and no empty
+  audio bar. Logo, title, prev/next, progress, scenes, and checks
+  unchanged.
+- `engine/runtime.js` still loads voiceover and toggles captions when a
+  scene has them. Do not delete that wiring.
+- Working-process block untouched. No pretty client/course URLs.
+  `/cgen/alsap` stays tabled. No Procedure B/C. No new scenes, checks,
+  `ele_` / `atom_` ids. No Lumina/Brunswick/chameleon. No new CSP.
+
+**Supersedes:** nothing about lesson catalogs, brand packs, Couturier
+roles, or check surfaces. Player chrome visibility is projection-driven.
+
 
