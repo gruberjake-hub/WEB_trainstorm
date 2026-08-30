@@ -1,0 +1,10 @@
+{
+  "policy": "v1_one_to_many_seed",
+  "project": "ast_artwork",
+  "seed": [
+    {"atom_id": "atom_sop_2290", "move": "present"},
+    {"atom_id": "atom_sop_2290_purpose", "move": "activate"},
+    {"atom_id": "atom_sop_2290_def_blue", "move": "reinforce"}
+  ],
+  "note": "SOP-course extras only. Title present, purpose why-this, BLUE invert-definition. No purpose reinforce (the intro line is not an honest copula definition). No form/instance guests. Not ALSAP atom ids."
+}

@@ -143,12 +143,15 @@ ELE_ID_RE = re.compile(r"^ele_[A-Za-z0-9_-]+$")
 # 9a (enhance retention), the legal name for a later placement of the same meaning.
 # Purpose also mints `activate` so the spine can wear tp_callout (why this).
 # Spec: agents/realizer/one_to_many_v1.md
+# A second SOP store may declare its own extras in occurrences/one_to_many_seed.json
+# so this list is not copied and ALSAP ids are not minted onto another document.
 ONE_TO_MANY_SEED = (
     ("atom_sop_ast29080", "present"),            # title: hook (primary) + present
     ("atom_sop_ast29080_general", "reinforce"),  # what ALSAP is: present + check
     ("atom_sop_ast29080_purpose", "activate"),   # SOP purpose: why-this callout
     ("atom_sop_ast29080_purpose", "reinforce"),  # SOP purpose: objective + check
 )
+ONE_TO_MANY_SEED_FILENAME = "one_to_many_seed.json"
 CHECK_SPEC = "agents/realizer/check_v1.md"
 CHECK_POLICY = "v1_check_from_atom"
 CHECK_SHAPE_SPEC = "vocab/check-shape.enum.json"
@@ -687,8 +690,69 @@ def normalize_elements_ext(elements):
     return elements
 
 
+def load_project_one_to_many_seed(store_dir) -> tuple | None:
+    """Optional project extras. Absent → caller uses the ALSAP live seed when those atoms exist."""
+    path = pathlib.Path(store_dir) / ONE_TO_MANY_SEED_FILENAME
+    if not path.exists():
+        return None
+    data = json.loads(path.read_text())
+    rows = data.get("seed") if isinstance(data, dict) else data
+    out = []
+    for row in rows or []:
+        if isinstance(row, (list, tuple)) and len(row) == 2:
+            aid, move = row[0], row[1]
+        elif isinstance(row, dict):
+            aid, move = row.get("atom_id"), row.get("move")
+        else:
+            continue
+        if aid and move:
+            out.append((aid, move))
+    return tuple(out) if out else None
+
+
+def one_to_many_seed_for(atoms, store_dir=None) -> tuple:
+    """ALSAP live seed when those atoms are present; else a project file; else none.
+
+    Does not mint ALSAP extras onto a second SOP. Selftest fixtures that
+    include the ALSAP seed ids still get the live seed.
+    """
+    declared = load_project_one_to_many_seed(store_dir) if store_dir else None
+    if declared:
+        return declared
+    ids = {a.get("atom_id") for a in (atoms or [])}
+    if all(aid in ids for aid, _ in ONE_TO_MANY_SEED):
+        return ONE_TO_MANY_SEED
+    return ()
+
+
+def apply_title_hook_for_present_extra(elements, atoms):
+    """First mint: root primary is hook when a present extra exists (one_to_many_v1).
+
+    Cartographer also classifies a root as hook. Without this, a new store's
+    default primary `present` collides with the title `present` extra before
+    Cartographer has run. Do not rewrite a Cartographer-stamped primary.
+    """
+    root_ids = {a["atom_id"] for a in (atoms or []) if not atom_belongs_to(a)}
+    by_cf = defaultdict(list)
+    for el in elements:
+        by_cf[el.get("composed_from")].append(el)
+    for aid, occs in by_cf.items():
+        if aid not in root_ids:
+            continue
+        primary = next((e for e in occs if is_primary_element(e)), None)
+        extras = [e for e in occs if is_extra_element(e)]
+        if not primary or not extras:
+            continue
+        if (primary.get("ext") or {}).get("cartographer"):
+            continue
+        extra_moves = {(e.get("intent") or {}).get("move") for e in extras}
+        if "present" in extra_moves and (primary.get("intent") or {}).get("move") == DEFAULT_MOVE:
+            primary.setdefault("intent", {})["move"] = "hook"
+
+
 def assemble_elements(atoms, previous, default_move: str, *, mint_extras: bool = True,
-                      instance_atoms=None, form_atoms=None, options_registry=None) -> list:
+                      instance_atoms=None, form_atoms=None, options_registry=None,
+                      seed=None) -> list:
     """
     Mint one primary per SOP atom, then extra occurrences from the seed and from
     any extras already in the store. Never drop an existing extra. Preserve
@@ -701,9 +765,10 @@ def assemble_elements(atoms, previous, default_move: str, *, mint_extras: bool =
     instance_by_id = {a["atom_id"]: a for a in (instance_atoms or []) if a.get("atom_id")}
     form_by_id = {a["atom_id"]: a for a in (form_atoms or []) if a.get("atom_id")}
     atoms_by_id = meaning_catalog(atoms, list(form_by_id.values()) + list(instance_by_id.values()))
+    extra_seed = seed if seed is not None else ONE_TO_MANY_SEED
     seed_moves = {}
     if mint_extras:
-        for aid, move in ONE_TO_MANY_SEED:
+        for aid, move in extra_seed:
             seed_moves.setdefault(aid, []).append(move)
 
     elements = []
@@ -767,6 +832,7 @@ def assemble_elements(atoms, previous, default_move: str, *, mint_extras: bool =
             elements.append(old)
             claimed.add(eid)
 
+    apply_title_hook_for_present_extra(elements, atoms)
     apply_group_ids(elements)
     refresh_text_primitives(elements, atoms_by_id)
     bind_check_shapes(
@@ -976,6 +1042,7 @@ KICKER = {
     "handoff": "On the job",
     "step": "Job aid",
     "scope_list": "Scope list",
+    "purpose_list": "Purpose",
     "doc_list": "The documents listed",
 }
 
@@ -986,12 +1053,37 @@ THIN_HEADING_RE = re.compile(
 GLOSSARY_POINTER_RE = re.compile(r"^for definitions,\s+refer\b", re.I)
 
 
+# Tokens whose trailing period is not a sentence boundary (purpose bullet 1
+# is one sentence that contains "e.g. folding cartons…").
+_ABBREV_TOKENS = frozenset({
+    "e.g", "i.e", "etc", "vs", "mr", "mrs", "ms", "dr", "approx", "fig", "vol",
+})
+
+
+def _is_abbrev_period(text: str, period_index: int) -> bool:
+    word = re.search(r"(\S+)\.$", text[: period_index + 1])
+    if not word:
+        return False
+    token = word.group(1).strip("()[]{}\"'“”‘’«»").lower().rstrip(".")
+    return token in _ABBREV_TOKENS
+
+
+def sentence_boundary_index(text: str) -> int | None:
+    """Index of the first real sentence-ending period, or None."""
+    for m in re.finditer(r"\.\s+", text or ""):
+        if _is_abbrev_period(text, m.start()):
+            continue
+        return m.start()
+    return None
+
+
 def first_sentence(text: str) -> str:
     t = clean_meaning(text or "")
     if not t:
         return ""
-    if ". " in t:
-        return t.split(". ", 1)[0].strip().rstrip(".") + "."
+    idx = sentence_boundary_index(t)
+    if idx is not None:
+        return t[:idx].strip().rstrip(".") + "."
     return t if t.endswith(".") else t + "."
 
 
@@ -1182,14 +1274,17 @@ def procedure_sequence_atoms(atoms) -> list:
     branches = kids(atoms, container["atom_id"])
     if not branches:
         return []
+    # First *real* procedure branch: skip intro paragraphs that sit under
+    # Procedures before A. ALSAP's first child is already A (has steps).
+    for branch in branches:
+        steps = [
+            a for a in kids(atoms, branch["atom_id"])
+            if (a.get("meaning") or {}).get("kind") == "procedure_step"
+            and not is_thin_teaching_atom(a)
+        ]
+        if steps:
+            return steps[:PROCEDURE_SEQUENCE_CAP]
     branch = branches[0]
-    steps = [
-        a for a in kids(atoms, branch["atom_id"])
-        if (a.get("meaning") or {}).get("kind") == "procedure_step"
-        and not is_thin_teaching_atom(a)
-    ]
-    if steps:
-        return steps[:PROCEDURE_SEQUENCE_CAP]
     if not is_thin_teaching_atom(branch):
         kind = (branch.get("meaning") or {}).get("kind")
         if kind in ("procedure", "procedure_step"):
@@ -1503,13 +1598,17 @@ def list_item_parent(el, atoms_by_id):
 def list_item_display(atom) -> str:
     """Verbatim atom text. First sentence only when the source has more than one."""
     src = clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
-    if ". " in src:
+    if sentence_boundary_index(src) is not None:
         return first_sentence(src)
     return src
 
 
-def list_group_kicker(item_els) -> str:
+def list_group_kicker(item_els, atoms_by_id=None) -> str:
     """One kicker for the sibling run — not a Present label per item."""
+    atoms_by_id = atoms_by_id or {}
+    parent = list_item_parent(item_els[0], atoms_by_id) if item_els else None
+    if parent and "purpose" in parent:
+        return KICKER.get("purpose_list", "Purpose")
     moves = {(el.get("intent") or {}).get("move") for el in item_els}
     styles = {(el.get("expression") or {}).get("style_ref") for el in item_els}
     if "exemplify" in moves or "brand.example" in styles:
@@ -3242,7 +3341,7 @@ def _engine_item_list_component(item_els, by_atom) -> dict:
     return {
         "type": "StepList",
         "props": {
-            "kicker": list_group_kicker(item_els),
+            "kicker": list_group_kicker(item_els, by_atom),
             "title": title,
             "ordered": False,
             "items": items,
@@ -3818,7 +3917,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
             )
         return (
             f'<section class="prim item-list{clothes_cls}">'
-            f'<div class="kicker">{esc(list_group_kicker(item_els))}</div>'
+            f'<div class="kicker">{esc(list_group_kicker(item_els, by_atom))}</div>'
             f'{title_html}'
             f'<ul class="items">{"".join(items)}</ul>'
             f'<p class="join">sibling list · {len(item_els)} items · meaning from each atom via '
@@ -4519,6 +4618,25 @@ summary{cursor:pointer;color:var(--mut);font-size:12.5px}
 def selftest(closed_moves):
     """Tiny fixture: extra ids are stable, 1:many shares composed_from, re-run keeps extras."""
     results = []
+
+    purpose_eg = (
+        "manage new or revised artwork in cooperation between Regulatory Affairs (RA) "
+        "and relevant stakeholders to ensure that for each batch of product delivered "
+        "under responsibility of an Astellas entity, the text of all Printed Packaging "
+        "Components (PPC) (e.g. folding cartons, patient leaflets etc.) is verified to "
+        "comply with the registered Product Information (PI), therefore the batch with "
+        "compliant artwork meets (local) regulatory requirements and is suitable for "
+        "distribution release"
+    )
+    results.append(("first_sentence does not split on e.g.",
+                    first_sentence(purpose_eg) == purpose_eg + ".",
+                    first_sentence(purpose_eg)[:80]))
+    results.append(("list_item_display keeps an e.g. list item verbatim",
+                    list_item_display({"meaning": {"source_text": purpose_eg}}) == purpose_eg,
+                    list_item_display({"meaning": {"source_text": purpose_eg}})[:80]))
+    results.append(("first_sentence still splits a real second sentence",
+                    first_sentence("Alpha is one. Beta is two.") == "Alpha is one.",
+                    first_sentence("Alpha is one. Beta is two.")))
 
     def atom(aid, kind, text, parent=None, order=0):
         a = {
@@ -6971,6 +7089,7 @@ def main():
         atoms, previous, move, mint_extras=mint_extras,
         instance_atoms=instance_atoms, form_atoms=form_atoms,
         options_registry=options_registry,
+        seed=one_to_many_seed_for(atoms, store_dir),
     )
     atoms_by_id = meaning_catalog(atoms, form_atoms + instance_atoms)
     validate_elements(elements, element_schema, atoms_by_id)
@@ -7025,9 +7144,10 @@ def main():
 
     mf_path = project / "manifest.json"
     project_name = load(mf_path).get("project", project.name) if mf_path.exists() else project.name
+    used_seed = one_to_many_seed_for(atoms, store_dir)
     seeded_present = [
         {"atom_id": aid, "extra_element_id": mint_extra_element_id(aid, mv), "move": mv}
-        for aid, mv in ONE_TO_MANY_SEED if aid in atoms_by_id
+        for aid, mv in used_seed if aid in atoms_by_id
     ]
     occ_manifest = {
         "store": "occurrences",

@@ -144,11 +144,17 @@ def classify_rhetorical(atom) -> str:
 def is_container_label(atom) -> bool:
     """Section heads whose coverage is a walk over children, not a stored union."""
     aid = atom["atom_id"]
-    return bool(re.search(r"_procedures$", aid) or re.search(r"_proc_[abc]$", aid))
+    return bool(re.search(r"_procedures$", aid) or re.search(r"_proc_[a-z]$", aid))
 
 
-def bind_teaches(atom) -> list[str]:
-    """Sparse objective binding. Empty is honest; never mint obj_ ids."""
+def bind_teaches(atom, project=None) -> list[str]:
+    """Sparse objective binding. Empty is honest; never mint obj_ ids.
+
+    ALSAP draft objectives stay on ALSAP (and selftest fixtures that omit
+    a project name). A second SOP does not inherit obj_explain_alsap_*.
+    """
+    if project and project != "ast_alsap":
+        return []
     aid = atom["atom_id"]
     if "_definitions" in aid or is_container_label(atom) or atom_kind(atom) == "form_field":
         return []
@@ -165,7 +171,17 @@ def bind_teaches(atom) -> list[str]:
     return []
 
 
-def bind_intended_response(atom, move: str) -> str | None:
+def bind_intended_response(atom, move: str, project=None) -> str | None:
+    if project and project != "ast_alsap":
+        if move == "hook":
+            return "attend to the document title this procedure governs"
+        if move == "objective":
+            return "state the process this SOP defines"
+        if move == "reinforce":
+            return "attempt a check that retrieves this atom's meaning, not as new information"
+        if move == "activate":
+            return "notice why this exists as a prior frame, not as a new fact"
+        return None
     if move == "hook":
         return "attend to ALSAP as the asset-level safety plan this procedure governs"
     if move == "objective":
@@ -181,7 +197,7 @@ def bind_intended_response(atom, move: str) -> str | None:
     return None
 
 
-def bind_intent(atom, closed_moves, closed_rhetorical, objective_ids) -> tuple[dict, dict]:
+def bind_intent(atom, closed_moves, closed_rhetorical, objective_ids, project=None) -> tuple[dict, dict]:
     move, confidence, flags = classify_move(atom)
     if move not in closed_moves:
         raise SystemExit(f"heuristic emitted ungoverned move {move!r} for {atom['atom_id']}")
@@ -190,7 +206,7 @@ def bind_intent(atom, closed_moves, closed_rhetorical, objective_ids) -> tuple[d
         raise SystemExit(
             f"heuristic emitted ungoverned rhetorical {rhetorical!r} for {atom['atom_id']}"
         )
-    teaches = bind_teaches(atom)
+    teaches = bind_teaches(atom, project=project)
     unknown = [t for t in teaches if t not in objective_ids]
     if unknown:
         raise SystemExit(f"{atom['atom_id']}: teaches {unknown} not in ontology/objectives.json")
@@ -201,7 +217,7 @@ def bind_intent(atom, closed_moves, closed_rhetorical, objective_ids) -> tuple[d
     intent = {"rhetorical": rhetorical, "move": move}
     if teaches:
         intent["teaches"] = teaches
-    intended = bind_intended_response(atom, move)
+    intended = bind_intended_response(atom, move, project=project)
     if intended:
         intent["intended_response"] = intended
     stamp = {
@@ -213,9 +229,12 @@ def bind_intent(atom, closed_moves, closed_rhetorical, objective_ids) -> tuple[d
     return intent, stamp
 
 
-def bind_intent_for_occurrence(el, atom, closed_moves, closed_rhetorical, objective_ids) -> tuple[dict, dict]:
+def bind_intent_for_occurrence(el, atom, closed_moves, closed_rhetorical, objective_ids,
+                              project=None) -> tuple[dict, dict]:
     """Bind intent on one occurrence. Extra occurrences keep Realizer-stamped `move`."""
-    intent, stamp = bind_intent(atom, closed_moves, closed_rhetorical, objective_ids)
+    intent, stamp = bind_intent(
+        atom, closed_moves, closed_rhetorical, objective_ids, project=project,
+    )
     if not realize.is_extra_element(el):
         return intent, stamp
     rf = (el.get("ext") or {}).get("realized_from") or {}
@@ -229,7 +248,7 @@ def bind_intent_for_occurrence(el, atom, closed_moves, closed_rhetorical, object
         raise SystemExit(f"{el.get('element_id')}: preserved extra move {move!r} is not in the closed vocab")
     intent = dict(intent)
     intent["move"] = move
-    intended = bind_intended_response(atom, move)
+    intended = bind_intended_response(atom, move, project=project)
     if intended:
         intent["intended_response"] = intended
     else:
@@ -534,6 +553,8 @@ def main():
     atoms_bytes = atoms_path.read_bytes()
     atoms_hash_before = sha256_bytes(atoms_bytes)
     atoms = json.loads(atoms_bytes)
+    mf_live = load(project / "manifest.json") if (project / "manifest.json").exists() else {}
+    project_name = mf_live.get("project") or project.name
     instance_atoms = realize.load_instance_example_atoms(project)
     instance_path = realize.sibling_instance_project(project)
     instance_hash_before = (
@@ -568,7 +589,8 @@ def main():
         if atom is None:
             raise SystemExit(f"{eid}: composed_from {cf} is not in the atom store")
         intent, stamp = bind_intent_for_occurrence(
-            el, atom, closed_moves, closed_rhetorical, objective_ids
+            el, atom, closed_moves, closed_rhetorical, objective_ids,
+            project=project_name,
         )
         apply_intent(el, intent, stamp)
 
@@ -594,7 +616,7 @@ def main():
     low_n = sum(1 for e in elements if e.get("ext", {}).get("cartographer", {}).get("confidence") == "low")
     if len(move_counts) < 2:
         raise SystemExit(f"heuristic v1 produced only {dict(move_counts)} — expected mixed moves")
-    if teaches_bound < 1:
+    if teaches_bound < 1 and project_name == "ast_alsap":
         raise SystemExit("heuristic v1 bound teaches on zero occurrences")
 
     mf_path = store_dir / "manifest.json"

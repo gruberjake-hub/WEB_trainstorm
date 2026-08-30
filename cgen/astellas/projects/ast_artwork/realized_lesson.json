@@ -1,0 +1,397 @@
+{
+  "generated_by": "tools/realize.py",
+  "projection_of": {
+    "kind": "lesson",
+    "lesson_id": "ast_artwork_short",
+    "policy": "v1_lesson_on_graph",
+    "spec": "agents/realizer/lesson_v1.md",
+    "engine_policy": "v1_engine_reads_lesson_projection",
+    "graph": "occurrences/",
+    "note": "Course Engine v1 at /cgen reads this projection of the occurrence lesson node (lesson \u2192 scene_ids \u2192 element_ids \u2192 atoms via composed_from; check shapes from manifest.checks). Meaning is resolved from atoms at realize time. meta.theme is the client overlay pack (cgen/brands/<theme>/) \u2014 player chrome, not Couturier style_ref. Not a hand-authored SCORM package. Not cgen/schema/course.schema.json as a rival constitution. Sidecar HTML stays a projector. Rebuild with realize \u2192 cartographer \u2192 couturier."
+  },
+  "meta": {
+    "id": "ast_artwork_short",
+    "title": "SOP-2290 \u2014 Artwork approval process and artwork text management for new or revised Printed Packaging Component.",
+    "title_from": "atom_sop_2290",
+    "theme": "astellas"
+  },
+  "nav": {
+    "linear": true,
+    "showProgress": true,
+    "startSceneId": "what_this_sop_is",
+    "sceneOrder": [
+      "what_this_sop_is",
+      "how_new_artwork_starts",
+      "lesson_end"
+    ]
+  },
+  "paging": {
+    "policy": "v1_one_scene_at_a_time",
+    "spec": "agents/realizer/scenes_v1.md",
+    "scene_count": 2,
+    "step_count": 3,
+    "lesson_end_is_final_step": true,
+    "note": "Player UX on the first-class scene list: one named scene at a time, Next/Back. Definition/purpose checks are a final step after the last scene, not a fourth named scene. Hash is optional. Same membership. Coverage dump stays unpaged."
+  },
+  "scenes": [
+    {
+      "id": "what_this_sop_is",
+      "title": "What this SOP is",
+      "kind": "scene",
+      "role": "front_matter",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "What this SOP is",
+            "kicker": "Front matter"
+          },
+          "meta": {
+            "scene_id": "what_this_sop_is",
+            "role": "front_matter"
+          }
+        },
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "SOP-2290 \u2014 Artwork approval process and artwork text management for new or revised Printed Packaging Component.",
+            "kicker": "Opening"
+          },
+          "meta": {
+            "element_id": "ele_sop_2290",
+            "composed_from": "atom_sop_2290",
+            "text_primitive": "tp_display",
+            "style_ref": "brand.opening"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "SOP-2290 \u2014 Artwork approval process and artwork text management for new or revised Printed Packaging Component.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_sop_2290__present",
+            "composed_from": "atom_sop_2290",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "The purpose of this Standard Operating Procedure (SOP) is to:",
+            "kicker": "Why this"
+          },
+          "meta": {
+            "element_id": "ele_sop_2290_purpose__activate",
+            "composed_from": "atom_sop_2290_purpose",
+            "text_primitive": "tp_callout",
+            "style_ref": "brand.prior"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "The purpose of this Standard Operating Procedure (SOP) is to:",
+            "kicker": "Purpose"
+          },
+          "meta": {
+            "element_id": "ele_sop_2290_purpose",
+            "composed_from": "atom_sop_2290_purpose",
+            "text_primitive": "tp_purpose",
+            "style_ref": "brand.purpose"
+          }
+        },
+        {
+          "type": "StepList",
+          "props": {
+            "kicker": "Purpose",
+            "title": "The purpose of this Standard Operating Procedure (SOP) is to:",
+            "ordered": false,
+            "items": [
+              {
+                "id": "ele_sop_2290_purpose_items_0",
+                "composed_from": "atom_sop_2290_purpose_items_0",
+                "text": "manage new or revised artwork in cooperation between Regulatory Affairs (RA) and relevant stakeholders to ensure that for each batch of product delivered under responsibility of an Astellas entity, the text of all Printed Packaging Components (PPC) (e.g. folding cartons, patient leaflets etc.) is verified to comply with the registered Product Information (PI), therefore the batch with compliant artwork meets (local) regulatory requirements and is suitable for distribution release"
+              },
+              {
+                "id": "ele_sop_2290_purpose_items_1",
+                "composed_from": "atom_sop_2290_purpose_items_1",
+                "text": "ensure that artwork, part of the Marketing Authorisation (MA) in compliance with the regulatory regulations and directives, created, managed, and provided for production by Astellas is controlled in Astellas Artwork Management System BLUE (hereafter BLUE) as per \u201cSOP-2293 Artwork Development with AMS BLUE\u201d"
+              },
+              {
+                "id": "ele_sop_2290_purpose_items_2",
+                "composed_from": "atom_sop_2290_purpose_items_2",
+                "text": "define an implementation schedule for new or revised artwork"
+              },
+              {
+                "id": "ele_sop_2290_purpose_items_3",
+                "composed_from": "atom_sop_2290_purpose_items_3",
+                "text": "describe the role and responsibilities for each different step in the artwork process"
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_sop_2290_purpose_items_0",
+              "ele_sop_2290_purpose_items_1",
+              "ele_sop_2290_purpose_items_2",
+              "ele_sop_2290_purpose_items_3"
+            ],
+            "composed_from": [
+              "atom_sop_2290_purpose_items_0",
+              "atom_sop_2290_purpose_items_1",
+              "atom_sop_2290_purpose_items_2",
+              "atom_sop_2290_purpose_items_3"
+            ],
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "This SOP applies to:",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_sop_2290_scope",
+            "composed_from": "atom_sop_2290_scope",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "StepList",
+          "props": {
+            "kicker": "Scope list",
+            "title": "This SOP applies to:",
+            "ordered": false,
+            "items": [
+              {
+                "id": "ele_sop_2290_scope_who_0",
+                "composed_from": "atom_sop_2290_scope_who_0",
+                "text": "Labeling Management Group Europe (LMG EU) fulfilling the role of (Associate) Artwork Coordination Managers (ACM)"
+              },
+              {
+                "id": "ele_sop_2290_scope_who_1",
+                "composed_from": "atom_sop_2290_scope_who_1",
+                "text": "RA organisation of the Established and Emerging Markets of the region Europe, Middle East and Africa (EMEA) involved in Artwork Management consisting of: (Senior) Directors; RA Representatives"
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_sop_2290_scope_who_0",
+              "ele_sop_2290_scope_who_1"
+            ],
+            "composed_from": [
+              "atom_sop_2290_scope_who_0",
+              "atom_sop_2290_scope_who_1"
+            ],
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "The procedure is applicable for all products where an Astellas entity is the Marketing Authorization Holder (MAH) or where Astellas has legal or regulatory responsibilities (i.e., business partners and license partners).",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_sop_2290_scope_products",
+            "composed_from": "atom_sop_2290_scope_products",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "This procedure is applicable for: specimen before approval; when a product will be launched after approval of the MA; after approval of a change (in a Centralized Procedure (CP), a Mutual Recognition Procedure (MRP) / Decentralized Procedure (DCP) or National Procedure (NP)) in the regulatory file requiring new or revised artwork",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_sop_2290_scope_applicable",
+            "composed_from": "atom_sop_2290_scope_applicable",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Out of scope of this SOP is dispatch/shipment of PPC.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_sop_2290_scope_oos",
+            "composed_from": "atom_sop_2290_scope_oos",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        }
+      ]
+    },
+    {
+      "id": "how_new_artwork_starts",
+      "title": "How a new artwork BLUE project starts",
+      "kind": "scene",
+      "role": "procedure_a",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "How a new artwork BLUE project starts",
+            "kicker": "Procedure A"
+          },
+          "meta": {
+            "scene_id": "how_new_artwork_starts",
+            "role": "procedure_a"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "For new artwork start with Section A. For existing artwork start with Section C.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_sop_2290_procedures_start",
+            "composed_from": "atom_sop_2290_procedures_start",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "StepList",
+          "props": {
+            "kicker": "Job aid",
+            "title": "A. BLUE: Initiate Project for new artwork",
+            "items": [
+              {
+                "id": "ele_sop_2290_proc_a_s1",
+                "composed_from": "atom_sop_2290_proc_a_s1",
+                "text": "If new artwork is applicable: ACM initiates the BLUE Project for new artwork based on the information in the signed Implementation Report (IR) according to WI-AST-10187, by using BLUE and the committed base design."
+              },
+              {
+                "id": "ele_sop_2290_proc_a_s2",
+                "composed_from": "atom_sop_2290_proc_a_s2",
+                "text": "If Mock-up is required to be submitted to HA, ACM starts a BLUE Project as per \u201cWPD-991 LMG Start of a BLUE Project\u201c when requested by the concerned Affiliate. This Mock-Up contains artwork that is for submission purposes."
+              },
+              {
+                "id": "ele_sop_2290_proc_a_s3",
+                "composed_from": "atom_sop_2290_proc_a_s3",
+                "text": "If an immediate implementation of the Mock-Up artwork is required after HA approval, the concerned ACM shall follow the Mock-Up Implementation steps described in SOP-2293."
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_sop_2290_proc_a_s1",
+              "ele_sop_2290_proc_a_s2",
+              "ele_sop_2290_proc_a_s3"
+            ],
+            "composed_from": [
+              "atom_sop_2290_proc_a_s1",
+              "atom_sop_2290_proc_a_s2",
+              "atom_sop_2290_proc_a_s3"
+            ],
+            "text_primitive": "tp_step",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "SequenceOrder",
+          "props": {
+            "id": "sequence:atom_sop_2290_proc_a_s1",
+            "kicker": "Practice",
+            "prompt": "Put these in the order already taught.",
+            "items": [
+              {
+                "id": "atom_sop_2290_proc_a_s2",
+                "text": "If Mock-up is required to be submitted to HA, ACM starts a BLUE Project as per \u201cWPD-991 LMG Start of a BLUE Project\u201c when requested by the concerned Affiliate."
+              },
+              {
+                "id": "atom_sop_2290_proc_a_s3",
+                "text": "If an immediate implementation of the Mock-Up artwork is required after HA approval, the concerned ACM shall follow the Mock-Up Implementation steps described in SOP-2293."
+              },
+              {
+                "id": "atom_sop_2290_proc_a_s1",
+                "text": "If new artwork is applicable: ACM initiates the BLUE Project for new artwork based on the information in the signed Implementation Report (IR) according to WI-AST-10187, by using BLUE and the committed base design."
+              }
+            ],
+            "correctIds": [
+              "atom_sop_2290_proc_a_s1",
+              "atom_sop_2290_proc_a_s2",
+              "atom_sop_2290_proc_a_s3"
+            ],
+            "feedback": {
+              "correct": "Correct \u2014 that\u2019s the order on the job aid already shown.",
+              "incorrect": "Not yet. Use the sequence on the job aid above."
+            }
+          },
+          "meta": {
+            "shape": "sequence_order",
+            "from": "manifest.checks",
+            "atom_ids": [
+              "atom_sop_2290_proc_a_s1",
+              "atom_sop_2290_proc_a_s2",
+              "atom_sop_2290_proc_a_s3"
+            ],
+            "style_ref": "brand.recall"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lesson_end",
+      "title": "",
+      "kind": "lesson_end",
+      "components": [
+        {
+          "type": "MCQ",
+          "props": {
+            "id": "ele_sop_2290_def_blue__reinforce",
+            "kicker": "Check",
+            "stem": "What is BLUE?",
+            "choices": [
+              {
+                "id": "key",
+                "text": "a software application for managing the artwork change control process within Astellas",
+                "correct": true
+              },
+              {
+                "id": "d:atom_sop_2290_def_blue_project",
+                "text": "A BLUE Project contains 16 BLUE Tasks which must be performed in a predefined sequence in order to produce a desired outcome, such as an approved piece of artwork.",
+                "correct": false
+              }
+            ],
+            "feedback": {
+              "correct": "Correct \u2014 that\u2019s the wording from this definition (\u201ca software application for managing the artwork change control process within Astellas\u201d).",
+              "incorrect": "Not yet. The other options are other sentences from this lesson, not this definition."
+            }
+          },
+          "meta": {
+            "element_id": "ele_sop_2290_def_blue__reinforce",
+            "composed_from": "atom_sop_2290_def_blue",
+            "shape": "invert_definition",
+            "from": "manifest.checks",
+            "text_primitive": "tp_recall",
+            "style_ref": "brand.recall"
+          }
+        }
+      ]
+    }
+  ],
+  "vars": {
+    "ccOn": false,
+    "completedScenes": []
+  },
+  "rules": []
+}

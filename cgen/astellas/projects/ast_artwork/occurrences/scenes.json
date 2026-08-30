@@ -1,0 +1,56 @@
+{
+  "store": "scenes",
+  "project": "ast_artwork",
+  "policy": "v1_scene_catalog",
+  "spec": "agents/realizer/scenes_v1.md",
+  "vocab": "vocab/scene.enum.json",
+  "scenes": [
+    {
+      "id": "what_this_sop_is",
+      "role": "front_matter",
+      "heading": "What this SOP is",
+      "kicker": "Front matter",
+      "element_ids": [
+        "ele_sop_2290",
+        "ele_sop_2290__present",
+        "ele_sop_2290_purpose__activate",
+        "ele_sop_2290_purpose",
+        "ele_sop_2290_purpose_items_0",
+        "ele_sop_2290_purpose_items_1",
+        "ele_sop_2290_purpose_items_2",
+        "ele_sop_2290_purpose_items_3",
+        "ele_sop_2290_scope",
+        "ele_sop_2290_scope_who_0",
+        "ele_sop_2290_scope_who_1",
+        "ele_sop_2290_scope_products",
+        "ele_sop_2290_scope_applicable",
+        "ele_sop_2290_scope_oos"
+      ],
+      "checks": [],
+      "from": "Document-root opening, why-this callout of purpose, the four purpose bullets as one list, and scope (who + products / applicable situations + out of scope dispatch/shipment of PPC). Thin list-container headings stay skipped. Related-process siblings (WPD-1172 / SOP-2502 / SOP-3184) stay coverage."
+    },
+    {
+      "id": "how_new_artwork_starts",
+      "role": "procedure_a",
+      "heading": "How a new artwork BLUE project starts",
+      "kicker": "Procedure A",
+      "element_ids": [
+        "ele_sop_2290_procedures_start",
+        "ele_sop_2290_proc_a_s1",
+        "ele_sop_2290_proc_a_s2",
+        "ele_sop_2290_proc_a_s3"
+      ],
+      "checks": [
+        {
+          "shape": "sequence_order",
+          "see": "checks"
+        }
+      ],
+      "from": "Intro line from the SOP (For new artwork start with Section A. For existing artwork start with Section C.) plus Procedure A ACM actions in object.order as one job-aid. Projector-only sequence_order of those three presents. Not B–L. No FORM-AST instance scene."
+    }
+  ],
+  "lesson_end_check_ids": [
+    "ele_sop_2290_def_blue__reinforce"
+  ],
+  "note": "Closed project catalog. Source of truth for scene records. Realizer reads this file and stamps spine.scenes (runtime view). No form_br scene — this SOP has no honest closed form fill. Lesson-end invert is BLUE (copula). Coverage dump keeps B–L and the rest."
+}

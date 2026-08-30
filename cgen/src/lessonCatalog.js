@@ -1,17 +1,38 @@
-/** Resolve a Course Engine lesson from the project catalog.
+/** Resolve a Course Engine lesson from a project catalog.
  *
  *  `occurrences/lessons.json` is the source of truth. Each record's
  *  `projection` is the existing realize sidecar name at the project
  *  root (`realized_lesson.json` / `realized_lesson_{suffix}.json`).
  *  The player is not an ALSAP filename special-case.
  *
- *  `/cgen` still points at one stand-in catalog. A future URL names
- *  client + course (which catalog). `?lesson=` is which record loads.
- *  Not a catalog UI.
+ *  `/cgen` default catalog is ALSAP. `?project=<slug>` selects a
+ *  sibling store's catalog (`cgen/astellas/projects/<slug>/occurrences/lessons.json`).
+ *  `?lesson=` is which record loads inside that catalog. Not a catalog UI.
+ *  No pretty-URL / Netlify rewrite.
  */
+
+export const DEFAULT_PROJECT = "ast_alsap";
 
 export const DEFAULT_CATALOG_URL =
   "./astellas/projects/ast_alsap/occurrences/lessons.json";
+
+const PROJECT_RE = /^[A-Za-z0-9_-]+$/;
+
+/** Stand-in catalog path for a project slug. Empty string if the slug is unsafe. */
+export function catalogUrlForProject(project) {
+  const slug =
+    project == null || project === "" ? DEFAULT_PROJECT : String(project);
+  if (!PROJECT_RE.test(slug)) return "";
+  return `./astellas/projects/${slug}/occurrences/lessons.json`;
+}
+
+export function unknownProjectMessage(project) {
+  const shown = project ? `"${project}"` : "(empty)";
+  return (
+    `Unknown or invalid project ${shown}. Use a project slug such as ` +
+    `${DEFAULT_PROJECT} or ast_artwork.`
+  );
+}
 
 const CATALOG_MARKER = "/occurrences/lessons.json";
 

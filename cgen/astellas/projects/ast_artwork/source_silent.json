@@ -1,0 +1,15 @@
+{
+  "_note": "Gaps where the source is silent or this extract is incomplete. Named, not invented.",
+  "corpus": "SOP-2290 (working id; Vault export does not print its own SOP number on the face; supersedes SOP-2290 v 4.0) — Artwork approval process and artwork text management for new or revised Printed Packaging Component (Astellas Pharma Europe B.V. Leiden; Pharmaceutical Technology / Supply Chain Management; status Effective). Authored extract, not a generic docx parse.",
+  "gaps": [
+    "SOP number on the face — Vault export used for this hop does not print its own SOP number. Working id SOP-2290 from supersedes SOP-2290 v 4.0. Not treated as a printed document number.",
+    "governance.owner — owning division is Pharmaceutical Technology / Supply Chain Management / Astellas Pharma Europe B.V. Leiden; inferred 'team_pt_scm_emea' and flagged.",
+    "DEFINITIONS — Artwork, CID, UID-related, ASD named; glossary prose not in the supplied extract. BLUE and BLUE Project are verbatim. Not a whole-glossary short lesson.",
+    "Roles table — actors are not in governed roles.registry; Headwater note on the roles atom; not a taught RACI course.",
+    "Procedure B–L — section titles only in this extract (Give instructions; Assess impact; Determine implementation overlap; Initiate artwork change; Additional BLUE start info; Development of Artwork; Review; Cancellation; Approve; Defining the CID; Artwork Implementation). Step actions not invented. Each letter is a procedure container plus one thin title-only procedure_step for coverage.",
+    "Procedures intro — extract ends the RA Representative sentence with an ellipsis; kept verbatim. Not completed.",
+    "Embedded conditionals in A.s1–s3 ('If new artwork…', 'If Mock-up…', 'If an immediate implementation…') — candidate decision steps; kept atomic + flagged, same as ALSAP B.s2.",
+    "FORM-AST — this SOP has no honest closed form fill. No form/instance scene.",
+    "ISO 14971 — not this document. Not ingested."
+  ]
+}
