@@ -13,6 +13,19 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-30 — STRUCTURE reconciled against this main (log refresh)
+
+Score hop only. `STRUCTURE.md` tree + First moves brought to 2026-08-30
+against `cgen/trainstorm-core`, not wider `cgen/` vestiges. Course-half
+hops after 2026-08-26 (checks, scenes, lessons, `/cgen` player, brand
+chrome, learner labels, hide-VO, `?lesson=`) marked done; cite the
+dated `DECISIONS.md` blocks. Item 7 brunswick gold course stays open.
+`ast_artwork` is on PR #42 Draft, **not on this main** — no `?project=`.
+No new product. Working-process block untouched. Claude remains a
+co-builder.
+
+---
+
 ## 2026-08-27 — Astellas brand pack is player chrome at `/cgen`
 
 Couturier v1 already wrote pedagogical look keys on occurrences

@@ -2048,4 +2048,84 @@ path. The catalog, realize naming, brand chrome, Couturier roles, and
 check surfaces stand. Pretty client/course URL still later.
 Working-process block untouched. Single-writer per facet stands.
 
+---
+
+## 2026-08-30 — STRUCTURE score: course-half hops since 2026-08-26 vs `cgen/` vestiges
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Score this checkout against `cgen/trainstorm-core` (the
+essential structure), not the wider `cgen/` accretion. Update
+`STRUCTURE.md` (tree + First moves; reconciled 2026-08-30). This is a
+**log refresh**, not new product. Working-process block untouched.
+Claude remains a co-builder.
+
+**On this main (2026-08-30):** no `ast_artwork` project;
+`cgen/src/lessonCatalog.js` is ALSAP-only (`?lesson=`, no `?project=`);
+PR #42 is still Draft. Artwork is **on PR #42, not on main**. Do not
+merge #42 from this hop.
+
+**Course half landed after the 2026-08-26 first-moves** (mark ✅; cite
+the dated blocks already in this file):
+
+- Check shapes on the graph — 2026-08-27
+  (`invert_definition` / `sequence_order` / `closed_choice`)
+- Scenes catalog + one-scene pager — 2026-08-26 / 2026-08-27
+- Lesson as a graph object + `occurrences/lessons.json` — 2026-08-27
+- `/cgen` Course Engine reads `realized_lesson.json` — 2026-08-27;
+  catalog `?lesson=` — 2026-08-30
+- Astellas brand pack as **player chrome** — 2026-08-27
+  (`cgen/brands/`, `meta.theme`); Couturier `style_ref` stays
+  pedagogical roles
+- Learner-facing check copy + registry **labels** — 2026-08-27
+- Instance example fill shows registry labels — 2026-08-28
+- ALSAP scene 1 in-scope org + governance-doc lists — 2026-08-29
+- Hide unused CC/audio unless the lesson has voiceover — 2026-08-29
+
+Document half was already green. Identity 1:many, primitives hop,
+Procedure A job-aid + sequence, form BR present, ASP-9999 example:
+already decided — do not re-litigate.
+
+**Vestiges (not remaining core work):** `cgen/lumina`; tabled
+`/cgen/alsap` rewrite; zips (`layout-engine.zip`,
+`manifold_bundle_copilot_aug626.zip`, `trainstorm-core.zip`); `.lnk` /
+`desktop.ini`; `README-START-HERE.md` (2026-07-31 drop note);
+`trainstorm-core/README.md` locales text (misfiled);
+`project/ast_alsap/review_matrix.csv` (already flagged);
+`cgen/schema/course.schema.json` is not a rival constitution.
+Layout-engine potx/sidecars stay a parallel expression path, not the
+live `/cgen` HTML player. Do not delete those files in this hop.
+
+**Specified, still open:** `reference/brunswick.reference.course.json`
+still `{"_todo"}` (proof of the course half end-to-end);
+`tools/render/` PNG; Dragoman / `locales/`;
+`vocab/primitives.registry.json` partial; `registry/templates/`;
+visual-asset track; `ingest-decompose/` retire or merge; ontology
+goals/objectives still `status: example`.
+
+**Parked / walled — not next hops:** runtime Chameleon / LRE /
+Responsive Engine; Headwater outcomes-mode; LLM distractor-writer;
+pretty `/cgen/{client}/{course}` URLs; `/cgen/alsap` rewrite;
+slide-authoring frontend; ingest UI on the static Netlify site;
+ISO 14971; Procedure B on ALSAP; Generator's divergent distractors;
+Strategist / Designer / Audience as live agents. Authoring Chameleon
+stays a contract; no `chameleon.py`.
+
+**Why:** First moves still read as if the course half had only reached
+Realizer / Cartographer / Couturier v1. The hops after 2026-08-26 are
+on main and already have dated blocks here. Scoring them in
+`STRUCTURE.md` keeps the tree honest without opening new product.
+
+**Consequences:**
+- `STRUCTURE.md` First moves 1–6 stay done; post-26 hops marked done;
+  item 7 brunswick gold course stays open.
+- Assistants name remaining specified-open work; they do not treat
+  vestiges or parked walls as next hops.
+- No agent-prompt or tools rewrite. No zip cleanup.
+
+**Supersedes:** the 2026-08-20 STRUCTURE reconciliation date and any
+reading that the post-2026-08-26 course-half hops are still First
+moves. Those hops' own blocks stand. Working-process block untouched.
+Single-writer per facet stands.
+
 
