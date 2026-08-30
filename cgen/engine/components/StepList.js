@@ -1,7 +1,8 @@
 export function StepList({ props }) {
   const wrap = document.createElement("section");
   wrap.className = "stepList";
-  wrap.setAttribute("aria-label", props.title || "Job aid");
+  const ordered = props.ordered !== false;
+  wrap.setAttribute("aria-label", props.title || (ordered ? "Job aid" : "List"));
 
   if (props.kicker) {
     const kicker = document.createElement("p");
@@ -16,15 +17,15 @@ export function StepList({ props }) {
     wrap.appendChild(title);
   }
 
-  const ol = document.createElement("ol");
-  ol.className = "steps";
+  const list = document.createElement(ordered ? "ol" : "ul");
+  list.className = ordered ? "steps" : "items";
   for (const item of props.items || []) {
     const li = document.createElement("li");
     if (item.id) li.dataset.eid = item.id;
     if (item.composed_from) li.dataset.atom = item.composed_from;
     li.textContent = item.text || "";
-    ol.appendChild(li);
+    list.appendChild(li);
   }
-  wrap.appendChild(ol);
+  wrap.appendChild(list);
   return wrap;
 }

@@ -247,9 +247,10 @@ SCENE_DEFS = (
         "heading": "What an ALSAP is",
         "kicker": "Front matter",
         "from": (
-            "Document-root opening, why-this callout of purpose, and teachable "
-            "front-matter primaries (purpose / scope / general). Those atoms "
-            "are the SOP’s definitional front-matter."
+            "Document-root opening, why-this callout of purpose, teachable "
+            "front-matter primaries (purpose / scope / general), and the "
+            "in-scope org / governance-doc children those presents already "
+            "say are listed below. Thin list-container headings stay skipped."
         ),
     },
     {
@@ -972,6 +973,8 @@ KICKER = {
     "example": "Example",
     "handoff": "On the job",
     "step": "Job aid",
+    "scope_list": "Scope list",
+    "doc_list": "The documents listed",
 }
 
 THIN_HEADING_RE = re.compile(
@@ -1332,6 +1335,8 @@ def apply_spine(manifest, atoms, elements, *, meaning_atoms=None, option_sets=No
                 lesson_catalog=None, scene_catalog=None) -> dict:
     """Stamp spine keys on the occurrence manifest. Pure projection; mints/drops no ele_."""
     ids = select_spine(atoms, elements)
+    if scene_catalog:
+        ids = spine_ids_from_catalog(scene_catalog, elements, fallback=ids)
     manifest["spine"] = {
         "policy": SPINE_POLICY,
         "spec": SPINE_SPEC,
@@ -1455,6 +1460,68 @@ def job_aid_title(first_el, atoms_by_id) -> str:
     return clean_meaning((parent.get("meaning") or {}).get("source_text") or "")
 
 
+def catalog_claimed_ids(scene_catalog) -> list:
+    """Ordered catalog membership: scene element_ids then lesson-end checks."""
+    out = []
+    seen = set()
+    for rec in scene_catalog.get("scenes") or []:
+        if not isinstance(rec, dict):
+            continue
+        for eid in rec.get("element_ids") or []:
+            if eid and eid not in seen:
+                out.append(eid)
+                seen.add(eid)
+    if "lesson_end_check_ids" in scene_catalog:
+        end = scene_catalog.get("lesson_end_check_ids") or []
+    else:
+        end = scene_catalog.get("lesson_end_checks") or []
+    for eid in end:
+        if eid and eid not in seen:
+            out.append(eid)
+            seen.add(eid)
+    return out
+
+
+def spine_ids_from_catalog(scene_catalog, elements, fallback) -> list:
+    """When a catalog exists, membership is that list — not a Python id fork."""
+    on_graph = {e["element_id"] for e in elements}
+    claimed = catalog_claimed_ids(scene_catalog)
+    out = [eid for eid in claimed if eid in on_graph]
+    return out or list(fallback)
+
+
+def list_item_parent(el, atoms_by_id):
+    """Same-parent list_item siblings group as one list. None if not a list item."""
+    atom = atoms_by_id.get(el.get("composed_from")) or {}
+    if (atom.get("meaning") or {}).get("kind") != "list_item":
+        return None
+    return atom_belongs_to(atom)
+
+
+def list_item_display(atom) -> str:
+    """Verbatim atom text. First sentence only when the source has more than one."""
+    src = clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
+    if ". " in src:
+        return first_sentence(src)
+    return src
+
+
+def list_group_kicker(item_els) -> str:
+    """One kicker for the sibling run — not a Present label per item."""
+    moves = {(el.get("intent") or {}).get("move") for el in item_els}
+    styles = {(el.get("expression") or {}).get("style_ref") for el in item_els}
+    if "exemplify" in moves or "brand.example" in styles:
+        return KICKER.get("doc_list", "The documents listed")
+    return KICKER.get("scope_list", "Scope list")
+
+
+def shared_style_ref(els):
+    refs = [(el.get("expression") or {}).get("style_ref") for el in els]
+    if refs and refs[0] and all(r == refs[0] for r in refs):
+        return refs[0]
+    return None
+
+
 def primitive_class(el) -> str:
     tp = (el.get("expression") or {}).get("text_primitive") or ""
     return {
@@ -1467,8 +1534,9 @@ def primitive_class(el) -> str:
     }.get(tp, "")
 
 
-def group_spine_for_project(spine_ids, by_eid):
-    """Consecutive tp_step occurrences become one job-aid run. Other beats stay singles."""
+def group_spine_for_project(spine_ids, by_eid, atoms_by_id=None):
+    """Consecutive tp_step → one job-aid. Consecutive list_item siblings → one list."""
+    atoms_by_id = atoms_by_id or {}
     groups = []
     i = 0
     n = len(spine_ids)
@@ -1486,9 +1554,20 @@ def group_spine_for_project(spine_ids, by_eid):
                 run.append(nxt)
                 i += 1
             groups.append(("job_aid", run))
-        else:
-            groups.append(("card", [el]))
-            i += 1
+            continue
+        parent = list_item_parent(el, atoms_by_id)
+        if parent:
+            run = []
+            while i < n:
+                nxt = by_eid.get(spine_ids[i])
+                if nxt is None or list_item_parent(nxt, atoms_by_id) != parent:
+                    break
+                run.append(nxt)
+                i += 1
+            groups.append(("item_list", run))
+            continue
+        groups.append(("card", [el]))
+        i += 1
     return groups
 
 
@@ -3092,19 +3171,50 @@ def _engine_step_list_component(step_els, by_atom) -> dict:
             "text": _engine_atom_text(atom),
         })
     title = job_aid_title(step_els[0], by_atom)
-    refs = [(el.get("expression") or {}).get("style_ref") for el in step_els]
     meta = {
         "element_ids": [el["element_id"] for el in step_els],
         "composed_from": [el["composed_from"] for el in step_els],
         "text_primitive": PRIMITIVE_STEP,
     }
-    if refs and refs[0] and all(r == refs[0] for r in refs):
-        meta["style_ref"] = refs[0]
+    ref = shared_style_ref(step_els)
+    if ref:
+        meta["style_ref"] = ref
     return {
         "type": "StepList",
         "props": {
             "kicker": KICKER.get("step", "Job aid"),
             "title": title,
+            "items": items,
+        },
+        "meta": meta,
+    }
+
+
+def _engine_item_list_component(item_els, by_atom) -> dict:
+    """Sibling list_item presents as one StepList (unordered). Reuses the job-aid component."""
+    items = []
+    for el in item_els:
+        atom = by_atom[el["composed_from"]]
+        items.append({
+            "id": el["element_id"],
+            "composed_from": el["composed_from"],
+            "text": list_item_display(atom),
+        })
+    title = job_aid_title(item_els[0], by_atom)
+    meta = {
+        "element_ids": [el["element_id"] for el in item_els],
+        "composed_from": [el["composed_from"] for el in item_els],
+        "text_primitive": PRIMITIVE_BODY,
+    }
+    ref = shared_style_ref(item_els)
+    if ref:
+        meta["style_ref"] = ref
+    return {
+        "type": "StepList",
+        "props": {
+            "kicker": list_group_kicker(item_els),
+            "title": title,
+            "ordered": False,
             "items": items,
         },
         "meta": meta,
@@ -3211,9 +3321,12 @@ def _engine_closed_choice_component(chk, options_registry=None) -> dict:
 
 def _engine_components_for_ids(ids, by_eid, by_atom, options_registry) -> list:
     comps = []
-    for kind, els in group_spine_for_project(ids, by_eid):
+    for kind, els in group_spine_for_project(ids, by_eid, by_atom):
         if kind == "job_aid":
             comps.append(_engine_step_list_component(els, by_atom))
+            continue
+        if kind == "item_list":
+            comps.append(_engine_item_list_component(els, by_atom))
             continue
         el = els[0]
         rec = hosted_check(el)
@@ -3647,11 +3760,51 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
     lesson_title = lesson["title"]
     lesson_key = lesson["lesson_id"]
 
+    def item_list_block_html(item_els):
+        title = job_aid_title(item_els[0], by_atom)
+        title_html = f'<h2 class="list-title">{esc(title)}</h2>' if title else ""
+        clothes = CLOTHES_CLASS.get(shared_style_ref(item_els) or "", "")
+        clothes_cls = f" {clothes}" if clothes else ""
+        items = []
+        for el in item_els:
+            atom = by_atom[el["composed_from"]]
+            sh = (el.get("source_hash") or "")[:19]
+            expr = el.get("expression") or {}
+            tp = expr.get("text_primitive") or ""
+            join = (
+                f'composed_from <span class="mono">{esc(el["composed_from"])}</span>'
+                f' · source_hash <span class="mono">{esc(sh)}…</span>'
+                f' · primitive <span class="mono">{esc(tp)}</span>'
+            )
+            items.append(
+                f'<li class="item" data-eid="{esc(el["element_id"])}">'
+                f'<div class="meta">'
+                f'<span class="id">{esc(el["element_id"])}</span>'
+                f'{pills_for(el)}'
+                f'</div>'
+                f'<p class="meaning">{esc(list_item_display(atom))}</p>'
+                f'<div class="join">{join}</div>'
+                f'</li>'
+            )
+        return (
+            f'<section class="prim item-list{clothes_cls}">'
+            f'<div class="kicker">{esc(list_group_kicker(item_els))}</div>'
+            f'{title_html}'
+            f'<ul class="items">{"".join(items)}</ul>'
+            f'<p class="join">sibling list · {len(item_els)} items · meaning from each atom via '
+            f'<span class="mono">composed_from</span> · not authored '
+            f'<span class="mono">content.text</span></p>'
+            f'</section>'
+        )
+
     def render_beat_groups(ids):
         chunks = []
-        for kind, els in group_spine_for_project(ids, by_eid):
+        for kind, els in group_spine_for_project(ids, by_eid, by_atom):
             if kind == "job_aid":
                 chunks.append(job_aid_block_html(els))
+                continue
+            if kind == "item_list":
+                chunks.append(item_list_block_html(els))
                 continue
             el = els[0]
             atom = by_atom[el["composed_from"]]
@@ -4004,6 +4157,18 @@ form.check .check-note{font-size:11.5px;color:var(--mut);margin:10px 0 0}
 .job-aid li.step .meaning{grid-column:2;margin:0 0 4px;font-size:15.5px;line-height:1.45}
 .job-aid li.step .join{grid-column:2}
 .job-aid > .join{margin:10px 0 4px}
+.item-list{border:1px solid var(--line);border-left:4px solid #1e3a8a;border-radius:8px;
+ padding:16px 18px 10px;margin:16px 0;background:#fff}
+.item-list.style-example{background:#faf5ff;border-color:#c4b5fd;border-left-color:#6d28d9}
+.item-list .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+ color:#1e3a8a;margin:0 0 6px}
+.item-list.style-example .kicker{color:#6d28d9}
+.item-list .list-title{font-size:16px;margin:0 0 10px;letter-spacing:-.01em}
+.item-list ul.items{margin:0;padding:0 0 0 1.2rem}
+.item-list li.item{padding:8px 0;border-top:1px solid var(--line)}
+.item-list li.item .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 4px}
+.item-list li.item .meaning{margin:0 0 4px;font-size:15.5px;line-height:1.45}
+.item-list > .join{margin:10px 0 4px}
 .player{margin:4px 0 24px}
 .player-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;
  position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:10px 0 12px;
@@ -4478,8 +4643,39 @@ def selftest(closed_moves):
         "Provide the ALSAP Lead with contributions to the ALSAP within the agreed-upon timeframe.",
         "atom_sop_ast29080_proc_b", 0,
     )
+    scope_orgs = atom(
+        "atom_sop_ast29080_scope_orgs", "list",
+        "Organizations in scope of this SOP.",
+        "atom_sop_ast29080_scope", 0,
+    )
+    org0 = atom(
+        "atom_sop_ast29080_scope_orgs_0", "list_item",
+        "Biopharma & Ophthalmology Development (BOD)",
+        "atom_sop_ast29080_scope_orgs", 0,
+    )
+    org1 = atom(
+        "atom_sop_ast29080_scope_orgs_1", "list_item",
+        "Clinical Operations & Quantitative Science (COQS)",
+        "atom_sop_ast29080_scope_orgs", 1,
+    )
+    govdocs = atom(
+        "atom_sop_ast29080_general_govdocs", "list",
+        "Existing safety governance documents the ALSAP operationalizes.",
+        "atom_sop_ast29080_general", 0,
+    )
+    gdoc0 = atom(
+        "atom_sop_ast29080_general_govdocs_0", "list_item",
+        "Safe First Dosing Guidance (SFDG): establishes initial safety considerations prior to First in Human (FIH).",
+        "atom_sop_ast29080_general_govdocs", 0,
+    )
+    gdoc1 = atom(
+        "atom_sop_ast29080_general_govdocs_1", "list_item",
+        "Development Risk Management Plan (DRMP): defines regulatory risk strategy prior to Phase 2.",
+        "atom_sop_ast29080_general_govdocs", 1,
+    )
     store = [title_live, purpose_live, scope_live, general_live, thin, definitions,
-             procedures, proc_a, proc_b, step, step2, step3, step4, step_b]
+             procedures, proc_a, proc_b, step, step2, step3, step4, step_b,
+             scope_orgs, org0, org1, govdocs, gdoc0, gdoc1]
 
     chk_g = derive_check(general_live, store)
     assert_check_honest(chk_g, general_live, store)
@@ -4551,6 +4747,15 @@ def selftest(closed_moves):
         "content_role": "callout",
         "layout_hint": "callout",
     }
+    for eid in ("ele_sop_ast29080_general_govdocs_0", "ele_sop_ast29080_general_govdocs_1"):
+        g_el = next(e for e in seeded if e["element_id"] == eid)
+        g_el["intent"]["move"] = "exemplify"
+        g_el["expression"] = {
+            "style_ref": "brand.example",
+            "text_primitive": "tp_body",
+            "content_role": "example",
+            "layout_hint": "cite",
+        }
     want_spine = [
         "ele_sop_ast29080",
         "ele_sop_ast29080__present",
@@ -4586,6 +4791,12 @@ def selftest(closed_moves):
                     < got_spine.index("ele_sop_ast29080_proc_a_s4"), got_spine))
     results.append(("spine skips branch B",
                     "ele_sop_ast29080_proc_b_s1" not in got_spine, ""))
+    results.append(("heuristic spine skips thin list-container headings",
+                    "ele_sop_ast29080_scope_orgs" not in got_spine
+                    and "ele_sop_ast29080_general_govdocs" not in got_spine, ""))
+    results.append(("heuristic spine skips list-item descendants until the catalog claims them",
+                    "ele_sop_ast29080_scope_orgs_0" not in got_spine
+                    and "ele_sop_ast29080_general_govdocs_0" not in got_spine, ""))
     results.append(("procedure A steps stay 1:1 (no extra reinforce)",
                     all(sum(1 for e in seeded if e["composed_from"] == aid) == 1
                         for aid in (
@@ -5126,7 +5337,137 @@ def selftest(closed_moves):
                     .split("</article>", 1)[0].count('form class="check"') == 0, ""))
     results.append(("coverage dump stays card-like (no job-aid grouping)",
                     "class=\"prim prim-step job-aid\"" not in cov_page
+                    and "class=\"prim item-list\"" not in cov_page
                     and "ele_sop_ast29080_proc_a_s1" in cov_page, ""))
+    results.append(("heuristic lesson does not pull list-item descendants",
+                    "ele_sop_ast29080_scope_orgs_0" not in page
+                    and "ele_sop_ast29080_general_govdocs_0" not in page, ""))
+    seeded_by_eid_list = {e["element_id"]: e for e in seeded}
+    list_ids = [
+        "ele_sop_ast29080_scope",
+        "ele_sop_ast29080_scope_orgs_0",
+        "ele_sop_ast29080_scope_orgs_1",
+        "ele_sop_ast29080_general",
+        "ele_sop_ast29080_general_govdocs_0",
+        "ele_sop_ast29080_general_govdocs_1",
+    ]
+    list_groups = group_spine_for_project(list_ids, seeded_by_eid_list, store_by_id)
+    results.append(("consecutive list_item siblings group as one list not cards",
+                    [k for k, _ in list_groups] == ["card", "item_list", "card", "item_list"]
+                    and [el["element_id"] for el in list_groups[1][1]]
+                    == ["ele_sop_ast29080_scope_orgs_0", "ele_sop_ast29080_scope_orgs_1"]
+                    and [el["element_id"] for el in list_groups[3][1]]
+                    == ["ele_sop_ast29080_general_govdocs_0",
+                        "ele_sop_ast29080_general_govdocs_1"],
+                    [k for k, _ in list_groups]))
+    grouping_src = "\n".join(inspect.getsource(fn) for fn in (
+        group_spine_for_project, list_item_parent, list_group_kicker,
+        spine_ids_from_catalog, catalog_claimed_ids,
+        _engine_item_list_component,
+    ))
+    results.append(("list grouping does not special-case ALSAP element ids",
+                    "ele_sop_ast29080_scope_orgs_0" not in grouping_src
+                    and "ele_sop_ast29080_general_govdocs_0" not in grouping_src,
+                    ""))
+    cat_listed = {
+        "policy": SCENE_CATALOG_POLICY,
+        "scenes": [
+            {
+                "id": "what_an_alsap_is",
+                "role": SCENE_FRONT_MATTER,
+                "heading": "What an ALSAP is",
+                "kicker": "Front matter",
+                "element_ids": [
+                    "ele_sop_ast29080",
+                    "ele_sop_ast29080__present",
+                    "ele_sop_ast29080_purpose__activate",
+                    "ele_sop_ast29080_purpose",
+                    "ele_sop_ast29080_scope",
+                    "ele_sop_ast29080_scope_orgs_0",
+                    "ele_sop_ast29080_scope_orgs_1",
+                    "ele_sop_ast29080_general",
+                    "ele_sop_ast29080_general_govdocs_0",
+                    "ele_sop_ast29080_general_govdocs_1",
+                ],
+                "checks": [],
+            },
+            {
+                "id": "how_an_alsap_starts",
+                "role": SCENE_PROCEDURE_A,
+                "heading": "How an ALSAP starts",
+                "kicker": "Procedure A",
+                "element_ids": [
+                    "ele_sop_ast29080_proc_a_s1",
+                    "ele_sop_ast29080_proc_a_s2",
+                    "ele_sop_ast29080_proc_a_s3",
+                    "ele_sop_ast29080_proc_a_s4",
+                ],
+                "checks": [{"shape": SHAPE_SEQUENCE, "see": "checks"}],
+            },
+        ],
+        "lesson_end_check_ids": [
+            "ele_sop_ast29080_purpose__reinforce",
+            "ele_sop_ast29080_general__reinforce",
+        ],
+    }
+    mf_listed = {"project": "course"}
+    apply_spine(mf_listed, store, seeded, scene_catalog=cat_listed)
+    listed_ids = (mf_listed.get("spine") or {}).get("element_ids") or []
+    results.append(("catalog membership includes listed-below children the heuristic skipped",
+                    "ele_sop_ast29080_scope_orgs_0" in listed_ids
+                    and "ele_sop_ast29080_general_govdocs_0" in listed_ids
+                    and listed_ids.index("ele_sop_ast29080_scope")
+                    < listed_ids.index("ele_sop_ast29080_scope_orgs_0")
+                    < listed_ids.index("ele_sop_ast29080_general")
+                    < listed_ids.index("ele_sop_ast29080_general_govdocs_0")
+                    and "ele_sop_ast29080_scope_orgs" not in listed_ids
+                    and "ele_sop_ast29080_general_govdocs" not in listed_ids,
+                    listed_ids))
+    with tempfile.TemporaryDirectory() as td_listed:
+        listed_path = pathlib.Path(td_listed) / "realized_lesson.html"
+        project_html(
+            store, seeded, {"project": "listed"}, listed_path,
+            scene_catalog=cat_listed,
+        )
+        page_listed = listed_path.read_text()
+    mf_eng = {"project": "listed"}
+    apply_spine(mf_eng, store, seeded, scene_catalog=cat_listed)
+    stamp_checks(mf_eng, store, seeded)
+    engine_listed = build_engine_course(store, seeded, mf_eng)
+    fm_comps = next(
+        (s.get("components") or [] for s in engine_listed.get("scenes") or []
+         if s.get("id") == "what_an_alsap_is"),
+        [],
+    )
+    fm_lists = [c for c in fm_comps if c.get("type") == "StepList"]
+    results.append(("catalog lesson projects two sibling lists not stacked Present cards",
+                    page_listed.count('class="prim item-list') == 2
+                    and page_listed.count("Scope list") == 1
+                    and page_listed.count("The documents listed") == 1
+                    and "Biopharma &amp; Ophthalmology Development (BOD)" in page_listed
+                    and "Safe First Dosing Guidance (SFDG)" in page_listed
+                    and page_listed.find("ele_sop_ast29080_scope")
+                    < page_listed.find("ele_sop_ast29080_scope_orgs_0")
+                    < page_listed.find("ele_sop_ast29080_general")
+                    < page_listed.find("ele_sop_ast29080_general_govdocs_0")
+                    and page_listed.count('class="kicker">Present</div>')
+                    == page.count('class="kicker">Present</div>'),
+                    page_listed.count('class="prim item-list')))
+    results.append(("engine reuses StepList for sibling lists (unordered)",
+                    len(fm_lists) == 2
+                    and fm_lists[0]["props"].get("ordered") is False
+                    and fm_lists[1]["props"].get("ordered") is False
+                    and fm_lists[0]["props"].get("kicker") == "Scope list"
+                    and fm_lists[1]["props"].get("kicker") == "The documents listed"
+                    and [it["text"] for it in fm_lists[0]["props"]["items"]]
+                    == [
+                        "Biopharma & Ophthalmology Development (BOD)",
+                        "Clinical Operations & Quantitative Science (COQS)",
+                    ]
+                    and fm_lists[1]["props"]["items"][0]["text"].startswith(
+                        "Safe First Dosing Guidance (SFDG)"
+                    ),
+                    [c["props"].get("kicker") for c in fm_lists]))
     results.append(("coverage dump has no sequence practice (lesson-only projection)",
                     'data-shape="sequence_order"' not in cov_page
                     and 'data-shape="closed_choice"' not in cov_page, ""))

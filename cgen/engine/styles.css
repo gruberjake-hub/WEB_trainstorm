@@ -49,8 +49,8 @@ p{ margin:0 0 12px; color:var(--text); }
 .headingBlock h1, .headingBlock h2, .headingBlock h3{ margin:4px 0 10px; }
 .bodyBlock{ margin:0 0 14px; }
 .stepList{ margin:16px 0; }
-.stepList .steps{ margin:8px 0 0; padding-left:22px; }
-.stepList .steps li{ margin:6px 0; }
+.stepList .steps, .stepList .items{ margin:8px 0 0; padding-left:22px; }
+.stepList .steps li, .stepList .items li{ margin:6px 0; }
 .sequenceOrder, section[aria-label="Knowledge check"]{
   margin: var(--space-6, 1.5rem) 0;
   padding: var(--space-5, 1.25rem);
@@ -106,6 +106,9 @@ section[aria-label="Knowledge check"] > p:not(.kicker):not(.feedback){
 .stepList.style-instructional{
   border-left-width: 6px;
   padding: var(--space-5, 1.25rem) var(--space-5, 1.25rem) var(--space-4, 1rem);
+}
+.stepList.style-example{
+  padding: var(--space-4, 1rem) var(--space-5, 1.25rem);
 }
 .style-recall{
   background: var(--color-surface, var(--panel));

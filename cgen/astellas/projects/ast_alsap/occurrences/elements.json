@@ -912,6 +912,12 @@
         "from_kind": "list_item",
         "from_move": "present",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -977,6 +983,12 @@
         "from_kind": "list_item",
         "from_move": "present",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -1042,6 +1054,12 @@
         "from_kind": "list_item",
         "from_move": "present",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -1107,6 +1125,12 @@
         "from_kind": "list_item",
         "from_move": "present",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -1172,6 +1196,12 @@
         "from_kind": "list_item",
         "from_move": "present",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -1237,6 +1267,12 @@
         "from_kind": "list_item",
         "from_move": "present",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -1369,6 +1405,12 @@
         "from_kind": "list_item",
         "from_move": "exemplify",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -1435,6 +1477,12 @@
         "from_kind": "list_item",
         "from_move": "exemplify",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -1501,6 +1549,12 @@
         "from_kind": "list_item",
         "from_move": "exemplify",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {
@@ -1567,6 +1621,12 @@
         "from_kind": "list_item",
         "from_move": "exemplify",
         "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "what_an_alsap_is",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
       }
     },
     "expression": {

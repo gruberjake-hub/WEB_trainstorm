@@ -122,7 +122,17 @@
       "ele_sop_ast29080_purpose__activate",
       "ele_sop_ast29080_purpose",
       "ele_sop_ast29080_scope",
+      "ele_sop_ast29080_scope_orgs_0",
+      "ele_sop_ast29080_scope_orgs_1",
+      "ele_sop_ast29080_scope_orgs_2",
+      "ele_sop_ast29080_scope_orgs_3",
+      "ele_sop_ast29080_scope_orgs_4",
+      "ele_sop_ast29080_scope_orgs_5",
       "ele_sop_ast29080_general",
+      "ele_sop_ast29080_general_govdocs_0",
+      "ele_sop_ast29080_general_govdocs_1",
+      "ele_sop_ast29080_general_govdocs_2",
+      "ele_sop_ast29080_general_govdocs_3",
       "ele_sop_ast29080_proc_a_s1",
       "ele_sop_ast29080_proc_a_s2",
       "ele_sop_ast29080_proc_a_s3",
@@ -134,7 +144,7 @@
       "ele_sop_ast29080_purpose__reinforce",
       "ele_sop_ast29080_general__reinforce"
     ],
-    "count": 16,
+    "count": 26,
     "store_count": 55,
     "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then the two FORM-AST-34037 BR-field presents those instance examples fill (alsap atoms via composed_from), then a small instance-example seed (alsap_asp9999 atoms via composed_from \u2014 Procedure A has no honest match; these illustrate the ALSAP generally), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check) plus a sequence practice of the Procedure A presents (projector-only; no extra ele_) plus a closed-choice of the BR profile fill after the form presents and instance examples (projector-only; options_ref value ids; no extra ele_) plus present clothes on the form-field beats and exemplify clothes on the instance beats; coverage dump stays card-like. Scene records (spine.scenes / ext.scene) group those existing beats from SOP/form roles \u2014 first-class on the graph, not chrome rediscovery. Scene records come from the project catalog (occurrences/scenes.json) when present; spine.scenes is the stamped runtime view. A lesson record (manifest.lessons) points at those scene ids; the projector reads the lesson node, not a hard-coded ALSAP trio. Lesson records come from the project catalog (occurrences/lessons.json) when present. Player chrome pages that list one named scene at a time (Next/Back); lesson-end checks are a final step, not a fourth scene. Not an LLM path and not a full object-tree walk.",
     "sequence_check": {
@@ -190,10 +200,20 @@
             "ele_sop_ast29080_purpose__activate",
             "ele_sop_ast29080_purpose",
             "ele_sop_ast29080_scope",
-            "ele_sop_ast29080_general"
+            "ele_sop_ast29080_scope_orgs_0",
+            "ele_sop_ast29080_scope_orgs_1",
+            "ele_sop_ast29080_scope_orgs_2",
+            "ele_sop_ast29080_scope_orgs_3",
+            "ele_sop_ast29080_scope_orgs_4",
+            "ele_sop_ast29080_scope_orgs_5",
+            "ele_sop_ast29080_general",
+            "ele_sop_ast29080_general_govdocs_0",
+            "ele_sop_ast29080_general_govdocs_1",
+            "ele_sop_ast29080_general_govdocs_2",
+            "ele_sop_ast29080_general_govdocs_3"
           ],
           "checks": [],
-          "from": "Document-root opening, why-this callout of purpose, and teachable front-matter primaries (purpose / scope / general). Those atoms are the SOP\u2019s definitional front-matter."
+          "from": "Document-root opening, why-this callout of purpose, teachable front-matter primaries (purpose / scope / general), and the in-scope org / governance-doc children those presents already say are listed below. Thin list-container headings stay skipped."
         },
         {
           "id": "how_an_alsap_starts",

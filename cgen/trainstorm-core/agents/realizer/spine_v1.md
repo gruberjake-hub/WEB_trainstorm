@@ -118,7 +118,7 @@ The projector kicker is **Practice**. Closed vocab still has no
 |---|---|---|---|
 | Opening | Document root: no `belongs_to` | Primary (`hook` once Cartographer has bound it) then the seeded extra `present` if it exists | Title hook + title present — already seeded on `atom_sop_ast29080` |
 | Why-this callout | Purpose atom `atom_sop_ast29080_purpose` | Seeded extra `activate` (`ele_sop_ast29080_purpose__activate`) | Verified why-this meaning (SOP purpose sentence). Clothes: `tp_callout`. Not invented text. Not the title atom. |
-| Front-matter teaching cards | Direct children of the root, `kind` in `procedure` / `form`, **not thin** | Primary occurrence only | Paragraphs an ID would actually say: purpose (objective / `tp_purpose`), scope, what-it-is. Sorted by `object.order`. |
+| Front-matter teaching cards | Direct children of the root, `kind` in `procedure` / `form`, **not thin** | Primary occurrence only | Paragraphs an ID would actually say: purpose (objective / `tp_purpose`), scope, what-it-is. Sorted by `object.order`. When the project catalog claims the children a present already says are “listed below,” those existing `ele_` records sit after that present. |
 | Procedure A job sequence | First Procedures-container branch in `object.order`; skip thin A/B/C heading; take every non-thin `procedure_step` child (`PROCEDURE_SEQUENCE_CAP = 8`) | Primary occurrence only | Doing the work: Plan Development’s four real steps, in `object.order`. Not B/C. |
 | Sequence practice | Same four A-step atoms | **No new `ele_`.** Projector-only check of the four presents (`shape: sequence_order` on `manifest.checks`) | Gagné-ish: practice the steps near the job aid. Items = first sentences. Order = `object.order`. Form presents then instance examples follow. |
 | Form BR present | The two FORM-AST-34037 field atoms those instance values `instantiates` (see `form_field_present_v1.md`) | Guest extras `…__present` | Honest referent of the two instance examples already on the spine: BR profile field + rationale field. `composed_from` is the form `atom_id`. Clothes: `present` / `brand.instructional` / `tp_body`. Not a form dump. Not `f_br_guidance` or phrasing-example cousins. |
@@ -132,30 +132,39 @@ The projector kicker is **Practice**. Closed vocab still has no
   `Procedures.`, `A. Plan Development of ALSAP.`, `B.…`, `C.…`,
   `For definitions, refer…`) — same bar as check-sibling rejection in
   `check_v1.md`.
-- Other descendants: lists, list items, procedure B/C steps, govdocs.
-- Any 1:1 leftover whose atom is not front-matter or a Procedure A step.
+- Thin list-container headings (`Organizations in scope of this SOP.`,
+  `Existing safety governance documents the ALSAP operationalizes.`) —
+  skipped as teaching cards; parent meaning may title a sibling list.
+- Other descendants: procedure B/C steps. Roles / definitions / Procedures.
+  Coverage dump keeps the rest.
+- Any 1:1 leftover whose atom is not front-matter, a catalog-claimed
+  listed-below child, or a Procedure A step.
 
-Live ALSAP therefore yields **sixteen** occurrences, in this order:
+Live ALSAP therefore yields **twenty-six** occurrences when the scene
+catalog claims the listed-below children, in this order:
 
 1. `ele_sop_ast29080` — hook (title)
 2. `ele_sop_ast29080__present` — present extra of the title
 3. `ele_sop_ast29080_purpose__activate` — callout (why this SOP; same atom)
 4. `ele_sop_ast29080_purpose` — objective (purpose-frame of the same atom)
 5. `ele_sop_ast29080_scope` — present (who it applies to)
-6. `ele_sop_ast29080_general` — present (what an ALSAP is)
-7. `ele_sop_ast29080_proc_a_s1` — present (notify / request Lead)
-8. `ele_sop_ast29080_proc_a_s2` — present (identify authors and reviewers)
-9. `ele_sop_ast29080_proc_a_s3` — present (15-day kick-off)
-10. `ele_sop_ast29080_proc_a_s4` — present (confirm deliverables and dates)
-11. `ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present` — present (BR profile field)
-12. `ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present` — present (BR rationale field)
-13. `ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify` — example (selected BR profile)
-14. `ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify` — example (authored rationale)
-15. `ele_sop_ast29080_purpose__reinforce` — check
-16. `ele_sop_ast29080_general__reinforce` — check
+6. `ele_sop_ast29080_scope_orgs_0` … `_5` — in-scope org names (BOD…RAPV)
+7. `ele_sop_ast29080_general` — present (what an ALSAP is)
+8. `ele_sop_ast29080_general_govdocs_0` … `_3` — named governance docs
+9. `ele_sop_ast29080_proc_a_s1` — present (notify / request Lead)
+10. `ele_sop_ast29080_proc_a_s2` — present (identify authors and reviewers)
+11. `ele_sop_ast29080_proc_a_s3` — present (15-day kick-off)
+12. `ele_sop_ast29080_proc_a_s4` — present (confirm deliverables and dates)
+13. `ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present` — present (BR profile field)
+14. `ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present` — present (BR rationale field)
+15. `ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify` — example (selected BR profile)
+16. `ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify` — example (authored rationale)
+17. `ele_sop_ast29080_purpose__reinforce` — check
+18. `ele_sop_ast29080_general__reinforce` — check
 
 Teachable order is Gagné-shaped and small: gain attention → why-this
-callout → say the thing (purpose-frame / who / what) → walk the Plan
+callout → say the thing (purpose-frame / who / what, plus the lists
+those presents already name) → walk the Plan
 Development job sequence → practice that order (projector-only sequence
 check) → present the form fields those examples fill → show a filled
 ALSAP (instance, `exemplify`) → enhance retention with the two existing
@@ -191,7 +200,7 @@ Heuristic — SOP/form roles already used for membership:
 
 | Scene | Role | Heading | Kicker | Which existing beats |
 |---|---|---|---|---|
-| 1 | `front_matter` | **What an ALSAP is** | Front matter | Document-root opening, why-this callout of purpose, teachable front-matter primaries (purpose / scope / general) |
+| 1 | `front_matter` | **What an ALSAP is** | Front matter | Document-root opening, why-this callout of purpose, teachable front-matter primaries (purpose / scope / general), and the in-scope org / governance-doc children those presents already say are listed below |
 | 2 | `procedure_a` | **How an ALSAP starts** | Procedure A | Procedure A job-aid presents (`tp_step`). The projector-only sequence practice stays **in-scene** (it is practice of those presents). |
 | 3 | `form_br` | **Benefit-risk on the form** | Form | FORM-AST-34037 BR-field presents + the instance examples that instantiate those fields. The projector-only closed-choice of the profile fill stays **in-scene**. |
 
@@ -244,7 +253,7 @@ Occurrence manifest `spine`:
   "policy": "v1_front_matter_callout_procedure_sequence_form_example_then_checks",
   "spec": "agents/realizer/spine_v1.md",
   "element_ids": ["ele_sop_ast29080", "ele_sop_ast29080__present", "ele_sop_ast29080_purpose__activate", "…"],
-  "count": 16,
+  "count": 26,
   "store_count": 55,
   "note": "Selection of existing ele_ records. Coverage dump keeps the rest. Sequence practice of Procedure A is projector-only (spine.sequence_check). Form BR presents then instance examples then a projector-only closed-choice of the profile fill (spine.br_profile_check). Scene records (spine.scenes) are the stamped runtime view of the project catalog (occurrences/scenes.json) when present. Player chrome (spine.scenes.paging) shows one named scene at a time; lesson-end checks are a final step, not a fourth scene."
 }
