@@ -40,8 +40,9 @@ cgen/
 │   └── brunswick/assets/                 ✅ same convention for every client that follows
 │
 ├── astellas/                            # ⚠ THIRD SIBLING — client atom stores + client registries
-│   ├── projects/{ast_alsap,alsap,alsap_asp9999}/   ✅ procedure · template · instance stores
-│   │                                               (`ast_artwork` is on PR #42 Draft, **not on main**)
+│   ├── projects/{ast_alsap,alsap,alsap_asp9999,ast_artwork}/  ✅ procedure · template · instance · artwork stores
+│   │                                               (`ast_artwork` **store** on main, PR #42 merged.
+│   │                                               Do not claim `/cgen ?project=` plays until the loader PR.)
 │   └── registry/{roles,records,docs,options}.registry.json  ✅ client-tier governed ENTRIES
 │
 └── trainstorm-core/                     # the build system itself (the tree below)
@@ -141,6 +142,8 @@ trainstorm-core/
 │   ├── selftest_form_gate.py             ✅ 17/17     selftest_instance_gate.py  ✅ 17/17
 │   ├── selftest_socket.py                ✅ 21/21     demand rules · PII · contract honesty
 │   ├── headwater_ingest.py / _form.py    ✅ procedure · form ingests
+│   ├── headwater_ingest_artwork.py       ✅ sibling Headwater ingest for `ast_artwork` (SOP-2290); ALSAP ingest untouched
+│   ├── project_sop_artwork.py            ✅ sibling SOP-2290 projector
 │   ├── store_merge.py                    ✅ the idempotent merge rule — lives once, both ingests import it
 │   ├── resolve_slot.py                   ✅ the walk: one slot → grounding packet (+ sufficiency)
 │   ├── resolve_prompt.py                 ✅ spine + specialization + packet → dispatchable payload
@@ -322,8 +325,9 @@ Near-term, in dependency order:
      `architecture/DECISIONS.md`.
    - ~~**`/cgen` Course Engine**~~ — **done 2026-08-27 player / 2026-08-30
      `?lesson=`.** Reads `realized_lesson.json` via catalog `?lesson=`.
-     This checkout has no `?project=` (`ast_artwork` is on PR #42, not
-     on main). See `architecture/DECISIONS.md`.
+     `ast_artwork` **store** is on main (PR #42 merged). Do not claim
+     `?project=` plays until the loader PR lands. See
+     `architecture/DECISIONS.md`.
    - ~~**Astellas brand pack as player chrome**~~ — **done 2026-08-27.**
      `cgen/brands/` via `meta.theme`. Couturier `style_ref` stays
      pedagogical roles. See `architecture/DECISIONS.md`.

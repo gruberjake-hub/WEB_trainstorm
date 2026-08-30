@@ -2050,6 +2050,76 @@ Working-process block untouched. Single-writer per facet stands.
 
 ---
 
+## 2026-08-30 — Second SOP through the Manifold pipe: `ast_artwork` (SOP-2290 working id)
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.* Claude remains a co-builder.
+
+**Decision:** A second Astellas SOP rides the existing Manifold pipe as its
+own project store — not a second player, not a rewrite of ALSAP, and not
+ISO 14971. Project slug **`ast_artwork`**. Working document id **SOP-2290**
+(current; supersedes SOP-2290 v 4.0). The Vault export used for this hop
+does **not** print its own SOP number on the face (common). That gap is
+named in the ingest corpus string, `proposed_registry_extensions.json`,
+and this block — the working id is not pretended to be a printed face
+number.
+
+Headwater ingest is **authored decomposition**
+(`tools/headwater_ingest_artwork.py`). `tools/headwater_ingest.py` stays
+ALSAP-hardcoded. Do not overwrite it. Controlled HTML is a sibling
+projector (`tools/project_sop_artwork.py`).
+
+`/cgen` default catalog stays ALSAP short. `?project=ast_artwork` loads
+`cgen/astellas/projects/ast_artwork/occurrences/lessons.json` (default
+short). `?lesson=` still selects a record inside the selected catalog.
+No pretty-URL, no Netlify rewrite, no catalog UI. Astellas brand pack
+from overlay (`meta.theme` astellas). Hide-VO chrome still applies.
+
+**Short course (SOP-course mode):** front-matter (title, four purpose
+bullets as one list, scope who / products / out-of-scope
+dispatch/shipment of PPC) + Procedure A as one job-aid of the ACM
+actions in `object.order` + projector-only `sequence_order` of those
+steps. Intro line from the SOP: “For new artwork start with Section A.
+For existing artwork start with Section C.” No FORM-AST instance scene
+(this SOP has no honest closed form fill). Lesson-end invert-definition
+of BLUE only (copula). Coverage dump keeps B–L `procedure_step` atoms so
+the graph is not a stub. Thin headings stay thin. Roles table is a
+Headwater note — actors are not in the governed `roles.registry`; this
+is not a taught RACI course.
+
+Ungoverned roles (ACM, RA Representative, LMG EU, Manufacturing Plant,
+SPD, Affiliate) and document numbers not in `docs.registry` are
+**proposed** in `proposed_registry_extensions.json` — not silently added
+to governed registries. Verbatim `meaning.source_text`. No paraphrased
+SOP rules. No LLM distractors. No invented “which is the first BLUE
+task?”
+
+Realize / cartographer: a second project does not inherit ALSAP 1:many
+seed ids, `obj_explain_alsap_*`, or form/instance guests.
+`procedure_sequence_atoms` skips intro children under Procedures and
+takes the first branch that has non-thin `procedure_step` children
+(ALSAP A is still first-with-steps). `first_sentence` / `list_item_display`
+do not treat `e.g.` / `i.e.` as a sentence boundary (purpose bullet 1 is
+one sentence). ALSAP atoms / scenes untouched except the player loader.
+
+**Why:** Jake: second SOP through the existing pipe, the same way ALSAP
+is already in it. WEB_trainstorm is public. Claude is a co-builder — do
+not freeze them out.
+
+**Consequences:**
+- After merge, https://trainstorm.ai/cgen still plays ALSAP short.
+- `?project=ast_artwork` plays the artwork short lesson in Astellas chrome.
+- `?lesson=` still works inside the selected catalog. Unknown project or
+  lesson fails in the stage; it does not fall back to ALSAP short.
+- ALSAP `atoms.json` / `occurrences/scenes.json` unchanged.
+- Working-process block untouched. No pretty client/course URLs.
+  `/cgen/alsap` stays tabled. No ISO 14971.
+
+**Supersedes:** nothing about ALSAP lesson catalogs, hide-VO chrome, or
+the `?lesson=` stand-in. Adds `?project=` as a sibling catalog stand-in.
+Pretty client/course URL still later.
+
+---
+
 ## 2026-08-30 — STRUCTURE score: course-half hops since 2026-08-26 vs `cgen/` vestiges
 
 **Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
@@ -2060,10 +2130,11 @@ essential structure), not the wider `cgen/` accretion. Update
 **log refresh**, not new product. Working-process block untouched.
 Claude remains a co-builder.
 
-**On this main (2026-08-30):** no `ast_artwork` project;
+**On this main (2026-08-30, hop start):** no `ast_artwork` project;
 `cgen/src/lessonCatalog.js` is ALSAP-only (`?lesson=`, no `?project=`);
 PR #42 is still Draft. Artwork is **on PR #42, not on main**. Do not
-merge #42 from this hop.
+merge #42 from this hop. **Same-day correction below:** #42 merged;
+the artwork *store* is on main; do not claim `?project=` plays.
 
 **Course half landed after the 2026-08-26 first-moves** (mark ✅; cite
 the dated blocks already in this file):
@@ -2127,5 +2198,40 @@ on main and already have dated blocks here. Scoring them in
 reading that the post-2026-08-26 course-half hops are still First
 moves. Those hops' own blocks stand. Working-process block untouched.
 Single-writer per facet stands.
+
+---
+
+## 2026-08-30 — Artwork *store* is on main; do not claim `?project=` plays
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** PR #42 merged onto origin (`f9642bc`). The artwork
+**store** is on main: `cgen/astellas/projects/ast_artwork/` and
+`tools/headwater_ingest_artwork.py` (sibling projector
+`tools/project_sop_artwork.py`). Mark that store ✅ in `STRUCTURE.md`.
+
+Do **not** claim the Course Engine `?project=` loader plays until a
+separate loader PR lands. `/cgen` catalog play on this score is still
+`?lesson=` on the ALSAP catalog. The #42 block’s “after merge,
+`?project=ast_artwork` plays” consequence is **not ratified** by this
+log refresh. A fix PR is going out for the loader — not this hop.
+
+Log refresh only. Working-process block untouched. Claude remains a
+co-builder.
+
+**Why:** The STRUCTURE score hop started against a main that lacked
+`ast_artwork`. Jake merged #42 the same day and asked the log to
+separate store-on-main from player-plays.
+
+**Consequences:**
+- `STRUCTURE.md` names `ast_artwork` as a store on main.
+- Assistants do not write that `/cgen/?project=ast_artwork` plays.
+- No loader implementation on this hop.
+
+**Supersedes:** the hop-start snapshot in the STRUCTURE-score block
+that artwork is only on PR #42 Draft, and the #42 consequence that
+`?project=` already plays. The #42 *store* decision (second SOP
+through the pipe; sibling ingest; not ISO 14971) stands.
+Working-process block untouched.
 
 

@@ -13,6 +13,18 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-30 — Artwork store on main; do not claim `?project=` plays
+
+Same-day correction to the STRUCTURE score hop. PR #42 merged onto
+origin. `cgen/astellas/projects/ast_artwork/` and
+`tools/headwater_ingest_artwork.py` are on main. Mark the **store**.
+Do not write that `/cgen/?project=` plays — a separate loader PR is
+going out. `/cgen` play on this score is still `?lesson=` (ALSAP
+catalog). No new product. Working-process block untouched. Claude
+remains a co-builder.
+
+---
+
 ## 2026-08-30 — STRUCTURE reconciled against this main (log refresh)
 
 Score hop only. `STRUCTURE.md` tree + First moves brought to 2026-08-30
@@ -20,7 +32,8 @@ against `cgen/trainstorm-core`, not wider `cgen/` vestiges. Course-half
 hops after 2026-08-26 (checks, scenes, lessons, `/cgen` player, brand
 chrome, learner labels, hide-VO, `?lesson=`) marked done; cite the
 dated `DECISIONS.md` blocks. Item 7 brunswick gold course stays open.
-`ast_artwork` is on PR #42 Draft, **not on this main** — no `?project=`.
+Hop-start snapshot had `ast_artwork` on PR #42 Draft; same-day
+correction above: store now on main, `?project=` still not claimed.
 No new product. Working-process block untouched. Claude remains a
 co-builder.
 

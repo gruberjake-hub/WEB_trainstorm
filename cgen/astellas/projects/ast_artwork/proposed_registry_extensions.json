@@ -1,0 +1,141 @@
+{
+  "_note": "Headwater flagged these: values resolve to PROPOSED registry entries because they are not in the current governed seeds. Do not silently extend roles.registry / docs.registry / records.registry. Adopt by entry + version bump before status>draft.",
+  "corpus": "SOP-2290 (working id; Vault export does not print its own SOP number on the face; supersedes SOP-2290 v 4.0) — Artwork approval process and artwork text management for new or revised Printed Packaging Component (Astellas Pharma Europe B.V. Leiden; Pharmaceutical Technology / Supply Chain Management; status Effective). Authored extract, not a generic docx parse.",
+  "roles": [
+    {
+      "id": "role_acm",
+      "label": "(Associate) Artwork Coordination Manager (ACM)",
+      "note": "LMG EU fulfills this role. Named throughout Procedure A. Not in governed roles.registry."
+    },
+    {
+      "id": "role_ra_representative",
+      "label": "RA Representative",
+      "note": "RA organisation of Established and Emerging Markets EMEA. Approves artworks in BLUE for their territory."
+    },
+    {
+      "id": "role_lmg_eu",
+      "label": "Labeling Management Group Europe (LMG EU)",
+      "note": "Group fulfilling the ACM role. A body, not an individual."
+    },
+    {
+      "id": "role_manufacturing_plant",
+      "label": "Manufacturing Plant",
+      "note": "Named among sibling-process actors; not in the supplied Procedure A extract. Flagged so it is not silently added."
+    },
+    {
+      "id": "role_spd",
+      "label": "SPD",
+      "note": "Named among sibling-process actors; expansion not in this extract. Flagged, not invented."
+    },
+    {
+      "id": "role_affiliate",
+      "label": "Affiliate",
+      "note": "Requests Mock-Up BLUE Project (Procedure A step 2)."
+    }
+  ],
+  "records": [
+    {
+      "id": "rec_blue_project",
+      "label": "BLUE Project",
+      "note": "A BLUE Project contains 16 BLUE Tasks in a predefined sequence."
+    },
+    {
+      "id": "rec_implementation_report",
+      "label": "Implementation Report (IR)",
+      "note": "Signed IR; Procedure A starts from it per WI-AST-10187."
+    },
+    {
+      "id": "rec_mock_up",
+      "label": "Mock-Up",
+      "note": "Artwork for HA submission purposes."
+    },
+    {
+      "id": "rec_printed_packaging_component",
+      "label": "Printed Packaging Component (PPC)",
+      "note": "e.g. folding cartons, patient leaflets."
+    },
+    {
+      "id": "rec_cid",
+      "label": "CID",
+      "note": "Named (Defining the CID). Glossary prose not in this extract."
+    },
+    {
+      "id": "rec_uid",
+      "label": "UID",
+      "note": "Named via SOP-2502 Management of the UID. Glossary prose not in this extract."
+    }
+  ],
+  "docs": [
+    {
+      "id": "doc_sop_2290",
+      "source_number": "SOP-2290",
+      "label": "Artwork approval process and artwork text management for new or revised Printed Packaging Component"
+    },
+    {
+      "id": "doc_sop_2293",
+      "source_number": "SOP-2293",
+      "label": "Artwork Development with AMS BLUE"
+    },
+    {
+      "id": "doc_wpd_1172",
+      "source_number": "WPD-1172",
+      "label": "Change Control of Text and/or Artwork"
+    },
+    {
+      "id": "doc_sop_2502",
+      "source_number": "SOP-2502",
+      "label": "Management of the UID"
+    },
+    {
+      "id": "doc_sop_3184",
+      "source_number": "SOP-3184",
+      "label": "Repackaging of Commercial Products within Affiliates"
+    },
+    {
+      "id": "doc_stl_4269",
+      "source_number": "STL-4269",
+      "label": "STL-4269 (title not in this extract)"
+    },
+    {
+      "id": "doc_stl_4270",
+      "source_number": "STL-4270",
+      "label": "STL-4270 (title not in this extract)"
+    },
+    {
+      "id": "doc_wpd_1055",
+      "source_number": "WPD-1055",
+      "label": "WPD-1055 (title not in this extract)"
+    },
+    {
+      "id": "doc_wpd_1056",
+      "source_number": "WPD-1056",
+      "label": "WPD-1056 (title not in this extract)"
+    },
+    {
+      "id": "doc_wpd_1002",
+      "source_number": "WPD-1002",
+      "label": "WPD-1002 (title not in this extract)"
+    },
+    {
+      "id": "doc_wpd_1003",
+      "source_number": "WPD-1003",
+      "label": "WPD-1003 (title not in this extract)"
+    },
+    {
+      "id": "doc_wpd_1004",
+      "source_number": "WPD-1004",
+      "label": "WPD-1004 (title not in this extract)"
+    },
+    {
+      "id": "doc_wpd_991",
+      "source_number": "WPD-991",
+      "label": "LMG Start of a BLUE Project"
+    },
+    {
+      "id": "doc_wi_ast_10187",
+      "source_number": "WI-AST-10187",
+      "label": "WI-AST-10187 (Implementation Report / IR; title not fully in this extract)"
+    }
+  ],
+  "docs_note": "None of these numbers are in the governed docs.registry (ALSAP-era seed). Proposed, not invented into the governed list. STL-4269/4270 and WPD-1055/1056/1002/1003/1004 are sibling citations from the face/header; titles were not in the supplied extract."
+}

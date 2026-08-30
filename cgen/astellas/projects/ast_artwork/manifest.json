@@ -1,0 +1,22 @@
+{
+  "project": "ast_artwork",
+  "corpus_derived_from": "SOP-2290 (working id; Vault export does not print its own SOP number on the face; supersedes SOP-2290 v 4.0) — Artwork approval process and artwork text management for new or revised Printed Packaging Component (Astellas Pharma Europe B.V. Leiden; Pharmaceutical Technology / Supply Chain Management; status Effective). Authored extract, not a generic docx parse.",
+  "headwater_mode": "direct",
+  "atom_count": 51,
+  "written_facets": [
+    "meaning",
+    "bindings.object",
+    "bindings.procedure"
+  ],
+  "read_only_facets": [
+    "intent",
+    "expression",
+    "audience",
+    "render"
+  ],
+  "approval_roles": [
+    "role_acm",
+    "role_ra_representative"
+  ],
+  "generated_by": "tools/headwater_ingest_artwork.py"
+}
