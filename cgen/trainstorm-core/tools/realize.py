@@ -106,8 +106,10 @@ never hand-edited):
     <project>/occurrences/scenes.json       closed project catalog (source of truth; not rewritten)
     <project>/occurrences/lessons.json      closed project catalog (source of truth; not rewritten)
     <project>/realized_lesson.html          short lesson (default {project}_short). Open this.
-    <project>/realized_lesson.json          Course Engine projection of that lesson. /cgen reads this.
-                                            meta.theme is the overlay client pack (player chrome).
+    <project>/realized_lesson.json          Course Engine projection of that lesson. /cgen
+                                            loads it via ?lesson=<lesson_id> from this catalog
+                                            (projection field). meta.theme is the overlay client
+                                            pack (player chrome).
     <project>/realized_lesson_br.html       BR subset (path derived from lesson_id)
     <project>/realized_lesson_plan.html     Procedure A subset (path derived from lesson_id)
     <project>/realized_coverage.html        full SOP dump in document order
@@ -2046,6 +2048,9 @@ def hydrate_lesson_record(raw, manifest, atoms, elements, computed_default, *, i
     rec["lesson_end_check_ids"] = end_ids
     rec["paging"] = paging
     rec["default"] = bool(is_default)
+    rec["projection"] = lesson_projection_filename(
+        manifest, lid, is_default=is_default, catalog_projection=raw.get("projection"),
+    )
     rec["from"] = raw.get("from") or (
         computed_default.get("from") if is_default else (
             "Catalog record: ordered scene id refs into spine.scenes. "
@@ -2194,6 +2199,38 @@ def carry_previous_lesson_records(occ_manifest, prev_mf) -> None:
     }
 
 
+def lesson_sidecar_stem(manifest, lid, *, is_default) -> str:
+    """Basename stem for sidecar HTML/JSON. Existing realize naming, not a per-id fork.
+
+    Default lesson → realized_lesson; extras → realized_lesson_{suffix}.
+    Suffix is the lesson_id with the project slug prefix stripped
+    (`{project}_{suffix}` → `realized_lesson_{suffix}`).
+    """
+    if is_default:
+        return "realized_lesson"
+    slug = project_slug(manifest)
+    suffix = lid or ""
+    prefix = f"{slug}_"
+    if suffix.startswith(prefix):
+        suffix = suffix[len(prefix):]
+    suffix = re.sub(r"[^A-Za-z0-9_-]+", "_", suffix).strip("_") or (lid or "lesson")
+    return f"realized_lesson_{suffix}"
+
+
+def lesson_projection_filename(manifest, lid, *, is_default, catalog_projection=None) -> str:
+    """Course Engine JSON filename at the project root.
+
+    Catalog `projection` wins when it is a .json basename (existing realize
+    name). Otherwise derive the same stem as the HTML sidecar.
+    """
+    raw = catalog_projection
+    if isinstance(raw, str) and raw.strip():
+        name = raw.strip().replace("\\", "/").split("/")[-1]
+        if name and ".." not in name and name.endswith(".json"):
+            return name
+    return lesson_sidecar_stem(manifest, lid, is_default=is_default) + ".json"
+
+
 def lesson_html_filename(manifest, lesson_id=None) -> str:
     """Default lesson → realized_lesson.html; extras → realized_lesson_{suffix}.html.
 
@@ -2203,15 +2240,8 @@ def lesson_html_filename(manifest, lesson_id=None) -> str:
     rec = select_lesson_record(manifest, lesson_id)
     lid = rec.get("lesson_id") or ""
     default_id = (manifest.get("lessons") or {}).get("default") or default_lesson_id(manifest)
-    if rec.get("default") or lid == default_id:
-        return DEFAULT_LESSON_HTML_NAME
-    slug = project_slug(manifest)
-    suffix = lid
-    prefix = f"{slug}_"
-    if lid.startswith(prefix):
-        suffix = lid[len(prefix):]
-    suffix = re.sub(r"[^A-Za-z0-9_-]+", "_", suffix).strip("_") or lid
-    return f"realized_lesson_{suffix}.html"
+    is_default = bool(rec.get("default") or lid == default_id)
+    return lesson_sidecar_stem(manifest, lid, is_default=is_default) + ".html"
 
 
 def lesson_html_path(project, manifest, lesson_id=None, *, out=None) -> pathlib.Path:
@@ -5148,6 +5178,56 @@ def selftest(closed_moves):
                     and lesson_html_filename(named, "ast_alsap_br") == "realized_lesson_br.html"
                     and lesson_html_filename(named, "ast_alsap_plan") == "realized_lesson_plan.html"
                     and lesson_html_filename(named) == DEFAULT_LESSON_HTML_NAME, ""))
+    cat_proj = {
+        "policy": LESSON_CATALOG_POLICY,
+        "default": "course_short",
+        "lessons": [
+            {
+                "lesson_id": "course_short",
+                "default": True,
+                "projection": "realized_lesson.json",
+            },
+            {
+                "lesson_id": "course_plan",
+                "scene_ids": ["how_an_alsap_starts"],
+                "projection": "realized_lesson_plan.json",
+            },
+        ],
+    }
+    mf_proj = {"project": "course"}
+    apply_spine(mf_proj, store, seeded, lesson_catalog=cat_proj)
+    stamped_proj = {
+        L["lesson_id"]: L.get("projection")
+        for L in (mf_proj.get("lessons") or {}).get("lessons") or []
+        if isinstance(L, dict) and L.get("lesson_id")
+    }
+    results.append(("catalog projection path is stamped onto the runtime lesson record",
+                    stamped_proj == {
+                        "course_short": "realized_lesson.json",
+                        "course_plan": "realized_lesson_plan.json",
+                    },
+                    stamped_proj))
+    cat_derive = {
+        "policy": LESSON_CATALOG_POLICY,
+        "default": "course_short",
+        "lessons": [
+            {"lesson_id": "course_short", "default": True},
+            {"lesson_id": "course_plan", "scene_ids": ["how_an_alsap_starts"]},
+        ],
+    }
+    mf_derive = {"project": "course"}
+    apply_spine(mf_derive, store, seeded, lesson_catalog=cat_derive)
+    derived_proj = {
+        L["lesson_id"]: L.get("projection")
+        for L in (mf_derive.get("lessons") or {}).get("lessons") or []
+        if isinstance(L, dict) and L.get("lesson_id")
+    }
+    results.append(("missing catalog projection derives from existing realize naming",
+                    derived_proj == {
+                        "course_short": "realized_lesson.json",
+                        "course_plan": "realized_lesson_plan.json",
+                    },
+                    derived_proj))
     cat_small = {
         "policy": LESSON_CATALOG_POLICY,
         "default": "course_short",
@@ -5194,7 +5274,8 @@ def selftest(closed_moves):
     projector_fns = (
         stamp_lessons, stamp_lessons_from_catalog, hydrate_lesson_record,
         derive_lesson_paging, project_html, project_lesson_htmls,
-        lesson_html_filename, select_lesson_record, resolve_lesson,
+        lesson_html_filename, lesson_sidecar_stem, lesson_projection_filename,
+        select_lesson_record, resolve_lesson,
         stamp_spine_scenes_from_catalog, hydrate_scene_record,
         load_scene_catalog, resolve_scene, build_engine_course,
         lesson_player_json_path,

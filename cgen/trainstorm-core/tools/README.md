@@ -37,9 +37,10 @@ the record is one scene). Live ALSAP: `ast_alsap_short` (pages 1–2–3),
 appending a catalog row; Realize does not special-case those ids.
 The Course Engine at `/cgen` cannot consume occurrence files as-is.
 Realize also writes a **JSON projection** of the same lesson node
-(`realized_lesson.json`, sibling of the HTML). `/cgen` loads that file
-through the existing engine (Heading / Body / StepList / SequenceOrder /
-MCQ). Meaning is still from atoms. This is not a hand-authored SCORM
+(`realized_lesson.json`, sibling of the HTML). Catalog records carry
+that filename as `projection`. `/cgen` loads it via `?lesson=<lesson_id>`
+(default is the catalog default). `?course=` stays a raw-path escape
+hatch. Meaning is still from atoms. This is not a hand-authored SCORM
 package and not `cgen/schema/course.schema.json` as a rival constitution.
 `meta.theme` on that JSON is the client overlay pack
 (`cgen/brands/<theme>/`) — player chrome at `/cgen`, not Couturier

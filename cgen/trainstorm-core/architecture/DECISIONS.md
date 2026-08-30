@@ -2004,4 +2004,48 @@ unfinished thing on the stakeholder URL.
 **Supersedes:** nothing about lesson catalogs, brand packs, Couturier
 roles, or check surfaces. Player chrome visibility is projection-driven.
 
+---
+
+## 2026-08-30 — `/cgen` plays a lesson catalog id (`?lesson=`)
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Course Engine v1 at `/cgen` plays a **lesson catalog id**,
+not one hardcoded JSON file. `?lesson=<lesson_id>` selects a record on
+the existing project catalog (`occurrences/lessons.json`). No param
+uses that file’s `default` (`ast_alsap_short`). The player resolves
+the Course Engine JSON from the record’s **`projection`** field
+(existing realize names: `realized_lesson.json`,
+`realized_lesson_br.json`, `realized_lesson_plan.json`). Realize
+stamps `projection` onto `manifest.lessons`. Unknown id fails in the
+stage; it does not silently fall back to short. `?course=` stays the
+raw-path escape hatch (wins if both are set).
+
+**URL (still later).** `?lesson=` is the stand-in for a future URL
+that names client + course (which pack + which lesson). This hop is
+which lesson projection loads, not the pretty path. No catalog UI.
+No `?client=`. Do not implement `/cgen/{client}/{course}` or revive
+`/cgen/alsap` (tabled redirect loop).
+
+**Why:** Jake: this early ALSAP version has gone deep enough. The
+short course is one catalog record, not the player. `/cgen` was still
+hardcoded to `realized_lesson.json`. The catalog already had the three
+lessons; the player needed to read them.
+
+**Consequences:**
+- After merge, https://trainstorm.ai/cgen still plays the short
+  course (three scenes + lesson-end).
+- `?lesson=ast_alsap_br` plays BR-only (scene 3 + closed-choice).
+- `?lesson=ast_alsap_plan` plays Procedure A only.
+- A bad id names the unknown id and the catalog’s ids; it does not
+  load short by accident.
+- No Procedure B. No more scene-1 content. No more clothes. Hide-VO
+  chrome untouched. Claude remains a co-builder.
+
+**Supersedes:** the stand-in that `/cgen` fetches
+`./astellas/projects/ast_alsap/realized_lesson.json` as *the* player
+path. The catalog, realize naming, brand chrome, Couturier roles, and
+check surfaces stand. Pretty client/course URL still later.
+Working-process block untouched. Single-writer per facet stands.
+
 

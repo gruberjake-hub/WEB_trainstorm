@@ -46,6 +46,7 @@ No new ALSAP pedagogy. `atoms.json` unchanged. No authored `content.text`.
 | `lesson_end_checks` | Pointer: `{see: spine.scenes.lesson_end_checks}`. |
 | `lesson_end_check_ids` | Ordered `ele_` refs (the invert-definition extras). Not a fourth scene. |
 | `paging` | Pointer: `{see: spine.scenes.paging}`. Player UX on that list. |
+| `projection` | Course Engine JSON filename at the project root (`realized_lesson.json` / `realized_lesson_{suffix}.json`). Existing realize naming, authored on the catalog so `/cgen` is not an ALSAP filename special-case. Realize stamps it onto `manifest.lessons`. |
 | `default` | The project’s default lesson (`--lesson` overrides). |
 
 Title heuristic (closed, not an LLM, not outcome language): the
@@ -64,8 +65,9 @@ Where they live:
 - **Project catalog:** `occurrences/lessons.json` is the **source of
   truth**. Closed file. Realizer reads it; it does not rewrite it.
   Adding a lesson is appending a record (`lesson_id`, `scene_ids`,
-  optional `lesson_end_check_ids`, optional `paging`). Realize does
-  not special-case extra lesson ids in Python.
+  `projection`, optional `lesson_end_check_ids`, optional `paging`).
+  Realize does not special-case extra lesson ids in Python. Missing
+  `projection` is derived from the same sidecar naming as the HTML.
 - **Occurrence store:** no `ext.lesson`, no `Course`/`Module` `ele_`.
   Scene membership stays `ext.scene`. Check shapes stay `ext.check`.
 - Coverage dump stays a **second projection** of the store, not a second
@@ -188,8 +190,9 @@ python3 tools/realize.py --lesson ast_alsap_plan
 
 Default project: `cgen/astellas/projects/ast_alsap`. Default pass emits
 all catalog lessons. Default lesson `ast_alsap_short` →
-`realized_lesson.html` plus `realized_lesson.json`. `/cgen` loads that
-JSON through Course Engine v1. `--lesson <id>` regenerates that file (path
+`realized_lesson.html` plus `realized_lesson.json`. `/cgen` loads a
+catalog record via `?lesson=<lesson_id>` (default `ast_alsap_short`);
+the JSON path is that record’s `projection`. `--lesson <id>` regenerates that file (path
 derived from `lesson_id`; the projector is not forked). `--selftest`
 asserts catalog records resolve `scene_ids` from the graph and that
 extra lesson ids are not hardcoded in the projector. The engine
