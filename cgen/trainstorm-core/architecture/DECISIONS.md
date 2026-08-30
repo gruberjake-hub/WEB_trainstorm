@@ -2132,9 +2132,9 @@ Claude remains a co-builder.
 
 **On this main (2026-08-30, hop start):** no `ast_artwork` project;
 `cgen/src/lessonCatalog.js` is ALSAP-only (`?lesson=`, no `?project=`);
-PR #42 is still Draft. Artwork is **on PR #42, not on main**. Do not
-merge #42 from this hop. **Same-day correction below:** #42 merged;
-the artwork *store* is on main; do not claim `?project=` plays.
+PR #42 is still Draft. That hop-start snapshot was a raw.githubusercontent
+read still at #41. **Same-day correction below:** #42 merged (`f9642bc`
+and later). Artwork **store and** `?project=` loader are on main.
 
 **Course half landed after the 2026-08-26 first-moves** (mark ✅; cite
 the dated blocks already in this file):
@@ -2144,7 +2144,9 @@ the dated blocks already in this file):
 - Scenes catalog + one-scene pager — 2026-08-26 / 2026-08-27
 - Lesson as a graph object + `occurrences/lessons.json` — 2026-08-27
 - `/cgen` Course Engine reads `realized_lesson.json` — 2026-08-27;
-  catalog `?lesson=` — 2026-08-30
+  catalog `?lesson=` — 2026-08-30; catalog `?project=` stand-in — 2026-08-30
+  via #42 (`DEFAULT_PROJECT` / `catalogUrlForProject`; live
+  `/cgen/?project=ast_artwork` plays SOP-2290; `/cgen` stays ALSAP)
 - Astellas brand pack as **player chrome** — 2026-08-27
   (`cgen/brands/`, `meta.theme`); Couturier `style_ref` stays
   pedagogical roles
@@ -2201,36 +2203,42 @@ Single-writer per facet stands.
 
 ---
 
-## 2026-08-30 — Artwork *store* is on main; do not claim `?project=` plays
+## 2026-08-30 — Artwork store **and** `?project=` loader are on main via #42
 
 **Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
 
-**Decision:** PR #42 merged onto origin (`f9642bc`). The artwork
-**store** is on main: `cgen/astellas/projects/ast_artwork/` and
-`tools/headwater_ingest_artwork.py` (sibling projector
-`tools/project_sop_artwork.py`). Mark that store ✅ in `STRUCTURE.md`.
+**Decision:** PR #42 merged onto origin (`f9642bc` and later). On main:
 
-Do **not** claim the Course Engine `?project=` loader plays until a
-separate loader PR lands. `/cgen` catalog play on this score is still
-`?lesson=` on the ALSAP catalog. The #42 block’s “after merge,
-`?project=ast_artwork` plays” consequence is **not ratified** by this
-log refresh. A fix PR is going out for the loader — not this hop.
+- **Store:** `cgen/astellas/projects/ast_artwork/` and
+  `tools/headwater_ingest_artwork.py` (sibling projector
+  `tools/project_sop_artwork.py`).
+- **Loader:** `cgen/src/lessonCatalog.js` has `DEFAULT_PROJECT`,
+  `catalogUrlForProject`, `unknownProjectMessage`; `cgen/src/main.js`
+  selects the catalog from `?project=`. Live
+  `https://trainstorm.ai/cgen/?project=ast_artwork` plays SOP-2290;
+  `/cgen` stays ALSAP.
+
+A separate loader restore PR was **not** needed and was **not**
+opened. Strike “until the loader PR lands” / “do not claim `?project=`
+plays.” Those sentences were false: an earlier
+raw.githubusercontent.com read was still at #41.
 
 Log refresh only. Working-process block untouched. Claude remains a
 co-builder.
 
-**Why:** The STRUCTURE score hop started against a main that lacked
-`ast_artwork`. Jake merged #42 the same day and asked the log to
-separate store-on-main from player-plays.
+**Why:** The STRUCTURE score hop started against a #41 snapshot. Jake
+merged #42 the same day. The #42 consequence that `?project=` plays
+is the live fact.
 
 **Consequences:**
-- `STRUCTURE.md` names `ast_artwork` as a store on main.
-- Assistants do not write that `/cgen/?project=ast_artwork` plays.
-- No loader implementation on this hop.
+- `STRUCTURE.md` names the artwork store **and** the `?project=`
+  stand-in as on main.
+- Assistants may write that `/cgen/?project=ast_artwork` plays SOP-2290.
+- No product on this hop. No loader rewrite.
 
-**Supersedes:** the hop-start snapshot in the STRUCTURE-score block
-that artwork is only on PR #42 Draft, and the #42 consequence that
-`?project=` already plays. The #42 *store* decision (second SOP
+**Supersedes:** the hop-start snapshot that artwork / `?project=` were
+only on PR #42 Draft, and the earlier same-day log line that a loader
+PR was still required. The #42 store-and-loader decision (second SOP
 through the pipe; sibling ingest; not ISO 14971) stands.
 Working-process block untouched.
 

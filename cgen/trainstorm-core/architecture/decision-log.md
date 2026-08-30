@@ -13,15 +13,20 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
-## 2026-08-30 — Artwork store on main; do not claim `?project=` plays
+## 2026-08-30 — Artwork store **and** `?project=` loader on main via #42
 
 Same-day correction to the STRUCTURE score hop. PR #42 merged onto
-origin. `cgen/astellas/projects/ast_artwork/` and
-`tools/headwater_ingest_artwork.py` are on main. Mark the **store**.
-Do not write that `/cgen/?project=` plays — a separate loader PR is
-going out. `/cgen` play on this score is still `?lesson=` (ALSAP
-catalog). No new product. Working-process block untouched. Claude
-remains a co-builder.
+origin (`f9642bc` and later). Store
+(`cgen/astellas/projects/ast_artwork/`,
+`tools/headwater_ingest_artwork.py`) **and** the Course Engine
+`?project=` stand-in (`catalogUrlForProject` in `lessonCatalog.js`;
+`main.js` selects the catalog) are on main. Live
+`/cgen/?project=ast_artwork` plays SOP-2290; `/cgen` stays ALSAP. A
+loader restore PR was not needed and was not opened. The earlier
+“do not claim `?project=` plays until the loader PR lands” line was
+false — a raw.githubusercontent.com read was still at #41. No new
+product. Working-process block untouched. Claude remains a
+co-builder.
 
 ---
 
@@ -32,8 +37,9 @@ against `cgen/trainstorm-core`, not wider `cgen/` vestiges. Course-half
 hops after 2026-08-26 (checks, scenes, lessons, `/cgen` player, brand
 chrome, learner labels, hide-VO, `?lesson=`) marked done; cite the
 dated `DECISIONS.md` blocks. Item 7 brunswick gold course stays open.
-Hop-start snapshot had `ast_artwork` on PR #42 Draft; same-day
-correction above: store now on main, `?project=` still not claimed.
+Hop-start snapshot had `ast_artwork` on PR #42 Draft (a #41 read);
+same-day correction above: store **and** `?project=` loader are on
+main via #42.
 No new product. Working-process block untouched. Claude remains a
 co-builder.
 

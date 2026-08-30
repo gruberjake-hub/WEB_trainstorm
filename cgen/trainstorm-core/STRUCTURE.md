@@ -41,8 +41,8 @@ cgen/
 │
 ├── astellas/                            # ⚠ THIRD SIBLING — client atom stores + client registries
 │   ├── projects/{ast_alsap,alsap,alsap_asp9999,ast_artwork}/  ✅ procedure · template · instance · artwork stores
-│   │                                               (`ast_artwork` **store** on main, PR #42 merged.
-│   │                                               Do not claim `/cgen ?project=` plays until the loader PR.)
+│   │                                               (`ast_artwork` store **and** `?project=` loader on main, PR #42.
+│   │                                               `/cgen/?project=ast_artwork` plays SOP-2290; `/cgen` stays ALSAP.)
 │   └── registry/{roles,records,docs,options}.registry.json  ✅ client-tier governed ENTRIES
 │
 └── trainstorm-core/                     # the build system itself (the tree below)
@@ -324,10 +324,11 @@ Near-term, in dependency order:
      `occurrences/lessons.json` (ALSAP short / br / plan). See
      `architecture/DECISIONS.md`.
    - ~~**`/cgen` Course Engine**~~ — **done 2026-08-27 player / 2026-08-30
-     `?lesson=`.** Reads `realized_lesson.json` via catalog `?lesson=`.
-     `ast_artwork` **store** is on main (PR #42 merged). Do not claim
-     `?project=` plays until the loader PR lands. See
-     `architecture/DECISIONS.md`.
+     `?lesson=` / `?project=`.** Reads `realized_lesson.json` via catalog
+     `?lesson=` inside the catalog selected by `?project=` (default ALSAP).
+     `ast_artwork` store **and** `?project=` loader are on main (PR #42).
+     Live `/cgen/?project=ast_artwork` plays SOP-2290; `/cgen` stays ALSAP.
+     See `architecture/DECISIONS.md`.
    - ~~**Astellas brand pack as player chrome**~~ — **done 2026-08-27.**
      `cgen/brands/` via `meta.theme`. Couturier `style_ref` stays
      pedagogical roles. See `architecture/DECISIONS.md`.
