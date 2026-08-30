@@ -16,6 +16,11 @@ body{ margin:0; background:var(--bg); color:var(--text); }
   background:var(--panel); border-radius:14px; padding:12px 14px;
   display:flex; align-items:center; justify-content:space-between; gap:12px;
 }
+/* [hidden] loses to display:flex above; keep unused chrome out of the layout. */
+.footer[hidden],
+#ccToggle[hidden]{
+  display:none !important;
+}
 .brand{ display:flex; align-items:center; gap:12px; min-width:0; }
 .brand img{ height:28px; max-width:160px; object-fit:contain; }
 .stage{
