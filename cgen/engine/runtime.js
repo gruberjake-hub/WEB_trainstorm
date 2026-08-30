@@ -18,6 +18,36 @@ import { Cloze } from "./components/Cloze.js";
 
 const COMPONENTS = { Heading, Body, RevealCards, MCQ, StepList, SequenceOrder, Cloze };
 
+function hasNonEmptyString(value) {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+function hasMediaList(value) {
+  return Array.isArray(value) && value.length > 0;
+}
+
+function voiceoverHasPayload(vo) {
+  if (vo == null || vo === false) return false;
+  if (typeof vo === "string") return vo.trim().length > 0;
+  if (typeof vo !== "object") return false;
+  if (hasNonEmptyString(vo.src) || hasNonEmptyString(vo.captionsVtt)) return true;
+  if (hasMediaList(vo.tracks) || hasMediaList(vo.segments)) return true;
+  if (hasNonEmptyString(vo.mode) && vo.mode !== "none") return true;
+  return false;
+}
+
+/** Course JSON has voiceover or captions/tracks on any scene. Not an ALSAP fork. */
+export function lessonHasVoiceoverChrome(course) {
+  return (course?.scenes || []).some((scene) => {
+    if (!scene) return false;
+    if (hasNonEmptyString(scene.captions) || hasNonEmptyString(scene.captionsVtt)) {
+      return true;
+    }
+    if (hasMediaList(scene.tracks)) return true;
+    return voiceoverHasPayload(scene.voiceover);
+  });
+}
+
 export class Runtime {
   constructor(opts) {
     /* -------------------------------
@@ -86,7 +116,10 @@ export class Runtime {
        Existing init logic (unchanged)
        ------------------------------- */
 
-    this.titleEl.textContent = this.course.meta?.title || "Course";
+    const lessonTitle = this.course.meta?.title;
+    this.titleEl.textContent = lessonTitle || "Course";
+    document.title = lessonTitle || "Course Engine v1";
+    this.applyVoiceoverChrome(lessonHasVoiceoverChrome(this.course));
     this.store.load();
 
     this.prevBtn.addEventListener("click", () =>
@@ -120,6 +153,12 @@ export class Runtime {
   /* ======================================================
      NEW: Brand application logic (small + deterministic)
      ====================================================== */
+  applyVoiceoverChrome(show) {
+    if (this.ccToggle) this.ccToggle.hidden = !show;
+    const footer = this.audioEl?.closest?.(".footer");
+    if (footer) footer.hidden = !show;
+  }
+
   applyBrand(brand) {
     if (!brand || !this.brandLogoEl) return;
 
