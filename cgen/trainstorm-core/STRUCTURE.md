@@ -115,6 +115,11 @@ trainstorm-core/
 │   ├── glossary/ · corpus/               ✅ locked-term seed · 1,164-pair exemplar corpus (NEVER synced)
 │   └── brands/                           ✅
 │
+├── layout-engine/                        # Storyline/.potx expression path — per-brand DATA + its CI gate (parallel to the /cgen HTML player)
+│   ├── ci/validate_sidecar.py            ✅ repaired 2026-08-30 — auto-detects core (old default pointed at a non-existent ../../trainstorm-core); OK, 0 violations
+│   ├── sidecars/ · templates/            ✅ astellas.awareness sidecar now governed: `Bullet` not `ListItem`; ungoverned `scenario` primitive rule removed
+│   └── _schema/                          ✅ REMOVED 2026-08-30 — held two drifted copies of schemas that live in schemas/ (one home)
+│
 ├── locales/                              ⬜ externalized translations keyed by atom_id — README only
 ├── ontology/objectives.json              ✅ obj_ nodes — 7 seeded (2 AST009 `status: example`; 5 ALSAP `draft`)
 ├── ontology/goals.json                   ✅ goal_ nodes — 2 seeded (1 AST009 `status: example`; 1 ALSAP `draft`); the WARRANT
@@ -152,7 +157,8 @@ trainstorm-core/
 │   ├── reconcile.py · approve.py · adopt_registries.py      ✅ round-trip · sign-off · promote-UP
 │   ├── project_sop.py · project_alsap.py · project_review_table.py  ✅ projections
 │   ├── project_socket.py                 ✅ template → INTAKE CONTRACT (json + client-facing html)
-│   ├── lint.py · validate_objectives.py  ✅
+│   ├── lint.py                           ✅ repaired 2026-08-30 — classifies atom/element stores instead of linting them as scripts (was 254 false errors); element stores schema-checked; v2 scripts get the v2 schema
+│   ├── validate_objectives.py            ✅ 45/45 — the warrant chain + worked examples
 │   ├── localize/ · chat-capture/ · visual-assets/           ✅
 │   ├── realize.py                        ✅ Realizer v1 — atoms → occurrences (1 ele_ per atom + small 1:many seed) + realized_lesson.html (spine) + extra lesson HTML from occurrences/lessons.json + scenes from occurrences/scenes.json + realized_lesson.json (`/cgen` via `?lesson=`) + realized_coverage.html
 │   ├── cartographer.py                   ✅ Cartographer v1 — occurrence intent on existing ele_ records (preserves extra moves)

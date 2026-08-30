@@ -13,6 +13,71 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-30 (cleanup) — Two gates that could not run now run and go red: `lint.py` classifier repaired (254 false errors → 0), `layout-engine/ci/validate_sidecar.py` repointed (3 real violations found and closed at the data layer), drifted `_schema/` copies removed
+
+*Anchor: branch `cleanup/tooling-lint-layout-engine` off `24b594c`, 8 files. Proposed by Claude as a
+patch series (no push access yet); repo state only once Jake lands it. Verification at delivery:
+`lint.py reference schemas vocab ontology ../astellas` → 71 files, **0 errors**; negative controls
+(ungoverned `pedagogical_intent`, ungoverned `move`, missing `composed_from`, malformed v2 script)
+all go red, exit 1. `validate_sidecar.py` → **OK, 0 violations** out of the box; negative control
+(bad sha pin + `ListItem`) fails, exit 1. Every other gate unchanged and green: `validate_atoms` on
+all four stores, form 17/17, instance 17/17, socket 21/21, objectives 45/45, realize 266/266,
+cartographer 27/27, couturier 35/35.*
+
+**Two gates were recording a state they could not check.** The 2026-08-30 survey that scored the
+course half found both in the same condition the 08-21 entry describes for `validate_objectives`
+before `77d5d57`: listed ✅ in `STRUCTURE.md`, and unable to execute against the repo as it is.
+
+**`tools/lint.py` — the classifier predated the stores.** It decided kind by shape, and "is a JSON
+array" meant "is a script." That was true in July. Since 2026-08-25 the repo holds two more arrays —
+`atoms.json` (items keyed `atom_id`) and `occurrences/elements.json` (items keyed `element_id` +
+`composed_from`) — and the linter was validating all 248 of their items against
+`script.primitives.v1.json`, producing 254 errors, every one false. Nobody had run it since the stores
+existed; nothing announced that. Repair: classify by the key the items carry. An **atom store** is
+recognised and **deferred** to `validate_atoms.py` with an INFO line — the gate already exists and
+does far more than schema; a thinner second copy here would be the drift the 08-13 vendored-schema
+entry warns about. An **element store** is schema-validated against `element.schema.json` (same file
+realize / cartographer / couturier already validate against on their own runs, so it cannot drift;
+this catches a hand-edited store between runs). A **script** is validated against v1 unless it uses a
+property only v2 declares — derived from the two schemas at run time, not hardcoded, so
+`sample_script.v2.json` stops failing against the wrong version. One incidental fix in the same tool:
+the `item_count` check looked for children typed `ListItem`; the element schema and
+`cgen/schema/scene.schema.json` both spell it `Bullet`, so the check could never fire. It accepts both.
+
+**`layout-engine/ci/validate_sidecar.py` — a default path from before the move.** Its defaults were
+`../../trainstorm-core/{schemas,}`, written when `layout-engine/` sat *beside* `trainstorm-core`.
+It now sits *inside*, so the default resolved to `trainstorm-core/trainstorm-core/…` and the gate
+crashed before its first check. Repair: auto-detect core as the nearest ancestor holding
+`schemas/atom.schema.json` — the same rule as `harness_paths.resolve_core()`, restated because this
+gate lives outside `tools/` and must run alone. Once it ran, it found **three real violations**, both
+closed at the **data** layer (the sidecar is per-brand data; the schema and the vocab are canon):
+
+| violation | resolution | why there and not in canon |
+|---|---|---|
+| rule `scenario_to_sort` fires on `script_primitive: scenario` | rule **removed**; the governed `requested_interaction: scenario_select` rule that already routed the same layout is now the only path | no version of `script.primitives` declares a `scenario` type (11 governed types, v1 and v2). The rule's own note says it was added to "close a gap" — i.e. it invented a value. A 12th primitive is a vocabulary decision for `DECISIONS.md`, not a sidecar edit. **Flagged, not made.** |
+| `STATIC_CARDS_3` / `REVEAL_GRID` repeat over `where.type: ListItem` | → `Bullet` | `element.schema.json`'s type enum has `List` + `Bullet`; the live Realizer emits `Bullet` for every `list_item` atom (10 of 55 in `ast_alsap`); `cgen/schema/scene.schema.json` agrees. `ListItem` is the prose spelling from July's conventions and survives only in `project/custom_instructions.md` line 28 and the Claude Project instructions — **prose drift, one line, not fixed here** because that file is a one-way snapshot Jake regenerates. |
+
+**`layout-engine/_schema/` — the second copy, again.** Two files, `intent_sidecar.schema.json` and
+`template_manifest.schema.json`, drifted from their canonical twins in `schemas/` (old `cgen.local`
+`$id`s, pre-Manifold descriptions; 169 and 13 diff lines). The layout-engine README had *already
+declared* the adoption into `schemas/` on 2026-07-31 and then kept the copies. Nothing read them —
+the validator took `--schema-dir` — so they were pure hazard: the next person to `cp` one back would
+re-run the 08-13 incident. Deleted; both docs repointed. Same standing rule, third instance:
+*schemas have exactly one home.*
+
+**Standing rule, sharpened.** The 08-21 entry made "a worked example must be gated" a rule. This
+adds its mirror: **a gate must be run by something.** A ✅ on a tool that no self-test, CI step or
+log entry has executed against the current repo is a claim, not a check. The two tools here had been
+✅ since July and August respectively; neither could run. Candidate follow-up (not done): a
+`tools/selftest_all.py` or CI job that executes every gate so a broken one announces itself.
+
+**Deliberately not in this pass** (Jake scoped it to broken tooling): the two committed virtualenvs
+under `cgen/Trainstorm_Toolkit_v2*/` (2,382 tracked `.pyc`); `atom.schema.json`'s `$id` still on
+`astellas.example`; the vestiges `STRUCTURE.md` already names; the cross-store `composed_from` rule
+that the 08-26 worked-example block executes but the 08-20 sideways-reference rule forbids — that one
+needs a `DECISIONS.md` block with Jake's signature; `ast_artwork`'s six proposed registry entries
+awaiting `adopt_registries.py`.
+
 ## 2026-08-30 — Artwork store **and** `?project=` loader on main via #42
 
 Same-day correction to the STRUCTURE score hop. PR #42 merged onto
