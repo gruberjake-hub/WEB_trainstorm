@@ -13,6 +13,38 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-30 — Artwork store **and** `?project=` loader on main via #42
+
+Same-day correction to the STRUCTURE score hop. PR #42 merged onto
+origin (`f9642bc` and later). Store
+(`cgen/astellas/projects/ast_artwork/`,
+`tools/headwater_ingest_artwork.py`) **and** the Course Engine
+`?project=` stand-in (`catalogUrlForProject` in `lessonCatalog.js`;
+`main.js` selects the catalog) are on main. Live
+`/cgen/?project=ast_artwork` plays SOP-2290; `/cgen` stays ALSAP. A
+loader restore PR was not needed and was not opened. The earlier
+“do not claim `?project=` plays until the loader PR lands” line was
+false — a raw.githubusercontent.com read was still at #41. No new
+product. Working-process block untouched. Claude remains a
+co-builder.
+
+---
+
+## 2026-08-30 — STRUCTURE reconciled against this main (log refresh)
+
+Score hop only. `STRUCTURE.md` tree + First moves brought to 2026-08-30
+against `cgen/trainstorm-core`, not wider `cgen/` vestiges. Course-half
+hops after 2026-08-26 (checks, scenes, lessons, `/cgen` player, brand
+chrome, learner labels, hide-VO, `?lesson=`) marked done; cite the
+dated `DECISIONS.md` blocks. Item 7 brunswick gold course stays open.
+Hop-start snapshot had `ast_artwork` on PR #42 Draft (a #41 read);
+same-day correction above: store **and** `?project=` loader are on
+main via #42.
+No new product. Working-process block untouched. Claude remains a
+co-builder.
+
+---
+
 ## 2026-08-27 — Astellas brand pack is player chrome at `/cgen`
 
 Couturier v1 already wrote pedagogical look keys on occurrences

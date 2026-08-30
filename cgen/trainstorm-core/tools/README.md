@@ -39,8 +39,9 @@ The Course Engine at `/cgen` cannot consume occurrence files as-is.
 Realize also writes a **JSON projection** of the same lesson node
 (`realized_lesson.json`, sibling of the HTML). Catalog records carry
 that filename as `projection`. `/cgen` loads it via `?lesson=<lesson_id>`
-(default is the catalog default). `?course=` stays a raw-path escape
-hatch. Meaning is still from atoms. This is not a hand-authored SCORM
+(default is the catalog default). `?project=` selects a sibling catalog
+(`ast_artwork`); `/cgen` with no project stays ALSAP. `?course=` stays a
+raw-path escape hatch. Meaning is still from atoms. This is not a hand-authored SCORM
 package and not `cgen/schema/course.schema.json` as a rival constitution.
 `meta.theme` on that JSON is the client overlay pack
 (`cgen/brands/<theme>/`) — player chrome at `/cgen`, not Couturier

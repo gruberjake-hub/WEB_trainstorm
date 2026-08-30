@@ -1,9 +1,9 @@
 # Trainstorm Core — Repository Structure
 
-*Tree and status reconciled against the repo 2026-08-20. The **one rule**, the naming conventions,
+*Tree and status reconciled against the repo 2026-08-30. The **one rule**, the naming conventions,
 the sync split and the logo decision below are unchanged and still correct — they were right the
-first time. What had gone stale was the tree, the ✅/⬜ markers, and the layering (see "The three
-layers" below, which is new).*
+first time. What had gone stale was the tree, the ✅/⬜/⚠ markers, and First moves (the course-half
+hops after 2026-08-26 were still written as if they had not landed).*
 
 The cure for getting sideways: **don't decide file-by-file. Follow one rule and this tree.**
 
@@ -35,11 +35,14 @@ Two siblings sit under `cgen/`. The split is deliberate: **`trainstorm-core/` is
 ```
 cgen/
 ├── brands/                              # CLIENT property — not machinery. One folder per client.
-│   ├── astellas/assets/                  ✅ identity marks only (tokens.css · fonts/ to follow)
+│   ├── astellas/                        ✅ player chrome at `/cgen` (`meta.theme`; tokens · components · logo)
+│   │   └── assets/                      ✅ identity marks (fonts/ to follow)
 │   └── brunswick/assets/                 ✅ same convention for every client that follows
 │
 ├── astellas/                            # ⚠ THIRD SIBLING — client atom stores + client registries
-│   ├── projects/{ast_alsap,alsap,alsap_asp9999}/   ✅ procedure · template · instance stores
+│   ├── projects/{ast_alsap,alsap,alsap_asp9999,ast_artwork}/  ✅ procedure · template · instance · artwork stores
+│   │                                               (`ast_artwork` store **and** `?project=` loader on main, PR #42.
+│   │                                               `/cgen/?project=ast_artwork` plays SOP-2290; `/cgen` stays ALSAP.)
 │   └── registry/{roles,records,docs,options}.registry.json  ✅ client-tier governed ENTRIES
 │
 └── trainstorm-core/                     # the build system itself (the tree below)
@@ -51,12 +54,21 @@ deliberately, so the exception is real and should be stated rather than left imp
 *courses* go to a separate `trainstorm-courses/` repo; client *document stores and governed
 registries* live here**, because the harness resolves a project store and its client registry as
 sibling anchors (`harness_paths.py`). Revisit if a client store ever needs to ship separately from
-core. Everything else under `cgen/` (zips, toolkits, loose HTML) is pre-manifold accretion and is not
-part of this structure.
+core.
+
+**⚠ Vestiges under `cgen/` (accretion — not remaining core work):** `cgen/lumina`; the tabled
+`/cgen/alsap` Netlify rewrite; zips (`layout-engine.zip`, `manifold_bundle_copilot_aug626.zip`,
+`trainstorm-core.zip`, and other toolkit zips); `.lnk` / `desktop.ini`. `README-START-HERE.md` is a
+2026-07-31 layout-engine drop note. `trainstorm-core/README.md` on main is locales README text
+(misfiled). `cgen/schema/course.schema.json` is the Course Engine runtime shape, **not** a rival
+constitution. Layout-engine potx/sidecars remain a parallel expression path, not the live `/cgen`
+HTML player. `project/ast_alsap/review_matrix.csv` is already flagged in the tree below. Do not
+treat these as First-moves work.
 
 ```
 trainstorm-core/
-├── README.md · README-START-HERE.md
+├── README.md                             ⚠ locales README text, misfiled at the core root
+├── README-START-HERE.md                  ⚠ 2026-07-31 layout-engine drop note
 ├── STRUCTURE.md                          ← this file  (STRUCTURE_dep*.md = deprecated, being removed)
 │
 ├── schemas/                              # the data contracts — validate against these
@@ -79,6 +91,8 @@ trainstorm-core/
 │   ├── evidence.enum.json                ✅ evidence_kind · supplied_by — the socket's terms  (evidence.v0.2)
 │   ├── instance.enum.json                ✅ meaning_kind · disposition_decision
 │   ├── structure.enum.json               ✅ list · list_item (source-agnostic)
+│   ├── check-shape.enum.json             ✅ invert_definition · sequence_order · closed_choice (DECISIONS 2026-08-27)
+│   ├── scene.enum.json                   ✅ front_matter · procedure_a · form_br (DECISIONS 2026-08-27)
 │   ├── intent.enum.json                  ✅ rhetorical + pedagogical intents  — ✅ pedagogical → element.intent.move
 │   ├── primitives.registry.json          ⬜ text/motion/layout/interaction/style keys — partial
 │   └── complexity · tone · visual-type    ✅
@@ -90,9 +104,9 @@ trainstorm-core/
 │   │   └── 07_examples/dispatch_2026-08-20/findings.md   ✅ first live dispatch record
 │   ├── couturier/ · griot/ · chameleon/  ✅ Couturier v1 writes style; chameleon is a stub (authoring in-scope as contract, runtime/LRE do not build; no chameleon.py)
 │   ├── localize/                         ✅ Dragoman — ⚠ flat `system.md` still un-`git rm`'d
-│   ├── ingest-decompose/                 ⚠ predecessor of headwater_ingest; retire or merge
+│   ├── ingest-decompose/                 ⚠ predecessor of headwater_ingest; folder already absent — retire or merge still named
 │   ├── cartographer/                     ✅ prompt + heuristic_v1.md; tools/cartographer.py writes occurrence intent
-│   └── realizer/                         ✅ one_to_many_v1.md — small extra-occurrence seed (not a prompt)
+│   └── realizer/                         ✅ one_to_many · primitives · check_v1 · scenes_v1 · lesson_v1 · instance_example · form_field_present · spine_v1
 │
 ├── registry/                             # backing store + retrieval memory (git-only, not synced)
 │   ├── visual-assets.registry.json       ✅ 255 governed image assets — the MAP, not the bytes
@@ -102,8 +116,8 @@ trainstorm-core/
 │   └── brands/                           ✅
 │
 ├── locales/                              ⬜ externalized translations keyed by atom_id — README only
-├── ontology/objectives.json              ✅ obj_ nodes — 2 seeded, `status: example` (v2: serves + bloom)
-├── ontology/goals.json                   ✅ goal_ nodes — 1 seeded, `status: example`; the WARRANT
+├── ontology/objectives.json              ✅ obj_ nodes — 7 seeded (2 AST009 `status: example`; 5 ALSAP `draft`)
+├── ontology/goals.json                   ✅ goal_ nodes — 2 seeded (1 AST009 `status: example`; 1 ALSAP `draft`); the WARRANT
 │
 ├── architecture/                         # docs of record (the .md files sync to Project knowledge)
 │   ├── DECISIONS.md                      ✅ append-only canon, one short block per settled call — if a chat disagrees, this file wins
@@ -128,6 +142,8 @@ trainstorm-core/
 │   ├── selftest_form_gate.py             ✅ 17/17     selftest_instance_gate.py  ✅ 17/17
 │   ├── selftest_socket.py                ✅ 21/21     demand rules · PII · contract honesty
 │   ├── headwater_ingest.py / _form.py    ✅ procedure · form ingests
+│   ├── headwater_ingest_artwork.py       ✅ sibling Headwater ingest for `ast_artwork` (SOP-2290); ALSAP ingest untouched
+│   ├── project_sop_artwork.py            ✅ sibling SOP-2290 projector
 │   ├── store_merge.py                    ✅ the idempotent merge rule — lives once, both ingests import it
 │   ├── resolve_slot.py                   ✅ the walk: one slot → grounding packet (+ sufficiency)
 │   ├── resolve_prompt.py                 ✅ spine + specialization + packet → dispatchable payload
@@ -138,7 +154,7 @@ trainstorm-core/
 │   ├── project_socket.py                 ✅ template → INTAKE CONTRACT (json + client-facing html)
 │   ├── lint.py · validate_objectives.py  ✅
 │   ├── localize/ · chat-capture/ · visual-assets/           ✅
-│   ├── realize.py                        ✅ Realizer v1 — atoms → occurrences (1 ele_ per atom + small 1:many seed) + realized_lesson.html (spine) + extra lesson HTML from occurrences/lessons.json + scenes from occurrences/scenes.json + realized_coverage.html
+│   ├── realize.py                        ✅ Realizer v1 — atoms → occurrences (1 ele_ per atom + small 1:many seed) + realized_lesson.html (spine) + extra lesson HTML from occurrences/lessons.json + scenes from occurrences/scenes.json + realized_lesson.json (`/cgen` via `?lesson=`) + realized_coverage.html
 │   ├── cartographer.py                   ✅ Cartographer v1 — occurrence intent on existing ele_ records (preserves extra moves)
 │   ├── couturier.py                      ✅ Couturier v1 — occurrence style keys on existing ele_ records (mints nothing)
 │   └── render/                           ⬜ element → HTML → PNG — NOT this hop (no PNG pipeline)
@@ -257,18 +273,13 @@ the occurrence's `expression` facet from a documented move→look map.
 *(The original four — unzip, fill placeholders, wire claudesync, paste custom instructions — are
 done. Superseded 2026-08-20 by the state above.)*
 
-The **document half** of the machine is built and green: three atom stores, a gate with two
-self-tests at 17/17, ingest · reconcile · approve · project, and an agent that has been dispatched
-and behaves correctly. The **course half has started**: Realizer v1 mints one occurrence per atom
-plus a small 1:many seed (two ALSAP atoms, plus purpose as a second `reinforce`
-check); Cartographer v1 (`tools/cartographer.py`) binds
-occurrence intent on that mixed store and re-projects `realized_lesson.html`. Couturier v1
-has written style keys on those occurrences (`tools/couturier.py`); the default HTML is now a
-short lesson spine (`agents/realizer/spine_v1.md`) with the SOP dump as coverage.
-Dragoman and `tools/render/`
-PNG pipelines are unbuilt. The `atom → primitives` hop is **landed 2026-08-26**
-(`agents/realizer/primitives_v1.md`): Realizer binds a closed compiler
-`text_primitive` on the occurrence; the spine projector renders those clothes.
+The **document half** of the machine is built and green: Headwater authored ingest, `validate_atoms`,
+form / instance / socket gates. Identity 1:many, the primitives hop, Procedure A as a job-aid +
+sequence, form BR present, and the ASP-9999 instance example are already decided — do not
+re-litigate. The **course half beyond Realizer / Cartographer / Couturier v1** has landed the
+post-2026-08-26 hops below (cite `architecture/DECISIONS.md` dates). Dragoman and `tools/render/`
+PNG pipelines are unbuilt. Authoring Chameleon stays a contract (assumed-audience facets); there is
+no `chameleon.py`.
 
 Near-term, in dependency order:
 
@@ -298,9 +309,55 @@ Near-term, in dependency order:
    (no extra `ele_`; no invented procedure-step MCQ). **Same day — atom →
    primitives:** those steps project as a job-aid, not four SOP cards.
    **Same day — sequence practice:** order those four first sentences
-   (projector-only; `object.order`). Next: Dragoman / `tools/render/`.
+   (projector-only; `object.order`). Couturier `style_ref` stays pedagogical
+   roles; brand tokens are player chrome (landed hop below).
+
+   Landed after 2026-08-26 (same course half; not new product):
+
+   - ~~**Check shapes on the graph**~~ — **done 2026-08-27.** Closed vocab
+     `invert_definition` / `sequence_order` / `closed_choice`
+     (`vocab/check-shape.enum.json`). See `architecture/DECISIONS.md`.
+   - ~~**Scenes catalog + one-scene pager**~~ — **done 2026-08-26 pager /
+     2026-08-27 catalog.** `occurrences/scenes.json` is source of truth;
+     projector pages one scene at a time. See `architecture/DECISIONS.md`.
+   - ~~**Lesson as a graph object + lessons catalog**~~ — **done 2026-08-27.**
+     `occurrences/lessons.json` (ALSAP short / br / plan). See
+     `architecture/DECISIONS.md`.
+   - ~~**`/cgen` Course Engine**~~ — **done 2026-08-27 player / 2026-08-30
+     `?lesson=` / `?project=`.** Reads `realized_lesson.json` via catalog
+     `?lesson=` inside the catalog selected by `?project=` (default ALSAP).
+     `ast_artwork` store **and** `?project=` loader are on main (PR #42).
+     Live `/cgen/?project=ast_artwork` plays SOP-2290; `/cgen` stays ALSAP.
+     See `architecture/DECISIONS.md`.
+   - ~~**Astellas brand pack as player chrome**~~ — **done 2026-08-27.**
+     `cgen/brands/` via `meta.theme`. Couturier `style_ref` stays
+     pedagogical roles. See `architecture/DECISIONS.md`.
+   - ~~**Learner-facing check copy + registry labels**~~ — **done
+     2026-08-27.** Engine JSON wears labels; graph still holds ids. See
+     `architecture/DECISIONS.md`.
+   - ~~**Instance example fill shows registry labels**~~ — **done
+     2026-08-28.** Same label projection as closed-choice. See
+     `architecture/DECISIONS.md`.
+   - ~~**ALSAP scene 1 in-scope org + governance-doc lists**~~ — **done
+     2026-08-29.** Children already on the graph; catalog membership.
+     See `architecture/DECISIONS.md`.
+   - ~~**Hide unused CC/audio unless the lesson has voiceover**~~ —
+     **done 2026-08-29.** See `architecture/DECISIONS.md`.
 7. **A real `brunswick.reference.course.json`** — still `{"_todo": …}`, and the only thing that would
    prove the course half end to end.
+
+**Specified, still open** (already named above or on the visual-asset track — not vestiges, not
+parked walls): `tools/render/` PNG pipeline; Dragoman / `locales/` (README only); 
+`vocab/primitives.registry.json` still partial; `registry/templates/` HTML/CSS per
+`layout_primitive`; visual-asset track (logos to `cgen/brands/<client>/assets/`, empty `alt_text`,
+`process_flow` layout gap); `ingest-decompose/` predecessor — retire or merge; ontology
+goals/objectives that are still `status: example`.
+
+**Parked / walled — not next hops:** runtime Chameleon / LRE / Responsive Engine; Headwater
+outcomes-mode; LLM distractor-writer; pretty `/cgen/{client}/{course}` URLs; `/cgen/alsap`
+rewrite; slide-authoring frontend; ingest UI on the static Netlify site; ISO 14971; Procedure B
+on ALSAP; Generator's divergent distractors; Strategist / Designer / Audience as live agents
+(outcomes-course warrant path). Authoring Chameleon stays a contract.
 
 `project/custom_instructions.md` now points at this file and `architecture/DECISIONS.md`.
 `architecture/unification-map.md` still names `element.schema.json` as canon in July prose —
