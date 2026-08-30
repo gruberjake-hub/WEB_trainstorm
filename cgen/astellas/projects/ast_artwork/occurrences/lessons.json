@@ -1,0 +1,23 @@
+{
+  "store": "lessons",
+  "project": "ast_artwork",
+  "policy": "v1_lesson_catalog",
+  "spec": "agents/realizer/lesson_v1.md",
+  "default": "ast_artwork_short",
+  "lessons": [
+    {
+      "lesson_id": "ast_artwork_short",
+      "default": true,
+      "projection": "realized_lesson.json",
+      "scene_ids": [
+        "what_this_sop_is",
+        "how_new_artwork_starts"
+      ],
+      "lesson_end_check_ids": [
+        "ele_sop_2290_def_blue__reinforce"
+      ],
+      "from": "Default short lesson: front-matter + Procedure A job-aid. Invert-definition of BLUE at lesson end. Title heuristic is the document-root atom. Not a Course ele_. No form scene."
+    }
+  ],
+  "note": "Closed project catalog. Source of truth for lesson records. /cgen?project=ast_artwork loads this file and plays the default short. ?lesson= still works inside this catalog. Not a LMS. Not SCORM. Not a catalog UI. Coverage dump stays a dump, not a second lesson."
+}
