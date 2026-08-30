@@ -21,12 +21,15 @@ Manifold conformance checks (sidecar <-> trainstorm-core):
      legacy free-string templates — this is what guarantees the element_id join
   9. selector `where` clauses use governed intent facets (rhetorical/pedagogical)
 
-Governed vocabularies are read from --core-dir (default ../../trainstorm-core), i.e.
-the canonical repo, never a copy bundled here. If a vocabulary file is missing, the
-axis it governs is SKIPPED with a NOTE rather than passing silently.
+Governed vocabularies and both schemas are read from --core-dir, i.e. the canonical
+trainstorm-core, never a copy bundled here. The default is auto-detected: the nearest
+ancestor of this file that holds schemas/atom.schema.json (layout-engine/ now lives
+INSIDE trainstorm-core, so that is two levels up — the old ../../trainstorm-core default
+pointed at a path that does not exist; fixed 2026-08-30). If a vocabulary file is
+missing, the axis it governs is SKIPPED with a NOTE rather than passing silently.
 
 Usage:
-  python validate_sidecar.py SIDECAR.json [--schema-dir ../../trainstorm-core/schemas] [--core-dir ../../trainstorm-core]
+  python validate_sidecar.py SIDECAR.json [--core-dir <path to trainstorm-core>] [--schema-dir <core>/schemas]
 
 Exit 0 = contract holds (warnings/notes allowed); non-zero = fail (prints violations).
 """
@@ -71,19 +74,47 @@ def ids_from_enum_values(obj, *path):
     return None
 
 
+def find_core():
+    """Nearest ancestor of this file that is a trainstorm-core checkout (schemas/atom.schema.json).
+    Same detection rule as tools/harness_paths.resolve_core(), restated here because this gate
+    lives outside tools/ and must stay runnable on its own."""
+    d = os.path.dirname(os.path.abspath(__file__))
+    while True:
+        if os.path.exists(os.path.join(d, "schemas", "atom.schema.json")):
+            return d
+        parent = os.path.dirname(d)
+        if parent == d:
+            return None
+        d = parent
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("sidecar")
-    ap.add_argument("--schema-dir", default=os.path.join(os.path.dirname(__file__), "..", "..", "trainstorm-core", "schemas"))
-    ap.add_argument("--core-dir", default=os.path.join(os.path.dirname(__file__), "..", "..", "trainstorm-core"))
+    ap.add_argument("--core-dir", default=None, help="trainstorm-core dir (default: auto-detect)")
+    ap.add_argument("--schema-dir", default=None, help="schemas dir (default: <core-dir>/schemas)")
     args = ap.parse_args()
+    args.core_dir = args.core_dir or find_core()
+    if not args.core_dir:
+        print("FAIL — cannot locate trainstorm-core (schemas/atom.schema.json); pass --core-dir")
+        sys.exit(2)
+    args.schema_dir = args.schema_dir or os.path.join(args.core_dir, "schemas")
 
     side = load(args.sidecar)
     side_dir = os.path.dirname(os.path.abspath(args.sidecar))
-    man_path = os.path.join(side_dir, side["template_ref"]["manifest"]) \
-        if not os.path.isabs(side["template_ref"]["manifest"]) else side["template_ref"]["manifest"]
-    if not os.path.exists(man_path):
-        man_path = side["template_ref"]["manifest"]
+    man_ref = side["template_ref"]["manifest"]
+    # A manifest ref is written relative to the layout-engine root (`templates/<brand>/…`).
+    # Resolve against: the sidecar's dir, the layout-engine root (its parent), then the cwd —
+    # so the gate runs the same from layout-engine/, from trainstorm-core/, or from CI.
+    candidates = [man_ref] if os.path.isabs(man_ref) else [
+        os.path.join(side_dir, man_ref),
+        os.path.join(os.path.dirname(side_dir), man_ref),
+        man_ref,
+    ]
+    man_path = next((c for c in candidates if os.path.exists(c)), None)
+    if man_path is None:
+        print(f"FAIL — manifest '{man_ref}' not found (tried: {', '.join(candidates)})")
+        sys.exit(1)
     man = load(man_path)
 
     side_schema = load(os.path.join(args.schema_dir, "intent_sidecar.schema.json"))

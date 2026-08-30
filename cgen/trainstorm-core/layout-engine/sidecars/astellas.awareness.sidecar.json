@@ -16,16 +16,6 @@
   },
   "selection": [
     {
-      "id": "scenario_to_sort",
-      "when": {
-        "script_primitive": [
-          "scenario"
-        ]
-      },
-      "use": "SCENARIO_SORT",
-      "note": "A scenario primitive (branching decision) routes to the scenario-sort layout, realized via the scenario_select interaction. Closes the gap where scenario_select had no owning script primitive."
-    },
-    {
       "id": "knowledge_check_to_kc",
       "when": {
         "script_primitive": [
@@ -43,7 +33,7 @@
         ]
       },
       "use": "SCENARIO_SORT",
-      "note": "Fallback: a scene element that REQUESTS scenario_select without carrying a scenario primitive still routes here. Primitive-driven rule above is now primary."
+      "note": "Routes on the governed interaction key. A former primary rule fired on a script_primitive 'scenario' that no version of script.primitives declares (11 governed types, no scenario); it was removed 2026-08-30 rather than silently accepted. Adding a 12th primitive is a vocabulary decision (DECISIONS.md), not a sidecar edit."
     },
     {
       "id": "reveal_to_grid",
@@ -150,7 +140,7 @@
           "scope": "descendants",
           "where": {
             "type": [
-              "ListItem"
+              "Bullet"
             ]
           },
           "order_by": "structure.sequence_index"
@@ -209,7 +199,7 @@
           "scope": "descendants",
           "where": {
             "type": [
-              "ListItem"
+              "Bullet"
             ]
           },
           "order_by": "structure.sequence_index"
