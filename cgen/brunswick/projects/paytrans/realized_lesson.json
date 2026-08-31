@@ -45,6 +45,20 @@
       "role": "front_matter",
       "components": [
         {
+          "type": "Body",
+          "props": {
+            "text": "Welcome \u2014 this is about your pay: what's changing, how it's set, and what it means for you.",
+            "kicker": ""
+          },
+          "meta": {
+            "beat_id": "bt_paytrans_welcome",
+            "intent": {
+              "pedagogical": "hook"
+            },
+            "placement": "lesson_start"
+          }
+        },
+        {
           "type": "Heading",
           "props": {
             "level": 2,
@@ -866,6 +880,20 @@
             "from": "manifest.checks",
             "text_primitive": "tp_recall",
             "style_ref": "brand.recall"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "You're informed. You know how your pay is set and what's behind it \u2014 and that knowledge is yours to use.",
+            "kicker": ""
+          },
+          "meta": {
+            "beat_id": "bt_paytrans_closure",
+            "intent": {
+              "pedagogical": "transfer"
+            },
+            "placement": "lesson_end"
           }
         }
       ]
