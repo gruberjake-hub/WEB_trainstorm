@@ -2388,3 +2388,24 @@ chrome (`meta.theme` from the projection; pack at `cgen/brands/brunswick/`). `/c
 
 **Supersedes:** the astellas-only path rule inside `catalogUrlForProject`; the #42 block's
 `?project=` stand-in otherwise stands.
+
+---
+
+## 2026-08-31 — Brunswick pack conforms to the Course Engine pack contract
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** `cgen/brands/brunswick/` gains the four contract files the engine loads
+(`brunswick-brand.json`, `brunswick-{tokens,layout,components}.css`), on the same semantic variable
+contract as the astellas pack. The January `brand.json` / `brunswick.css` remain as the distillation
+source. Non-brand status colors are flagged in-file, not invented. Layout/components are copies of
+the astellas files (brand spots swapped) — a shared engine base layer is a NAMED CARRY, and until it
+exists component/layout edits go to both packs.
+
+**Why:** The pack predates the contract; `?project=brunswick/paytrans` played unbranded because the
+loader's 404 fallback is silent. Conform the data, don't teach the loader legacy names.
+
+**Consequences:** `/cgen/?project=brunswick/paytrans` plays in Brunswick chrome (verified headless
+against this branch). Carries: engine base stylesheet; a visible dev notice on brand-load fallback.
+
+**Supersedes:** nothing — the astellas pack layout is confirmed as the pack contract of record.

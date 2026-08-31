@@ -1,0 +1,17 @@
+{
+  "brand": "brunswick",
+  "source": "brand.json (distilled Brunswick Brand Guidelines 2023) \u2014 this file is the engine's identity contract only",
+  "logos": {
+    "primary": {
+      "src": "assets/Logo_Brunswick_black.png",
+      "alt": "Brunswick"
+    },
+    "inverse": {
+      "src": "assets/Logo_Brunswick_white_transback.png",
+      "alt": "Brunswick"
+    }
+  },
+  "rules": {
+    "minimum_clear_space_px": 24
+  }
+}
