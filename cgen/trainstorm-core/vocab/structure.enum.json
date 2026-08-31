@@ -1,5 +1,5 @@
 {
-  "vocabulary_version": "structure.v0.1",
+  "vocabulary_version": "structure.v0.2",
   "status": "draft_for_build",
   "owner": "quality_content_architecture",
   "description": "Universal structural closed lists for atom.meaning.kind — content shapes that are NOT specific to any source type (procedures, forms, and courses all have lists). Additive to atom.meaning.kind, same governance pattern as procedure.enum.json / intent.enum.json. A list is decomposed into a List container + ListItem children, never a \\n-delimited string.",
@@ -14,7 +14,10 @@
       "field": "atom.meaning.kind",
       "values": [
         { "id": "list",      "label": "List",      "definition": "An ordered or unordered list container. Its meaning is the list's lead-in / caption; its entries are child atoms (kind list_item) via object.belongs_to. Never a newline-delimited string." },
-        { "id": "list_item", "label": "List Item", "definition": "A single entry within a list. Its meaning is the item text; its place is object.order within the parent list. A leaf." }
+        { "id": "list_item", "label": "List Item", "definition": "A single entry within a list. Its meaning is the item text; its place is object.order within the parent list. A leaf." },
+        { "id": "document",  "label": "Document",  "definition": "v0.2 — the root node of one ingested source document (a deck, a guide, an FAQ). Its meaning is the document's title/identity line; children hang off it via object.belongs_to. Source-agnostic: SOP roots predate this value and keep kind procedure; expository sources root here." },
+        { "id": "section",   "label": "Section",   "definition": "v0.2 — a titled subdivision of a document (a slide topic, a heading's scope). Its meaning is the section's own title or claim. A container: statements, lists, and sub-sections belong to it." },
+        { "id": "statement", "label": "Statement", "definition": "v0.2 — one meaning-bearing assertion from an expository source: a claim, definition, or fact, verbatim in the source locale. A leaf; the didactic dual of procedure_step (a step says DO THIS, a statement says THIS IS SO). First consumer: the Brunswick pay-transparency corpus, the first non-procedural, non-form source through Headwater." }
       ]
     }
   }
