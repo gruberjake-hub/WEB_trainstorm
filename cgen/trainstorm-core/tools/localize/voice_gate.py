@@ -68,9 +68,12 @@ def sha(text: str) -> str:
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def invariant_findings(text, atom_text, corpus_text):
-    """Returns (fails, notes): tokens absent from the atom; notes = found in a sibling atom."""
+def invariant_findings(text, atom_text, corpus_text, sentence_starters=False):
+    """Returns (fails, notes): tokens absent from the atom; notes = found in a sibling atom.
+    sentence_starters=True exempts sentence-initial capitals (track prose — the same documented
+    limit the inverse guard carries; numbers are NEVER exempted)."""
     fails, notes = [], []
+    starters = set(_SENT_START.findall(text)) if sentence_starters else set()
     def present(token, hay):        # whole-token, case-insensitive — substring matching once
         return bool(re.search(r"(?<![A-Za-z0-9])" + re.escape(token) + r"(?![A-Za-z0-9])", hay, re.I))
         # let 'one' hide inside 'zones'; never again
@@ -81,7 +84,7 @@ def invariant_findings(text, atom_text, corpus_text):
         (notes if present(t, corpus_text) else fails).append(f"number '{t}'")
     for tok in CAP_RE.findall(text):
         t = tok.strip("'")
-        if t.lower() in EXEMPT or any(c.isdigit() for c in t) or present(t, atom_text):
+        if t.lower() in EXEMPT or t in starters or any(c.isdigit() for c in t) or present(t, atom_text):
             continue
         (notes if present(t, corpus_text) else fails).append(f"name '{t}'")
     return sorted(set(fails)), sorted(set(notes))
@@ -147,6 +150,57 @@ def gate_beat_proposals(name, store, beats_by_id, corpus_text, allow_text, resul
         bad_flags = [f for f in p.get("flags", [])
                      if f.get("category") not in FLAG_CATEGORIES or f.get("severity") not in SEVERITIES]
         conf = p.get("confidence")
+        disciplined = not bad_flags and isinstance(conf, (int, float)) and 0.0 <= conf <= 1.0
+        results.append((f"{tag} flag/confidence discipline", disciplined,
+                        "" if disciplined else "ungoverned flag category/severity or bad confidence"))
+
+
+def gate_track_proposals(name, store, atoms_by_id, beats_by_id, voice_pack, corpus_text, results):
+    """Narration tracks (narrate-agent.v0.1): draft-only bright line; every pin fresh (atom
+    content_hash / beat_hash); invariants checked against the UNION of pinned sources — atom
+    text + its accepted voice rendering + woven beat copy. Connective-tissue claims built from
+    ordinary words are the documented limit; the writer's flags carry them to the human."""
+    entries = (voice_pack or {}).get("entries") or {}
+    beat_copy = (voice_pack or {}).get("beats") or {}
+    for sid, tr in (store.get("track_proposals") or {}).items():
+        tag = f"{name}: track {sid}"
+        if tr.get("status") != "draft":
+            results.append((f"{tag} status is draft (bright line)", False,
+                            f"writer emitted {tr.get('status')!r}"))
+            continue
+        union_parts, stale, missing = [], [], []
+        for key, pinned in (tr.get("sources") or {}).items():
+            if key.startswith("bt_"):
+                beat = beats_by_id.get(key)
+                if beat is None:
+                    missing.append(key); continue
+                if pinned != beat_hash(beat):
+                    stale.append(key); continue
+                bc = beat_copy.get(key)
+                if bc:
+                    union_parts.append(bc.get("text") or "")
+            else:
+                atom = atoms_by_id.get(key)
+                if atom is None:
+                    missing.append(key); continue
+                if pinned != atom["content_hash"]:
+                    stale.append(key); continue
+                union_parts.append(atom["meaning"]["source_text"])
+                ve = entries.get(key)
+                if ve:
+                    union_parts.append(ve.get("text") or "")
+        results.append((f"{tag} pins resolve", not missing, ", ".join(missing)))
+        results.append((f"{tag} pins are fresh", not stale,
+                        "; ".join(f"{k} — source moved, track STALE" for k in stale)))
+        if missing or stale:
+            continue
+        union = " ".join(union_parts)
+        fails, notes = invariant_findings(tr.get("text", ""), union, corpus_text, sentence_starters=True)
+        detail = ("; ".join(fails) + (f"  [corpus: {'; '.join(notes)}]" if notes else "")) if fails                  else (f"[corpus: {'; '.join(notes)}]" if notes else "")
+        results.append((f"{tag} union invariants", not fails, detail))
+        bad_flags = [f for f in tr.get("flags", [])
+                     if f.get("category") not in FLAG_CATEGORIES or f.get("severity") not in SEVERITIES]
+        conf = tr.get("confidence")
         disciplined = not bad_flags and isinstance(conf, (int, float)) and 0.0 <= conf <= 1.0
         results.append((f"{tag} flag/confidence discipline", disciplined,
                         "" if disciplined else "ungoverned flag category/severity or bad confidence"))
@@ -289,6 +343,49 @@ if __name__ == "__main__" and args.selftest:
     results.append(("selftest(beat): sentence-initial name slips — the DOCUMENTED limit "
                     "(human acceptance is the meaning gate)",
                     all(ok for _, ok, _ in scratch), "limit unexpectedly caught — update the docs"))
+
+    # ── track / union guard (Griot hop one) ──
+    TB = {"beat_id": "bt_fx_welcome", "placement": {"type": "lesson_start"},
+          "intent": {"pedagogical": "hook"}, "status": "accepted", "from": "fx"}
+    TBEATS = {"bt_fx_welcome": TB}
+    TVPACK = {"entries": {"atom_fx_grades": {"text": "Your pay range is one of 24.",
+                                              "status": "accepted", "reviewer": "t",
+                                              "source_hash": A1["content_hash"]}},
+              "beats": {"bt_fx_welcome": {"text": "Welcome, this is for you.",
+                                           "status": "accepted", "reviewer": "t",
+                                           "source_hash": beat_hash(TB)}}}
+    tgood = {"register": "warm_direct", "track_proposals": {
+        "sc_one": {"text": "Welcome, this is for you. Your pay range is one of 24 — set against market rates, in one of 3 zones.",
+                    "status": "draft", "confidence": 0.8, "flags": [],
+                    "sources": {"atom_fx_grades": A1["content_hash"],
+                                 "atom_fx_zones": A2["content_hash"],
+                                 "bt_fx_welcome": beat_hash(TB)}}}}
+    n2 = len(results)
+    gate_track_proposals("fixture(track)", tgood, ATOMS, TBEATS, TVPACK, CORPUS, results)
+    results.append(("selftest(track): union-anchored flowing track passes",
+                    all(ok for _, ok, _ in results[n2:]), ""))
+
+    def tred(label, mutate):
+        s = json.loads(json.dumps(tgood))
+        atoms = {k: json.loads(json.dumps(v)) for k, v in ATOMS.items()}
+        beats = {k: json.loads(json.dumps(v)) for k, v in TBEATS.items()}
+        mutate(s, atoms, beats)
+        scratch = []
+        gate_track_proposals("fixture(track-red)", s, atoms, beats, TVPACK, CORPUS, scratch)
+        caught = any(not ok for _, ok, _ in scratch)
+        results.append((label, caught, "" if caught else "mutation was NOT caught"))
+
+    tred("selftest(track): a figure NO pinned source carries is caught",
+         lambda s, a, b: s["track_proposals"]["sc_one"].update(
+             text="Your pay range is one of 25, in one of 3 zones."))
+    tred("selftest(track): a stale atom pin is caught",
+         lambda s, a, b: a["atom_fx_grades"].update(content_hash=sha("moved meaning")))
+    tred("selftest(track): a stale beat pin (placement moved) is caught",
+         lambda s, a, b: b["bt_fx_welcome"].update(placement={"type": "lesson_end"}))
+    tred("selftest(track): a pin naming nothing is caught",
+         lambda s, a, b: s["track_proposals"]["sc_one"]["sources"].update(atom_fx_ghost="sha256:" + "0" * 64))
+    tred("selftest(track): self-accepted track is caught (bright line)",
+         lambda s, a, b: s["track_proposals"]["sc_one"].update(status="accepted"))
     sys.exit(0 if report(results) else 1)
 
 # ---------------------------------------------------------------- project mode
@@ -310,8 +407,13 @@ if __name__ == "__main__":       # importers take invariant_findings/GOVERNED/sh
         beats_by_id = {b["beat_id"]: b for b in
                        json.loads(beats_p.read_text(encoding="utf-8")).get("beats", [])}
     allow_text = build_arc_allowlist(proj)
+    vpack_p = proj / "voice" / f"{'warm_direct'}.json"
+    voice_packs = {vp.stem: json.loads(vp.read_text(encoding="utf-8"))
+                   for vp in (proj / "voice").glob("*.json")}
     for f in files:
         store = json.loads(f.read_text(encoding="utf-8"))
         gate_proposals(f.name, store, atoms_by_id, corpus_text, results)
         gate_beat_proposals(f.name, store, beats_by_id, corpus_text, allow_text, results)
+        gate_track_proposals(f.name, store, atoms_by_id, beats_by_id,
+                             voice_packs.get(store.get("register") or ""), corpus_text, results)
     sys.exit(0 if report(results) else 1)

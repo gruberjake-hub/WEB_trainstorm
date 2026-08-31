@@ -29,23 +29,24 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 import harness_paths
 from voice_gate import (invariant_findings, inverse_findings, build_arc_allowlist,
-                        GOVERNED, sha)  # one guard, one home — never copied
+                        gate_track_proposals, GOVERNED, sha)  # one guard, one home — never copied
 from validate_arc import beat_hash
 from jsonschema import Draft202012Validator
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--core"); ap.add_argument("--project", required=False)
 ap.add_argument("--register", required=True)
-ap.add_argument("--ids", help="comma-separated atom_ids to accept")
+ap.add_argument("--ids", help="comma-separated atom_ids (or bt_ beat ids) to accept")
+ap.add_argument("--tracks", help="comma-separated scene ids: accept narration tracks (voice/proposals/narration.<register>.json → voice/narration/<register>.json)")
 ap.add_argument("--all", action="store_true", help="accept every gate-passing draft")
 ap.add_argument("--by", required=True, help="reviewer of record — acceptance is a person's act")
 ap.add_argument("--edit", help="replacement text (single --ids entry only): accept your edit of the draft")
 a = ap.parse_args()
 
-if bool(a.ids) == a.all:
-    raise SystemExit("choose exactly one of --ids or --all")
-if a.edit and (a.all or len(a.ids.split(",")) != 1):
-    raise SystemExit("--edit accepts exactly one --ids entry")
+if sum(map(bool, (a.ids, a.all, a.tracks))) != 1:
+    raise SystemExit("choose exactly one of --ids, --all, or --tracks")
+if a.edit and (a.all or len((a.ids or a.tracks).split(",")) != 1):
+    raise SystemExit("--edit accepts exactly one --ids/--tracks entry")
 
 P = harness_paths.resolve_core(a.core)
 PP = harness_paths.resolve()
@@ -56,6 +57,54 @@ if reg not in GOVERNED:
 if GOVERNED[reg].get("status") != "specified":
     raise SystemExit(f"register '{reg}' is status '{GOVERNED[reg].get('status')}' — "
                      "a draft register may be drafted against, never accepted (register.v0.1 rule)")
+
+if a.tracks:
+    import json as _json
+    tprops_p = proj / "voice" / "proposals" / f"narration.{reg}.json"
+    if not tprops_p.exists():
+        raise SystemExit(f"no narration proposals store: {tprops_p}")
+    tstore = _json.loads(tprops_p.read_text(encoding="utf-8"))
+    atoms_l = _json.loads((proj / "atoms.json").read_text(encoding="utf-8"))
+    atoms_by_id = {x["atom_id"]: x for x in (atoms_l["atoms"] if isinstance(atoms_l, dict) else atoms_l)}
+    beats_pth = proj / "occurrences" / "beats.json"
+    b_by_id = {b["beat_id"]: b for b in _json.loads(beats_pth.read_text(encoding="utf-8")).get("beats", [])}               if beats_pth.exists() else {}
+    vpack_p = proj / "voice" / f"{reg}.json"
+    vpack = _json.loads(vpack_p.read_text(encoding="utf-8")) if vpack_p.exists() else {}
+    corpus_t = " ".join(x["meaning"]["source_text"] for x in atoms_by_id.values())
+    from jsonschema import Draft202012Validator as _V
+    nschema = _json.loads((P["schemas_dir"] / "narration.pack.schema.json").read_text(encoding="utf-8"))
+    npack_p = proj / "voice" / "narration" / f"{reg}.json"
+    npack = _json.loads(npack_p.read_text(encoding="utf-8")) if npack_p.exists() else             {"narration_version": "narration.v0.1", "register": reg, "tracks": {}}
+    acc, ref = [], []
+    for sid in [s.strip() for s in a.tracks.split(",")]:
+        tr = (tstore.get("track_proposals") or {}).get(sid)
+        if tr is None:
+            ref.append((sid, "no such track proposal")); continue
+        scratch = []
+        gate_track_proposals("acceptance", {"register": reg, "track_proposals": {sid: tr}},
+                             atoms_by_id, b_by_id, vpack, corpus_t, scratch)
+        bad = [r for r in scratch if not r[1]]
+        if bad:
+            ref.append((sid, "; ".join(f"{n}: {d}" for n, _, d in bad)[:160])); continue
+        text = a.edit if a.edit else tr["text"]
+        npack["tracks"][sid] = {"text": text, "status": "accepted", "reviewer": a.by,
+                                 "sources": tr["sources"]}
+        acc.append((sid, "accepted" + (" (with edit)" if a.edit else "")))
+    errs = sorted(_V(nschema).iter_errors(npack), key=lambda e: list(e.path))
+    if errs:
+        print("NARRATION PACK INVALID — nothing written:")
+        for e in errs[:5]:
+            print(" ", e.message)
+        sys.exit(1)
+    if acc:
+        npack_p.parent.mkdir(parents=True, exist_ok=True)
+        npack_p.write_text(_json.dumps(npack, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    for sid, msg in acc:
+        print(f"  + track {sid}: {msg}")
+    for sid, msg in ref:
+        print(f"  ! track {sid}: REFUSED — {msg}")
+    print(f"\n{len(acc)} track(s) accepted by {a.by} → {npack_p if acc else '(nothing written)'}; {len(ref)} refused.")
+    sys.exit(0 if not ref else (0 if acc else 1))
 
 atoms_list = json.loads((proj / "atoms.json").read_text(encoding="utf-8"))
 atoms = {x["atom_id"]: x for x in (atoms_list["atoms"] if isinstance(atoms_list, dict) else atoms_list)}
