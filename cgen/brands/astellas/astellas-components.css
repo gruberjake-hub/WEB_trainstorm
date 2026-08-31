@@ -195,3 +195,16 @@ button:active, .btn:active {
    uses these pack tokens (accent, surface, heading font, spacing).
    Do not fuse client identity into Couturier keys. Chrome stays calm:
    Arial, mostly neutral, red for emphasis. */
+
+
+/* ── structure grouping (2026-08-31 structure hop) — NEUTRAL styling only.
+   COPIED into both brand packs per the engine-base-stylesheet carry: edits go to BOTH.
+   Real hierarchy aesthetics (type scale, cards, registry) belong to the player-expression
+   phase; this only makes the object facet's tree visible: heads read as heads, children
+   sit with their parent, clusters separate. */
+.structGroup { margin: 2.1rem 0; }
+.structGroup .bodyBlock { margin: 0.4rem 0; }
+.structGroup .group-head p { font-weight: 650; font-size: 1.07em; letter-spacing: .01em; }
+.structGroup .depth-1 { margin-left: 1.1rem; }
+.structGroup .depth-2 { margin-left: 2.2rem; }
+.structGroup .depth-1 p, .structGroup .depth-2 p { font-size: 0.98em; }
