@@ -213,12 +213,18 @@ body {
   min-width: 2.4rem;
 }
 
-.sl-submit {
+.sl-player .sl-submit {
   background: var(--color-accent, #026afe);
   border-color: var(--color-accent, #026afe);
   color: #fff;
   font-weight: 700;
   min-width: 5.5rem;
+}
+
+.sl-player .sl-submit:hover {
+  background: var(--color-accent-strong, var(--color-accent, #026afe));
+  border-color: var(--color-accent-strong, var(--color-accent, #026afe));
+  color: #fff;
 }
 
 .sl-submit[hidden] {
