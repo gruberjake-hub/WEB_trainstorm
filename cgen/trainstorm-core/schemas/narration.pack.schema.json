@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/narration.pack.schema.json",
+  "title": "Narration pack — one register's spoken-channel tracks for one project",
+  "description": "The narration SCRIPT layer (Griot hop one, 2026-08-31): words rendered for the EAR at the spoken-channel coordinate of the register — Dragoman's third mode (narrate) writes them; Griot (the narration facet: voice_ref/prosody/locale/voiceover_ref) binds performance to ACCEPTED tracks, per his ratified 'words before voice' wake. Tracks are SCENE-LEVEL flowing prose (the artisan control's shape), MULTI-PINNED: `sources` maps every contributing atom_id to its content_hash and every woven beat_id to its beat_hash — any source moves, the track is stale. The union guard (voice_gate) proves no invariant in a track that no pinned source carries; connective tissue must be claim-free (flagged, humanly judged — the documented limit applies). Pack instances live per-project at voice/narration/<register>.json; proposals at voice/proposals/narration.<register>.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["narration_version", "register", "tracks"],
+  "properties": {
+    "narration_version": { "const": "narration.v0.1" },
+    "register": { "type": "string", "description": "Governed id from vocab/register.enum.json; acceptance requires status `specified`." },
+    "tracks": {
+      "type": "object",
+      "description": "engine scene id → track (including the synthetic lesson_end scene).",
+      "additionalProperties": { "$ref": "#/$defs/track" }
+    }
+  },
+  "$defs": {
+    "track": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "status", "sources"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1, "description": "The spoken script — flowing prose, one track per scene." },
+        "status": { "enum": ["draft", "accepted"] },
+        "reviewer": { "type": "string" },
+        "sources": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Multi-pin: atom_id → the atom's content_hash; bt_* → the beat's beat_hash. The meaning anchors and the staleness join, in one map.",
+          "propertyNames": { "pattern": "^(atom|bt)_[A-Za-z0-9_]+$" },
+          "additionalProperties": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+        }
+      },
+      "if": { "properties": { "status": { "const": "accepted" } } },
+      "then": { "required": ["text", "status", "sources", "reviewer"] }
+    }
+  }
+}
