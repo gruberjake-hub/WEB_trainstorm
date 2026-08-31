@@ -86,6 +86,14 @@
       "bt_paytrans_closure",
       "bt_paytrans_welcome"
     ],
+    "narration_scenes": [
+      "base_pay_in_total_rewards",
+      "how_pay_is_determined",
+      "lesson_end",
+      "performance_over_time",
+      "resources_and_eu",
+      "why_pay_ranges"
+    ],
     "stale_fallbacks": []
   },
   "spine": {
