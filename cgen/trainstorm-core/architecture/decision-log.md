@@ -13,6 +13,56 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (voice hop three) — The course SPEAKS: realize's voice overlay, one choke point, loud stale fallback. Checks stay meaning-anchored, and the played lesson proves both sides of that line.
+
+*Anchor: branch `drive/voice-renderer` off `2c96259` (Jake's acceptance commit — the pack itself,
+50 entries, `--all --by jake`; acceptance data goes straight to main as the human's own write, no
+PR). Before this hop: Jake's acceptance run failed on Windows (cp1252 vs UTF-8 — my missing
+`encoding=` in the voice tools; unblocked with `$env:PYTHONUTF8=1`, hardened properly here; the
+WIDER toolset still reads locale-default — named carry, one sweep, not silent fixes).*
+
+### The instructive failure
+
+First implementation loaded the overlay in realize's `main()`. Regen looked right — manifest
+stamped `applied: 50` — but the projection still spoke verbatim: cartographer and couturier
+IMPORT realize and call `project_lesson_htmls` directly, so the last writer in the pipeline had
+an empty overlay. The fix is the architectural point: the overlay loads inside
+`project_lesson_htmls` itself — one choke point every caller shares. Worth remembering as the
+pattern for any future projection-time store: wire it into the shared entry, not the CLI path.
+
+### What landed
+
+`load_voice_overlay` + `voice_text`/`voice_atom_text` in realize; interceptions at the four
+learner-facing text accessors (`_engine_atom_text`, `list_item_display`,
+`instance_fill_display`, `step_item_html`). Accepted-and-fresh entries apply; element overrides
+(chain-hash checked) beat atom entries; STALE accepted entries fall back to verbatim LOUDLY
+(console + manifest `voice.stale_fallbacks`) — the brand-fallback lesson applied. Two packs
+refuse rather than guess (authored register choice = future, deliberate). Stamps only when a
+pack applies: manifest `voice` block, projection `meta.voice_register` — so ast_alsap and
+ast_artwork regenerate BYTE-IDENTICAL, proven. Realize selftest +6 voice checks. UTF-8 explicit
+in the three voice tools.
+
+### Verified live (the hop-4b bar)
+
+Headless Chromium against a local serve, paged through all five scenes:
+`/cgen/?project=brunswick/paytrans` in Brunswick chrome renders "Your base salary pays for the
+core expectations of your specific role", "You have the right to ask your employer…", the EU
+line with 27/June 2026 intact — and the withheld reassurance ABSENT on-screen, exactly as
+accepted. One probe deliberately still verbatim: a lesson-end check choice quotes the atom
+("Base salary is paid to perform…") — **checks derive from meaning, not voice**, because
+`assert_check_honest` proves choices against atoms. That register seam (warm teaching copy,
+verbatim check language) is now VISIBLE in the played course — the concrete exhibit for the
+check-voicing decision, to be taken or declined deliberately, not drifted into.
+
+### The arc, after this hop
+
+Voice pack v1 is COMPLETE end-to-end: vocab → schema → writer → guard → acceptance → renderer →
+played. Next: the ARC PASS design conversation (intangibles/beats — hop-two log has the sketch:
+species distinction, inverse guard, placement-keyed store) BEFORE Griot builds, since narration
+hits the same missing-welcome problem. Then Griot, then player expression. Carries: acceptance
+front-end (review surface — pairs with player expression); toolkit-wide UTF-8 sweep; check
+voicing (above).
+
 ## 2026-08-31 (voice hop two) — Dragoman speaks: 50 warm_direct drafts proposed, gate-green, none accepted. The invent-guard is two-speed; the pack's only writer is a human-run script; the withheld reassurance is the finding.
 
 *Anchor: branch `drive/voice-writer` off `c505f5e` (PR #51). Design beat held with Jake before

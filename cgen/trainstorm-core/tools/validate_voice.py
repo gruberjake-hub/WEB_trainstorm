@@ -37,8 +37,8 @@ vocab_p = P["vocab_dir"] / "register.enum.json"
 for _p in (schema_p, vocab_p):
     if not _p.exists():
         raise SystemExit(f"not found: {_p}")
-schema = json.loads(schema_p.read_text())
-vocab = json.loads(vocab_p.read_text())
+schema = json.loads(schema_p.read_text(encoding="utf-8"))
+vocab = json.loads(vocab_p.read_text(encoding="utf-8"))
 
 results = []
 
@@ -163,7 +163,7 @@ else:
     atoms_p = proj / "atoms.json"
     if not atoms_p.exists():
         raise SystemExit(f"not found: {atoms_p}")
-    _atoms = json.loads(atoms_p.read_text())
+    _atoms = json.loads(atoms_p.read_text(encoding="utf-8"))
     _alist = _atoms["atoms"] if isinstance(_atoms, dict) and "atoms" in _atoms else _atoms
     atoms_by_id = {a["atom_id"]: a["content_hash"] for a in _alist}
     voice_dir = proj / "voice"
@@ -172,7 +172,7 @@ else:
         results.append(("no voice packs in project — contract-only pass", True,
                         f"looked in {voice_dir}"))
     for pk in packs:
-        gate_pack(pk.name, json.loads(pk.read_text()), atoms_by_id)
+        gate_pack(pk.name, json.loads(pk.read_text(encoding="utf-8")), atoms_by_id)
 
 # ---------------------------------------------------------------- report
 

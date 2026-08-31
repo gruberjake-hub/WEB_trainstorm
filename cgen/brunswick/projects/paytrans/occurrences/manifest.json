@@ -77,6 +77,13 @@
     "registry": "vocab/primitives.registry.json",
     "note": "v1 map from occurrence move to expression style keys. Couturier mints no ids, does not rewrite atoms or intent, and does not bind motion / layout_primitive / interaction_primitive. Realizer owns text_primitive (compiler form); this tool preserves it and writes style_ref / content_role / layout_hint. HTML reads these keys for clothes; meaning stays on the atom. Lesson spine is Realizer projection; this tool does not pick the path. Does not wipe manifest.lessons. Re-stamps scene records from the project catalog (occurrences/scenes.json) when present. Re-stamps lesson records from the project catalog (occurrences/lessons.json) when present."
   },
+  "voice": {
+    "register": "warm_direct",
+    "pack": "warm_direct.json",
+    "applied": 50,
+    "element_overrides": 0,
+    "stale_fallbacks": []
+  },
   "spine": {
     "policy": "v1_front_matter_callout_procedure_sequence_form_example_then_checks",
     "spec": "agents/realizer/spine_v1.md",

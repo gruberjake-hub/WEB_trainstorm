@@ -33,7 +33,7 @@ ap.add_argument("--core"); ap.add_argument("--project"); ap.add_argument("--self
 args, _ = ap.parse_known_args()
 
 P = harness_paths.resolve_core(args.core)
-vocab = json.loads((P["vocab_dir"] / "register.enum.json").read_text())
+vocab = json.loads((P["vocab_dir"] / "register.enum.json").read_text(encoding="utf-8"))
 GOVERNED = {v["id"]: v for v in vocab["values"]}
 FLAG_CATEGORIES = {"invented-risk", "compression-loss", "register", "ambiguous-source",
                    "defined-name", "verbatim-kept"}
@@ -175,7 +175,7 @@ if __name__ == "__main__" and args.selftest:
 if __name__ == "__main__":       # importers take invariant_findings/GOVERNED/sha; only the CLI runs
     PP = harness_paths.resolve()
     proj = PP["project_dir"]
-    atoms_list = json.loads((proj / "atoms.json").read_text())
+    atoms_list = json.loads((proj / "atoms.json").read_text(encoding="utf-8"))
     atoms_by_id = {a["atom_id"]: a for a in (atoms_list["atoms"] if isinstance(atoms_list, dict) else atoms_list)}
     corpus_text = " ".join(a["meaning"]["source_text"] for a in atoms_by_id.values())
     props_dir = proj / "voice" / "proposals"
@@ -184,5 +184,5 @@ if __name__ == "__main__":       # importers take invariant_findings/GOVERNED/sh
     if not files:
         results.append(("no voice proposals in project — nothing to gate", True, f"looked in {props_dir}"))
     for f in files:
-        gate_proposals(f.name, json.loads(f.read_text()), atoms_by_id, corpus_text, results)
+        gate_proposals(f.name, json.loads(f.read_text(encoding="utf-8")), atoms_by_id, corpus_text, results)
     sys.exit(0 if report(results) else 1)

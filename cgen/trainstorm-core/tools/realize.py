@@ -454,6 +454,71 @@ def clean_meaning(text: str) -> str:
     return text[:i].strip() if i != -1 else text.strip()
 
 
+# ── voice overlay (2026-08-31, voice hop three) ──────────────────────────────
+# "Accepted voice rendering if present, else verbatim atom." The overlay is loaded once per run
+# from <project>/voice/<register>.json; a project with no pack renders byte-identical to before
+# this hop existed. Only status:"accepted" entries whose source_hash matches the atom's CURRENT
+# content_hash apply — a stale accepted entry falls back to the verbatim atom and is reported
+# LOUDLY (the silent brand-load fallback cost a round trip; not again).
+
+VOICE = {"register": None, "atoms": {}, "elements": {}, "stale": [], "pack": None}
+
+
+def _voice_reset():
+    VOICE.update({"register": None, "atoms": {}, "elements": {}, "stale": [], "pack": None})
+
+
+def load_voice_overlay(project: pathlib.Path, atoms_by_id: dict) -> None:
+    _voice_reset()
+    vdir = pathlib.Path(project) / "voice"
+    packs = sorted(vdir.glob("*.json")) if vdir.exists() else []
+    if not packs:
+        return
+    if len(packs) > 1:
+        raise SystemExit(
+            f"{len(packs)} voice packs in {vdir} — applying one needs an authored register "
+            "choice, which no store carries yet. Add that deliberately when a second register "
+            "is accepted; realize will not guess.")
+    pack = load(packs[0])
+    entries = pack.get("entries") or {}
+    for aid, entry in entries.items():
+        if entry.get("status") != "accepted":
+            continue
+        atom = atoms_by_id.get(aid)
+        if atom is None or entry.get("source_hash") != atom.get("content_hash"):
+            VOICE["stale"].append(aid)
+            continue
+        VOICE["atoms"][aid] = entry["text"]
+    for eid, entry in (pack.get("element_overrides") or {}).items():
+        if entry.get("status") != "accepted":
+            continue
+        df = entry.get("derived_from") or {}
+        src = entries.get(df.get("key")) or {}
+        if df and df.get("hash") != sha256_bytes((src.get("text") or "").encode("utf-8")):
+            VOICE["stale"].append(eid)
+            continue
+        VOICE["elements"][eid] = entry["text"]
+    VOICE["register"] = pack.get("register")
+    VOICE["pack"] = packs[0].name
+    if VOICE["stale"]:
+        shown = ", ".join(VOICE["stale"][:5]) + ("…" if len(VOICE["stale"]) > 5 else "")
+        print(f"!! voice: {len(VOICE['stale'])} STALE accepted entr(ies) fell back to the "
+              f"verbatim atom ({shown}) — meaning moved; re-propose and re-accept.")
+
+
+def voice_atom_text(atom) -> str | None:
+    return VOICE["atoms"].get((atom or {}).get("atom_id"))
+
+
+def voice_text(el, atom) -> str | None:
+    """Element override beats atom entry beats nothing. Callers fall back to the verbatim atom."""
+    if el is not None:
+        v = VOICE["elements"].get(el.get("element_id"))
+        if v is not None:
+            return v
+    return voice_atom_text(atom)
+
+
 def kids(atoms, parent_id):
     ch = [a for a in atoms
           if (a.get("bindings") or {}).get("object", {}).get("belongs_to") == parent_id]
@@ -1597,7 +1662,11 @@ def list_item_parent(el, atoms_by_id):
 
 
 def list_item_display(atom) -> str:
-    """Verbatim atom text. First sentence only when the source has more than one."""
+    """Accepted voice rendering whole (authored copy is not truncated), else verbatim atom
+    text — first sentence only when the source has more than one."""
+    v = voice_atom_text(atom)
+    if v is not None:
+        return v
     src = clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
     if sentence_boundary_index(src) is not None:
         return first_sentence(src)
@@ -2374,10 +2443,16 @@ def project_lesson_htmls(atoms, elements, manifest, project, *, meaning_atoms=No
     `--lesson` regenerates that one file. `--out` writes one path.
     Coverage dump is written once (default lesson) and is not a lesson node.
     Extra records project to a path derived from `lesson_id`.
+    Loads the voice overlay itself (accepted voice rendering if present, else
+    verbatim atom) so every caller — realize main, cartographer, couturier —
+    projects the same words; a project with no pack is byte-identical to
+    pre-voice behavior.
+
     `theme` is the client brand pack name (`cgen/brands/<theme>/`), copied
     onto every lesson JSON projection's `meta.theme`. Default: overlay
     folder (`cgen/<client>/projects/<proj>`).
     """
+    load_voice_overlay(pathlib.Path(project), {a["atom_id"]: a for a in atoms})
     if not theme:
         theme = overlay_client_name(project)
     html_kw = dict(
@@ -2981,6 +3056,9 @@ def instance_fill_display(el, atom, catalog, option_sets) -> str:
     fills (rationale prose, form presents) stay source_text.
     """
     src = clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
+    v = voice_text(el, atom)
+    if v is not None:
+        src = v          # accepted voice rendering; the instance_value branches below don't apply to voiced atoms
     if not el:
         return src
     move = ((el.get("intent") or {}).get("move") or "")
@@ -3247,6 +3325,9 @@ def lesson_player_json_path(html_path: pathlib.Path) -> pathlib.Path:
 
 
 def _engine_atom_text(atom) -> str:
+    v = voice_atom_text(atom)
+    if v is not None:
+        return v
     return clean_meaning((atom.get("meaning") or {}).get("source_text") or "")
 
 
@@ -3561,6 +3642,8 @@ def build_engine_course(atoms, elements, manifest, *, meaning_atoms=None,
     }
     if theme:
         meta["theme"] = theme
+    if VOICE["register"]:
+        meta["voice_register"] = VOICE["register"]
     return {
         "generated_by": REALIZER,
         "projection_of": {
@@ -3732,7 +3815,7 @@ def project_html(atoms, elements, manifest, out_path: pathlib.Path, *, meaning_a
         )
 
     def step_item_html(el, atom):
-        meaning = clean_meaning(atom["meaning"]["source_text"])
+        meaning = voice_text(el, atom) or clean_meaning(atom["meaning"]["source_text"])
         sh = (el.get("source_hash") or "")[:19]
         expr = el.get("expression") or {}
         tp = expr.get("text_primitive") or ""
@@ -6940,6 +7023,49 @@ def selftest(closed_moves):
                                   for i in range(1, PROCEDURE_SEQUENCE_CAP + 1)],
                     a_on_huge))
 
+    # ── voice overlay (hop three): accepted-if-fresh, else verbatim; loud stale fallback ──
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        vproj = pathlib.Path(td)
+        (vproj / "voice").mkdir()
+        va = {"atom_id": "atom_vx_a", "content_hash": sha256_bytes(b"Alpha fact."),
+              "meaning": {"source_text": "Alpha fact."}}
+        vb = {"atom_id": "atom_vx_b", "content_hash": sha256_bytes(b"Beta fact."),
+              "meaning": {"source_text": "Beta fact."}}
+        v_by_id = {a["atom_id"]: a for a in (va, vb)}
+        pack = {"pack_version": "voice.v0.1", "register": "warm_direct", "entries": {
+            "atom_vx_a": {"text": "Your alpha, warmly.", "status": "accepted",
+                           "reviewer": "t", "source_hash": va["content_hash"]},
+            "atom_vx_b": {"text": "Beta, warmly.", "status": "accepted",
+                           "reviewer": "t", "source_hash": "sha256:" + "0" * 64},
+        }, "element_overrides": {
+            "ele_vx_a_head": {"text": "Alpha, short.", "status": "accepted", "reviewer": "t",
+                               "source_hash": va["content_hash"],
+                               "derived_from": {"pack": "voice/warm_direct.json", "key": "atom_vx_a",
+                                                 "hash": sha256_bytes("Your alpha, warmly.".encode())}},
+        }}
+        (vproj / "voice" / "warm_direct.json").write_text(json.dumps(pack))
+        load_voice_overlay(vproj, v_by_id)
+        results.append(("voice: fresh accepted entry applies",
+                        _engine_atom_text(va) == "Your alpha, warmly.", _engine_atom_text(va)))
+        results.append(("voice: STALE accepted entry falls back to verbatim atom",
+                        _engine_atom_text(vb) == "Beta fact." and "atom_vx_b" in VOICE["stale"],
+                        _engine_atom_text(vb)))
+        results.append(("voice: element override beats atom entry",
+                        voice_text({"element_id": "ele_vx_a_head"}, va) == "Alpha, short.", ""))
+        results.append(("voice: register stamped for provenance",
+                        VOICE["register"] == "warm_direct", ""))
+        two = json.loads(json.dumps(pack)); two["register"] = "formal_institutional"
+        (vproj / "voice" / "formal_institutional.json").write_text(json.dumps(two))
+        try:
+            load_voice_overlay(vproj, v_by_id)
+            results.append(("voice: two packs refuse rather than guess", False, "no refusal"))
+        except SystemExit:
+            results.append(("voice: two packs refuse rather than guess", True, ""))
+    _voice_reset()
+    results.append(("voice: overlay resets — no-pack projects render pre-hop verbatim",
+                    _engine_atom_text(va) == "Alpha fact." and not VOICE["register"], ""))
+
     print(f"{'CHECK':<72} RESULT")
     print("-" * 86)
     ok = True
@@ -7098,6 +7224,7 @@ def main():
         seed=one_to_many_seed_for(atoms, store_dir),
     )
     atoms_by_id = meaning_catalog(atoms, form_atoms + instance_atoms)
+    load_voice_overlay(project, atoms_by_id)
     validate_elements(elements, element_schema, atoms_by_id)
     assert_primitives_registered(elements, closed_text_primitives)
 
@@ -7254,6 +7381,12 @@ def main():
         cout["dressed"] = sum(1 for e in elements if e.get("expression"))
         cout["element_count"] = len(elements)
         occ_manifest["couturier"] = cout
+    if VOICE["register"]:
+        occ_manifest["voice"] = {
+            "register": VOICE["register"], "pack": VOICE["pack"],
+            "applied": len(VOICE["atoms"]), "element_overrides": len(VOICE["elements"]),
+            "stale_fallbacks": sorted(VOICE["stale"]),
+        }
     lesson_catalog = load_lesson_catalog(store_dir)
     scene_catalog = load_scene_catalog(store_dir)
     if lesson_catalog is None:
