@@ -58,7 +58,7 @@
           "props": {
             "level": 2,
             "text": "SOP-AST-29080 \u2014 Plan, Develop, Execute, Maintain, and Archive the Asset Level Safety Assessment Plan (ALSAP).",
-            "kicker": "Opening"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_ast29080",
@@ -71,7 +71,7 @@
           "type": "Body",
           "props": {
             "text": "SOP-AST-29080 \u2014 Plan, Develop, Execute, Maintain, and Archive the Asset Level Safety Assessment Plan (ALSAP).",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_ast29080__present",
@@ -84,7 +84,7 @@
           "type": "Body",
           "props": {
             "text": "The purpose of this SOP is to define the process for planning, developing, executing, maintaining, and archiving the Asset Level Safety Assessment Plan (ALSAP) for use in asset-level safety monitoring during clinical development.",
-            "kicker": "Why this"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_ast29080_purpose__activate",
@@ -97,7 +97,7 @@
           "type": "Body",
           "props": {
             "text": "The purpose of this SOP is to define the process for planning, developing, executing, maintaining, and archiving the Asset Level Safety Assessment Plan (ALSAP) for use in asset-level safety monitoring during clinical development.",
-            "kicker": "Purpose"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_ast29080_purpose",
@@ -110,7 +110,7 @@
           "type": "Body",
           "props": {
             "text": "This SOP applies to all Astellas and non-Astellas employees responsible for supporting ALSAP throughout its lifecycle. The in-scope organizations are listed below.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_ast29080_scope",
@@ -122,7 +122,7 @@
         {
           "type": "StepList",
           "props": {
-            "kicker": "Scope list",
+            "kicker": "",
             "title": "Organizations in scope of this SOP.",
             "ordered": false,
             "items": [
@@ -183,7 +183,7 @@
           "type": "Body",
           "props": {
             "text": "The ALSAP is the central cross-functional framework for ongoing identification, evaluation, and communication of emerging safety risks at the asset level. It operationalizes the existing safety governance documents listed below, integrating them into an actionable, data-driven plan for aggregate monitoring across all relevant clinical trials. Only one ALSAP exists per asset. It must meet ALCOA+ standards and is reviewed annually by the SMT, with ad hoc updates triggered by emerging signals, regulatory changes, milestones, data-quality concerns, or external safety events.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_ast29080_general",
@@ -195,7 +195,7 @@
         {
           "type": "StepList",
           "props": {
-            "kicker": "The documents listed",
+            "kicker": "",
             "title": "Existing safety governance documents the ALSAP operationalizes.",
             "ordered": false,
             "items": [
@@ -261,7 +261,7 @@
         {
           "type": "StepList",
           "props": {
-            "kicker": "Job aid",
+            "kicker": "",
             "title": "A. Plan Development of ALSAP.",
             "items": [
               {
@@ -307,7 +307,7 @@
           "type": "SequenceOrder",
           "props": {
             "id": "sequence:atom_sop_ast29080_proc_a_s1",
-            "kicker": "Practice",
+            "kicker": "",
             "prompt": "Put these in the order already taught.",
             "items": [
               {
@@ -374,7 +374,7 @@
           "type": "Body",
           "props": {
             "text": "SMT assessment of the overall Benefit-Risk profile of the asset.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present",
@@ -387,7 +387,7 @@
           "type": "Body",
           "props": {
             "text": "Rationale and phrasing for the selected Benefit-Risk profile.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present",
@@ -400,7 +400,7 @@
           "type": "Body",
           "props": {
             "text": "Conditional Favorable Benefit-Risk Profile",
-            "kicker": "Example"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify",
@@ -413,7 +413,7 @@
           "type": "Body",
           "props": {
             "text": "The benefit-risk profile of ASP9999 is favorable provided the additional hepatic monitoring described in the risk management plan is in place. Across 412 participants the observed transaminase elevations were reversible and detected by scheduled monitoring in every case; the SMT judges the residual risk acceptable for the proposed indication on that condition, and will re-assess when the Phase 3 dataset matures.",
-            "kicker": "Example"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify",
@@ -426,7 +426,7 @@
           "type": "MCQ",
           "props": {
             "id": "closed_choice:atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
-            "kicker": "Practice",
+            "kicker": "",
             "stem": "Choose the value already shown on the example.",
             "choices": [
               {
@@ -485,7 +485,7 @@
           "type": "MCQ",
           "props": {
             "id": "ele_sop_ast29080_purpose__reinforce",
-            "kicker": "Check",
+            "kicker": "",
             "stem": "What is the purpose of this SOP?",
             "choices": [
               {
@@ -522,7 +522,7 @@
           "type": "MCQ",
           "props": {
             "id": "ele_sop_ast29080_general__reinforce",
-            "kicker": "Check",
+            "kicker": "",
             "stem": "What is the ALSAP?",
             "choices": [
               {

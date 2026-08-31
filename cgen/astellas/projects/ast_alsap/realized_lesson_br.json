@@ -54,7 +54,7 @@
           "type": "Body",
           "props": {
             "text": "SMT assessment of the overall Benefit-Risk profile of the asset.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present",
@@ -67,7 +67,7 @@
           "type": "Body",
           "props": {
             "text": "Rationale and phrasing for the selected Benefit-Risk profile.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present",
@@ -80,7 +80,7 @@
           "type": "Body",
           "props": {
             "text": "Conditional Favorable Benefit-Risk Profile",
-            "kicker": "Example"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify",
@@ -93,7 +93,7 @@
           "type": "Body",
           "props": {
             "text": "The benefit-risk profile of ASP9999 is favorable provided the additional hepatic monitoring described in the risk management plan is in place. Across 412 participants the observed transaminase elevations were reversible and detected by scheduled monitoring in every case; the SMT judges the residual risk acceptable for the proposed indication on that condition, and will re-assess when the Phase 3 dataset matures.",
-            "kicker": "Example"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify",
@@ -106,7 +106,7 @@
           "type": "MCQ",
           "props": {
             "id": "closed_choice:atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
-            "kicker": "Practice",
+            "kicker": "",
             "stem": "Choose the value already shown on the example.",
             "choices": [
               {

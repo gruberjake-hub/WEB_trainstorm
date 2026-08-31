@@ -2727,3 +2727,39 @@ words AND an arc), player expression, motion (parked). The withheld midpoint glo
 demo case for the `withheld_gloss` wake when Jake flips it live.
 
 **Supersedes:** nothing. The six prior 2026-08-31 blocks and the working process stand.
+
+---
+
+## 2026-08-31 — Learner surface: authored copy only. Derived kickers suppressed; list titles speak voice
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Jake's first full viewing of the played course surfaced internal taxonomy rendering
+learner-facing: the KICKER map's derived labels ("Present" on 34 of 36 Body components, "Scope
+list", "Opening", "Check", "Practice", "Job aid", "Example"). The rule, made explicit and
+enforced: **the learner surface renders AUTHORED copy only.**
+
+- **Engine projection emits no derived kickers.** Scene-record kickers (authored in scenes.json
+  — "Why this", "The philosophy", …) render; beat copy renders; everything the machine derived
+  from internal vocabulary is suppressed (`kicker: ""` at every engine builder). Want a label
+  somewhere? Author it — the same pattern as every other learner-facing word. The KICKER map
+  stays for the dev HTML sidecar, where taxonomy belongs.
+- **`job_aid_title` routes through the voice overlay** — list titles were reading atom text
+  directly, bypassing accepted renderings (the range-positions list showed the verbatim
+  "The following illustrates…" instead of the accepted "Where people typically fall within the
+  range:"). Same class as the hop-three choke-point lesson: a text path we missed, now closed.
+- **Selftest repaired to the rule, not the pin** (the 08-20 discipline): three assertions had
+  pinned derived kicker VALUES; they now assert suppression, plus one positive rule check —
+  no non-Heading engine component carries a kicker.
+
+**Why:** The stakes principle applied to labels: copy the machine derived is copy nobody
+accepted. This is deliberately a BEHAVIOR change for every projection that carried derived
+kickers — ast_alsap and ast_artwork projections regenerate with kickers stripped (diff verified
+kicker-lines-only), not byte-identical, and that is the point.
+
+**Consequences:** The played paytrans course now shows exactly five kickers — all Jake's
+(scene records). Voiced list titles render. Verified headless (derived labels absent, authored
+survive — the player uppercases kickers via CSS). Remaining visual fine-tuning is player
+expression's hop, as planned; this closes the one Jake called disruptive.
+
+**Supersedes:** the engine builders' KICKER defaults (dev sidecar keeps them). Nothing else.

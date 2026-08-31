@@ -53,7 +53,7 @@
         {
           "type": "StepList",
           "props": {
-            "kicker": "Job aid",
+            "kicker": "",
             "title": "A. Plan Development of ALSAP.",
             "items": [
               {
@@ -99,7 +99,7 @@
           "type": "SequenceOrder",
           "props": {
             "id": "sequence:atom_sop_ast29080_proc_a_s1",
-            "kicker": "Practice",
+            "kicker": "",
             "prompt": "Put these in the order already taught.",
             "items": [
               {

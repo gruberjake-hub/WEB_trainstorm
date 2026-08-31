@@ -57,7 +57,7 @@
           "props": {
             "level": 2,
             "text": "SOP-2290 \u2014 Artwork approval process and artwork text management for new or revised Printed Packaging Component.",
-            "kicker": "Opening"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_2290",
@@ -70,7 +70,7 @@
           "type": "Body",
           "props": {
             "text": "SOP-2290 \u2014 Artwork approval process and artwork text management for new or revised Printed Packaging Component.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_2290__present",
@@ -83,7 +83,7 @@
           "type": "Body",
           "props": {
             "text": "The purpose of this Standard Operating Procedure (SOP) is to:",
-            "kicker": "Why this"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_2290_purpose__activate",
@@ -96,7 +96,7 @@
           "type": "Body",
           "props": {
             "text": "The purpose of this Standard Operating Procedure (SOP) is to:",
-            "kicker": "Purpose"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_2290_purpose",
@@ -108,7 +108,7 @@
         {
           "type": "StepList",
           "props": {
-            "kicker": "Purpose",
+            "kicker": "",
             "title": "The purpose of this Standard Operating Procedure (SOP) is to:",
             "ordered": false,
             "items": [
@@ -155,7 +155,7 @@
           "type": "Body",
           "props": {
             "text": "This SOP applies to:",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_2290_scope",
@@ -167,7 +167,7 @@
         {
           "type": "StepList",
           "props": {
-            "kicker": "Scope list",
+            "kicker": "",
             "title": "This SOP applies to:",
             "ordered": false,
             "items": [
@@ -200,7 +200,7 @@
           "type": "Body",
           "props": {
             "text": "The procedure is applicable for all products where an Astellas entity is the Marketing Authorization Holder (MAH) or where Astellas has legal or regulatory responsibilities (i.e., business partners and license partners).",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_2290_scope_products",
@@ -213,7 +213,7 @@
           "type": "Body",
           "props": {
             "text": "This procedure is applicable for: specimen before approval; when a product will be launched after approval of the MA; after approval of a change (in a Centralized Procedure (CP), a Mutual Recognition Procedure (MRP) / Decentralized Procedure (DCP) or National Procedure (NP)) in the regulatory file requiring new or revised artwork",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_2290_scope_applicable",
@@ -226,7 +226,7 @@
           "type": "Body",
           "props": {
             "text": "Out of scope of this SOP is dispatch/shipment of PPC.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_2290_scope_oos",
@@ -259,7 +259,7 @@
           "type": "Body",
           "props": {
             "text": "For new artwork start with Section A. For existing artwork start with Section C.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_2290_procedures_start",
@@ -271,7 +271,7 @@
         {
           "type": "StepList",
           "props": {
-            "kicker": "Job aid",
+            "kicker": "",
             "title": "A. BLUE: Initiate Project for new artwork",
             "items": [
               {
@@ -310,7 +310,7 @@
           "type": "SequenceOrder",
           "props": {
             "id": "sequence:atom_sop_2290_proc_a_s1",
-            "kicker": "Practice",
+            "kicker": "",
             "prompt": "Put these in the order already taught.",
             "items": [
               {
@@ -358,7 +358,7 @@
           "type": "MCQ",
           "props": {
             "id": "ele_sop_2290_def_blue__reinforce",
-            "kicker": "Check",
+            "kicker": "",
             "stem": "What is BLUE?",
             "choices": [
               {

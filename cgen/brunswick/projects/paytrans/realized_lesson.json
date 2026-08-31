@@ -75,7 +75,7 @@
           "props": {
             "level": 2,
             "text": "Brunswick is committed to open, informed conversations about compensation \u2014 they're part of a positive work environment.",
-            "kicker": "Opening"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_commitment",
@@ -88,7 +88,7 @@
           "type": "Body",
           "props": {
             "text": "In 2025, several U.S. states implement new pay transparency laws \u2014 laws that require employers to disclose salary ranges and benefits in job postings or during the hiring process. The aim: pay equity, transparency, and fair compensation practices.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_commitment_laws",
@@ -101,7 +101,7 @@
           "type": "Body",
           "props": {
             "text": "New pay transparency laws take effect in 2025 \u2014 and we're proud to be including salary ranges and benefits information in all our new job postings.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_commitment_postings",
@@ -114,7 +114,7 @@
           "type": "Body",
           "props": {
             "text": "Transparency builds trust. That's why we're preparing managers to have open, informed conversations about compensation.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_commitment_trust",
@@ -147,7 +147,7 @@
           "type": "Body",
           "props": {
             "text": "Brunswick's Compensation Philosophy",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_philosophy",
@@ -160,7 +160,7 @@
           "type": "Body",
           "props": {
             "text": "Market-Competitive Compensation, Set Through Benchmarking",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_philosophy_benchmarking",
@@ -173,7 +173,7 @@
           "type": "Body",
           "props": {
             "text": "Accurate job descriptions keep roles aligned in compensation surveys, and market data from trusted sources is used to assess job value and total rewards programs. A total rewards mindset shapes a package that attracts and keeps top talent.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_philosophy_benchmarking_how",
@@ -186,7 +186,7 @@
           "type": "Body",
           "props": {
             "text": "Balance External Competitiveness with Internal Equity",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_philosophy_equity",
@@ -199,7 +199,7 @@
           "type": "Body",
           "props": {
             "text": "Market data is a guide \u2014 but internal equity matters just as much. Every job is placed in the Brunswick grade structure based on both its external market data and its internal value.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_philosophy_equity_how",
@@ -212,7 +212,7 @@
           "type": "Body",
           "props": {
             "text": "Link Pay to Individual, Team & Company Performance",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_philosophy_p4p",
@@ -225,7 +225,7 @@
           "type": "Body",
           "props": {
             "text": "Exceptional performance gets recognized and rewarded \u2014 through annual merit increases and incentive plans \u2014 based on your individual contributions plus team and company performance.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_philosophy_p4p_how",
@@ -238,7 +238,7 @@
           "type": "Body",
           "props": {
             "text": "How Your Base Pay Is Set",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_base_pay",
@@ -251,7 +251,7 @@
           "type": "Body",
           "props": {
             "text": "Brunswick uses a traditional grade structure \u2014 24 pay ranges, each closely tied to market rates through our compensation surveys and benchmarking exercises.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_base_pay_grades",
@@ -264,7 +264,7 @@
           "type": "Body",
           "props": {
             "text": "The grade structure splits into three geographic zones, each reflecting the cost of labor in different U.S. locations \u2014 accounting for the varied pay rates across our widespread locations.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_base_pay_zones",
@@ -277,7 +277,7 @@
           "type": "Body",
           "props": {
             "text": "Every grade has a minimum, midpoint, and maximum, plus a market range for base salary \u2014 and its own target for incentive pay.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_base_pay_range",
@@ -290,7 +290,7 @@
           "type": "Body",
           "props": {
             "text": "Where people typically fall within the range:",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_base_pay_range_positions",
@@ -302,8 +302,8 @@
         {
           "type": "StepList",
           "props": {
-            "kicker": "Scope list",
-            "title": "The following illustrates where individuals would typically fall within the range in different scenarios.",
+            "kicker": "",
+            "title": "Where people typically fall within the range:",
             "ordered": false,
             "items": [
               {
@@ -342,7 +342,7 @@
           "type": "Body",
           "props": {
             "text": "Shaping Pay as Part of Enterprise HR: the Compensation and Benefits team, in strong partnership with division HR teams, regularly reviews compensation data, benchmarks against market trends, and assesses internal pay levels \u2014 so pay stays fair and competitive for all employees.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_stewardship",
@@ -355,7 +355,7 @@
           "type": "Body",
           "props": {
             "text": "Key activities at the enterprise level:",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_guide_stewardship_activities",
@@ -367,8 +367,8 @@
         {
           "type": "StepList",
           "props": {
-            "kicker": "Scope list",
-            "title": "Key activities that are completed at the enterprise level:",
+            "kicker": "",
+            "title": "Key activities at the enterprise level:",
             "ordered": false,
             "items": [
               {
@@ -420,7 +420,7 @@
           "type": "Body",
           "props": {
             "text": "Total Rewards: More Than a Paycheck. Your total compensation includes benefits, bonuses, and company-provided offerings from Brunswick.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_total_rewards",
@@ -433,7 +433,7 @@
           "type": "Body",
           "props": {
             "text": "A portion of your pay is variable compensation \u2014 with targets, like base salary, set from competitive market data. As you move up through the organization, the mix shifts: less base, more variable.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_total_rewards_variable",
@@ -446,7 +446,7 @@
           "type": "Body",
           "props": {
             "text": "Variable compensation includes:",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_total_rewards_variable_kinds",
@@ -458,7 +458,7 @@
         {
           "type": "StepList",
           "props": {
-            "kicker": "Scope list",
+            "kicker": "",
             "title": "Variable compensation includes:",
             "ordered": false,
             "items": [
@@ -505,7 +505,7 @@
           "type": "Body",
           "props": {
             "text": "Your Total Rewards Statement: your total rewards in one personalized snapshot \u2014 find it in Workday under the Benefits and Pay app.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_trs",
@@ -518,7 +518,7 @@
           "type": "Body",
           "props": {
             "text": "Your Total Rewards Statement includes:",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_trs_includes",
@@ -530,8 +530,8 @@
         {
           "type": "StepList",
           "props": {
-            "kicker": "Scope list",
-            "title": "The Total Rewards Statement includes:",
+            "kicker": "",
+            "title": "Your Total Rewards Statement includes:",
             "ordered": false,
             "items": [
               {
@@ -584,7 +584,7 @@
           "type": "Body",
           "props": {
             "text": "If you're an international employee, note that the Total Rewards Statement doesn't currently capture every allowance and benefit.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_trs_intl_note",
@@ -617,7 +617,7 @@
           "type": "Body",
           "props": {
             "text": "Pay for Performance at Brunswick",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_p4p",
@@ -630,7 +630,7 @@
           "type": "Body",
           "props": {
             "text": "Your base salary pays for the core expectations of your specific role.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_p4p_base_role",
@@ -643,7 +643,7 @@
           "type": "Body",
           "props": {
             "text": "Annual incentives are the main way a year's accomplishments get rewarded: they measure performance against established business goals, and your individual performance links directly to your final payout.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_p4p_annual_incentives",
@@ -656,7 +656,7 @@
           "type": "Body",
           "props": {
             "text": "Salary and merit reviews keep us following market trends and aligned to pay for performance \u2014 and your performance in a given year, high or low, shapes your salary increase.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_p4p_merit",
@@ -669,7 +669,7 @@
           "type": "Body",
           "props": {
             "text": "Your incentive payout starts with the plan formula, then moves up or down with your individual performance \u2014 as measured through Achieve.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_p4p_achieve",
@@ -682,7 +682,7 @@
           "type": "Body",
           "props": {
             "text": "The Brunswick Performance Plan (BPP) is the key compensation tool behind our pay for performance culture \u2014 for the Company and for you. Most global salaried employees are eligible (the main exception: sales employees who earn commissions), and your bonus target is set by your salary grade.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_p4p_bpp",
@@ -715,7 +715,7 @@
           "type": "Body",
           "props": {
             "text": "How We Promote Pay Transparency. We're committed to pay transparency through our established practices and processes \u2014 and to enhancing those efforts, for fairness and clarity for you.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_transparency_practices",
@@ -728,7 +728,7 @@
           "type": "Body",
           "props": {
             "text": "Established practices, by pillar:",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_framework_transparency_practices_practices",
@@ -740,7 +740,7 @@
         {
           "type": "StepList",
           "props": {
-            "kicker": "Scope list",
+            "kicker": "",
             "title": "Established practices, by pillar:",
             "ordered": false,
             "items": [
@@ -766,7 +766,7 @@
           "type": "Body",
           "props": {
             "text": "Have questions about pay ranges in U.S. job postings? The Pay Transparency in U.S. job postings FAQ answers them \u2014 employee and manager questions alike \u2014 and includes a table of disclosure requirements, timing, and effective dates for each jurisdiction.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_faq_scope",
@@ -779,7 +779,7 @@
           "type": "Body",
           "props": {
             "text": "The EU Pay Directive: pay transparency measures for workers and employers, aimed at reducing unexplained gender pay gaps. All 27 EU member countries must adopt regulations by June 2026.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_eoc_euptd",
@@ -792,7 +792,7 @@
           "type": "Body",
           "props": {
             "text": "You have the right to ask your employer about your own pay level \u2014 and about average pay levels, broken down by gender, for people doing the same work or work of equal value.",
-            "kicker": "Present"
+            "kicker": ""
           },
           "meta": {
             "element_id": "ele_bw_eoc_euptd_right_to_info",
@@ -812,7 +812,7 @@
           "type": "MCQ",
           "props": {
             "id": "ele_bw_framework_p4p_base_role__reinforce",
-            "kicker": "Check",
+            "kicker": "",
             "stem": "What is Base salary?",
             "choices": [
               {
@@ -849,7 +849,7 @@
           "type": "MCQ",
           "props": {
             "id": "ele_bw_framework_p4p_bpp__reinforce",
-            "kicker": "Check",
+            "kicker": "",
             "stem": "What is the Brunswick Performance Plan (BPP)?",
             "choices": [
               {

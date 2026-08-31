@@ -1633,6 +1633,9 @@ def job_aid_title(first_el, atoms_by_id) -> str:
     parent = atoms_by_id.get(parent_id) if parent_id else None
     if not parent:
         return ""
+    v = voice_atom_text(parent)
+    if v is not None:
+        return v
     return clean_meaning((parent.get("meaning") or {}).get("source_text") or "")
 
 
@@ -3361,10 +3364,8 @@ def _engine_present_component(el, atom, catalog=None, option_sets=None) -> dict:
     """Heading/Body from atom meaning + occurrence primitive. No authored content.text."""
     expr = el.get("expression") or {}
     tp = expr.get("text_primitive") or ""
-    role = expr.get("content_role") or ""
-    kicker = KICKER.get(role, "")
-    if tp == PRIMITIVE_CALLOUT:
-        kicker = KICKER.get("callout", "Why this")
+    kicker = ""   # derived kickers are dev taxonomy; the learner surface renders AUTHORED copy only
+                  # (scene-record kickers, beats). The KICKER map still labels the dev HTML sidecar.
     text = instance_fill_display(el, atom, catalog, option_sets)
     meta = {
         "element_id": el.get("element_id"),
@@ -3406,7 +3407,7 @@ def _engine_step_list_component(step_els, by_atom) -> dict:
     return {
         "type": "StepList",
         "props": {
-            "kicker": KICKER.get("step", "Job aid"),
+            "kicker": "",   # derived — suppressed on the learner surface (authored copy only)
             "title": title,
             "items": items,
         },
@@ -3436,7 +3437,7 @@ def _engine_item_list_component(item_els, by_atom) -> dict:
     return {
         "type": "StepList",
         "props": {
-            "kicker": list_group_kicker(item_els, by_atom),
+            "kicker": "",   # derived — suppressed on the learner surface (authored copy only)
             "title": title,
             "ordered": False,
             "items": items,
@@ -3467,7 +3468,7 @@ def _engine_invert_component(el, chk) -> dict:
             "type": "MCQ",
             "props": {
                 "id": eid,
-                "kicker": "Check",
+                "kicker": "",   # derived — suppressed on the learner surface
                 "stem": chk["stem"],
                 "choices": options,
                 "feedback": invert_feedback(chk),
@@ -3478,7 +3479,7 @@ def _engine_invert_component(el, chk) -> dict:
         "type": "Cloze",
         "props": {
             "id": eid,
-            "kicker": "Check",
+            "kicker": "",   # derived — suppressed on the learner surface
             "stem": chk["stem"],
             "key": chk["key"],
             "feedback": invert_feedback(chk),
@@ -3494,7 +3495,7 @@ def _engine_sequence_component(chk) -> dict:
         "type": "SequenceOrder",
         "props": {
             "id": "sequence:" + chk["correct_ids"][0],
-            "kicker": "Practice",
+            "kicker": "",   # derived — suppressed on the learner surface
             "prompt": chk["prompt"],
             "items": [
                 {"id": it["atom_id"], "text": it["text"]}
@@ -3527,7 +3528,7 @@ def _engine_closed_choice_component(chk, options_registry=None) -> dict:
         "type": "MCQ",
         "props": {
             "id": "closed_choice:" + chk["key_atom_id"],
-            "kicker": "Practice",
+            "kicker": "",   # derived — suppressed on the learner surface
             "stem": chk["prompt"],
             "choices": options,
             "feedback": dict(CLOSED_MCQ_FEEDBACK),
@@ -5806,8 +5807,8 @@ def selftest(closed_moves):
                     len(fm_lists) == 2
                     and fm_lists[0]["props"].get("ordered") is False
                     and fm_lists[1]["props"].get("ordered") is False
-                    and fm_lists[0]["props"].get("kicker") == "Scope list"
-                    and fm_lists[1]["props"].get("kicker") == "The documents listed"
+                    and fm_lists[0]["props"].get("kicker") == ""      # derived kickers suppressed
+                    and fm_lists[1]["props"].get("kicker") == ""      # (authored-only surface)
                     and [it["text"] for it in fm_lists[0]["props"]["items"]]
                     == [
                         "Biopharma & Ophthalmology Development (BOD)",
@@ -6566,6 +6567,11 @@ def selftest(closed_moves):
         c["props"].get("stem") for c in engine_form["scenes"][3]["components"]
         if c["type"] == "MCQ"
     ]
+    results.append(("engine learner surface carries no derived kickers (authored only)",
+                    all((c.get("props") or {}).get("kicker", "") == ""
+                        for s in engine_form.get("scenes") or []
+                        for c in s.get("components") or [] if c.get("type") != "Heading"),
+                    ""))
     results.append(("engine projection meaning is from atoms not authored content.text",
                     seq_comp["props"]["prompt"] == SEQUENCE_PROMPT
                     and any("Notify a member of Safety Data Science" in (it.get("text") or "")
@@ -6611,7 +6617,7 @@ def selftest(closed_moves):
                     == "Conditional Favorable Benefit-Risk Profile"
                     and (profile_ex.get("meta") or {}).get("composed_from")
                     == INSTANCE_EXAMPLE_SEED[0][0]
-                    and (profile_ex.get("props") or {}).get("kicker") == "Example"
+                    and (profile_ex.get("props") or {}).get("kicker") == ""   # derived suppressed
                     and "conditional_favorable" not in json.dumps(profile_ex.get("props") or {})
                     and "The benefits of the investigational drug outweigh"
                     not in json.dumps(profile_ex),
@@ -6784,7 +6790,7 @@ def selftest(closed_moves):
     results.append(("engine BR subset instance-fill shows the registry label",
                     any((c.get("props") or {}).get("text")
                         == "Conditional Favorable Benefit-Risk Profile"
-                        and (c.get("props") or {}).get("kicker") == "Example"
+                        and (c.get("props") or {}).get("kicker") == ""   # derived suppressed
                         for c in br_subset_bodies)
                     and any(((c.get("props") or {}).get("text") or "").startswith(
                         "The benefit-risk profile of ASP9999"
