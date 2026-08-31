@@ -82,6 +82,10 @@
     "pack": "warm_direct.json",
     "applied": 50,
     "element_overrides": 0,
+    "beats_applied": [
+      "bt_paytrans_closure",
+      "bt_paytrans_welcome"
+    ],
     "stale_fallbacks": []
   },
   "spine": {
