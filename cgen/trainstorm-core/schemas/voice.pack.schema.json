@@ -25,6 +25,12 @@
       "description": "element_id → rendering, ONLY where the occurrence's placement constrains length or form (heading vs sentence, character limits). Each override should chain from the pack's own atom-level entry via derived_from.",
       "propertyNames": { "pattern": "^ele_[A-Za-z0-9_]+$" },
       "additionalProperties": { "$ref": "#/$defs/entry" }
+    },
+    "beats": {
+      "type": "object",
+      "description": "beat_id → copy for an ACCEPTED beat in the project's beat catalog (2026-08-31 arc pass). Beat copy is content-free by contract and gated by the INVERSE guard: no figures at all, no names beyond the governed course allowlist — a sentence that claims nothing can't lie. source_hash here pins the beat's beat_hash (sha256 of canonical {beat_id, placement, intent}), NOT an atom content_hash — placement or intent moves, copy goes stale. Provenance is `authored`, honestly: these words were invented on purpose, claim-free by proof, placed by intent, accepted by a human.",
+      "propertyNames": { "pattern": "^bt_[A-Za-z0-9_]+$" },
+      "additionalProperties": { "$ref": "#/$defs/entry" }
     }
   },
   "$defs": {

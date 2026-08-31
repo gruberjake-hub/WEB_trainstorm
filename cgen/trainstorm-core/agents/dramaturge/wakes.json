@@ -1,0 +1,30 @@
+{
+  "wakes_version": "dramaturge.wakes.v0.1",
+  "description": "Dramaturge's wake conditions — each a predicate over the graph, each independently tunable. Only live:true wakes run; the others are DECLARED placeholders (contract first, implementation when deliberately enabled). Edit params, flip live, re-run tools/dramaturge.py, and watch how the beats arrive differently — this file is the play surface.",
+  "wakes": [
+    {
+      "id": "missing_arc_frame",
+      "live": true,
+      "predicate": "A lesson with at least `min_scenes` scenes and no lesson_start beat gets a proposed welcome (pedagogical: hook); no lesson_end beat gets a proposed closure (pedagogical: transfer).",
+      "params": { "min_scenes": 3 }
+    },
+    {
+      "id": "withheld_gloss",
+      "live": false,
+      "predicate": "PLACEHOLDER — a voice proposal carrying an invented-risk flag with a '(withheld)' span marks copy the register wanted and the atom couldn't anchor: propose an after_element beat (rhetorical: persuade) at that element, so the warmth gets a governed home instead of leaking into a rendering.",
+      "params": { "min_severity": "low" }
+    },
+    {
+      "id": "hook_persuade",
+      "live": false,
+      "predicate": "PLACEHOLDER — a lesson whose elected hook scene has no persuade beat within `reach` scenes: propose a scene_end persuade beat to land the 'why this matters' the hook opened.",
+      "params": { "reach": 2 }
+    },
+    {
+      "id": "pacing_interlude",
+      "live": false,
+      "predicate": "PLACEHOLDER — more than `max_run` consecutive topic scenes with no beat and no check: propose a scene_end transition beat (rhetorical: transition) to break the run.",
+      "params": { "max_run": 3 }
+    }
+  ]
+}

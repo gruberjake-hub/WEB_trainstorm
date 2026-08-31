@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/beats.catalog.schema.json",
+  "title": "Beat catalog — the authored arc as project data",
+  "description": "The arc store (2026-08-31 arc pass): BEATS are content-free rhetorical/pedagogical moves — welcomes, closures, persuade glosses, transitions — keyed by PLACEMENT, not by atom. A beat carries no copy: its words live in the register's voice pack under the beat_id (voice.pack.schema `beats` section), proposed by Dragoman voice mode and gated by the INVERSE guard (claim-free proven — a sentence that claims nothing can't lie). Twin stakes sentence: let words with no meaning anchor exist, while proving they carry none. A beat's `beat_hash` (sha256 of the canonical {beat_id, placement, intent}) is what beat copy pins as its source_hash — placement or intent moves, copy goes stale. Dramaturge (the arc facet owner) PROPOSES beats (status proposed); the designer ratifies by flipping status to accepted in this catalog — authored project data, like scenes.json. Never mint pseudo-atoms for rhetorical moves.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["store", "project", "policy", "beats"],
+  "properties": {
+    "store": { "const": "beats" },
+    "project": { "type": "string" },
+    "policy": { "const": "v1_beat_catalog" },
+    "spec": { "type": "string" },
+    "vocab": { "type": "string" },
+    "beats": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/beat" }
+    }
+  },
+  "$defs": {
+    "beat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["beat_id", "placement", "intent", "status", "from"],
+      "properties": {
+        "beat_id": { "type": "string", "pattern": "^bt_[A-Za-z0-9_]+$" },
+        "placement": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type"],
+          "properties": {
+            "type": { "enum": ["lesson_start", "lesson_end", "scene_start", "scene_end", "after_element"] },
+            "scene_id": { "type": "string" },
+            "element_id": { "type": "string", "pattern": "^ele_[A-Za-z0-9_]+$" }
+          },
+          "allOf": [
+            { "if": { "properties": { "type": { "enum": ["scene_start", "scene_end"] } } },
+              "then": { "required": ["type", "scene_id"] } },
+            { "if": { "properties": { "type": { "const": "after_element" } } },
+              "then": { "required": ["type", "element_id"] } },
+            { "if": { "properties": { "type": { "enum": ["lesson_start", "lesson_end"] } } },
+              "then": { "properties": { "scene_id": false, "element_id": false } } }
+          ]
+        },
+        "intent": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "pedagogical": { "type": "string", "description": "A governed id from intent.enum.json pedagogical values (e.g. hook, transfer). The validator enforces membership." },
+            "rhetorical": { "type": "string", "description": "A governed id from intent.enum.json rhetorical values (e.g. persuade, transition)." }
+          }
+        },
+        "status": { "enum": ["proposed", "accepted"] },
+        "from": { "type": "string", "description": "Rationale — which wake fired, or the designer's reasoning. Never learner-facing." },
+        "proposed_by": { "type": "string", "description": "e.g. dramaturge.v0.1/missing_arc_frame — provenance of the proposal." }
+      }
+    }
+  }
+}
