@@ -3544,6 +3544,48 @@ def _engine_closed_choice_component(chk, options_registry=None) -> dict:
     }
 
 
+def _stamp_structure_meta(comps, by_atom):
+    """Project the OBJECT facet's tree instead of discarding it (2026-08-31 structure hop).
+
+    Walks a scene's element components in order; a component whose atom `belongs_to` an atom
+    already seen in this scene joins that atom's cluster one level down. Emits
+    meta.structure = {group, depth, head} — the player wraps consecutive same-group components
+    and the brand packs style depth/subordination. Data-only: belongs_to + order already carry
+    the tree (never parse IDs). Components without element atoms (beats, checks) are untouched.
+    Aesthetics stay the visual registry's job — this hop only stops the projection being lossy."""
+    seen = {}      # atom_id -> (group_root, depth)
+    parents_with_kids = set()
+    for c in comps:
+        meta = c.get("meta") or {}
+        cf = meta.get("composed_from")
+        aid = cf[0] if isinstance(cf, list) and cf else cf
+        if not aid or aid not in by_atom:
+            continue
+        anchor = aid
+        if isinstance(cf, list):                      # a list component clusters under its container
+            anchor = atom_belongs_to(by_atom[aid]) or aid
+        parent = atom_belongs_to(by_atom.get(anchor) or {})
+        if parent in seen:
+            root, d = seen[parent]
+            entry = (root, d + 1)
+            parents_with_kids.add(parent)
+        else:
+            entry = (anchor, 0)
+        seen[anchor] = entry
+        meta["structure"] = {"group": entry[0], "depth": entry[1]}
+        c["meta"] = meta
+    for c in comps:
+        st = (c.get("meta") or {}).get("structure")
+        if st:
+            cf = c["meta"].get("composed_from")
+            aid = cf[0] if isinstance(cf, list) and cf else cf
+            anchor = aid
+            if isinstance(cf, list) and aid in by_atom:
+                anchor = atom_belongs_to(by_atom[aid]) or aid
+            st["head"] = anchor in parents_with_kids
+    return comps
+
+
 def _engine_components_for_ids(ids, by_eid, by_atom, options_registry) -> list:
     comps = []
     for kind, els in group_spine_for_project(ids, by_eid, by_atom):
@@ -3671,9 +3713,9 @@ def build_engine_course(atoms, elements, manifest, *, meaning_atoms=None,
                 "props": {"level": 2, "text": heading, "kicker": kicker},
                 "meta": {"scene_id": resolved["id"], "role": resolved.get("role")},
             })
-        comps.extend(_engine_components_for_ids(
+        comps.extend(_stamp_structure_meta(_engine_components_for_ids(
             resolved["element_ids"], by_eid, by_atom, registry
-        ))
+        ), by_atom))
         comps.extend(_engine_scene_checks(
             resolved, manifest, by_eid, by_atom, registry
         ))
@@ -6567,6 +6609,17 @@ def selftest(closed_moves):
         c["props"].get("stem") for c in engine_form["scenes"][3]["components"]
         if c["type"] == "MCQ"
     ]
+    _st_comps = [c for s in engine_form.get("scenes") or []
+                 for c in s.get("components") or []
+                 if (c.get("meta") or {}).get("structure")]
+    results.append(("engine projects the object tree (structure meta present, sane depths)",
+                    bool(_st_comps)
+                    and all(isinstance(c["meta"]["structure"].get("depth"), int)
+                            and c["meta"]["structure"].get("group")
+                            for c in _st_comps)
+                    and any(c["meta"]["structure"].get("head") for c in _st_comps)
+                    and any(c["meta"]["structure"]["depth"] > 0 for c in _st_comps),
+                    f"{len(_st_comps)} structured components"))
     results.append(("engine learner surface carries no derived kickers (authored only)",
                     all((c.get("props") or {}).get("kicker", "") == ""
                         for s in engine_form.get("scenes") or []
