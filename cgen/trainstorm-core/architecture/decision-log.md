@@ -13,6 +13,39 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (hop five) — RATIFIED: the paytrans employee course is `brunswick.reference.course` v1 (structural). The July `_todo` is closed by the pipe, not by hand. The artisan side-by-side names four gaps, each with an architectural home; the voice pack is the next build.
+
+*Jake's two calls, made in conversation after playing the branded course live: ratify now as the
+STRUCTURAL reference with v2 scope named, and build the voice pack next. Anchor: branch
+`drive/reference-course-v1` off `cb2e32d` (PR #49). The reference file is a validated POINTER
+record — copying the projection into reference/ would mint the drifting second source this repo
+exists to prevent.*
+
+### The side-by-side (pipeline v1 vs. the January artisan control)
+
+Control: `cgen/courses/brunswick_pay_transparency_employee/course.json` — 10 AE-rendered scenes,
+10 VO tracks (~977 narration words), rewritten learner-facing on-screen copy, two mid-course
+interactions, a `persuade` Impact beat ("You have every right to understand your pay"), a closure
+scene ("You're Informed"). Pipeline v1: 5 scenes + 2 checks, verbatim atom text, branded chrome,
+no narration, no arc. Jake's read: content is very close; aesthetics and the less tangible pieces
+are not there yet. The decomposition of "less tangible":
+
+| gap | what the artisan has | architectural home | status |
+|---|---|---|---|
+| **Voice** | compressed, warm, learner-facing copy — almost never verbatim source | a RENDERING of meaning, external store keyed by element id — a locale pack shifted in REGISTER, not language; Dragoman machinery generalized. First natural seat for a dispatched LLM writer under propose→accept, with meaning-preservation as the review gate; content_hash staleness covers it for free | **NEXT BUILD** |
+| **Narration** | 10 VO mp3s | Griot — seat and wake ("words before voice") defined 08-12, never run; player audio chrome already built | after voice pack |
+| **Arc** | welcome, persuade beat, closure, interaction placement | the 08-12 authored-affect carry + the lineage audit's exploratory seat; closure/persuade COPY waits on the voice pack, placement is catalog work | partially catalog-now |
+| **Motion/visuals** | AE mp4 per scene, motion primitives | parked (Lottie-first per conventions); meanwhile the HTML player has unused RevealCards/StepList components, and the PayTrans icon set + 255-asset visual registry have never been consumed | expression hop, parallel |
+
+The consolidating finding: **every gap already has a home in the architecture** — nothing the
+artisan course does is architecturally homeless. The manifold anticipated its own v2.
+
+### Order decided
+
+Voice pack → Griot (words, then audio) → player expression (components + icons, parallelizable).
+Motion/AE and Storyline/.potx stay parked. Ratification does not wait on any of it: the reference's
+job is to prove corpus→course under gates, which v1 does; the record names what v2 will claim.
+
 ## 2026-08-31 (hop 4b) — Brunswick brand pack conformed to the Course Engine pack contract; the branded player verified in a real browser
 
 *Anchor: branch `drive/brunswick-brand-pack` off `c53b2e6` (PR #48). Verified headless-Chromium

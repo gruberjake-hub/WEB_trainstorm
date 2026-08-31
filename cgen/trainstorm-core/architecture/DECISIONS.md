@@ -2409,3 +2409,26 @@ loader's 404 fallback is silent. Conform the data, don't teach the loader legacy
 against this branch). Carries: engine base stylesheet; a visible dev notice on brand-load fallback.
 
 **Supersedes:** nothing — the astellas pack layout is confirmed as the pack contract of record.
+
+---
+
+## 2026-08-31 — `brunswick.reference.course` v1 ratified (structural); voice pack is the next build
+
+**Signed:** Jake / Claude — *Jake ratified in conversation; merge makes it durable.*
+
+**Decision:** `reference/brunswick.reference.course.json` is a ratified POINTER record naming the
+paytrans employee course as the gold worked course — v1 structural scope (corpus→atoms→warrant→
+catalogs→occurrences→branded player, all gated). The July `_todo` is closed by the pipe. Named v2
+scope, in build order: voice pack (learner-register rendering store keyed by element id — the next
+build), Griot narration, authored arc, player expression; motion and Storyline stay parked. The
+projection is never copied into reference/ — the pointer IS the reference.
+
+**Why:** The reference exists to prove the machine's shape on a real course, which v1 does; the
+artisan side-by-side (decision-log, hop five) shows every remaining gap has an architectural home.
+
+**Consequences:** Assistants may cite the paytrans store as the worked course example. The voice
+pack arc opens next with its own design pass; its store decision (pack shape, writer, review gate)
+is made there, not assumed here.
+
+**Supersedes:** the `_todo` stub and the July intent of a hand-dropped gold course file. The
+2026-08-31 hop-one clause "produced by the pipe or not at all" is fulfilled, not changed.

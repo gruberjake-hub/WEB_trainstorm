@@ -144,7 +144,7 @@ trainstorm-core/
 │   ├── example_atom.json                 ✅
 │   ├── example_element.json              ✅ occurrence of example_atom (`composed_from`, no authored content)
 │   ├── sample_script.json / .v2.json     ✅
-│   └── brunswick.reference.course.json   ⬜ `{"_todo": …}` — being produced by the paytrans drive (DECISIONS 2026-08-31); never hand-authored
+│   └── brunswick.reference.course.json   ✅ RATIFIED v1 structural (2026-08-31) — a pointer to the paytrans course, never a copy; v2 scope named (voice, Griot, arc, expression)
 │
 ├── tools/                                # the agents' runtime code & utilities
 │   ├── harness_paths.py                  ✅ 4 anchors: core · registry · project · template
