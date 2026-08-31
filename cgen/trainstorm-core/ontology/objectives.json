@@ -1,6 +1,6 @@
 {
   "store": "ontology/objectives",
-  "version": 4,
+  "version": 5,
   "status": "seeded",
   "closed_list": true,
   "owner": "L&D / Instructional Design",
@@ -96,7 +96,7 @@
       "label": "Understand how base pay fits within Brunswick's broader total rewards package",
       "requires": [],
       "framework": "none",
-      "status": "draft",
+      "status": "validated",
       "derived_from": "doc_bw_learner_objectives_paytrans — 'For Salaried Employees (U.S. & E.U.)', verbatim capability statements; Bloom classified by BPS.",
       "serves": [
         "goal_bw_pay_understood"
@@ -107,7 +107,7 @@
       "label": "Identify the main factors that are considered when salaries are determined",
       "requires": [],
       "framework": "none",
-      "status": "draft",
+      "status": "validated",
       "derived_from": "doc_bw_learner_objectives_paytrans — 'For Salaried Employees (U.S. & E.U.)', verbatim capability statements; Bloom classified by BPS.",
       "serves": [
         "goal_bw_pay_understood"
@@ -120,7 +120,7 @@
         "obj_bw_emp_pay_factors"
       ],
       "framework": "none",
-      "status": "draft",
+      "status": "validated",
       "derived_from": "doc_bw_learner_objectives_paytrans — 'For Salaried Employees (U.S. & E.U.)', verbatim capability statements; Bloom classified by BPS.",
       "serves": [
         "goal_bw_pay_understood"
@@ -131,7 +131,7 @@
       "label": "Know where to find additional information or resources related to pay transparency at Brunswick",
       "requires": [],
       "framework": "none",
-      "status": "draft",
+      "status": "validated",
       "derived_from": "doc_bw_learner_objectives_paytrans — 'For Salaried Employees (U.S. & E.U.)', verbatim capability statements; Bloom classified by BPS.",
       "serves": [
         "goal_bw_pay_understood"
@@ -142,7 +142,7 @@
       "label": "Recognize when additional, region-specific information may apply, including EU pay transparency rights",
       "requires": [],
       "framework": "none",
-      "status": "draft",
+      "status": "validated",
       "derived_from": "doc_bw_learner_objectives_paytrans — 'For Salaried Employees (U.S. & E.U.)', verbatim capability statements; Bloom classified by BPS.",
       "serves": [
         "goal_bw_pay_understood"
@@ -150,5 +150,5 @@
       "bloom": "remember"
     }
   },
-  "_note": "v3, 2026-08-25: five draft ALSAP objectives distilled from SOP-AST-29080 (the live ast_alsap atom store), warranted by goal_alsap_asset_safety_monitored. Status is draft, not example and not validated — the procedure is real, the human objective-lock conversation has not happened (Cartographer steward rule). The two AST009 PSI objectives remain status:example. This is a small ontology (5+2), not a fake competency graph. v4, 2026-08-31: added the five Brunswick employee-awareness objectives (obj_bw_emp_*), verbatim from the client-ready LO document, serving goal_bw_pay_understood. Status draft pending the objective-lock conversation; the ten Manager/HR LOs are deliberately NOT minted until drive two. Instances still live in the core seed — the per-project ontology store remains an open carry (see goals.json v2 note)."
+  "_note": "v3, 2026-08-25: five draft ALSAP objectives distilled from SOP-AST-29080 (the live ast_alsap atom store), warranted by goal_alsap_asset_safety_monitored. Status is draft, not example and not validated — the procedure is real, the human objective-lock conversation has not happened (Cartographer steward rule). The two AST009 PSI objectives remain status:example. This is a small ontology (5+2), not a fake competency graph. v4, 2026-08-31: added the five Brunswick employee-awareness objectives (obj_bw_emp_*), verbatim from the client-ready LO document, serving goal_bw_pay_understood. Status draft pending the objective-lock conversation; the ten Manager/HR LOs are deliberately NOT minted until drive two. Instances still live in the core seed — the per-project ontology store remains an open carry (see goals.json v2 note). v5, 2026-08-31: the five obj_bw_emp_* nodes ratified validated by Jake — the FIRST validated objectives in the ontology; the schema's serves-required-at-validated promotion gate is now exercised by live nodes."
 }
