@@ -2368,3 +2368,23 @@ broke (single root; Python teaches walk) are retired the same way scenes and les
 **Supersedes:** the realize selftest's pinned three-role list; `bind_teaches`'s ALSAP-only reach as
 the ONLY teaches path (the hardcoded walk still runs for ast_alsap, unchanged). Single-writer per
 facet, catalogs-as-project-data, and the working-process block stand.
+
+---
+
+## 2026-08-31 — `?project=` accepts a client-qualified ref (`brunswick/paytrans`)
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** `catalogUrlForProject` resolves `<client>/<slug>` to
+`cgen/<client>/projects/<slug>/occurrences/lessons.json`; a bare slug still means astellas, so
+existing URLs are unchanged. Unsafe refs (extra segments, traversal) resolve to "" and fail in the
+stage. Not a client registry; not a catalog UI; no pretty URLs (still tabled).
+
+**Why:** The loader baked `./astellas/` into the path — true while astellas was the only client,
+an assumption once `cgen/brunswick` landed. The URL now names the store the way the tree does.
+
+**Consequences:** `/cgen/?project=brunswick/paytrans` plays the employee course in Brunswick
+chrome (`meta.theme` from the projection; pack at `cgen/brands/brunswick/`). `/cgen` stays ALSAP.
+
+**Supersedes:** the astellas-only path rule inside `catalogUrlForProject`; the #42 block's
+`?project=` stand-in otherwise stands.

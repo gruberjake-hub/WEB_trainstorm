@@ -5,8 +5,14 @@
  *  root (`realized_lesson.json` / `realized_lesson_{suffix}.json`).
  *  The player is not an ALSAP filename special-case.
  *
- *  `/cgen` default catalog is ALSAP. `?project=<slug>` selects a
- *  sibling store's catalog (`cgen/astellas/projects/<slug>/occurrences/lessons.json`).
+ *  `/cgen` default catalog is ALSAP. `?project=<ref>` selects a
+ *  sibling store's catalog. A bare slug means the astellas client
+ *  (`cgen/astellas/projects/<slug>/occurrences/lessons.json`, unchanged);
+ *  a client-qualified ref `<client>/<slug>` (e.g. brunswick/paytrans)
+ *  selects `cgen/<client>/projects/<slug>/occurrences/lessons.json`
+ *  (2026-08-31 — the second client namespace made the astellas prefix
+ *  an assumption instead of a fact). Not a client registry, not a
+ *  catalog UI.
  *  `?lesson=` is which record loads inside that catalog. Not a catalog UI.
  *  No pretty-URL / Netlify rewrite.
  */
@@ -17,20 +23,26 @@ export const DEFAULT_CATALOG_URL =
   "./astellas/projects/ast_alsap/occurrences/lessons.json";
 
 const PROJECT_RE = /^[A-Za-z0-9_-]+$/;
+const DEFAULT_CLIENT = "astellas";
 
-/** Stand-in catalog path for a project slug. Empty string if the slug is unsafe. */
+/** Stand-in catalog path for a project ref (`slug` or `client/slug`).
+ *  Empty string if the ref is unsafe. Bare slug = astellas (unchanged). */
 export function catalogUrlForProject(project) {
-  const slug =
+  const ref =
     project == null || project === "" ? DEFAULT_PROJECT : String(project);
-  if (!PROJECT_RE.test(slug)) return "";
-  return `./astellas/projects/${slug}/occurrences/lessons.json`;
+  const parts = ref.split("/");
+  if (parts.length > 2) return "";
+  const client = parts.length === 2 ? parts[0] : DEFAULT_CLIENT;
+  const slug = parts.length === 2 ? parts[1] : parts[0];
+  if (!PROJECT_RE.test(client) || !PROJECT_RE.test(slug)) return "";
+  return `./${client}/projects/${slug}/occurrences/lessons.json`;
 }
 
 export function unknownProjectMessage(project) {
   const shown = project ? `"${project}"` : "(empty)";
   return (
-    `Unknown or invalid project ${shown}. Use a project slug such as ` +
-    `${DEFAULT_PROJECT} or ast_artwork.`
+    `Unknown or invalid project ${shown}. Use a project ref such as ` +
+    `${DEFAULT_PROJECT}, ast_artwork, or brunswick/paytrans.`
   );
 }
 
