@@ -63,7 +63,12 @@
             "element_id": "ele_sop_2290",
             "composed_from": "atom_sop_2290",
             "text_primitive": "tp_display",
-            "style_ref": "brand.opening"
+            "style_ref": "brand.opening",
+            "structure": {
+              "group": "atom_sop_2290",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -76,7 +81,12 @@
             "element_id": "ele_sop_2290__present",
             "composed_from": "atom_sop_2290",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_2290",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -89,7 +99,12 @@
             "element_id": "ele_sop_2290_purpose__activate",
             "composed_from": "atom_sop_2290_purpose",
             "text_primitive": "tp_callout",
-            "style_ref": "brand.prior"
+            "style_ref": "brand.prior",
+            "structure": {
+              "group": "atom_sop_2290",
+              "depth": 1,
+              "head": true
+            }
           }
         },
         {
@@ -102,7 +117,12 @@
             "element_id": "ele_sop_2290_purpose",
             "composed_from": "atom_sop_2290_purpose",
             "text_primitive": "tp_purpose",
-            "style_ref": "brand.purpose"
+            "style_ref": "brand.purpose",
+            "structure": {
+              "group": "atom_sop_2290",
+              "depth": 1,
+              "head": true
+            }
           }
         },
         {
@@ -148,7 +168,12 @@
               "atom_sop_2290_purpose_items_3"
             ],
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_2290",
+              "depth": 2,
+              "head": false
+            }
           }
         },
         {
@@ -161,7 +186,12 @@
             "element_id": "ele_sop_2290_scope",
             "composed_from": "atom_sop_2290_scope",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_2290",
+              "depth": 1,
+              "head": true
+            }
           }
         },
         {
@@ -193,7 +223,12 @@
               "atom_sop_2290_scope_who_1"
             ],
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_2290",
+              "depth": 2,
+              "head": false
+            }
           }
         },
         {
@@ -206,7 +241,12 @@
             "element_id": "ele_sop_2290_scope_products",
             "composed_from": "atom_sop_2290_scope_products",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_2290",
+              "depth": 2,
+              "head": false
+            }
           }
         },
         {
@@ -219,7 +259,12 @@
             "element_id": "ele_sop_2290_scope_applicable",
             "composed_from": "atom_sop_2290_scope_applicable",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_2290",
+              "depth": 2,
+              "head": false
+            }
           }
         },
         {
@@ -232,7 +277,12 @@
             "element_id": "ele_sop_2290_scope_oos",
             "composed_from": "atom_sop_2290_scope_oos",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_2290",
+              "depth": 2,
+              "head": false
+            }
           }
         }
       ]
@@ -265,7 +315,12 @@
             "element_id": "ele_sop_2290_procedures_start",
             "composed_from": "atom_sop_2290_procedures_start",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_2290_procedures_start",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {
@@ -303,7 +358,12 @@
               "atom_sop_2290_proc_a_s3"
             ],
             "text_primitive": "tp_step",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_2290_proc_a",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {

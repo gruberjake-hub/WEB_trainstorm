@@ -64,7 +64,12 @@
             "element_id": "ele_sop_ast29080",
             "composed_from": "atom_sop_ast29080",
             "text_primitive": "tp_display",
-            "style_ref": "brand.opening"
+            "style_ref": "brand.opening",
+            "structure": {
+              "group": "atom_sop_ast29080",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -77,7 +82,12 @@
             "element_id": "ele_sop_ast29080__present",
             "composed_from": "atom_sop_ast29080",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_ast29080",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -90,7 +100,12 @@
             "element_id": "ele_sop_ast29080_purpose__activate",
             "composed_from": "atom_sop_ast29080_purpose",
             "text_primitive": "tp_callout",
-            "style_ref": "brand.prior"
+            "style_ref": "brand.prior",
+            "structure": {
+              "group": "atom_sop_ast29080",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -103,7 +118,12 @@
             "element_id": "ele_sop_ast29080_purpose",
             "composed_from": "atom_sop_ast29080_purpose",
             "text_primitive": "tp_purpose",
-            "style_ref": "brand.purpose"
+            "style_ref": "brand.purpose",
+            "structure": {
+              "group": "atom_sop_ast29080",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -116,7 +136,12 @@
             "element_id": "ele_sop_ast29080_scope",
             "composed_from": "atom_sop_ast29080_scope",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_ast29080",
+              "depth": 1,
+              "head": true
+            }
           }
         },
         {
@@ -176,7 +201,12 @@
               "atom_sop_ast29080_scope_orgs_5"
             ],
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_ast29080",
+              "depth": 2,
+              "head": false
+            }
           }
         },
         {
@@ -189,7 +219,12 @@
             "element_id": "ele_sop_ast29080_general",
             "composed_from": "atom_sop_ast29080_general",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_ast29080",
+              "depth": 1,
+              "head": true
+            }
           }
         },
         {
@@ -235,7 +270,12 @@
               "atom_sop_ast29080_general_govdocs_3"
             ],
             "text_primitive": "tp_body",
-            "style_ref": "brand.example"
+            "style_ref": "brand.example",
+            "structure": {
+              "group": "atom_sop_ast29080",
+              "depth": 2,
+              "head": false
+            }
           }
         }
       ]
@@ -300,7 +340,12 @@
               "atom_sop_ast29080_proc_a_s4"
             ],
             "text_primitive": "tp_step",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_ast29080_proc_a",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {
@@ -380,7 +425,12 @@
             "element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present",
             "composed_from": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {
@@ -393,7 +443,12 @@
             "element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present",
             "composed_from": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {
@@ -406,7 +461,12 @@
             "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify",
             "composed_from": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
             "text_primitive": "tp_body",
-            "style_ref": "brand.example"
+            "style_ref": "brand.example",
+            "structure": {
+              "group": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {
@@ -419,7 +479,12 @@
             "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify",
             "composed_from": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
             "text_primitive": "tp_body",
-            "style_ref": "brand.example"
+            "style_ref": "brand.example",
+            "structure": {
+              "group": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {

@@ -60,7 +60,12 @@
             "element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__present",
             "composed_from": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {
@@ -73,7 +78,12 @@
             "element_id": "ele_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__present",
             "composed_from": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {
@@ -86,7 +96,12 @@
             "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile__exemplify",
             "composed_from": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
             "text_primitive": "tp_body",
-            "style_ref": "brand.example"
+            "style_ref": "brand.example",
+            "structure": {
+              "group": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_profile",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {
@@ -99,7 +114,12 @@
             "element_id": "ele_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale__exemplify",
             "composed_from": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
             "text_primitive": "tp_body",
-            "style_ref": "brand.example"
+            "style_ref": "brand.example",
+            "structure": {
+              "group": "atom_alsap_asp9999__form_ast34037_sec_purpose_sec_safety_profile_f_br_rationale",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {
