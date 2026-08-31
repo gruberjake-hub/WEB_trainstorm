@@ -1,0 +1,81 @@
+{
+  "vocabulary_version": "register.v0.1",
+  "status": "draft_for_reconciliation",
+  "owner": "instructional_design",
+  "description": "Governed REGISTER vocabulary — the course-level voice coordinate a rendering of meaning is written to: who the words are for and how they are pitched (stance, person, formality). Register is a coordinate in the same rendering space as locale: voice packs (voice/<register>.json) sit beside locale packs (locales/<lang>.json) as sibling store families, both keyed by atom_id, both gated against the atom's content_hash. Dragoman owns this whole space; language and register are coordinates, and each of its modes declares its own gate profile (see DECISIONS 2026-08-31, voice-pack contract block).",
+  "governance": {
+    "closed_list": true,
+    "rule": "A voice pack may only declare a register id defined here. A new register requires a version bump and an entry — the validator rejects anything else. Per-register `status` additionally gates AUTHORING: only a `specified` register may carry accepted renderings; renderings authored against a `draft` register are flagged by the gate, not silently admitted.",
+    "supplants": "Nothing — first vocabulary of the rendering-coordinate family."
+  },
+  "boundaries": {
+    "tone": "Register is NOT tone (vocab/tone.enum.json). Tone is per-element affect at the intent layer — what feeling THIS element carries, varying scene to scene, set upstream and read by the realizer. Register is the course-level voice coordinate — constant across a rendering. TONE MODULATES WITHIN REGISTER: the voice writer reads each element's tone as an input while writing every entry to one register. Neither vocabulary absorbs the other.",
+    "locale": "Register does not translate. The spec fields below are ABSTRACT intent, realized natively per locale — conversational Japanese is not translated conversational English. When a locale rendering chains from a voice rendering, the voiced source text transmits the authored choices, this spec transmits the shared intent, and the atom remains the judge.",
+    "audience": "Register is a coordinate someone CHOOSES for a course — a governed input the voice writer writes to. Which learner segment gets which register is the audience facet's join (Chameleon), downstream. The voice writer never reasons about who the learners are; the moment it does, single-writer has broken."
+  },
+  "spec_fields": {
+    "person": "Grammatical person of address the register intends (e.g. second_direct, impersonal).",
+    "stance": "The writer's posture toward the learner (e.g. learner_advocate, neutral_authority).",
+    "formality": "Formality intent, not surface rules (e.g. conversational_professional, formal)."
+  },
+  "values": [
+    {
+      "id": "warm_direct",
+      "label": "Warm & Direct",
+      "status": "specified",
+      "provenance": "Reverse-specified 2026-08-31 from the January artisan control course (cgen/courses/brunswick_pay_transparency_employee/course.json) — the voice-pack arc's validation target.",
+      "definition": "Second-person, plain-language, reassuring learner advocacy. Compresses source meaning into copy that addresses the learner directly and lowers threat.",
+      "spec": {
+        "person": "second_direct",
+        "stance": "learner_advocate",
+        "formality": "conversational_professional"
+      },
+      "observed_markers": [
+        "Direct address and possessives: 'What It Means for You', 'your pay'.",
+        "Contractions and plain diction: 'wasn't', 'It's a system, not a judgment.'",
+        "De-threatening reassurance moves: 'No trick questions', 'a solid, positive place to be'.",
+        "Rights-affirming persuade beats: 'You have every right to understand your pay.'",
+        "Compression: on-screen copy far terser than source; narration fuller but still conversational."
+      ]
+    },
+    {
+      "id": "formal_institutional",
+      "label": "Formal Institutional",
+      "status": "draft",
+      "provenance": "Named 2026-08-31 in the taxonomy-up-front decision; unproven — no course has been authored in it.",
+      "definition": "Impersonal, policy-precise register for compliance-critical or externally reviewed content where the institution, not a narrator, speaks.",
+      "spec": {
+        "person": "impersonal",
+        "stance": "neutral_authority",
+        "formality": "formal"
+      },
+      "observed_markers": []
+    },
+    {
+      "id": "executive_brief",
+      "label": "Executive Brief",
+      "status": "draft",
+      "provenance": "Named 2026-08-31 in the taxonomy-up-front decision; unproven — no course has been authored in it.",
+      "definition": "Compressed, decision-first register for senior audiences: leads with the implication, spends no words on reassurance.",
+      "spec": {
+        "person": "second_sparse",
+        "stance": "decision_first",
+        "formality": "crisp"
+      },
+      "observed_markers": []
+    },
+    {
+      "id": "technical_precise",
+      "label": "Technical Precise",
+      "status": "draft",
+      "provenance": "Named 2026-08-31 in the taxonomy-up-front decision; unproven — no course has been authored in it.",
+      "definition": "Imperative, terminology-exact register for practitioner and procedure audiences where ambiguity is the failure mode.",
+      "spec": {
+        "person": "imperative_second",
+        "stance": "task_authority",
+        "formality": "terminology_exact"
+      },
+      "observed_markers": []
+    }
+  ]
+}

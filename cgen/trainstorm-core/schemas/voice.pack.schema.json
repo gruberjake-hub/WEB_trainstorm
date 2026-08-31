@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/voice.pack.schema.json",
+  "title": "Voice pack — one register's renderings of meaning for one project",
+  "description": "The first store that re-expresses MEANING itself: learner-facing copy as a RENDERING of the atom's meaning, external and keyed, never embedded (constitution: reference, don't embed). Structurally a locale pack shifted in REGISTER instead of language — sibling family to locales/<lang>.json, same keying precedent (2026-08-25 occurrence identity): entries key on atom_id (meaning is re-expressed once per atom+register), element_overrides key on element_id only where placement constrains length or form. TWO PINS govern every entry: source_hash always pins the ATOM's content_hash (the meaning anchor — every rendering at every coordinate is gated against the atom, never transitively against another rendering), and derived_from, where present, pins the TEXT the writer worked from (for an element override, the pack's own atom-level entry). Pack instances live PER-PROJECT (cgen/<client>/projects/<proj>/voice/<register>.json); this schema and the register vocabulary live in core.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["pack_version", "register", "entries"],
+  "properties": {
+    "pack_version": {
+      "const": "voice.v0.1"
+    },
+    "register": {
+      "type": "string",
+      "description": "A register id from vocab/register.enum.json — governed, closed list; the validator rejects anything else. Per-register status in the vocab additionally gates authoring: accepted entries are only admitted for a `specified` register."
+    },
+    "entries": {
+      "type": "object",
+      "description": "atom_id → rendering. One rendering of the atom's meaning in this register.",
+      "propertyNames": { "pattern": "^atom_[A-Za-z0-9_]+$" },
+      "additionalProperties": { "$ref": "#/$defs/entry" }
+    },
+    "element_overrides": {
+      "type": "object",
+      "description": "element_id → rendering, ONLY where the occurrence's placement constrains length or form (heading vs sentence, character limits). Each override should chain from the pack's own atom-level entry via derived_from.",
+      "propertyNames": { "pattern": "^ele_[A-Za-z0-9_]+$" },
+      "additionalProperties": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "status", "source_hash"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The rendered learner-facing copy. The words may change; the gate proves the meaning didn't."
+        },
+        "status": {
+          "enum": ["draft", "accepted"],
+          "description": "draft = proposed by the writer (Dragoman voice mode); accepted = a human accepted it (propose→accept, the Amanuensis pattern). The agent never sets accepted — acceptance is a human write, mechanically."
+        },
+        "reviewer": {
+          "type": "string",
+          "description": "Who accepted. Required when status is accepted."
+        },
+        "source_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "description": "The ATOM's content_hash at rendering time — the meaning anchor. A mismatch with the atom's current hash means the meaning moved and this rendering is stale."
+        },
+        "derived_from": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["pack", "key", "hash"],
+          "description": "The text the writer worked from, when it was not the verbatim atom — e.g. an element override chaining from this pack's atom-level entry. Locale packs use the same shape to chain from an accepted voice entry (see locales/README.md). Staleness propagates down the chain: atom changes → voice stale → descendants stale.",
+          "properties": {
+            "pack": { "type": "string", "description": "Store-relative path of the source pack, e.g. voice/warm_direct.json." },
+            "key": { "type": "string", "description": "The source entry's key in that pack (atom_id or element_id)." },
+            "hash": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "description": "sha256 of the source entry's text at derivation time."
+            }
+          }
+        }
+      },
+      "if": { "properties": { "status": { "const": "accepted" } } },
+      "then": { "required": ["text", "status", "source_hash", "reviewer"] }
+    }
+  }
+}
