@@ -13,6 +13,91 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 — Brunswick paytrans hop one: first non-Astellas client namespace, first EXPOSITORY corpus through Headwater (structure.v0.2: document/section/statement), warrant chain drafted from client documents. 68 atoms, all gates green.
+
+*Anchor: branch `drive/brunswick-paytrans-hop1` off `bc53065`. Proposed by Claude as a patch series;
+repo state once Jake lands it — and his merge RATIFIES the structure.v0.2 vocab bump and the drafted
+warrant chain (see the DECISIONS block). Verification at delivery: `validate_atoms --project
+../brunswick/projects/paytrans` GATE PASS / PROMOTE PASS (68 atoms, 0 hard, 0 soft);
+`validate_objectives` ALL PASS with the new nodes; every pre-existing gate re-run green.*
+
+### What this drive is
+
+The full-course arc, decided with Jake this session: take the messy Brunswick pay-transparency
+corpus (the real BPS engagement corpus, Jan 2025–Jan 2026, from the folder that predates the
+manifold) and drive it through the whole pipe to a played lesson — the validated projection then
+BECOMES `reference/brunswick.reference.course`, closing the July `_todo` instead of hand-authoring
+it (a hand-written reference now would be fake evidence). Scope call: the **employee awareness
+course** first (~10 min, five LOs) — it is the proven drive scale, and Jake's hand-built
+`cgen/courses/brunswick_pay_transparency_employee` is an exact artisan CONTROL to compare against.
+The manager course (10 LOs, scenario-heavy) is drive two on the same store.
+
+### The vocabulary finding — the headline decision
+
+**The manifold had no meaning-kind for expository content.** Every governed `meaning.kind` was
+procedure-, form-, or list-shaped, because only SOPs and forms had ever been ingested. A deck that
+*states how compensation works* has nothing to DO and nothing to fill in. Per govern-the-vocabularies
+this is a version bump, not a silent addition: **`structure.enum.json` → v0.2**, adding `document`
+(source-document root), `section` (titled subdivision), `statement` (one meaning-bearing assertion —
+the didactic dual of `procedure_step`: a step says DO THIS, a statement says THIS IS SO). The gate
+unions vocab files, so the three kinds became governed with no validator change — the 08-13 `govset`
+design paying off exactly as intended.
+
+### The store — first non-Astellas client
+
+`cgen/brunswick/{registry,projects/paytrans}`, sibling to `cgen/astellas`, same shape;
+`harness_paths` derived the registry anchor with zero changes. Registries seeded v1 as the
+namespace-creation act (8 docs, 5 roles, records/options empty) — there was no prior Brunswick
+registry to propose INTO; growth from here follows propose→adopt. `tools/headwater_ingest_paytrans.py`
+is the authored decomposition (headwater_mode: direct, owns `object` only — no procedure/form facet
+anywhere, which the source-type rule permits: at most one, not exactly one): **68 atoms** — 4
+document roots (Manager's Guide deck, Comp Philosophy & Framework v3, EOC update, FAQs), 10
+sections, 24 statements, 6 lists, 24 list_items. Everything verbatim from the structured extractions
+Jake's own Jan-2026 pipeline produced from the pptx sources (`file_to_structured_all_md.py`) — that
+derivation is named in the manifest corpus string, the docs registry, and the ingest header, not
+hidden. Deliberately NOT decomposed, each named in a Headwater note: the manager-course slides
+(practice sessions, reflection guidance, talking points) and the FAQ's per-jurisdiction compliance
+table (reference material the course points TO — obj_bw_emp_find_resources — not taught meaning).
+
+### The warrant chain — drafted from documents, not invented
+
+The 08-21 structure gets its first real, non-Astellas exercise, and the client had already written
+most of it: the SOW states outcome, audiences, timing, and measurement; the client-ready LO document
+IS the objective list; and Jake's own LO-revision analysis contains a reachability judgment made in
+the wild — "confidence builds through practice over time" is `not_trainable` reasoning written seven
+months before the schema required the field. Minted: **`goal_bw_pay_understood`** (goals v3) with a
+four-item `not_trainable` (pay outcomes and pay equity itself; trust; manager conversation quality —
+that is drive two's goal; compliance itself) and **five `obj_bw_emp_*` nodes** (objectives v4),
+verbatim from the LO doc's employee section, `serves` the goal, Bloom-classified
+(3×understand, 2×remember). All `status: draft` — the objective-lock conversation with Jake is the
+next hop's first beat, and Brunswick has not ratified the goal statement; the note says both out
+loud. The ten manager LOs are deliberately unminted until drive two.
+
+### Lineage woven — Jake's directive
+
+The three Jan-2026 proto-agent prompts in the corpus folder are the pipeline's ancestors, and
+`architecture/lineage/2026-01-proto-agent-prompts.md` (+ the three prompts frozen beside it) now
+records the mapping: the sense-making prompt → Headwater case_author + the objective derivation
+(its "training compensating for structural issues" clause → `reachability.not_trainable` — the
+strongest single line of lineage); the design-commitment prompt → the script-primitives IR. The
+audit's structural finding: **the exploratory ("high-temperature, non-binding") phase has no agent
+seat** — stages 1 and 3 of the proto-pipeline were industrialized, stage 2 was not. Already parked
+(Designer/Strategist); the lineage file now says what that seat inherits. Three smaller carries:
+signal-vs-noise annotation on ingest scope; open-questions-to-the-project-team for a corpus; a
+course-level DESIGN COMMITMENT NOTES analog.
+
+### Open / next (the drive's remaining hops)
+
+Hop two: **objective lock** — Jake ratifies or amends the five draft objectives and the goal, they
+go `validated` (the schema's promotion gate makes `serves` binding there). Hop three: catalogs as
+project data — scenes/lessons/checks for the employee course, drafted by Claude, ratified by Jake;
+realize → cartographer → couturier (heuristics may need their first non-SOP touches — e.g.
+`procedure_sequence_atoms` has nothing to walk here, and move classification has never seen
+`statement`). Hop four: Brunswick brand pack (`cgen/brands/brunswick` exists) as `/cgen?project=`
+chrome. Hop five: ratify the projection as `brunswick.reference.course`, strike the `_todo`, and
+run the side-by-side against the artisan control. Standing carries touched, not closed: per-project
+ontology store (instances still in core seed); the atom.schema `$id` namespace; Claude push access.
+
 ## 2026-08-30 (cleanup) — Two gates that could not run now run and go red: `lint.py` classifier repaired (254 false errors → 0), `layout-engine/ci/validate_sidecar.py` repointed (3 real violations found and closed at the data layer), drifted `_schema/` copies removed
 
 *Anchor: branch `cleanup/tooling-lint-layout-engine` off `24b594c`, 8 files. Proposed by Claude as a
