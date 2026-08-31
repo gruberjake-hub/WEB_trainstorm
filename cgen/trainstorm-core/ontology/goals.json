@@ -1,10 +1,10 @@
 {
   "store": "ontology/goals",
-  "version": 2,
+  "version": 3,
   "status": "seeded",
   "closed_list": true,
   "owner": "Client business owner (NOT L&D) — see goal.schema.json",
-  "_note": "v2, 2026-08-25: added goal_alsap_asset_safety_monitored, distilled from the live SOP-AST-29080 atom store (ast_alsap). Status on that node is draft — the SOP is real; a client has not ratified the outcome statement. The AST009 PSI goal remains status:example. Schema is shared core; these INSTANCES are per-engagement content that currently live in the core seed because no per-project ontology store exists yet.",
+  "_note": "v2, 2026-08-25: added goal_alsap_asset_safety_monitored, distilled from the live SOP-AST-29080 atom store (ast_alsap). Status on that node is draft — the SOP is real; a client has not ratified the outcome statement. The AST009 PSI goal remains status:example. Schema is shared core; these INSTANCES are per-engagement content that currently live in the core seed because no per-project ontology store exists yet. v3, 2026-08-31: added goal_bw_pay_understood for the Brunswick pay-transparency drive (first non-Astellas client; projects/paytrans). Status draft — BPS-drafted from the SOW and client LO documents; not client-ratified.",
   "goals": {
     "goal_ast009_psi_reported_on_time": {
       "label": "Product safety information reaching the company is recognised and reported within the required window, without relying on individual vigilance.",
@@ -42,6 +42,25 @@
       },
       "status": "draft",
       "derived_from": "Live SOP-AST-29080 atom store (cgen/astellas/projects/ast_alsap/atoms.json). Distilled from the procedure's purpose, general statement, and three procedure sections. Not client-ratified — Jake merging the Cartographer PR is the first human look, not a lock."
+    },
+    "goal_bw_pay_understood": {
+      "label": "Brunswick salaried employees understand how pay is determined — the philosophy, the factors, and base pay's place in total rewards — and know where to find their own compensation information, so that pay transparency lands as informed understanding rather than unexplained numbers.",
+      "measure": "Optional employee eLearning completion and embedded check performance (SOW §5); downstream, the quality of pay conversations employees initiate — measured through the manager/HR channel the program equips separately.",
+      "owner": "role_bw_ehrc_paytrans_team",
+      "reachability": {
+        "trainable": "Understanding. What the philosophy is, which factors set a salary, how base pay sits inside total rewards, where Workday and the Total Rewards Statement live, and that EU-specific rights exist — all knowledge and orientation, exactly what an awareness course can move.",
+        "not_trainable": [
+          "Actual pay outcomes and pay equity itself — properties of the compensation structure and its administration, not of anything a learner is taught.",
+          "Trust in the fairness of pay — built or broken in real conversations with managers and in lived outcomes; the course can inform it, not produce it.",
+          "Manager conversation quality — the other half of the program (required manager course, drive two), not this optional awareness piece.",
+          "Regulatory compliance itself — a legal and process obligation Brunswick meets by disclosure practices, not by employee training."
+        ],
+        "assessed_by": "role_bw_ehrc_paytrans_team",
+        "assessed_on": "2026-08-31",
+        "rationale": "Drafted by BPS (instructional designer) from the SOW, the client-ready LO document, and the LO revision analysis — whose 'confidence builds through practice over time' note is this same judgment made in the wild a year early, for the manager half. Status draft: Brunswick has not ratified this statement of the outcome; Jake's merge ratifies the DRAFT as BPS's working warrant, not as client sign-off."
+      },
+      "status": "draft",
+      "derived_from": "doc_bw_sow_paytrans_education §1–5 (audiences, timing, measurement); doc_bw_learner_objectives_paytrans (employee section); LO_Revision_Summary.md (the not-trainable reasoning)."
     }
   }
 }

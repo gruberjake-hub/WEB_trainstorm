@@ -1,6 +1,6 @@
 {
   "store": "ontology/objectives",
-  "version": 3,
+  "version": 4,
   "status": "seeded",
   "closed_list": true,
   "owner": "L&D / Instructional Design",
@@ -11,16 +11,22 @@
       "framework": "CASE",
       "status": "example",
       "derived_from": "AST009 reference course; the prerequisite named (but not defined) by atom-spec §4's example",
-      "serves": ["goal_ast009_psi_reported_on_time"],
+      "serves": [
+        "goal_ast009_psi_reported_on_time"
+      ],
       "bloom": "understand"
     },
     "obj_recognize_psi": {
       "label": "Recognize PSI",
-      "requires": ["obj_define_psi"],
+      "requires": [
+        "obj_define_psi"
+      ],
       "framework": "CASE",
       "status": "example",
       "derived_from": "atom-spec §4 canonical example objective (obj_recognize_psi)",
-      "serves": ["goal_ast009_psi_reported_on_time"],
+      "serves": [
+        "goal_ast009_psi_reported_on_time"
+      ],
       "bloom": "analyze"
     },
     "obj_explain_alsap_purpose": {
@@ -29,45 +35,120 @@
       "framework": "none",
       "status": "draft",
       "derived_from": "SOP-AST-29080 purpose + general statement in ast_alsap/atoms.json",
-      "serves": ["goal_alsap_asset_safety_monitored"],
+      "serves": [
+        "goal_alsap_asset_safety_monitored"
+      ],
       "bloom": "understand"
     },
     "obj_identify_alsap_scope": {
       "label": "Identify which organizations and roles are in scope of the ALSAP lifecycle",
-      "requires": ["obj_explain_alsap_purpose"],
+      "requires": [
+        "obj_explain_alsap_purpose"
+      ],
       "framework": "none",
       "status": "draft",
       "derived_from": "SOP-AST-29080 scope, in-scope organizations list, and roles heading in ast_alsap/atoms.json",
-      "serves": ["goal_alsap_asset_safety_monitored"],
+      "serves": [
+        "goal_alsap_asset_safety_monitored"
+      ],
       "bloom": "remember"
     },
     "obj_execute_alsap_plan": {
       "label": "Execute Plan Development of ALSAP (notify, authors, kick-off, deliverable alignment)",
-      "requires": ["obj_identify_alsap_scope"],
+      "requires": [
+        "obj_identify_alsap_scope"
+      ],
       "framework": "none",
       "status": "draft",
       "derived_from": "SOP-AST-29080 section A procedure steps in ast_alsap/atoms.json",
-      "serves": ["goal_alsap_asset_safety_monitored"],
+      "serves": [
+        "goal_alsap_asset_safety_monitored"
+      ],
       "bloom": "apply"
     },
     "obj_execute_alsap_develop_maintain": {
       "label": "Execute Develop and Maintain ALSAP (draft, review, reconcile, approve, notify)",
-      "requires": ["obj_execute_alsap_plan"],
+      "requires": [
+        "obj_execute_alsap_plan"
+      ],
       "framework": "none",
       "status": "draft",
       "derived_from": "SOP-AST-29080 section B procedure steps in ast_alsap/atoms.json",
-      "serves": ["goal_alsap_asset_safety_monitored"],
+      "serves": [
+        "goal_alsap_asset_safety_monitored"
+      ],
       "bloom": "apply"
     },
     "obj_produce_alsap_analysis_outputs": {
       "label": "Produce analysis datasets and TLFs per the ALSAP while protecting the blind",
-      "requires": ["obj_execute_alsap_develop_maintain"],
+      "requires": [
+        "obj_execute_alsap_develop_maintain"
+      ],
       "framework": "none",
       "status": "draft",
       "derived_from": "SOP-AST-29080 section C procedure steps in ast_alsap/atoms.json",
-      "serves": ["goal_alsap_asset_safety_monitored"],
+      "serves": [
+        "goal_alsap_asset_safety_monitored"
+      ],
       "bloom": "apply"
+    },
+    "obj_bw_emp_total_rewards": {
+      "label": "Understand how base pay fits within Brunswick's broader total rewards package",
+      "requires": [],
+      "framework": "none",
+      "status": "draft",
+      "derived_from": "doc_bw_learner_objectives_paytrans — 'For Salaried Employees (U.S. & E.U.)', verbatim capability statements; Bloom classified by BPS.",
+      "serves": [
+        "goal_bw_pay_understood"
+      ],
+      "bloom": "understand"
+    },
+    "obj_bw_emp_pay_factors": {
+      "label": "Identify the main factors that are considered when salaries are determined",
+      "requires": [],
+      "framework": "none",
+      "status": "draft",
+      "derived_from": "doc_bw_learner_objectives_paytrans — 'For Salaried Employees (U.S. & E.U.)', verbatim capability statements; Bloom classified by BPS.",
+      "serves": [
+        "goal_bw_pay_understood"
+      ],
+      "bloom": "understand"
+    },
+    "obj_bw_emp_perf_over_time": {
+      "label": "Describe how performance and role responsibilities influence pay over time",
+      "requires": [
+        "obj_bw_emp_pay_factors"
+      ],
+      "framework": "none",
+      "status": "draft",
+      "derived_from": "doc_bw_learner_objectives_paytrans — 'For Salaried Employees (U.S. & E.U.)', verbatim capability statements; Bloom classified by BPS.",
+      "serves": [
+        "goal_bw_pay_understood"
+      ],
+      "bloom": "understand"
+    },
+    "obj_bw_emp_find_resources": {
+      "label": "Know where to find additional information or resources related to pay transparency at Brunswick",
+      "requires": [],
+      "framework": "none",
+      "status": "draft",
+      "derived_from": "doc_bw_learner_objectives_paytrans — 'For Salaried Employees (U.S. & E.U.)', verbatim capability statements; Bloom classified by BPS.",
+      "serves": [
+        "goal_bw_pay_understood"
+      ],
+      "bloom": "remember"
+    },
+    "obj_bw_emp_eu_rights": {
+      "label": "Recognize when additional, region-specific information may apply, including EU pay transparency rights",
+      "requires": [],
+      "framework": "none",
+      "status": "draft",
+      "derived_from": "doc_bw_learner_objectives_paytrans — 'For Salaried Employees (U.S. & E.U.)', verbatim capability statements; Bloom classified by BPS.",
+      "serves": [
+        "goal_bw_pay_understood"
+      ],
+      "bloom": "remember"
     }
   },
-  "_note": "v3, 2026-08-25: five draft ALSAP objectives distilled from SOP-AST-29080 (the live ast_alsap atom store), warranted by goal_alsap_asset_safety_monitored. Status is draft, not example and not validated — the procedure is real, the human objective-lock conversation has not happened (Cartographer steward rule). The two AST009 PSI objectives remain status:example. This is a small ontology (5+2), not a fake competency graph."
+  "_note": "v3, 2026-08-25: five draft ALSAP objectives distilled from SOP-AST-29080 (the live ast_alsap atom store), warranted by goal_alsap_asset_safety_monitored. Status is draft, not example and not validated — the procedure is real, the human objective-lock conversation has not happened (Cartographer steward rule). The two AST009 PSI objectives remain status:example. This is a small ontology (5+2), not a fake competency graph. v4, 2026-08-31: added the five Brunswick employee-awareness objectives (obj_bw_emp_*), verbatim from the client-ready LO document, serving goal_bw_pay_understood. Status draft pending the objective-lock conversation; the ten Manager/HR LOs are deliberately NOT minted until drive two. Instances still live in the core seed — the per-project ontology store remains an open carry (see goals.json v2 note)."
 }
