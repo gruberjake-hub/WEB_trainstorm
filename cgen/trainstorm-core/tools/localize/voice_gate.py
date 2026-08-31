@@ -19,6 +19,16 @@ imported facts with COUNTABLE SURFACE FORMS — figures, dates, names. It does n
 invention ("your pay will go up"). That residue is what human acceptance is for; the writer's
 flags are its triage signal.
 
+Beat copy (arc hop two) is gated by the INVERSE guard — gate_beat_proposals: beat copy is
+content-free BY CONTRACT, so the check inverts: ZERO digits anywhere (a figure in a welcome is a
+claim that belongs to an atom), and no capitalized content word that is not sentence-initial,
+exempt, in the project corpus, or in the arc allowlist (lesson titles + scene headings/kickers +
+client/project names). Its anchor is the beat's beat_hash (validate_arc.py), not an atom hash.
+Honest limits, both guards, stated plainly: the atom guard catches imported facts with countable
+surface forms, not paraphrased invention; the inverse guard cannot catch a claim built from
+ordinary lowercase words ("your pay will rise") or a name at sentence start — human acceptance
+remains the meaning gate, the writer's flags its triage.
+
     python3 tools/localize/voice_gate.py --project ../brunswick/projects/paytrans   # gate real proposals
     python3 tools/localize/voice_gate.py --selftest                                  # fixtures, proves red
 """
@@ -27,6 +37,7 @@ import argparse, hashlib, json, re, sys, pathlib
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))          # tools/ — for harness_paths
 import harness_paths
+from validate_arc import beat_hash  # one anchor definition — never copied
 
 ap = argparse.ArgumentParser(add_help=False)
 ap.add_argument("--core"); ap.add_argument("--project"); ap.add_argument("--selftest", action="store_true")
@@ -74,6 +85,71 @@ def invariant_findings(text, atom_text, corpus_text):
             continue
         (notes if present(t, corpus_text) else fails).append(f"name '{t}'")
     return sorted(set(fails)), sorted(set(notes))
+
+
+def build_arc_allowlist(proj: "pathlib.Path") -> str:
+    """Names beat copy may use without them being in the corpus: lesson titles, scene
+    headings/kickers, project + client names. Data-derived — no hand-kept list to drift."""
+    parts = [proj.name, proj.parent.parent.name if len(proj.parts) >= 3 else ""]
+    occ = proj / "occurrences"
+    try:
+        lessons = json.loads((occ / "lessons.json").read_text(encoding="utf-8"))
+        parts += [l.get("title", "") for l in lessons.get("lessons", [])]
+    except FileNotFoundError:
+        pass
+    try:
+        scenes = json.loads((occ / "scenes.json").read_text(encoding="utf-8"))
+        parts += [f"{s.get('heading','')} {s.get('kicker','')}" for s in scenes.get("scenes", [])]
+    except FileNotFoundError:
+        pass
+    return " ".join(parts)
+
+
+_SENT_START = re.compile(r"(?:^|[.!?…]\s+|—\s+|:\s+|\n\s*)([A-Z][A-Za-z'\-]*)")
+
+
+def inverse_findings(text, corpus_text, allow_text):
+    """The inverse guard: beat copy proves it carries NOTHING. Zero digits; capitalized content
+    words only if sentence-initial, exempt, in the corpus, or in the arc allowlist."""
+    fails = []
+    def present(token, hay):
+        return bool(re.search(r"(?<![A-Za-z0-9])" + re.escape(token) + r"(?![A-Za-z0-9])", hay, re.I))
+    for tok in NUM_RE.findall(text):
+        fails.append(f"figure '{tok.strip(',.()-')}' — beat copy carries no figures, ever")
+    starters = set(_SENT_START.findall(text))
+    for tok in CAP_RE.findall(text):
+        t2 = tok.strip("'")
+        if t2.lower() in EXEMPT or t2 in starters:
+            continue
+        if present(t2, corpus_text) or present(t2, allow_text):
+            continue
+        fails.append(f"name '{t2}'")
+    return sorted(set(fails))
+
+
+def gate_beat_proposals(name, store, beats_by_id, corpus_text, allow_text, results):
+    for bid, p in (store.get("beat_proposals") or {}).items():
+        tag = f"{name}: {bid}"
+        if p.get("status") != "draft":
+            results.append((f"{tag} status is draft (bright line)", False,
+                            f"writer emitted {p.get('status')!r}"))
+            continue
+        beat = beats_by_id.get(bid)
+        if beat is None:
+            results.append((f"{tag} keys a real beat", False, "no such beat in the catalog"))
+            continue
+        if p.get("source_hash") != beat_hash(beat):
+            results.append((f"{tag} beat_hash anchor is fresh", False,
+                            "placement/intent moved — copy is STALE"))
+            continue
+        fails = inverse_findings(p.get("text", ""), corpus_text, allow_text)
+        results.append((f"{tag} inverse guard (claim-free proven)", not fails, "; ".join(fails)))
+        bad_flags = [f for f in p.get("flags", [])
+                     if f.get("category") not in FLAG_CATEGORIES or f.get("severity") not in SEVERITIES]
+        conf = p.get("confidence")
+        disciplined = not bad_flags and isinstance(conf, (int, float)) and 0.0 <= conf <= 1.0
+        results.append((f"{tag} flag/confidence discipline", disciplined,
+                        "" if disciplined else "ungoverned flag category/severity or bad confidence"))
 
 
 def gate_proposals(name, store, atoms_by_id, corpus_text, results):
@@ -168,6 +244,51 @@ if __name__ == "__main__" and args.selftest:
     inv = [r for r in scratch if "invariants" in r[0]][0]
     results.append(("selftest: sibling-atom import passes WITH a visible note",
                     inv[1] and "sibling-atom" in inv[2], inv[2]))
+
+    # ── inverse guard (arc hop two): beat copy proves it carries nothing ──
+    BEAT = {"beat_id": "bt_fx_welcome", "placement": {"type": "lesson_start"},
+            "intent": {"pedagogical": "hook"}, "status": "accepted", "from": "fx"}
+    BEATS = {"bt_fx_welcome": BEAT}
+    ALLOW = "Pay Transparency at Fixture — How Your Pay Works fixture-client"
+    bgood = {"register": "warm_direct", "beat_proposals": {
+        "bt_fx_welcome": {"text": "Welcome — this is about your pay, and what it means for you.",
+                           "status": "draft", "source_hash": beat_hash(BEAT), "confidence": 0.8,
+                           "flags": [], "rationale": "hook; claim-free"}}}
+    n1 = len(results)
+    gate_beat_proposals("fixture(beat)", bgood, BEATS, CORPUS, ALLOW, results)
+    results.append(("selftest(beat): claim-free welcome passes the inverse guard",
+                    all(ok for _, ok, _ in results[n1:]), ""))
+
+    def bred(label, mutate):
+        s = json.loads(json.dumps(bgood)); beats = {"bt_fx_welcome": json.loads(json.dumps(BEAT))}
+        mutate(s, beats)
+        scratch = []
+        gate_beat_proposals("fixture(beat-red)", s, beats, CORPUS, ALLOW, scratch)
+        caught = any(not ok for _, ok, _ in scratch)
+        results.append((label, caught, "" if caught else "mutation was NOT caught"))
+
+    bred("selftest(beat): ANY figure in beat copy is caught",
+         lambda s, b: s["beat_proposals"]["bt_fx_welcome"].update(
+             text="Welcome — all 24 pay ranges explained, for you."))
+    bred("selftest(beat): an invented mid-sentence name is caught",
+         lambda s, b: s["beat_proposals"]["bt_fx_welcome"].update(
+             text="Welcome — your pay, explained with data from Mercer."))
+    bred("selftest(beat): stale beat_hash (placement moved) is caught",
+         lambda s, b: b["bt_fx_welcome"].update(placement={"type": "lesson_end"}))
+    bred("selftest(beat): copy for a beat not in the catalog is caught",
+         lambda s, b: b.clear())
+    bred("selftest(beat): self-accepted beat copy is caught (bright line)",
+         lambda s, b: s["beat_proposals"]["bt_fx_welcome"].update(status="accepted"))
+    # the documented limit, demonstrated honestly: sentence-initial name slips the name check
+    slip = {"register": "warm_direct", "beat_proposals": {
+        "bt_fx_welcome": {"text": "Mercer welcomes you to this course about your pay.",
+                           "status": "draft", "source_hash": beat_hash(BEAT), "confidence": 0.5,
+                           "flags": [], "rationale": ""}}}
+    scratch = []
+    gate_beat_proposals("fixture(limit)", slip, BEATS, CORPUS, ALLOW, scratch)
+    results.append(("selftest(beat): sentence-initial name slips — the DOCUMENTED limit "
+                    "(human acceptance is the meaning gate)",
+                    all(ok for _, ok, _ in scratch), "limit unexpectedly caught — update the docs"))
     sys.exit(0 if report(results) else 1)
 
 # ---------------------------------------------------------------- project mode
@@ -183,6 +304,14 @@ if __name__ == "__main__":       # importers take invariant_findings/GOVERNED/sh
     results = []
     if not files:
         results.append(("no voice proposals in project — nothing to gate", True, f"looked in {props_dir}"))
+    beats_p = proj / "occurrences" / "beats.json"
+    beats_by_id = {}
+    if beats_p.exists():
+        beats_by_id = {b["beat_id"]: b for b in
+                       json.loads(beats_p.read_text(encoding="utf-8")).get("beats", [])}
+    allow_text = build_arc_allowlist(proj)
     for f in files:
-        gate_proposals(f.name, json.loads(f.read_text(encoding="utf-8")), atoms_by_id, corpus_text, results)
+        store = json.loads(f.read_text(encoding="utf-8"))
+        gate_proposals(f.name, store, atoms_by_id, corpus_text, results)
+        gate_beat_proposals(f.name, store, beats_by_id, corpus_text, allow_text, results)
     sys.exit(0 if report(results) else 1)

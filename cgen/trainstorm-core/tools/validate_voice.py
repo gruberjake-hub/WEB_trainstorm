@@ -26,6 +26,7 @@ so — packs are optional until the writer hop lands.
 import argparse, hashlib, json, sys
 from jsonschema import Draft202012Validator
 import harness_paths
+from validate_arc import beat_hash  # one anchor definition — never copied
 
 ap = argparse.ArgumentParser(add_help=False)
 ap.add_argument("--core"); ap.add_argument("--project"); ap.add_argument("--selftest", action="store_true")
@@ -65,8 +66,9 @@ _governed = set(_ids)
 
 # ---------------------------------------------------------------- pack gate (shared by both modes)
 
-def gate_pack(name, pack, atoms_by_id):
-    """Append results for one pack dict against the atom store {atom_id: content_hash}."""
+def gate_pack(name, pack, atoms_by_id, beats_by_id=None):
+    """Append results for one pack dict against the atom store {atom_id: content_hash} and,
+    for the beats section (arc hop two), the beat catalog {beat_id: beat}."""
     errs = sorted(V.iter_errors(pack), key=lambda e: list(e.path))
     results.append((f"{name}: validates against schema", not errs,
                     "; ".join(e.message for e in errs)[:180]))
@@ -86,6 +88,19 @@ def gate_pack(name, pack, atoms_by_id):
         fresh = entry["source_hash"] == atoms_by_id[aid]
         results.append((f"{name}: entry {aid} source_hash is fresh", fresh,
                         "" if fresh else "atom content_hash moved — rendering is STALE"))
+    for bid, entry in pack.get("beats", {}).items():
+        beat = (beats_by_id or {}).get(bid)
+        if beat is None:
+            results.append((f"{name}: beat entry {bid} keys a real beat", False,
+                            "no such beat in occurrences/beats.json"))
+            continue
+        if entry.get("status") == "accepted" and beat.get("status") != "accepted":
+            results.append((f"{name}: beat entry {bid} rides an accepted beat", False,
+                            f"beat is status {beat.get('status')!r} — copy cannot outrun its beat"))
+            continue
+        fresh = entry["source_hash"] == beat_hash(beat)
+        results.append((f"{name}: beat entry {bid} beat_hash is fresh", fresh,
+                        "" if fresh else "placement/intent moved — copy is STALE"))
     for eid, entry in pack.get("element_overrides", {}).items():
         df = entry.get("derived_from")
         if not df:
@@ -167,12 +182,17 @@ else:
     _alist = _atoms["atoms"] if isinstance(_atoms, dict) and "atoms" in _atoms else _atoms
     atoms_by_id = {a["atom_id"]: a["content_hash"] for a in _alist}
     voice_dir = proj / "voice"
+    beats_p = proj / "occurrences" / "beats.json"
+    beats_by_id = {}
+    if beats_p.exists():
+        beats_by_id = {b["beat_id"]: b for b in
+                       json.loads(beats_p.read_text(encoding="utf-8")).get("beats", [])}
     packs = sorted(voice_dir.glob("*.json")) if voice_dir.exists() else []
     if not packs:
         results.append(("no voice packs in project — contract-only pass", True,
                         f"looked in {voice_dir}"))
     for pk in packs:
-        gate_pack(pk.name, json.loads(pk.read_text(encoding="utf-8")), atoms_by_id)
+        gate_pack(pk.name, json.loads(pk.read_text(encoding="utf-8")), atoms_by_id, beats_by_id)
 
 # ---------------------------------------------------------------- report
 
