@@ -28,7 +28,9 @@ import argparse, json, sys, pathlib
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 import harness_paths
-from voice_gate import invariant_findings, GOVERNED, sha  # one guard, one home — never copied
+from voice_gate import (invariant_findings, inverse_findings, build_arc_allowlist,
+                        GOVERNED, sha)  # one guard, one home — never copied
+from validate_arc import beat_hash
 from jsonschema import Draft202012Validator
 
 ap = argparse.ArgumentParser()
@@ -62,7 +64,15 @@ corpus = " ".join(x["meaning"]["source_text"] for x in atoms.values())
 props_p = proj / "voice" / "proposals" / f"{reg}.json"
 if not props_p.exists():
     raise SystemExit(f"no proposals store: {props_p}")
-props = json.loads(props_p.read_text(encoding="utf-8"))["proposals"]
+_props_store = json.loads(props_p.read_text(encoding="utf-8"))
+props = _props_store["proposals"]
+beat_props = _props_store.get("beat_proposals") or {}
+beats_p = proj / "occurrences" / "beats.json"
+beats_by_id = {}
+if beats_p.exists():
+    beats_by_id = {b["beat_id"]: b for b in
+                   json.loads(beats_p.read_text(encoding="utf-8")).get("beats", [])}
+allow_text = build_arc_allowlist(proj)
 
 pack_p = proj / "voice" / f"{reg}.json"
 pack = json.loads(pack_p.read_text(encoding="utf-8")) if pack_p.exists() else \
@@ -71,9 +81,31 @@ pack = json.loads(pack_p.read_text(encoding="utf-8")) if pack_p.exists() else \
 schema = json.loads((P["schemas_dir"] / "voice.pack.schema.json").read_text(encoding="utf-8"))
 V = Draft202012Validator(schema)
 
-wanted = list(props) if a.all else [i.strip() for i in a.ids.split(",")]
+wanted = (list(props) + list(beat_props)) if a.all else [i.strip() for i in a.ids.split(",")]
 accepted, refused = [], []
 for aid in wanted:
+    if aid.startswith("bt_"):
+        bp = beat_props.get(aid)
+        if bp is None:
+            refused.append((aid, "no such beat proposal")); continue
+        beat = beats_by_id.get(aid)
+        if beat is None:
+            refused.append((aid, "no such beat in occurrences/beats.json")); continue
+        if beat.get("status") != "accepted":
+            refused.append((aid, f"beat is status {beat.get('status')!r} — ratify the beat in the "
+                                  "catalog first; copy cannot outrun its beat")); continue
+        if bp.get("status") != "draft":
+            refused.append((aid, f"proposal status is {bp.get('status')!r}, not draft")); continue
+        if bp["source_hash"] != beat_hash(beat):
+            refused.append((aid, "STALE — placement/intent moved since the draft; re-propose")); continue
+        btext = a.edit if a.edit else bp["text"]
+        bfails = inverse_findings(btext, corpus, allow_text)
+        if bfails:
+            refused.append((aid, "inverse guard: " + "; ".join(bfails))); continue
+        pack.setdefault("beats", {})[aid] = {"text": btext, "status": "accepted", "reviewer": a.by,
+                                              "source_hash": beat_hash(beat)}
+        accepted.append((aid, "accepted" + (" (with edit)" if a.edit else "")))
+        continue
     p = props.get(aid)
     if p is None:
         refused.append((aid, "no such proposal")); continue

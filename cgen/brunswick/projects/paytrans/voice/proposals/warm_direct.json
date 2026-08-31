@@ -6,7 +6,8 @@
   "prompt_version": "voice-agent.v0.1",
   "agent": "dragoman.voice (executed in-session per DECISIONS 2026-08-31 hop-two execution call)",
   "exemplar_ref": "cgen/courses/brunswick_pay_transparency_employee/course.json",
-  "authored": "2026-08-31"
+  "authored": "2026-08-31",
+  "beats_authored": "2026-08-31 (arc hop two; dragoman.voice in-session; beats proposed status at authoring time — acceptance requires ratified beats)"
  },
  "proposals": {
   "atom_bw_eoc_euptd": {
@@ -562,6 +563,38 @@
     }
    ],
    "rationale": ""
+  }
+ },
+ "beat_proposals": {
+  "bt_paytrans_welcome": {
+   "text": "Welcome — this is about your pay: what's changing, how it's set, and what it means for you.",
+   "status": "draft",
+   "source_hash": "sha256:4d56ad90186a3c6c02b57508fc4ce6d336e466d9bc8c5209293f488e482913e9",
+   "confidence": 0.75,
+   "flags": [
+    {
+     "span": "what's changing",
+     "category": "invented-risk",
+     "severity": "low",
+     "note": "presupposes change — contextually anchored by the laws/postings atoms the first scene teaches, but the welcome itself claims it; confirm"
+    }
+   ],
+   "rationale": "hook: names the learner's stake in the course's own three movements (change, mechanism, meaning), no facts"
+  },
+  "bt_paytrans_closure": {
+   "text": "You're informed. You know how your pay is set and what's behind it — and that knowledge is yours to use.",
+   "status": "draft",
+   "source_hash": "sha256:60fa04e1f250ac09a7408983378dd01557e0ba4ad23da6d803a2c38358985a6c",
+   "confidence": 0.8,
+   "flags": [
+    {
+     "span": "You're informed",
+     "category": "invented-risk",
+     "severity": "low",
+     "note": "evaluates the LEARNER, not the pay system — the artisan control's closure stance ('You're Informed'); claim-free about content, but it is an assurance; confirm"
+    }
+   ],
+   "rationale": "transfer: closes the arc the welcome opened; mirrors the artisan control's closure; carries no figures or names"
   }
  }
 }

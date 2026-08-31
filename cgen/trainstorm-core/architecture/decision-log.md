@@ -13,6 +13,49 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (arc hop two) — The inverse guard lands and the frame gets its words: welcome and closure proposed, gate-green, refused-until-ratified. Copy cannot outrun its beat.
+
+*Anchor: branch `drive/arc-beat-copy` off `0558f96` (PR #54). No new design forks — this hop
+executes the arc-pass design already ratified (hop one block): beat copy through the voice
+machinery, inverse-guarded, beats-section acceptance.*
+
+### The inverse guard, mechanically
+
+`inverse_findings` (voice_gate.py): ZERO digits anywhere; capitalized content words pass only if
+sentence-initial, exempt, in the project corpus, or in the data-derived ARC ALLOWLIST (lesson
+titles + scene headings/kickers + project/client names). Anchor = `beat_hash`, imported from
+validate_arc — one definition, three importers, zero copies. The selftest proves red five ways
+(figure, invented mid-sentence name, stale hash, missing beat, self-acceptance) and — worth
+noting as a first — DEMONSTRATES its own documented limit as a passing check: a sentence-initial
+name slips the deterministic net, on purpose, in the record, so nobody mistakes the guard for a
+proof. Human acceptance remains the meaning gate.
+
+### Copy cannot outrun its beat
+
+`voice_accept` routes `bt_` ids: refuses while the beat is `proposed` (proven on a project copy
+— the refusal message names the fix), refuses stale `beat_hash`, re-guards at acceptance,
+supports `--edit`; `validate_voice` gates the pack's `beats` section identically. The subtle
+call that makes the workflow humane: `beat_hash` EXCLUDES status — so the copy authored today,
+while the beats sit `proposed`, survives Jake's ratification edit untouched; only a placement or
+intent change stales it. Sequencing freedom without staleness holes.
+
+### The words (Dragoman voice mode, in-session, warm_direct — both draft, both gate-green)
+
+Welcome (hook): "Welcome — this is about your pay: what's changing, how it's set, and what it
+means for you." — flagged invented-risk low ("what's changing" presupposes change; contextually
+anchored by scene one's atoms, but the welcome itself claims it). Closure (transfer): "You're
+informed. You know how your pay is set and what's behind it — and that knowledge is yours to
+use." — flagged invented-risk low (assures the LEARNER, the artisan control's closure stance;
+claim-free about content, but an assurance). Both flags are the guard doing its job on the
+species it was built for: the residue the deterministic net can't judge, handed to the human
+with the reasoning attached.
+
+### What did NOT happen
+
+No beat was accepted (the beats themselves are still `proposed` — Jake's ratification edit
+comes first, then copy acceptance). No realize change (arc hop three). All stores regenerate
+byte-identical; every selftest and gate green.
+
 ## 2026-08-31 (arc hop one) — Dramaturge takes the seat: beats as governed project data, one live wake, welcome + closure proposed for paytrans. The intangibles get their home.
 
 *Anchor: branch `drive/arc-dramaturge` off `569dc18` (PR #53). The design conversation ran in
