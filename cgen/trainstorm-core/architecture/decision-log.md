@@ -13,6 +13,59 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (arc hop one) — Dramaturge takes the seat: beats as governed project data, one live wake, welcome + closure proposed for paytrans. The intangibles get their home.
+
+*Anchor: branch `drive/arc-dramaturge` off `569dc18` (PR #53). The design conversation ran in
+two sittings: the intangibles exchange after the withheld-reassurance finding (species
+distinction — affective claim-free copy vs. actual invention; the INVERSE guard — claim-free is
+a checkable property; placement-keyed store; never via Headwater), and the fork resolution
+before this build. Jake's calls: a REAL agent seat now, not just a catalog — he wants to tune
+wake conditions and watch how beats arrive differently — split as one live wake + declared
+placeholders; beat copy inside the register's voice pack; full v1 placement granularity
+(lesson + scene + element-adjacent, so the motivating midpoint case has a home).*
+
+### The grounding find that reframed the design
+
+Scene records ALREADY carry authored, learner-facing, atom-free copy — `"heading": "Why you're
+seeing pay ranges"` renders on screen and no atom anchors it. The honesty line was crossed in
+miniature when scene.v2 landed, governed only by authorship and merge. So the arc pass is not
+introducing a foreign species; it is giving the species scene headings already are a first-class
+home with governed intent and a gate, instead of letting it grow one ungated field at a time.
+(Migrating heading/kicker INTO beats is a candidate later hop — named, not assumed.)
+
+### What landed
+
+`schemas/beats.catalog.schema.json` (beats carry placement + governed intent + status + NO text
+— schema-enforced; `beat_hash` anchors future copy) · `agents/dramaturge/` — the seat: README
+(spine slots; write contract narrowed to status:"proposed" only), `beats_v1.md` (the model and
+the three-hop arc), `wakes.json` — THE PLAY SURFACE: `missing_arc_frame` live with tunable
+`min_scenes`; `withheld_gloss` (voice proposals' invented-risk withheld flags → after_element
+persuade beats — the finding become a wake condition), `hook_persuade`, `pacing_interlude` all
+declared live:false · `tools/dramaturge.py` (runs live wakes; defers to claimed placements —
+re-runs never re-litigate designer decisions, proven; validates before writing; --dry-run) ·
+`tools/validate_arc.py` (schema + governance + reference resolution; selftest red seven ways,
+including copy smuggled onto a beat) · voice.pack.schema `beats` section (bt_* keyed, copy
+pins beat_hash).
+
+No vocab bump was needed — welcome/closure/gloss/interlude resolve to hook/transfer/persuade/
+transition. The design validating itself: a beat kind is an intent, not a new type.
+
+### First run
+
+`bt_paytrans_welcome` (lesson_start, hook) and `bt_paytrans_closure` (lesson_end, transfer)
+proposed for the employee course — the exact frame the January artisan control has and the
+pipeline course lacks. Both status "proposed"; Jake ratifies by flipping to "accepted" in
+beats.json. Idempotent re-run skips both ("placement already claimed — not re-litigating").
+All stores regenerate byte-identical (realize does not read beats yet); every gate green.
+
+### Next
+
+Arc hop two: the INVERSE guard in voice_gate (beat entries: NO figures, no names beyond the
+governed course allowlist), Dragoman voice mode proposes copy for accepted beats pinned to
+beat_hash, voice_accept extended to the beats section. Arc hop three: realize injects
+accepted-and-fresh beat copy at placement; a beat without accepted copy renders nothing. Then
+Griot has both words AND arc to narrate.
+
 ## 2026-08-31 (voice hop three) — The course SPEAKS: realize's voice overlay, one choke point, loud stale fallback. Checks stay meaning-anchored, and the played lesson proves both sides of that line.
 
 *Anchor: branch `drive/voice-renderer` off `2c96259` (Jake's acceptance commit — the pack itself,

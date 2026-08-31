@@ -2588,3 +2588,61 @@ Next per the arc: the ARC PASS design conversation (beats/intangibles — see ho
 before Griot builds.
 
 **Supersedes:** nothing. Both prior voice blocks, single-writer, and the working process stand.
+
+---
+
+## 2026-08-31 — Arc hop one: the arc facet has an owner. Dramaturge (real seat, one live wake), beats as governed project data
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The 08-12 ownerless "affective/narrative-arc facet" carry closes into a seat, per
+the arc-pass design conversation (species distinction, inverse guard, placement-keyed store —
+decision-log, voice hop two) and three calls of Jake's: a REAL agent seat now — one wake live,
+the rest declared placeholders, wake conditions exposed as a tunable file because he wants to
+watch how the beats arrive differently; beat copy lives INSIDE the register's voice pack; v1
+placement granularity is lesson + scene + element-adjacent.
+
+- **The species, named:** a BEAT is a content-free rhetorical/pedagogical move keyed by
+  PLACEMENT, not by atom — the homeless kind the withheld-reassurance finding surfaced. Scene
+  `heading`/`kicker` fields were this species in embryo (designer-authored, learner-facing,
+  atom-free, already rendering); beats are that embryo given a first-class, gated home. Actual
+  new factual claims remain invention, remain forbidden — the existing guard already draws that
+  line. **Never mint pseudo-atoms for rhetorical moves.**
+- **`schemas/beats.catalog.schema.json`** — `occurrences/beats.json` as authored project data
+  beside scenes.json. Placement: lesson_start/lesson_end, scene_start/scene_end(+scene_id),
+  after_element(+element_id). Intent is GOVERNED and sufficient: welcome = pedagogical `hook`,
+  closure = pedagogical `transfer`, gloss = rhetorical `persuade` — no vocab bump was needed,
+  which is the design validating itself: a beat kind is an intent, not a new type. Beats carry
+  NO text (schema-enforced); `beat_hash` (canonical {beat_id, placement, intent}) is the
+  staleness anchor beat copy will pin.
+- **The seat: `agents/dramaturge/`** — Dramaturge, arc facet owner. Writes ONLY
+  `status:"proposed"` beats; the designer ratifies by flipping status in the catalog (the
+  authored-catalog pattern); never writes copy, never sets accepted. `wakes.json` is the play
+  surface: `missing_arc_frame` LIVE (≥min_scenes and no lesson frame → propose welcome +
+  closure); `withheld_gloss`, `hook_persuade`, `pacing_interlude` declared `live:false` —
+  contract first, implementation when deliberately enabled. `tools/dramaturge.py` runs live
+  wakes, defers to any claimed placement (a designer's decision, including deletion-by-edit, is
+  never re-litigated by a re-run — idempotence proven), and schema-validates before writing.
+- **`tools/validate_arc.py`** — the gate: schema, governed intent, placement refs resolve;
+  selftest proves red seven ways (including copy smuggled onto a beat). Home of `beat_hash`.
+- **voice.pack.schema gains a `beats` section** (keyed `bt_*`): beat copy is register-specific
+  and flows through the PROVEN machinery — voice mode proposes, the INVERSE guard gates
+  (claim-free proven: no figures at all, no names beyond the governed course allowlist),
+  voice_accept stays the only writer, provenance `authored`. Twin stakes sentence: *let words
+  with no meaning anchor exist, while proving they carry none.*
+- **First run:** Dramaturge proposed `bt_paytrans_welcome` (hook) and `bt_paytrans_closure`
+  (transfer) for the employee course — the exact frame the January artisan control has and the
+  pipeline course lacks. Both `proposed`; ratification is Jake's edit.
+
+**Why:** Narration (Griot) hits the same missing-welcome problem the on-screen copy did; the arc
+store must exist first. And the seat exists because tuning WHERE beats arrive is design work
+Jake wants his hands on.
+
+**Consequences:** Arc hop two = beat copy (inverse guard in voice_gate, Dragoman proposes
+against accepted beats, beat_hash pinning). Arc hop three = realize injects accepted-and-fresh
+beat copy at placement (a beat without accepted copy renders nothing; no-catalog projects stay
+byte-identical — proven untouched this hop). Scene heading/kicker REMAIN in scene records for
+now — migrating them into beats is a candidate later hop, deliberate, not assumed.
+
+**Supersedes:** the 08-12 "affective/narrative-arc facet has no owner" carry (it does now).
+Nothing else; the three voice blocks and the working process stand.
