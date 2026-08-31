@@ -13,6 +13,55 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (Griot hop one) — Words before voice, at last with the words: narration splits into script (Dragoman's third mode) and performance (Griot's seat, exactly as written). Six tracks proposed under the union guard.
+
+*Anchor: branch `drive/griot-script` off `3ea0873` (PR #58). The design beat's reframe: Griot's
+own 08-12 contract says "you do not write words" — his keys are voice_ref/prosody/locale/
+voiceover_ref, and he explicitly never touches renderings. The 08-12 design assumed narration
+speaks existing validated words VERBATIM; the artisan control (~977 words / 10 VO tracks vs
+terse screens) proves narration words are a rendering for the ear. So the mode-vs-seat question
+dissolved: script = Dragoman narrate mode (channel joins language and register as the rendering
+space's third coordinate); performance = Griot as designed, waking on ACCEPTED tracks. Jake's
+three calls: the split; scene-level multi-pinned tracks over per-atom segments (the ear wants
+prose, not stitches); six-track scope (welcome woven into track one, closure landing the
+lesson-end track).*
+
+### Sweep first (the PR #57 carry, discharged)
+
+Every remaining raw source_text read in realize classified: the deliberate check seam (stems,
+distractors, template clothes — the check-voicing carry), the lesson-title heuristic (fallback;
+authored titles win), and internal classification logic. NO new unrouted learner-facing paths.
+Narration could multiply surfaces safely.
+
+### The union guard — the multi-pin generalization
+
+A track pins EVERY source (atom_id → content_hash, bt_ → beat_hash); pins must resolve and be
+fresh; invariants must exist in the UNION of pinned sources (atom text + accepted voice
+rendering + beat copy). Sentence-initial capitals exempt in track prose — the same documented
+limit the inverse guard demonstrates; figures never exempt (the first gate run caught exactly
+this working: 'Before'/'Take' failed until the track guard gained the starter exemption the
+prose channel needs; the five red proofs still catch every real mutation, including a stale
+beat pin and a ghost pin). Acceptance re-gates and NAMES the moved source when refusing.
+
+### The tracks (all draft, all gate-green — 676 words of warm_direct for the ear)
+
+Track one opens on the welcome beat and closes claim-free ("that's why you're seeing pay
+ranges"); the philosophy track spines the three commitments and keeps 24/three-zones/
+minimum-midpoint-maximum exact; total rewards weaves the list items into spoken series;
+performance keeps the high-or-low symmetry ("honesty is the register's warmth here" — the
+rationale line worth keeping); resources lands the EU rights re-addressed to second person; the
+lesson-end track paces the checks claim-free and lands the accepted closure verbatim. The flags
+carry every judgment call to Jake — including the artisan's "no trick questions" reassurance,
+WITHHELD a second time for the same reason as the midpoint gloss: warmth with no anchor is
+Dramaturge's to place, not the narrator's to smuggle.
+
+### Next
+
+Jake accepts (`voice_accept --tracks ... --by jake`, `--edit` where he wants his own cadence —
+narration is the layer where his voice literally becomes the course's). Griot hop two: the
+per-brand voice registry seed his contract predicted, the narration facet bindings, and the
+player's voiceover/caption stage. All stores byte-identical this hop; every gate green.
+
 ## 2026-08-31 (structure hop, thin) — The projection stops flattening the object tree: header, subhead, and content now group like the graph always knew they should.
 
 *Anchor: branch `drive/structure-projection` off `fb0e698` (PR #57). Jake's second-viewing

@@ -2801,3 +2801,50 @@ projections regenerate with structure meta added (meta-only diff; behavior chang
 Selftest asserts the tree survives projection. Formatting rules = the expression-phase opener.
 
 **Supersedes:** nothing. The nine prior 2026-08-31 blocks and the working process stand.
+
+---
+
+## 2026-08-31 — Griot hop one: the narration SCRIPT layer. Dragoman's third mode; scene-level tracks, multi-pinned; the union guard
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Narration splits into SCRIPT and PERFORMANCE, completing (not contradicting) the
+08-12 Griot design — his own contract says "you do not write words"; the artisan control proves
+narration words are a RENDERING (fuller, flowing, for the ear). Three calls, all Jake's:
+
+- **Script = Dragoman `narrate` mode** (`agents/localize/narrate.system.md`,
+  narrate-agent.v0.1) — the third coordinate of the one rendering space (language, register,
+  now CHANNEL). Chains from accepted voice entries and woven beats; two-speed; connective
+  tissue is beat-law (claim-free, flagged); never sets accepted. **Performance stays Griot's
+  facet as ratified** (voice_ref/prosody/locale/voiceover_ref) — his "words before voice" wake
+  now means: an ACCEPTED track exists and lacks a narration binding. Audio is stage two.
+- **Tracks are SCENE-LEVEL and MULTI-PINNED** (`schemas/narration.pack.schema.json`): one
+  flowing script per engine scene (incl. lesson_end); `sources` maps every contributing
+  atom_id → content_hash and beat_id → beat_hash — any source moves, the track is stale, one
+  walk. Pack at `voice/narration/<register>.json`; proposals at
+  `voice/proposals/narration.<register>.json`.
+- **The UNION guard** (voice_gate `gate_track_proposals`): pins must resolve and be fresh;
+  every invariant in the track must exist in the UNION of pinned sources (atom text + its
+  accepted voice rendering + beat copy); sentence-initial capitals exempt in track prose (the
+  same documented limit the inverse guard demonstrates); figures never exempt. Selftest proves
+  red five ways (unanchored figure, stale atom pin, stale beat pin, ghost pin, self-accept).
+- **Acceptance:** `voice_accept --tracks <scene_ids>` — same human-run bright line; re-gates at
+  acceptance (a stale pin refuses with the moved source NAMED); `--edit` recorded;
+  schema-validated before writing.
+- **First run (scope: six tracks, 5 scenes + lesson_end):** 676 words of `warm_direct` spoken
+  prose proposed, all gate-green, all `draft`. Welcome woven into track one; the accepted
+  closure beat lands the final track verbatim. Flags carry the judgment calls: one authored
+  causal join, one compression sweep, one evaluative gloss, and the artisan's "no trick
+  questions" reassurance WITHHELD again — the midpoint lesson holds in this mode too.
+
+**Why:** Words before voice, at last with the words. The ear's channel gets the same law the
+screen's got: proposed under contract, deterministically guarded where possible, humanly
+accepted where it matters.
+
+**Consequences:** Jake reviews the six tracks (flags are triage) and runs
+`voice_accept --tracks ... --by jake`. Griot hop two: the performance binding (voice registry
+seed — per-brand, as his contract predicts — + narration facet bindings) and the player's
+voiceover/caption stage. All stores regenerate byte-identical (no pipeline code touched).
+
+**Supersedes:** the 08-12 assumption that narration speaks existing words verbatim — narrowed,
+not overturned: Griot's seat, keys, wake, and staleness design stand exactly as written.
