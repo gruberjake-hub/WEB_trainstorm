@@ -1,0 +1,106 @@
+From 22b67090f1163dd0d96dc36307b3d88183b1ca9e Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Mon, 31 Aug 2026 20:07:32 +0000
+Subject: [PATCH 1/4] arc contract: beats.catalog.schema (placement-keyed,
+ governed intent, NO text) + voice pack beats section
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+beat_hash anchors future copy; welcome/closure/gloss resolve to
+hook/transfer/persuade — no vocab bump needed.
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01L9kxrUSPXNDN7azb5T1tee
+---
+ .../schemas/beats.catalog.schema.json         | 60 +++++++++++++++++++
+ .../schemas/voice.pack.schema.json            |  6 ++
+ 2 files changed, 66 insertions(+)
+ create mode 100644 cgen/trainstorm-core/schemas/beats.catalog.schema.json
+
+diff --git a/cgen/trainstorm-core/schemas/beats.catalog.schema.json b/cgen/trainstorm-core/schemas/beats.catalog.schema.json
+new file mode 100644
+index 0000000..8f0d69e
+--- /dev/null
++++ b/cgen/trainstorm-core/schemas/beats.catalog.schema.json
+@@ -0,0 +1,60 @@
++{
++  "$schema": "https://json-schema.org/draft/2020-12/schema",
++  "$id": "https://trainstorm.ai/schemas/beats.catalog.schema.json",
++  "title": "Beat catalog — the authored arc as project data",
++  "description": "The arc store (2026-08-31 arc pass): BEATS are content-free rhetorical/pedagogical moves — welcomes, closures, persuade glosses, transitions — keyed by PLACEMENT, not by atom. A beat carries no copy: its words live in the register's voice pack under the beat_id (voice.pack.schema `beats` section), proposed by Dragoman voice mode and gated by the INVERSE guard (claim-free proven — a sentence that claims nothing can't lie). Twin stakes sentence: let words with no meaning anchor exist, while proving they carry none. A beat's `beat_hash` (sha256 of the canonical {beat_id, placement, intent}) is what beat copy pins as its source_hash — placement or intent moves, copy goes stale. Dramaturge (the arc facet owner) PROPOSES beats (status proposed); the designer ratifies by flipping status to accepted in this catalog — authored project data, like scenes.json. Never mint pseudo-atoms for rhetorical moves.",
++  "type": "object",
++  "additionalProperties": false,
++  "required": ["store", "project", "policy", "beats"],
++  "properties": {
++    "store": { "const": "beats" },
++    "project": { "type": "string" },
++    "policy": { "const": "v1_beat_catalog" },
++    "spec": { "type": "string" },
++    "vocab": { "type": "string" },
++    "beats": {
++      "type": "array",
++      "items": { "$ref": "#/$defs/beat" }
++    }
++  },
++  "$defs": {
++    "beat": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": ["beat_id", "placement", "intent", "status", "from"],
++      "properties": {
++        "beat_id": { "type": "string", "pattern": "^bt_[A-Za-z0-9_]+$" },
++        "placement": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": ["type"],
++          "properties": {
++            "type": { "enum": ["lesson_start", "lesson_end", "scene_start", "scene_end", "after_element"] },
++            "scene_id": { "type": "string" },
++            "element_id": { "type": "string", "pattern": "^ele_[A-Za-z0-9_]+$" }
++          },
++          "allOf": [
++            { "if": { "properties": { "type": { "enum": ["scene_start", "scene_end"] } } },
++              "then": { "required": ["type", "scene_id"] } },
++            { "if": { "properties": { "type": { "const": "after_element" } } },
++              "then": { "required": ["type", "element_id"] } },
++            { "if": { "properties": { "type": { "enum": ["lesson_start", "lesson_end"] } } },
++              "then": { "properties": { "scene_id": false, "element_id": false } } }
++          ]
++        },
++        "intent": {
++          "type": "object",
++          "additionalProperties": false,
++          "minProperties": 1,
++          "properties": {
++            "pedagogical": { "type": "string", "description": "A governed id from intent.enum.json pedagogical values (e.g. hook, transfer). The validator enforces membership." },
++            "rhetorical": { "type": "string", "description": "A governed id from intent.enum.json rhetorical values (e.g. persuade, transition)." }
++          }
++        },
++        "status": { "enum": ["proposed", "accepted"] },
++        "from": { "type": "string", "description": "Rationale — which wake fired, or the designer's reasoning. Never learner-facing." },
++        "proposed_by": { "type": "string", "description": "e.g. dramaturge.v0.1/missing_arc_frame — provenance of the proposal." }
++      }
++    }
++  }
++}
+diff --git a/cgen/trainstorm-core/schemas/voice.pack.schema.json b/cgen/trainstorm-core/schemas/voice.pack.schema.json
+index 6fb7c52..3860204 100644
+--- a/cgen/trainstorm-core/schemas/voice.pack.schema.json
++++ b/cgen/trainstorm-core/schemas/voice.pack.schema.json
+@@ -25,6 +25,12 @@
+       "description": "element_id → rendering, ONLY where the occurrence's placement constrains length or form (heading vs sentence, character limits). Each override should chain from the pack's own atom-level entry via derived_from.",
+       "propertyNames": { "pattern": "^ele_[A-Za-z0-9_]+$" },
+       "additionalProperties": { "$ref": "#/$defs/entry" }
++    },
++    "beats": {
++      "type": "object",
++      "description": "beat_id → copy for an ACCEPTED beat in the project's beat catalog (2026-08-31 arc pass). Beat copy is content-free by contract and gated by the INVERSE guard: no figures at all, no names beyond the governed course allowlist — a sentence that claims nothing can't lie. source_hash here pins the beat's beat_hash (sha256 of canonical {beat_id, placement, intent}), NOT an atom content_hash — placement or intent moves, copy goes stale. Provenance is `authored`, honestly: these words were invented on purpose, claim-free by proof, placed by intent, accepted by a human.",
++      "propertyNames": { "pattern": "^bt_[A-Za-z0-9_]+$" },
++      "additionalProperties": { "$ref": "#/$defs/entry" }
+     }
+   },
+   "$defs": {
+-- 
+2.43.0
+

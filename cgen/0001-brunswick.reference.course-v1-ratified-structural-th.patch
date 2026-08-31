@@ -1,0 +1,156 @@
+From 6431668664b71e090ffbebc5603ffb5c139849f3 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Mon, 31 Aug 2026 17:57:35 +0000
+Subject: [PATCH] =?UTF-8?q?brunswick.reference.course=20v1=20ratified=20(s?=
+ =?UTF-8?q?tructural)=20=E2=80=94=20the=20July=20=5Ftodo=20closed=20by=20t?=
+ =?UTF-8?q?he=20pipe?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Pointer record, never a copy of the projection. Side-by-side vs the January
+artisan control in the decision log: four gaps (voice, narration, arc,
+motion), each with an architectural home; voice pack decided as next build.
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_011D5frcWrYvcmBrL9WPQW42
+---
+ cgen/trainstorm-core/STRUCTURE.md             |  2 +-
+ .../trainstorm-core/architecture/DECISIONS.md | 23 ++++++++++++
+ .../architecture/decision-log.md              | 33 +++++++++++++++++
+ .../reference/brunswick.reference.course.json | 37 ++++++++++++++++++-
+ 4 files changed, 93 insertions(+), 2 deletions(-)
+
+diff --git a/cgen/trainstorm-core/STRUCTURE.md b/cgen/trainstorm-core/STRUCTURE.md
+index bbcdc1f..9ae31de 100644
+--- a/cgen/trainstorm-core/STRUCTURE.md
++++ b/cgen/trainstorm-core/STRUCTURE.md
+@@ -144,7 +144,7 @@ trainstorm-core/
+ │   ├── example_atom.json                 ✅
+ │   ├── example_element.json              ✅ occurrence of example_atom (`composed_from`, no authored content)
+ │   ├── sample_script.json / .v2.json     ✅
+-│   └── brunswick.reference.course.json   ⬜ `{"_todo": …}` — being produced by the paytrans drive (DECISIONS 2026-08-31); never hand-authored
++│   └── brunswick.reference.course.json   ✅ RATIFIED v1 structural (2026-08-31) — a pointer to the paytrans course, never a copy; v2 scope named (voice, Griot, arc, expression)
+ │
+ ├── tools/                                # the agents' runtime code & utilities
+ │   ├── harness_paths.py                  ✅ 4 anchors: core · registry · project · template
+diff --git a/cgen/trainstorm-core/architecture/DECISIONS.md b/cgen/trainstorm-core/architecture/DECISIONS.md
+index 8a38085..ce37857 100644
+--- a/cgen/trainstorm-core/architecture/DECISIONS.md
++++ b/cgen/trainstorm-core/architecture/DECISIONS.md
+@@ -2409,3 +2409,26 @@ loader's 404 fallback is silent. Conform the data, don't teach the loader legacy
+ against this branch). Carries: engine base stylesheet; a visible dev notice on brand-load fallback.
+ 
+ **Supersedes:** nothing — the astellas pack layout is confirmed as the pack contract of record.
++
++---
++
++## 2026-08-31 — `brunswick.reference.course` v1 ratified (structural); voice pack is the next build
++
++**Signed:** Jake / Claude — *Jake ratified in conversation; merge makes it durable.*
++
++**Decision:** `reference/brunswick.reference.course.json` is a ratified POINTER record naming the
++paytrans employee course as the gold worked course — v1 structural scope (corpus→atoms→warrant→
++catalogs→occurrences→branded player, all gated). The July `_todo` is closed by the pipe. Named v2
++scope, in build order: voice pack (learner-register rendering store keyed by element id — the next
++build), Griot narration, authored arc, player expression; motion and Storyline stay parked. The
++projection is never copied into reference/ — the pointer IS the reference.
++
++**Why:** The reference exists to prove the machine's shape on a real course, which v1 does; the
++artisan side-by-side (decision-log, hop five) shows every remaining gap has an architectural home.
++
++**Consequences:** Assistants may cite the paytrans store as the worked course example. The voice
++pack arc opens next with its own design pass; its store decision (pack shape, writer, review gate)
++is made there, not assumed here.
++
++**Supersedes:** the `_todo` stub and the July intent of a hand-dropped gold course file. The
++2026-08-31 hop-one clause "produced by the pipe or not at all" is fulfilled, not changed.
+diff --git a/cgen/trainstorm-core/architecture/decision-log.md b/cgen/trainstorm-core/architecture/decision-log.md
+index c10db3c..54bb052 100644
+--- a/cgen/trainstorm-core/architecture/decision-log.md
++++ b/cgen/trainstorm-core/architecture/decision-log.md
+@@ -13,6 +13,39 @@ and the fix is a new dated block there plus a dated entry here — never a silen
+ *Running log of settled architectural decisions. Newest first. One entry = one decision that is
+ closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
+ 
++## 2026-08-31 (hop five) — RATIFIED: the paytrans employee course is `brunswick.reference.course` v1 (structural). The July `_todo` is closed by the pipe, not by hand. The artisan side-by-side names four gaps, each with an architectural home; the voice pack is the next build.
++
++*Jake's two calls, made in conversation after playing the branded course live: ratify now as the
++STRUCTURAL reference with v2 scope named, and build the voice pack next. Anchor: branch
++`drive/reference-course-v1` off `cb2e32d` (PR #49). The reference file is a validated POINTER
++record — copying the projection into reference/ would mint the drifting second source this repo
++exists to prevent.*
++
++### The side-by-side (pipeline v1 vs. the January artisan control)
++
++Control: `cgen/courses/brunswick_pay_transparency_employee/course.json` — 10 AE-rendered scenes,
++10 VO tracks (~977 narration words), rewritten learner-facing on-screen copy, two mid-course
++interactions, a `persuade` Impact beat ("You have every right to understand your pay"), a closure
++scene ("You're Informed"). Pipeline v1: 5 scenes + 2 checks, verbatim atom text, branded chrome,
++no narration, no arc. Jake's read: content is very close; aesthetics and the less tangible pieces
++are not there yet. The decomposition of "less tangible":
++
++| gap | what the artisan has | architectural home | status |
++|---|---|---|---|
++| **Voice** | compressed, warm, learner-facing copy — almost never verbatim source | a RENDERING of meaning, external store keyed by element id — a locale pack shifted in REGISTER, not language; Dragoman machinery generalized. First natural seat for a dispatched LLM writer under propose→accept, with meaning-preservation as the review gate; content_hash staleness covers it for free | **NEXT BUILD** |
++| **Narration** | 10 VO mp3s | Griot — seat and wake ("words before voice") defined 08-12, never run; player audio chrome already built | after voice pack |
++| **Arc** | welcome, persuade beat, closure, interaction placement | the 08-12 authored-affect carry + the lineage audit's exploratory seat; closure/persuade COPY waits on the voice pack, placement is catalog work | partially catalog-now |
++| **Motion/visuals** | AE mp4 per scene, motion primitives | parked (Lottie-first per conventions); meanwhile the HTML player has unused RevealCards/StepList components, and the PayTrans icon set + 255-asset visual registry have never been consumed | expression hop, parallel |
++
++The consolidating finding: **every gap already has a home in the architecture** — nothing the
++artisan course does is architecturally homeless. The manifold anticipated its own v2.
++
++### Order decided
++
++Voice pack → Griot (words, then audio) → player expression (components + icons, parallelizable).
++Motion/AE and Storyline/.potx stay parked. Ratification does not wait on any of it: the reference's
++job is to prove corpus→course under gates, which v1 does; the record names what v2 will claim.
++
+ ## 2026-08-31 (hop 4b) — Brunswick brand pack conformed to the Course Engine pack contract; the branded player verified in a real browser
+ 
+ *Anchor: branch `drive/brunswick-brand-pack` off `c53b2e6` (PR #48). Verified headless-Chromium
+diff --git a/cgen/trainstorm-core/reference/brunswick.reference.course.json b/cgen/trainstorm-core/reference/brunswick.reference.course.json
+index 6fa3395..e892917 100644
+--- a/cgen/trainstorm-core/reference/brunswick.reference.course.json
++++ b/cgen/trainstorm-core/reference/brunswick.reference.course.json
+@@ -1 +1,36 @@
+-{ "_todo": "Drop ONE clean, validated course here as the gold example. Fix the sce_003 ID collision first (course.json sce_003 vs the standalone Total-Rewards scene)." }
++{
++  "reference": "brunswick.reference.course",
++  "version": 1,
++  "status": "ratified_structural",
++  "ratified_by": "Jake (BPS) — conversation 2026-08-31; merge of this file is the durable record",
++  "_what_this_is": "The gold worked course the July scaffold promised — delivered as a POINTER, not a copy. The course itself lives in one place (the paytrans store and its projection); copying realized_lesson.json here would mint the drifting second source this repo exists to prevent. This record says where the reference course is, what its ratification covers, and what it deliberately does not yet claim.",
++  "course": {
++    "client": "brunswick",
++    "project": "cgen/brunswick/projects/paytrans",
++    "lesson_id": "bw_paytrans_employee",
++    "projection": "cgen/brunswick/projects/paytrans/realized_lesson.json",
++    "played_at": "/cgen/?project=brunswick/paytrans",
++    "ratified_at_commit": "see the merge commit of the PR that lands this file"
++  },
++  "scope_of_ratification": {
++    "v1_structural": [
++      "corpus -> atoms (68, authored decomposition, structure.v0.2 expository kinds) -> gate",
++      "warrant chain: goal_bw_pay_understood + five validated obj_bw_emp_* with serves + bloom",
++      "course design as project data: scenes.json / lessons.json / one_to_many_seed.json / intent_map.json",
++      "realize -> cartographer (heuristic v2) -> couturier; 70 occurrences; elements 70/70 vs schema",
++      "two honest invert_definition checks with sibling contrasts; refused checks documented",
++      "client-qualified player URL + conforming Brunswick brand pack, verified in-browser"
++    ],
++    "v2_named_scope_not_yet_claimed": [
++      "voice pack — learner-facing register rendering keyed by element id (the artisan course's on-screen copy and warmth); NEXT BUILD",
++      "Griot narration (words, then TTS audio; artisan control has 10 VO scenes)",
++      "authored affective arc — welcome / persuade beat / closure (the 2026-08-12 carry)",
++      "richer player expression — reveal/step components, PayTrans icons via the visual-assets registry",
++      "motion (Lottie/AE) and Storyline/.potx expression — parked, separate arcs"
++    ]
++  },
++  "control": {
++    "artisan_course": "cgen/courses/brunswick_pay_transparency_employee/course.json",
++    "side_by_side": "architecture/decision-log.md 2026-08-31 (hop five) — the four-gap comparison"
++  }
++}
+-- 
+2.43.0
+

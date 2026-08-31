@@ -1,0 +1,215 @@
+From 5c9662badeca834ade070ee2e75025146f972bd7 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Mon, 31 Aug 2026 18:41:35 +0000
+Subject: [PATCH 1/3] =?UTF-8?q?voice-pack=20contract:=20register.v0.1=20+?=
+ =?UTF-8?q?=20voice.pack.schema=20=E2=80=94=20two=20pins,=20tone=20boundar?=
+ =?UTF-8?q?y,=20per-register=20status?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Dragoman voice MODE per the 2026-08-31 design conversation. warm_direct
+reverse-specified from the January artisan control; three draft registers
+flagged until proven. Locale contract gains optional derived_from
+(backward-compatible).
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01L9kxrUSPXNDN7azb5T1tee
+---
+ cgen/trainstorm-core/locales/README.md        | 12 +++
+ .../schemas/voice.pack.schema.json            | 74 +++++++++++++++++
+ cgen/trainstorm-core/vocab/register.enum.json | 81 +++++++++++++++++++
+ 3 files changed, 167 insertions(+)
+ create mode 100644 cgen/trainstorm-core/schemas/voice.pack.schema.json
+ create mode 100644 cgen/trainstorm-core/vocab/register.enum.json
+
+diff --git a/cgen/trainstorm-core/locales/README.md b/cgen/trainstorm-core/locales/README.md
+index 3f64f2a..f107528 100644
+--- a/cgen/trainstorm-core/locales/README.md
++++ b/cgen/trainstorm-core/locales/README.md
+@@ -4,3 +4,15 @@ Each entry: { "<atom_id>": { "target": "...", "status": "validated",
+               "reviewer": "...", "source_hash": "sha256:..." } }
+ Never embed translations in the atom; they live here.
+ Packs key on `atom_id` — meaning is translated once, not once per occurrence. Occurrence-level overrides (length limits, heading vs sentence) would key on `element_id`; not built. See `architecture/DECISIONS.md` (2026-08-25, occurrence identity).
++
++**Sibling family (2026-08-31):** locale packs are one axis of the rendering space; VOICE packs
++(`voice/<register>.json`, per-project) are the other — register instead of language, same keying,
++same fields, gated by `schemas/voice.pack.schema.json` against `vocab/register.enum.json`.
++
++**`derived_from` (optional, 2026-08-31):** when a translation was rendered from an accepted voice
++entry rather than the verbatim atom, the entry additionally carries
++`"derived_from": { "pack": "voice/<register>.json", "key": "<atom_id>", "hash": "sha256:<of the voice entry's text>" }`.
++`source_hash` STILL pins the atom — the meaning gate always judges against the atom, never
++transitively. `derived_from` records the text the writer worked from, so authored voice choices
++transmit and staleness propagates down the chain (atom changes → voice stale → descendants stale).
++Backward-compatible: entries without `derived_from` were rendered from the verbatim atom.
+diff --git a/cgen/trainstorm-core/schemas/voice.pack.schema.json b/cgen/trainstorm-core/schemas/voice.pack.schema.json
+new file mode 100644
+index 0000000..6fb7c52
+--- /dev/null
++++ b/cgen/trainstorm-core/schemas/voice.pack.schema.json
+@@ -0,0 +1,74 @@
++{
++  "$schema": "https://json-schema.org/draft/2020-12/schema",
++  "$id": "https://trainstorm.ai/schemas/voice.pack.schema.json",
++  "title": "Voice pack — one register's renderings of meaning for one project",
++  "description": "The first store that re-expresses MEANING itself: learner-facing copy as a RENDERING of the atom's meaning, external and keyed, never embedded (constitution: reference, don't embed). Structurally a locale pack shifted in REGISTER instead of language — sibling family to locales/<lang>.json, same keying precedent (2026-08-25 occurrence identity): entries key on atom_id (meaning is re-expressed once per atom+register), element_overrides key on element_id only where placement constrains length or form. TWO PINS govern every entry: source_hash always pins the ATOM's content_hash (the meaning anchor — every rendering at every coordinate is gated against the atom, never transitively against another rendering), and derived_from, where present, pins the TEXT the writer worked from (for an element override, the pack's own atom-level entry). Pack instances live PER-PROJECT (cgen/<client>/projects/<proj>/voice/<register>.json); this schema and the register vocabulary live in core.",
++  "type": "object",
++  "additionalProperties": false,
++  "required": ["pack_version", "register", "entries"],
++  "properties": {
++    "pack_version": {
++      "const": "voice.v0.1"
++    },
++    "register": {
++      "type": "string",
++      "description": "A register id from vocab/register.enum.json — governed, closed list; the validator rejects anything else. Per-register status in the vocab additionally gates authoring: accepted entries are only admitted for a `specified` register."
++    },
++    "entries": {
++      "type": "object",
++      "description": "atom_id → rendering. One rendering of the atom's meaning in this register.",
++      "propertyNames": { "pattern": "^atom_[A-Za-z0-9_]+$" },
++      "additionalProperties": { "$ref": "#/$defs/entry" }
++    },
++    "element_overrides": {
++      "type": "object",
++      "description": "element_id → rendering, ONLY where the occurrence's placement constrains length or form (heading vs sentence, character limits). Each override should chain from the pack's own atom-level entry via derived_from.",
++      "propertyNames": { "pattern": "^ele_[A-Za-z0-9_]+$" },
++      "additionalProperties": { "$ref": "#/$defs/entry" }
++    }
++  },
++  "$defs": {
++    "entry": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": ["text", "status", "source_hash"],
++      "properties": {
++        "text": {
++          "type": "string",
++          "minLength": 1,
++          "description": "The rendered learner-facing copy. The words may change; the gate proves the meaning didn't."
++        },
++        "status": {
++          "enum": ["draft", "accepted"],
++          "description": "draft = proposed by the writer (Dragoman voice mode); accepted = a human accepted it (propose→accept, the Amanuensis pattern). The agent never sets accepted — acceptance is a human write, mechanically."
++        },
++        "reviewer": {
++          "type": "string",
++          "description": "Who accepted. Required when status is accepted."
++        },
++        "source_hash": {
++          "type": "string",
++          "pattern": "^sha256:[0-9a-f]{64}$",
++          "description": "The ATOM's content_hash at rendering time — the meaning anchor. A mismatch with the atom's current hash means the meaning moved and this rendering is stale."
++        },
++        "derived_from": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": ["pack", "key", "hash"],
++          "description": "The text the writer worked from, when it was not the verbatim atom — e.g. an element override chaining from this pack's atom-level entry. Locale packs use the same shape to chain from an accepted voice entry (see locales/README.md). Staleness propagates down the chain: atom changes → voice stale → descendants stale.",
++          "properties": {
++            "pack": { "type": "string", "description": "Store-relative path of the source pack, e.g. voice/warm_direct.json." },
++            "key": { "type": "string", "description": "The source entry's key in that pack (atom_id or element_id)." },
++            "hash": {
++              "type": "string",
++              "pattern": "^sha256:[0-9a-f]{64}$",
++              "description": "sha256 of the source entry's text at derivation time."
++            }
++          }
++        }
++      },
++      "if": { "properties": { "status": { "const": "accepted" } } },
++      "then": { "required": ["text", "status", "source_hash", "reviewer"] }
++    }
++  }
++}
+diff --git a/cgen/trainstorm-core/vocab/register.enum.json b/cgen/trainstorm-core/vocab/register.enum.json
+new file mode 100644
+index 0000000..e253e5f
+--- /dev/null
++++ b/cgen/trainstorm-core/vocab/register.enum.json
+@@ -0,0 +1,81 @@
++{
++  "vocabulary_version": "register.v0.1",
++  "status": "draft_for_reconciliation",
++  "owner": "instructional_design",
++  "description": "Governed REGISTER vocabulary — the course-level voice coordinate a rendering of meaning is written to: who the words are for and how they are pitched (stance, person, formality). Register is a coordinate in the same rendering space as locale: voice packs (voice/<register>.json) sit beside locale packs (locales/<lang>.json) as sibling store families, both keyed by atom_id, both gated against the atom's content_hash. Dragoman owns this whole space; language and register are coordinates, and each of its modes declares its own gate profile (see DECISIONS 2026-08-31, voice-pack contract block).",
++  "governance": {
++    "closed_list": true,
++    "rule": "A voice pack may only declare a register id defined here. A new register requires a version bump and an entry — the validator rejects anything else. Per-register `status` additionally gates AUTHORING: only a `specified` register may carry accepted renderings; renderings authored against a `draft` register are flagged by the gate, not silently admitted.",
++    "supplants": "Nothing — first vocabulary of the rendering-coordinate family."
++  },
++  "boundaries": {
++    "tone": "Register is NOT tone (vocab/tone.enum.json). Tone is per-element affect at the intent layer — what feeling THIS element carries, varying scene to scene, set upstream and read by the realizer. Register is the course-level voice coordinate — constant across a rendering. TONE MODULATES WITHIN REGISTER: the voice writer reads each element's tone as an input while writing every entry to one register. Neither vocabulary absorbs the other.",
++    "locale": "Register does not translate. The spec fields below are ABSTRACT intent, realized natively per locale — conversational Japanese is not translated conversational English. When a locale rendering chains from a voice rendering, the voiced source text transmits the authored choices, this spec transmits the shared intent, and the atom remains the judge.",
++    "audience": "Register is a coordinate someone CHOOSES for a course — a governed input the voice writer writes to. Which learner segment gets which register is the audience facet's join (Chameleon), downstream. The voice writer never reasons about who the learners are; the moment it does, single-writer has broken."
++  },
++  "spec_fields": {
++    "person": "Grammatical person of address the register intends (e.g. second_direct, impersonal).",
++    "stance": "The writer's posture toward the learner (e.g. learner_advocate, neutral_authority).",
++    "formality": "Formality intent, not surface rules (e.g. conversational_professional, formal)."
++  },
++  "values": [
++    {
++      "id": "warm_direct",
++      "label": "Warm & Direct",
++      "status": "specified",
++      "provenance": "Reverse-specified 2026-08-31 from the January artisan control course (cgen/courses/brunswick_pay_transparency_employee/course.json) — the voice-pack arc's validation target.",
++      "definition": "Second-person, plain-language, reassuring learner advocacy. Compresses source meaning into copy that addresses the learner directly and lowers threat.",
++      "spec": {
++        "person": "second_direct",
++        "stance": "learner_advocate",
++        "formality": "conversational_professional"
++      },
++      "observed_markers": [
++        "Direct address and possessives: 'What It Means for You', 'your pay'.",
++        "Contractions and plain diction: 'wasn't', 'It's a system, not a judgment.'",
++        "De-threatening reassurance moves: 'No trick questions', 'a solid, positive place to be'.",
++        "Rights-affirming persuade beats: 'You have every right to understand your pay.'",
++        "Compression: on-screen copy far terser than source; narration fuller but still conversational."
++      ]
++    },
++    {
++      "id": "formal_institutional",
++      "label": "Formal Institutional",
++      "status": "draft",
++      "provenance": "Named 2026-08-31 in the taxonomy-up-front decision; unproven — no course has been authored in it.",
++      "definition": "Impersonal, policy-precise register for compliance-critical or externally reviewed content where the institution, not a narrator, speaks.",
++      "spec": {
++        "person": "impersonal",
++        "stance": "neutral_authority",
++        "formality": "formal"
++      },
++      "observed_markers": []
++    },
++    {
++      "id": "executive_brief",
++      "label": "Executive Brief",
++      "status": "draft",
++      "provenance": "Named 2026-08-31 in the taxonomy-up-front decision; unproven — no course has been authored in it.",
++      "definition": "Compressed, decision-first register for senior audiences: leads with the implication, spends no words on reassurance.",
++      "spec": {
++        "person": "second_sparse",
++        "stance": "decision_first",
++        "formality": "crisp"
++      },
++      "observed_markers": []
++    },
++    {
++      "id": "technical_precise",
++      "label": "Technical Precise",
++      "status": "draft",
++      "provenance": "Named 2026-08-31 in the taxonomy-up-front decision; unproven — no course has been authored in it.",
++      "definition": "Imperative, terminology-exact register for practitioner and procedure audiences where ambiguity is the failure mode.",
++      "spec": {
++        "person": "imperative_second",
++        "stance": "task_authority",
++        "formality": "terminology_exact"
++      },
++      "observed_markers": []
++    }
++  ]
++}
+-- 
+2.43.0
+

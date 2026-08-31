@@ -1,0 +1,74 @@
+From 0325ba903951506ba35f4a95a406b06f7d97be87 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Mon, 31 Aug 2026 20:34:01 +0000
+Subject: [PATCH 2/3] paytrans beat copy proposed: welcome + closure in
+ warm_direct, gate-green, draft
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Both flagged invented-risk low (presupposed change; learner
+assurance — the artisan closure stance). Acceptance waits on beat
+ratification.
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01L9kxrUSPXNDN7azb5T1tee
+---
+ .../paytrans/voice/proposals/warm_direct.json | 35 ++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
+
+diff --git a/cgen/brunswick/projects/paytrans/voice/proposals/warm_direct.json b/cgen/brunswick/projects/paytrans/voice/proposals/warm_direct.json
+index cea1d56..42558f6 100644
+--- a/cgen/brunswick/projects/paytrans/voice/proposals/warm_direct.json
++++ b/cgen/brunswick/projects/paytrans/voice/proposals/warm_direct.json
+@@ -6,7 +6,8 @@
+   "prompt_version": "voice-agent.v0.1",
+   "agent": "dragoman.voice (executed in-session per DECISIONS 2026-08-31 hop-two execution call)",
+   "exemplar_ref": "cgen/courses/brunswick_pay_transparency_employee/course.json",
+-  "authored": "2026-08-31"
++  "authored": "2026-08-31",
++  "beats_authored": "2026-08-31 (arc hop two; dragoman.voice in-session; beats proposed status at authoring time — acceptance requires ratified beats)"
+  },
+  "proposals": {
+   "atom_bw_eoc_euptd": {
+@@ -563,5 +564,37 @@
+    ],
+    "rationale": ""
+   }
++ },
++ "beat_proposals": {
++  "bt_paytrans_welcome": {
++   "text": "Welcome — this is about your pay: what's changing, how it's set, and what it means for you.",
++   "status": "draft",
++   "source_hash": "sha256:4d56ad90186a3c6c02b57508fc4ce6d336e466d9bc8c5209293f488e482913e9",
++   "confidence": 0.75,
++   "flags": [
++    {
++     "span": "what's changing",
++     "category": "invented-risk",
++     "severity": "low",
++     "note": "presupposes change — contextually anchored by the laws/postings atoms the first scene teaches, but the welcome itself claims it; confirm"
++    }
++   ],
++   "rationale": "hook: names the learner's stake in the course's own three movements (change, mechanism, meaning), no facts"
++  },
++  "bt_paytrans_closure": {
++   "text": "You're informed. You know how your pay is set and what's behind it — and that knowledge is yours to use.",
++   "status": "draft",
++   "source_hash": "sha256:60fa04e1f250ac09a7408983378dd01557e0ba4ad23da6d803a2c38358985a6c",
++   "confidence": 0.8,
++   "flags": [
++    {
++     "span": "You're informed",
++     "category": "invented-risk",
++     "severity": "low",
++     "note": "evaluates the LEARNER, not the pay system — the artisan control's closure stance ('You're Informed'); claim-free about content, but it is an assurance; confirm"
++    }
++   ],
++   "rationale": "transfer: closes the arc the welcome opened; mirrors the artisan control's closure; carries no figures or names"
++  }
+  }
+ }
+-- 
+2.43.0
+

@@ -1,0 +1,331 @@
+From 381badc2a38b6773cd231853a6a676fdb3248a6e Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Mon, 31 Aug 2026 20:07:32 +0000
+Subject: [PATCH 3/4] dramaturge runtime + arc gate; first run proposes the
+ paytrans frame (welcome + closure)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Idempotent (claimed placements never re-litigated); validate_arc
+selftest proves red 7 ways incl. copy smuggled onto a beat. Both
+beats status:proposed — ratification is Jake's edit.
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01L9kxrUSPXNDN7azb5T1tee
+---
+ .../projects/paytrans/occurrences/beats.json  |  33 ++++
+ cgen/trainstorm-core/tools/dramaturge.py      | 111 ++++++++++++++
+ cgen/trainstorm-core/tools/validate_arc.py    | 142 ++++++++++++++++++
+ 3 files changed, 286 insertions(+)
+ create mode 100644 cgen/brunswick/projects/paytrans/occurrences/beats.json
+ create mode 100644 cgen/trainstorm-core/tools/dramaturge.py
+ create mode 100644 cgen/trainstorm-core/tools/validate_arc.py
+
+diff --git a/cgen/brunswick/projects/paytrans/occurrences/beats.json b/cgen/brunswick/projects/paytrans/occurrences/beats.json
+new file mode 100644
+index 0000000..224421a
+--- /dev/null
++++ b/cgen/brunswick/projects/paytrans/occurrences/beats.json
+@@ -0,0 +1,33 @@
++{
++ "store": "beats",
++ "project": "paytrans",
++ "policy": "v1_beat_catalog",
++ "spec": "agents/dramaturge/beats_v1.md",
++ "vocab": "vocab/intent.enum.json",
++ "beats": [
++  {
++   "beat_id": "bt_paytrans_welcome",
++   "placement": {
++    "type": "lesson_start"
++   },
++   "intent": {
++    "pedagogical": "hook"
++   },
++   "status": "proposed",
++   "from": "missing_arc_frame: 5 scenes, no lesson_start beat — a course that opens on its first topic never told the learner why they're here.",
++   "proposed_by": "dramaturge.v0.1/missing_arc_frame"
++  },
++  {
++   "beat_id": "bt_paytrans_closure",
++   "placement": {
++    "type": "lesson_end"
++   },
++   "intent": {
++    "pedagogical": "transfer"
++   },
++   "status": "proposed",
++   "from": "missing_arc_frame: 5 scenes, no lesson_end beat — the artisan control closes ('You're Informed'); the pipeline course just stops.",
++   "proposed_by": "dramaturge.v0.1/missing_arc_frame"
++  }
++ ]
++}
+diff --git a/cgen/trainstorm-core/tools/dramaturge.py b/cgen/trainstorm-core/tools/dramaturge.py
+new file mode 100644
+index 0000000..00c46a0
+--- /dev/null
++++ b/cgen/trainstorm-core/tools/dramaturge.py
+@@ -0,0 +1,111 @@
++#!/usr/bin/env python3
++"""
++dramaturge — the arc facet owner's runtime (dramaturge.v0.1).
++
++Runs the LIVE wakes in agents/dramaturge/wakes.json against a project and PROPOSES beats into
++occurrences/beats.json (status "proposed", always — the designer ratifies by flipping to
++"accepted" in the catalog; merge makes it durable). Dramaturge writes placement + intent, never
++copy: words are Dragoman voice-mode work against a beat, inverse-guarded, a later hop.
++
++Idempotent and deferential: a placement already claimed by ANY existing beat (whatever its
++status) is never re-proposed — a designer's decision, including a deletion-by-edit, is not
++re-litigated by a re-run. The catalog is schema-validated before writing; a failed validation
++writes nothing.
++
++    python3 tools/dramaturge.py --project ../brunswick/projects/paytrans
++    python3 tools/dramaturge.py --project ... --dry-run
++"""
++import argparse, json, sys, pathlib
++
++HERE = pathlib.Path(__file__).resolve().parent
++sys.path.insert(0, str(HERE))
++import harness_paths
++from validate_arc import gate_catalog, beat_hash  # one gate, one home — never copied
++
++ap = argparse.ArgumentParser()
++ap.add_argument("--core"); ap.add_argument("--project")
++ap.add_argument("--dry-run", action="store_true")
++a = ap.parse_args()
++
++P = harness_paths.resolve_core(a.core)
++PP = harness_paths.resolve()
++proj = PP["project_dir"]
++wakes_p = P["core_dir"] / "agents" / "dramaturge" / "wakes.json" if "core_dir" in P else \
++          P["schemas_dir"].parent / "agents" / "dramaturge" / "wakes.json"
++wakes = json.loads(wakes_p.read_text(encoding="utf-8"))
++
++scenes_p = proj / "occurrences" / "scenes.json"
++scenes = json.loads(scenes_p.read_text(encoding="utf-8")) if scenes_p.exists() else {"scenes": []}
++scene_ids = {s["id"] for s in scenes.get("scenes", [])}
++els_p = proj / "occurrences" / "elements.json"
++els = json.loads(els_p.read_text(encoding="utf-8")) if els_p.exists() else []
++el_list = els["elements"] if isinstance(els, dict) and "elements" in els else els
++element_ids = {e["element_id"] for e in el_list}
++
++beats_p = proj / "occurrences" / "beats.json"
++cat = json.loads(beats_p.read_text(encoding="utf-8")) if beats_p.exists() else {
++    "store": "beats", "project": proj.name, "policy": "v1_beat_catalog",
++    "spec": "agents/dramaturge/beats_v1.md", "vocab": "vocab/intent.enum.json", "beats": []}
++
++claimed = {json.dumps(b["placement"], sort_keys=True) for b in cat["beats"]}
++slug = proj.name
++proposed, skipped = [], []
++
++
++def propose(beat):
++    key = json.dumps(beat["placement"], sort_keys=True)
++    if key in claimed:
++        skipped.append((beat["beat_id"], "placement already claimed — not re-litigating"))
++        return
++    cat["beats"].append(beat)
++    claimed.add(key)
++    proposed.append(beat)
++
++
++for wake in wakes["wakes"]:
++    if not wake.get("live"):
++        continue
++    if wake["id"] == "missing_arc_frame":
++        n = len(scenes.get("scenes", []))
++        if n < int(wake["params"].get("min_scenes", 3)):
++            skipped.append((wake["id"], f"lesson has {n} scenes < min_scenes"))
++            continue
++        propose({"beat_id": f"bt_{slug}_welcome",
++                  "placement": {"type": "lesson_start"},
++                  "intent": {"pedagogical": "hook"},
++                  "status": "proposed",
++                  "from": f"missing_arc_frame: {n} scenes, no lesson_start beat — a course that "
++                           "opens on its first topic never told the learner why they're here.",
++                  "proposed_by": "dramaturge.v0.1/missing_arc_frame"})
++        propose({"beat_id": f"bt_{slug}_closure",
++                  "placement": {"type": "lesson_end"},
++                  "intent": {"pedagogical": "transfer"},
++                  "status": "proposed",
++                  "from": f"missing_arc_frame: {n} scenes, no lesson_end beat — the artisan "
++                           "control closes ('You're Informed'); the pipeline course just stops.",
++                  "proposed_by": "dramaturge.v0.1/missing_arc_frame"})
++    else:
++        skipped.append((wake["id"], "live but unimplemented — placeholder wakes must stay live:false"))
++
++results = []
++gate_catalog(beats_p.name, cat, scene_ids, element_ids, results)
++bad = [r for r in results if not r[1]]
++if bad:
++    print("CATALOG INVALID — nothing written:")
++    for nm, _, detail in bad[:5]:
++        print(f"  {nm}: {detail}")
++    sys.exit(1)
++
++for b in proposed:
++    print(f"  + {b['beat_id']}: {b['placement']['type']} · {json.dumps(b['intent'])} · {beat_hash(b)[:23]}…")
++for bid, why in skipped:
++    print(f"  · {bid}: skipped — {why}")
++
++if a.dry_run:
++    print(f"\n(dry run) {len(proposed)} beat(s) would be proposed → {beats_p}")
++elif proposed:
++    beats_p.write_text(json.dumps(cat, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
++    print(f"\n{len(proposed)} beat(s) proposed → {beats_p}. Ratify by flipping status to "
++          "\"accepted\" in the catalog; copy comes later via Dragoman voice mode.")
++else:
++    print("\nnothing to propose — the arc frame is already claimed.")
+diff --git a/cgen/trainstorm-core/tools/validate_arc.py b/cgen/trainstorm-core/tools/validate_arc.py
+new file mode 100644
+index 0000000..48bfb93
+--- /dev/null
++++ b/cgen/trainstorm-core/tools/validate_arc.py
+@@ -0,0 +1,142 @@
++#!/usr/bin/env python3
++"""
++The arc gate — Dramaturge's gate. Validates a project's beat catalog:
++
++    SCHEMA      — occurrences/beats.json validates against schemas/beats.catalog.schema.json.
++    GOVERNANCE  — every beat intent resolves to intent.enum.json (both dimensions, closed lists).
++    REFERENCES  — scene placements name a scene in scenes.json; after_element names an element
++                  in occurrences/elements.json; beat_ids are unique.
++
++Also home to `beat_hash` — sha256 over canonical {beat_id, placement, intent} — the staleness
++anchor beat COPY pins as its source_hash (voice pack `beats` section). One definition, imported
++by dramaturge.py and the voice tools; never copied.
++
++    python3 tools/validate_arc.py --project ../brunswick/projects/paytrans
++    python3 tools/validate_arc.py --selftest
++"""
++import argparse, hashlib, json, sys, pathlib
++from jsonschema import Draft202012Validator
++import harness_paths
++
++ap = argparse.ArgumentParser(add_help=False)
++ap.add_argument("--core"); ap.add_argument("--project"); ap.add_argument("--selftest", action="store_true")
++args, _ = ap.parse_known_args()
++
++P = harness_paths.resolve_core(args.core)
++schema = json.loads((P["schemas_dir"] / "beats.catalog.schema.json").read_text(encoding="utf-8"))
++_intent = json.loads((P["vocab_dir"] / "intent.enum.json").read_text(encoding="utf-8"))
++PEDAGOGICAL = {v["id"] for v in _intent["dimensions"]["pedagogical"]["values"]}
++RHETORICAL = {v["id"] for v in _intent["dimensions"]["rhetorical"]["values"]}
++V = Draft202012Validator(schema)
++
++
++def beat_hash(beat: dict) -> str:
++    """sha256 over canonical {beat_id, placement, intent}. Placement or intent moves → copy stale."""
++    canon = json.dumps({"beat_id": beat["beat_id"], "placement": beat["placement"],
++                         "intent": beat["intent"]}, sort_keys=True, separators=(",", ":"))
++    return "sha256:" + hashlib.sha256(canon.encode("utf-8")).hexdigest()
++
++
++def gate_catalog(name, cat, scene_ids, element_ids, results):
++    errs = sorted(V.iter_errors(cat), key=lambda e: list(e.path))
++    results.append((f"{name}: validates against schema", not errs,
++                    "; ".join(e.message for e in errs)[:160]))
++    if errs:
++        return
++    seen = set()
++    for b in cat.get("beats", []):
++        bid = b["beat_id"]
++        results.append((f"{name}: {bid} unique", bid not in seen, "duplicate beat_id"))
++        seen.add(bid)
++        it = b["intent"]
++        ok_int = (("pedagogical" not in it or it["pedagogical"] in PEDAGOGICAL)
++                  and ("rhetorical" not in it or it["rhetorical"] in RHETORICAL))
++        results.append((f"{name}: {bid} intent governed", ok_int, json.dumps(it)))
++        pl = b["placement"]
++        if pl["type"] in ("scene_start", "scene_end"):
++            results.append((f"{name}: {bid} scene ref resolves", pl.get("scene_id") in scene_ids,
++                            f"scene_id {pl.get('scene_id')!r} not in scenes.json"))
++        if pl["type"] == "after_element":
++            results.append((f"{name}: {bid} element ref resolves", pl.get("element_id") in element_ids,
++                            f"element_id {pl.get('element_id')!r} not in elements.json"))
++
++
++def report(results):
++    print(f"{'CHECK':<66} RESULT")
++    print("-" * 82)
++    ok = True
++    for nm, passed, detail in results:
++        ok = ok and passed
++        print(f"{nm:<66} {'PASS' if passed else 'FAIL'}   {detail if not passed else ''}")
++    print("-" * 82)
++    print("ALL PASS" if ok else "SOME FAILED")
++    return ok
++
++
++if __name__ == "__main__" and args.selftest:
++    try:
++        Draft202012Validator.check_schema(schema)
++        results = [("beats.catalog.schema is valid Draft 2020-12", True, "")]
++    except Exception as e:
++        results = [("beats.catalog.schema is valid Draft 2020-12", False, str(e))]
++    SC, EL = {"sc_a", "sc_b"}, {"ele_x_mid"}
++    good = {"store": "beats", "project": "fx", "policy": "v1_beat_catalog", "beats": [
++        {"beat_id": "bt_fx_welcome", "placement": {"type": "lesson_start"},
++         "intent": {"pedagogical": "hook"}, "status": "proposed",
++         "from": "fixture", "proposed_by": "dramaturge.v0.1/missing_arc_frame"},
++        {"beat_id": "bt_fx_gloss", "placement": {"type": "after_element", "element_id": "ele_x_mid"},
++         "intent": {"rhetorical": "persuade"}, "status": "accepted", "from": "fixture"},
++    ]}
++    n0 = len(results)
++    gate_catalog("fixture(good)", good, SC, EL, results)
++    results.append(("selftest: clean fixture passes", all(ok for _, ok, _ in results[n0:]), ""))
++    results.append(("selftest: beat_hash is stable and prefixed",
++                    beat_hash(good["beats"][0]) == beat_hash(json.loads(json.dumps(good["beats"][0])))
++                    and beat_hash(good["beats"][0]).startswith("sha256:"), ""))
++    results.append(("selftest: beat_hash moves when placement moves",
++                    beat_hash(good["beats"][0]) != beat_hash({**good["beats"][0],
++                        "placement": {"type": "lesson_end"}}), ""))
++
++    def red(label, mutate):
++        cat = json.loads(json.dumps(good)); mutate(cat)
++        scratch = []
++        gate_catalog("fixture(red)", cat, SC, EL, scratch)
++        caught = any(not ok for _, ok, _ in scratch)
++        results.append((label, caught, "" if caught else "mutation was NOT caught"))
++
++    red("selftest: ungoverned intent is caught",
++        lambda c: c["beats"][0]["intent"].update(pedagogical="delight"))
++    red("selftest: new beat 'type' outside intent is caught (schema)",
++        lambda c: c["beats"][0].update(beat_type="callout"))
++    red("selftest: dangling scene ref is caught",
++        lambda c: c["beats"][0].update(placement={"type": "scene_end", "scene_id": "sc_missing"}))
++    red("selftest: after_element without element_id is caught",
++        lambda c: c["beats"][1].update(placement={"type": "after_element"}))
++    red("selftest: lesson beat carrying a scene_id is caught",
++        lambda c: c["beats"][0].update(placement={"type": "lesson_start", "scene_id": "sc_a"}))
++    red("selftest: duplicate beat_id is caught",
++        lambda c: c["beats"].append(json.loads(json.dumps(c["beats"][0]))))
++    red("selftest: copy smuggled onto a beat is caught (schema — beats carry no text)",
++        lambda c: c["beats"][0].update(text="Welcome to the course!"))
++    sys.exit(0 if report(results) else 1)
++
++if __name__ == "__main__":
++    PP = harness_paths.resolve()
++    proj = PP["project_dir"]
++    beats_p = proj / "occurrences" / "beats.json"
++    results = []
++    if not beats_p.exists():
++        results.append(("no beat catalog in project — nothing to gate", True, f"looked at {beats_p}"))
++        sys.exit(0 if report(results) else 1)
++    cat = json.loads(beats_p.read_text(encoding="utf-8"))
++    scenes_p = proj / "occurrences" / "scenes.json"
++    scenes = json.loads(scenes_p.read_text(encoding="utf-8")) if scenes_p.exists() else {"scenes": []}
++    scene_ids = {s["id"] for s in scenes.get("scenes", [])}
++    els_p = proj / "occurrences" / "elements.json"
++    els = json.loads(els_p.read_text(encoding="utf-8")) if els_p.exists() else []
++    el_list = els["elements"] if isinstance(els, dict) and "elements" in els else els
++    element_ids = {e["element_id"] for e in el_list}
++    gate_catalog(beats_p.name, cat, scene_ids, element_ids, results)
++    for b in cat.get("beats", []):
++        print(f"   {b['beat_id']:<28} {b['status']:<9} {beat_hash(b)[:23]}…")
++    sys.exit(0 if report(results) else 1)
+-- 
+2.43.0
+
