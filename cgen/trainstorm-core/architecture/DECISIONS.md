@@ -2541,3 +2541,50 @@ atoms + flags) — a carry, not a blocker.
 
 **Supersedes:** nothing. The hop-one contract block, single-writer, and the working-process
 block stand.
+
+---
+
+## 2026-08-31 — Voice hop three: the course SPEAKS. Realize's voice overlay; loud stale fallback; checks stay meaning-anchored
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Realize applies **"accepted voice rendering if present, else verbatim atom"**:
+
+- **One choke point.** `load_voice_overlay` runs inside `project_lesson_htmls` — the projection
+  entry every caller shares (realize main, cartographer, couturier both import and re-project) —
+  so all three emit the same words. First regen exposed exactly this: main-only loading left
+  couturier's re-projection verbatim; the overlay moved into the shared entry, plus main's early
+  load for the manifest stamp.
+- **Application rules:** only `status:"accepted"` entries whose `source_hash` matches the atom's
+  CURRENT `content_hash`; element overrides (chain-hash checked) beat atom entries. A STALE
+  accepted entry falls back to the verbatim atom and is reported LOUDLY at realize time and in
+  the manifest (`voice.stale_fallbacks`) — the silent brand-load fallback cost a round trip; not
+  again. **Two packs refuse rather than guess** — applying one of several needs an authored
+  register choice, which no store carries yet; add it deliberately when a second register is
+  accepted.
+- **Provenance stamps** (only when a pack applies, so no-pack projects stay byte-identical —
+  proven this hop for ast_alsap and ast_artwork): occurrence manifest gains `voice`
+  {register, pack, applied, element_overrides, stale_fallbacks}; the lesson projection gains
+  `meta.voice_register`.
+- **Checks stay meaning-anchored — a named scope line, not an oversight.** Check stems, keys,
+  and distractors still derive from verbatim atom text: `assert_check_honest` proves choices
+  against atoms, and voicing them would dissolve that proof. Consequence, visible in the played
+  course: teaching copy speaks `warm_direct` while check choices quote the atom. Voicing checks
+  is its own honesty design (the key must remain provably the atom's claim) — future hop, taken
+  deliberately or declined deliberately.
+- **Windows/UTF-8 hardening** (the acceptance-run failure on Jake's machine): every read in the
+  three voice tools now passes `encoding="utf-8"`. The wider toolset (realize.py's `load`, etc.)
+  still reads locale-default — NAMED CARRY, fix as one sweep, not silently.
+
+**Why:** The fallback hop the arc promised: every store without a pack plays unchanged; the one
+store with an accepted pack plays in its accepted register.
+
+**Consequences:** `/cgen/?project=brunswick/paytrans` plays warm_direct (verified headless-
+Chromium: voice lines render on-screen through all five scenes, Brunswick chrome, the withheld
+reassurance ABSENT, check choices verbatim). Realize selftest gains six voice checks (fresh
+applies; stale falls back loudly; override beats entry; register stamped; two packs refuse;
+reset = pre-hop verbatim). Griot's "words before voice" wake now has accepted words to read.
+Next per the arc: the ARC PASS design conversation (beats/intangibles — see hop-two decision-log)
+before Griot builds.
+
+**Supersedes:** nothing. Both prior voice blocks, single-writer, and the working process stand.
