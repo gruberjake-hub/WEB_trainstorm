@@ -13,6 +13,27 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (hop four) — `?project=` refs are client-qualified: `/cgen/?project=brunswick/paytrans`. The astellas prefix was an assumption the second client namespace exposed.
+
+*Anchor: branch `drive/cgen-client-qualified-project` off `7e25d55` (PR #47). One file,
+`cgen/src/lessonCatalog.js`. Node tests on the resolver: bare slug → astellas (both existing URLs
+byte-identical in behavior), `brunswick/paytrans` → `./brunswick/projects/paytrans/…`, and the
+unsafe shapes (`../evil`, `a/b/c`, `brunswick/../x`) all resolve to "" and fail in the stage.*
+
+The hop-three plan assumed `/cgen/?project=paytrans` would play with no work because the loader
+"already takes ?project=". Half true: it takes a project, but bakes `./astellas/` into the path —
+fine when astellas was the only client, an assumption the moment brunswick existed. Fix is
+data-free: a project ref may be `<client>/<slug>`; a bare slug keeps meaning astellas, so
+`/cgen` and `?project=ast_artwork` are untouched. Deliberately NOT a client registry and not a
+catalog UI — the ref names the store path the same way the store names itself.
+
+Verification after Jake lands this: fetch
+`https://trainstorm.ai/cgen/brunswick/projects/paytrans/occurrences/lessons.json` (the catalog) and
+play `/cgen/?project=brunswick/paytrans` — Brunswick chrome via `meta.theme`. Then hop five:
+Jake's design review of the lesson, ratify the projection as `brunswick.reference.course`, run the
+artisan side-by-side. Carry from hop three unchanged: manifest `move_counts` key order is
+insertion-dependent across rerun sequences (diff noise, not meaning — sort it in a later tidy).
+
 ## 2026-08-31 (hop three) — The employee course EXISTS: five scenes, two checks, played from the graph. Cartographer heuristic v2 (expository kinds + intent_map as project data); scene.v2 adds `topic`; existing stores proven byte-identical.
 
 *Anchor: branch `drive/brunswick-paytrans-course` off `0832c53` (PR #46). Verification at delivery:
