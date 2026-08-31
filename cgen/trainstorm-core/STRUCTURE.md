@@ -40,7 +40,7 @@ cgen/
 │   └── brunswick/assets/                 ✅ same convention for every client that follows
 │
 ├── brunswick/                           # second client namespace (2026-08-31, paytrans drive) — same shape as astellas
-│   ├── projects/paytrans/                ✅ 68 atoms — first EXPOSITORY corpus (structure.v0.2 kinds); employee-awareness scope
+│   ├── projects/paytrans/                ✅ 68 atoms + 70 occurrences — first EXPOSITORY corpus; employee course plays (5 scenes, 2 checks, intent_map; DECISIONS 2026-08-31 hop three)
 │   └── registry/{roles,records,docs,options}.registry.json  ✅ seeded v1 at namespace creation; grown by propose→adopt
 │
 ├── astellas/                            # ⚠ THIRD SIBLING — client atom stores + client registries

@@ -2335,3 +2335,36 @@ remain unminted (drive two). Amending any of the six now means a new dated entry
 bump, not an edit.
 
 **Supersedes:** the draft status of those six nodes. Nothing else.
+
+---
+
+## 2026-08-31 — Hop three: the employee course plays from the graph; heuristic v2; scene.v2 `topic`
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The Brunswick employee-awareness course exists as project data + pipeline output:
+five authored scenes (`scenes.json`), an authored lesson record with designer title
+(`lessons.json`), two reinforce extras (`one_to_many_seed.json`), and designer objective bindings
+in the NEW `occurrences/intent_map.json` (Cartographer heuristic v2 — validated project-data input;
+Cartographer stays the intent facet's single writer; at most one hook election). `scene.enum` v2
+adds the `topic` role. `kind document → present/low` (a multi-root corpus's opening is course
+design); `kind statement → present/assert`. Two lesson-end invert-definition checks from the only
+two honest copulas; colon-form definitions deliberately unseeded. A realize selftest that pinned
+the scene-role list was repaired to assert the rule (third recurrence of the 08-20 rot).
+
+**Why:** First expository corpus through the course half. The two ALSAP-hardcoded assumptions it
+broke (single root; Python teaches walk) are retired the same way scenes and lessons were on
+08-27: as closed project data, not code branches.
+
+**Consequences:**
+- `realize → cartographer → couturier --project ../brunswick/projects/paytrans` regenerates
+  everything; all gates and selftests green; ast_alsap and ast_artwork regenerate **byte-identical**
+  (no intent_map = v1 behavior).
+- `realized_lesson.json` carries `meta.theme: brunswick`; `/cgen?project=paytrans` becomes playable
+  the moment this lands (hop four verifies live).
+- Scene/lesson/membership/title remain redraftable in Jake's review before the reference-course
+  ratification (hop five).
+
+**Supersedes:** the realize selftest's pinned three-role list; `bind_teaches`'s ALSAP-only reach as
+the ONLY teaches path (the hardcoded walk still runs for ast_alsap, unchanged). Single-writer per
+facet, catalogs-as-project-data, and the working-process block stand.
