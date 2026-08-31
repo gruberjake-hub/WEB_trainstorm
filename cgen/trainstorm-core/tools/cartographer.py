@@ -95,6 +95,11 @@ def classify_move(atom) -> tuple[str, str, list[str]]:
     kind = atom_kind(atom)
     text = clean_meaning(atom.get("meaning", {}).get("source_text") or "")
 
+    if kind == "document":
+        # Heuristic v2 (expository): a multi-document corpus carries SEVERAL roots; which one
+        # opens the lesson is course design, not structure. Default present; the project's
+        # intent_map elevates exactly one to hook. SOP roots keep kind procedure → rule below.
+        return "present", "low", ["document_root_expository"]
     if not belongs_to(atom):
         return "hook", "high", ["root_title"]
     if aid.endswith("_purpose") or PURPOSE_TEXT_RE.search(text):
@@ -107,7 +112,7 @@ def classify_move(atom) -> tuple[str, str, list[str]]:
         return "exemplify", "low", ["governance_docs_as_examples"]
     if kind == "procedure_step" and TRANSFER_TEXT_RE.search(text):
         return "transfer", "low", ["handoff_as_transfer"]
-    if kind in ("procedure_step", "list", "list_item"):
+    if kind in ("procedure_step", "list", "list_item", "statement"):
         return "present", "high", ["kind_present"]
     if kind == "form_field":
         return "present", "high", ["form_field_as_present"]
@@ -120,8 +125,10 @@ def classify_rhetorical(atom) -> str:
     kind = atom_kind(atom)
     text = clean_meaning(atom.get("meaning", {}).get("source_text") or "")
 
-    if not belongs_to(atom):
+    if kind == "document" or not belongs_to(atom):
         return "orient"
+    if kind == "statement":
+        return "assert"
     if aid.endswith("_purpose") or PURPOSE_TEXT_RE.search(text):
         return "assert"
     if aid.endswith("_scope") and kind == "procedure":
@@ -226,6 +233,78 @@ def bind_intent(atom, closed_moves, closed_rhetorical, objective_ids, project=No
         "confidence": confidence,
         "flags": flags,
     }
+    return intent, stamp
+
+
+INTENT_MAP_FILENAME = "intent_map.json"
+INTENT_MAP_POLICY = "v1_intent_map"
+
+
+def load_intent_map(project_dir, objective_ids, closed_moves):
+    """Project-data intent bindings: occurrences/intent_map.json, keyed by atom_id.
+
+    Heuristic v2. The v1 teaches walk is ALSAP-hardcoded Python — the same shape the
+    2026-08-27 catalog decisions retired for scenes and lessons. The map is the catalog
+    move applied to Cartographer's inputs: the DESIGNER's objective bindings (and at most
+    one hook election) live as project data; Cartographer stays the single writer of the
+    intent facet and validates every value against the governed stores. Absent file = v1
+    behavior, so ALSAP/artwork are byte-identical without it.
+    Entry shape: {"teaches": [obj_ids], "move": optional governed move}.
+    """
+    p = pathlib.Path(project_dir) / "occurrences" / INTENT_MAP_FILENAME
+    if not p.exists():
+        return {}
+    m = load(p)
+    if m.get("policy") != INTENT_MAP_POLICY:
+        raise SystemExit(f"{p}: policy {m.get('policy')!r} is not {INTENT_MAP_POLICY!r}")
+    entries = m.get("map") or {}
+    hooks = 0
+    for aid, e in entries.items():
+        for t in e.get("teaches") or []:
+            if t not in objective_ids:
+                raise SystemExit(f"intent_map {aid}: teaches {t!r} not in ontology/objectives.json")
+        mv = e.get("move")
+        if mv is not None:
+            if mv not in closed_moves:
+                raise SystemExit(f"intent_map {aid}: move {mv!r} not in the closed pedagogical vocab")
+            if mv == "hook":
+                hooks += 1
+        extra = set(e) - {"teaches", "move", "why"}
+        if extra:
+            raise SystemExit(f"intent_map {aid}: unknown keys {sorted(extra)} (closed entry shape)")
+    if hooks > 1:
+        raise SystemExit("intent_map elects more than one hook — a lesson opens once")
+    return entries
+
+
+def apply_intent_map(el, atom, intent, stamp, entry, closed_moves, project=None):
+    """Overlay one map entry on the heuristic result. Extras keep their Realizer move."""
+    intent = dict(intent)
+    stamp = dict(stamp)
+    flags = [f for f in (stamp.get("flags") or [])]
+    if entry.get("teaches") is not None:
+        if entry["teaches"]:
+            intent["teaches"] = list(entry["teaches"])
+            if "teaches_unbound" in flags:
+                # The heuristic demoted confidence ONLY because teaches was unbindable
+                # (bind_teaches is empty off-ALSAP); the map has now bound it, so restore
+                # the classifier's own confidence for the move.
+                flags = [f for f in flags if f != "teaches_unbound"]
+                if stamp.get("confidence") == "low":
+                    stamp["confidence"] = classify_move(atom)[1]
+        else:
+            intent.pop("teaches", None)
+    if entry.get("move") and not realize.is_extra_element(el):
+        intent["move"] = entry["move"]
+        stamp["confidence"] = "map"
+        intended = bind_intended_response(atom, entry["move"], project=project)
+        if intended:
+            intent["intended_response"] = intended
+        else:
+            intent.pop("intended_response", None)
+    if "intent_map" not in flags:
+        flags.append("intent_map")
+    stamp["flags"] = flags
     return intent, stamp
 
 
@@ -364,6 +443,64 @@ def selftest(closed_moves, closed_rhetorical, objective_ids):
               and intent.get("teaches", []) == want_teach)
         results.append((f"{a['atom_id']} → {want_move}/{want_conf}/{want_teach}", ok,
                         f"got {intent.get('move')} / {stamp['confidence']} / {intent.get('teaches', [])}"))
+    # ---- heuristic v2: expository kinds + intent_map (2026-08-31) ----
+    doc_atom = atom("atom_x_doc", "document", "Guide to the Thing — a document title line.")
+    doc_intent, doc_stamp = bind_intent(doc_atom, closed_moves, closed_rhetorical, objective_ids,
+                                        project="not_alsap")
+    results.append(("document root defaults present/low (multi-root corpus; hook is a map election)",
+                    doc_intent["move"] == "present" and doc_stamp["confidence"] == "low"
+                    and doc_intent.get("rhetorical") == "orient",
+                    f"{doc_intent.get('move')}/{doc_stamp['confidence']}/{doc_intent.get('rhetorical')}"))
+    st_atom = atom("atom_x_claim", "statement", "The framework balances market data with internal equity across grades.", "atom_x_doc")
+    st_intent, st_stamp = bind_intent(st_atom, closed_moves, closed_rhetorical, objective_ids,
+                                      project="not_alsap")
+    results.append(("statement → present/high, rhetorical assert",
+                    st_intent["move"] == "present" and st_intent.get("rhetorical") == "assert",
+                    f"{st_intent.get('move')}/{st_intent.get('rhetorical')}"))
+    any_obj = sorted(objective_ids)[0]
+    prim_el = {"element_id": "ele_x_doc", "composed_from": "atom_x_doc"}
+    m_intent, m_stamp = apply_intent_map(prim_el, doc_atom, doc_intent, doc_stamp,
+                                         {"teaches": [any_obj], "move": "hook"}, closed_moves,
+                                         project="not_alsap")
+    results.append(("intent_map elects hook + binds teaches on a primary",
+                    m_intent["move"] == "hook" and m_intent.get("teaches") == [any_obj]
+                    and m_stamp["confidence"] == "map" and "intent_map" in m_stamp["flags"],
+                    f"{m_intent.get('move')}/{m_intent.get('teaches')}/{m_stamp}"))
+    extra_el = {"element_id": "ele_x_claim__reinforce", "composed_from": "atom_x_claim",
+                "intent": {"move": "reinforce"},
+                "ext": {"realized_from": {"target_move": "reinforce"}}}
+    e_base, e_stamp0 = bind_intent_for_occurrence(extra_el, st_atom, closed_moves,
+                                                  closed_rhetorical, objective_ids,
+                                                  project="not_alsap")
+    e_intent, e_stamp = apply_intent_map(extra_el, st_atom, e_base, e_stamp0,
+                                         {"teaches": [any_obj], "move": "present"}, closed_moves,
+                                         project="not_alsap")
+    results.append(("intent_map move does NOT override a preserved extra move; teaches still binds",
+                    e_intent["move"] == "reinforce" and e_intent.get("teaches") == [any_obj],
+                    f"{e_intent.get('move')}/{e_intent.get('teaches')}"))
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        occ = pathlib.Path(td) / "occurrences"
+        occ.mkdir()
+        (occ / INTENT_MAP_FILENAME).write_text(json.dumps({
+            "policy": INTENT_MAP_POLICY,
+            "map": {"atom_x_doc": {"teaches": ["obj_never_governed_zzz"]}},
+        }))
+        try:
+            load_intent_map(pathlib.Path(td), objective_ids, closed_moves)
+            results.append(("load_intent_map rejects an ungoverned obj id", False, "did not raise"))
+        except SystemExit:
+            results.append(("load_intent_map rejects an ungoverned obj id", True, "raised"))
+        (occ / INTENT_MAP_FILENAME).write_text(json.dumps({
+            "policy": INTENT_MAP_POLICY,
+            "map": {"a": {"move": "hook"}, "b": {"move": "hook"}},
+        }))
+        try:
+            load_intent_map(pathlib.Path(td), objective_ids, closed_moves)
+            results.append(("load_intent_map rejects two hook elections", False, "did not raise"))
+        except SystemExit:
+            results.append(("load_intent_map rejects two hook elections", True, "raised"))
+
     form_atom = cases[-1][0]
     form_intent, form_stamp = bind_intent(form_atom, closed_moves, closed_rhetorical, objective_ids)
     results.append(("form_field rhetorical is specify (a named slot)",
@@ -582,6 +719,8 @@ def main():
         for e in elements
     }
 
+    intent_map = load_intent_map(project, objective_ids, closed_moves)
+
     for el in elements:
         eid = el["element_id"]
         cf = el.get("composed_from")
@@ -592,6 +731,10 @@ def main():
             el, atom, closed_moves, closed_rhetorical, objective_ids,
             project=project_name,
         )
+        entry = intent_map.get(cf)
+        if entry:
+            intent, stamp = apply_intent_map(
+                el, atom, intent, stamp, entry, closed_moves, project=project_name)
         apply_intent(el, intent, stamp)
 
     realize.refresh_text_primitives(elements, atoms_by_id)
