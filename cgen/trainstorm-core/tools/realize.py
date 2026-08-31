@@ -244,6 +244,7 @@ PAGING_POLICY = "v1_one_scene_at_a_time"
 SCENE_FRONT_MATTER = "front_matter"
 SCENE_PROCEDURE_A = "procedure_a"
 SCENE_FORM_BR = "form_br"
+SCENE_TOPIC = "topic"  # scene.v2 (2026-08-31): authored expository grouping; heading/kicker come from the catalog record
 SCENE_LESSON_END = "lesson_end"
 SCENE_DEFS = (
     {
@@ -396,7 +397,7 @@ def load_check_shape_ids(vocab_dir) -> list:
     return [s["id"] for s in (data.get("shapes") or []) if s.get("id")]
 
 
-SCENE_ROLES = (SCENE_FRONT_MATTER, SCENE_PROCEDURE_A, SCENE_FORM_BR)
+SCENE_ROLES = (SCENE_FRONT_MATTER, SCENE_PROCEDURE_A, SCENE_FORM_BR, SCENE_TOPIC)
 
 
 def load_scene_role_ids(vocab_dir) -> list:
@@ -6346,8 +6347,13 @@ def selftest(closed_moves):
                     and all(r.get("shape") in CHECK_SHAPES
                             for r in (mf_form.get("checks") or {}).get("checks") or []),
                     (mf_form.get("checks") or {}).get("checks")))
-    results.append(("closed vocab of scene roles is front_matter / procedure_a / form_br",
-                    set(SCENE_ROLES) == {SCENE_FRONT_MATTER, SCENE_PROCEDURE_A, SCENE_FORM_BR}
+    # 08-20 standing rule: assert the RULE (every used role is governed, and this tool's
+    # mirror matches the vocab's shape), never the current contents of the governed list —
+    # the original form of this case pinned three roles and correctly broke when scene.v2
+    # added `topic` (2026-08-31), the second recurrence of exactly that rot.
+    results.append(("scene roles: SOP trio still governed; every used role is in SCENE_ROLES",
+                    {SCENE_FRONT_MATTER, SCENE_PROCEDURE_A, SCENE_FORM_BR} <= set(SCENE_ROLES)
+                    and SCENE_TOPIC in SCENE_ROLES
                     and all(s.get("role") in SCENE_ROLES
                             for s in form_scenes.get("scenes") or []),
                     [s.get("role") for s in form_scenes.get("scenes") or []]))

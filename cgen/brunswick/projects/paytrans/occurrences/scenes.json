@@ -1,0 +1,114 @@
+{
+  "store": "scenes",
+  "project": "paytrans",
+  "policy": "v1_scene_catalog",
+  "spec": "agents/realizer/scenes_v1.md",
+  "vocab": "vocab/scene.enum.json",
+  "scenes": [
+    {
+      "id": "why_pay_ranges",
+      "role": "front_matter",
+      "heading": "Why you're seeing pay ranges",
+      "kicker": "Why this",
+      "element_ids": [
+        "ele_bw_guide_commitment",
+        "ele_bw_guide_commitment_laws",
+        "ele_bw_guide_commitment_postings",
+        "ele_bw_guide_commitment_trust"
+      ],
+      "checks": [],
+      "from": "Opening: the corpus's commitment framing — new state laws, ranges on all U.S. postings, transparency-builds-trust. The commitment section is the elected hook (intent_map): its sentence is employee-facing, where the guide document root's title is manager-facing copy and stays coverage. Serves orientation; binds no objective."
+    },
+    {
+      "id": "how_pay_is_determined",
+      "role": "topic",
+      "heading": "How pay is determined",
+      "kicker": "The philosophy",
+      "element_ids": [
+        "ele_bw_guide_philosophy",
+        "ele_bw_guide_philosophy_benchmarking",
+        "ele_bw_guide_philosophy_benchmarking_how",
+        "ele_bw_guide_philosophy_equity",
+        "ele_bw_guide_philosophy_equity_how",
+        "ele_bw_guide_philosophy_p4p",
+        "ele_bw_guide_philosophy_p4p_how",
+        "ele_bw_guide_base_pay",
+        "ele_bw_guide_base_pay_grades",
+        "ele_bw_guide_base_pay_zones",
+        "ele_bw_guide_base_pay_range",
+        "ele_bw_guide_base_pay_range_positions",
+        "ele_bw_guide_base_pay_range_positions_low",
+        "ele_bw_guide_base_pay_range_positions_mid",
+        "ele_bw_guide_base_pay_range_positions_high",
+        "ele_bw_guide_stewardship",
+        "ele_bw_guide_stewardship_activities",
+        "ele_bw_guide_stewardship_activities_2",
+        "ele_bw_guide_stewardship_activities_3"
+      ],
+      "checks": [],
+      "from": "The three philosophy principles with their explanations, then how base pay is set (grades, zones, min/mid/max, typical range positions), then two enterprise-stewardship activities that show the factors are actively maintained (market surveys, role analyses). Stewardship items 1/4/5 stay coverage — manager-planning flavored. Serves obj_bw_emp_pay_factors."
+    },
+    {
+      "id": "base_pay_in_total_rewards",
+      "role": "topic",
+      "heading": "Base pay is one part of total rewards",
+      "kicker": "Total rewards",
+      "element_ids": [
+        "ele_bw_framework_total_rewards",
+        "ele_bw_framework_total_rewards_variable",
+        "ele_bw_framework_total_rewards_variable_kinds",
+        "ele_bw_framework_total_rewards_variable_kinds_1",
+        "ele_bw_framework_total_rewards_variable_kinds_2",
+        "ele_bw_framework_total_rewards_variable_kinds_3",
+        "ele_bw_framework_total_rewards_variable_kinds_4",
+        "ele_bw_framework_trs",
+        "ele_bw_framework_trs_includes",
+        "ele_bw_framework_trs_includes_1",
+        "ele_bw_framework_trs_includes_2",
+        "ele_bw_framework_trs_includes_3",
+        "ele_bw_framework_trs_includes_4",
+        "ele_bw_framework_trs_includes_5",
+        "ele_bw_framework_trs_intl_note"
+      ],
+      "checks": [],
+      "from": "Total-rewards frame, variable-compensation kinds, then the Total Rewards Statement (what it includes, where it lives — Workday — and the international caveat, honesty the source itself carries). The abstract total-rewards purpose statement stays coverage. Serves obj_bw_emp_total_rewards; the TRS block also serves obj_bw_emp_find_resources."
+    },
+    {
+      "id": "performance_over_time",
+      "role": "topic",
+      "heading": "How performance moves pay over time",
+      "kicker": "Pay for performance",
+      "element_ids": [
+        "ele_bw_framework_p4p",
+        "ele_bw_framework_p4p_base_role",
+        "ele_bw_framework_p4p_annual_incentives",
+        "ele_bw_framework_p4p_merit",
+        "ele_bw_framework_p4p_achieve",
+        "ele_bw_framework_p4p_bpp"
+      ],
+      "checks": [],
+      "from": "Base salary vs. annual incentives, merit reviews, the Achieve link, and the BPP — the over-time story the employee LO names. Serves obj_bw_emp_perf_over_time. The two lesson-end invert-definition checks retrieve from this scene."
+    },
+    {
+      "id": "resources_and_eu",
+      "role": "topic",
+      "heading": "Where to learn more — and your EU rights",
+      "kicker": "Resources",
+      "element_ids": [
+        "ele_bw_framework_transparency_practices",
+        "ele_bw_framework_transparency_practices_practices",
+        "ele_bw_framework_transparency_practices_practices_4",
+        "ele_bw_faq_scope",
+        "ele_bw_eoc_euptd",
+        "ele_bw_eoc_euptd_right_to_info"
+      ],
+      "checks": [],
+      "from": "Employee-visibility practices (Workday, TRS, merit letters), the FAQ pointer, and the EU right-to-information — recognition-level, per the SOW's 'delivered separately' note on EUPTD detail. Practices items 1–3 (foundation / postings / town halls) stay coverage. Serves obj_bw_emp_find_resources and obj_bw_emp_eu_rights."
+    }
+  ],
+  "lesson_end_check_ids": [
+    "ele_bw_framework_p4p_base_role__reinforce",
+    "ele_bw_framework_p4p_bpp__reinforce"
+  ],
+  "note": "Closed project catalog — the employee-awareness course design as data. ~46 of 70 occurrences on the spine; everything else is coverage, not deleted. Scene headings/kickers are authored designer copy; membership is refs only."
+}

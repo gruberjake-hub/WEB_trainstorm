@@ -1,0 +1,351 @@
+{
+  "store": "occurrences",
+  "project": "paytrans",
+  "policy": "v1_one_to_many_seed",
+  "default_move": "present",
+  "element_count": 70,
+  "generated_by": "tools/realize.py",
+  "realized_from": {
+    "atom_store": "cgen/brunswick/projects/paytrans/atoms.json",
+    "atom_count": 68,
+    "atoms_sha256": "sha256:73c60f694bf7c637e7cf819a7ca96d2ff7097fd7c75c39aeed9bc24c162da43f"
+  },
+  "one_to_many": {
+    "spec": "agents/realizer/one_to_many_v1.md",
+    "seeded_atom_count": 2,
+    "extra_count": 2,
+    "seed": [
+      {
+        "atom_id": "atom_bw_framework_p4p_base_role",
+        "extra_element_id": "ele_bw_framework_p4p_base_role__reinforce",
+        "move": "reinforce"
+      },
+      {
+        "atom_id": "atom_bw_framework_p4p_bpp",
+        "extra_element_id": "ele_bw_framework_p4p_bpp__reinforce",
+        "move": "reinforce"
+      }
+    ],
+    "note": "Small honest seed, not the whole SOP. Extra ele_ ids are stable. Re-run accretes missing extras and never drops existing extras, Cartographer bindings, or Couturier style. Extra reinforce occurrences project as a check from the atom (agents/realizer/check_v1.md)."
+  },
+  "instance_example": {
+    "spec": "agents/realizer/instance_example_v1.md",
+    "policy": "v1_instance_example_seed",
+    "store": "alsap_asp9999",
+    "seed": [],
+    "note": "Procedure A has no honest match in the instance store (plan-development acts vs filled AST-34037 values). Two cited atoms illustrate the ALSAP generally: BR profile + rationale. composed_from points at the instance atom_id. Meaning catalog joins the sibling store; SOP atoms.json is not copied into."
+  },
+  "form_field_present": {
+    "spec": "agents/realizer/form_field_present_v1.md",
+    "policy": "v1_form_field_present_seed",
+    "store": "alsap",
+    "seed": [],
+    "note": "The two instance examples instantiate exactly these FORM-AST-34037 fields (BR profile + rationale). Guest ele_ records composed_from the form atom_id. Not a form dump. Not f_br_guidance or phrasing cousins. Meaning catalog joins the sibling alsap store; SOP and form atoms.json are not copied into."
+  },
+  "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). A small form-field present seed mints guest ele_ records whose composed_from is an alsap form atom_id (agents/realizer/form_field_present_v1.md). A small instance-example seed mints guest ele_ records whose composed_from is an alsap_asp9999 atom_id (agents/realizer/instance_example_v1.md). Cartographer owns occurrence intent; Couturier owns expression style. Realizer binds compiler primitives (text_primitive) from atom kind + move (agents/realizer/primitives_v1.md). Spine is a documented selection of existing ele_ records (agents/realizer/spine_v1.md); the full dump is coverage. Check shapes (invert_definition, sequence_order, closed_choice) live on ext.check / manifest.checks (vocab/check-shape.enum.json). Scene records (id, title heuristic, ordered ele_ refs) live on spine.scenes / ext.scene (vocab/scene.enum.json), stamped from the project catalog (occurrences/scenes.json) when present. The lesson record (id, title heuristic, scene id refs) lives on manifest.lessons (agents/realizer/lesson_v1.md), stamped from the project catalog (occurrences/lessons.json) when present, and points at spine.scenes \u2014 not a Course ele_, not a LMS. Procedure A sequence_order is projector-only of those four presents; composing it from one atom would be a lie. closed_choice is projector-only of the form present + instance fill (options_ref ids; key = selected_value); composing from only one of those two atoms would hide the other half. A re-realize preserves extras, intent, style, and recomputes the same spine, primitives, check shapes, stamps scene records from the catalog (or the heuristic if none), and stamps lesson records from the catalog (HTML derived from lesson_id).",
+  "cartographer": {
+    "policy": "v1_heuristic_compiler",
+    "tool": "tools/cartographer.py",
+    "heuristic": "agents/cartographer/heuristic_v1.md",
+    "move_counts": {
+      "activate": 5,
+      "hook": 1,
+      "objective": 1,
+      "present": 61,
+      "reinforce": 2
+    },
+    "teaches_bound": 56,
+    "low_confidence": 13,
+    "element_count": 70,
+    "ontology": "ontology/objectives.json",
+    "note": "v1 compiler pass over Realizer occurrences, including extra 1:many records. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Extra occurrences keep Realizer-stamped move. Couturier owns expression style; this tool does not wipe it. After writing move, Realizer refreshes text_primitive (compiler form). Lesson spine is Realizer projection (agents/realizer/spine_v1.md); this tool does not own sequence. Does not wipe ext.check, ext.scene, or manifest.lessons. Re-stamps scene records from the project catalog (occurrences/scenes.json) when present. Re-stamps lesson records from the project catalog (occurrences/lessons.json) when present."
+  },
+  "couturier": {
+    "policy": "v1_move_to_look",
+    "tool": "tools/couturier.py",
+    "spec": "agents/couturier/style_map_v1.md",
+    "look_counts": {
+      "brand.instructional": 61,
+      "brand.opening": 1,
+      "brand.prior": 5,
+      "brand.purpose": 1,
+      "brand.recall": 2
+    },
+    "dressed": 70,
+    "unmapped": 0,
+    "element_count": 70,
+    "registry": "vocab/primitives.registry.json",
+    "note": "v1 map from occurrence move to expression style keys. Couturier mints no ids, does not rewrite atoms or intent, and does not bind motion / layout_primitive / interaction_primitive. Realizer owns text_primitive (compiler form); this tool preserves it and writes style_ref / content_role / layout_hint. HTML reads these keys for clothes; meaning stays on the atom. Lesson spine is Realizer projection; this tool does not pick the path. Does not wipe manifest.lessons. Re-stamps scene records from the project catalog (occurrences/scenes.json) when present. Re-stamps lesson records from the project catalog (occurrences/lessons.json) when present."
+  },
+  "spine": {
+    "policy": "v1_front_matter_callout_procedure_sequence_form_example_then_checks",
+    "spec": "agents/realizer/spine_v1.md",
+    "element_ids": [
+      "ele_bw_guide_commitment",
+      "ele_bw_guide_commitment_laws",
+      "ele_bw_guide_commitment_postings",
+      "ele_bw_guide_commitment_trust",
+      "ele_bw_guide_philosophy",
+      "ele_bw_guide_philosophy_benchmarking",
+      "ele_bw_guide_philosophy_benchmarking_how",
+      "ele_bw_guide_philosophy_equity",
+      "ele_bw_guide_philosophy_equity_how",
+      "ele_bw_guide_philosophy_p4p",
+      "ele_bw_guide_philosophy_p4p_how",
+      "ele_bw_guide_base_pay",
+      "ele_bw_guide_base_pay_grades",
+      "ele_bw_guide_base_pay_zones",
+      "ele_bw_guide_base_pay_range",
+      "ele_bw_guide_base_pay_range_positions",
+      "ele_bw_guide_base_pay_range_positions_low",
+      "ele_bw_guide_base_pay_range_positions_mid",
+      "ele_bw_guide_base_pay_range_positions_high",
+      "ele_bw_guide_stewardship",
+      "ele_bw_guide_stewardship_activities",
+      "ele_bw_guide_stewardship_activities_2",
+      "ele_bw_guide_stewardship_activities_3",
+      "ele_bw_framework_total_rewards",
+      "ele_bw_framework_total_rewards_variable",
+      "ele_bw_framework_total_rewards_variable_kinds",
+      "ele_bw_framework_total_rewards_variable_kinds_1",
+      "ele_bw_framework_total_rewards_variable_kinds_2",
+      "ele_bw_framework_total_rewards_variable_kinds_3",
+      "ele_bw_framework_total_rewards_variable_kinds_4",
+      "ele_bw_framework_trs",
+      "ele_bw_framework_trs_includes",
+      "ele_bw_framework_trs_includes_1",
+      "ele_bw_framework_trs_includes_2",
+      "ele_bw_framework_trs_includes_3",
+      "ele_bw_framework_trs_includes_4",
+      "ele_bw_framework_trs_includes_5",
+      "ele_bw_framework_trs_intl_note",
+      "ele_bw_framework_p4p",
+      "ele_bw_framework_p4p_base_role",
+      "ele_bw_framework_p4p_annual_incentives",
+      "ele_bw_framework_p4p_merit",
+      "ele_bw_framework_p4p_achieve",
+      "ele_bw_framework_p4p_bpp",
+      "ele_bw_framework_transparency_practices",
+      "ele_bw_framework_transparency_practices_practices",
+      "ele_bw_framework_transparency_practices_practices_4",
+      "ele_bw_faq_scope",
+      "ele_bw_eoc_euptd",
+      "ele_bw_eoc_euptd_right_to_info",
+      "ele_bw_framework_p4p_base_role__reinforce",
+      "ele_bw_framework_p4p_bpp__reinforce"
+    ],
+    "count": 52,
+    "store_count": 70,
+    "note": "Selection of existing ele_ records in teachable order: document-root opening, why-this activate callout of purpose, teachable front-matter primaries (object.order), the first real procedure\u2019s non-thin procedure_step children as a job sequence (not thin A/B/C headings, not B/C), then the two FORM-AST-34037 BR-field presents those instance examples fill (alsap atoms via composed_from), then a small instance-example seed (alsap_asp9999 atoms via composed_from \u2014 Procedure A has no honest match; these illustrate the ALSAP generally), then existing reinforce extras. Spine projector renders compiler primitives (callout / step list / heading / body / check) plus a sequence practice of the Procedure A presents (projector-only; no extra ele_) plus a closed-choice of the BR profile fill after the form presents and instance examples (projector-only; options_ref value ids; no extra ele_) plus present clothes on the form-field beats and exemplify clothes on the instance beats; coverage dump stays card-like. Scene records (spine.scenes / ext.scene) group those existing beats from SOP/form roles \u2014 first-class on the graph, not chrome rediscovery. Scene records come from the project catalog (occurrences/scenes.json) when present; spine.scenes is the stamped runtime view. A lesson record (manifest.lessons) points at those scene ids; the projector reads the lesson node, not a hard-coded ALSAP trio. Lesson records come from the project catalog (occurrences/lessons.json) when present. Player chrome pages that list one named scene at a time (Next/Back); lesson-end checks are a final step, not a fourth scene. Not an LLM path and not a full object-tree walk.",
+    "scenes": {
+      "policy": "v1_scenes_on_graph",
+      "heuristic": "v1_three_scenes_from_roles",
+      "spec": "agents/realizer/scenes_v1.md",
+      "vocab": "vocab/scene.enum.json",
+      "scenes": [
+        {
+          "id": "why_pay_ranges",
+          "role": "front_matter",
+          "heading": "Why you're seeing pay ranges",
+          "kicker": "Why this",
+          "element_ids": [
+            "ele_bw_guide_commitment",
+            "ele_bw_guide_commitment_laws",
+            "ele_bw_guide_commitment_postings",
+            "ele_bw_guide_commitment_trust"
+          ],
+          "checks": [],
+          "from": "Opening: the corpus's commitment framing \u2014 new state laws, ranges on all U.S. postings, transparency-builds-trust. The commitment section is the elected hook (intent_map): its sentence is employee-facing, where the guide document root's title is manager-facing copy and stays coverage. Serves orientation; binds no objective."
+        },
+        {
+          "id": "how_pay_is_determined",
+          "role": "topic",
+          "heading": "How pay is determined",
+          "kicker": "The philosophy",
+          "element_ids": [
+            "ele_bw_guide_philosophy",
+            "ele_bw_guide_philosophy_benchmarking",
+            "ele_bw_guide_philosophy_benchmarking_how",
+            "ele_bw_guide_philosophy_equity",
+            "ele_bw_guide_philosophy_equity_how",
+            "ele_bw_guide_philosophy_p4p",
+            "ele_bw_guide_philosophy_p4p_how",
+            "ele_bw_guide_base_pay",
+            "ele_bw_guide_base_pay_grades",
+            "ele_bw_guide_base_pay_zones",
+            "ele_bw_guide_base_pay_range",
+            "ele_bw_guide_base_pay_range_positions",
+            "ele_bw_guide_base_pay_range_positions_low",
+            "ele_bw_guide_base_pay_range_positions_mid",
+            "ele_bw_guide_base_pay_range_positions_high",
+            "ele_bw_guide_stewardship",
+            "ele_bw_guide_stewardship_activities",
+            "ele_bw_guide_stewardship_activities_2",
+            "ele_bw_guide_stewardship_activities_3"
+          ],
+          "checks": [],
+          "from": "The three philosophy principles with their explanations, then how base pay is set (grades, zones, min/mid/max, typical range positions), then two enterprise-stewardship activities that show the factors are actively maintained (market surveys, role analyses). Stewardship items 1/4/5 stay coverage \u2014 manager-planning flavored. Serves obj_bw_emp_pay_factors."
+        },
+        {
+          "id": "base_pay_in_total_rewards",
+          "role": "topic",
+          "heading": "Base pay is one part of total rewards",
+          "kicker": "Total rewards",
+          "element_ids": [
+            "ele_bw_framework_total_rewards",
+            "ele_bw_framework_total_rewards_variable",
+            "ele_bw_framework_total_rewards_variable_kinds",
+            "ele_bw_framework_total_rewards_variable_kinds_1",
+            "ele_bw_framework_total_rewards_variable_kinds_2",
+            "ele_bw_framework_total_rewards_variable_kinds_3",
+            "ele_bw_framework_total_rewards_variable_kinds_4",
+            "ele_bw_framework_trs",
+            "ele_bw_framework_trs_includes",
+            "ele_bw_framework_trs_includes_1",
+            "ele_bw_framework_trs_includes_2",
+            "ele_bw_framework_trs_includes_3",
+            "ele_bw_framework_trs_includes_4",
+            "ele_bw_framework_trs_includes_5",
+            "ele_bw_framework_trs_intl_note"
+          ],
+          "checks": [],
+          "from": "Total-rewards frame, variable-compensation kinds, then the Total Rewards Statement (what it includes, where it lives \u2014 Workday \u2014 and the international caveat, honesty the source itself carries). The abstract total-rewards purpose statement stays coverage. Serves obj_bw_emp_total_rewards; the TRS block also serves obj_bw_emp_find_resources."
+        },
+        {
+          "id": "performance_over_time",
+          "role": "topic",
+          "heading": "How performance moves pay over time",
+          "kicker": "Pay for performance",
+          "element_ids": [
+            "ele_bw_framework_p4p",
+            "ele_bw_framework_p4p_base_role",
+            "ele_bw_framework_p4p_annual_incentives",
+            "ele_bw_framework_p4p_merit",
+            "ele_bw_framework_p4p_achieve",
+            "ele_bw_framework_p4p_bpp"
+          ],
+          "checks": [],
+          "from": "Base salary vs. annual incentives, merit reviews, the Achieve link, and the BPP \u2014 the over-time story the employee LO names. Serves obj_bw_emp_perf_over_time. The two lesson-end invert-definition checks retrieve from this scene."
+        },
+        {
+          "id": "resources_and_eu",
+          "role": "topic",
+          "heading": "Where to learn more \u2014 and your EU rights",
+          "kicker": "Resources",
+          "element_ids": [
+            "ele_bw_framework_transparency_practices",
+            "ele_bw_framework_transparency_practices_practices",
+            "ele_bw_framework_transparency_practices_practices_4",
+            "ele_bw_faq_scope",
+            "ele_bw_eoc_euptd",
+            "ele_bw_eoc_euptd_right_to_info"
+          ],
+          "checks": [],
+          "from": "Employee-visibility practices (Workday, TRS, merit letters), the FAQ pointer, and the EU right-to-information \u2014 recognition-level, per the SOW's 'delivered separately' note on EUPTD detail. Practices items 1\u20133 (foundation / postings / town halls) stay coverage. Serves obj_bw_emp_find_resources and obj_bw_emp_eu_rights."
+        }
+      ],
+      "lesson_end_checks": [
+        "ele_bw_framework_p4p_base_role__reinforce",
+        "ele_bw_framework_p4p_bpp__reinforce"
+      ],
+      "paging": {
+        "policy": "v1_one_scene_at_a_time",
+        "spec": "agents/realizer/scenes_v1.md",
+        "scene_count": 5,
+        "step_count": 6,
+        "lesson_end_is_final_step": true,
+        "note": "Player UX on the first-class scene list: one named scene at a time, Next/Back. Definition/purpose checks are a final step after the last scene, not a fourth named scene. Hash is optional. Same membership. Coverage dump stays unpaged."
+      },
+      "note": "First-class scene records: ordered ele_ refs plus in-scene check-shape refs. Source of truth is the project catalog (occurrences/scenes.json); this block is the stamped runtime view. Adding a scene is appending a catalog record (id, title heuristic/ref, ordered element_ids, in-scene checks). Lessons point at scene_ids only. Projector reads this list to wrap/page; it does not re-discover scenes by if-atom-id. Definition/purpose checks stay at lesson end. Not an LLM. Not outcome language. Coverage dump stays ungrouped.",
+      "catalog": {
+        "see": "occurrences/scenes.json",
+        "policy": "v1_scene_catalog"
+      }
+    }
+  },
+  "lessons": {
+    "policy": "v1_lesson_on_graph",
+    "spec": "agents/realizer/lesson_v1.md",
+    "default": "bw_paytrans_employee",
+    "lessons": [
+      {
+        "lesson_id": "bw_paytrans_employee",
+        "title": "Pay Transparency at Brunswick \u2014 How Your Pay Is Determined",
+        "title_from": "atom_bw_guide_commitment",
+        "scenes": {
+          "see": "spine.scenes"
+        },
+        "scene_ids": [
+          "why_pay_ranges",
+          "how_pay_is_determined",
+          "base_pay_in_total_rewards",
+          "performance_over_time",
+          "resources_and_eu"
+        ],
+        "lesson_end_checks": {
+          "see": "spine.scenes.lesson_end_checks"
+        },
+        "lesson_end_check_ids": [
+          "ele_bw_framework_p4p_base_role__reinforce",
+          "ele_bw_framework_p4p_bpp__reinforce"
+        ],
+        "paging": {
+          "see": "spine.scenes.paging"
+        },
+        "default": true,
+        "projection": "realized_lesson.json",
+        "from": "The optional ~10-minute employee awareness course (SOW \u00a73.2), serving the five validated obj_bw_emp_* objectives. Title is authored designer copy \u2014 a four-root corpus has no single document-root to name it (the guide root is a manager-facing title). Manager course is drive two, this catalog, new record."
+      }
+    ],
+    "note": "First-class lesson records: id, title heuristic, ordered scene id refs into spine.scenes, lesson-end ele_ refs, paging pointer. Projector reads the selected lesson (default or --lesson) to wrap/page; it does not assume the ALSAP trio. Source of truth is the project catalog (occurrences/lessons.json); this block is the stamped runtime view. Adding a lesson is appending a catalog record. Not a LMS. Not SCORM. Not a Course ele_. Coverage dump stays a second projection, not a lesson node.",
+    "catalog": {
+      "see": "occurrences/lessons.json",
+      "policy": "v1_lesson_catalog"
+    }
+  },
+  "checks": {
+    "policy": "v1_check_shapes_on_graph",
+    "spec": "agents/realizer/check_v1.md",
+    "vocab": "vocab/check-shape.enum.json",
+    "checks": [
+      {
+        "shape": "invert_definition",
+        "host_element_id": "ele_bw_framework_p4p_base_role__reinforce",
+        "operands": {
+          "key_atom_id": "atom_bw_framework_p4p_base_role",
+          "contrast_atom_ids": [
+            "atom_bw_framework_p4p_annual_incentives",
+            "atom_bw_framework_p4p_merit"
+          ],
+          "host_element_id": "ele_bw_framework_p4p_base_role__reinforce"
+        }
+      },
+      {
+        "shape": "invert_definition",
+        "host_element_id": "ele_bw_framework_p4p_bpp__reinforce",
+        "operands": {
+          "key_atom_id": "atom_bw_framework_p4p_bpp",
+          "contrast_atom_ids": [
+            "atom_bw_framework_p4p_base_role",
+            "atom_bw_framework_p4p_annual_incentives"
+          ],
+          "host_element_id": "ele_bw_framework_p4p_bpp__reinforce"
+        }
+      }
+    ],
+    "note": "Closed shapes on the graph. Projector reads these records (and ext.check on host ele_ records). Operands are refs \u2014 atoms, ele_, options_ref, object.order \u2014 not copied option strings. invert_definition hosts on extra reinforce; sequence_order is projector-only of the Procedure A presents; closed_choice is projector-only of the form present + instance fill (options_ref value ids; key = selected_value)."
+  },
+  "primitives": {
+    "policy": "v1_atom_to_primitive",
+    "spec": "agents/realizer/primitives_v1.md",
+    "owner": "realizer",
+    "counts": {
+      "tp_body": 61,
+      "tp_callout": 5,
+      "tp_display": 1,
+      "tp_purpose": 1,
+      "tp_recall": 2
+    },
+    "note": "Closed compiler form on the occurrence (heading/body/step/callout/check). Realizer binds text_primitive from atom kind + occurrence move. Couturier still owns style_ref."
+  }
+}

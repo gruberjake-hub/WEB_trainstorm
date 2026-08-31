@@ -1,0 +1,308 @@
+{
+  "store": "intent_map",
+  "project": "paytrans",
+  "policy": "v1_intent_map",
+  "spec": "agents/cartographer/heuristic_v2_expository.md",
+  "map": {
+    "atom_bw_guide_philosophy": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_philosophy_benchmarking": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_philosophy_benchmarking_how": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_philosophy_equity": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_philosophy_equity_how": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_philosophy_p4p": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_philosophy_p4p_how": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_base_pay": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_base_pay_grades": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_base_pay_zones": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_base_pay_range": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_base_pay_range_positions": {
+      "teaches": [
+        "obj_bw_emp_pay_factors",
+        "obj_bw_emp_perf_over_time"
+      ],
+      "why": "Range position encodes both the factors and the over-time story (tenure, performance, growth)."
+    },
+    "atom_bw_guide_base_pay_range_positions_low": {
+      "teaches": [
+        "obj_bw_emp_pay_factors",
+        "obj_bw_emp_perf_over_time"
+      ],
+      "why": "Range position encodes both the factors and the over-time story (tenure, performance, growth)."
+    },
+    "atom_bw_guide_base_pay_range_positions_mid": {
+      "teaches": [
+        "obj_bw_emp_pay_factors",
+        "obj_bw_emp_perf_over_time"
+      ],
+      "why": "Range position encodes both the factors and the over-time story (tenure, performance, growth)."
+    },
+    "atom_bw_guide_base_pay_range_positions_high": {
+      "teaches": [
+        "obj_bw_emp_pay_factors",
+        "obj_bw_emp_perf_over_time"
+      ],
+      "why": "Range position encodes both the factors and the over-time story (tenure, performance, growth)."
+    },
+    "atom_bw_guide_stewardship": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_stewardship_activities": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_stewardship_activities_1": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_stewardship_activities_2": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_stewardship_activities_3": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_stewardship_activities_4": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_guide_stewardship_activities_5": {
+      "teaches": [
+        "obj_bw_emp_pay_factors"
+      ]
+    },
+    "atom_bw_framework_total_rewards": {
+      "teaches": [
+        "obj_bw_emp_total_rewards"
+      ]
+    },
+    "atom_bw_framework_total_rewards_purpose": {
+      "teaches": [
+        "obj_bw_emp_total_rewards"
+      ]
+    },
+    "atom_bw_framework_total_rewards_variable": {
+      "teaches": [
+        "obj_bw_emp_total_rewards"
+      ]
+    },
+    "atom_bw_framework_total_rewards_variable_kinds": {
+      "teaches": [
+        "obj_bw_emp_total_rewards"
+      ]
+    },
+    "atom_bw_framework_total_rewards_variable_kinds_1": {
+      "teaches": [
+        "obj_bw_emp_total_rewards"
+      ]
+    },
+    "atom_bw_framework_total_rewards_variable_kinds_2": {
+      "teaches": [
+        "obj_bw_emp_total_rewards"
+      ]
+    },
+    "atom_bw_framework_total_rewards_variable_kinds_3": {
+      "teaches": [
+        "obj_bw_emp_total_rewards"
+      ]
+    },
+    "atom_bw_framework_total_rewards_variable_kinds_4": {
+      "teaches": [
+        "obj_bw_emp_total_rewards"
+      ]
+    },
+    "atom_bw_framework_trs": {
+      "teaches": [
+        "obj_bw_emp_total_rewards",
+        "obj_bw_emp_find_resources"
+      ],
+      "why": "The TRS is both the total-rewards picture and the where-to-look resource (Workday)."
+    },
+    "atom_bw_framework_trs_includes": {
+      "teaches": [
+        "obj_bw_emp_total_rewards",
+        "obj_bw_emp_find_resources"
+      ],
+      "why": "The TRS is both the total-rewards picture and the where-to-look resource (Workday)."
+    },
+    "atom_bw_framework_trs_includes_1": {
+      "teaches": [
+        "obj_bw_emp_total_rewards",
+        "obj_bw_emp_find_resources"
+      ],
+      "why": "The TRS is both the total-rewards picture and the where-to-look resource (Workday)."
+    },
+    "atom_bw_framework_trs_includes_2": {
+      "teaches": [
+        "obj_bw_emp_total_rewards",
+        "obj_bw_emp_find_resources"
+      ],
+      "why": "The TRS is both the total-rewards picture and the where-to-look resource (Workday)."
+    },
+    "atom_bw_framework_trs_includes_3": {
+      "teaches": [
+        "obj_bw_emp_total_rewards",
+        "obj_bw_emp_find_resources"
+      ],
+      "why": "The TRS is both the total-rewards picture and the where-to-look resource (Workday)."
+    },
+    "atom_bw_framework_trs_includes_4": {
+      "teaches": [
+        "obj_bw_emp_total_rewards",
+        "obj_bw_emp_find_resources"
+      ],
+      "why": "The TRS is both the total-rewards picture and the where-to-look resource (Workday)."
+    },
+    "atom_bw_framework_trs_includes_5": {
+      "teaches": [
+        "obj_bw_emp_total_rewards",
+        "obj_bw_emp_find_resources"
+      ],
+      "why": "The TRS is both the total-rewards picture and the where-to-look resource (Workday)."
+    },
+    "atom_bw_framework_trs_intl_note": {
+      "teaches": [
+        "obj_bw_emp_total_rewards",
+        "obj_bw_emp_find_resources"
+      ],
+      "why": "The TRS is both the total-rewards picture and the where-to-look resource (Workday)."
+    },
+    "atom_bw_framework_p4p": {
+      "teaches": [
+        "obj_bw_emp_perf_over_time"
+      ]
+    },
+    "atom_bw_framework_p4p_base_role": {
+      "teaches": [
+        "obj_bw_emp_perf_over_time"
+      ]
+    },
+    "atom_bw_framework_p4p_annual_incentives": {
+      "teaches": [
+        "obj_bw_emp_perf_over_time"
+      ]
+    },
+    "atom_bw_framework_p4p_merit": {
+      "teaches": [
+        "obj_bw_emp_perf_over_time"
+      ]
+    },
+    "atom_bw_framework_p4p_achieve": {
+      "teaches": [
+        "obj_bw_emp_perf_over_time"
+      ]
+    },
+    "atom_bw_framework_p4p_bpp": {
+      "teaches": [
+        "obj_bw_emp_perf_over_time"
+      ]
+    },
+    "atom_bw_framework_transparency_practices": {
+      "teaches": [
+        "obj_bw_emp_find_resources"
+      ]
+    },
+    "atom_bw_framework_transparency_practices_practices": {
+      "teaches": [
+        "obj_bw_emp_find_resources"
+      ]
+    },
+    "atom_bw_framework_transparency_practices_practices_1": {
+      "teaches": [
+        "obj_bw_emp_find_resources"
+      ]
+    },
+    "atom_bw_framework_transparency_practices_practices_2": {
+      "teaches": [
+        "obj_bw_emp_find_resources"
+      ]
+    },
+    "atom_bw_framework_transparency_practices_practices_3": {
+      "teaches": [
+        "obj_bw_emp_find_resources"
+      ]
+    },
+    "atom_bw_framework_transparency_practices_practices_4": {
+      "teaches": [
+        "obj_bw_emp_find_resources"
+      ]
+    },
+    "atom_bw_faq_scope": {
+      "teaches": [
+        "obj_bw_emp_find_resources"
+      ]
+    },
+    "atom_bw_eoc_euptd": {
+      "teaches": [
+        "obj_bw_emp_eu_rights"
+      ]
+    },
+    "atom_bw_eoc_euptd_jobseekers": {
+      "teaches": [
+        "obj_bw_emp_eu_rights"
+      ]
+    },
+    "atom_bw_eoc_euptd_right_to_info": {
+      "teaches": [
+        "obj_bw_emp_eu_rights"
+      ]
+    },
+    "atom_bw_guide_commitment": {
+      "teaches": [],
+      "move": "hook",
+      "why": "The elected lesson opening — employee-facing commitment sentence; one hook per lesson. The four document roots all stay present/coverage (the guide root's title is manager-facing)."
+    }
+  },
+  "note": "Designer objective bindings as project data (Cartographer heuristic v2). Cartographer stays the single writer of the intent facet; this file is its governed input, validated against ontology/objectives.json and the closed move vocab on load. Atoms absent here keep heuristic bindings — commitment statements, the guide calendar, the EOC definitions list, and three document roots are deliberately unbound (orientation/context, not objective-bearing), which the teaches_unbound flag reports honestly."
+}

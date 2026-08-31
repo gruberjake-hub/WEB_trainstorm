@@ -13,6 +13,74 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (hop three) — The employee course EXISTS: five scenes, two checks, played from the graph. Cartographer heuristic v2 (expository kinds + intent_map as project data); scene.v2 adds `topic`; existing stores proven byte-identical.
+
+*Anchor: branch `drive/brunswick-paytrans-course` off `0832c53` (PR #46). Verification at delivery:
+paytrans GATE/PROMOTE PASS (68 atoms), elements 70/70 vs element.schema.json, validate_objectives
+ALL PASS, realize/cartographer/couturier selftests ALL PASS on default AND both astellas projects,
+lint 0 errors, form/instance/socket 17/17·17/17·21/21 — and the decisive one: regenerating
+ast_alsap and ast_artwork under the new code produced a 0-line diff (no intent_map file = v1
+behavior, byte for byte).*
+
+### What ran
+
+`realize → cartographer → couturier` on the first expository store. 70 occurrences (68 primaries +
+2 reinforce extras), spine 52 of 70 across five authored scenes, moves
+{hook 1 · objective 1 · present 61 · activate 5 · reinforce 2}, teaches bound on 56, all five
+looks dressed, two lesson-end `invert_definition` checks with real sibling contrasts, and
+`realized_lesson.json` carrying `meta.theme: brunswick` — the brand pack the repo has held since
+January finally has a consumer. The course design itself lives entirely in FOUR project-data files:
+`scenes.json` (five scenes, ordered refs), `lessons.json` (authored title — a four-root corpus has
+no single document root to name it), `one_to_many_seed.json` (two extras), and the new
+`intent_map.json`.
+
+### Heuristic v2 — the two v1 assumptions the corpus broke
+
+**"No belongs_to → hook" assumed one root.** Four document roots here; which one opens the lesson
+is course design, not structure. New rule: `kind document → present/low`, and the **intent_map
+elects at most one hook** (loader rejects two — a lesson opens once). First election taught its own
+lesson: the guide root's title is *manager-facing* copy ("Manager's Guide to…"), wrong as an
+employee course opening; the commitment sentence is the honest hook. The heuristic could never have
+known that. That is exactly the designer/compiler boundary working.
+
+**`bind_teaches` was ALSAP-hardcoded Python.** The same shape the 08-27 catalog decisions retired
+for scenes and lessons, now retired for intent: `occurrences/intent_map.json` carries the
+designer's objective bindings (55 entries here, each validated against the ontology and the closed
+move vocab on load). Cartographer remains the intent facet's single writer; the map is its governed
+input. Confidence subtlety worth keeping: the v1 walk demoted every off-ALSAP atom to `low` purely
+for `teaches_unbound`; when the map binds teaches, the classifier's own confidence is restored —
+low-confidence dropped 69 → 13, and the 13 that remain are honest (document roots, definitions,
+deliberately unbound orientation atoms). Spec: `agents/cartographer/heuristic_v2_expository.md`.
+
+### scene.v2 and the selftest that rotted on schedule
+
+`vocab/scene.enum.json` v2 adds one role, `topic` (authored expository grouping; heading/kicker are
+designer copy from the record, like every scene heading). realize's role mirror caught the bump
+exactly as built — and its selftest then FAILED because the case asserted the three SOP roles as
+the whole list. **Third recurrence of the 08-20 rot** (reg_benefit_risk_profile, then `serves`,
+now scene roles): a governed-list bump breaks the test that pinned the list's contents. Repaired to
+assert the rule (SOP trio still governed ⊆ SCENE_ROLES; every used role governed), with the
+recurrence noted in the test comment itself.
+
+### Checks — what was refused
+
+Only two atoms carry honest copulas ("Base salary is…", "The BPP is…"); both became lesson-end
+invert-definition checks retrieving from the performance scene. The colon-form definitions
+(Pay Equity / Pay Transparency / Pay Gap Reporting) were **not** seeded: `copula_parts` cannot
+invert "X: Y" and a rewritten stem would be invented copy. If those checks are wanted, the honest
+path is extending `copula_parts` to colon definitions as its own decided hop — flagged, not done.
+
+### Open / next
+
+Jake reacts to `realized_lesson.html` (nothing is locked — scenes, order, membership, title are all
+project data he can redraft in review). Then hop four: `/cgen?project=paytrans` needs only the
+landed store — the loader already takes `?project=`, and `meta.theme: brunswick` resolves the
+existing brand pack; verify live and score. Hop five: ratify the projection as
+`brunswick.reference.course` and run the artisan-control side-by-side. Carries: colon-copula
+extension; the `objective` move on `atom_bw_framework_total_rewards_purpose` (heuristic
+purpose-frame match on a coverage atom — harmless, flagged here rather than special-cased); the
+manager course as drive two.
+
 ## 2026-08-31 (objective lock) — RATIFIED: goal_bw_pay_understood and all five obj_bw_emp_* go `validated`. The promotion gate is exercised by live nodes for the first time.
 
 *Jake's ratification, given in conversation after reading the goal, the four not_trainable causes,

@@ -1,0 +1,15 @@
+{
+  "policy": "v1_one_to_many_seed",
+  "project": "paytrans",
+  "seed": [
+    {
+      "atom_id": "atom_bw_framework_p4p_base_role",
+      "move": "reinforce"
+    },
+    {
+      "atom_id": "atom_bw_framework_p4p_bpp",
+      "move": "reinforce"
+    }
+  ],
+  "note": "Employee-course extras only. Two honest copula definitions from the pay-for-performance scene get lesson-end invert-definition checks (base salary; the BPP), each retrieving the same atom the scene taught — 1:many as the instrument. The colon-form definitions (Pay Equity / Pay Transparency / Pay Gap Reporting) are NOT seeded: copula_parts cannot invert 'X: Y' and a rewritten stem would be invented copy. No hook extra: the guide root is elected hook by the intent_map, not doubled."
+}
