@@ -49,6 +49,8 @@ cgen/
 │   │                                               `/cgen/?project=ast_artwork` plays SOP-2290; `/cgen` stays ALSAP.)
 │   └── registry/{roles,records,docs,options}.registry.json  ✅ client-tier governed ENTRIES
 │
+├── sl/                                  ✅ player two — Storyline chrome on the same realized_lesson.json (`/cgen` remains stock)
+│
 └── trainstorm-core/                     # the build system itself (the tree below)
 ```
 

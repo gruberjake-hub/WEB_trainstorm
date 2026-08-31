@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Course Engine — Storyline player</title>
+  <!-- Stage components still wear engine + pack styles. Chrome lives here. -->
+  <link rel="stylesheet" href="../engine/styles.css" />
+  <link rel="stylesheet" href="./shell.css" />
+</head>
+<body>
+  <div id="app" class="app sl-player" aria-label="Storyline-shaped course player">
+    <header class="sl-topbar">
+      <div class="brand sl-brand">
+        <img id="brandLogo" alt="" hidden />
+        <div class="title" id="courseTitle">Course</div>
+      </div>
+    </header>
+
+    <div class="sl-body">
+      <aside class="sl-menu" aria-label="Menu">
+        <div class="sl-menu-kicker">MENU</div>
+        <p class="sl-menu-lesson" id="menuLessonTitle"></p>
+        <ol class="sl-outline" id="sceneMenu"></ol>
+      </aside>
+
+      <div class="sl-stage-wrap">
+        <main id="stage" class="stage" tabindex="-1"></main>
+      </div>
+    </div>
+
+    <div class="sl-dock">
+      <nav class="sl-pager" aria-label="Scene paging">
+        <button id="prevBtn" class="btn sl-nav" type="button">PREV</button>
+        <button id="nextBtn" class="btn sl-nav" type="button">NEXT</button>
+        <div class="progress sl-progress" aria-label="Progress">
+          <div id="progressText" class="progressText">0%</div>
+          <div class="progressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div id="progressFill" class="progressFill"></div>
+          </div>
+        </div>
+        <button id="submitBtn" class="btn sl-submit" type="button" hidden>Submit</button>
+      </nav>
+
+      <!-- Class footer is required: Runtime hide-VO looks for audioEl.closest(".footer"). -->
+      <footer class="footer sl-media" hidden>
+        <audio id="vo" preload="metadata"></audio>
+        <button id="playBtn" class="btn sl-media-btn" type="button" aria-label="Play">Play</button>
+        <input id="seek" class="sl-seek" type="range" min="0" max="0" value="0" step="0.1" aria-label="Seek" />
+        <span id="mediaTime" class="sl-time">0:00</span>
+        <label class="sl-vol-label">
+          <span class="sl-vol-text">Vol</span>
+          <input id="volume" class="sl-volume" type="range" min="0" max="1" step="0.05" value="1" aria-label="Volume" />
+        </label>
+        <button id="ccToggle" class="btn sl-media-btn" type="button" aria-pressed="true" hidden>CC</button>
+      </footer>
+    </div>
+  </div>
+
+  <script type="module" src="./player.js"></script>
+</body>
+</html>
