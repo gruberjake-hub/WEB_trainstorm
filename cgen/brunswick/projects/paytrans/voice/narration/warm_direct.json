@@ -1,0 +1,102 @@
+{
+ "narration_version": "narration.v0.1",
+ "register": "warm_direct",
+ "tracks": {
+  "why_pay_ranges": {
+   "text": "Welcome — this is about your pay: what's changing, how it's set, and what it means for you. Brunswick is committed to open, informed conversations about compensation — because transparency builds trust. In 2025, several U.S. states implement new pay transparency laws, requiring employers to disclose salary ranges and benefits in job postings or during the hiring process. And we're proud to be including salary ranges and benefits information in all our new job postings. We're preparing managers for open, informed conversations about compensation, too. So that's why you're seeing pay ranges — the way we talk about pay is changing.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "sources": {
+    "atom_bw_guide_commitment": "sha256:b7b34f92ab7553ba54df327c52935457d3ccd1da2a237702f9c08d8adedfaa6b",
+    "atom_bw_guide_commitment_laws": "sha256:b3959b625c6da235710a6c38b2e3b32dd6115664fc4b2555eb27df128dc326bb",
+    "atom_bw_guide_commitment_postings": "sha256:4a9da434135ebd7c3ff5df23df2bc5ae4aa0294c5975d283bb76a580328e86fa",
+    "atom_bw_guide_commitment_trust": "sha256:4b0069a43332bd9551f49bfe8bb1916ca05f6864e9937a96ae8b1b9f392069d6",
+    "bt_paytrans_welcome": "sha256:4d56ad90186a3c6c02b57508fc4ce6d336e466d9bc8c5209293f488e482913e9"
+   }
+  },
+  "how_pay_is_determined": {
+   "text": "How is pay determined at Brunswick? It starts with a compensation philosophy built on three commitments: set market-competitive compensation through benchmarking, balance external competitiveness with internal equity, and link pay to individual, team, and company performance. Accurate job descriptions keep roles aligned in compensation surveys, and market data from trusted sources is used to assess job value — but internal equity matters just as much. Your base pay lives inside a structure: 24 pay ranges, each closely tied to market rates, split across three geographic zones reflecting the cost of labor. Every grade has a minimum, midpoint, and maximum. Where people fall varies — newer in role tends lower, fully competent performers sit around the market median, and long-term, highly skilled, sustained performers sit higher. And behind all of it, the Compensation and Benefits team in Enterprise HR, partnered with division HR teams, keeps reviewing data and benchmarking so pay stays fair and competitive.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "sources": {
+    "atom_bw_guide_philosophy": "sha256:4d91d359954b6d96d3df13d938e275e47df8a2cc240017c3eafbed9051d154c7",
+    "atom_bw_guide_philosophy_benchmarking": "sha256:03467f65f66e982b07511af0d9a9feb8e4e0fb6bbd6964c34987d0cea0cca43a",
+    "atom_bw_guide_philosophy_benchmarking_how": "sha256:c2fabeb9c41fa7488a5c5f0f86bbeebff1680fd122e6026d7f548c399195a70d",
+    "atom_bw_guide_philosophy_equity": "sha256:6510637c7f3bca31f8547dde062ff8d61a92e32c095eac7a1a5416b99b60a922",
+    "atom_bw_guide_philosophy_equity_how": "sha256:5f1c41e5b996185a87b614157279e1ca8d57f9d8620ada85f05310efa8e252be",
+    "atom_bw_guide_philosophy_p4p": "sha256:a9d258d6479bbba4bc47fe3061875088d476011356a201f26eb4986232a7c73d",
+    "atom_bw_guide_philosophy_p4p_how": "sha256:a28ee0f1020824918392cc69b5bb43ebf49284e73de3738766078c52ca8ec394",
+    "atom_bw_guide_base_pay": "sha256:7005aaff82439861b9111f8d1517f6b01819ae703be3982d19b6e09d1eb23180",
+    "atom_bw_guide_base_pay_grades": "sha256:20831be783ef2536f96cbb6e526d110846d39e57ebf8352fe341aafc60f4d642",
+    "atom_bw_guide_base_pay_zones": "sha256:8a253df5ece71f6c6f67ab607a16f31900d964499e3a05f4caccd35f1bf94d70",
+    "atom_bw_guide_base_pay_range": "sha256:c9a59c9774a9d5dfecabbc3044a56d2229bf8c975d96c82eb6176210d6529c7d",
+    "atom_bw_guide_base_pay_range_positions": "sha256:21dccfaa50420a6d1e4189ab4974301e6c746e5af52a99ab1d6307c7c556f724",
+    "atom_bw_guide_base_pay_range_positions_low": "sha256:03f7fc37d868cf4e4f07ec0d522a8f6e8bea7bbfcbe5ed6aa9c7a33d9e189c9d",
+    "atom_bw_guide_base_pay_range_positions_mid": "sha256:4e43401e2f1cb6ad899a734d6905469ad59bb40534b05cc5dc99a1cc6c66fd72",
+    "atom_bw_guide_base_pay_range_positions_high": "sha256:4f3e3d95581ef5121566a3442021e47653932e74e90a9eeac7e8b0ef40336556",
+    "atom_bw_guide_stewardship": "sha256:ea6a107f872cd0922bc5604c23e6a627bdbfb98a08a666b8c0aa510c5477c039",
+    "atom_bw_guide_stewardship_activities": "sha256:4f789e5b9c154844dab16722b0991c59b5ae7412f1c98db3394593e38098151f",
+    "atom_bw_guide_stewardship_activities_2": "sha256:bb9fbce60ec90d3a2f36e946c3a8c0cf8851a0da960a013207167a7471cbe391",
+    "atom_bw_guide_stewardship_activities_3": "sha256:4ede758ac4b3de8126d471d5e5df568c46743702ddd4fe59f5ed6430e5985335"
+   }
+  },
+  "base_pay_in_total_rewards": {
+   "text": "Base pay is one part of a bigger picture: total rewards. Your total compensation is more than a paycheck — it includes benefits, bonuses, and company-provided offerings. A portion of your pay is variable compensation, with targets set from competitive market data: annual incentives, the Brunswick Performance Plan, commissions for our employees who focus on sales, and long-term incentives, generally for leadership. As you move up through the organization, the mix shifts — less base, more variable. And you can see yours in one place: your Total Rewards Statement puts base pay, variable comp, benefits, and benefit incentives in one personalized snapshot, in Workday under the Benefits and Pay app. One note if you're an international employee: the statement doesn't currently capture every allowance and benefit.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "sources": {
+    "atom_bw_framework_total_rewards": "sha256:91998b7efbc43c2c1ee93205d15aa6b670f79eb1d9e167eb05b42dd39fa88ab3",
+    "atom_bw_framework_total_rewards_variable": "sha256:aefb5728f839be1e7826ee70785d09180c8b0637bbb1b960682a5a7dcb718596",
+    "atom_bw_framework_total_rewards_variable_kinds": "sha256:b0f119b1cd35e89ceb9641ca29552a4d9947f4abdb34e8fe6c3e26fb0d038a3c",
+    "atom_bw_framework_total_rewards_variable_kinds_1": "sha256:db98a103387d55906ba12daf00dd7356e45d9d5c6f875f0829bb5a5d568cdd98",
+    "atom_bw_framework_total_rewards_variable_kinds_2": "sha256:7f3b268f7591f2703c04db1245eed8720cc505869d0286761f8d50a78288d5f5",
+    "atom_bw_framework_total_rewards_variable_kinds_3": "sha256:e7e27e877f873caf03adc2385110036cb970ac8c053814af708900cc68974bce",
+    "atom_bw_framework_total_rewards_variable_kinds_4": "sha256:40a210635b914f113f63fa5383b8e977da7a2465bb1a0fd4bd63de5e9edbc534",
+    "atom_bw_framework_trs": "sha256:7ed82620e682bf7bcb5771aae02f8463dffdfaef859951cb2868756a2f541ef9",
+    "atom_bw_framework_trs_includes": "sha256:d32c4249c0d8d9f851013586d95650ad186e4bc3d7fb70fbb0352b30aaa2771e",
+    "atom_bw_framework_trs_includes_1": "sha256:b3911a97419ae7e83f422b9a734fd5f5c6abf4cb818fd7b4b330c59516a6d353",
+    "atom_bw_framework_trs_includes_2": "sha256:5e0ad8125afb0244be365b024a3dd378ef32a421a9020929632847a7cfe96238",
+    "atom_bw_framework_trs_includes_3": "sha256:133a673896a366c58463a55a18f406c55a452eba20b1eb6885f9a519c4a8f65a",
+    "atom_bw_framework_trs_includes_4": "sha256:f6a4d850f4c14b44908c52ff9ec2205232b0804922b3592b39f98925a089d6f7",
+    "atom_bw_framework_trs_includes_5": "sha256:a73e214221b41a54f870227f37e092b8fb8060c80f53583507f7e90a2b6b3e5b",
+    "atom_bw_framework_trs_intl_note": "sha256:2f0cb76c1d2f7589ccc3b863ff4b0f2e3d2dc35859e49ae805daf01c6ae16c7b"
+   }
+  },
+  "performance_over_time": {
+   "text": "So how does performance move your pay over time? Your base salary pays for the core expectations of your role. Annual incentives are the main way a year's accomplishments get rewarded — they measure performance against established business goals, and your individual performance links directly to your final payout. That payout starts with the plan formula, then moves up or down with your performance, as measured through Achieve. For most global salaried employees, the Brunswick Performance Plan — the BPP — is the key compensation tool behind our pay for performance culture, with your bonus target set by your salary grade. And salary and merit reviews keep it aligned: your performance in a given year, high or low, shapes your salary increase.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "sources": {
+    "atom_bw_framework_p4p": "sha256:1fa6643102a98974d4b9c50a7a16407dd64399cc42baa48a809183abc64d2a0e",
+    "atom_bw_framework_p4p_base_role": "sha256:8a060c9f3f54daf17a182a90cf89a636e1207fdaa227572f2592311e2a20b515",
+    "atom_bw_framework_p4p_annual_incentives": "sha256:da72d2f48ccbd63fa5c94bcf5d16a71afaa373d6f05996a2f3c2f8ce115b242f",
+    "atom_bw_framework_p4p_merit": "sha256:7ee60a2ab4ad53e1b08a1e9de232bd4184106f59b6feb918a7dc391937789671",
+    "atom_bw_framework_p4p_achieve": "sha256:60a1742d2ca775d5388b68706d0576e47f9003f583b9e9ce9b488caa82d6aa72",
+    "atom_bw_framework_p4p_bpp": "sha256:7edfdb19f7ffead6ef959ed2f5ea50308abc233b14423823957bf60e7aa9d746"
+   }
+  },
+  "resources_and_eu": {
+   "text": "Where can you learn more? We promote pay transparency through established practices — including employee visibility: your compensation details in Workday, your Total Rewards Statement, and merit and bonus letters with your annual performance review. Have questions about pay ranges in U.S. job postings? The Pay Transparency in U.S. job postings FAQ answers them, with disclosure requirements, timing, and effective dates for each jurisdiction. And if you're in the EU: the EU Pay Directive brings pay transparency measures aimed at reducing unexplained gender pay gaps, and all 27 EU member countries must adopt regulations by June 2026. That includes a right worth knowing — you can ask your employer about your own pay level, and about average pay levels, broken down by gender, for people doing the same work or work of equal value.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "sources": {
+    "atom_bw_framework_transparency_practices": "sha256:4e022009357ffb592b0263f605a64d93759676c490e0cd369fb2626695b2fec5",
+    "atom_bw_framework_transparency_practices_practices": "sha256:9cd7c448001fbf9edd505a57e8f3fd88180e09196871ba9cf838f734ee642ad9",
+    "atom_bw_framework_transparency_practices_practices_4": "sha256:d22f75ca758caec4300de98905fb938a8650911ca05439a6185561ce78a69a98",
+    "atom_bw_faq_scope": "sha256:ab36653b759c7202a3b51779ca809b7e5dc91cccb7a00ccc679468176c4d5999",
+    "atom_bw_eoc_euptd": "sha256:4e3a8d66531d30c523b5e3a5cb24da4861527edcc0dcf322cdfad417c713b069",
+    "atom_bw_eoc_euptd_right_to_info": "sha256:95fedd6a32a315fae2b7b4c2f9dc308f8e9441d4bf766e2f03512d590446e223"
+   }
+  },
+  "lesson_end": {
+   "text": "Before you finish, a couple of questions — just checking the key ideas. Take your time. And then: you're informed. You know how your pay is set and what's behind it — and that knowledge is yours to use.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "sources": {
+    "atom_bw_framework_p4p_base_role": "sha256:8a060c9f3f54daf17a182a90cf89a636e1207fdaa227572f2592311e2a20b515",
+    "atom_bw_framework_p4p_bpp": "sha256:7edfdb19f7ffead6ef959ed2f5ea50308abc233b14423823957bf60e7aa9d746",
+    "bt_paytrans_closure": "sha256:60fa04e1f250ac09a7408983378dd01557e0ba4ad23da6d803a2c38358985a6c"
+   }
+  }
+ }
+}
