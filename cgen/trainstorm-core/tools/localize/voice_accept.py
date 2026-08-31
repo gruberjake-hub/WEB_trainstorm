@@ -55,20 +55,20 @@ if GOVERNED[reg].get("status") != "specified":
     raise SystemExit(f"register '{reg}' is status '{GOVERNED[reg].get('status')}' — "
                      "a draft register may be drafted against, never accepted (register.v0.1 rule)")
 
-atoms_list = json.loads((proj / "atoms.json").read_text())
+atoms_list = json.loads((proj / "atoms.json").read_text(encoding="utf-8"))
 atoms = {x["atom_id"]: x for x in (atoms_list["atoms"] if isinstance(atoms_list, dict) else atoms_list)}
 corpus = " ".join(x["meaning"]["source_text"] for x in atoms.values())
 
 props_p = proj / "voice" / "proposals" / f"{reg}.json"
 if not props_p.exists():
     raise SystemExit(f"no proposals store: {props_p}")
-props = json.loads(props_p.read_text())["proposals"]
+props = json.loads(props_p.read_text(encoding="utf-8"))["proposals"]
 
 pack_p = proj / "voice" / f"{reg}.json"
-pack = json.loads(pack_p.read_text()) if pack_p.exists() else \
+pack = json.loads(pack_p.read_text(encoding="utf-8")) if pack_p.exists() else \
        {"pack_version": "voice.v0.1", "register": reg, "entries": {}}
 
-schema = json.loads((P["schemas_dir"] / "voice.pack.schema.json").read_text())
+schema = json.loads((P["schemas_dir"] / "voice.pack.schema.json").read_text(encoding="utf-8"))
 V = Draft202012Validator(schema)
 
 wanted = list(props) if a.all else [i.strip() for i in a.ids.split(",")]
