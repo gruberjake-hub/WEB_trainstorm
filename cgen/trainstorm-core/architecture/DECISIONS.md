@@ -2646,3 +2646,46 @@ now — migrating them into beats is a candidate later hop, deliberate, not assu
 
 **Supersedes:** the 08-12 "affective/narrative-arc facet has no owner" carry (it does now).
 Nothing else; the three voice blocks and the working process stand.
+
+---
+
+## 2026-08-31 — Arc hop two: the INVERSE guard exists and the frame has words. Copy cannot outrun its beat
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Beat copy flows through the voice machinery under a guard that INVERTS:
+
+- **`inverse_findings` in voice_gate.py** — beat copy is content-free BY CONTRACT, so the check
+  proves it carries nothing: ZERO digits anywhere (a figure in a welcome is a claim that belongs
+  to an atom), and no capitalized content word that isn't sentence-initial, exempt, in the
+  project corpus, or in the ARC ALLOWLIST (data-derived: lesson titles + scene headings/kickers
+  + project/client names — no hand-kept list to drift). Anchor: the beat's `beat_hash`
+  (imported from validate_arc — one definition). Honest limit stated and DEMONSTRATED in the
+  selftest: a claim built from ordinary lowercase words, or a name at sentence start, slips the
+  deterministic net — human acceptance remains the meaning gate.
+- **`voice_accept` routes `bt_` ids** through the beat flow with one rule the run itself proved:
+  **copy cannot outrun its beat** — acceptance refuses while the beat is `proposed` (ratify the
+  catalog first), refuses stale `beat_hash`, re-runs the inverse guard, supports `--edit`.
+  `validate_voice` gates the pack's `beats` section the same way (real beat, accepted beat under
+  accepted copy, fresh hash). `beat_hash` deliberately EXCLUDES status, so ratifying a beat
+  never stales copy authored while it was proposed; editing placement or intent does.
+- **The frame has words** (Dragoman voice mode, in-session, `warm_direct`), both gate-green,
+  both `draft` in `voice/proposals/warm_direct.json` `beat_proposals`:
+  - `bt_paytrans_welcome`: "Welcome — this is about your pay: what's changing, how it's set,
+    and what it means for you." (flagged: "what's changing" presupposes change — confirm)
+  - `bt_paytrans_closure`: "You're informed. You know how your pay is set and what's behind it
+    — and that knowledge is yours to use." (flagged: assures the LEARNER — the artisan
+    control's closure stance — confirm)
+
+**Why:** The intangibles get words the same way meaning got renderings: proposed under contract,
+gated deterministically where possible, accepted by a human where it matters. Twin stakes
+sentence enforced: let words with no meaning anchor exist, while proving they carry none.
+
+**Consequences:** Jake's path: ratify the two beats in `occurrences/beats.json` (edit status →
+accepted, commit to main), then `voice_accept --ids bt_paytrans_welcome,bt_paytrans_closure
+--by jake` (or `--edit`). Arc hop three: realize injects accepted-and-fresh beat copy at
+placement; a beat without accepted copy renders nothing; no-catalog projects stay
+byte-identical (all stores proven untouched this hop). Then the course opens with a welcome and
+lands a closure — and Griot narrates an arc, not a list.
+
+**Supersedes:** nothing. The five prior 2026-08-31 blocks and the working process stand.
