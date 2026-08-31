@@ -1,0 +1,57 @@
+{
+ "store": "narration",
+ "project": "paytrans",
+ "policy": "v1_narration_bindings",
+ "spec": "agents/griot/02_system_prompts/core_agent/griot_system_prompt.md",
+ "registry": "brands/brunswick/brunswick-voice.registry.json",
+ "bindings": {
+  "why_pay_ranges": {
+   "voice_ref": "voice_bw_narrator",
+   "register": "warm_direct",
+   "locale": "en",
+   "narration_source": "voice/narration/warm_direct.json",
+   "script_hash": "sha256:965ca4fdabe92b297d9612e5f4cfc0980c3a4d9f4f8a3ab487d9a5e8e9b3fede",
+   "voiceover_ref": null
+  },
+  "how_pay_is_determined": {
+   "voice_ref": "voice_bw_narrator",
+   "register": "warm_direct",
+   "locale": "en",
+   "narration_source": "voice/narration/warm_direct.json",
+   "script_hash": "sha256:5a82ec1bb7d3dc9d5540711ca938681cd968cac13306e15078f6820c0284165c",
+   "voiceover_ref": null
+  },
+  "base_pay_in_total_rewards": {
+   "voice_ref": "voice_bw_narrator",
+   "register": "warm_direct",
+   "locale": "en",
+   "narration_source": "voice/narration/warm_direct.json",
+   "script_hash": "sha256:9cb84a43471d2f79014c5a1595f6a06c9bd9085ca6ab746b38388ec030c7f6b7",
+   "voiceover_ref": null
+  },
+  "performance_over_time": {
+   "voice_ref": "voice_bw_narrator",
+   "register": "warm_direct",
+   "locale": "en",
+   "narration_source": "voice/narration/warm_direct.json",
+   "script_hash": "sha256:4e45f3fd1d67265ca8ed2ee6c4888593ccaaaa9b425d26f41be4fc6fc5eb68ea",
+   "voiceover_ref": null
+  },
+  "resources_and_eu": {
+   "voice_ref": "voice_bw_narrator",
+   "register": "warm_direct",
+   "locale": "en",
+   "narration_source": "voice/narration/warm_direct.json",
+   "script_hash": "sha256:2a7d843c6f4ac474b71cc1f46bc86297b104fec662515962366563aea2f554d9",
+   "voiceover_ref": null
+  },
+  "lesson_end": {
+   "voice_ref": "voice_bw_narrator",
+   "register": "warm_direct",
+   "locale": "en",
+   "narration_source": "voice/narration/warm_direct.json",
+   "script_hash": "sha256:26a14e72de8b961c41a6eb8ecbf952c1da00c8855f3dd7f929376c64dbec3ffe",
+   "voiceover_ref": null
+  }
+ }
+}
