@@ -1,0 +1,21 @@
+{
+  "project": "paytrans",
+  "corpus_derived_from": "Brunswick pay-transparency education corpus (BPS engagement, corpus dated Jan 2025–Jan 2026): Manager's Guide to Pay Transparency deck (Jan 2025), Compensation Philosophy & Framework 2025 v3 deck, Pay Transparency Status EOC Update deck, FAQs on U.S. job postings (Jan 2025); pptx sources read via structured extractions (file_to_structured_all_md.py), binaries retained by BPS. Authored decomposition scoped to the employee awareness course; manager-course sources registered but not decomposed.",
+  "headwater_mode": "direct",
+  "atom_count": 68,
+  "written_facets": [
+    "meaning",
+    "bindings.object"
+  ],
+  "read_only_facets": [
+    "intent",
+    "expression",
+    "audience",
+    "render"
+  ],
+  "approval_roles": [
+    "role_bw_comp_benefits_team",
+    "role_bw_ehrc_paytrans_team"
+  ],
+  "generated_by": "tools/headwater_ingest_paytrans.py"
+}

@@ -1,0 +1,15 @@
+{
+  "registry": "brunswick/roles",
+  "version": 1,
+  "status": "seeded",
+  "closed_list": true,
+  "owner": "team_bw_enterprise_hr_comp_benefits",
+  "_note": "v1, 2026-08-31: seeded at client-namespace creation. Only roles the corpus itself names; grown by proposal + adoption.",
+  "roles": [
+    { "id": "role_bw_salaried_employee", "label": "Brunswick Salaried Employee (U.S. & E.U.)", "description": "Audience of the optional employee awareness eLearning (~10 min, Workday Learning), per the SOW audience segmentation." },
+    { "id": "role_bw_manager", "label": "Brunswick People Manager", "description": "Audience of the required core eLearning (~30–40 min); the most common channel for communicating pay program information to employees (EOC deck, Foundation for Pay Transparency)." },
+    { "id": "role_bw_hr", "label": "Brunswick HR", "description": "Required core eLearning audience alongside managers; local partner for consistent application of pay practices." },
+    { "id": "role_bw_comp_benefits_team", "label": "Compensation & Benefits team (Enterprise HR)", "description": "Conducts compensation reviews, benchmarking, calibration, and role analyses at the enterprise level (Manager's Guide, Shaping Pay Programs)." },
+    { "id": "role_bw_ehrc_paytrans_team", "label": "Pay Transparency EHRC team", "description": "Facilitates the optional instructor-led sessions and owns the pay-transparency initiative (SOW; EOC update)." }
+  ]
+}
