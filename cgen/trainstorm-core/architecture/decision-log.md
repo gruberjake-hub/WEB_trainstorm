@@ -13,6 +13,30 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (objective lock) — RATIFIED: goal_bw_pay_understood and all five obj_bw_emp_* go `validated`. The promotion gate is exercised by live nodes for the first time.
+
+*Jake's ratification, given in conversation after reading the goal, the four not_trainable causes,
+and the five objectives as written; this entry and the status flips are the durable record, and his
+merge lands them. Anchor: branch `drive/brunswick-objective-lock` off `34b9700` (PR #45). Goals v4,
+objectives v5. `validate_objectives` ALL PASS; negative control proven red in the same session — a
+validated objective with `serves` stripped fails on two checks (schema conditional + the warrant
+walk), then green on restore.*
+
+The meaning of `validated` was put to Jake explicitly before he chose: it asserts the warrant holds
+for building, not that Brunswick has signed off — client sign-off is a separate, later event, and
+the goal's rationale now says so in the file. He ratified on that reading.
+
+These are the first `validated` nodes the ontology has ever held. Every prior goal and objective is
+`example` or `draft` — the 08-21 warrant chain was built and gated against seeds, and the
+"conditionally required once status: validated" promotion gate had never had a live node to bite.
+It now guards six.
+
+Unlocked: hop three — the course itself. Scenes/lessons/checks as project data for the employee
+awareness course, then realize → cartographer → couturier on the paytrans store. Two heuristic
+touches are expected and will be taken as their own decisions, not smuggled: Cartographer's move
+walk has never seen `statement`/`section`/`document` kinds, and the spine/sequence heuristics walk
+procedure shapes that this store does not have.
+
 ## 2026-08-31 — Brunswick paytrans hop one: first non-Astellas client namespace, first EXPOSITORY corpus through Headwater (structure.v0.2: document/section/statement), warrant chain drafted from client documents. 68 atoms, all gates green.
 
 *Anchor: branch `drive/brunswick-paytrans-hop1` off `bc53065`. Proposed by Claude as a patch series;

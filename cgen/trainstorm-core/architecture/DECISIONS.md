@@ -2314,3 +2314,24 @@ January). The vocab bump is the governed path for the first new content family s
 **Supersedes:** the July intent that `brunswick.reference.course.json` be authored as a standalone
 worked example — it will be produced by the pipe or not at all. Nothing else; single-writer,
 one-home-per-schema, and the working-process block stand.
+
+---
+
+## 2026-08-31 — Objective lock: the Brunswick warrant chain is `validated`
+
+**Signed:** Jake / Claude — *Jake ratified in conversation; merge makes it durable.*
+
+**Decision:** `goal_bw_pay_understood` and the five `obj_bw_emp_*` nodes are `validated` (goals v4,
+objectives v5) — the ontology's first validated nodes. `validated` here means the warrant holds for
+building the employee-awareness course; Brunswick client sign-off is a separate, later event,
+recorded when it happens. The promotion gate (serves required at validated) now guards live nodes
+and was proven to go red in the same session.
+
+**Why:** Hop two of the paytrans drive. Building a course on an unratified warrant would make the
+whole chain decorative.
+
+**Consequences:** Hop three may bind `teaches` against validated objectives. The ten manager LOs
+remain unminted (drive two). Amending any of the six now means a new dated entry and a version
+bump, not an edit.
+
+**Supersedes:** the draft status of those six nodes. Nothing else.

@@ -1,10 +1,10 @@
 {
   "store": "ontology/goals",
-  "version": 3,
+  "version": 4,
   "status": "seeded",
   "closed_list": true,
   "owner": "Client business owner (NOT L&D) — see goal.schema.json",
-  "_note": "v2, 2026-08-25: added goal_alsap_asset_safety_monitored, distilled from the live SOP-AST-29080 atom store (ast_alsap). Status on that node is draft — the SOP is real; a client has not ratified the outcome statement. The AST009 PSI goal remains status:example. Schema is shared core; these INSTANCES are per-engagement content that currently live in the core seed because no per-project ontology store exists yet. v3, 2026-08-31: added goal_bw_pay_understood for the Brunswick pay-transparency drive (first non-Astellas client; projects/paytrans). Status draft — BPS-drafted from the SOW and client LO documents; not client-ratified.",
+  "_note": "v2, 2026-08-25: added goal_alsap_asset_safety_monitored, distilled from the live SOP-AST-29080 atom store (ast_alsap). Status on that node is draft — the SOP is real; a client has not ratified the outcome statement. The AST009 PSI goal remains status:example. Schema is shared core; these INSTANCES are per-engagement content that currently live in the core seed because no per-project ontology store exists yet. v3, 2026-08-31: added goal_bw_pay_understood for the Brunswick pay-transparency drive (first non-Astellas client; projects/paytrans). Status draft — BPS-drafted from the SOW and client LO documents; not client-ratified. v4, 2026-08-31: goal_bw_pay_understood ratified validated by Jake (objective-lock conversation, drive hop two).",
   "goals": {
     "goal_ast009_psi_reported_on_time": {
       "label": "Product safety information reaching the company is recognised and reported within the required window, without relying on individual vigilance.",
@@ -57,9 +57,9 @@
         ],
         "assessed_by": "role_bw_ehrc_paytrans_team",
         "assessed_on": "2026-08-31",
-        "rationale": "Drafted by BPS (instructional designer) from the SOW, the client-ready LO document, and the LO revision analysis — whose 'confidence builds through practice over time' note is this same judgment made in the wild a year early, for the manager half. Status draft: Brunswick has not ratified this statement of the outcome; Jake's merge ratifies the DRAFT as BPS's working warrant, not as client sign-off."
+        "rationale": "Drafted by BPS (instructional designer) from the SOW, the client-ready LO document, and the LO revision analysis — whose 'confidence builds through practice over time' note is this same judgment made in the wild a year early, for the manager half. Ratified validated 2026-08-31 by Jake (BPS, owning instructional designer) as the working warrant for the employee-awareness build — validated here means the warrant holds for building; Brunswick client sign-off is a separate, later event and will be recorded when it happens."
       },
-      "status": "draft",
+      "status": "validated",
       "derived_from": "doc_bw_sow_paytrans_education §1–5 (audiences, timing, measurement); doc_bw_learner_objectives_paytrans (employee section); LO_Revision_Summary.md (the not-trainable reasoning)."
     }
   }
