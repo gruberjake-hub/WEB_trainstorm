@@ -13,6 +13,37 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (structure hop, thin) — The projection stops flattening the object tree: header, subhead, and content now group like the graph always knew they should.
+
+*Anchor: branch `drive/structure-projection` off `fb0e698` (PR #57). Jake's second-viewing
+finding: related chunks render visually flat ("Brunswick's Compensation Philosophy" / its
+pillars / their descriptions — one undifferentiated level). His sequencing call: thin structure
+hop now, Griot next, formatting rules open the player-expression phase.*
+
+### The finding that wasn't missing data
+
+`belongs_to` + `order` already encode his exact example — philosophy is a section under the
+guide; benchmarking and benchmarking_how are its ordered children. The projection flattened it;
+the player styled one level. A lossy projection, not an authoring gap: the manifold anticipated
+this one too.
+
+### What landed
+
+`_stamp_structure_meta`: scene element components carry meta.structure {group, depth, head},
+walked from the object facet (no ID parsing — constitution). Runtime wraps consecutive
+same-group components in .structGroup sections with depth/head classes; flat rendering preserved
+for everything unstructured (beats, checks, scene headings). Neutral CSS — cluster separation,
+indentation, head emphasis — copied into BOTH brand packs per the carry, flagged in-file.
+Selftest asserts the tree survives projection. Verified headless: the philosophy scene renders
+three clusters; the head reads as a head; six children indent beneath it; computed styles real.
+
+### Deliberately NOT this hop
+
+Hierarchy aesthetics (type scale, cards, registry consumption) — the expression phase, opened by
+the formatting-rules design conversation Jake asked for. Couturier's primitive gap (section
+atoms typed tp_body — heads that aren't headings) — noted for that phase, not reached into:
+primitives are Couturier's facet. The seat boundary held even for a styling itch.
+
 ## 2026-08-31 (learner surface) — Jake plays the course and the taxonomy is showing: derived kickers suppressed, authored-only rule made explicit; list titles gain their voice.
 
 *Anchor: branch `drive/learner-surface` off `325f055` (PR #56). Triggered by Jake's first full

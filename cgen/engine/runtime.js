@@ -223,6 +223,11 @@ export class Runtime {
 
     this.dispatch({ type: "SCENE_ENTER", payload: { sceneId } });
 
+    // Structure grouping (2026-08-31): consecutive components sharing meta.structure.group
+    // render inside one <section class="structGroup">; depth/head become classes the brand
+    // pack styles. Components without structure (beats, checks, headings) render flat, as before.
+    let groupWrap = null;
+    let groupKey = null;
     for (const node of scene.components || []) {
       const Cmp = COMPONENTS[node.type];
       if (!Cmp) continue;
@@ -239,7 +244,23 @@ export class Runtime {
       const role = roleClassFromMeta(meta);
       if (role) el.classList.add(role);
 
-      this.mount.appendChild(el);
+      const st = meta.structure;
+      if (st && st.group) {
+        el.classList.add(`depth-${st.depth || 0}`);
+        if (st.head) el.classList.add("group-head");
+        if (st.group !== groupKey) {
+          groupWrap = document.createElement("section");
+          groupWrap.className = "structGroup";
+          groupWrap.dataset.group = st.group;
+          this.mount.appendChild(groupWrap);
+          groupKey = st.group;
+        }
+        groupWrap.appendChild(el);
+      } else {
+        groupWrap = null;
+        groupKey = null;
+        this.mount.appendChild(el);
+      }
     }
 
     this.loadVoiceover(scene.voiceover);

@@ -81,7 +81,12 @@
             "element_id": "ele_bw_guide_commitment",
             "composed_from": "atom_bw_guide_commitment",
             "text_primitive": "tp_display",
-            "style_ref": "brand.opening"
+            "style_ref": "brand.opening",
+            "structure": {
+              "group": "atom_bw_guide_commitment",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -94,7 +99,12 @@
             "element_id": "ele_bw_guide_commitment_laws",
             "composed_from": "atom_bw_guide_commitment_laws",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_commitment",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -107,7 +117,12 @@
             "element_id": "ele_bw_guide_commitment_postings",
             "composed_from": "atom_bw_guide_commitment_postings",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_commitment",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -120,7 +135,12 @@
             "element_id": "ele_bw_guide_commitment_trust",
             "composed_from": "atom_bw_guide_commitment_trust",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_commitment",
+              "depth": 1,
+              "head": false
+            }
           }
         }
       ]
@@ -153,7 +173,12 @@
             "element_id": "ele_bw_guide_philosophy",
             "composed_from": "atom_bw_guide_philosophy",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_philosophy",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -166,7 +191,12 @@
             "element_id": "ele_bw_guide_philosophy_benchmarking",
             "composed_from": "atom_bw_guide_philosophy_benchmarking",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_philosophy",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -179,7 +209,12 @@
             "element_id": "ele_bw_guide_philosophy_benchmarking_how",
             "composed_from": "atom_bw_guide_philosophy_benchmarking_how",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_philosophy",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -192,7 +227,12 @@
             "element_id": "ele_bw_guide_philosophy_equity",
             "composed_from": "atom_bw_guide_philosophy_equity",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_philosophy",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -205,7 +245,12 @@
             "element_id": "ele_bw_guide_philosophy_equity_how",
             "composed_from": "atom_bw_guide_philosophy_equity_how",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_philosophy",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -218,7 +263,12 @@
             "element_id": "ele_bw_guide_philosophy_p4p",
             "composed_from": "atom_bw_guide_philosophy_p4p",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_philosophy",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -231,7 +281,12 @@
             "element_id": "ele_bw_guide_philosophy_p4p_how",
             "composed_from": "atom_bw_guide_philosophy_p4p_how",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_philosophy",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -244,7 +299,12 @@
             "element_id": "ele_bw_guide_base_pay",
             "composed_from": "atom_bw_guide_base_pay",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_base_pay",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -257,7 +317,12 @@
             "element_id": "ele_bw_guide_base_pay_grades",
             "composed_from": "atom_bw_guide_base_pay_grades",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_base_pay",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -270,7 +335,12 @@
             "element_id": "ele_bw_guide_base_pay_zones",
             "composed_from": "atom_bw_guide_base_pay_zones",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_base_pay",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -283,7 +353,12 @@
             "element_id": "ele_bw_guide_base_pay_range",
             "composed_from": "atom_bw_guide_base_pay_range",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_base_pay",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -296,7 +371,12 @@
             "element_id": "ele_bw_guide_base_pay_range_positions",
             "composed_from": "atom_bw_guide_base_pay_range_positions",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_base_pay",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -335,7 +415,12 @@
               "atom_bw_guide_base_pay_range_positions_high"
             ],
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_base_pay",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -348,7 +433,12 @@
             "element_id": "ele_bw_guide_stewardship",
             "composed_from": "atom_bw_guide_stewardship",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_stewardship",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -361,7 +451,12 @@
             "element_id": "ele_bw_guide_stewardship_activities",
             "composed_from": "atom_bw_guide_stewardship_activities",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_stewardship",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -393,7 +488,12 @@
               "atom_bw_guide_stewardship_activities_3"
             ],
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_guide_stewardship",
+              "depth": 1,
+              "head": false
+            }
           }
         }
       ]
@@ -426,7 +526,12 @@
             "element_id": "ele_bw_framework_total_rewards",
             "composed_from": "atom_bw_framework_total_rewards",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_total_rewards",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -439,7 +544,12 @@
             "element_id": "ele_bw_framework_total_rewards_variable",
             "composed_from": "atom_bw_framework_total_rewards_variable",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_total_rewards",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -452,7 +562,12 @@
             "element_id": "ele_bw_framework_total_rewards_variable_kinds",
             "composed_from": "atom_bw_framework_total_rewards_variable_kinds",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_total_rewards",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -498,7 +613,12 @@
               "atom_bw_framework_total_rewards_variable_kinds_4"
             ],
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_total_rewards",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -511,7 +631,12 @@
             "element_id": "ele_bw_framework_trs",
             "composed_from": "atom_bw_framework_trs",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_trs",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -524,7 +649,12 @@
             "element_id": "ele_bw_framework_trs_includes",
             "composed_from": "atom_bw_framework_trs_includes",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_trs",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -577,7 +707,12 @@
               "atom_bw_framework_trs_includes_5"
             ],
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_trs",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -590,7 +725,12 @@
             "element_id": "ele_bw_framework_trs_intl_note",
             "composed_from": "atom_bw_framework_trs_intl_note",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_trs",
+              "depth": 1,
+              "head": false
+            }
           }
         }
       ]
@@ -623,7 +763,12 @@
             "element_id": "ele_bw_framework_p4p",
             "composed_from": "atom_bw_framework_p4p",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_p4p",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -636,7 +781,12 @@
             "element_id": "ele_bw_framework_p4p_base_role",
             "composed_from": "atom_bw_framework_p4p_base_role",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_p4p",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -649,7 +799,12 @@
             "element_id": "ele_bw_framework_p4p_annual_incentives",
             "composed_from": "atom_bw_framework_p4p_annual_incentives",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_p4p",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -662,7 +817,12 @@
             "element_id": "ele_bw_framework_p4p_merit",
             "composed_from": "atom_bw_framework_p4p_merit",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_p4p",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -675,7 +835,12 @@
             "element_id": "ele_bw_framework_p4p_achieve",
             "composed_from": "atom_bw_framework_p4p_achieve",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_p4p",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -688,7 +853,12 @@
             "element_id": "ele_bw_framework_p4p_bpp",
             "composed_from": "atom_bw_framework_p4p_bpp",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_p4p",
+              "depth": 1,
+              "head": false
+            }
           }
         }
       ]
@@ -721,7 +891,12 @@
             "element_id": "ele_bw_framework_transparency_practices",
             "composed_from": "atom_bw_framework_transparency_practices",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_transparency_practices",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -734,7 +909,12 @@
             "element_id": "ele_bw_framework_transparency_practices_practices",
             "composed_from": "atom_bw_framework_transparency_practices_practices",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_transparency_practices",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -759,7 +939,12 @@
               "atom_bw_framework_transparency_practices_practices_4"
             ],
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_framework_transparency_practices",
+              "depth": 1,
+              "head": false
+            }
           }
         },
         {
@@ -772,7 +957,12 @@
             "element_id": "ele_bw_faq_scope",
             "composed_from": "atom_bw_faq_scope",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_faq_scope",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {
@@ -785,7 +975,12 @@
             "element_id": "ele_bw_eoc_euptd",
             "composed_from": "atom_bw_eoc_euptd",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_eoc_euptd",
+              "depth": 0,
+              "head": true
+            }
           }
         },
         {
@@ -798,7 +993,12 @@
             "element_id": "ele_bw_eoc_euptd_right_to_info",
             "composed_from": "atom_bw_eoc_euptd_right_to_info",
             "text_primitive": "tp_body",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_bw_eoc_euptd",
+              "depth": 1,
+              "head": false
+            }
           }
         }
       ]

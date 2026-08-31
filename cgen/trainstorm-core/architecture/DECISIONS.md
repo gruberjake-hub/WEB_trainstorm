@@ -2763,3 +2763,41 @@ survive — the player uppercases kickers via CSS). Remaining visual fine-tuning
 expression's hop, as planned; this closes the one Jake called disruptive.
 
 **Supersedes:** the engine builders' KICKER defaults (dev sidecar keeps them). Nothing else.
+
+---
+
+## 2026-08-31 — Structure hop (thin): the projection stops flattening the object tree
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Jake's second viewing surfaced that related chunks render visually flat — header,
+subhead, and description at one level, unrelated to the eye. Diagnosis: the object facet ALREADY
+carries the tree (`belongs_to` + `order` — his exact example: philosophy → benchmarking +
+benchmarking_how, ordered); the engine projection discarded it. Sequencing (Jake's call): this
+THIN structural hop now; Griot next as ordered; the full formatting-rules design conversation
+opens the PLAYER-EXPRESSION phase, where hierarchy aesthetics properly live.
+
+- **`_stamp_structure_meta` (realize):** scene element components gain
+  `meta.structure = {group, depth, head}` walked from `belongs_to`/`order` (data only — IDs are
+  never parsed; list components cluster under their container atom). Beats, checks, and scene
+  headings are untouched.
+- **The player (`engine/runtime.js`):** consecutive same-group components wrap in
+  `<section class="structGroup">`; depth/head become classes. Components without structure
+  render flat, exactly as before.
+- **NEUTRAL styling only, copied into BOTH brand packs** (the engine-base-stylesheet carry,
+  honored and flagged in-file): cluster separation, child indentation, head emphasis. Real
+  hierarchy aesthetics — type scale, cards, the 255-asset registry — are the expression phase's
+  design conversation, not this hop's.
+- **Noted for Couturier (expression phase):** section atoms carry `tp_body` — the pillar heads
+  read as headings but are typed as body. Primitive assignment is Couturier's facet; the
+  structure meta makes the gap visible without reaching into it.
+
+**Why:** A lossy projection is a bug against the constitution's own claim that structure is a
+governed facet. Fix the data path thin and now; design the look deliberately and later.
+
+**Consequences:** "How pay is determined" renders as three clusters — "Brunswick's Compensation
+Philosophy" heads six indented children (verified headless, computed styles applied). All
+projections regenerate with structure meta added (meta-only diff; behavior change named).
+Selftest asserts the tree survives projection. Formatting rules = the expression-phase opener.
+
+**Supersedes:** nothing. The nine prior 2026-08-31 blocks and the working process stand.

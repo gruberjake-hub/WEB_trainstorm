@@ -92,7 +92,12 @@
               "atom_sop_ast29080_proc_a_s4"
             ],
             "text_primitive": "tp_step",
-            "style_ref": "brand.instructional"
+            "style_ref": "brand.instructional",
+            "structure": {
+              "group": "atom_sop_ast29080_proc_a",
+              "depth": 0,
+              "head": false
+            }
           }
         },
         {
