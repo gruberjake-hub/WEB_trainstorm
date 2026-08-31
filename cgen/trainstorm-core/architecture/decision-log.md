@@ -13,6 +13,40 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (Griot hop two) — Griot runs: six tracks bound to the seeded brand voice, and the course captions its own narration. Voice before audio, both reviewable.
+
+*Anchor: branch `drive/griot-performance` off `39d52f4` (Jake's track-acceptance commit). Two
+calls, both Jake's: caption-first (the script reaches the player before any audio exists) and
+the voice registry in the brand pack (the seat's own 08-12 prediction: per-brand, resolved like
+style_ref).*
+
+### What landed
+
+The brand voice registry seeded with one governed candidate (`voice_bw_narrator` — persona
+reverse-specified from the artisan control's VO direction; status candidate, Jake's review).
+`tools/griot.py` — the seat's first execution, faithful to its contract in every clause: reads
+accepted tracks, binds performance keys into `occurrences/narration.json`, writes no words,
+produces no audio (voiceover_ref null — "you choose, they produce"), refuses ungoverned
+voice_refs, never re-litigates, and refuses to GUESS among multiple voices. Selftest proves the
+contract four ways. Realize joins three acceptances (accepted track + binding + fresh
+script_hash) before projecting `scene.voiceover`; the player treats `captionText` as a payload —
+CC chrome appears, a captionStrip renders the script per scene, styled in BOTH packs (carry ×3).
+
+### Verified live
+
+Headless: CC toggle visible; strip shows "Welcome — this is about your pay…" on scene one and
+"How is pay determined at Brunswick?…" on scene two; toggling CC off hides it. All six scenes
+bound and projecting; ast stores byte-identical; every gate and selftest green.
+
+### The pattern, third time
+
+Voice hop three: three acceptances before an atom's words render. Arc hop three: three before a
+beat renders. Griot hop two: three before a scene speaks. The machine now has ONE discipline
+for every learner-facing surface — nothing renders that a human didn't accept, and nothing
+stale renders quietly. Remaining for narration: the audio render step (TTS/recorded VO, asset
+entries, VTT from captionText) — deliberately later; the captions make the script reviewable
+in place NOW, which is what this hop was for.
+
 ## 2026-08-31 (Griot hop one) — Words before voice, at last with the words: narration splits into script (Dragoman's third mode) and performance (Griot's seat, exactly as written). Six tracks proposed under the union guard.
 
 *Anchor: branch `drive/griot-script` off `3ea0873` (PR #58). The design beat's reframe: Griot's
