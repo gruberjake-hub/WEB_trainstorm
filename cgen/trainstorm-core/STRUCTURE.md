@@ -39,6 +39,10 @@ cgen/
 │   │   └── assets/                      ✅ identity marks (fonts/ to follow)
 │   └── brunswick/assets/                 ✅ same convention for every client that follows
 │
+├── brunswick/                           # second client namespace (2026-08-31, paytrans drive) — same shape as astellas
+│   ├── projects/paytrans/                ✅ 68 atoms — first EXPOSITORY corpus (structure.v0.2 kinds); employee-awareness scope
+│   └── registry/{roles,records,docs,options}.registry.json  ✅ seeded v1 at namespace creation; grown by propose→adopt
+│
 ├── astellas/                            # ⚠ THIRD SIBLING — client atom stores + client registries
 │   ├── projects/{ast_alsap,alsap,alsap_asp9999,ast_artwork}/  ✅ procedure · template · instance · artwork stores
 │   │                                               (`ast_artwork` store **and** `?project=` loader on main, PR #42.
@@ -128,6 +132,7 @@ trainstorm-core/
 │   ├── DECISIONS.md                      ✅ append-only canon, one short block per settled call — if a chat disagrees, this file wins
 │   ├── decision-log.md                   ✅ the narrative record behind DECISIONS.md (migrated from the Claude Project 2026-08-25); newest first
 │   ├── sessions/                         ✅ dated notes, not canon
+│   ├── lineage/                          ✅ proto-agent prompt lineage (2026-01 Brunswick prompts + mapping) — history, not canon
 │   ├── manifold.md · conventions.md · atom-spec.md          ✅
 │   ├── unification-map.md                ⚠ names element.schema.json as canon — SUPERSEDED, see DECISIONS.md 2026-08-25
 │   ├── agents-roster.md · promptpack_manifold.md            ✅  (promptpack is a crosswalk from a parallel workstream — cite as such, not as canon)
@@ -139,7 +144,7 @@ trainstorm-core/
 │   ├── example_atom.json                 ✅
 │   ├── example_element.json              ✅ occurrence of example_atom (`composed_from`, no authored content)
 │   ├── sample_script.json / .v2.json     ✅
-│   └── brunswick.reference.course.json   ⬜ `{"_todo": …}` — the gold course has NEVER existed
+│   └── brunswick.reference.course.json   ⬜ `{"_todo": …}` — being produced by the paytrans drive (DECISIONS 2026-08-31); never hand-authored
 │
 ├── tools/                                # the agents' runtime code & utilities
 │   ├── harness_paths.py                  ✅ 4 anchors: core · registry · project · template
@@ -148,6 +153,7 @@ trainstorm-core/
 │   ├── selftest_socket.py                ✅ 21/21     demand rules · PII · contract honesty
 │   ├── headwater_ingest.py / _form.py    ✅ procedure · form ingests
 │   ├── headwater_ingest_artwork.py       ✅ sibling Headwater ingest for `ast_artwork` (SOP-2290); ALSAP ingest untouched
+│   ├── headwater_ingest_paytrans.py      ✅ sibling Headwater ingest for brunswick/paytrans — first expository corpus (2026-08-31)
 │   ├── project_sop_artwork.py            ✅ sibling SOP-2290 projector
 │   ├── store_merge.py                    ✅ the idempotent merge rule — lives once, both ingests import it
 │   ├── resolve_slot.py                   ✅ the walk: one slot → grounding packet (+ sufficiency)

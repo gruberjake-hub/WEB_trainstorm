@@ -1,0 +1,9 @@
+{
+  "registry": "brunswick/options",
+  "version": 1,
+  "status": "seeded",
+  "closed_list": true,
+  "owner": "team_bw_enterprise_hr_comp_benefits",
+  "_note": "v1, 2026-08-31: seeded empty at client-namespace creation. No controlled value sets in the employee-awareness scope. Grown by proposal + adoption.",
+  "options": []
+}

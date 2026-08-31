@@ -1,0 +1,18 @@
+{
+  "registry": "brunswick/docs",
+  "version": 1,
+  "status": "seeded",
+  "closed_list": true,
+  "owner": "team_bw_enterprise_hr_comp_benefits",
+  "_note": "v1, 2026-08-31: seeded at client-namespace creation for the pay-transparency drive (first Brunswick project: projects/paytrans). Governed doc_ ids for the corpus sources. Registry creation is itself the deliberate governing act here (there was no prior Brunswick registry to propose into); grown afterwards only by proposal + adoption like the Astellas tier. The three large pptx sources were ingested via their structured extractions (file_to_structured_all_md.py, Jan 2026) with the binaries retained by BPS; that derivation is provenance, recorded here and in the project manifest, not hidden.",
+  "docs": [
+    { "id": "doc_bw_mgr_guide_paytrans_jan2025", "label": "Manager's Guide to Pay Transparency — Building Trust through Effective Communication about Compensation (HR, January 2025)", "source_file": "Compensation Philosophy  Pay Transparency_Final_Jan 2025.pptx", "description": "Manager-facing deck: commitment statement, US posting change, compensation philosophy, how base pay is set, enterprise HR practices, reflection and practice sessions." },
+    { "id": "doc_bw_comp_framework_2025_v3", "label": "Compensation Philosophy & Framework 2025 v3", "source_file": "Compensation Philosophy & Framework_2025_v3.pptx", "description": "Enterprise deck: total rewards purpose and principles, base pay and grade structure, incentive compensation, Total Rewards Statement, pay for performance / BPP, pay-transparency practices." },
+    { "id": "doc_bw_eoc_update_paytrans", "label": "Pay Transparency Status — EOC Update (Final)", "source_file": "Pay Transparency Status_EOC Update_FInal.pptx", "description": "Executive update: US compliance landscape, EU Pay Transparency Directive overview and transposition status, HR initiative status, definitions." },
+    { "id": "doc_bw_faq_job_postings_jan2025", "label": "FAQs — Pay Transparency in U.S. Job Postings (January 2025)", "source_file": "FAQs_Job Postings_Jan 2025.docx", "description": "Employee/manager-facing FAQ, including the per-jurisdiction disclosure requirements table." },
+    { "id": "doc_bw_mgr_talking_points_salary_adj", "label": "Manager Talking Points — Salary Adjustments (Final)", "source_file": "Manager Talking Points - Salary Adjustments_Final.docx", "description": "Manager-facing talking points for salary-adjustment conversations. Manager-course source; not decomposed in the employee-awareness ingest." },
+    { "id": "doc_bw_team_comments_pay_education", "label": "Pay Transparency Team comments related to pay education", "source_file": "Pay Transparency Team comments related to pay education.docx", "description": "Client stakeholder commentary on the education initiative. Warrant/context source, not learner content." },
+    { "id": "doc_bw_sow_paytrans_education", "label": "Compensation / Pay Transparency Education — Finalized Proposal & Statement of Work (BPS ↔ Brunswick)", "source_file": "Brunswick Pay Transparency Education – Final Proposal & Sow.docx", "description": "The engagement contract: audiences, pathways, durations, timing, learning objectives, measurement. Primary warrant source for goal_ and obj_ nodes." },
+    { "id": "doc_bw_learner_objectives_paytrans", "label": "Pay Transparency Education — Learner Objectives (client-ready, revised)", "source_file": "Pay Transparency Education – Learner Objectives.docx", "description": "The client-ready learning objectives: 10 Manager/HR, 5 Salaried Employee, plus the confidence-timeline design note. The direct source of the obj_bw_* nodes." }
+  ]
+}

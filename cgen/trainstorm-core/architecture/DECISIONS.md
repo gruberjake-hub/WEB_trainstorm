@@ -2277,3 +2277,40 @@ vocabularies invariant exists to catch, resolved by conforming the data, not by 
 **Supersedes:** the `STRUCTURE.md` ✅ on `lint.py` as it stood 2026-08-30 (a marker on a tool that
 could not run). Nothing in the working-process block. Single-writer per facet, one home per schema,
 govern the vocabularies — all stand and are what this enforces.
+
+---
+
+## 2026-08-31 — Brunswick paytrans drive, hop one: structure.v0.2 (document/section/statement), the brunswick namespace, and the drafted warrant chain
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The full-course drive runs on the real Brunswick pay-transparency corpus; its
+validated projection will become `reference/brunswick.reference.course` (no hand-authored reference).
+Employee awareness course first; manager course is drive two on the same store. To carry an
+expository corpus, `vocab/structure.enum.json` bumps to **v0.2** adding `document`, `section`,
+`statement` — the didactic duals of the procedural kinds. `cgen/brunswick/` is the second client
+namespace (registries seeded v1 at creation: 8 docs, 5 roles; growth by propose→adopt).
+`tools/headwater_ingest_paytrans.py` authors 68 atoms (meaning + object only; no source-type facet,
+legal under the at-most-one rule). `ontology/goals.json` v3 adds `goal_bw_pay_understood` and
+`ontology/objectives.json` v4 adds five `obj_bw_emp_*` nodes verbatim from the client-ready LO
+document — **all draft**: merging ratifies them as BPS's working draft, and the objective-lock
+conversation (hop two) is where Jake promotes them. The Jan-2026 proto-agent prompts are recorded
+as lineage (`architecture/lineage/`), with the exploratory-phase agent seat named as the roster's
+one structural absence — parked, not opened.
+
+**Why:** The course half has run only on SOP walks. A course-shaped proof needs a real corpus, a
+real warrant, and a control — this corpus supplies all three (Jake hand-built the same course in
+January). The vocab bump is the governed path for the first new content family since forms.
+
+**Consequences:**
+- `python3 tools/headwater_ingest_paytrans.py` regenerates the store idempotently;
+  `validate_atoms --project ../brunswick/projects/paytrans` PASS/PASS; `validate_objectives` ALL PASS.
+- Manager-course sources and the FAQ jurisdiction table are registered, not decomposed (named
+  Headwater notes). The ten manager LOs stay unminted until drive two.
+- Realize/cartographer/couturier are NOT run on this store yet — hop three, after objective lock.
+- Open carry restated: instances still live in the core ontology seed (no per-project ontology
+  store); this drive will press on that and it should be decided deliberately, not drifted into.
+
+**Supersedes:** the July intent that `brunswick.reference.course.json` be authored as a standalone
+worked example — it will be produced by the pipe or not at all. Nothing else; single-writer,
+one-home-per-schema, and the working-process block stand.
