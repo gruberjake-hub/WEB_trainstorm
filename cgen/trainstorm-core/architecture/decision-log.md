@@ -13,6 +13,43 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (learner surface) — Jake plays the course and the taxonomy is showing: derived kickers suppressed, authored-only rule made explicit; list titles gain their voice.
+
+*Anchor: branch `drive/learner-surface` off `325f055` (PR #56). Triggered by Jake's first full
+viewing: "Present", "Scope List" etc. rendering above components — internal vocabulary on the
+learner surface. His words: particularly disruptive. He chose the clean rule over exceptions:
+suppress ALL derived kickers, including "Check" — authored only.*
+
+### The diagnosis and the rule
+
+Two populations of kickers were rendering: five Jake AUTHORED in scenes.json (fine, intended) and
+dozens the machine DERIVED from the KICKER map ("Present" ×34 was the offender). The day's
+principle already answered it: copy the machine derived is copy nobody accepted. Engine builders
+now emit no derived kickers; scene-record kickers and beats render; the KICKER map keeps
+labeling the dev HTML sidecar, where taxonomy belongs. Want a label? Author it.
+
+### The bonus bug the same look found
+
+`job_aid_title` (StepList/ItemList titles) read atom text directly — bypassing the voice
+overlay. The range-positions list showed verbatim source over Jake's accepted rendering. Routed
+through `voice_atom_text`; the accepted title now renders. Second instance of the "text path we
+missed" class (hop three's choke point was the first) — worth a sweep-check when player
+expression opens: every learner-facing string should flow through the overlay or be authored.
+
+### Selftest discipline
+
+Three assertions had PINNED derived kicker values ("Scope list", "Example") — the 08-20
+pinned-selftest rot, caught at repair time: they now assert the rule (suppression), plus one
+positive check (no non-Heading engine component carries any kicker). Deliberate behavior change:
+ast projections regenerate with kickers stripped (diff verified kicker-lines-only) — NOT
+byte-identical, and that is the point, stated rather than hidden.
+
+### Verified
+
+Headless: "Present"/"Scope list"/"Opening" absent through all scenes; "The philosophy" et al.
+survive (player uppercases kickers via CSS — a probe lesson); voiced list title renders; welcome
+and closure intact. Paytrans now shows exactly five kickers, all Jake's.
+
 ## 2026-08-31 (arc hop three) — The course greets and closes. Three acceptances join at the choke point; the closure lands after the checks; the arc's first pass is COMPLETE.
 
 *Anchor: branch `drive/arc-renderer` off `41878e6` (Jake's beat-copy acceptance commit; the
