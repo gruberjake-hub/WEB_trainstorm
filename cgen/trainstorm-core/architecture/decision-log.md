@@ -13,6 +13,43 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (arc hop three) — The course greets and closes. Three acceptances join at the choke point; the closure lands after the checks; the arc's first pass is COMPLETE.
+
+*Anchor: branch `drive/arc-renderer` off `41878e6` (Jake's beat-copy acceptance commit; the
+beats themselves ratified in `394655e` — both direct-to-main human writes, per the acceptance
+precedent). No design forks — this executes the arc-pass plan end to end.*
+
+### What landed
+
+Beat loading joined to the voice overlay at the same choke point (`project_lesson_htmls` — the
+voice hop-three lesson, applied not relearned): a beat renders only when catalog-accepted AND
+copy-accepted AND `beat_hash`-fresh; stale copy is loud; everything else renders NOTHING — a
+placed beat is a plan, not a promise. `_inject_beat_components` is pure and selftested: welcome
+opens scene one; the closure appends to the LAST scene — after the lesson-end checks, the
+artisan control's shape (you close once the work is done); scene and element placements land
+exactly; an unplaceable beat is skipped and reported, never guessed. Manifest stamps
+`beats_applied`; beat components carry beat_id/intent/placement in meta. Scope line named: the
+engine projection (the played course) renders beats; the dev HTML sidecar does not yet — carry.
+
+### Verified live
+
+Headless Chromium: the course OPENS on "Welcome — this is about your pay: what's changing, how
+it's set, and what it means for you." — closure absent until the end — pages through the
+warm_direct teaching copy — and LANDS on "You're informed. You know how your pay is set and
+what's behind it — and that knowledge is yours to use." after the checks. ast_alsap and
+ast_artwork regenerate byte-identical; every gate and selftest green.
+
+### Where this leaves the machine
+
+The artisan side-by-side (hop five of the paytrans drive) named four gaps. Two are now CLOSED
+at v1 — voice (rewritten learner copy) and arc frame (welcome/closure) — through five governed
+stores, two agent modes, one new seat, and eleven human acceptance acts, with every rendering
+provably anchored or provably empty. Remaining: narration (Griot — whose "words before voice"
+wake now has accepted words and an authored arc), player expression (+ acceptance front-end
+carry), motion (parked). The withheld midpoint gloss is the ready-made demo for flipping
+Dramaturge's `withheld_gloss` wake live. One session, 2026-08-31, corpus to a course that
+greets, teaches, checks, and closes — in words the machine can prove it was allowed to say.
+
 ## 2026-08-31 (arc hop two) — The inverse guard lands and the frame gets its words: welcome and closure proposed, gate-green, refused-until-ratified. Copy cannot outrun its beat.
 
 *Anchor: branch `drive/arc-beat-copy` off `0558f96` (PR #54). No new design forks — this hop

@@ -2689,3 +2689,41 @@ byte-identical (all stores proven untouched this hop). Then the course opens wit
 lands a closure — and Griot narrates an arc, not a list.
 
 **Supersedes:** nothing. The five prior 2026-08-31 blocks and the working process stand.
+
+---
+
+## 2026-08-31 — Arc hop three: the course greets and closes. Beat injection at the engine projection; a placed beat is a plan, not a promise
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Realize renders accepted beat copy at its placement:
+
+- **Loading joins three acceptances.** The voice overlay (same choke point, `project_lesson_htmls`)
+  admits a beat only when the CATALOG beat is accepted AND the PACK copy is accepted AND the
+  copy's `source_hash` matches the beat's current `beat_hash` — stale copy is reported loudly
+  (manifest `stale_fallbacks`); an unratified beat or missing copy renders NOTHING, silently by
+  design (a placed beat is a plan, not a promise).
+- **`_inject_beat_components`** (pure, selftested): `lesson_start` → first component of the first
+  scene; `lesson_end` → appended to the LAST scene, i.e. AFTER the lesson-end checks — the
+  closure lands once the work is done, matching the artisan control's shape; `scene_start`/
+  `scene_end` → that scene's components; `after_element` → directly after that element's
+  component. A beat whose target is not in this lesson is skipped and reported, never guessed.
+- **Stamps:** manifest `voice.beats_applied`; beat components carry `meta.beat_id`/`intent`/
+  `placement` — provenance visible in the projection.
+- **Scope line, named:** beats render in the ENGINE projection (the played course). The dev HTML
+  sidecar and coverage dump do not show beats yet — carry, taken knowingly; the learner surface
+  is the one that matters and the manifest records what applied.
+
+**Why:** The last hop of the arc's first pass: the frame Dramaturge proposed and Jake ratified,
+in the words Dragoman proposed and Jake accepted, on the screen the learner sees.
+
+**Consequences:** `/cgen/?project=brunswick/paytrans` OPENS with "Welcome — this is about your
+pay…" and CLOSES with "You're informed…" after the checks (verified headless: welcome on the
+first screen, closure only on the last, teaching voice intact between). Realize selftest +3 beat
+checks (three-acceptance join; all four placements; unplaceable skipped-and-reported). ast
+stores regenerate byte-identical. The artisan side-by-side's voice/arc gaps are now CLOSED at
+v1: rewritten copy, welcome, closure. Remaining from that table: narration (Griot — now with
+words AND an arc), player expression, motion (parked). The withheld midpoint gloss remains the
+demo case for the `withheld_gloss` wake when Jake flips it live.
+
+**Supersedes:** nothing. The six prior 2026-08-31 blocks and the working process stand.
