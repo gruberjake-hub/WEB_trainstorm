@@ -1,0 +1,878 @@
+{
+  "generated_by": "tools/realize.py",
+  "projection_of": {
+    "kind": "lesson",
+    "lesson_id": "bw_paytrans_employee",
+    "policy": "v1_lesson_on_graph",
+    "spec": "agents/realizer/lesson_v1.md",
+    "engine_policy": "v1_engine_reads_lesson_projection",
+    "graph": "occurrences/",
+    "note": "Course Engine v1 at /cgen reads this projection of the occurrence lesson node (lesson \u2192 scene_ids \u2192 element_ids \u2192 atoms via composed_from; check shapes from manifest.checks). Meaning is resolved from atoms at realize time. meta.theme is the client overlay pack (cgen/brands/<theme>/) \u2014 player chrome, not Couturier style_ref. Not a hand-authored SCORM package. Not cgen/schema/course.schema.json as a rival constitution. Sidecar HTML stays a projector. Rebuild with realize \u2192 cartographer \u2192 couturier."
+  },
+  "meta": {
+    "id": "bw_paytrans_employee",
+    "title": "Pay Transparency at Brunswick \u2014 How Your Pay Is Determined",
+    "title_from": "atom_bw_guide_commitment",
+    "theme": "brunswick"
+  },
+  "nav": {
+    "linear": true,
+    "showProgress": true,
+    "startSceneId": "why_pay_ranges",
+    "sceneOrder": [
+      "why_pay_ranges",
+      "how_pay_is_determined",
+      "base_pay_in_total_rewards",
+      "performance_over_time",
+      "resources_and_eu",
+      "lesson_end"
+    ]
+  },
+  "paging": {
+    "policy": "v1_one_scene_at_a_time",
+    "spec": "agents/realizer/scenes_v1.md",
+    "scene_count": 5,
+    "step_count": 6,
+    "lesson_end_is_final_step": true,
+    "note": "Player UX on the first-class scene list: one named scene at a time, Next/Back. Definition/purpose checks are a final step after the last scene, not a fourth named scene. Hash is optional. Same membership. Coverage dump stays unpaged."
+  },
+  "scenes": [
+    {
+      "id": "why_pay_ranges",
+      "title": "Why you're seeing pay ranges",
+      "kind": "scene",
+      "role": "front_matter",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Why you're seeing pay ranges",
+            "kicker": "Why this"
+          },
+          "meta": {
+            "scene_id": "why_pay_ranges",
+            "role": "front_matter"
+          }
+        },
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Brunswick is committed to fostering a positive work environment through open, informed compensation discussions.",
+            "kicker": "Opening"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_commitment",
+            "composed_from": "atom_bw_guide_commitment",
+            "text_primitive": "tp_display",
+            "style_ref": "brand.opening"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "In 2025, several states in the USA will implement new pay transparency laws. These laws require employers to disclose salary ranges and benefits in job postings or during the hiring process. These laws aim to promote pay equity and transparency and ensure fair compensation practices.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_commitment_laws",
+            "composed_from": "atom_bw_guide_commitment_laws",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "In response to the new pay transparency laws taking effect in 2025, we are proud to announce that we will be including salary ranges and benefits information in all our new job postings.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_commitment_postings",
+            "composed_from": "atom_bw_guide_commitment_postings",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "We recognize that transparency builds trust and fosters a positive work environment, which is why we are preparing managers to have open, informed conversations about compensation.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_commitment_trust",
+            "composed_from": "atom_bw_guide_commitment_trust",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        }
+      ]
+    },
+    {
+      "id": "how_pay_is_determined",
+      "title": "How pay is determined",
+      "kind": "scene",
+      "role": "topic",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "How pay is determined",
+            "kicker": "The philosophy"
+          },
+          "meta": {
+            "scene_id": "how_pay_is_determined",
+            "role": "topic"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Brunswick's Compensation Philosophy.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_philosophy",
+            "composed_from": "atom_bw_guide_philosophy",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Set Market-Competitive Compensation Through Benchmarking.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_philosophy_benchmarking",
+            "composed_from": "atom_bw_guide_philosophy_benchmarking",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Accurate job descriptions ensure proper role alignment in compensation surveys. Market data from trusted sources is used to assess job value and total rewards programs. We leverage a total rewards mindset to create a compelling package that attracts and retains top talent.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_philosophy_benchmarking_how",
+            "composed_from": "atom_bw_guide_philosophy_benchmarking_how",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Balance External Competitiveness with Internal Equity.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_philosophy_equity",
+            "composed_from": "atom_bw_guide_philosophy_equity",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Market data is used as a guide, but internal equity is equally important when determining the right job grade. Jobs are assigned to the Brunswick grade structure based on both external market data and their internal value.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_philosophy_equity_how",
+            "composed_from": "atom_bw_guide_philosophy_equity_how",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Link Pay to Individual, Team & Company Performance via Pay-for-Performance.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_philosophy_p4p",
+            "composed_from": "atom_bw_guide_philosophy_p4p",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Recognizing and rewarding exceptional performance through pay-for-performance strategies, such as annual merit increases and incentive plans, motivates employees and drives success. These rewards are based on individual contributions, as well as team and company performance.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_philosophy_p4p_how",
+            "composed_from": "atom_bw_guide_philosophy_p4p_how",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "How Base Pay is Set.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_base_pay",
+            "composed_from": "atom_bw_guide_base_pay",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Brunswick uses a traditional grade structure, with 24 pay ranges, that are closely tied to market rates based on our compensation surveys and benchmarking exercises.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_base_pay_grades",
+            "composed_from": "atom_bw_guide_base_pay_grades",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "The grade structure is divided into three geographic zones, each reflecting the cost of labor in different U.S. locations. This structure accounts for the varied pay rates across our widespread locations.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_base_pay_zones",
+            "composed_from": "atom_bw_guide_base_pay_zones",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "In each grade there is a minimum, midpoint and maximum, as well as a market range for base salary. In addition, each grade has a target for incentive pay.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_base_pay_range",
+            "composed_from": "atom_bw_guide_base_pay_range",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "The following illustrates where individuals would typically fall within the range in different scenarios.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_base_pay_range_positions",
+            "composed_from": "atom_bw_guide_base_pay_range_positions",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "StepList",
+          "props": {
+            "kicker": "Scope list",
+            "title": "The following illustrates where individuals would typically fall within the range in different scenarios.",
+            "ordered": false,
+            "items": [
+              {
+                "id": "ele_bw_guide_base_pay_range_positions_low",
+                "composed_from": "atom_bw_guide_base_pay_range_positions_low",
+                "text": "Lower in the range: new hires with minimal experience; recent promotions to much larger jobs; new to grade based on job evaluation; performance level is lower than expectations."
+              },
+              {
+                "id": "ele_bw_guide_base_pay_range_positions_mid",
+                "composed_from": "atom_bw_guide_base_pay_range_positions_mid",
+                "text": "Around the market median: successful performers who are \u201cfully competent\u201d in their role; experienced new hires."
+              },
+              {
+                "id": "ele_bw_guide_base_pay_range_positions_high",
+                "composed_from": "atom_bw_guide_base_pay_range_positions_high",
+                "text": "Higher in the range: long-term employees who have remained in role; highly skilled/high demand positions; highest sustained performers."
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_bw_guide_base_pay_range_positions_low",
+              "ele_bw_guide_base_pay_range_positions_mid",
+              "ele_bw_guide_base_pay_range_positions_high"
+            ],
+            "composed_from": [
+              "atom_bw_guide_base_pay_range_positions_low",
+              "atom_bw_guide_base_pay_range_positions_mid",
+              "atom_bw_guide_base_pay_range_positions_high"
+            ],
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Shaping Pay Programs and Practices as Part of Enterprise HR: the Compensation and Benefits team within Enterprise HR, in strong partnership with the division HR teams, conducts regular reviews of compensation data, benchmarking against market trends, and assesses internal pay levels to ensure fair and competitive pay for all employees.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_stewardship",
+            "composed_from": "atom_bw_guide_stewardship",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Key activities that are completed at the enterprise level:",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_guide_stewardship_activities",
+            "composed_from": "atom_bw_guide_stewardship_activities",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "StepList",
+          "props": {
+            "kicker": "Scope list",
+            "title": "Key activities that are completed at the enterprise level:",
+            "ordered": false,
+            "items": [
+              {
+                "id": "ele_bw_guide_stewardship_activities_2",
+                "composed_from": "atom_bw_guide_stewardship_activities_2",
+                "text": "Participate in market surveys to benchmark compensation against industry standards and ensure competitiveness."
+              },
+              {
+                "id": "ele_bw_guide_stewardship_activities_3",
+                "composed_from": "atom_bw_guide_stewardship_activities_3",
+                "text": "Perform on-demand and planned role analyses to assess job responsibilities, market value, and internal equity."
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_bw_guide_stewardship_activities_2",
+              "ele_bw_guide_stewardship_activities_3"
+            ],
+            "composed_from": [
+              "atom_bw_guide_stewardship_activities_2",
+              "atom_bw_guide_stewardship_activities_3"
+            ],
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        }
+      ]
+    },
+    {
+      "id": "base_pay_in_total_rewards",
+      "title": "Base pay is one part of total rewards",
+      "kind": "scene",
+      "role": "topic",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Base pay is one part of total rewards",
+            "kicker": "Total rewards"
+          },
+          "meta": {
+            "scene_id": "base_pay_in_total_rewards",
+            "role": "topic"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Total rewards: your total compensation is so much more than just a paycheck and includes other benefits, bonuses and company provided offerings from Brunswick.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_total_rewards",
+            "composed_from": "atom_bw_framework_total_rewards",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Brunswick provides a portion of pay in the form of variable compensation. As with base salary, variable compensation targets are based on competitive market data. Pay mix shifts towards less base salary and more variable compensation as you progress up through the organization.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_total_rewards_variable",
+            "composed_from": "atom_bw_framework_total_rewards_variable",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Variable compensation includes:",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_total_rewards_variable_kinds",
+            "composed_from": "atom_bw_framework_total_rewards_variable_kinds",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "StepList",
+          "props": {
+            "kicker": "Scope list",
+            "title": "Variable compensation includes:",
+            "ordered": false,
+            "items": [
+              {
+                "id": "ele_bw_framework_total_rewards_variable_kinds_1",
+                "composed_from": "atom_bw_framework_total_rewards_variable_kinds_1",
+                "text": "Annual Incentives"
+              },
+              {
+                "id": "ele_bw_framework_total_rewards_variable_kinds_2",
+                "composed_from": "atom_bw_framework_total_rewards_variable_kinds_2",
+                "text": "Brunswick Performance Plan (BPP)"
+              },
+              {
+                "id": "ele_bw_framework_total_rewards_variable_kinds_3",
+                "composed_from": "atom_bw_framework_total_rewards_variable_kinds_3",
+                "text": "Commissions (for our employees who focus on sales)"
+              },
+              {
+                "id": "ele_bw_framework_total_rewards_variable_kinds_4",
+                "composed_from": "atom_bw_framework_total_rewards_variable_kinds_4",
+                "text": "Long-term Incentives (\u201cLTI\u201d \u2013 generally for leadership)"
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_bw_framework_total_rewards_variable_kinds_1",
+              "ele_bw_framework_total_rewards_variable_kinds_2",
+              "ele_bw_framework_total_rewards_variable_kinds_3",
+              "ele_bw_framework_total_rewards_variable_kinds_4"
+            ],
+            "composed_from": [
+              "atom_bw_framework_total_rewards_variable_kinds_1",
+              "atom_bw_framework_total_rewards_variable_kinds_2",
+              "atom_bw_framework_total_rewards_variable_kinds_3",
+              "atom_bw_framework_total_rewards_variable_kinds_4"
+            ],
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Total Rewards Statement \u2014 an easy way to view your total rewards: a snapshot of your total rewards in one personalized statement, available for employees to view in Workday under the Benefits and Pay app.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_trs",
+            "composed_from": "atom_bw_framework_trs",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "The Total Rewards Statement includes:",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_trs_includes",
+            "composed_from": "atom_bw_framework_trs_includes",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "StepList",
+          "props": {
+            "kicker": "Scope list",
+            "title": "The Total Rewards Statement includes:",
+            "ordered": false,
+            "items": [
+              {
+                "id": "ele_bw_framework_trs_includes_1",
+                "composed_from": "atom_bw_framework_trs_includes_1",
+                "text": "Base pay"
+              },
+              {
+                "id": "ele_bw_framework_trs_includes_2",
+                "composed_from": "atom_bw_framework_trs_includes_2",
+                "text": "Variable Annual Comp"
+              },
+              {
+                "id": "ele_bw_framework_trs_includes_3",
+                "composed_from": "atom_bw_framework_trs_includes_3",
+                "text": "Variable Long-Term Comp (if applicable)"
+              },
+              {
+                "id": "ele_bw_framework_trs_includes_4",
+                "composed_from": "atom_bw_framework_trs_includes_4",
+                "text": "Benefits (Health and Welfare)"
+              },
+              {
+                "id": "ele_bw_framework_trs_includes_5",
+                "composed_from": "atom_bw_framework_trs_includes_5",
+                "text": "Benefit Incentives (401(k), Wellness Credits, etc.)"
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_bw_framework_trs_includes_1",
+              "ele_bw_framework_trs_includes_2",
+              "ele_bw_framework_trs_includes_3",
+              "ele_bw_framework_trs_includes_4",
+              "ele_bw_framework_trs_includes_5"
+            ],
+            "composed_from": [
+              "atom_bw_framework_trs_includes_1",
+              "atom_bw_framework_trs_includes_2",
+              "atom_bw_framework_trs_includes_3",
+              "atom_bw_framework_trs_includes_4",
+              "atom_bw_framework_trs_includes_5"
+            ],
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "For international employees, the Total Rewards Statement currently does not capture all allowances and benefits.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_trs_intl_note",
+            "composed_from": "atom_bw_framework_trs_intl_note",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        }
+      ]
+    },
+    {
+      "id": "performance_over_time",
+      "title": "How performance moves pay over time",
+      "kind": "scene",
+      "role": "topic",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "How performance moves pay over time",
+            "kicker": "Pay for performance"
+          },
+          "meta": {
+            "scene_id": "performance_over_time",
+            "role": "topic"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Pay for Performance: how does Brunswick pay for performance?",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_p4p",
+            "composed_from": "atom_bw_framework_p4p",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Base salary is paid to perform the core expectations of a specific position.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_p4p_base_role",
+            "composed_from": "atom_bw_framework_p4p_base_role",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Annual incentives are the primary compensation element used to measure performance against established business goals and reward accomplishments within a given year. There is a clear link between individual performance and final incentive payout.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_p4p_annual_incentives",
+            "composed_from": "atom_bw_framework_p4p_annual_incentives",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Salary / merit reviews will ensure that we follow market trends and are aligned to pay for performance. High or low performance will impact the salary increase for a given year.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_p4p_merit",
+            "composed_from": "atom_bw_framework_p4p_merit",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Incentive payouts are calculated based on the plan formula and then adjusted up or down based on individual performance as measured through Achieve.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_p4p_achieve",
+            "composed_from": "atom_bw_framework_p4p_achieve",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "The Brunswick Performance Plan (BPP) is the key compensation tool used to promote a pay for performance culture \u2014 for both the Company and individuals. Most global salaried employees are eligible \u2014 exceptions are generally sales employees who earn commissions. Individual bonus target is determined by employee salary grade.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_p4p_bpp",
+            "composed_from": "atom_bw_framework_p4p_bpp",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        }
+      ]
+    },
+    {
+      "id": "resources_and_eu",
+      "title": "Where to learn more \u2014 and your EU rights",
+      "kind": "scene",
+      "role": "topic",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Where to learn more \u2014 and your EU rights",
+            "kicker": "Resources"
+          },
+          "meta": {
+            "scene_id": "resources_and_eu",
+            "role": "topic"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "How does Brunswick promote pay transparency? We are committed to promoting pay transparency through our established practices and processes and are dedicated to further enhance pay transparency efforts to ensure fairness and clarity for employees.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_transparency_practices",
+            "composed_from": "atom_bw_framework_transparency_practices",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Established practices, by pillar:",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_transparency_practices_practices",
+            "composed_from": "atom_bw_framework_transparency_practices_practices",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "StepList",
+          "props": {
+            "kicker": "Scope list",
+            "title": "Established practices, by pillar:",
+            "ordered": false,
+            "items": [
+              {
+                "id": "ele_bw_framework_transparency_practices_practices_4",
+                "composed_from": "atom_bw_framework_transparency_practices_practices_4",
+                "text": "Employee Visibility: Workday access to personal compensation details; Total Rewards Statement; merit/bonus letters communicated with annual performance reviews."
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_bw_framework_transparency_practices_practices_4"
+            ],
+            "composed_from": [
+              "atom_bw_framework_transparency_practices_practices_4"
+            ],
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "The FAQ answers employee and manager questions about pay ranges in U.S. job postings and includes a per-jurisdiction table of disclosure requirements, timing, and effective dates. For more information, review the Pay Transparency in U.S. job postings FAQ.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_faq_scope",
+            "composed_from": "atom_bw_faq_scope",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "EU Pay Directive Overview: measures to ensure pay transparency for workers and employers, and reducing unexplained gender pay gaps. Each of the 27 EU member countries must adopt regulations by June 2026.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_eoc_euptd",
+            "composed_from": "atom_bw_eoc_euptd",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Right to information for employees: employees have the right to request information from their employer on their individual pay level, and on average pay levels, broken down by gender, for categories of workers doing the same work or work of equal value.",
+            "kicker": "Present"
+          },
+          "meta": {
+            "element_id": "ele_bw_eoc_euptd_right_to_info",
+            "composed_from": "atom_bw_eoc_euptd_right_to_info",
+            "text_primitive": "tp_body",
+            "style_ref": "brand.instructional"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lesson_end",
+      "title": "",
+      "kind": "lesson_end",
+      "components": [
+        {
+          "type": "MCQ",
+          "props": {
+            "id": "ele_bw_framework_p4p_base_role__reinforce",
+            "kicker": "Check",
+            "stem": "What is Base salary?",
+            "choices": [
+              {
+                "id": "d:atom_bw_framework_p4p_merit",
+                "text": "Salary / merit reviews will ensure that we follow market trends and are aligned to pay for performance.",
+                "correct": false
+              },
+              {
+                "id": "key",
+                "text": "paid to perform the core expectations of a specific position",
+                "correct": true
+              },
+              {
+                "id": "d:atom_bw_framework_p4p_annual_incentives",
+                "text": "Annual incentives are the primary compensation element used to measure performance against established business goals and reward accomplishments within a given year.",
+                "correct": false
+              }
+            ],
+            "feedback": {
+              "correct": "Correct \u2014 that\u2019s the wording from this definition (\u201cpaid to perform the core expectations of a specific position\u201d).",
+              "incorrect": "Not yet. The other options are other sentences from this lesson, not this definition."
+            }
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_p4p_base_role__reinforce",
+            "composed_from": "atom_bw_framework_p4p_base_role",
+            "shape": "invert_definition",
+            "from": "manifest.checks",
+            "text_primitive": "tp_recall",
+            "style_ref": "brand.recall"
+          }
+        },
+        {
+          "type": "MCQ",
+          "props": {
+            "id": "ele_bw_framework_p4p_bpp__reinforce",
+            "kicker": "Check",
+            "stem": "What is the Brunswick Performance Plan (BPP)?",
+            "choices": [
+              {
+                "id": "d:atom_bw_framework_p4p_annual_incentives",
+                "text": "Annual incentives are the primary compensation element used to measure performance against established business goals and reward accomplishments within a given year.",
+                "correct": false
+              },
+              {
+                "id": "key",
+                "text": "the key compensation tool used to promote a pay for performance culture \u2014 for both the Company and individuals",
+                "correct": true
+              },
+              {
+                "id": "d:atom_bw_framework_p4p_base_role",
+                "text": "Base salary is paid to perform the core expectations of a specific position.",
+                "correct": false
+              }
+            ],
+            "feedback": {
+              "correct": "Correct \u2014 that\u2019s the wording from this definition (\u201cthe key compensation tool used to promote a pay for performance culture \u2014 for both the Company and individuals\u201d).",
+              "incorrect": "Not yet. The other options are other sentences from this lesson, not this definition."
+            }
+          },
+          "meta": {
+            "element_id": "ele_bw_framework_p4p_bpp__reinforce",
+            "composed_from": "atom_bw_framework_p4p_bpp",
+            "shape": "invert_definition",
+            "from": "manifest.checks",
+            "text_primitive": "tp_recall",
+            "style_ref": "brand.recall"
+          }
+        }
+      ]
+    }
+  ],
+  "vars": {
+    "ccOn": false,
+    "completedScenes": []
+  },
+  "rules": []
+}

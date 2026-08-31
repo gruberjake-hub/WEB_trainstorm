@@ -1,0 +1,28 @@
+{
+  "store": "lessons",
+  "project": "paytrans",
+  "policy": "v1_lesson_catalog",
+  "spec": "agents/realizer/lesson_v1.md",
+  "default": "bw_paytrans_employee",
+  "lessons": [
+    {
+      "lesson_id": "bw_paytrans_employee",
+      "default": true,
+      "projection": "realized_lesson.json",
+      "title": "Pay Transparency at Brunswick — How Your Pay Is Determined",
+      "scene_ids": [
+        "why_pay_ranges",
+        "how_pay_is_determined",
+        "base_pay_in_total_rewards",
+        "performance_over_time",
+        "resources_and_eu"
+      ],
+      "lesson_end_check_ids": [
+        "ele_bw_framework_p4p_base_role__reinforce",
+        "ele_bw_framework_p4p_bpp__reinforce"
+      ],
+      "from": "The optional ~10-minute employee awareness course (SOW §3.2), serving the five validated obj_bw_emp_* objectives. Title is authored designer copy — a four-root corpus has no single document-root to name it (the guide root is a manager-facing title). Manager course is drive two, this catalog, new record."
+    }
+  ],
+  "note": "Closed project catalog. /cgen?project=paytrans loads this file and plays the default. Not a LMS, not SCORM, not a catalog UI. Coverage dump stays a dump."
+}
