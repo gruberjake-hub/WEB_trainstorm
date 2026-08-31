@@ -1,5 +1,5 @@
 {
-  "vocabulary_version": "scene.v1",
+  "vocabulary_version": "scene.v2",
   "status": "draft_for_build",
   "owner": "realizer",
   "description": "Closed vocabulary of first-class SCENE records. A scene is an ordered grouping of existing ele_ / occurrence refs plus optional in-scene check-shape refs — not a second meaning store, not an LLM path, and not invented outcome language. When present, occurrences/scenes.json is the source of truth; Realizer reads it and stamps the runtime view on spine.scenes (analogous to manifest.lessons) and membership on ext.scene. The grouping heuristic may still propose a default catalog on first mint. The HTML projector READS those records to wrap and page; it does not re-discover scenes by if-atom-id.",
@@ -39,6 +39,17 @@
       "operands": {
         "element_ids": "ordered form-present then instance-exemplify ele_ refs",
         "checks": "shape refs into manifest.checks (closed_choice)"
+      }
+    },
+    {
+      "id": "topic",
+      "label": "Topic",
+      "title_heuristic": "authored heading in the scene record (an expository corpus has no single procedure to name it)",
+      "kicker": "Topic",
+      "definition": "v2 — a titled expository grouping: ordered statement/section/list presents that teach one coherent chunk of a didactic corpus, plus optional in-scene check refs. The catalog record's authored heading/kicker are designer copy (like every scene heading); membership stays ordered ele_ refs, never copied atom text. First consumer: brunswick/paytrans, the first expository (non-SOP, non-form) course.",
+      "operands": {
+        "element_ids": "ordered ele_ refs for this topic",
+        "checks": "optional shape refs into manifest.checks"
       }
     }
   ],
