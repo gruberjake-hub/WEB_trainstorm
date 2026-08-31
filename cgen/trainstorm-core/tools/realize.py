@@ -128,6 +128,7 @@ import sys
 from collections import Counter, defaultdict
 
 import harness_paths
+from validate_arc import beat_hash   # the beat staleness anchor — one definition, never copied
 from jsonschema import Draft202012Validator
 
 POLICY = "v1_one_occurrence_per_atom"
@@ -461,11 +462,11 @@ def clean_meaning(text: str) -> str:
 # content_hash apply — a stale accepted entry falls back to the verbatim atom and is reported
 # LOUDLY (the silent brand-load fallback cost a round trip; not again).
 
-VOICE = {"register": None, "atoms": {}, "elements": {}, "stale": [], "pack": None}
+VOICE = {"register": None, "atoms": {}, "elements": {}, "beats": [], "stale": [], "pack": None}
 
 
 def _voice_reset():
-    VOICE.update({"register": None, "atoms": {}, "elements": {}, "stale": [], "pack": None})
+    VOICE.update({"register": None, "atoms": {}, "elements": {}, "beats": [], "stale": [], "pack": None})
 
 
 def load_voice_overlay(project: pathlib.Path, atoms_by_id: dict) -> None:
@@ -498,6 +499,18 @@ def load_voice_overlay(project: pathlib.Path, atoms_by_id: dict) -> None:
             VOICE["stale"].append(eid)
             continue
         VOICE["elements"][eid] = entry["text"]
+    beats_p = pathlib.Path(project) / "occurrences" / "beats.json"
+    if beats_p.exists():
+        _cat = {b["beat_id"]: b for b in load(beats_p).get("beats", [])}
+        for bid, entry in (pack.get("beats") or {}).items():
+            beat = _cat.get(bid)
+            if beat is None or entry.get("status") != "accepted" or beat.get("status") != "accepted":
+                continue          # a beat without accepted copy (or an unratified beat) renders NOTHING
+            if entry.get("source_hash") != beat_hash(beat):
+                VOICE["stale"].append(bid)
+                continue
+            VOICE["beats"].append({"beat_id": bid, "placement": beat["placement"],
+                                    "intent": beat["intent"], "text": entry["text"]})
     VOICE["register"] = pack.get("register")
     VOICE["pack"] = packs[0].name
     if VOICE["stale"]:
@@ -3572,6 +3585,55 @@ def _engine_scene_checks(scene, manifest, by_eid, by_atom, options_registry) -> 
     return comps
 
 
+def _beat_component(beat) -> dict:
+    return {
+        "type": "Body",
+        "props": {"text": beat["text"], "kicker": ""},
+        "meta": {"beat_id": beat["beat_id"], "intent": beat["intent"],
+                 "placement": beat["placement"]["type"]},
+    }
+
+
+def _inject_beat_components(scenes_out, beats) -> tuple[list, list]:
+    """Inject accepted-and-fresh beat copy into the engine scene list, in place.
+
+    lesson_start → first component of the first scene; lesson_end → appended to the LAST scene
+    (after the lesson-end checks — the closure lands once the work is done); scene_start /
+    scene_end → that scene's components; after_element → directly after that element's component.
+    A beat whose target is not in this lesson is SKIPPED and reported — a placed beat is a plan,
+    not a promise. Returns (applied_ids, skipped)."""
+    applied, skipped = [], []
+    if not scenes_out:
+        return applied, skipped
+    by_id = {s["id"]: s for s in scenes_out}
+    for beat in beats:
+        pl, ptype = beat["placement"], beat["placement"]["type"]
+        comp = _beat_component(beat)
+        if ptype == "lesson_start":
+            scenes_out[0]["components"].insert(0, comp)
+        elif ptype == "lesson_end":
+            scenes_out[-1]["components"].append(comp)
+        elif ptype in ("scene_start", "scene_end"):
+            sc = by_id.get(pl.get("scene_id"))
+            if sc is None:
+                skipped.append((beat["beat_id"], f"scene {pl.get('scene_id')!r} not in this lesson"))
+                continue
+            (sc["components"].insert(0, comp) if ptype == "scene_start"
+             else sc["components"].append(comp))
+        elif ptype == "after_element":
+            hit = None
+            for sc in scenes_out:
+                for i, c in enumerate(sc["components"]):
+                    if (c.get("meta") or {}).get("element_id") == pl.get("element_id"):
+                        hit = (sc, i)
+            if hit is None:
+                skipped.append((beat["beat_id"], f"element {pl.get('element_id')!r} not in this lesson"))
+                continue
+            hit[0]["components"].insert(hit[1] + 1, comp)
+        applied.append(beat["beat_id"])
+    return applied, skipped
+
+
 def build_engine_course(atoms, elements, manifest, *, meaning_atoms=None,
                         options_registry=None, lesson_id=None, theme=None) -> dict:
     """Project the selected lesson node into Course Engine v1 runtime JSON.
@@ -3634,6 +3696,10 @@ def build_engine_course(atoms, elements, manifest, *, meaning_atoms=None,
                 end_ids, by_eid, by_atom, registry
             ),
         })
+    if VOICE["beats"]:
+        _applied, _skipped = _inject_beat_components(scenes_out, VOICE["beats"])
+        for bid, why in _skipped:
+            print(f"!! beat {bid} not rendered: {why}")
     lid = lesson["lesson_id"]
     meta = {
         "id": lid,
@@ -7062,6 +7128,52 @@ def selftest(closed_moves):
             results.append(("voice: two packs refuse rather than guess", False, "no refusal"))
         except SystemExit:
             results.append(("voice: two packs refuse rather than guess", True, ""))
+    # ── beat injection (arc hop three): accepted beat + accepted copy + fresh hash, else nothing ──
+    with tempfile.TemporaryDirectory() as td2:
+        bproj = pathlib.Path(td2)
+        (bproj / "voice").mkdir(); (bproj / "occurrences").mkdir()
+        B_OK = {"beat_id": "bt_fx_w", "placement": {"type": "lesson_start"},
+                "intent": {"pedagogical": "hook"}, "status": "accepted", "from": "fx"}
+        B_STALE = {"beat_id": "bt_fx_c", "placement": {"type": "lesson_end"},
+                   "intent": {"pedagogical": "transfer"}, "status": "accepted", "from": "fx"}
+        B_UNRAT = {"beat_id": "bt_fx_u", "placement": {"type": "lesson_end"},
+                   "intent": {"rhetorical": "persuade"}, "status": "proposed", "from": "fx"}
+        (bproj / "occurrences" / "beats.json").write_text(json.dumps(
+            {"store": "beats", "project": "fx", "policy": "v1_beat_catalog",
+             "beats": [B_OK, B_STALE, B_UNRAT]}))
+        bpack = {"pack_version": "voice.v0.1", "register": "warm_direct", "entries": {}, "beats": {
+            "bt_fx_w": {"text": "Welcome, this is for you.", "status": "accepted", "reviewer": "t",
+                         "source_hash": beat_hash(B_OK)},
+            "bt_fx_c": {"text": "Goodbye.", "status": "accepted", "reviewer": "t",
+                         "source_hash": "sha256:" + "0" * 64},
+            "bt_fx_u": {"text": "Should never render.", "status": "accepted", "reviewer": "t",
+                         "source_hash": beat_hash(B_UNRAT)},
+        }}
+        (bproj / "voice" / "warm_direct.json").write_text(json.dumps(bpack))
+        load_voice_overlay(bproj, {})
+        results.append(("beats: only accepted+fresh copy on an accepted beat loads",
+                        [b["beat_id"] for b in VOICE["beats"]] == ["bt_fx_w"]
+                        and "bt_fx_c" in VOICE["stale"], str(VOICE["beats"])))
+        scenes_fx = [
+            {"id": "s1", "components": [{"type": "Heading", "props": {}, "meta": {"element_id": "ele_a"}}]},
+            {"id": "s2", "components": [{"type": "Body", "props": {}, "meta": {"element_id": "ele_b"}}]},
+        ]
+        beats_fx = [
+            {"beat_id": "bt_w", "placement": {"type": "lesson_start"}, "intent": {}, "text": "W"},
+            {"beat_id": "bt_c", "placement": {"type": "lesson_end"}, "intent": {}, "text": "C"},
+            {"beat_id": "bt_s", "placement": {"type": "scene_end", "scene_id": "s1"}, "intent": {}, "text": "S"},
+            {"beat_id": "bt_e", "placement": {"type": "after_element", "element_id": "ele_b"}, "intent": {}, "text": "E"},
+            {"beat_id": "bt_x", "placement": {"type": "scene_start", "scene_id": "s9"}, "intent": {}, "text": "X"},
+        ]
+        applied, skipped = _inject_beat_components(scenes_fx, beats_fx)
+        s1c = [c["props"].get("text") or (c.get("meta") or {}).get("element_id") for c in scenes_fx[0]["components"]]
+        s2c = [c["props"].get("text") or (c.get("meta") or {}).get("element_id") for c in scenes_fx[1]["components"]]
+        results.append(("beats: all four placements land where the contract says",
+                        s1c == ["W", "ele_a", "S"] and s2c == ["ele_b", "E", "C"]
+                        and applied == ["bt_w", "bt_c", "bt_s", "bt_e"],
+                        f"s1={s1c} s2={s2c}"))
+        results.append(("beats: an unplaceable beat is skipped and reported, not guessed",
+                        skipped == [("bt_x", "scene 's9' not in this lesson")], str(skipped)))
     _voice_reset()
     results.append(("voice: overlay resets — no-pack projects render pre-hop verbatim",
                     _engine_atom_text(va) == "Alpha fact." and not VOICE["register"], ""))
@@ -7385,6 +7497,7 @@ def main():
         occ_manifest["voice"] = {
             "register": VOICE["register"], "pack": VOICE["pack"],
             "applied": len(VOICE["atoms"]), "element_overrides": len(VOICE["elements"]),
+            "beats_applied": sorted(b["beat_id"] for b in VOICE["beats"]),
             "stale_fallbacks": sorted(VOICE["stale"]),
         }
     lesson_catalog = load_lesson_catalog(store_dir)
