@@ -2432,3 +2432,61 @@ is made there, not assumed here.
 
 **Supersedes:** the `_todo` stub and the July intent of a hand-dropped gold course file. The
 2026-08-31 hop-one clause "produced by the pipe or not at all" is fulfilled, not changed.
+
+---
+
+## 2026-08-31 — Voice-pack contract: Dragoman voice MODE, two pins, register.v0.1
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The voice pack's design, landed in the 2026-08-31 design conversation and built as
+contract-before-writer:
+
+- **The writer is a Dragoman MODE, not a new agent** (Jake's call). Dragoman owns the
+  meaning-rendering space; language and register are coordinates. Precedent: Dragoman already has
+  a mode (`reconcile`), and single-writer is proven at key granularity (Couturier/Dragoman split).
+  Payoff: locale × register composition ordering is one seat's internal concern, never inter-agent
+  coordination. The strain, handled by contract: the modes differ in LICENSE (translation ≈
+  fidelity; voice = real authorship) and their failure modes invert (a failing translator garbles,
+  a failing copywriter INVENTS) — therefore **each mode declares its own gate profile**, and mode
+  reuse must never import translation's leniency into voice.
+- **Two pins.** The atom anchors meaning, always: every rendering at every coordinate is gated
+  against the atom's `content_hash`, never transitively. The writer works from the accepted voice
+  rendering where one exists (localization localizes the EXPRESSION, judged against the ATOM),
+  recorded as `derived_from` with the source text's hash pinned. Three protections, three scopes:
+  the atom guards what must be true; Dragoman's libraries guard what the client always says; the
+  chained source transmits what the voice writer chose here.
+- **`vocab/register.enum.json` (register.v0.1):** governed, versioned, closed. Four registers
+  (taxonomy-up-front, Jake's call), each with abstract spec fields (person/stance/formality)
+  realized natively per locale — register does not translate. Per-register `status`: only a
+  `specified` register may carry accepted renderings; `warm_direct` is reverse-specified from the
+  January artisan control course and is the arc's validation target; the other three are `draft`
+  and the gate flags renderings against them. Boundaries stated in-file: TONE MODULATES WITHIN
+  REGISTER (tone stays per-element at the intent layer; the voice writer reads it as input);
+  register is a chosen input, never a judgment about learners — segment→register selection is
+  Chameleon's join, downstream.
+- **`schemas/voice.pack.schema.json`:** per-project packs `voice/<register>.json`
+  (vocab/schema in core, instances per-project — answering the standing per-project-store carry
+  FOR PACKS). Entries key on `atom_id` per the 08-25 occurrence-identity precedent, with
+  `element_overrides` only where placement constrains; fields mirror the locale contract
+  (`status`/`reviewer`/`source_hash`) plus `derived_from`; propose→accept statuses
+  `draft`/`accepted`, `reviewer` required at accepted — the agent never sets accepted.
+- **Locale contract addition (backward-compatible):** locale entries MAY carry `derived_from`
+  when rendered from an accepted voice entry; `source_hash` still pins the atom.
+- **`tools/validate_voice.py`:** the bookkeeping gate — schema, register governance, atom anchor
+  freshness, chain freshness; selftest proves red eight ways. It does NOT check meaning
+  preservation itself — that is voice mode's review gate (the invent-guard), a later hop.
+
+**Why:** Opening hop of the voice-pack arc: land the contract so the writer lands into a gated
+store, not the reverse. The stakes sentence for the arc: let the words change while proving the
+meaning didn't.
+
+**Consequences:** Hop two = Dragoman voice-mode prompt + propose→accept on paytrans (the
+Amanuensis shape). Hop three = realize learns "accepted voice rendering if present, else verbatim
+atom" — every existing store plays unchanged until then, proven byte-identical this hop (no
+pipeline code touched). Chameleon carry recorded in the decision-log: every pack axis widens its
+decision space; revisit after player expression.
+
+**Supersedes:** the hop-five block's passing parenthetical "keyed by element id" — refined to
+atom_id + element overrides, exactly the pack-shape decision that block deferred to this design
+pass. Nothing else; single-writer, reference-don't-embed, and the working-process block stand.

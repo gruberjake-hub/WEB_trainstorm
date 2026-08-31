@@ -13,6 +13,77 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (voice hop one) — The voice-pack CONTRACT lands: Dragoman voice MODE, two pins, register.v0.1 with the January register reverse-specified. Contract before writer.
+
+*Anchor: branch `drive/voice-pack-contract` off `a9b73eb` (PR #50). The design conversation the
+hop-five block called for was held with Jake in full before any file was written; this entry is
+the reasoning record behind the DECISIONS block of the same date.*
+
+### The design conversation (what was argued, not just what was decided)
+
+**Mode, not agent — Jake's opening call, tested and kept.** Register-shift and translation share
+the deep contract: re-render meaning at a target coordinate, prove the meaning didn't move. The
+frame that survived scrutiny: Dragoman owns the meaning-rendering SPACE; language and register are
+coordinates. The composition payoff decided it — when locale × register combine (Spanish AND
+conversational), ordering becomes one seat's internal concern instead of inter-agent
+coordination, which the choreography model forbids. The strain named honestly: the modes differ
+in LICENSE (translation ≈ fidelity, near-zero authorial freedom; voice = authorship —
+compression, person, rhythm) and their failure modes INVERT (a failing translator garbles; a
+failing copywriter invents). Handled by contract, not by a second agent: each mode declares its
+own gate profile, and voice's invent-guard is the stricter one.
+
+**"What does localization localize?" dissolved into two pins.** Jake's question, and the split
+that answered it: the ATOM anchors meaning always (every rendering gated against `content_hash`,
+never transitively — no telephone chains), while the WRITER works from the accepted voice
+rendering where one exists (`derived_from`, hash pinned). Localization localizes the expression,
+judged against the atom. Jake's articulation, kept as the canonical rationale: three protections
+with three scopes — the atom guards what must be TRUE; Dragoman's libraries guard what the client
+ALWAYS SAYS; the chained source transmits what the voice writer CHOSE HERE, the one kind of
+contextual meaning no library can hold. And register does not translate: specs are abstract
+(person/stance/formality), realized natively per locale — conversational Japanese is not
+translated conversational English.
+
+**The Chameleon boundary, drawn before it could blur.** Voice mode READS a register spec — a
+governed coordinate chosen for the course. It never reasons about who the learners are; the
+moment it does, it is writing the audience facet and single-writer has broken. Which segment gets
+which register is Chameleon's join, downstream. **Named carry (Jake, this session): Chameleon is
+the faster→better pivot.** Correctly a stub today — until the voice pack it had nothing to choose
+between; every pack axis built widens its decision space for free, because packs key on exactly
+the coordinates it selects on. The decided build order IS the Chameleon-preparation sequence.
+Revisit after player expression; do not open its design mid-arc.
+
+**Taxonomy-up-front with an honest counterweight.** Jake chose four registers now over
+one-register-minimalism. Mitigation built into the vocab: per-register `status` — only
+`warm_direct`, reverse-specified from the January artisan control's actual copy (direct address,
+contractions, de-threatening reassurance, rights-affirming persuade beats, heavy compression), is
+`specified`; the other three are `draft` and the gate flags any rendering authored against them.
+
+### What the repo read surfaced (two flags, both resolved with Jake)
+
+**`tone.enum.json` already existed** — governed affective tone, per-element, at the intent layer.
+Unflagged overlap here would have been vocabulary drift of the exact kind the constitution exists
+to prevent. Resolution: TONE MODULATES WITHIN REGISTER — register is the course-level voice
+coordinate, constant per rendering; tone varies element to element and the voice writer reads it
+as an input. Boundary stated in `register.enum.json` itself. **The hop-five block's parenthetical
+said "keyed by element id"** while deferring pack shape to this pass; refined per the 08-25
+occurrence-identity precedent to atom_id + element overrides, named as a supersession rather than
+letting canon and schema quietly disagree.
+
+### What landed
+
+`vocab/register.enum.json` (register.v0.1) · `schemas/voice.pack.schema.json` (two pins;
+propose→accept statuses; element_overrides chain via `derived_from`) · `locales/README.md` gains
+the sibling-family note and the optional `derived_from` (backward-compatible; no pack instances
+existed to migrate) · `tools/validate_voice.py` — schema, governance, anchor freshness, chain
+freshness; selftest proves red EIGHT ways (ungoverned register, accepted-against-draft, missing
+reviewer, malformed hash, stale anchor, missing atom, stale chain, embedded-shape entry); project
+mode is a contract-only pass until packs exist. All existing gates re-run green; paytrans,
+ast_alsap, ast_artwork regenerated byte-identical (no pipeline code touched). What this gate does
+NOT check, deliberately: meaning preservation itself — that is voice mode's review gate (the
+invent-guard, `prompt_purity.py` as prior art), which is hop two's problem, alongside the
+Dragoman voice-mode prompt. Hop three: realize learns "accepted voice if present, else verbatim
+atom."
+
 ## 2026-08-31 (hop five) — RATIFIED: the paytrans employee course is `brunswick.reference.course` v1 (structural). The July `_todo` is closed by the pipe, not by hand. The artisan side-by-side names four gaps, each with an architectural home; the voice pack is the next build.
 
 *Jake's two calls, made in conversation after playing the branded course live: ratify now as the
