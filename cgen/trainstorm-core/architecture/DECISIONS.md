@@ -2848,3 +2848,45 @@ voiceover/caption stage. All stores regenerate byte-identical (no pipeline code 
 
 **Supersedes:** the 08-12 assumption that narration speaks existing words verbatim — narrowed,
 not overturned: Griot's seat, keys, wake, and staleness design stand exactly as written.
+
+---
+
+## 2026-08-31 — Player two: Storyline-shaped chrome at `/cgen/sl` (stock `/cgen` unchanged)
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Players are interchangeable adapters on `realized_lesson.json`. `/cgen` remains the
+stock Course Engine. `/cgen/sl/` is player two: Storyline-shaped chrome (left MENU from the
+lesson's scenes + title; PREV / NEXT; Submit when the visible scene has a check; bottom media
+bar only if the projection actually has voiceover/media) around the **same** graph projection.
+The stage still renders existing engine components (Heading, Body, checks, beats, structGroup).
+Identity still comes from `cgen/brands/<theme>/` via `meta.theme`. In-session visited/lock on
+the MENU is tab state, not an LRE / learner model. Claude is a co-builder: this hop does not
+freeze them out of the stock player, engine, catalogs, or graph.
+
+**Not this hop / not touched:** Review 360 commenting or sign-in; forty chrome buttons; After
+Effects on the stage; new atoms; Storyline file import; Couturier `style_ref` fused into client
+hex; `cgen/index.html`; `cgen/src/main.js`; `cgen/src/lessonCatalog.js` (imported); engine
+runtime/components `/cgen` uses (imported, APIs unchanged); ALSAP / artwork / paytrans atoms,
+occurrences, realize, cartographer, couturier, voice packs, beats; `cgen/lumina`; `/cgen/alsap`
+rewrite; pretty URLs. Working-process block untouched.
+
+**Query contract.** Same as stock: `?project=` (bare slug = astellas; `brunswick/paytrans`
+client-qualified), `?lesson=` inside that catalog, `?course=` raw-path hatch. Unknown
+project/lesson fails in the stage; no silent ALSAP fallback. Default catalog remains ALSAP
+short so the adapter is not Brunswick-only. Catalog/projection paths resolve against `/cgen/`
+(the stock root), not `/cgen/sl/`.
+
+**Why:** Jake is testing Claude's paytrans / voice / arc work on the stock player. A second
+chrome must sit beside that work, not replace it.
+
+**Consequences:**
+- Live stand-in: **https://trainstorm.ai/cgen/sl/?project=brunswick/paytrans** next to unchanged
+  **https://trainstorm.ai/cgen/?project=brunswick/paytrans**.
+- **https://trainstorm.ai/cgen/sl/** default is ALSAP short (same catalog default as stock).
+- Hide-VO honesty is the same rule: paytrans currently has no VO file — do not fake a playbar
+  or a video stage. Griot hop two still owns the voiceover/caption stage.
+- A third player is a sibling folder, same adapter contract; do not fork meaning to add chrome.
+
+**Supersedes:** nothing. `/cgen` as the stock Course Engine stands. Claude's 2026-08-31
+paytrans / voice / arc / Griot / structure / learner-surface blocks stand.
