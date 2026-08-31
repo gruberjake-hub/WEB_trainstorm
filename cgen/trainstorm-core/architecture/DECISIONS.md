@@ -2490,3 +2490,54 @@ decision space; revisit after player expression.
 **Supersedes:** the hop-five block's passing parenthetical "keyed by element id" — refined to
 atom_id + element overrides, exactly the pack-shape decision that block deferred to this design
 pass. Nothing else; single-writer, reference-don't-embed, and the working-process block stand.
+
+---
+
+## 2026-08-31 — Voice hop two: Dragoman's voice mode exists and has proposed; the invent-guard is two-speed; acceptance is one human-run script
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The voice writer, per the hop-two design beat (three calls, all Jake's):
+
+- **The mode contract:** `agents/localize/voice.system.md` (`voice-agent.v0.1`) — the register-
+  coordinate instantiation of Dragoman's frame: same two-speed principle, same flag discipline,
+  same draft-only bright line, STRICTER invention profile. New flag taxonomy (`invented-risk`,
+  `compression-loss`, `register`, `ambiguous-source`, `defined-name`, `verbatim-kept`). Verbatim
+  is legal and declared. The mode reads element tone where present (absent in paytrans — proceeds
+  without) and never reasons about learners (register is a chosen input; selection is Chameleon's).
+- **The invent-guard is TWO-SPEED** (`tools/localize/voice_gate.py`): a deterministic class —
+  draft-only bright line, anchor freshness against the atom's current `content_hash`, and NO
+  INVARIANT IMPORT (numbers/dates/names in a rendering must exist in the atom; a sibling-atom
+  fact passes WITH a visible note; an absent fact fails) — plus a judgment class: writer
+  self-flags + confidence, with human acceptance as the meaning gate. Honest limit stated in the
+  prompt_purity.py manner: the deterministic guard catches imported facts with countable surface
+  forms, not paraphrased invention; that residue is what acceptance is FOR. Selftest proves red
+  seven ways.
+- **Acceptance is `tools/localize/voice_accept.py`** — the accept_value.py pattern: the pack's
+  ONLY writer, run by a person, `--by` required. Re-runs the invent-guard at acceptance time
+  (stale or invariant-violating drafts are refused), refuses acceptance against a non-`specified`
+  register, supports `--edit` (accepted-with-edit — the human's authorship, recorded), and
+  validates the pack against the schema before writing. Drafts live in
+  `voice/proposals/<register>.json`, NEVER in the pack.
+- **Execution (this run):** the mode was executed in-session (implementation varies behind the
+  contract); provenance in the proposals store records agent, prompt_version, and the January
+  artisan course as exemplar_ref. **Scope: the 50 course-played atoms** (of 68 — the arc's
+  validation target is the played course).
+- **The proposals exist:** `cgen/brunswick/projects/paytrans/voice/proposals/warm_direct.json` —
+  50 drafts, all gate-green, one sibling-atom note (U.S. rendered where the atom writes USA), and
+  one deliberately WITHHELD reassurance: the artisan control's "a solid, positive place to be"
+  (midpoint atom) is an evaluative claim no atom carries — flagged `invented-risk`, not written.
+  That flag is the honesty line working, and it re-opens the invented-copy design question
+  (closure/persuade) with a concrete case.
+
+**Why:** First dispatched LLM writer, landed into the store hop one gated. The pack itself stays
+empty until Jake accepts — acceptance is the human's act, mechanically.
+
+**Consequences:** Jake reviews the proposals (flags are the triage signal) and runs voice_accept
+— per-id, or `--all` after reading the gate report. Hop three: realize learns "accepted voice
+rendering if present, else verbatim atom." Griot's "words before voice" wake gains its first
+words once entries are accepted. Brunswick termbase remains absent (defined names constrained by
+atoms + flags) — a carry, not a blocker.
+
+**Supersedes:** nothing. The hop-one contract block, single-writer, and the working-process
+block stand.

@@ -13,6 +13,56 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (voice hop two) — Dragoman speaks: 50 warm_direct drafts proposed, gate-green, none accepted. The invent-guard is two-speed; the pack's only writer is a human-run script; the withheld reassurance is the finding.
+
+*Anchor: branch `drive/voice-writer` off `c505f5e` (PR #51). Design beat held with Jake before
+building; three calls, all his: two-speed invent-guard (deterministic + flags, human acceptance as
+the meaning gate) over adding an LLM checker now; in-session execution of the mode (implementation
+varies behind the contract — the contract, not the executor, is what's governed); scope = the 50
+course-played atoms, not the full 68.*
+
+### What the seat read surfaced
+
+Dragoman's `system.md` was READIER than the handoff suggested: config header (with a free-prose
+`register` field the vocab now formalizes), the two-speed principle, the flag discipline, the
+draft-only bright line — voice mode is that frame re-instantiated, not new machinery. Tone is not
+wired into paytrans (the tone.enum field is proposed, no data) — the mode's contract reads tone
+where present and proceeds without. No Brunswick termbase exists; defined names are constrained by
+the atoms themselves plus the `defined-name` flag (carry, not blocker).
+
+### What landed
+
+`agents/localize/voice.system.md` (voice-agent.v0.1) — the mode contract; README reframed:
+agents/localize is DRAGOMAN, one seat, two mode instantiations, each with its own gate profile.
+`tools/localize/voice_gate.py` — the deterministic invent-guard: bright line, anchor freshness,
+invariant import (atom → pass; sibling atom → pass WITH NOTE; nowhere → fail), flag/confidence
+discipline; selftest proves red seven ways; honest limit stated (catches countable surface forms,
+not paraphrased invention). `tools/localize/voice_accept.py` — the accept_value pattern: the
+pack's ONLY writer, human-run, re-guards at acceptance time, refuses non-`specified` registers,
+`--edit` records accepted-with-edit, schema-validates before writing. Whole loop proven on a
+project copy: accept 2 → accept `--all` (50/50) → store gate green; refusal paths demonstrated
+(draft register, missing proposal).
+
+### The proposals (the actual copy)
+
+50 drafts in `voice/proposals/warm_direct.json`, all gate-green. Register moves per the spec:
+second person re-addressing where the atom grants the learner something; compression that sheds
+words, not claims; verbatim-kept declared on labels and pillar names; the high-or-low merit
+symmetry KEPT (de-threatening by honesty, not softening). One sibling-atom note (U.S. for the
+atom's USA). **The finding of the hop: the withheld reassurance.** The artisan control appends "a
+solid, positive place to be" to the midpoint scenario — an evaluative claim NO atom carries. The
+mode withheld it and flagged `invented-risk` instead. That is the stakes sentence enforced against
+the exact copy that motivated the arc — and it hands the closure/persuade design question its
+first concrete case: warm copy the client plausibly wants, with no meaning anchor to hang it on.
+Resolution paths when that conversation opens: mint the atom (Headwater), or accept-with-edit
+(human authorship, recorded).
+
+### What did NOT happen
+
+No pack entry exists — acceptance is Jake's act, per-id or `--all`, after reading the flags. No
+realize change (hop three: "accepted voice if present, else verbatim atom"). No closure/persuade
+copy. All stores regenerate byte-identical; every existing gate green.
+
 ## 2026-08-31 (voice hop one) — The voice-pack CONTRACT lands: Dragoman voice MODE, two pins, register.v0.1 with the January register reverse-specified. Contract before writer.
 
 *Anchor: branch `drive/voice-pack-contract` off `a9b73eb` (PR #50). The design conversation the
