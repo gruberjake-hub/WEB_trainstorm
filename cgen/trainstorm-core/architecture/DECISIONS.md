@@ -2242,4 +2242,38 @@ PR was still required. The #42 store-and-loader decision (second SOP
 through the pipe; sibling ingest; not ISO 14971) stands.
 Working-process block untouched.
 
+---
 
+## 2026-08-30 — Two dormant gates repaired; sidecar brought under the governed vocabularies; `_schema/` copies removed
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** `tools/lint.py` and `layout-engine/ci/validate_sidecar.py` are live gates again.
+`lint.py` classifies atom stores (deferred to `validate_atoms.py`), element stores (schema-checked
+against `element.schema.json`) and scripts (v1, or v2 when a v2-only field is present) instead of
+treating every JSON array as a script. `validate_sidecar.py` auto-detects the enclosing
+`trainstorm-core` instead of a pre-move relative path. The Astellas awareness sidecar conforms to
+canon: repeat sources select `Bullet` (the governed element type), and the selection rule that fired
+on an ungoverned `script_primitive: scenario` is removed — the governed `requested_interaction:
+scenario_select` rule already routes that layout. `layout-engine/_schema/` is deleted; the two schemas
+have one home in `schemas/`.
+
+**Why:** Both gates were marked ✅ and could not execute against the current repo (254 false errors;
+a crash on a path that no longer exists). A gate nobody can run is a claim. The three violations the
+repaired gate found are all "a data file invented a value" — the exact class the govern-the-
+vocabularies invariant exists to catch, resolved by conforming the data, not by widening canon.
+
+**Consequences:**
+- `python3 tools/lint.py reference schemas vocab ontology ../astellas` → 0 errors, and goes red on
+  negative controls. `python3 layout-engine/ci/validate_sidecar.py layout-engine/sidecars/<x>.json`
+  → OK with no flags.
+- **Open, not decided here:** whether a 12th script primitive `scenario` (branching decision)
+  should exist. If yes, it is a `script.primitives` version bump plus a sidecar rule — in that order.
+- **Prose drift to fix on the next Project re-sync:** `project/custom_instructions.md` and the Claude
+  Project instructions say "`ListItem`"; the governed spelling is `Bullet` (element type) over a
+  `list_item` atom kind. One line.
+- `STRUCTURE.md` gains a `layout-engine/` entry and corrected markers for both tools.
+
+**Supersedes:** the `STRUCTURE.md` ✅ on `lint.py` as it stood 2026-08-30 (a marker on a tool that
+could not run). Nothing in the working-process block. Single-writer per facet, one home per schema,
+govern the vocabularies — all stand and are what this enforces.

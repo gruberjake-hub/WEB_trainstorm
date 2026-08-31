@@ -64,7 +64,7 @@ because they are per-brand data, not canonical contracts.
 ## The two files
 
 **Template manifest** — *generated*, not hand-edited. Pure structure + skin extracted from the
-`.potx`. Conforms to `_schema/template_manifest.schema.json`. Each `layout.id` is the
+`.potx`. Conforms to `trainstorm-core/schemas/template_manifest.schema.json`. Each `layout.id` is the
 `layout_primitive` key; `layout.interaction_primitive` names the interaction it provides (or null).
 
 **Intent sidecar** — *hand-authored* policy. Ordered `selection` rules over governed intent signals
@@ -75,10 +75,9 @@ optional `token_overrides`; `interaction_defaults`. Pins to a manifest by `sha25
 ## Validate locally
 
 ```bash
-# schemas + vocab both read from your trainstorm-core checkout
-# (defaults: --schema-dir ../../trainstorm-core/schemas, --core-dir ../../trainstorm-core)
-python ci/validate_sidecar.py sidecars/astellas.awareness.sidecar.json \
-  --schema-dir ../trainstorm-core/schemas --core-dir ../trainstorm-core
+# schemas + vocab both read from the enclosing trainstorm-core checkout
+# (auto-detected — layout-engine/ lives inside trainstorm-core; override with --core-dir)
+python ci/validate_sidecar.py sidecars/astellas.awareness.sidecar.json
 ```
 
 The gate checks: schema validity, sha256 pin, layout/slot existence, **governed selection values**,

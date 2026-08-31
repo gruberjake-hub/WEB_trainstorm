@@ -5,7 +5,9 @@ Trainstorm linter — the guardrail across the content stack.
  
 Runs governance + drift checks on courses, scenes, and scripts:
   • ungoverned intents / pedagogical intents / primitive types (vs vocab + schema)
-  • script validation against schemas/script.primitives.v1.json
+  • script validation against schemas/script.primitives.v1.json (v2 when a v2-only field is used)
+  • occurrence stores (occurrences/elements.json) validated against schemas/element.schema.json
+  • atom stores (atoms.json) are recognised and deferred to tools/validate_atoms.py — not re-gated here
   • list integrity (legacy delimited lists, item_count vs children, parent refs)
   • cross-file ID collisions (the sce_003 case)
   • embedded localization (should be externalized to locale packs)
@@ -50,9 +52,24 @@ def load_json(path):
         return json.load(f)
  
 def classify(data):
-    """Decide what KIND of file this is, from its shape."""
+    """Decide what KIND of file this is, from its shape.
+
+    Three different stores are JSON arrays, so "is a list" is not a kind (2026-08-30 fix — the
+    linter was validating atoms.json and occurrences/elements.json against the script schema and
+    reporting hundreds of false errors):
+      atom store      — items carry `atom_id`      (gated by validate_atoms.py; lint defers)
+      element store   — items carry `element_id`   (validated here against element.schema.json)
+      script          — items carry a primitive `type`
+    """
     if isinstance(data, list):
-        return "script"                       # an array of primitives
+        items = [x for x in data if isinstance(x, dict)]
+        if items and any("atom_id" in x for x in items):
+            return "atom_store"
+        if items and any("element_id" in x and "composed_from" in x for x in items):
+            return "element_store"
+        if items and all("type" in x for x in items):
+            return "script"                   # an array of primitives
+        return "unknown"
     if isinstance(data, dict):
         if "scenes" in data:
             return "course"                   # course.v0.2 (scenes inline)
@@ -77,7 +94,8 @@ def collect_inputs(paths):
  
 def load_canon(root):
     """Load the governed vocabularies + the script schema from the repo."""
-    canon = {"rhetorical": set(), "pedagogical": set(), "script_schema": None}
+    canon = {"rhetorical": set(), "pedagogical": set(),
+             "script_schema": None, "script_schema_v2": None, "element_schema": None}
     if not root:
         return canon
     ie = os.path.join(root, "vocab", "intent.enum.json")
@@ -85,10 +103,37 @@ def load_canon(root):
         dims = load_json(ie)["dimensions"]
         canon["rhetorical"]  = {v["id"] for v in dims["rhetorical"]["values"]}
         canon["pedagogical"] = {v["id"] for v in dims["pedagogical"]["values"]}
-    ss = os.path.join(root, "schemas", "script.primitives.v1.json")
-    if os.path.exists(ss):
-        canon["script_schema"] = load_json(ss)
+    for key, name in [("script_schema", "script.primitives.v1.json"),
+                      ("script_schema_v2", "script.primitives.v2.json"),
+                      ("element_schema", "element.schema.json")]:
+        p = os.path.join(root, "schemas", name)
+        if os.path.exists(p):
+            canon[key] = load_json(p)
     return canon
+
+def schema_property_names(schema):
+    """Union of every property name declared anywhere in a schema's $defs (plus top level)."""
+    names = set()
+    def walk(node):
+        if isinstance(node, dict):
+            names.update(node.get("properties", {}).keys())
+            for v in node.values():
+                walk(v)
+        elif isinstance(node, list):
+            for v in node:
+                walk(v)
+    walk(schema or {})
+    return names
+
+def script_schema_for(data, canon):
+    """v1 unless the script uses a property that only v2 declares (derived from the schemas, not
+    hardcoded — so a v3 with new fields is a one-line addition here, not a new rule)."""
+    v1, v2 = canon.get("script_schema"), canon.get("script_schema_v2")
+    if v1 and v2:
+        v2_only = schema_property_names(v2) - schema_property_names(v1)
+        if any(k in v2_only for prim in data if isinstance(prim, dict) for k in prim):
+            return v2, "v2"
+    return v1, "v1"
  
 def scenes_of(kind, path, data):
     """Normalize course/scene docs to an iterable of (scene_id, scene_dict, file)."""
@@ -127,7 +172,10 @@ def check_lists(docs, canon):
                                   "delimited-string List — decompose into ListItem children")
                 # item_count vs actual children
                 if t == "List" and "item_count" in el:
-                    kids = [k for k, v in els.items() if v.get("type") == "ListItem" and v.get("parent") == key]
+                    # element.schema.json + cgen/schema/scene.schema.json name the child `Bullet`;
+                    # `ListItem` is the legacy spelling. Accept both so the count check can fire.
+                    kids = [k for k, v in els.items()
+                            if v.get("type") in ("Bullet", "ListItem") and v.get("parent") == key]
                     if len(kids) != el["item_count"]:
                         yield Finding(WARN, "list-count", loc(path, sid, key),
                                       f"item_count={el['item_count']} but {len(kids)} ListItem children")
@@ -189,14 +237,14 @@ def check_delivery(docs, canon):
                 yield Finding(WARN, "delivery", loc(path, sid), f"unknown delivery '{d}'")
  
 def check_scripts(docs, canon):
-    schema = canon.get("script_schema")
     for kind, path, data in docs:
         if kind != "script":
             continue
+        schema, ver = script_schema_for(data, canon)
         if schema and jsonschema:
             for e in jsonschema.Draft202012Validator(schema).iter_errors(data):
                 where = "/".join(str(x) for x in e.path) or "(root)"
-                yield Finding(ERROR, "script-schema", loc(path, where), e.message)
+                yield Finding(ERROR, "script-schema", loc(path, where), f"[{ver}] {e.message}")
         elif schema and not jsonschema:
             yield Finding(INFO, "script-schema", loc(path), "jsonschema not installed — skipping")
         for i, prim in enumerate(data):
@@ -205,8 +253,32 @@ def check_scripts(docs, canon):
                 yield Finding(ERROR, "pedagogical-vocab", loc(path, f"[{i}]"),
                               f"ungoverned pedagogical_intent '{pi}'")
  
+def check_stores(docs, canon):
+    """Atom and element stores are arrays too, but they are not scripts.
+
+    atom store    → validate_atoms.py is the gate (schema + drift + vocab + facets); lint defers
+                    rather than growing a second, thinner copy of that gate.
+    element store → schema-validate each occurrence against element.schema.json. realize /
+                    cartographer / couturier already do this on their own runs; this catches a
+                    hand-edited store between runs. Same schema file, so it cannot drift.
+    """
+    el_schema = canon.get("element_schema")
+    for kind, path, data in docs:
+        if kind == "atom_store":
+            yield Finding(INFO, "atom-store", loc(path),
+                          f"{len(data)} atoms — not linted here; gate with tools/validate_atoms.py --project <store>")
+        elif kind == "element_store":
+            if not (el_schema and jsonschema):
+                yield Finding(INFO, "element-schema", loc(path), "element.schema.json or jsonschema unavailable — skipping")
+                continue
+            v = jsonschema.Draft202012Validator(el_schema)
+            for i, el in enumerate(data):
+                for e in v.iter_errors(el):
+                    where = "/".join(str(x) for x in e.path) or "(root)"
+                    yield Finding(ERROR, "element-schema", loc(path, el.get("element_id", f"[{i}]"), where), e.message)
+
 CHECKS = [check_intents, check_lists, check_collisions, check_embedded_locale,
-          check_asset_contract, check_delivery, check_scripts]
+          check_asset_contract, check_delivery, check_scripts, check_stores]
  
  
 # ── run & report ──────────────────────────────────────────────────────────────

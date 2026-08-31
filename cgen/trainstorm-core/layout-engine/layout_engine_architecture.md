@@ -113,8 +113,7 @@ Starter delivered to the user (schemas validated, examples conform, CI contract 
 
 ```
 layout-engine/
-├── _schema/template_manifest.schema.json
-├── _schema/intent_sidecar.schema.json
+├── (schemas: trainstorm-core/schemas/{template_manifest,intent_sidecar}.schema.json — `_schema/` copies removed 2026-08-30)
 ├── templates/astellas/template_manifest.example.json   # 6 layouts from GEN607 work
 ├── sidecars/astellas.awareness.sidecar.json
 ├── ci/validate_sidecar.py                              # schema + sha256 pin + refs/slots
