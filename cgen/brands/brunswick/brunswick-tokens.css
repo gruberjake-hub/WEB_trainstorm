@@ -1,0 +1,90 @@
+/* Brunswick Theme Tokens (v1) — Course Engine pack contract
+   Values from brands/brunswick/brunswick.css + brand.json (distilled from
+   Brunswick Brand Guidelines 2023, Jan 2026). Same SEMANTIC variable contract
+   as the astellas pack (the de-facto pack baseline): tokens only, no layout.
+   Honest gap: the guidelines define no warning color; a neutral amber is used
+   and flagged rather than a brand color invented. */
+
+:root {
+  /* Brand colors (core) */
+  --brunswick-blue: #026AFE;
+  --brunswick-midnight: #000018;
+  --brunswick-white: #FFFFFF;
+  --brunswick-sky: #D4E8FF;
+
+  /* Support */
+  --brunswick-grey-a: #6D6E70;
+  --brunswick-grey-b: #A7A9AB;
+
+  /* Accents (use sparingly) */
+  --brunswick-accent-green: #04E255;
+  --brunswick-accent-blue: #00C4FF;
+  --brunswick-accent-purple: #A665FF;
+
+  /* Semantic UI mapping (learning-appropriate) */
+  --color-bg: var(--brunswick-white);
+  --color-surface: #F5F9FF; /* calm surface tinted from brunswick-sky */
+  --color-panel: #FFFFFF;
+
+  --color-text: var(--brunswick-midnight);
+  --color-text-muted: var(--brunswick-grey-a);
+
+  --color-border: #E1E8F2;
+  --color-border-strong: var(--brunswick-grey-b);
+
+  --color-accent: var(--brunswick-blue);
+  --color-accent-strong: #0153C7; /* darkened brunswick-blue for hover/active */
+
+  --color-link: var(--brunswick-blue);
+  --color-focus: var(--brunswick-accent-blue);
+
+  /* Status colors */
+  --color-success: var(--brunswick-accent-green);
+  --color-warning: #B45309; /* NOT a brand color — guidelines define none; neutral amber */
+  --color-danger: #C2333B;  /* NOT a brand color — guidelines define none; accessible red */
+
+  /* Typography (brand sans w/ web-safe stack; see brunswick.css) */
+  --font-body: "Telegraf", "Titillium Web", "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "Telegraf", "Titillium Web", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-body: 1.55;
+  --line-height-heading: 1.2;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+
+  /* Radius & shadow (restrained) */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 8px 18px rgba(0,0,0,0.08);
+
+  /* Max content width for reading comfort */
+  --content-max: 1100px;
+
+  /* Motion (conservative; avoid playful motion) */
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur-med: 180ms;
+}

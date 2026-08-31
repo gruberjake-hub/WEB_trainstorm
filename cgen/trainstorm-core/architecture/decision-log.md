@@ -13,6 +13,35 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-08-31 (hop 4b) — Brunswick brand pack conformed to the Course Engine pack contract; the branded player verified in a real browser
+
+*Anchor: branch `drive/brunswick-brand-pack` off `c53b2e6` (PR #48). Verified headless-Chromium
+against a local serve of the repo: catalog, projection, all four pack files and the logo fetch 200;
+`#app` carries `brand-brunswick`; `--color-accent` resolves `#026AFE`; the lesson pages through to
+both checks rendering with sibling distractors under Brunswick chrome.*
+
+Jake's live report after landing hop four: the lesson plays, no Brunswick chrome. Cause: the
+January brand folder predates the pack contract the engine's loaders established (astellas pack,
+PR #35) — `loadBrand` fetches `<theme>-brand.json` and `loadTheme` links
+`<theme>-{tokens,layout,components}.css`; the folder held `brand.json` + `brunswick.css`. The 404
+was silent chrome-fallback by design (a course must play unbranded rather than not at all), which
+made it invisible until a human looked. Fix at the data layer: the pack now carries the four
+contract files. `brunswick-tokens.css` maps the January distillation onto the SAME semantic
+variable contract as the astellas tokens; two status colors the guidelines do not define (warning,
+danger) are neutral values flagged as non-brand in the file, not invented brand colors.
+`brand.json` and `brunswick.css` stay — they are the distillation source, a different genre.
+
+**Named carry (real debt, taken knowingly):** `brunswick-{layout,components}.css` are copies of the
+astellas files with brand spots swapped, because the engine has no shared base layer — the astellas
+pack IS the de-facto base. Two copies of component CSS will drift exactly the way two copies of a
+schema drift. The right shape is an engine base stylesheet + thin per-brand token/override packs;
+until that hop, every component/layout edit must land in BOTH packs, and each copied file says so
+in its header. Second smaller carry: `loadBrand`'s silent fallback deserves a visible dev-mode
+notice — silence cost this drive a round trip.
+
+Hop five remains: Jake's design review of the played lesson, then reference-course ratification and
+the artisan side-by-side.
+
 ## 2026-08-31 (hop four) — `?project=` refs are client-qualified: `/cgen/?project=brunswick/paytrans`. The astellas prefix was an assumption the second client namespace exposed.
 
 *Anchor: branch `drive/cgen-client-qualified-project` off `7e25d55` (PR #47). One file,
