@@ -44,9 +44,10 @@ cgen/
 │   └── registry/{roles,records,docs,options}.registry.json  ✅ seeded v1 at namespace creation; grown by propose→adopt
 │
 ├── astellas/                            # ⚠ THIRD SIBLING — client atom stores + client registries
-│   ├── projects/{ast_alsap,alsap,alsap_asp9999,ast_artwork}/  ✅ procedure · template · instance · artwork stores
+│   ├── projects/{ast_alsap,alsap,alsap_asp9999,ast_artwork,cci_public_disclosure}/  ✅ procedure · template · instance · artwork stores; `cci_public_disclosure` is a THIN proposed `cd_` store (inventory + committed-design; no atoms)
 │   │                                               (`ast_artwork` store **and** `?project=` loader on main, PR #42.
-│   │                                               `/cgen/?project=ast_artwork` plays SOP-2290; `/cgen` stays ALSAP.)
+│   │                                               `/cgen/?project=ast_artwork` plays SOP-2290; `/cgen` stays ALSAP.
+│   │                                               `cci_public_disclosure`: first live proposed `cd_ast_cci_pd`, 2026-09-01; mint does not exist; inventory refs are pointers, not a docs.registry smash.)
 │   └── registry/{roles,records,docs,options}.registry.json  ✅ client-tier governed ENTRIES
 │
 ├── sl/                                  ✅ player two — Storyline chrome on the same realized_lesson.json (`/cgen` remains stock)
@@ -307,11 +308,10 @@ no `chameleon.py`. The open-project warrant has an operating prompt
 (`agents/strategist/02_system_prompts/core_agent/strategist_system_prompt.md`) and a
 propose-only dossier store (`schemas/dossier.schema.json`); human-run
 `tools/dossier_accept.py --by` is the only promoter. There is no `strategist.py`.
-Case-Author stage 1 writer is `tools/headwater_case_author.py` (propose-only); there is
-no stage-2 mint this hop. Accepting a dossier still does not write `ontology/goals.json`.
-The named next write landed 2026-09-01: `goal_ast_cci_library_used` in the live store.
-Designer `obj_` lock for that goal landed 2026-09-01 (`obj_ast_cci_*`, objectives v6).
-This hop does not mint atoms.
+Case-Author stage 1 writer is `tools/headwater_case_author.py` (propose-only); first live
+proposed `cd_ast_cci_pd` sits at `cgen/astellas/projects/cci_public_disclosure/` (status
+`proposed`; Jake accepts with `committed_design_accept.py --by jake`). There is no
+stage-2 mint this hop. This hop does not mint atoms.
 
 Near-term, in dependency order:
 
@@ -390,9 +390,11 @@ outcomes-mode; LLM distractor-writer; pretty `/cgen/{client}/{course}` URLs; `/c
 rewrite; slide-authoring frontend; ingest UI on the static Netlify site; ISO 14971; Procedure B
 on ALSAP; Generator's divergent distractors; Designer as a live agent; Strategist as a
 *compiler* (the operating prompt and dossier store exist; there is still no `strategist.py`;
-Case-Author stage-1 propose is `tools/headwater_case_author.py`; mint does not exist; accepting
-a dossier still does not write `ontology/goals.json` — the named store write landed 2026-09-01
-as `goal_ast_cci_library_used`; Designer `obj_` lock for that goal landed 2026-09-01 as four
+Case-Author stage-1 propose is `tools/headwater_case_author.py`; first live proposed
+`cd_ast_cci_pd` exists (status `proposed`; Jake accepts with
+`committed_design_accept.py --by jake`); mint does not exist; accepting a dossier still
+does not write `ontology/goals.json` — the named store write landed 2026-09-01 as
+`goal_ast_cci_library_used`; Designer `obj_` lock for that goal landed 2026-09-01 as four
 `obj_ast_cci_*` nodes in the core seed). Authoring Chameleon
 stays a contract.
 
