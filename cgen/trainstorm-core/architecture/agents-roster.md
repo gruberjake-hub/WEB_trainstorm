@@ -22,6 +22,7 @@ affected audiences, constraints, risks, politics, modality recommendations.
 - **Wakes on:** a new project intake
 - **Temperature:** high — this is judgment work. Heaviest HITL gate in the system; nothing
   locks without a human in the room. *(absorbs: LEADER, ADRA S0–S3 at survey depth)*
+- **Stub (2026-09-01):** `agents/strategist/warrant_STUB.md` — contract only; no `strategist.py`.
 
 ## The Audience Agent
 *The ethnographer. Knows the people; never touches the content.*
