@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/audience-model.schema.json",
+  "title": "Trainstorm Audience Model — segment record",
+  "description": "The Audience Agent's write schema (agents-roster: 'the ethnographer — knows the people; never touches the content'). One record per audience SEGMENT: the design-time learner/audience model the unification map calls Band B-sub (ADRA S6.1–S6.6 + S7 — affective, cadence, empathy, meaning, inhibitor, motivator, composite indices), keyed to segments, never to persons. This is the sibling graph: it lives beside the content graph (a project's audience/<segment_id>.json, next to voice/ and locales/) and joins it ONLY through objective_ids (mastery, factor targeting) and, downstream, through element_id when a planner binds direction per segment. It is also the LRE Stage-1 'synthetic learner': a segment record enacted as a persona IS the learner the planner plans for (see architecture/lre-stage1-synthetic-learner.md). The same shape is reserved for Stage 2's live learner record (kind=learner) so that the planner cannot tell synthetic from live — but that record is written by the Responsive Engine under separate learner-data governance and MUST NOT appear in a content project store; the gate rejects it there. PII-BLIND BY CONSTRUCTION: no name, identifier, contact, or free text about a person; every psychological value is a governed vocabulary id plus a strength and a basis (why we believe it — a reviewable reason, never a confidence score), so a reason trace can cite it. NO SILENT LYING: this record holds only what a population can hold before any course exists. The trajectory variables (clarity, agreement, intent_to_act, load) are deliberately absent — they arise during an encounter and belong to the scene's learning contract, not to the audience.",
+  "type": "object",
+  "required": ["record_id", "kind", "schema_version", "segment_id", "as_of", "standing", "disposition", "baselines", "governance"],
+  "additionalProperties": false,
+  "properties": {
+
+    "record_id": {
+      "type": "string",
+      "pattern": "^(seg|lrn)_[A-Za-z0-9_-]+$",
+      "description": "Stable opaque id of this record. seg_… for a segment record (Audience Agent, design time). lrn_… is RESERVED for the Responsive Engine's live learner record (Stage 2, separate governance) and is not legal in a content project store."
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["segment", "learner"],
+      "description": "segment = design-time population record; the Stage-1 synthetic learner. learner = Stage-2 live record (reserved; not written by any agent yet). Must agree with the record_id prefix."
+    },
+    "schema_version": { "type": "string", "const": "audience-model.v0.1" },
+    "segment_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The audience segment this record describes. The design-time join: elements target it via audience.segment_scope[]; a direction planner keys per-segment bindings by it.",
+      "examples": ["us_hourly_tenured", "tier1_field", "tier2_msl"]
+    },
+    "as_of": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this record was true. Segment: the analysis/authoring time. Learner (reserved): the last evidence update."
+    },
+
+    "standing": {
+      "type": "object",
+      "description": "Survey-depth facts about the population's position (ADRA S1 / Audience Analysis): role, tier, experience, what they already know. The Audience Agent writes this on project intake, before any deep pass.",
+      "additionalProperties": false,
+      "properties": {
+        "role": { "type": "string", "description": "Role id (registry/roles.registry.json where one applies) — a population's role, never a person's title." },
+        "tier": { "type": "string", "description": "Risk/responsibility tier id (e.g. an RBT tier)." },
+        "experience_level": { "type": "string", "enum": ["novice", "developing", "proficient", "expert"] },
+        "mastery": {
+          "type": "array",
+          "description": "Estimated mastery per objective, as priors for the population. Keyed by obj_ ids from ontology/objectives.json — the audience model joins content through OBJECTIVES, not elements, so a segment record survives re-export and is reusable across courses.",
+          "items": {
+            "type": "object",
+            "required": ["objective_id", "level", "basis"],
+            "additionalProperties": false,
+            "properties": {
+              "objective_id": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" },
+              "level": { "$ref": "#/$defs/unit" },
+              "basis": { "$ref": "#/$defs/basis" }
+            }
+          }
+        },
+        "prior_exposure": {
+          "type": "array",
+          "description": "Courses/topics this population has typically completed, as ids — never free text.",
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" }
+        }
+      }
+    },
+
+    "disposition": {
+      "type": "object",
+      "description": "The deep pass — B-sub proper. What the psykido skills produce when the Designer flags a persuasive nature (unification-map §5): inhibitors, objections, aligners/motivators, identity threats, belief gaps, meaning anchors, rationalization patterns, dominant affect. Every factor is a governed id from vocab/disposition.enum.json with a strength, a basis, and a risk_of_overuse — the roster's one hard ethical rule, carried on the thing it protects. These are what the psychological primitives reason FROM; the primitives themselves are never stored here or in content.",
+      "additionalProperties": false,
+      "properties": {
+        "inhibitors":              { "$ref": "#/$defs/factorList", "description": "What blocks uptake or action (inh_). Inhibitor Vaccination (S6.5) targets these." },
+        "objections":              { "$ref": "#/$defs/factorList", "description": "Counter-arguments the population is likely to hold (obj_x_ — NOT obj_, which is reserved for objectives)." },
+        "aligners":                { "$ref": "#/$defs/factorList", "description": "Values/goals the content can align with (aln_). Motivation Reinforcer (S6.6) targets these." },
+        "identity_threats":        { "$ref": "#/$defs/factorList", "description": "Ways the content could read as an attack on who the learner is (thr_). Empathy Tuning (S6.4)." },
+        "belief_gaps":             { "$ref": "#/$defs/factorList", "description": "Misconceptions or missing mental models at population level (gap_). Meaning Maker (S6.3). Item-level misconception_predictions live on knowledge_check primitives in the CONTENT graph — not here." },
+        "meaning_anchors":         { "$ref": "#/$defs/factorList", "description": "What makes this matter to them (mng_). Meaning Maker (S6.3)." },
+        "rationalization_patterns":{ "$ref": "#/$defs/factorList", "description": "Characteristic ways the population explains away the behavior being taught (rat_). ADRA's rationalization_pattern, segment-level." },
+        "affective_pattern": {
+          "type": "string",
+          "pattern": "^aff_[A-Za-z0-9_-]+$",
+          "description": "Dominant emotional stance toward the subject, governed id (aff_). Affective Patterns (S6.1)."
+        }
+      }
+    },
+
+    "baselines": {
+      "type": "object",
+      "description": "B-sub S7 — the composite indices, as population BASELINES the Audience Agent seeds: dispositions a population can plausibly hold before any course exists. Static in Stage 1; no update machinery exists or may exist for them here. EXACTLY FOUR, on purpose (design beat 2026-09-01, 'split it is'): the other four candidates — clarity, agreement, intent_to_act, load — are trajectories that arise during an encounter and are the TARGET of a scene, not a property of an audience. They belong to the scene's learning contract (Designer's facet; capability_horizon/learner-response-intelligence, 'moment-level learning contract') and to evidence flags in Stage 1.5. Writing them here would be a schema asserting a state that does not yet exist.",
+      "required": ["self_efficacy", "risk_sensitivity", "identity_safety", "trust"],
+      "additionalProperties": false,
+      "properties": {
+        "self_efficacy":    { "$ref": "#/$defs/latent", "description": "Does this population believe it can do what is asked?" },
+        "risk_sensitivity": { "$ref": "#/$defs/latent", "description": "How much do consequences weigh on them? (High: consequences carry themselves; don't amplify.)" },
+        "identity_safety":  { "$ref": "#/$defs/latent", "description": "Do they feel their competence/identity is safe in this subject? (Low: anchor before asserting.)" },
+        "trust":            { "$ref": "#/$defs/latent", "description": "Trust in the source/organization speaking." }
+      }
+    },
+
+    "cadence": {
+      "type": "object",
+      "description": "Engagement Cadence (S6.2) — how this population takes in material. Read directly by a direction planner for chunking and pacing.",
+      "additionalProperties": false,
+      "properties": {
+        "chunk_tolerance":      { "type": "string", "enum": ["short", "medium", "long"], "description": "How much per beat before attention drops." },
+        "density_tolerance":    { "type": "string", "enum": ["sparse", "moderate", "dense"] },
+        "preferred_pace":       { "type": "string", "enum": ["slow", "steady", "brisk"] },
+        "interaction_appetite": { "type": "string", "enum": ["low", "medium", "high"], "description": "How often the population wants to DO rather than receive." }
+      }
+    },
+
+    "governance": {
+      "type": "object",
+      "description": "Provenance of this record. Same shape family as element.governance so tooling can reuse. owner is the Audience Agent for segment records.",
+      "required": ["version", "status", "owner", "generated_by"],
+      "additionalProperties": false,
+      "properties": {
+        "version": { "type": "integer", "minimum": 1 },
+        "status": { "type": "string", "enum": ["draft", "in_review", "approved", "retired"] },
+        "owner": { "type": "string", "description": "Accountable owner id — audience_agent for segment records." },
+        "generated_by": { "type": "string", "description": "Agent/skill-chain id + version that produced this record, e.g. audience_agent.psykido.v1." },
+        "source_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$", "description": "Hash of the audience analysis this record was distilled from. Changed hash ⇒ record stale ⇒ any per-segment direction bindings stale." },
+        "derived_from": { "type": "array", "items": { "type": "string" }, "description": "Ids of the analysis artifacts / dossier this record was distilled from." },
+        "approved_by": { "type": "array", "items": { "type": "string" } },
+        "reviewer_notes": { "type": "string", "description": "Reviewer commentary on the RECORD as an artifact — never about a real person." }
+      }
+    },
+
+    "ext": {
+      "type": "object",
+      "description": "Sanctioned extension point, as in element.schema. Experimental audience fields accrete here; promote once stable.",
+      "additionalProperties": true
+    }
+  },
+
+  "allOf": [
+    { "if": { "properties": { "kind": { "const": "segment" } } }, "then": { "properties": { "record_id": { "pattern": "^seg_" } } } },
+    { "if": { "properties": { "kind": { "const": "learner" } } }, "then": { "properties": { "record_id": { "pattern": "^lrn_" } } } }
+  ],
+
+  "$defs": {
+    "unit": { "type": "number", "minimum": 0, "maximum": 1 },
+
+    "basis": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 120,
+      "pattern": "^[a-z][a-z0-9_.-]*:[A-Za-z0-9_.:/-]+$",
+      "description": "Why we believe this value — a short, consistent, human-reviewable reason token of the form <source>:<ref>, never a confidence number and never prose (design decision 2026-08: 'a reason statement is better than a value'). Segment: the analysis that asserted it. Learner (reserved): an evidence ref.",
+      "examples": ["audience_analysis:BRUN-PAYTX-2026-08", "psykido.inhibitors:v1", "prior:segment_default", "evidence:kc_003:incorrect"]
+    },
+
+    "latent": {
+      "type": "object",
+      "required": ["value", "basis"],
+      "additionalProperties": false,
+      "properties": {
+        "value": { "$ref": "#/$defs/unit" },
+        "basis": { "$ref": "#/$defs/basis" }
+      }
+    },
+
+    "risk_of_overuse": {
+      "type": "object",
+      "description": "ADRA S6.6 — the only harm model in any layer, promoted to a GATE (unification-map §2). Asks whether targeting this factor could harm the person it is aimed at: manipulation, shame, identity injury, learned helplessness. A planner MUST read it: high ⇒ this factor may be acknowledged but never amplified or repeated; moderate ⇒ once per course; low ⇒ no constraint. A factor without it cannot be targeted.",
+      "required": ["level", "basis"],
+      "additionalProperties": false,
+      "properties": {
+        "level": { "type": "string", "enum": ["low", "moderate", "high"] },
+        "basis": { "$ref": "#/$defs/basis" }
+      }
+    },
+
+    "factor": {
+      "type": "object",
+      "required": ["id", "strength", "basis", "risk_of_overuse"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(inh|obj_x|aln|thr|gap|mng|rat)_[A-Za-z0-9_-]+$",
+          "description": "Governed id from vocab/disposition.enum.json. Free text is NOT allowed — an ungoverned factor cannot appear in a reason trace, and the gate rejects ids the vocabulary does not define."
+        },
+        "strength": { "$ref": "#/$defs/unit" },
+        "basis": { "$ref": "#/$defs/basis" },
+        "risk_of_overuse": { "$ref": "#/$defs/risk_of_overuse" },
+        "objective_ids": {
+          "type": "array",
+          "description": "Optional: the objectives this factor bears on most (segment × objective entries, per the roster), so a planner can localize its response.",
+          "items": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" }
+        }
+      }
+    },
+
+    "factorList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/factor" }
+    }
+  }
+}

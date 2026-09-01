@@ -36,6 +36,8 @@ governance. He also carries the system's conscience: `risk_of_overuse` lives in 
 the one field that asks whether an intervention might harm the person it's aimed at.
 
 - **Writes:** the audience/learner model (design-time, segment-scoped, no PII)
+  — `schemas/audience-model.schema.json`, one record per segment in `audience/<segment_id>.json`;
+  gated by `tools/validate_audience.py` (2026-09-01)
 - **Reads:** Strategist dossier, corpus signals, SME input
 - **Wakes on:** project intake (survey depth); Designer's nature-of-expression flag (deep)
 - **Temperature:** medium; deep passes are expensive and run only when warranted.
