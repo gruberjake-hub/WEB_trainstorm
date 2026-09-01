@@ -1,0 +1,106 @@
+{
+  "_note": "Validated 2026-09-01 by jake via dossier_accept.py --by jake. Live synthetic Astellas CCI Public Disclosure (Feb 2025) warrant snapshot — not the reference fixture. Parked in core/reference because no per-project dossier store exists yet. Accept promoted status and reviewer only; this _note replaces the stale proposed-not-accepted line. proposed_goals[0] is the sketch copied into ontology/goals.json v5 as goal_ast_cci_library_used.",
+  "schema_version": "dossier.v0.1",
+  "store": "dossier",
+  "dossier_id": "doss_ast_cci_pd",
+  "version": 1,
+  "status": "validated",
+  "reviewer": "jake",
+  "client": "astellas",
+  "project": "ast_cci_pd",
+  "proposed_by": "strategist",
+  "derived_from": {
+    "source_store": "CPO archive Public Disclosure Feb 2025 (synthetic): SOP-AST-29658, GUIDE-AST-6011, FORM-AST-35734",
+    "notes": "Accepted 2026-09-01 by jake. Corpus was not in this repo; snapshot parked so the warrant is not only in Downloads."
+  },
+  "door": "open_project",
+  "context_digest": {
+    "overview": "Synthetic Astellas CCI Public Disclosure pile (CPO archive, Feb 2025). SOP-AST-29658, GUIDE-AST-6011, and FORM-AST-35734 are the QD nucleus. The ask is a library before IND so already-public text is not redisclosed or fought as a redaction. Helix/Kachi trigger, FORM repo, tracking tool, governing body, WS3, and org-wide literacy sit outside instruction.",
+    "stated_vs_implied": "Stated: in-scope assets have a CCI library before IND and disclosing parties follow it. Implied by the remainder-bin: start the library because Helix or Kachi fires between CN and IND, find the FORM because someone told you where it lives, discharge the measure from a production tracking tool, overrule Asset Leads who mark everything CCI, and make every listed organization literate. Fact: the SOP, GUIDE, and FORM exist. Interpretation: those six remainder items are operating-model, not a learning objective.",
+    "operational_reality": "Asset Leads complete FORM-AST-35734 using GUIDE-AST-6011. Disclosing parties must find and follow the FORM and escalate a deviation before ship. There is no governed Helix/Kachi start trigger in the trainable slice, no settled FORM repository notice, no production Public Disclosure Tracking Tool with a quarterly feed, no governing body to overrule over-marking, no WS3 regulatory-intelligence repository as a course outcome, and no org-wide literacy campaign that instruction can finish.",
+    "tensions": "A course that treats Helix trigger, FORM storage, the tracking tool, a governing body, WS3, or org-wide literacy as learning objectives would launder operating-model gaps as training wins. LMS completion is the tempting fake measure. The living Q1 case is already-public text and participant data in the same files; a checkbox library course severs that.",
+    "diagnostic_observations": "Knowledge: how to complete FORM-AST-35734 from GUIDE-AST-6011, and that already-public text in the file is irreversible once shipped. Capability: disclosing parties finding the FORM and escalating a deviation before ship. Mindset: the library is not a redaction fight after the fact. Decision-making: when a disclosure would re-publish or re-argue text that is already public. No prescriptions in this slice.",
+    "open_questions": "If Helix never fires between CN and IND, does a trained Asset Lead still start the library? Who tells disclosing parties the FORM exists, in practice not on the org chart? If Asset Leads mark everything CCI, who overrules them when no governing body exists? Would a quarterly tracking feed change what anyone needs to know, or only what can be counted?"
+  },
+  "warrant": {
+    "value_evidence": {
+      "verdict": "pass",
+      "human_case": "Already-public text redisclosed or fought as a redaction is not a filing inconvenience. The same files can carry participant data. Once that text is in the public domain the error does not walk back. The SOP/GUIDE/FORM exist because that class of harm already happened; the living connection is that cost, not a library checkbox.",
+      "rationale": "Q1 is a short living-connection frame, not a full operating-model pass. The human case is specific: irreversible public-domain errors and participant data in the same files. It would survive a skeptical Asset Lead. Regulation here is crystallized memory of that cost, not compliance-as-end."
+    },
+    "adoption_legitimacy": {
+      "verdict": "partial",
+      "rationale": "The QD nucleus is in force: Asset Leads can complete FORM-AST-35734 using GUIDE-AST-6011, and disclosing parties can be asked to find, follow, and escalate. The remainder-bin is a half-built reality — no Helix/Kachi start trigger, no FORM-repo notice, no production tracking tool, no governing body, no WS3 repo, no org-wide literacy. Training into that remainder is not legitimate. The ask is legitimate for the nucleus plus the living connection."
+    },
+    "cynicism_audit": {
+      "verdict": "pass",
+      "trust_repair": false,
+      "rationale": "A library course measured by LMS completion would deserve the cynicism. This snapshot refuses that measure. Naming the six remainder-bin causes as not-trainable is the differentiation: a later missing-library or redaction-fight count is not automatically a training failure. That split has to stay in writing."
+    },
+    "outcome": "partial_pass"
+  },
+  "outcomes": [
+    {
+      "label": "In-scope assets have a CCI library before IND, and disclosing parties follow it so already-public text is not redisclosed or fought as a redaction.",
+      "measure": "Count of in-scope assets with an archived FORM-AST-35734 before IND, and count of redaction/disclosure incidents that cite already-public text — not LMS completion."
+    }
+  ],
+  "proposed_goals": [
+    {
+      "goal_id": "goal_ast_cci_library_used",
+      "label": "In-scope assets have a CCI library before IND, and disclosing parties follow it so already-public text is not redisclosed or fought as a redaction.",
+      "measure": "Count of in-scope assets with an archived FORM-AST-35734 before IND, and count of redaction/disclosure incidents that cite already-public text — not LMS completion.",
+      "reachability": {
+        "trainable": "Asset Leads can complete FORM-AST-35734 using GUIDE-AST-6011; disclosing parties can find and follow the FORM and know to escalate a deviation before ship; both groups connect the rule to irreversible public-domain errors and participant data in the same files.",
+        "not_trainable": [
+          "Helix or Kachi trigger that a library must start between CN and IND.",
+          "Where FORM-AST-35734 is stored and how disclosing parties are informed it exists.",
+          "Public Disclosure Tracking Tool in production, including a quarterly feed that can discharge the measure.",
+          "A governing body to overrule Asset Leads who mark everything CCI.",
+          "WS3 regulatory-intelligence repository.",
+          "Making every listed organization CCI-literate (that is comms)."
+        ],
+        "assessed_by": "role_pd_lead"
+      }
+    }
+  ],
+  "audiences": [
+    {
+      "segment_id": "asset_leads",
+      "label": "Asset Leads who complete FORM-AST-35734 using GUIDE-AST-6011",
+      "notes": "The trainable act is completing the FORM against the GUIDE, connected to already-public failure — not standing up Helix, the tracking tool, or a governing body."
+    },
+    {
+      "segment_id": "disclosing_parties",
+      "label": "Disclosing parties who must find and follow the FORM and escalate a deviation before ship",
+      "notes": "Where the FORM is stored and how this population is informed it exists is remainder-bin, not a learning objective."
+    }
+  ],
+  "constraints": [
+    "No Helix or Kachi trigger in the trainable slice that a library must start between CN and IND.",
+    "FORM-AST-35734 repository location and notice to disclosing parties are not instruction.",
+    "Public Disclosure Tracking Tool is not in production; a quarterly feed that can discharge the measure is not a course outcome.",
+    "No governing body exists in this warrant to overrule Asset Leads who mark everything CCI.",
+    "WS3 regulatory-intelligence repository is out of scope for learning.",
+    "Making every listed organization CCI-literate is comms, not this intervention.",
+    "Measure is not LMS completion."
+  ],
+  "risks": [
+    "A course measured by LMS completion launders a missing library as a training win.",
+    "Training Helix trigger, FORM storage, the tracking tool, a governing body, WS3, or org-wide literacy as if they were knowledge problems.",
+    "Asset Leads mark everything CCI and there is no body to overrule them — then the library exists and still fails the disclosure case.",
+    "Already-public text is redisclosed or fought as a redaction after a 'completed' course."
+  ],
+  "politics": [
+    "Remainder-bin operating model (trigger, repo, tracking tool, governing body, WS3, org-wide literacy) vs a bounded QD-nucleus course.",
+    "Asset Leads own the FORM; no governing body is in the warrant to overrule over-marking.",
+    "Naming the six not-trainable causes will be unwelcome and is still required."
+  ],
+  "modality_recommendations": [
+    "If anything is built, it is the QD nucleus (SOP-AST-29658 / GUIDE-AST-6011 / FORM-AST-35734) plus the living connection to already-public failures — not org-wide CCI literacy and not a tracking-tool curriculum.",
+    "Non-training: Helix/Kachi start trigger, FORM repository notice, production tracking tool, governing body, WS3 repo, comms literacy. Owned outside L&D."
+  ],
+  "roi": "Attention cost of org-wide literacy or a tracking-tool course is not justified by the trainable slice. A bounded FORM/GUIDE/SOP intervention plus why already-public errors are irreversible might be; an LMS-completion library course is not.",
+  "finding": "course_warranted",
+  "design_insights": "The real chunk is the QD nucleus plus the living connection to already-public failures and participant data in the same files. Helix trigger, FORM repo, tracking tool, governing body, WS3, and org-wide literacy are remainder-bin operating model — schemas will struggle if those are minted as obj_. Next: Designer may lock obj_ that serves goal_ast_cci_library_used; that lock is not the dossier and not the goals-store hop. Do not treat LMS completion as the measure."
+}

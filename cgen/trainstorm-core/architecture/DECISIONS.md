@@ -3282,3 +3282,61 @@ Python."* Its two front doors, unreachable-LO terminal, Case-Author mint gate, p
 outcomes-mode, and "no `strategist.py`" stand. This hop gives the stub an operating
 prompt and a propose-only dossier store; it does not stand up a compiler.
 
+---
+
+## 2026-09-01 — Accepted CCI Public Disclosure goal seated in the live goals store (named hop after dossier accept)
+
+**Signed:** Jake / Claude / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** `ontology/goals.json` bumps to **v5**. `goal_ast_cci_library_used` is copied from the
+accepted Strategist dossier `doss_ast_cci_pd` (`proposed_goals[0]`) into the **core seed**, the
+same seating as paytrans (`goal_bw_pay_understood`). Status **validated** — the warrant holds
+for building, same sense as the 2026-08-31 paytrans lock. `goal.schema.json` is unchanged
+(no silent `proposed` on the node status enum). Store owner remains the client-business note
+already on the file.
+
+No per-project `ontology/goals.json` exists (paytrans and ALSAP instances still live in this
+seed). This hop does not invent a per-project ontology layout and does not migrate the other
+three goals off core.
+
+`tools/dossier_accept.py` still does **not** write the goals store. Accepting the dossier
+promoted `doss_ast_cci_pd` only (status `validated`, reviewer `jake`). **This PR is the named
+write** that hop pointed at. Designer may now lock `obj_` that `serves` `goal_ast_cci_library_used`;
+that lock is **not** this PR.
+
+Owner / `assessed_by`: `role_pd_lead`. No Public Disclosure / DS Business & Operations role
+exists in `cgen/trainstorm-core/registry/roles.registry.json` or
+`cgen/astellas/registry/roles.registry.json`. Do not invent a person name. The role id is not
+minted into a registry this hop.
+
+Parked copy of the validated dossier: `reference/doss_ast_cci_pd.json` (status `validated`,
+reviewer `jake`, no EXAMPLE marker). The live Downloads file was not in this VM; the parked
+copy reconstructs the accepted identity and `proposed_goals[0]` from the hop payload, and
+rewrites the stale `_note` that still said "Status proposed. Not accepted." Nested sketches
+still must not carry `status: validated` (that lives on the goals-store node).
+
+**Still not this hop:** `obj_` lock; atoms / `cd_` / `ele_` mint; Case-Author stage-2;
+`strategist.py`; Designer as a live agent; Headwater outcomes-mode; `chameleon.py`; LRE;
+workbench UI; `/cgen` player; `/cgen/sl`. Claude sibling files (Audience, schema-graph,
+Direction) untouched.
+
+**Why:** A validated dossier that never writes a `goal_` leaves Designer with nothing to
+`serves`. Building on an unseated sketch would make the warrant decorative. The accept script
+was correct not to smash the store; the copy is a separate, named act.
+
+**Consequences:**
+- `python3 tools/validate_objectives.py` gates the store (generic schema + reachability;
+  no new selftest — the house does not pin individual `goal_` ids that way).
+- `python3 tools/validate_dossier.py --file reference/doss_ast_cci_pd.json` gates the parked
+  copy. Example fixture stays `proposed`.
+- `/cgen`, `/cgen/sl`, ALSAP, artwork, paytrans live stores, realize, cartographer,
+  couturier, Case-Author tools, Audience / Direction hops are untouched. Working-process
+  block (this file, 2026-08-25) is untouched.
+- Claude is a co-builder: this hop does not freeze them out of Headwater, ontology,
+  Audience, Direction, or later agent prompts.
+
+**Supersedes:** the 2026-09-01 Strategist operating-prompt block's clause that writing
+proposed payloads into `ontology/goals.json` is still an *unwritten* named next hop. Accept
+still does not write the store. The two front doors, unreachable-LO terminal, no
+`strategist.py`, and "validated means the warrant holds for building" stand.
+

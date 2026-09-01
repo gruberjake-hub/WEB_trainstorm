@@ -1,10 +1,10 @@
 {
   "store": "ontology/goals",
-  "version": 4,
+  "version": 5,
   "status": "seeded",
   "closed_list": true,
   "owner": "Client business owner (NOT L&D) — see goal.schema.json",
-  "_note": "v2, 2026-08-25: added goal_alsap_asset_safety_monitored, distilled from the live SOP-AST-29080 atom store (ast_alsap). Status on that node is draft — the SOP is real; a client has not ratified the outcome statement. The AST009 PSI goal remains status:example. Schema is shared core; these INSTANCES are per-engagement content that currently live in the core seed because no per-project ontology store exists yet. v3, 2026-08-31: added goal_bw_pay_understood for the Brunswick pay-transparency drive (first non-Astellas client; projects/paytrans). Status draft — BPS-drafted from the SOW and client LO documents; not client-ratified. v4, 2026-08-31: goal_bw_pay_understood ratified validated by Jake (objective-lock conversation, drive hop two).",
+  "_note": "v2, 2026-08-25: added goal_alsap_asset_safety_monitored, distilled from the live SOP-AST-29080 atom store (ast_alsap). Status on that node is draft — the SOP is real; a client has not ratified the outcome statement. The AST009 PSI goal remains status:example. Schema is shared core; these INSTANCES are per-engagement content that currently live in the core seed because no per-project ontology store exists yet. v3, 2026-08-31: added goal_bw_pay_understood for the Brunswick pay-transparency drive (first non-Astellas client; projects/paytrans). Status draft — BPS-drafted from the SOW and client LO documents; not client-ratified. v4, 2026-08-31: goal_bw_pay_understood ratified validated by Jake (objective-lock conversation, drive hop two). v5, 2026-09-01: added goal_ast_cci_library_used from accepted dossier doss_ast_cci_pd (dossier_accept.py --by jake). Synthetic Astellas CCI Public Disclosure (Feb 2025) corpus. Status validated — the warrant holds for building, same sense as goal_bw_pay_understood 2026-08-31. Still seated in the core seed; no per-project ontology store exists. Not a second ALSAP or paytrans goal. Designer obj_ lock is a later hop.",
   "goals": {
     "goal_ast009_psi_reported_on_time": {
       "label": "Product safety information reaching the company is recognised and reported within the required window, without relying on individual vigilance.",
@@ -61,6 +61,27 @@
       },
       "status": "validated",
       "derived_from": "doc_bw_sow_paytrans_education §1–5 (audiences, timing, measurement); doc_bw_learner_objectives_paytrans (employee section); LO_Revision_Summary.md (the not-trainable reasoning)."
+    },
+    "goal_ast_cci_library_used": {
+      "label": "In-scope assets have a CCI library before IND, and disclosing parties follow it so already-public text is not redisclosed or fought as a redaction.",
+      "measure": "Count of in-scope assets with an archived FORM-AST-35734 before IND, and count of redaction/disclosure incidents that cite already-public text — not LMS completion.",
+      "owner": "role_pd_lead",
+      "reachability": {
+        "trainable": "Asset Leads can complete FORM-AST-35734 using GUIDE-AST-6011; disclosing parties can find and follow the FORM and know to escalate a deviation before ship; both groups connect the rule to irreversible public-domain errors and participant data in the same files.",
+        "not_trainable": [
+          "Helix or Kachi trigger that a library must start between CN and IND.",
+          "Where FORM-AST-35734 is stored and how disclosing parties are informed it exists.",
+          "Public Disclosure Tracking Tool in production, including a quarterly feed that can discharge the measure.",
+          "A governing body to overrule Asset Leads who mark everything CCI.",
+          "WS3 regulatory-intelligence repository.",
+          "Making every listed organization CCI-literate (that is comms)."
+        ],
+        "assessed_by": "role_pd_lead",
+        "assessed_on": "2026-09-01",
+        "rationale": "Warranted as a partial pass on the accepted dossier doss_ast_cci_pd. Trainable slice is the QD nucleus (SOP-AST-29658 / GUIDE-AST-6011 / FORM-AST-35734) plus the living connection to already-public failures. Remainder-bin operating model is not a learning objective. validated here means the warrant holds for building, same sense as goal_bw_pay_understood 2026-08-31."
+      },
+      "status": "validated",
+      "derived_from": "doss_ast_cci_pd accepted 2026-09-01 by jake (dossier_accept.py --by jake). Synthetic Public Disclosure (Feb 2025) corpus; not a second ALSAP/paytrans goal."
     }
   }
 }

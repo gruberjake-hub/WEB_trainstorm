@@ -26,7 +26,11 @@ affected audiences, constraints, risks, politics, modality recommendations.
   — spine specialization, same genre as Headwater. Contract that points at it:
   `agents/strategist/warrant_STUB.md`. Propose-only dossier: `schemas/dossier.schema.json`,
   gated by `tools/validate_dossier.py`; human-run `tools/dossier_accept.py --by` is the only
-  promoter. No `strategist.py`. Accepting a dossier does not write `ontology/goals.json`.
+  promoter. No `strategist.py`. Accepting a dossier still does not write
+  `ontology/goals.json` (the accept script). The named next write landed 2026-09-01:
+  `proposed_goals[0]` from accepted `doss_ast_cci_pd` copied into the live store as
+  `goal_ast_cci_library_used` (validated; warrant holds for building). Designer `obj_`
+  lock that `serves` that goal is not that hop.
 
 ## The Audience Agent
 *The ethnographer. Knows the people; never touches the content.*
