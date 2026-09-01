@@ -13,6 +13,44 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-09-01 (Strategist operating prompt) — Spine specialization + propose-only dossier. Human accept. Still no strategist.py.
+
+*Anchor: branch `cursor/strategist-operating-prompt-2f47` off `bc67588` (PR #68,
+Case-Author stage-1 writer). Jake: replace the Strategist stub with a real operating
+prompt plus a propose-only dossier store and a human-only accept script. No
+strategist.py. No atoms. No obj_. No Case-Author mint. Do not touch /cgen player or
+/cgen/sl. Claude is a co-builder. Working-process DECISIONS untouched. First live wake
+is still a messy corpus Jake actually has — not this PR.*
+
+### What this hop is
+
+PR #66 seated the stub; #67–#68 gave Case-Author a contract and a writer. Exploratory
+still had no agent home (`architecture/lineage/2026-01-proto-agent-prompts.md`). This hop
+seats ingest + exploratory + Intervention Warrant v0.1 as one hot dialogue seat, and
+gives the snapshot a dossier species so HITL is mechanical rather than prompt fiction.
+
+### What landed
+
+`agents/strategist/02_system_prompts/core_agent/strategist_system_prompt.md` — spine
+specialization (including `{{WRITE_CONTRACT}}` propose-only). Standing mode is dialogue
+with Jake. Snapshot dossier JSON when asked. Devil's-advocate on demand, labeled, not
+the standing voice. Design-commitment and the October chain stay out.
+
+`agents/strategist/warrant_STUB.md` rewritten as the contract that **points at** that
+prompt. Still: no strategist.py, propose-only, human accept is the only promotion, two
+front doors, no PII.
+
+`schemas/dossier.schema.json` + `reference/example_dossier.json` (status proposed) +
+`tools/validate_dossier.py` + `tools/dossier_accept.py --by`. Species-closed
+proposed|validated. Accept promotes the dossier only; does not write
+`ontology/goals.json`. `--selftest` goes red on auto-validate, atom/`obj_` smuggling,
+agent-shaped `--by`, missing warrant terminal, and the existence of `strategist.py`.
+
+### What this is not
+
+Not atoms. Not `obj_` lock. Not Case-Author mint. Not a live client dossier. Not
+design-commitment. Not a compiler. Not `/cgen` / `/cgen/sl`.
+
 ## 2026-09-01 (Case-Author stage-1 writer) — Propose-only committed-design runtime. Mint still does not exist. Human validates.
 
 *Anchor: branch `cursor/headwater-case-author-stage1-d331` off `f889a05` (PR #67,

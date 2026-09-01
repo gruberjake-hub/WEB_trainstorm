@@ -3211,3 +3211,74 @@ no atoms.
 
 **Supersedes:** nothing. Extends the 2026-09-01 committed-design contract block by adding
 the stage-1 writer. Prior blocks and the working process stand.
+
+## 2026-09-01 — Strategist operating prompt seated; propose-only dossier; human accept; still no strategist.py
+
+**Signed:** Jake / Claude / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The Strategist seat is no longer a stub-only contract. Jake's ad-hoc pack is
+seated as one operating prompt in the same genre as Headwater (spine slots at
+`agents/_shared/facet_owner_spine.md` + specialization at
+`agents/strategist/02_system_prompts/core_agent/strategist_system_prompt.md`). The file
+`agents/strategist/warrant_STUB.md` is now the **contract that points at that prompt**. It
+is no longer "this is not an operating prompt." There is still **no `strategist.py`**.
+
+**Inherited into the operating prompt (compressed, one voice — not pasted wholesale):**
+- Ingest Context Digest (`architecture/lineage/PROMPT_ingestion_project-context-md.md`) —
+  facts vs interpretations, stated vs implied, operational reality, diagnostic gaps with
+  no prescriptions yet, open questions that expose hidden assumptions.
+- Exploratory instructional script (`architecture/lineage/PROMPT_exploratory_instructional_script.md`) —
+  hot, non-binding; permission to say this is probably not a course; harvestable close.
+  Standing mode is **dialogue with Jake**, not a dumped essay unless he asks for a snapshot.
+- Intervention Warrant v0.1 (`cgen/knowledge/intervention_warrant_v0.1.md`) — the hard gate:
+  Value Evidence (human-level case; regulation is crystallized memory of a human cost),
+  Adoption Legitimacy, Cynicism Audit (Q3-fail + Q1+Q2-pass is trust-repair, a partial
+  pass). Designer's shield: the system requires a warrant.
+- Proto-agent mapping (`architecture/lineage/2026-01-proto-agent-prompts.md`): ingest +
+  warrant absorbed into this seat; exploratory had no agent home — that hole is this hop.
+- Overlay: systems-diagnostic *questions* folded in (not a second agent). Devil's-advocate
+  is an **on-demand pass**, not the standing voice. Conversational default: working
+  collaborator for an ID in regulated industries.
+
+**Left out of this prompt (on purpose):**
+- `PROMPT_design_commitment_production_script.md` — cool lock / production script /
+  compiler contract. Designer / script later.
+- October 2025 Course-Design-Prompt-Chain (AA/OA extractors, storyboard, PPT, QA).
+- Orchestrator product prompts. Headwater mint rules, Realizer, Cartographer, Couturier,
+  player chrome.
+
+**Dossier store (new species — do not extend `goal.schema` with `proposed`):**
+`schemas/dossier.schema.json` (`dossier.v0.1`, `doss_`, status `proposed` | `validated`).
+May embed proposed `goal_` *payloads* (label / measure / reachability). `measure` is the
+business discharge test; warrant Q1 is the human-level case — keep both. Gate:
+`tools/validate_dossier.py`. Human-run `tools/dossier_accept.py --by` is the only writer
+of `validated` (human-shaped `--by`; writes nothing on refuse). Example fixture stays
+`proposed` (`reference/example_dossier.json` — not a live engagement). **Accept promotes
+the dossier only.** Writing proposed payloads into `ontology/goals.json` is a named next
+hop. Unreachable-LO terminal is valid (empty `proposed_goals`; finding `no_course` /
+`not_this_course`). Direct escape is recorded as itself, not as a pretended warrant.
+
+**Still not this hop:** `strategist.py`; atoms; `obj_` lock; Case-Author mint (stage-2
+still unbuilt; stage-1 writer untouched); Headwater outcomes-mode; chameleon.py; LRE;
+workbench UI; `/cgen` player; `/cgen/sl`. First live wake is still a messy corpus Jake
+actually has — not this PR's fixture.
+
+**Why:** PR #66 seated the stub; PRs #67–#68 gave Case-Author a contract and a propose
+writer. The exploratory prompt still had no agent home. A stub cannot make a mediocre ID
+excellent. The operating prompt is the seat; the dossier is the snapshot; the human is
+the only ratification.
+
+**Consequences:**
+- `/cgen`, `/cgen/sl`, ALSAP, artwork, paytrans live stores, realize, cartographer,
+  couturier, Case-Author tools, Audience / Direction hops are untouched. Working-process
+  block (this file, 2026-08-25) is untouched.
+- Claude is a co-builder: this hop does not freeze them out of Headwater, ontology,
+  Audience, Direction, or later agent prompts.
+- Temperature: this seat is hot. Mint / Realizer / Cartographer stay cold.
+
+**Supersedes:** the 2026-09-01 open-project warrant block's clauses that the Strategist
+file is *"not an operating prompt and not an agent"* and *"stub contract only. No
+Python."* Its two front doors, unreachable-LO terminal, Case-Author mint gate, parked
+outcomes-mode, and "no `strategist.py`" stand. This hop gives the stub an operating
+prompt and a propose-only dossier store; it does not stand up a compiler.
+
