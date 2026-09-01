@@ -3172,3 +3172,42 @@ read one example; Claude is not frozen out of Headwater; nothing proposes design
 
 **Supersedes:** nothing. Extends the 2026-09-01 warrant block by naming the stage-1 artifact.
 Prior blocks and the working process stand.
+
+## 2026-09-01 — Case-Author stage-1 writer exists; propose-only; mint still does not; human validates
+
+**Signed:** Jake / Claude / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Headwater Case-Author stage 1 has a runtime. `tools/headwater_case_author.py`
+reads a corpus inventory and **proposes** a committed-design document (`cd_`, status
+`proposed`, `proposed_by` stamped). It does not mint atoms. It does not set `validated`.
+It never writes `reviewer`. A human-run `tools/committed_design_accept.py --by` is the
+only promoter to `validated`, and it re-runs `tools/validate_committed_design.py` first
+(refuses unreachable-LO, missing warrant-and-escape, agent-shaped `--by`). Stage-2 mint
+still does not exist.
+
+- **Dramaturge pattern.** Propose, never accept. A designer's existing design at `--out`
+  (proposed or validated) is not re-litigated.
+- **Selection is a partition.** `in_scope` vs `left_in_source_store`. The fixture listing
+  has out-of-scope docs; smashing the whole corpus into `in_scope` with an empty leftover
+  is refused. Gate before write.
+- **Fixture only.** Inventory and proposed design live under `reference/` (schema example
+  stays under `schemas/`). No live Brunswick/Astellas `cd_`. Direct-mode
+  `headwater_ingest*.py` scripts are untouched.
+- **Headwater prompt.** Case-Author stage 1 points at this tool as the scope-commit
+  runtime. Claude is a co-builder; this hop does not freeze them out of Headwater.
+
+**Why:** PR #67 landed the contract. The mint gate had a schema and no writer. This hop
+is the Dramaturge hop for that node: a propose tool a designer can run, a human accept,
+no atoms.
+
+**Consequences:**
+- `/cgen`, `/cgen/sl`, ALSAP, artwork, paytrans live stores are untouched. Working-process
+  block (this file, 2026-08-25) is untouched. No `strategist.py`, no workbench UI, no
+  Headwater outcomes-mode, no `chameleon.py`, no LRE, no Direct-mode ingest rewrite, no
+  Case-Author stage-2 mint.
+- The 2026-09-01 committed-design contract block stands. This hop gives it a writer.
+- Claude is a co-builder: this hop does not freeze them out of Headwater, ontology, or
+  later agent prompts.
+
+**Supersedes:** nothing. Extends the 2026-09-01 committed-design contract block by adding
+the stage-1 writer. Prior blocks and the working process stand.

@@ -13,7 +13,44 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
-## 2026-09-01 (committed-design contract) — Case-Author stage-1 node is a schema, not a writer. Selection + framing, not atoms. Mint still does not exist. Gate proves the join.
+## 2026-09-01 (Case-Author stage-1 writer) — Propose-only committed-design runtime. Mint still does not exist. Human validates.
+
+*Anchor: branch `cursor/headwater-case-author-stage1-d331` off `f889a05` (PR #67,
+committed-design contract). Jake: build Case-Author stage 1 only — a propose-only writer
+of the committed-design artifact. Do not mint atoms. Do not set status validated/accepted.
+Do not stand up strategist.py, workbench UI, outcomes-mode, chameleon.py, LRE, Direct-mode
+ingest rewrite, or Case-Author stage-2 mint. Claude is a co-builder. Working-process
+DECISIONS untouched. Fixture only — no live Brunswick/Astellas cd_.*
+
+### What this hop is
+
+PR #67 gave the mint gate a schema. This hop is the Dramaturge hop for that node: a
+writer that proposes, never accepts. The human-run accept script is the only promoter.
+
+### What landed
+
+`tools/headwater_case_author.py` — reads a corpus inventory, emits `committed-design`
+JSON (`status: proposed`, `proposed_by` stamped, warrant_join required, selection
+partitions in_scope vs left_in_source_store). Gates with `validate_committed_design`
+before write. Idempotent: an existing design at `--out` is not re-litigated.
+`--selftest` goes red if the writer would mint atoms, set validated, omit warrant_join,
+use `atom_` as design_id, or smash the fixture corpus into in_scope.
+
+`tools/committed_design_accept.py --by` — flips proposed→validated after re-running the
+gate. Requires `--by`. Refuses unreachable-LO / missing warrant-and-escape /
+agent-shaped reviewer. Does not mint atoms.
+
+`reference/example_corpus_inventory.json` + `reference/example_committed_design.json` —
+fixture listing and proposed design. Not paytrans.
+
+Headwater Case-Author stage 1 points at the propose tool as the scope-commit runtime.
+Direct mode unchanged. One DECISIONS block. One STRUCTURE tree line under `tools/`.
+Mint still does not exist.
+
+### What this is not
+
+Not atoms. Not stage-2 mint. Not Strategist / Designer / Audience standing up. Not LRE.
+Not a live client design. Not a rewrite of `headwater_ingest*.py`.
 
 *Anchor: branch `cursor/committed-design-contract-df5d` off `0378baa` (PR #66, open-project
 warrant). Jake: land the committed-design artifact as contract-before-writer. No
