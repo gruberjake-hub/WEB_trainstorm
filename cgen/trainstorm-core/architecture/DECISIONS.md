@@ -2972,3 +2972,33 @@ contract), `learner-evidence.schema.json`, the scene learning contract, meaning 
 **Supersedes:** nothing. Extends unification-map §6 step 5 from "begins the frontier" to "first
 rung built." Prior 2026-08-31 blocks and the working process stand — with one process amendment
 recorded in the Project doc `claude/workflow-patch-series.md`: pull the real repo before designing.
+
+## 2026-09-01 — Schema graph: a diagram of record for how the schemas join, live at `/cgen/schema-graph`
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The relationships between `schemas/`, `vocab/`, `registry/`, `ontology/` and the
+README-contracted stores are drawn once, as data-backed HTML, and hosted from the repo.
+
+- **`architecture/diagrams/schema-graph.html`** — 37 nodes, 90 field-level edges, each read
+  from the file it names; six edge types (keyed reference · binds under · hash pin ·
+  derived/realized · governed value/mirror · proposed-not-built). Includes the audience model
+  (PR #62) as the sibling graph it is. Stamped with the commit it was read at (`main@8b349d9`);
+  re-read and bump the stamp when a schema changes.
+- **Self-contained by the site CSP:** vendored `d3.v7.9.0.min.js` beside the page, no CDN, no
+  web fonts (`/_headers` is `script-src 'self'`; no second CSP — PR #6).
+- **`/cgen/schema-graph`** — forced-200 rewrite in `netlify.toml`, the `/cgen/alsap/coverage`
+  pattern; d3 loaded by absolute path.
+- **Flagged, not fixed:** `atom.schema.json` `$id` still `astellas.example`; tone / complexity /
+  visual-type name element fields the schema lacks; no locale-pack schema; no core seed for
+  `doc_` / `reg_`.
+
+**Why:** The one rule (STRUCTURE.md) puts a rendered diagram in `architecture/diagrams/`, git-only,
+and the schemas are now numerous enough that their joins need a picture a cold reader can hover.
+
+**Consequences:** Nothing gated changed; full sweep green (validate_atoms ×4 — `ast_artwork`
+still BLOCKED on unadopted registry extensions, pre-existing; lint 0/0; sidecar OK;
+validate_objectives ALL PASS; selftests ×3 PASS). Next layer, named not built: a derived
+`tools/schema_graph.py` so the page cannot drift.
+
+**Supersedes:** nothing. The Audience hop one block above stands.

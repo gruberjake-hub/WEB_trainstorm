@@ -140,7 +140,7 @@ trainstorm-core/
 │   ├── agents-roster.md · promptpack_manifold.md            ✅  (promptpack is a crosswalk from a parallel workstream — cite as such, not as canon)
 │   ├── reconciliation.md · conversation-reconciliation.md   ✅
 │   ├── script-generation-layer.md · localization-agent.md   ✅
-│   └── diagrams/                         ✅ rendered HTML — git-only
+│   └── diagrams/                         ✅ rendered HTML — git-only. `schema-graph.html` (2026-09-01) is the diagram of record for how the schemas join — hand-read edges, stamped with the commit read; live at `/cgen/schema-graph`
 │
 ├── reference/                            # ONE clean, validated example of each layer
 │   ├── example_atom.json                 ✅
