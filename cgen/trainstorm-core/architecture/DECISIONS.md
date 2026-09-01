@@ -3460,3 +3460,50 @@ stage-2 mint, and "do not re-litigate a claimed `--out`" stand. The 2026-09-01 D
 objective-lock block's "Headwater Case-Author mint still waits on a validated `cd_`"
 stands — this hop proposes; it does not validate.
 
+---
+
+## 2026-09-01 — Human accept of `cd_ast_cci_pd` recorded in git; mint still does not exist
+
+**Signed:** Jake / Claude / App-maker — *Jake already ran accept locally; this PR only records that accept in git. Merge is the ratification.*
+
+**Decision:** The live (synthetic) Case-Author stage-1 node
+`cgen/astellas/projects/cci_public_disclosure/committed-design.json` (`cd_ast_cci_pd`)
+is recorded as **validated**, reviewer **jake**. Jake already ran:
+
+    python tools\committed_design_accept.py --file ..\astellas\projects\cci_public_disclosure\committed-design.json --by jake
+
+Output: `+ cd_ast_cci_pd: validated by jake`. This PR copies that accepted node into git.
+The agent does **not** re-run accept. The agent does **not** mint atoms. Stage-2 mint
+still does not exist.
+
+Selection, framing, warrant_join, ids, status, and reviewer are Jake's local write
+after accept. Only `_note` is rewritten so it no longer says "status proposed" /
+"Jake accepts with…" — accepted 2026-09-01 by jake via
+`committed_design_accept.py`; not a mint; stage 2 still does not exist.
+
+**Still not this hop.** Stage-2 mint; atoms; `ele_`; `teaches`; Headwater ingest of
+the 114-file pile; `strategist.py`; more `obj_`; `/cgen` player; `/cgen/sl`; ALSAP;
+paytrans; artwork; `docs.registry.json`. Claude remains a co-builder.
+
+**Why:** PR #72 proposed `cd_ast_cci_pd` and left accept to Jake. Jake accepted. A
+validated `cd_` that lives only on one laptop is not durable. This hop records the
+accept; it is not a second accept and not a mint.
+
+**Consequences:**
+- Gates: `python3 tools/validate_committed_design.py --file` the live `cd_` (status
+  `validated`, reviewer `jake`, `held_warrant`, not an atom);
+  `python3 tools/committed_design_accept.py --selftest` (example fixture stays
+  `proposed`; agent `--by` still refused). Re-running accept on this file must
+  REFUSE (already validated).
+- `/cgen`, `/cgen/sl`, ALSAP, artwork, paytrans live stores, realize, cartographer,
+  couturier, Audience / Direction hops are untouched. Working-process block (this
+  file, 2026-08-25) is untouched.
+- Claude is a co-builder: this hop does not freeze them out of Headwater, ontology,
+  Audience, Direction, or later agent prompts.
+
+**Supersedes:** the 2026-09-01 first-live-propose block's clauses that `cd_ast_cci_pd`
+is status `proposed`, that Jake accepts *after* merge, and that "this hop proposes;
+it does not validate." The Dramaturge pattern, human `--by` as the only promoter,
+no stage-2 mint, and "do not re-litigate a claimed `--out`" stand. Mint still waits
+on a later hop.
+
