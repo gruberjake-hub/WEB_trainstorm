@@ -1,0 +1,35 @@
+{
+  "vocabulary_version": "disposition.v0.1",
+  "status": "draft_for_reconciliation",
+  "owner": "audience_agent",
+  "description": "Governed DISPOSITION vocabulary for the audience model (schemas/audience-model.schema.json) — the closed lists a segment record's psychological factors must resolve to. Eight families, one id prefix each: inh_ inhibitors · obj_x_ objections (NOT obj_, reserved for objectives) · aln_ aligners/motivators · thr_ identity threats · gap_ belief gaps · mng_ meaning anchors · rat_ rationalization patterns · aff_ affective patterns. This is Band B-sub's vocabulary (ADRA S6.1–S6.6 psykido builders), lifted from prose into governed ids so that (a) a factor can be cited in a planner's reason trace, (b) two segments naming the same inhibitor name it the same way, and (c) nothing psychological enters a record as free text about people. Populations, not persons: every entry describes something a SEGMENT can plausibly hold.",
+  "governance": {
+    "closed_list": true,
+    "rule": "A segment record may only use ids defined here. A new factor requires an entry + version bump — the validator (tools/validate_audience.py) rejects anything else. Entries carry a status: `seed` = placed to make the contract testable, reverse-specified from a reference course, NOT the product of an Audience Agent pass; `specified` = produced or ratified by an Audience Agent deep pass on a real project. A segment record with status approved may not cite a `seed` entry.",
+    "families": {
+      "inh_":   "inhibitors — what blocks uptake or action (Inhibitor Vaccination, S6.5)",
+      "obj_x_": "objections — counter-arguments the population holds",
+      "aln_":   "aligners — values/goals content can align with (Motivation Reinforcer, S6.6)",
+      "thr_":   "identity threats — where content can read as an attack on who they are (Empathy Tuning, S6.4)",
+      "gap_":   "belief gaps — population-level misconceptions / missing models (Meaning Maker, S6.3)",
+      "mng_":   "meaning anchors — what makes this matter to them (Meaning Maker, S6.3)",
+      "rat_":   "rationalization patterns — how the population explains away the behavior (ADRA rationalization_pattern)",
+      "aff_":   "affective patterns — dominant emotional stance toward the subject (Affective Patterns, S6.1)"
+    }
+  },
+  "values": [
+    { "id": "inh_fear_of_being_underpaid",  "family": "inh_", "label": "Fear of being underpaid",          "status": "seed", "definition": "Anticipates that transparency will reveal they earn less than peers; avoids engaging to avoid the confirmation.", "provenance": "seed 2026-09-01 — reverse-specified from the paytrans reference course's persuasive content; replace via Audience Agent pass" },
+    { "id": "inh_distrust_of_hr_messaging", "family": "inh_", "label": "Distrust of HR messaging",         "status": "seed", "definition": "Reads official communication about pay as spin; discounts it before reading.", "provenance": "seed 2026-09-01" },
+    { "id": "obj_x_ranges_are_legal_cover", "family": "obj_x_", "label": "Ranges are just legal cover",    "status": "seed", "definition": "Holds that posted pay ranges exist to satisfy regulation, not to inform employees.", "provenance": "seed 2026-09-01" },
+    { "id": "aln_fairness_for_my_crew",     "family": "aln_", "label": "Fairness for my crew",            "status": "seed", "definition": "Motivated by equitable treatment of the people they work alongside; responds to fairness framing.", "provenance": "seed 2026-09-01" },
+    { "id": "aln_predictability_of_pay",    "family": "aln_", "label": "Predictability of pay",           "status": "seed", "definition": "Values knowing how pay will move over time; responds to structure and rules being made visible.", "provenance": "seed 2026-09-01" },
+    { "id": "thr_seniority_not_valued",     "family": "thr_", "label": "Seniority not valued",            "status": "seed", "definition": "Reads range-based pay as erasing the standing earned through tenure.", "provenance": "seed 2026-09-01" },
+    { "id": "gap_midpoint_means_average",   "family": "gap_", "label": "Midpoint means average pay",      "status": "seed", "definition": "Believes the range midpoint is what most people earn, rather than the market reference for a fully proficient role.", "provenance": "seed 2026-09-01" },
+    { "id": "mng_know_where_i_stand",       "family": "mng_", "label": "Know where I stand",              "status": "seed", "definition": "The subject matters because it answers 'where am I, and what would move me'.", "provenance": "seed 2026-09-01" },
+    { "id": "rat_everyone_negotiates_anyway","family": "rat_", "label": "Everyone negotiates anyway",     "status": "seed", "definition": "Explains away range discipline: the range is a fiction because deals get cut regardless.", "provenance": "seed 2026-09-01" },
+    { "id": "aff_defensive",   "family": "aff_", "label": "Defensive",   "status": "seed", "definition": "Approaches the subject braced for bad news or blame.", "provenance": "seed 2026-09-01" },
+    { "id": "aff_indifferent", "family": "aff_", "label": "Indifferent", "status": "seed", "definition": "Does not expect the subject to affect them; low arousal.", "provenance": "seed 2026-09-01" },
+    { "id": "aff_anxious",     "family": "aff_", "label": "Anxious",     "status": "seed", "definition": "Approaches the subject with worry about consequences or exposure.", "provenance": "seed 2026-09-01" },
+    { "id": "aff_curious",     "family": "aff_", "label": "Curious",     "status": "seed", "definition": "Approaches the subject wanting to understand; open.", "provenance": "seed 2026-09-01" }
+  ]
+}
