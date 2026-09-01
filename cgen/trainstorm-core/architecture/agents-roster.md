@@ -148,20 +148,42 @@ stops being a question.
   deterministic checks → the validator tool she wields; SOP-alignment stays a human gate)*
 
 ## The Responsive Engine
-*The frontier. The only one who knows both graphs — and the only one who meets the learner.*
+*The one who resolves the audience join — and, one day, the only one who meets the learner.*
 
-Everyone else works at design time on populations. The Responsive Engine works at runtime
-on a person: reads the content graph and the learner model, resolves the join per learner,
-serves the next move, and updates posteriors from the response — over mastery, over the
-misconception priors, over the composite indices the Audience agent seeded. He inherits the
-roster's one hard ethical rule: `risk_of_overuse` is a **gate** in his join, not a note in
-his margins. Reserved territory (the profiles called him SIMULATOR); designed, not yet
-built.
+He owns **direction**: how content should LAND for a given audience — weight (what is
+load-bearing here) and tempo (how it arrives). He is the only seat that reads BOTH graphs,
+content and audience, and he exists now because that job splits cleanly in two. Today he runs
+**design time**, on segments, writing a reviewable pack. One day he runs at **runtime**, on a
+person. Same pure resolver; only the harness changes.
 
-- **Writes:** learner × objective runtime state (separate governance, PII)
-- **Reads:** both graphs — content and learner
-- **Wakes on:** a learner interaction
-- **Temperature:** rules + model, live. *(answers OPEN-05; GAP-06's closure lives here)*
+Two modes, and the seat is honest about which one runs (`agents/responsive_engine/modes.json`):
+
+- **`resolve` — live.** Batch: every element × one segment record → `direction/<segment_id>.json`,
+  bindings `proposed`. A human accepts **bindings**.
+- **`serve` — declared, not live.** One element, one live learner, nothing materialized. A human
+  accepts the **policy**, and the runtime may serve only what that policy produces. It waits on
+  the horizon's activation signals *and* on an accepted-binding corpus large enough to license
+  accepting a policy at all. Asking for it is refused, with the reason.
+
+He inherits the roster's one hard ethical rule, and here it is executable rather than advisory:
+`risk_of_overuse` is a **clamp in the resolver and a check in the gate** — a high-risk factor may
+be acknowledged, never amplified (no `lead`, no `dwell`), and never repeated (once per pack, the
+spend recorded in `harm_budget`).
+
+- **Writes:** `direction` — `direction/<segment_id>.json`, schema
+  `schemas/direction.pack.schema.json`, vocab `vocab/direction.enum.json`;
+  gated by `tools/validate_direction.py` (2026-09-01)
+- **Reads:** both graphs — content (elements) and audience (segment records)
+- **Wakes on:** a segment record exists and elements are unresolved or stale against either pin
+- **Temperature:** deterministic rules, reviewable — probabilistic inference is deliberately not
+  here. *(answers OPEN-05; GAP-06's closure lives here)*
+
+**What he does NOT own.** The learner-state half — transcript, posteriors, evidence, PII — is a
+**separate future seat**, and this entry no longer claims it. The horizon already separates the
+three jobs the old one-line entry compressed: **the LRE serves · the Bayesians infer · the
+Transcript stores** (`capability_horizon/learner-response-intelligence`). This seat is the
+*decision* half, which is precisely why it can exist before any learner data does. It holds no
+PII in either mode.
 
 ---
 

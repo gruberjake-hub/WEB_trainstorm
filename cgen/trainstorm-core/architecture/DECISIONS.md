@@ -3002,3 +3002,57 @@ validate_objectives ALL PASS; selftests ×3 PASS). Next layer, named not built: 
 `tools/schema_graph.py` so the page cannot drift.
 
 **Supersedes:** nothing. The Audience hop one block above stands.
+
+## 2026-09-01 — Direction hop one: the audience coordinate. Weight + tempo as an external pack; the Responsive Engine seat activated in design-time mode; risk_of_overuse becomes executable
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Experiential direction is its own facet, owned by the roster's Responsive Engine,
+and it is the audience coordinate of the rendering space.
+
+- **The line.** Tone, arc and expression are audience-invariant; **direction is the one thing that
+  varies per audience segment while meaning, tone and arc stay fixed.** A field that would be set
+  identically for every segment is not direction. Written into `vocab/direction.enum.json` as its
+  governing rule. Five of the eleven rehydrated "treatment" values dissolved into facets that
+  already own them; there is deliberately **no scene-level enum**.
+- **Two axes, closed and versioned:** weight (`anchor` · `lead` · `support` · `aside`) and tempo
+  (`brisk` · `measured` · `dwell` · `progressive`). Every value must name a resolver rule that can
+  produce it — `pivot` was withheld under that rule.
+- **An external pack, not a field on the element:** `direction/<segment_id>.json`
+  (`schemas/direction.pack.schema.json`), sibling to `locales/<lang>.json` and `voice/<register>.json`.
+  **Two pins:** the entry's `source_hash` (the element's meaning) and `audience_ref.source_hash`
+  (the segment record's analysis). Reason traces live **per entry**, as short governed tokens —
+  which closes the long-open `plannerAssessment` question: reasons, never a confidence value.
+- **A pack is the audience DELTA.** An entry is written only where the binding differs from the
+  audience-blind baseline, so the invariance test is structural, not aspirational. And an audience
+  rule may promote at most **one element per scene** to `lead`: direction does not re-emphasise
+  what the content already emphasises.
+- **The seat is the Responsive Engine, activated — not a new name.** It owns `direction` and holds
+  **no PII in either mode**; the old entry's claim on "learner × objective runtime state" is
+  removed. The horizon already separates what that line compressed: **LRE serves · Bayesians infer ·
+  Transcript stores.** Two modes are declared and one runs: `resolve` (live, design-time batch,
+  a human accepts BINDINGS) and `serve` (`live:false`, runtime, a human would accept the POLICY).
+  The core is a **pure resolver**, so promotion swaps the harness, not the architecture. Nine seats
+  still.
+- **`risk_of_overuse` is now executable (D10 closed):** high — never `lead`, never `dwell`, cited
+  once per pack; moderate — once per pack; low — free. The budget is checked BEFORE a rule fires
+  (a spent factor withholds the EFFECT, not just the citation), and every spend is recorded in
+  `harm_budget` because it can land on an element that produces no entry.
+
+**Why:** The audience model needed a consumer, and the LRE needed a first rung that prepays for
+nothing. Both are the same artifact: a deterministic, reviewable resolver whose accepted output is
+what will one day license accepting a policy — the only way "nothing renders that a human didn't
+accept" survives a runtime with no human in it.
+
+**Consequences:** Nothing renders differently; all stores byte-identical (no renderer reads
+direction yet — Couturier reading it as an upstream signal, like tone, is the next hop). New in the
+sweep: `responsive_engine.py --selftest` and `validate_direction.py --selftest|--project`. The
+schema-graph diagram gained the direction node and its edges. No direction pack was written into a
+client project (paytrans has no segment record; the reference record is seed data). Still deferred:
+D7b the Stage-1.5 traversal loop, D8 `learner-evidence.schema.json`, D9 the scene learning contract,
+D1 meaning variants, D5 promoting seed dispositions by a real Audience Agent pass.
+
+**Supersedes:** the roster's prior Responsive Engine entry (rewritten in this hop); the Project note
+`claude/design-beat-direction.md` (drafted the beat, now superseded by
+`architecture/direction-facet.md`). Extends the 2026-09-01 audience block. Prior blocks and the
+working process stand.

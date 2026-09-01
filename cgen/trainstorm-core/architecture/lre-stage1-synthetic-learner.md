@@ -180,20 +180,25 @@ at a segment, emitting this schema (D5 → `specified` vocab entries).
 | D1 | meaning variants per segment (Hop B) | foreseen | Hop A traces reviewed on a real course |
 | D2 | live learner record as planner input (Stage 2 / true LRE) | frontier, separate project | contract stable through ≥2 courses; learner-data governance approved (horizon activation signals) |
 | D3 | psychology validated against real learner evidence | needs D2 | Stage 2 data |
-| D4 | machine-readable direction registry | proposed | when a validator needs it |
+| D4 | machine-readable direction registry | **DONE 2026-09-01** — `vocab/direction.enum.json` | — |
 | D5 | `disposition.enum.json` entries promoted `seed` → `specified` by an Audience Agent pass | vocab seeded (13 entries), pass not built | before the first `approved` segment record |
 | D6 | `governance.derived_from` present in conventions, absent from `element.schema.json` | schema gap | before D1; trivial |
-| D7 | direction planner + Stage 1.5 traversal loop (different model, adversarial seed, bounded) | foreseen | direction facet designed (Hop A design beat) |
+| D7a | direction planner (Hop A) | **DONE 2026-09-01** — the Responsive Engine's `resolve` mode, `tools/responsive_engine.py` | — |
+| D7b | Stage 1.5 traversal loop (a DIFFERENT model enacts the segment, seeded adversarially from its own inhibitors; bounded passes; evidence flags against a scene contract) | foreseen | accepted bindings on a real course + D8/D9 |
 | D8 | `learner-evidence.schema.json` — per-element evidence, contract flags, PII-blind | foreseen | with D7 |
 | D9 | scene-level **learning contract** (the four trajectory variables' real home; Designer's facet) | foreseen | Hop A; horizon's "scenes can carry explicit learning contracts" |
-| D10 | `risk_of_overuse` planner enforcement (high: never amplify; moderate: once) | contract built, behavior not | D7 |
+| D10 | `risk_of_overuse` planner enforcement (high: never amplify; moderate: once) | **DONE 2026-09-01** — clamped in the resolver, checked in `validate_direction.py`, spend recorded in `harm_budget` | — |
 
-## 11. Open for the next design beat
+## 11. The next design beat — ANSWERED 2026-09-01 (see `direction-facet.md`)
 
-1. Shape and name of the **direction** facet (own facet vs `intent.direction`), and its line against
-   tone and arc; scene-level and unit-level enums seeded from the rehydrated treatment vocabulary
-   (didactic-flow / emphasis-frame / progressive-reveal / contrast-frame / assessment-beat;
-   primary-assertion / supporting-context / emphasis-beat / progressive-step / contrast-pair /
-   interaction-prompt).
-2. Where reason traces live — per binding, or a scene-level assessment envelope.
-3. The planner contract: `(elements, segment record) → direction bindings + reasons`, honoring D10.
+1. **Shape and name of the direction facet, and its line against tone and arc.** Settled: its own
+   facet, an external pack keyed by `element_id` per segment (the audience coordinate beside locale
+   and register), two axes — weight and tempo. Five of the eleven rehydrated "treatment" values
+   dissolved into facets that already own them; there is deliberately no scene-level enum.
+2. **Where reason traces live.** Per entry in the pack, as short governed tokens — not a
+   scene-level assessment envelope, and not a confidence score.
+3. **The planner contract.** `(elements, segment record) → direction bindings + reasons`, honoring
+   D10, built as the Responsive Engine's `resolve` mode over a pure resolver.
+
+Open for the beat after: which seat READS direction (Couturier as an upstream signal, like tone),
+and what accepting a binding looks like in a tool (the `voice_accept.py` precedent).
