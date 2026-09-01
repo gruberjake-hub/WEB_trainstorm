@@ -1,6 +1,6 @@
 {
   "store": "ontology/objectives",
-  "version": 5,
+  "version": 6,
   "status": "seeded",
   "closed_list": true,
   "owner": "L&D / Instructional Design",
@@ -148,7 +148,57 @@
         "goal_bw_pay_understood"
       ],
       "bloom": "remember"
+    },
+    "obj_ast_cci_public_irreversible": {
+      "label": "Connect CCI disclosure rules to irreversible public-domain errors and to participant data that rides in the same files.",
+      "requires": [],
+      "framework": "none",
+      "status": "validated",
+      "derived_from": "accepted doss_ast_cci_pd + goal_ast_cci_library_used reachable slice (2026-09-01). Designer lock of the dossier design_insights four-chunk split; remainder-bin not minted.",
+      "serves": [
+        "goal_ast_cci_library_used"
+      ],
+      "bloom": "understand"
+    },
+    "obj_ast_cci_classify_with_guide": {
+      "label": "Classify information as CCI, may-be-CCI, or not-CCI using GUIDE-AST-6011, including that classification can change by development phase.",
+      "requires": [
+        "obj_ast_cci_public_irreversible"
+      ],
+      "framework": "none",
+      "status": "validated",
+      "derived_from": "accepted doss_ast_cci_pd + goal_ast_cci_library_used reachable slice (2026-09-01). Designer lock of the dossier design_insights four-chunk split; remainder-bin not minted.",
+      "serves": [
+        "goal_ast_cci_library_used"
+      ],
+      "bloom": "apply"
+    },
+    "obj_ast_cci_complete_form_before_ind": {
+      "label": "Complete FORM-AST-35734 as the CCI library for an in-scope asset before IND.",
+      "requires": [
+        "obj_ast_cci_classify_with_guide"
+      ],
+      "framework": "none",
+      "status": "validated",
+      "derived_from": "accepted doss_ast_cci_pd + goal_ast_cci_library_used reachable slice (2026-09-01). Designer lock of the dossier design_insights four-chunk split; remainder-bin not minted.",
+      "serves": [
+        "goal_ast_cci_library_used"
+      ],
+      "bloom": "apply"
+    },
+    "obj_ast_cci_follow_or_escalate": {
+      "label": "Follow the archived FORM when preparing or posting an in-scope public disclosure, and escalate a deviation before ship.",
+      "requires": [
+        "obj_ast_cci_public_irreversible"
+      ],
+      "framework": "none",
+      "status": "validated",
+      "derived_from": "accepted doss_ast_cci_pd + goal_ast_cci_library_used reachable slice (2026-09-01). Designer lock of the dossier design_insights four-chunk split; remainder-bin not minted.",
+      "serves": [
+        "goal_ast_cci_library_used"
+      ],
+      "bloom": "apply"
     }
   },
-  "_note": "v3, 2026-08-25: five draft ALSAP objectives distilled from SOP-AST-29080 (the live ast_alsap atom store), warranted by goal_alsap_asset_safety_monitored. Status is draft, not example and not validated — the procedure is real, the human objective-lock conversation has not happened (Cartographer steward rule). The two AST009 PSI objectives remain status:example. This is a small ontology (5+2), not a fake competency graph. v4, 2026-08-31: added the five Brunswick employee-awareness objectives (obj_bw_emp_*), verbatim from the client-ready LO document, serving goal_bw_pay_understood. Status draft pending the objective-lock conversation; the ten Manager/HR LOs are deliberately NOT minted until drive two. Instances still live in the core seed — the per-project ontology store remains an open carry (see goals.json v2 note). v5, 2026-08-31: the five obj_bw_emp_* nodes ratified validated by Jake — the FIRST validated objectives in the ontology; the schema's serves-required-at-validated promotion gate is now exercised by live nodes."
+  "_note": "v3, 2026-08-25: five draft ALSAP objectives distilled from SOP-AST-29080 (the live ast_alsap atom store), warranted by goal_alsap_asset_safety_monitored. Status is draft, not example and not validated — the procedure is real, the human objective-lock conversation has not happened (Cartographer steward rule). The two AST009 PSI objectives remain status:example. This is a small ontology (5+2), not a fake competency graph. v4, 2026-08-31: added the five Brunswick employee-awareness objectives (obj_bw_emp_*), verbatim from the client-ready LO document, serving goal_bw_pay_understood. Status draft pending the objective-lock conversation; the ten Manager/HR LOs are deliberately NOT minted until drive two. Instances still live in the core seed — the per-project ontology store remains an open carry (see goals.json v2 note). v5, 2026-08-31: the five obj_bw_emp_* nodes ratified validated by Jake — the FIRST validated objectives in the ontology; the schema's serves-required-at-validated promotion gate is now exercised by live nodes. v6, 2026-09-01: four obj_ast_cci_* nodes locked validated by Jake (Designer hop after PR #70), serving goal_ast_cci_library_used. Trainable slice only: (1) irreversible public-domain errors and participant data in the same files, (2) GUIDE-AST-6011 CCI / may-be / not including phase decay, (3) FORM-AST-35734 as the object Asset Leads fill before IND, (4) given a FORM, follow it or escalate a deviation before ship. Helix/Kachi trigger, FORM repo/notify path, tracking tool, governing body, WS3, and org-wide CCI literacy are not minted. Instances still live in the core seed; no per-project ontology store. Not Case-Author mint; no atoms, cd_, ele_, or teaches bindings."
 }

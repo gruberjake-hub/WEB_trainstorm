@@ -3340,3 +3340,62 @@ proposed payloads into `ontology/goals.json` is still an *unwritten* named next 
 still does not write the store. The two front doors, unreachable-LO terminal, no
 `strategist.py`, and "validated means the warrant holds for building" stand.
 
+---
+
+## 2026-09-01 — Designer objective-lock: four `obj_ast_cci_*` nodes serve `goal_ast_cci_library_used`
+
+**Signed:** Jake / Claude / App-maker — *Jake locked the trainable slice in conversation; merge makes it durable.*
+
+**Decision:** `ontology/objectives.json` bumps to **v6**. Four nodes are seated in the **core seed**,
+the same seating as paytrans (`obj_bw_emp_*`). Status **validated** — the warrant holds for
+building, same sense as the 2026-08-31 paytrans lock and as `goal_ast_cci_library_used` (goals v5,
+PR #70). Every `serves`: `goal_ast_cci_library_used`. `framework`: `none` (no CASE mapping for
+this SOP family). Store owner remains L&D / Instructional Design.
+
+The four-chunk split is the dossier `design_insights` reachable slice, not a remainder-bin dump:
+
+1. `obj_ast_cci_public_irreversible` (understand, root) — connect CCI disclosure rules to
+   irreversible public-domain errors and to participant data in the same files.
+2. `obj_ast_cci_classify_with_guide` (apply; requires 1) — classify CCI / may-be-CCI / not-CCI
+   using GUIDE-AST-6011, including that classification can change by development phase.
+3. `obj_ast_cci_complete_form_before_ind` (apply; requires 2) — complete FORM-AST-35734 as the
+   CCI library for an in-scope asset before IND.
+4. `obj_ast_cci_follow_or_escalate` (apply; requires 1) — given an archived FORM, follow it when
+   preparing or posting an in-scope public disclosure, or escalate a deviation before ship.
+   This is not "where the FORM repository lives" and not the notify path (`not_trainable`).
+
+No fifth `obj_` for Helix/Kachi trigger, FORM storage/notify, the production tracking tool,
+governing body, WS3, or org-wide CCI literacy.
+
+No per-project `ontology/objectives.json` exists (ALSAP, paytrans, and AST009 instances still
+live in this seed). This hop does not invent a per-project ontology layout and does not migrate
+the other twelve objectives off core.
+
+`tools/dossier_accept.py` still does **not** write the objectives store. This PR is the Designer
+lock after PR #70; it is **not** Case-Author mint. Headwater Case-Author mint still waits on a
+validated `cd_`.
+
+**Still not this hop:** atoms / `cd_` / `ele_` / `teaches` bindings; Case-Author stage 2;
+Designer as a live agent; `strategist.py`; Headwater outcomes-mode; `chameleon.py`; LRE;
+Audience; schema-graph; Direction; workbench UI; `/cgen` player; `/cgen/sl`. Claude sibling
+files untouched.
+
+**Why:** A validated goal with no `obj_` leaves Cartographer nothing to `teaches`. Building on
+an unlocked slice would mint remainder-bin operating model as learning objectives. Jake locked
+the four we can.
+
+**Consequences:**
+- `python3 tools/validate_objectives.py` gates the store (generic schema + reachability +
+  promotion gate; no new selftest pinning individual `obj_` ids — the house does not).
+- `/cgen`, `/cgen/sl`, ALSAP, artwork, paytrans live stores, realize, cartographer,
+  couturier, Case-Author tools, Audience / Direction hops are untouched. Working-process
+  block (this file, 2026-08-25) is untouched.
+- Claude is a co-builder: this hop does not freeze them out of Headwater, ontology,
+  Audience, Direction, or later agent prompts.
+- Amending any of the four now means a new dated entry and a version bump, not an edit.
+
+**Supersedes:** the 2026-09-01 CCI-PD goals-store block's clause that Designer may now lock
+`obj_` that `serves` `goal_ast_cci_library_used` and that lock is *not* that PR. The seated
+goal, the six `not_trainable` causes, "validated means the warrant holds for building," and
+accept still not writing ontology stores stand.
+
