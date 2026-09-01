@@ -169,9 +169,10 @@ with `validate_committed_design` before write, and will not re-litigate an exist
 at `--out`. `committed_design_accept.py --by` is the only promoter to `validated`; it
 re-runs the gate and refuses unreachable-LO / missing warrant-and-escape / agent-shaped
 `--by`. Stage-2 mint does not exist. Direct-mode `headwater_ingest*.py` scripts are
-untouched. Do not write a live `cd_` into paytrans / ALSAP / artwork. First live proposed
+untouched. Do not write a live `cd_` into paytrans / ALSAP / artwork. First live
 `cd_` is `cgen/astellas/projects/cci_public_disclosure/committed-design.json`
-(`cd_ast_cci_pd`, status `proposed`; Jake accepts with `--by jake`).
+(`cd_ast_cci_pd`, status `validated`, reviewer `jake`, 2026-09-01; accept already
+recorded; re-running `--by` on this file is refused).
 
 ## Strategist dossier (propose-only)
 
