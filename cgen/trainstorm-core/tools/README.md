@@ -114,3 +114,26 @@ The Audience Agent's gate for segment records (`audience/<segment_id>.json`, sch
 boundary (`kind: learner` is never legal in a content store) · objective anchoring · segment_id
 uniqueness. With no `audience/` dir the project run is contract-only and says so. Design record:
 `architecture/lre-stage1-synthetic-learner.md`.
+
+## Responsive Engine (direction)
+
+From `cgen/trainstorm-core`:
+
+    python3 tools/responsive_engine.py --project ../brunswick/projects/paytrans
+    python3 tools/responsive_engine.py --project ... --audience reference/example_audience_segment.json --dry-run
+    python3 tools/responsive_engine.py --selftest
+    python3 tools/validate_direction.py --project ../brunswick/projects/paytrans
+    python3 tools/validate_direction.py --selftest
+
+The roster's Responsive Engine seat, in its design-time `resolve` mode: reads the project's segment
+records (`audience/`) and the element store, resolves the audience join, and writes proposed
+bindings to `direction/<segment_id>.json` (schema `schemas/direction.pack.schema.json`, vocab
+`vocab/direction.enum.json`). The `serve` mode is declared and `live:false`
+(`agents/responsive_engine/modes.json`) — asking for it is refused with the reason.
+
+A pack is the **audience delta**: an entry is written only where the binding differs from the
+audience-blind baseline, because a binding that reads the same for every segment is tone, arc or
+expression, not direction. `risk_of_overuse` is enforced, not noted — a high-risk factor may be
+acknowledged but never amplified (`lead`/`dwell`) and never repeated, with the spend recorded in
+`harm_budget`. Rule set: `agents/responsive_engine/direction_v1.md`. Design record:
+`architecture/direction-facet.md`.
