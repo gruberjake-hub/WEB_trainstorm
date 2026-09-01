@@ -462,11 +462,11 @@ def clean_meaning(text: str) -> str:
 # content_hash apply — a stale accepted entry falls back to the verbatim atom and is reported
 # LOUDLY (the silent brand-load fallback cost a round trip; not again).
 
-VOICE = {"register": None, "atoms": {}, "elements": {}, "beats": [], "stale": [], "pack": None}
+VOICE = {"register": None, "atoms": {}, "elements": {}, "beats": [], "narration": {}, "stale": [], "pack": None}
 
 
 def _voice_reset():
-    VOICE.update({"register": None, "atoms": {}, "elements": {}, "beats": [], "stale": [], "pack": None})
+    VOICE.update({"register": None, "atoms": {}, "elements": {}, "beats": [], "narration": {}, "stale": [], "pack": None})
 
 
 def load_voice_overlay(project: pathlib.Path, atoms_by_id: dict) -> None:
@@ -511,6 +511,28 @@ def load_voice_overlay(project: pathlib.Path, atoms_by_id: dict) -> None:
                 continue
             VOICE["beats"].append({"beat_id": bid, "placement": beat["placement"],
                                     "intent": beat["intent"], "text": entry["text"]})
+    # narration (Griot hop two): THREE joins again — accepted track (Dragoman narrate mode),
+    # Griot's binding, and a fresh script_hash. Anything short projects NO voiceover for that
+    # scene; a stale script_hash is loud. Audio src appears only when a render step fills
+    # voiceover_ref; captionText carries the script to the player meanwhile (caption-first).
+    reg_name = pack.get("register")
+    npack_p = pathlib.Path(project) / "voice" / "narration" / f"{reg_name}.json"
+    nbind_p = pathlib.Path(project) / "occurrences" / "narration.json"
+    if npack_p.exists() and nbind_p.exists():
+        ntracks = (load(npack_p).get("tracks") or {})
+        nbinds = (load(nbind_p).get("bindings") or {})
+        for sid, b in nbinds.items():
+            tr = ntracks.get(sid)
+            if tr is None or tr.get("status") != "accepted":
+                continue
+            if b.get("script_hash") != sha256_bytes(tr["text"].encode("utf-8")):
+                VOICE["stale"].append(f"narration:{sid}")
+                continue
+            vo = {"captionText": tr["text"], "voiceRef": b.get("voice_ref"),
+                  "locale": b.get("locale")}
+            if b.get("voiceover_ref"):
+                vo["src"] = b["voiceover_ref"]
+            VOICE["narration"][sid] = vo
     VOICE["register"] = pack.get("register")
     VOICE["pack"] = packs[0].name
     if VOICE["stale"]:
@@ -3721,24 +3743,30 @@ def build_engine_course(atoms, elements, manifest, *, meaning_atoms=None,
         ))
         sid = resolved["id"]
         order.append(sid)
-        scenes_out.append({
+        scene_rec = {
             "id": sid,
             "title": heading,
             "kind": "scene",
             "role": resolved.get("role"),
             "components": comps,
-        })
+        }
+        if sid in VOICE["narration"]:
+            scene_rec["voiceover"] = VOICE["narration"][sid]
+        scenes_out.append(scene_rec)
     end_ids = list(lesson["lesson_end_checks"])
     if end_ids:
         order.append(SCENE_LESSON_END)
-        scenes_out.append({
+        end_rec = {
             "id": SCENE_LESSON_END,
             "title": "",
             "kind": SCENE_LESSON_END,
             "components": _engine_components_for_ids(
                 end_ids, by_eid, by_atom, registry
             ),
-        })
+        }
+        if SCENE_LESSON_END in VOICE["narration"]:
+            end_rec["voiceover"] = VOICE["narration"][SCENE_LESSON_END]
+        scenes_out.append(end_rec)
     if VOICE["beats"]:
         _applied, _skipped = _inject_beat_components(scenes_out, VOICE["beats"])
         for bid, why in _skipped:
@@ -7557,6 +7585,7 @@ def main():
             "register": VOICE["register"], "pack": VOICE["pack"],
             "applied": len(VOICE["atoms"]), "element_overrides": len(VOICE["elements"]),
             "beats_applied": sorted(b["beat_id"] for b in VOICE["beats"]),
+            "narration_scenes": sorted(VOICE["narration"]),
             "stale_fallbacks": sorted(VOICE["stale"]),
         }
     lesson_catalog = load_lesson_catalog(store_dir)

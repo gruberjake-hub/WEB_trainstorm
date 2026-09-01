@@ -208,3 +208,11 @@ button:active, .btn:active {
 .structGroup .depth-1 { margin-left: 1.1rem; }
 .structGroup .depth-2 { margin-left: 2.2rem; }
 .structGroup .depth-1 p, .structGroup .depth-2 p { font-size: 0.98em; }
+
+
+/* ── caption strip (Griot hop two) — caption-first narration. COPIED into both brand packs
+   per the engine-base-stylesheet carry. Visible only when CC is on and the scene has an
+   accepted, freshly-bound script. */
+.captionStrip { margin: 1.2rem auto 0; max-width: 46rem; padding: .8rem 1.1rem;
+  border-left: 3px solid var(--color-accent, #888); background: rgba(127,127,127,.07);
+  font-size: .95em; line-height: 1.55; font-style: italic; }

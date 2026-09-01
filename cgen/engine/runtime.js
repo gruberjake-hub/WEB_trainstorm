@@ -31,6 +31,7 @@ function voiceoverHasPayload(vo) {
   if (typeof vo === "string") return vo.trim().length > 0;
   if (typeof vo !== "object") return false;
   if (hasNonEmptyString(vo.src) || hasNonEmptyString(vo.captionsVtt)) return true;
+  if (hasNonEmptyString(vo.captionText)) return true;   // caption-first: script is a payload
   if (hasMediaList(vo.tracks) || hasMediaList(vo.segments)) return true;
   if (hasNonEmptyString(vo.mode) && vo.mode !== "none") return true;
   return false;
@@ -278,8 +279,16 @@ export class Runtime {
     while (this.audioEl.firstChild)
       this.audioEl.removeChild(this.audioEl.firstChild);
 
+    // Caption-first (Griot hop two): an accepted script renders as a caption strip under the
+    // CC toggle even before any audio exists. Same field feeds VTT when audio arrives.
+    this.captionText = voiceover?.captionText || "";
+    this.renderCaptionStrip();
+
     if (!voiceover?.src) {
       this.audioEl.removeAttribute("src");
+      const ccOnNow = !!this.store.get("vars.ccOn");
+      this.ccToggle.setAttribute("aria-pressed", String(ccOnNow));
+      this.applyCaptionsVisibility(ccOnNow);
       return;
     }
 
@@ -305,6 +314,23 @@ export class Runtime {
     for (let i = 0; i < tracks.length; i++) {
       tracks[i].mode = on ? "showing" : "hidden";
     }
+    if (this.captionStripEl) {
+      this.captionStripEl.hidden = !(on && this.captionText);
+    }
+  }
+
+  renderCaptionStrip() {
+    if (!this.captionStripEl) {
+      this.captionStripEl = document.createElement("div");
+      this.captionStripEl.className = "captionStrip";
+      this.captionStripEl.setAttribute("role", "region");
+      this.captionStripEl.setAttribute("aria-label", "Narration");
+      this.captionStripEl.hidden = true;
+      this.mount.parentElement
+        ? this.mount.parentElement.insertBefore(this.captionStripEl, this.mount.nextSibling)
+        : this.mount.appendChild(this.captionStripEl);
+    }
+    this.captionStripEl.textContent = this.captionText || "";
   }
 
   updateProgressUI() {

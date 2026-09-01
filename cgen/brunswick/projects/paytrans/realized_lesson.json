@@ -143,7 +143,12 @@
             }
           }
         }
-      ]
+      ],
+      "voiceover": {
+        "captionText": "Welcome \u2014 this is about your pay: what's changing, how it's set, and what it means for you. Brunswick is committed to open, informed conversations about compensation \u2014 because transparency builds trust. In 2025, several U.S. states implement new pay transparency laws, requiring employers to disclose salary ranges and benefits in job postings or during the hiring process. And we're proud to be including salary ranges and benefits information in all our new job postings. We're preparing managers for open, informed conversations about compensation, too. So that's why you're seeing pay ranges \u2014 the way we talk about pay is changing.",
+        "voiceRef": "voice_bw_narrator",
+        "locale": "en"
+      }
     },
     {
       "id": "how_pay_is_determined",
@@ -496,7 +501,12 @@
             }
           }
         }
-      ]
+      ],
+      "voiceover": {
+        "captionText": "How is pay determined at Brunswick? It starts with a compensation philosophy built on three commitments: set market-competitive compensation through benchmarking, balance external competitiveness with internal equity, and link pay to individual, team, and company performance. Accurate job descriptions keep roles aligned in compensation surveys, and market data from trusted sources is used to assess job value \u2014 but internal equity matters just as much. Your base pay lives inside a structure: 24 pay ranges, each closely tied to market rates, split across three geographic zones reflecting the cost of labor. Every grade has a minimum, midpoint, and maximum. Where people fall varies \u2014 newer in role tends lower, fully competent performers sit around the market median, and long-term, highly skilled, sustained performers sit higher. And behind all of it, the Compensation and Benefits team in Enterprise HR, partnered with division HR teams, keeps reviewing data and benchmarking so pay stays fair and competitive.",
+        "voiceRef": "voice_bw_narrator",
+        "locale": "en"
+      }
     },
     {
       "id": "base_pay_in_total_rewards",
@@ -733,7 +743,12 @@
             }
           }
         }
-      ]
+      ],
+      "voiceover": {
+        "captionText": "Base pay is one part of a bigger picture: total rewards. Your total compensation is more than a paycheck \u2014 it includes benefits, bonuses, and company-provided offerings. A portion of your pay is variable compensation, with targets set from competitive market data: annual incentives, the Brunswick Performance Plan, commissions for our employees who focus on sales, and long-term incentives, generally for leadership. As you move up through the organization, the mix shifts \u2014 less base, more variable. And you can see yours in one place: your Total Rewards Statement puts base pay, variable comp, benefits, and benefit incentives in one personalized snapshot, in Workday under the Benefits and Pay app. One note if you're an international employee: the statement doesn't currently capture every allowance and benefit.",
+        "voiceRef": "voice_bw_narrator",
+        "locale": "en"
+      }
     },
     {
       "id": "performance_over_time",
@@ -861,7 +876,12 @@
             }
           }
         }
-      ]
+      ],
+      "voiceover": {
+        "captionText": "So how does performance move your pay over time? Your base salary pays for the core expectations of your role. Annual incentives are the main way a year's accomplishments get rewarded \u2014 they measure performance against established business goals, and your individual performance links directly to your final payout. That payout starts with the plan formula, then moves up or down with your performance, as measured through Achieve. For most global salaried employees, the Brunswick Performance Plan \u2014 the BPP \u2014 is the key compensation tool behind our pay for performance culture, with your bonus target set by your salary grade. And salary and merit reviews keep it aligned: your performance in a given year, high or low, shapes your salary increase.",
+        "voiceRef": "voice_bw_narrator",
+        "locale": "en"
+      }
     },
     {
       "id": "resources_and_eu",
@@ -1001,7 +1021,12 @@
             }
           }
         }
-      ]
+      ],
+      "voiceover": {
+        "captionText": "Where can you learn more? We promote pay transparency through established practices \u2014 including employee visibility: your compensation details in Workday, your Total Rewards Statement, and merit and bonus letters with your annual performance review. Have questions about pay ranges in U.S. job postings? The Pay Transparency in U.S. job postings FAQ answers them, with disclosure requirements, timing, and effective dates for each jurisdiction. And if you're in the EU: the EU Pay Directive brings pay transparency measures aimed at reducing unexplained gender pay gaps, and all 27 EU member countries must adopt regulations by June 2026. That includes a right worth knowing \u2014 you can ask your employer about your own pay level, and about average pay levels, broken down by gender, for people doing the same work or work of equal value.",
+        "voiceRef": "voice_bw_narrator",
+        "locale": "en"
+      }
     },
     {
       "id": "lesson_end",
@@ -1096,7 +1121,12 @@
             "placement": "lesson_end"
           }
         }
-      ]
+      ],
+      "voiceover": {
+        "captionText": "Before you finish, a couple of questions \u2014 just checking the key ideas. Take your time. And then: you're informed. You know how your pay is set and what's behind it \u2014 and that knowledge is yours to use.",
+        "voiceRef": "voice_bw_narrator",
+        "locale": "en"
+      }
     }
   ],
   "vars": {

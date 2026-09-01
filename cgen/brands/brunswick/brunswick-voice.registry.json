@@ -1,0 +1,25 @@
+{
+  "registry_version": "brunswick-voice.v0.1",
+  "status": "candidate_for_review",
+  "owner": "griot",
+  "description": "Brunswick's voice/persona registry — the per-brand store Griot's contract predicted ('voices/personas are likely per-brand… resolved like style_ref'). Seeded 2026-08-31 (Griot hop two) with ONE narrator persona as a GOVERNED CANDIDATE, flagged for Jake's review — flag, don't invent, and never an inline voice definition. voiceover_ref production (TTS or recorded VO) consumes these entries in a later render step: Griot chooses, renderers produce.",
+  "governance": {
+    "closed_list": true,
+    "rule": "Narration bindings may only reference ids defined here. A new voice requires an entry + version bump; the binding tool refuses anything else."
+  },
+  "voices": [
+    {
+      "id": "voice_bw_narrator",
+      "label": "Brunswick Narrator",
+      "status": "candidate",
+      "persona": "Warm, direct, unhurried — the spoken realization of the warm_direct register: second-person address, plain diction, reassurance by honesty rather than softening.",
+      "language": "en",
+      "delivery": {
+        "pace": "measured",
+        "warmth": "high",
+        "formality": "conversational_professional"
+      },
+      "provenance": "Reverse-specified from the January artisan control's VO direction (10 tracks, ~977 words); candidate until Jake reviews."
+    }
+  ]
+}

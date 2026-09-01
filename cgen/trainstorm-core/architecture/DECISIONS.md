@@ -2890,3 +2890,43 @@ chrome must sit beside that work, not replace it.
 
 **Supersedes:** nothing. `/cgen` as the stock Course Engine stands. Claude's 2026-08-31
 paytrans / voice / arc / Griot / structure / learner-surface blocks stand.
+## 2026-08-31 — Griot hop two: the seat RUNS. Performance bindings, the brand voice registry seeded, caption-first playback
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Griot's ratified facet finally executes, and the script reaches the learner —
+caption-first (Jake's call: reviewable today, zero audio dependency), with the voice registry
+seeded per-brand (Jake's call; the seat's own prediction).
+
+- **`brands/brunswick/brunswick-voice.registry.json`** — the per-brand voice/persona store
+  Griot's contract predicted, closed-list governed, seeded with ONE candidate
+  (`voice_bw_narrator`, reverse-specified from the artisan control's VO direction) — flagged
+  for Jake's review, never an inline voice.
+- **`tools/griot.py`** (griot.v0.1) — read-then-bind: wakes on accepted tracks lacking
+  bindings; binds voice_ref/register/locale/narration_source/script_hash into
+  `occurrences/narration.json`; `voiceover_ref` stays NULL — audio is a render step ("you
+  choose, they produce"). Writes no words; refuses an ungoverned voice_ref; never re-litigates
+  an existing binding; refuses to guess among multiple voices (an authored choice, when a
+  second voice exists). Selftest proves the contract four ways.
+- **Staleness both ways, per the seat:** `script_hash` pins the accepted track text (re-accept
+  with new words → binding stale); the track multi-pins its sources (meaning moves → track
+  stale → binding transitively). Realize joins THREE acceptances again — accepted track +
+  binding + fresh hash — before projecting `scene.voiceover`; stale is loud
+  (`stale_fallbacks: narration:<scene>`); anything short projects nothing.
+- **Caption-first playback:** the projection carries `captionText` (+ `voiceRef`, `locale`;
+  `src` only once a render step fills `voiceover_ref` — the same field then feeds VTT). The
+  player treats captionText as a payload: CC chrome appears, a `captionStrip` renders the
+  scene's script under the CC toggle, styled neutrally in BOTH brand packs (carry honored ×3).
+  Manifest stamps `voice.narration_scenes`.
+
+**Why:** Words before voice, then voice before audio: every layer reviewable the moment it
+exists, none pretending to be the next.
+
+**Consequences:** `/cgen/?project=brunswick/paytrans` with CC on shows each scene's narration —
+verified headless (toggle appears, strip carries the script per scene, hides cleanly).
+Remaining for narration: the audio render step (TTS or recorded VO consuming the bindings,
+asset entries per visual-asset.schema.json, VTT from captionText) — a deliberate later hop.
+ast stores byte-identical. Jake's review items: the candidate voice entry, and the captions
+read aloud in place.
+
+**Supersedes:** nothing. Ten prior 2026-08-31 blocks and the working process stand.
