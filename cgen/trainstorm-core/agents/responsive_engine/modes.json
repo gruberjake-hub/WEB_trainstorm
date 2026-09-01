@@ -1,0 +1,25 @@
+{
+  "seat": "responsive_engine",
+  "seat_version": "responsive_engine.v0.1",
+  "facet": "direction",
+  "note": "Two modes on one seat, one of which runs. The declaration is the honesty: a reader sees the arc AND sees which half is built. Same precedent as agents/dramaturge/wakes.json (live vs placeholder) and vocab entry status (seed vs specified).",
+  "modes": [
+    {
+      "id": "resolve",
+      "live": true,
+      "when": "design time, batch",
+      "reads": ["occurrences/elements.json", "audience/<segment_id>.json", "vocab/direction.enum.json"],
+      "writes": "direction/<segment_id>.json — proposed bindings, human-reviewable",
+      "description": "Walk every element × one segment record, resolve the audience join, materialize a pack. A human accepts BINDINGS."
+    },
+    {
+      "id": "serve",
+      "live": false,
+      "when": "runtime, per learner",
+      "reads": ["the content graph", "a live learner record (kind: learner, separate governance)"],
+      "writes": "nothing — the decision is served, not materialized",
+      "description": "The same pure resolver under a serve-one harness. A human accepts the POLICY; the runtime may serve only what the accepted policy produces, never improvising.",
+      "why_not_live": "Waits on the horizon's activation signals (capability_horizon/learner-response-intelligence): a governed competency model with observable behaviors, a response-event contract, approved learner-data governance, and an accepted-binding corpus large enough to license accepting a policy. Declared so the seat's shape is honest; not built, so the seat does not overclaim."
+    }
+  ]
+}
