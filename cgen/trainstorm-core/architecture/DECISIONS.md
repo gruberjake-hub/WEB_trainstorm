@@ -3082,7 +3082,9 @@ agent, a Case-Author tool, a workbench UI, Headwater outcomes-mode, `chameleon.p
    project should not exist"*). If LOs cannot support the goal, that is a **valid terminal**
    (no course, or not this course). Do not invent objectives to save the project. Writes
    draft `goal_` / dossier only as `proposed`; a human ratifies. No PII. Stub:
-   `agents/strategist/warrant_STUB.md` (chameleon pattern). No `strategist.py`.
+   `agents/strategist/warrant_STUB.md`, same genre as
+   `agents/chameleon/chameleon_STUB.md` (*"This is not an operating prompt and not
+   an agent"*). No `strategist.py`.
 2. **Audience** — design-time segments gleaned from the corpus (no PII). Later input to
    Authoring Chameleon. Not LRE / runtime Chameleon.
 3. **Designer** — `obj_` that `serves` a **validated** goal. Lock before `teaches` binds.
@@ -3091,8 +3093,10 @@ agent, a Case-Author tool, a workbench UI, Headwater outcomes-mode, `chameleon.p
    holds for building"*; *"Hop three may bind `teaches` against validated objectives."*
    No lock without a human.
 4. **Headwater Direct** — one bounded SOP/form; document is syllabus; mint. Existing mode
-   in `agents/headwater_ingest/02_system_prompts/core_agent/headwater_system_prompt.md`.
-   Direct is not rewritten.
+   in `agents/headwater_ingest/02_system_prompts/core_agent/headwater_system_prompt.md`
+   (*"Input is one artifact whose whole content is in scope: a single SOP, a single form.
+   There is no selection to make; everything in the source becomes canon. Go straight to
+   the mint."*). Direct is not rewritten.
 5. **Headwater Case-Author** — messy corpus. Stage 1 scope-commit emits a
    **committed-design** artifact (not atoms). Stage 2 mint wakes only when that artifact is
    validated **and** a warrant is held (or an explicit SOP-course Direct escape is
