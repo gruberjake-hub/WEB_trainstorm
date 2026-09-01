@@ -170,3 +170,23 @@ at `--out`. `committed_design_accept.py --by` is the only promoter to `validated
 re-runs the gate and refuses unreachable-LO / missing warrant-and-escape / agent-shaped
 `--by`. Stage-2 mint does not exist. Direct-mode `headwater_ingest*.py` scripts are
 untouched. Do not write a live `cd_` into paytrans / ALSAP / artwork this hop.
+
+## Strategist dossier (propose-only)
+
+From `cgen/trainstorm-core`:
+
+    python3 tools/validate_dossier.py --selftest
+    python3 tools/validate_dossier.py --file reference/example_dossier.json
+    python3 tools/dossier_accept.py --selftest
+
+Open-project warrant snapshot (`schemas/dossier.schema.json`, `doss_`). Schema · warrant
+terminal (three questions + outcome, or a recorded SOP-course Direct escape) · HITL
+(`proposed` until a human sets `validated` with a human-shaped `--by`) · not-an-atom ·
+no PII · no `strategist.py`. The operating prompt is
+`agents/strategist/02_system_prompts/core_agent/strategist_system_prompt.md`; there is no
+compiler that reads a pile and emits a `goal_`. `dossier_accept.py --by` is the only
+promoter; it refuses agent-shaped `--by`, already-validated, missing warrant terminal,
+smuggled atoms, and the example fixture (not a live engagement). Writes nothing on refuse.
+Accepting a dossier does **not** write `ontology/goals.json` — that is a named next hop.
+Fixture: `reference/example_dossier.json` (status `proposed`).
+

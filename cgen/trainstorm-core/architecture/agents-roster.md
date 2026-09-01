@@ -22,7 +22,11 @@ affected audiences, constraints, risks, politics, modality recommendations.
 - **Wakes on:** a new project intake
 - **Temperature:** high — this is judgment work. Heaviest HITL gate in the system; nothing
   locks without a human in the room. *(absorbs: LEADER, ADRA S0–S3 at survey depth)*
-- **Stub (2026-09-01):** `agents/strategist/warrant_STUB.md` — contract only; no `strategist.py`.
+- **Operating prompt (2026-09-01):** `agents/strategist/02_system_prompts/core_agent/strategist_system_prompt.md`
+  — spine specialization, same genre as Headwater. Contract that points at it:
+  `agents/strategist/warrant_STUB.md`. Propose-only dossier: `schemas/dossier.schema.json`,
+  gated by `tools/validate_dossier.py`; human-run `tools/dossier_accept.py --by` is the only
+  promoter. No `strategist.py`. Accepting a dossier does not write `ontology/goals.json`.
 
 ## The Audience Agent
 *The ethnographer. Knows the people; never touches the content.*

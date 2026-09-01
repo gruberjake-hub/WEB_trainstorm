@@ -1,0 +1,365 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/dossier.schema.json",
+  "title": "Strategist dossier — open-project warrant snapshot (propose-only)",
+  "description": "The Strategist's project-level document: warrant assessment + harvestable context-digest + proposed goal sketches. It is NOT an atom (no atom_ id, no meaning.source_text), NOT a committed-design (no cd_), NOT a write into ontology/goals.json. Status is proposed until a human validates via tools/dossier_accept.py --by; the seat never sets validated. Species-closed lists (status, door, warrant verdicts/outcomes, finding, escape_kind) live here as dossier.v0.1 — version-bump to extend; do not silently extend goal draft/example/validated, beats proposed/accepted, or committed-design enums. Accepting this document promotes the dossier only; writing proposed_goals into the live goals store is a later hop. Canonical instances will live per-project; this schema is shared core. Example fixture stays proposed — not a live validated engagement.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "store",
+    "dossier_id",
+    "version",
+    "status",
+    "client",
+    "project",
+    "door",
+    "context_digest",
+    "outcomes",
+    "audiences",
+    "constraints",
+    "risks",
+    "politics",
+    "modality_recommendations",
+    "roi",
+    "finding",
+    "design_insights"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "dossier.v0.1",
+      "description": "Closed with this schema. A new status, door, verdict, outcome, finding, or escape kind is a version bump, not a silent extend."
+    },
+    "store": { "const": "dossier" },
+    "dossier_id": {
+      "type": "string",
+      "pattern": "^doss_[a-z0-9_]+$",
+      "description": "Opaque id of this dossier. Never atom_, never ele_, never cd_, never goal_, never obj_. Minted once; never reused, never edited."
+    },
+    "version": { "type": "integer", "minimum": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["proposed", "validated"],
+      "description": "v0.1 closed list for THIS species. proposed = Strategist (or a human) has drafted the warrant snapshot; validated = a human has ratified the assessment. Reuses the house words without extending goal.schema or committed-design enums. The agent never writes validated."
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Who validated. Required when status is validated; forbidden while proposed. A human handle, never an agent id."
+    },
+    "client": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Client namespace slug (e.g. brunswick). Not a person."
+    },
+    "project": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Project slug. The live dossier would live under that project; this schema's example is not a live client dossier."
+    },
+    "proposed_by": {
+      "type": "string",
+      "description": "Provenance of the proposal (e.g. strategist, a chat, a human handle). Not a ratification."
+    },
+    "derived_from": { "$ref": "#/$defs/derived_from" },
+    "door": {
+      "type": "string",
+      "enum": ["open_project", "direct_escape"],
+      "description": "v0.1 closed list. open_project = Strategist warrant first. direct_escape = this pile is actually one bounded SOP-course; take Headwater Direct without pretending a warrant was found."
+    },
+    "direct_escape": { "$ref": "#/$defs/direct_escape" },
+    "context_digest": { "$ref": "#/$defs/context_digest" },
+    "warrant": { "$ref": "#/$defs/warrant" },
+    "outcomes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/outcome" },
+      "description": "Business outcomes in scope for this assessment. May be empty on a no-course terminal or a Direct escape. Not a write into ontology/goals.json."
+    },
+    "proposed_goals": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/proposed_goal" },
+      "description": "Optional goal_ payload sketches (label/measure/reachability). Not minted into ontology/goals.json this hop. Empty when the finding is no_course / not_this_course / direct_escape — do not mint a decorative goal_ to save a project. Never carry status validated."
+    },
+    "audiences": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/audience_segment" },
+      "description": "Affected populations as SEGMENTS, never persons. No PII."
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Project realities that bound the intervention: time, systems, access, regulation-as-lived."
+    },
+    "risks": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Failure modes, including false confidence from training."
+    },
+    "politics": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Organizational / political sensitivities. Segments and functions, never named persons."
+    },
+    "modality_recommendations": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Non-binding modality notes (course / not a course / job aid / communication / process). Not a production script."
+    },
+    "roi": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 800,
+      "description": "Intervention assessed in ROI terms: attention and cost against the trainable slice. Distinct from goal.measure (business discharge test) and from warrant Q1 (human-level case). Do not collapse the three."
+    },
+    "finding": {
+      "type": "string",
+      "enum": ["course_warranted", "no_course", "not_this_course", "direct_escape"],
+      "description": "v0.1 closed list. Unreachable-LO terminal is no_course or not_this_course. Direct escape is recorded as itself, not as a held warrant."
+    },
+    "design_insights": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000,
+      "description": "Harvestable close — DESIGN INSIGHTS FOR NORMALIZATION. Valuable ideas, implied chunks, where schemas will struggle, questions Jake should answer next. Standing mode is still dialogue; this field is the snapshot's carry."
+    },
+    "_note": {
+      "type": "string",
+      "maxLength": 800,
+      "description": "Free-text note about this document as a whole — example marker, provenance. House style (goal.schema.json). Never a corpus dump."
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "validated" } }, "required": ["status"] },
+      "then": { "required": ["reviewer"] }
+    },
+    {
+      "if": { "properties": { "status": { "const": "proposed" } }, "required": ["status"] },
+      "then": { "not": { "required": ["reviewer"] } }
+    },
+    {
+      "if": { "properties": { "door": { "const": "direct_escape" } }, "required": ["door"] },
+      "then": {
+        "required": ["direct_escape"],
+        "properties": { "finding": { "const": "direct_escape" } }
+      }
+    },
+    {
+      "if": { "properties": { "door": { "const": "open_project" } }, "required": ["door"] },
+      "then": {
+        "required": ["warrant"],
+        "not": { "required": ["direct_escape"] }
+      }
+    }
+  ],
+  "$defs": {
+    "derived_from": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The corpus this dossier is derived from. Store path + notes. Never the blobs, never meaning.source_text, never PII.",
+      "properties": {
+        "source_store": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "description": "Store-relative pointer to the corpus home, never the file bytes."
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 400,
+          "description": "How this snapshot relates to the corpus. Not a dump."
+        }
+      }
+    },
+    "direct_escape": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["escape_kind", "rationale"],
+      "description": "This pile is actually one bounded SOP-course. Takes the Direct door without pretending a warrant was found. recorded_by is forbidden while proposed; accept stamps it from --by when promoting.",
+      "properties": {
+        "escape_kind": {
+          "type": "string",
+          "enum": ["sop_course"],
+          "description": "v0.1 closed list. sop_course = one bounded SOP/form; the document is the syllabus. Version-bump to extend."
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 400,
+          "description": "Why this corpus is one bounded SOP-course, not an open-project warrant."
+        },
+        "recorded_by": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human who recorded the escape at accept time. Forbidden while proposed. Agent never writes this."
+        }
+      }
+    },
+    "context_digest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stated_vs_implied",
+        "operational_reality",
+        "tensions",
+        "diagnostic_observations",
+        "open_questions"
+      ],
+      "description": "Harvestable ingest slice. Strings, not a second schema soup. Diagnostic observations are gaps without prescriptions.",
+      "properties": {
+        "overview": { "type": "string", "maxLength": 800 },
+        "stated_vs_implied": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1200,
+          "description": "Stated objectives vs implied objectives. Facts vs interpretations named."
+        },
+        "operational_reality": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1200,
+          "description": "What people actually do — roles, handoffs, decision points. Internal operations brief, not a syllabus."
+        },
+        "tensions": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1200,
+          "description": "Contradictions, misalignment, training used to compensate for structural issues."
+        },
+        "diagnostic_observations": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1200,
+          "description": "Capability / knowledge / mindset / decision-making gaps. NO prescriptions in this field."
+        },
+        "open_questions": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1200,
+          "description": "Questions that expose hidden assumptions."
+        }
+      }
+    },
+    "warrant_question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verdict", "rationale"],
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": ["pass", "partial", "fail"],
+          "description": "v0.1 closed vocab for one warrant question."
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 800
+        },
+        "human_case": {
+          "type": "string",
+          "maxLength": 800,
+          "description": "Q1 only — honest human-level case, not the business case as stated. Regulation is crystallized memory of a human cost."
+        },
+        "trust_repair": {
+          "type": "boolean",
+          "description": "Q3 only — true when Q1+Q2 pass and soil is poisoned; design mode, not a full fail."
+        }
+      }
+    },
+    "warrant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value_evidence", "adoption_legitimacy", "cynicism_audit", "outcome"],
+      "description": "The three questions. Documented either way. Designer's shield: the system requires a warrant.",
+      "properties": {
+        "value_evidence": { "$ref": "#/$defs/warrant_question" },
+        "adoption_legitimacy": { "$ref": "#/$defs/warrant_question" },
+        "cynicism_audit": { "$ref": "#/$defs/warrant_question" },
+        "outcome": {
+          "type": "string",
+          "enum": ["full_pass", "partial_pass", "full_fail"],
+          "description": "v0.1 closed list. full_pass = all three affirmative; partial_pass = modified scope (including Q3-fail + Q1+Q2-pass as trust-repair); full_fail = two or more fails, do not deploy."
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "measure"],
+      "description": "A business outcome in designer terms. measure is the discharge test. Not a minted goal_.",
+      "properties": {
+        "label": { "type": "string", "minLength": 1, "maxLength": 400 },
+        "measure": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 400,
+          "description": "Business discharge test — how anyone would know it moved. Distinct from warrant Q1 human_case."
+        }
+      }
+    },
+    "proposed_goal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["goal_id", "label", "measure", "reachability"],
+      "description": "A sketch of a goal_ payload. Does not write ontology/goals.json. Must not carry status validated. goal.schema enums are not extended — there is no status field here on purpose.",
+      "properties": {
+        "goal_id": {
+          "type": "string",
+          "pattern": "^goal_[a-z0-9_]+$",
+          "description": "Proposed id. Not minted this hop."
+        },
+        "label": { "type": "string", "minLength": 1 },
+        "measure": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Business discharge test (goal.schema measure). Not the human-level case."
+        },
+        "reachability": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["trainable", "not_trainable", "assessed_by"],
+          "properties": {
+            "trainable": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The part training can move. If nothing here is true, omit this sketch and set finding to no_course / not_this_course."
+            },
+            "not_trainable": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "assessed_by": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Who made the split. A role or function, not a person-name field."
+            }
+          }
+        }
+      }
+    },
+    "audience_segment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["segment_id", "label"],
+      "description": "A population, not a person. No name/email/PII fields exist on this object.",
+      "properties": {
+        "segment_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Segment slug. Not a person. Not a record_id from the audience-model store (Audience Agent owns that hop)."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "Who this population is, as a role/tier/segment — never a person's name."
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 400,
+          "description": "Constraints, prior exposure, working conditions. Still not a person."
+        }
+      }
+    }
+  }
+}

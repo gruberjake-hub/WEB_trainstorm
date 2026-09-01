@@ -87,6 +87,7 @@ trainstorm-core/
 │   ├── objectives.schema.json            ✅ intent ontology — objective node contract  (v2: serves + bloom)
 │   ├── goal.schema.json                  ✅ business-outcome node — reachability is a REQUIRED gate
 │   ├── committed-design.schema.json      ✅ Case-Author stage-1 node (selection + framing, `cd_`); writer is `tools/headwater_case_author.py` (propose-only); mint does not exist (DECISIONS 2026-09-01)
+│   ├── dossier.schema.json               ✅ Strategist open-project warrant snapshot (`doss_`); propose-only; human accept; does not write ontology/goals.json (DECISIONS 2026-09-01)
 │   ├── socket.schema.json                ✅ the INTAKE CONTRACT — derived, never authored (socket.v0.1)
 │   ├── template_manifest.schema.json     ✅
 │   ├── visual-asset.schema.json          ✅ one visual asset registry entry
@@ -110,7 +111,7 @@ trainstorm-core/
 │   ├── alsap_builder/                    ✅ Amanuensis — proposes into `instance`; dispatched 2026-08-20
 │   │   └── 07_examples/dispatch_2026-08-20/findings.md   ✅ first live dispatch record
 │   ├── couturier/ · griot/ · chameleon/  ✅ Couturier v1 writes style; chameleon is a stub (authoring in-scope as contract, runtime/LRE do not build; no chameleon.py)
-│   ├── strategist/                       ⬜ stub contract (`warrant_STUB.md`); no strategist.py — open-project warrant (DECISIONS 2026-09-01)
+│   ├── strategist/                       ✅ operating prompt (`02_system_prompts/core_agent/strategist_system_prompt.md`) + contract (`warrant_STUB.md`); propose-only dossier; no strategist.py (DECISIONS 2026-09-01)
 │   ├── localize/                         ✅ Dragoman — ⚠ flat `system.md` still un-`git rm`'d
 │   ├── ingest-decompose/                 ⚠ predecessor of headwater_ingest; folder already absent — retire or merge still named
 │   ├── cartographer/                     ✅ prompt + heuristic_v1.md; tools/cartographer.py writes occurrence intent
@@ -149,6 +150,7 @@ trainstorm-core/
 │   ├── example_element.json              ✅ occurrence of example_atom (`composed_from`, no authored content)
 │   ├── example_corpus_inventory.json     ✅ Case-Author stage-1 fixture listing (not a live client dump)
 │   ├── example_committed_design.json     ✅ proposed design from that listing (`cd_`; not paytrans)
+│   ├── example_dossier.json              ✅ proposed Strategist warrant snapshot (`doss_`; not a live engagement)
 │   ├── sample_script.json / .v2.json     ✅
 │   └── brunswick.reference.course.json   ✅ RATIFIED v1 structural (2026-08-31) — a pointer to the paytrans course, never a copy; v2 scope named (voice, Griot, arc, expression)
 │
@@ -161,6 +163,8 @@ trainstorm-core/
 │   ├── headwater_ingest_artwork.py       ✅ sibling Headwater ingest for `ast_artwork` (SOP-2290); ALSAP ingest untouched
 │   ├── headwater_ingest_paytrans.py      ✅ sibling Headwater ingest for brunswick/paytrans — first expository corpus (2026-08-31)
 │   ├── headwater_case_author.py          ✅ Case-Author stage 1 — proposes committed-design (status proposed); human-run committed_design_accept.py --by is the only promoter; mint does not exist
+│   ├── validate_dossier.py               ✅ Strategist dossier gate — schema · warrant terminal · HITL · no atoms · no PII · no strategist.py
+│   ├── dossier_accept.py                 ✅ ONLY writer of dossier `validated`; human-shaped `--by`; writes nothing on refuse; does not write ontology/goals.json
 │   ├── project_sop_artwork.py            ✅ sibling SOP-2290 projector
 │   ├── store_merge.py                    ✅ the idempotent merge rule — lives once, both ingests import it
 │   ├── resolve_slot.py                   ✅ the walk: one slot → grounding packet (+ sufficiency)
@@ -192,7 +196,7 @@ trainstorm-core/
 - **Vocabularies:** `*.enum.json` (closed value lists) · `*.registry.json` (keyed lookups)
 - **Locale packs:** `<bcp47>.json` — `en.json`, `ja.json`, `fr-CA.json`
 - **Examples:** `example_*.json` · reference courses: `*.reference.course.json`
-- **Stable ID prefixes** (never reused/edited): `atom_` **content node** (the only key meaning is stored under) · `ele_` **occurrence** of an atom in a course (minted at realization, linked to its atom by `composed_from`, never carries authored text) · `obj_` objective · `goal_` business outcome · `cd_` committed-design (Case-Author stage-1 selection + framing; not an atom) · `term_` glossary term · `asset_` visual asset · `prim_`/`p###` script primitive · `sce_`/`sec_`/`mod_` structure. Two id spaces, two kinds of node: never mint `ele_` for content, never mint `atom_` for an occurrence (`architecture/DECISIONS.md`, 2026-08-25 occurrence identity; decision-log 2026-08-20 eighth). Never mint `atom_` for a committed-design.
+- **Stable ID prefixes** (never reused/edited): `atom_` **content node** (the only key meaning is stored under) · `ele_` **occurrence** of an atom in a course (minted at realization, linked to its atom by `composed_from`, never carries authored text) · `obj_` objective · `goal_` business outcome · `cd_` committed-design (Case-Author stage-1 selection + framing; not an atom) · `doss_` dossier (Strategist open-project warrant snapshot; not an atom, not a write into `ontology/goals.json`) · `term_` glossary term · `asset_` visual asset · `prim_`/`p###` script primitive · `sce_`/`sec_`/`mod_` structure. Two id spaces, two kinds of node: never mint `ele_` for content, never mint `atom_` for an occurrence (`architecture/DECISIONS.md`, 2026-08-25 occurrence identity; decision-log 2026-08-20 eighth). Never mint `atom_` for a committed-design or a dossier.
 - **Asset ids** are minted from the file's content hash at first ingest (`asset_img_<hash12>`) and then **frozen**. Opaque is correct here — but on re-ingest, match against the registry rather than re-deriving, or a re-exported image mints a second identity for the same asset.
 - **Two new governed closed lists** ship with the visual asset registry, both `v0.1` draft, both bumped by version not by silent extension: `role` (signature · motif · chrome) and `mark_class` (identity · sub_brand · program · third_party). `mark_class` is **required when `role: signature`**, enforced by a conditional in the schema — an unclassified signature is the exact ambiguity it exists to remove. Note it is deliberately *not* named `*_tier`: "tier" already means audience segment here (`tier1_field`, `tier2_msl`).
 
@@ -298,9 +302,13 @@ sequence, form BR present, and the ASP-9999 instance example are already decided
 re-litigate. The **course half beyond Realizer / Cartographer / Couturier v1** has landed the
 post-2026-08-26 hops below (cite `architecture/DECISIONS.md` dates). Dragoman and `tools/render/`
 PNG pipelines are unbuilt. Authoring Chameleon stays a contract (assumed-audience facets); there is
-no `chameleon.py`. The open-project warrant lives as a stub (`agents/strategist/warrant_STUB.md`);
-there is no `strategist.py`. Case-Author stage 1 writer is `tools/headwater_case_author.py`
-(propose-only); there is no stage-2 mint this hop.
+no `chameleon.py`. The open-project warrant has an operating prompt
+(`agents/strategist/02_system_prompts/core_agent/strategist_system_prompt.md`) and a
+propose-only dossier store (`schemas/dossier.schema.json`); human-run
+`tools/dossier_accept.py --by` is the only promoter. There is no `strategist.py`.
+Case-Author stage 1 writer is `tools/headwater_case_author.py` (propose-only); there is
+no stage-2 mint this hop. This hop does not mint atoms, lock `obj_`, or write
+`ontology/goals.json`.
 
 Near-term, in dependency order:
 
@@ -374,13 +382,14 @@ parked walls): `tools/render/` PNG pipeline; Dragoman / `locales/` (README only)
 `process_flow` layout gap); `ingest-decompose/` predecessor — retire or merge; ontology
 goals/objectives that are still `status: example`.
 
-**Parked / walled — not next hops:** runtime Chameleon / LRE / Responsive Engine; Headwater
+**Parked / walled — not next hops:** runtime Chameleon / LRE / Responsive Engine serve-mode; Headwater
 outcomes-mode; LLM distractor-writer; pretty `/cgen/{client}/{course}` URLs; `/cgen/alsap`
 rewrite; slide-authoring frontend; ingest UI on the static Netlify site; ISO 14971; Procedure B
-on ALSAP; Generator's divergent distractors; Strategist / Designer / Audience as live agents
-(open-project warrant is a stub contract, not a tool — `agents/strategist/warrant_STUB.md`; no
-`strategist.py`; Case-Author stage-1 propose is `tools/headwater_case_author.py`; mint does not
-exist). Authoring Chameleon stays a contract.
+on ALSAP; Generator's divergent distractors; Designer as a live agent; Strategist as a
+*compiler* (the operating prompt and dossier store exist; there is still no `strategist.py`;
+Case-Author stage-1 propose is `tools/headwater_case_author.py`; mint does not exist; accepting
+a dossier does not write `ontology/goals.json` — that is a named next hop). Authoring Chameleon
+stays a contract.
 
 `project/custom_instructions.md` now points at this file and `architecture/DECISIONS.md`.
 `architecture/unification-map.md` still names `element.schema.json` as canon in July prose —

@@ -1,0 +1,93 @@
+{
+  "_note": "EXAMPLE / status proposed — fixture warrant snapshot, not a live client engagement, not paytrans, not a minted goal_/obj_/atom_/cd_. Fictional fx open-project. Example warrants stay proposed.",
+  "schema_version": "dossier.v0.1",
+  "store": "dossier",
+  "dossier_id": "doss_fx_open_project_example",
+  "version": 1,
+  "status": "proposed",
+  "client": "fx",
+  "project": "example_open",
+  "proposed_by": "strategist",
+  "derived_from": {
+    "source_store": "fx/projects/example_open/source",
+    "notes": "Fictional messy corpus: incident-reduction ask plus a work instruction and a staffing memo. Not a live dump."
+  },
+  "door": "open_project",
+  "context_digest": {
+    "overview": "Leadership asked for a course so incident counts drop 20%. The corpus is a work instruction, an incident log summary, and a staffing memo. The work instruction is real; the 20% target is a wish mixed with a process problem.",
+    "stated_vs_implied": "Stated: reduce incidents 20% via training. Implied, from the staffing memo and skipped-step pattern in the log: keep the line moving while headcount is short. Fact: the work instruction names a verification gate. Interpretation: the 20% figure is a management target, not a trainable delta.",
+    "operational_reality": "Operators run the procedure under time pressure. The verification gate is skipped when the line is short. Handoff to the lead is informal. The staffing memo is the operational document people actually obey.",
+    "tensions": "The course request treats skipped steps as a knowledge problem. The log shows people who can recite the steps still skip the gate. Training is being asked to compensate for staffing.",
+    "diagnostic_observations": "Knowledge: the verification gate is named but not why it exists. Capability: working the procedure at speed with the gate intact. Mindset: skipping the gate is how a short crew 'helps.' Decision-making: when to stop the line. No prescriptions in this slice.",
+    "open_questions": "If headcount stayed short, would a trained crew still skip the gate? Who owns the stop-the-line decision in practice, not on the org chart? What human cost is the verification gate the memory of?"
+  },
+  "warrant": {
+    "value_evidence": {
+      "verdict": "pass",
+      "human_case": "The verification gate exists because a skipped check has already harmed a person on this kind of line. A crew that understands that cost, and the stop-the-line right, is not being asked to worship a checkbox.",
+      "rationale": "The human case is specific and would survive a skeptical operator. The incident log is not a KPI theatre; it names the same skipped gate the work instruction exists to prevent."
+    },
+    "adoption_legitimacy": {
+      "verdict": "partial",
+      "rationale": "The work instruction is in force, but the staffing memo is the document that actually governs pace. Training people into a half-built crew is only partly reasonable. The ask is legitimate for the gate and the stop-the-line right; it is not legitimate as a 20% incident cure."
+    },
+    "cynicism_audit": {
+      "verdict": "pass",
+      "trust_repair": false,
+      "rationale": "Prior 'safety moments' were slideware. This ask is different to the extent it is scoped to the gate and the stop-the-line right, and not sold as the 20% cure. That differentiation has to be shown, not claimed, in whatever is built later."
+    },
+    "outcome": "partial_pass"
+  },
+  "outcomes": [
+    {
+      "label": "Operators follow the work instruction without inventing or skipping steps, including the verification gate.",
+      "measure": "Audit count of skipped-gate incidents on the procedure — not a 20% incident-volume wish."
+    }
+  ],
+  "proposed_goals": [
+    {
+      "goal_id": "goal_fx_example_outcome",
+      "label": "Operators follow the work instruction without inventing or skipping steps, including the verification gate.",
+      "measure": "Audit count of skipped-gate incidents on the procedure — not a 20% incident-volume wish.",
+      "reachability": {
+        "trainable": "Knowing the steps, why the verification gate exists, and that stopping the line is a legitimate act.",
+        "not_trainable": [
+          "Staffing on the line.",
+          "Pace set by the staffing memo.",
+          "A 20% drop in all incidents."
+        ],
+        "assessed_by": "role_ops_lead"
+      }
+    }
+  ],
+  "audiences": [
+    {
+      "segment_id": "line_operators",
+      "label": "Line operators who run the procedure under production pressure",
+      "notes": "Short-crew conditions are the working reality, not an edge case."
+    },
+    {
+      "segment_id": "shift_leads",
+      "label": "Shift leads who receive informal handoff when a gate is skipped"
+    }
+  ],
+  "constraints": [
+    "No added headcount in the current planning window.",
+    "The work instruction cannot be rewritten by L&D."
+  ],
+  "risks": [
+    "A course that promises the 20% target creates false confidence and launders a staffing problem as a learning win.",
+    "Slideware 'safety moment' residue: another initiative that looks like the last one."
+  ],
+  "politics": [
+    "Operations owns pace; L&D is being asked to absorb the incident KPI.",
+    "Naming staffing as not-trainable will be unwelcome and is still required."
+  ],
+  "modality_recommendations": [
+    "If anything is built, it is a short procedure-plus-why on the gate and stop-the-line — not an incident-reduction curriculum.",
+    "Non-training: crew-size policy and who may stop the line, owned by operations."
+  ],
+  "roi": "Attention cost of a full incident-reduction course is not justified by the trainable slice. A bounded gate/stop-the-line intervention might be; a 20% KPI course is not.",
+  "finding": "course_warranted",
+  "design_insights": "The real chunk is the verification gate as memory of a human cost, plus the stop-the-line right. A 20% incident module is the schema struggling. Next questions: who may stop the line in practice; whether operations will let the not-trainable staffing split stand in writing. Designer/script later — this snapshot is not a production commitment."
+}
