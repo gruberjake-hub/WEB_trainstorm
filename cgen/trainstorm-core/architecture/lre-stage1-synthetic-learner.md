@@ -66,7 +66,7 @@ whether that costs anything. It doesn't — the joins compose:
 Element-keyed state would weld a segment to one course's structure. Objective-keyed state is what
 makes the segment reusable and the loop in §6 possible.
 
-## 3. `risk_of_overuse` is a gate · BUILT (contract) / DEFERRED (planner behavior)
+## 3. `risk_of_overuse` is a gate · BUILT (contract + planner behavior) — D10 closed
 
 The roster's one hard ethical rule, unification-map §2: "promote it to a gate in the responsive
 join, not a metadata note — a substrate-aware engine without a harm model is an optimizer pointed at
@@ -75,8 +75,11 @@ a human." It is carried on the thing it protects: every disposition factor requi
 scoped to objectives (high means *never amplified*, so it must say where it applies).
 
 The planner rule — **high ⇒ acknowledge, never amplify or repeat; moderate ⇒ once per course;
-low ⇒ unconstrained** — is written in the schema description and will be enforced when the
-direction planner exists (§5, D7).
+low ⇒ unconstrained** — is now executable, not just written down (direction hop, 2026-09-01): the
+Responsive Engine's resolver clamps it BEFORE a rule fires, so a spent factor withholds the effect
+and not merely the citation; `tools/validate_direction.py` re-checks it on every pack; and each
+spend is recorded in `harm_budget`, because it can land on an element that produces no entry. See
+`direction-facet.md` §6.
 
 ## 4. "No silent lying" — the baselines split · DECIDED 2026-09-01
 
@@ -105,13 +108,15 @@ deltas on latents — the horizon's "transparent rules before probabilistic infe
 
 Jake's requirement: eventually both **how it lands** and **what is said**. Split (Claude's call).
 
-**Hop A — how it lands (NEXT · D7).** Segment record → direction planner → **direction** bindings
-(staging / pacing / weight / attention) + expression keys. Same `element_id`, same `content_hash`,
-different bindings per segment, external, keyed by element_id / `audience.variant_group`. Zero
-content_hash churn, so it validates on the reference course without touching locales or provenance,
-and the psychology's whole effect is visible in reason traces. First design beat of that hop: draw
-the line between **direction**, **tone** (`vocab/tone.enum.json` — affective feel, upstream signal)
-and **arc** (Dramaturge's beats — placement) so we do not mint a fourth overlapping vocabulary.
+**Hop A — how it lands · BUILT 2026-09-01 (D7a).** Segment record → the Responsive Engine's
+`resolve` mode → **direction** bindings in `direction/<segment_id>.json`, keyed by `element_id`.
+Two axes only, **weight** and **tempo** — not expression keys, which stay Couturier's (direction
+decides, expression realizes). Same `element_id`, same `content_hash`, different bindings per
+segment; zero content_hash churn, so it validated on the reference course without touching locales
+or provenance, and the psychology's whole effect is visible in the reason traces. The design beat
+that opened the hop — the line between direction, **tone** (`vocab/tone.enum.json`) and **arc**
+(Dramaturge's beats) — is settled in `direction-facet.md` §§2–3, where five of the eleven
+rehydrated "treatment" values dissolved into facets that already owned them.
 
 **Hop B — what is said (FORESEEN · D1).** Meaning variants per segment: a new element with its own
 `element_id`, `governance.derived_from` → source, same `variant_group`; new meaning ⇒ new hash ⇒ its

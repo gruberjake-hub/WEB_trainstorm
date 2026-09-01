@@ -52,6 +52,23 @@ in this hop's own lifetime. The honest fix is a small `tools/schema_graph.py` th
 nodes/edges from `$ref`, id-prefix patterns and the vocab `mirrors` lists, with the page reading
 that JSON. Named here; not this hop.
 
+## 2026-09-01 (records sync) — The LRE design record catches up with its own build.
+
+*Anchor: `a2e6655` (PR #64). No behavior, no schema, no vocabulary — a doc-only correction, recorded
+because a canonical file that describes built work as future is exactly the drift this repo gates
+against everywhere else.*
+
+The direction hop updated the deferred register (D4, D7a, D10) and the open-beat section of
+`lre-stage1-synthetic-learner.md`, but left two passages of PROSE describing the planner as
+forthcoming: §3 still headed "DEFERRED (planner behavior)" and said the harm rule "will be enforced
+when the direction planner exists", and §5 still opened Hop A with "(NEXT · D7)" and listed its
+design beat as an open question. All three had shipped. Both passages are now past tense and point
+at `direction-facet.md`.
+
+One accuracy fix rode along: §5 described Hop A as writing "direction bindings + expression keys".
+It does not — direction writes weight and tempo only; expression keys stay Couturier's. Direction
+decides, expression realizes, and the doc now says so.
+
 ## 2026-09-01 (Direction hop one) — The audience becomes a coordinate: direction packs, and the Responsive Engine seat wakes up in design-time mode.
 
 *Anchor: branch `drive/direction-facet` off `15f17c5` (PR #63, the schema-graph hop — main had moved
