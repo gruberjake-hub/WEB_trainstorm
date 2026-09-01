@@ -52,6 +52,100 @@ in this hop's own lifetime. The honest fix is a small `tools/schema_graph.py` th
 nodes/edges from `$ref`, id-prefix patterns and the vocab `mirrors` lists, with the page reading
 that JSON. Named here; not this hop.
 
+## 2026-09-01 (Direction hop one) — The audience becomes a coordinate: direction packs, and the Responsive Engine seat wakes up in design-time mode.
+
+*Anchor: branch `drive/direction-facet` off `15f17c5` (PR #63, the schema-graph hop — main had moved
+past the audience anchor while the design beat ran). Two calls, both Jake's: (1) the seat is the
+ROSTER'S RESPONSIVE ENGINE from birth rather than a new tenth name — "over-promising becomes
+aspirational with the right framing, and this machinery faces only me"; (2) the four trajectory
+variables stay out (settled in the audience hop, and it held here: "we simply cannot have any
+silent-lying schemas").*
+
+### The subtraction that made this small
+
+The rehydrated 2026-08 "treatment" vocabulary proposed eleven values. Tested against the spine,
+five dissolved into facets that already own them — `assessment-beat` into pedagogical intent plus
+an interaction primitive, `contrast-frame` into the `distinction` primitive plus a two-column
+layout, `interaction-prompt` into `expression`, `emphasis-beat` into `tone` plus rhetorical
+`persuade`, and scene-to-scene pacing into Dramaturge's arc (the `pacing_interlude` wake was
+already sitting there). What survived was two things the spine could not say: **weight** (what is
+load-bearing within a scene) and **tempo** (dwell, and whether content arrives whole or in parts).
+
+The test that drew the line, now written into the vocabulary as its governing rule: *tone, arc and
+expression are audience-invariant; direction is the one thing that varies per segment while
+meaning, tone and arc stay fixed.* If a field would be set identically for every segment, it is not
+direction. Two consequences: direction cannot live on the element (external pack keyed by
+element_id per segment — the audience coordinate beside locale and register), and there is no
+scene-level enum (a scene's character is the aggregate of its elements).
+
+### What landed
+
+`vocab/direction.enum.json` — weight (anchor · lead · support · aside) + tempo (brisk · measured ·
+dwell · progressive), closed and versioned, every value naming a rule that can PRODUCE it. `pivot`
+was considered and withheld under that same rule: nothing writes it, so it does not ship.
+
+`schemas/direction.pack.schema.json` — two pins per pack (each entry's `source_hash` against the
+element's meaning; `audience_ref.source_hash` against the segment record's analysis), non-empty
+reason traces of governed tokens, `proposed`/`accepted` with a required reviewer, and `harm_budget`.
+
+`tools/responsive_engine.py` (policy `direction_v1`) — the seat. `baseline()`, `propose()` and
+`clamp()` are PURE functions; `resolve` runs them under a batch harness and `serve` will run the
+same functions under a serve-one harness. That is the whole promotion path, and it cost nothing
+extra to build that way. `agents/responsive_engine/modes.json` declares both modes with
+`serve` at `live:false` — the Dramaturge-wakes precedent applied to an aspiration, so a reader sees
+the arc AND sees which half runs; asking for `serve` is refused with its reason.
+
+`tools/validate_direction.py` — schema · governed weight/tempo/factor ids · the DELTA check · the
+harm rules · both pins · the join · the learner-data boundary. Red-proofs 14 ways.
+
+The roster's Responsive Engine entry was rewritten. It now owns `direction` and **no PII in either
+mode**; the claim that it writes "learner × objective runtime state" is gone, because the horizon
+already separates the three jobs that one line compressed — **the LRE serves · the Bayesians infer ·
+the Transcript stores**. This seat is the decision half, which is exactly why it can exist before
+any learner data does. The count stays nine: the seat was activated, not added.
+
+### Two flaws the real store caught
+
+The first dry-run against the 70-element paytrans store directed 30 of 70 and read wrong on sight.
+Two genuine defects, both fixed:
+
+1. **A spent harm budget dropped the citation but kept the effect.** `threat_anchor` fired once,
+   recorded `harm:budget_spent` on the next 21 elements — and left them promoted anyway. That is
+   how "never repeat" quietly becomes "repeat without saying so". Budgets are now checked BEFORE a
+   rule fires, so a spent factor withholds the effect, not merely the mention.
+2. **`belief_gap_lead` made 22 elements the "lead".** Weight is scene-relative or it means nothing.
+   An audience rule may now promote at most ONE element per scene, and direction never re-emphasises
+   what the content already emphasises — a scene with twenty assertions has an authoring problem,
+   not a direction problem.
+
+With both fixed the pack is the audience delta and nothing else: **7 of 70**. That emission rule —
+write only what differs from the audience-blind baseline — is what makes the invariance test
+structural rather than aspirational.
+
+A third, smaller finding: the harm budget can be spent on an element that produces NO entry (the
+rule agreed with the content's own weighting), which left `harm:budget_spent` tokens pointing at
+nothing. The spend is now recorded at pack level in `harm_budget`, so the restraint is visible.
+
+### Verified
+
+Every selftest green (cartographer, couturier, realize, griot, voice, arc, objectives, audience,
+direction, responsive_engine, form, instance, socket); lint clean across schemas/vocab/reference/
+tools/agents/architecture; atoms gate PASS; realize → cartographer → couturier for paytrans and
+ast_alsap byte-identical (nothing reads direction yet — by design). The resolver was proven against
+the real 70-element store with `--dry-run`. The schema-graph diagram (PR #63) gained the direction
+node, the vocab chip and five edges; its JS syntax-checks, has no dangling edges, and the new node
+overlaps nothing. Observation for that diagram's next hop, not fixed here: the registry column
+(`r_roles` … `r_glossary`) sits at x 1600–1780 against a 1760-wide viewBox, so those five chips
+overflow by 20px — pre-existing, and not this branch's to silently move.
+
+### Deliberately not done
+
+No direction pack was written into a client project: paytrans has no segment record, the reference
+record's dispositions are SEED values reverse-specified from the course, and planting it as project
+data would let an unearned audience analysis masquerade as a real one. No renderer reads direction
+yet — Couturier reading it as an upstream signal (like tone) is the next hop, and is why every
+projection here is byte-identical. `serve` stays declared and unbuilt.
+
 ## 2026-09-01 (Audience hop one) — The sibling graph gets its schema: the Audience Agent's segment record, seeded from B-sub, `risk_of_overuse` promoted to a gate, and the LRE's Stage-1 "synthetic learner" named as that same record.
 
 *Anchor: branch `drive/audience-model` off `81ce34a` (PR #61). Design conversation 2026-09-01, all
