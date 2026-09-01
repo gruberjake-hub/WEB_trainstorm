@@ -1,0 +1,83 @@
+{
+  "record_id": "seg_bw_paytrans_us_hourly_tenured",
+  "kind": "segment",
+  "schema_version": "audience-model.v0.1",
+  "segment_id": "us_hourly_tenured",
+  "as_of": "2026-09-01T15:00:00-05:00",
+
+  "standing": {
+    "role": "role_hourly_production",
+    "tier": "tier_general_workforce",
+    "experience_level": "proficient",
+    "mastery": [
+      { "objective_id": "obj_bw_emp_pay_factors",     "level": 0.2, "basis": "prior:segment_default" },
+      { "objective_id": "obj_bw_emp_total_rewards",   "level": 0.4, "basis": "audience_analysis:BRUN-PAYTX-2026-08" },
+      { "objective_id": "obj_bw_emp_find_resources",  "level": 0.3, "basis": "prior:segment_default" },
+      { "objective_id": "obj_bw_emp_perf_over_time",  "level": 0.2, "basis": "prior:segment_default" }
+    ],
+    "prior_exposure": ["crs_brunswick_code_of_conduct_2025"]
+  },
+
+  "disposition": {
+    "inhibitors": [
+      { "id": "inh_fear_of_being_underpaid",  "strength": 0.8, "basis": "psykido.inhibitors:seed",
+        "risk_of_overuse": { "level": "high", "basis": "psykido.inhibitors:seed" },
+        "objective_ids": ["obj_bw_emp_pay_factors"] },
+      { "id": "inh_distrust_of_hr_messaging", "strength": 0.6, "basis": "psykido.inhibitors:seed",
+        "risk_of_overuse": { "level": "moderate", "basis": "psykido.inhibitors:seed" } }
+    ],
+    "objections": [
+      { "id": "obj_x_ranges_are_legal_cover", "strength": 0.7, "basis": "psykido.inhibitors:seed",
+        "risk_of_overuse": { "level": "low", "basis": "psykido.inhibitors:seed" } }
+    ],
+    "aligners": [
+      { "id": "aln_fairness_for_my_crew",  "strength": 0.9, "basis": "psykido.motivators:seed",
+        "risk_of_overuse": { "level": "low", "basis": "psykido.motivators:seed" } },
+      { "id": "aln_predictability_of_pay", "strength": 0.7, "basis": "psykido.motivators:seed",
+        "risk_of_overuse": { "level": "low", "basis": "psykido.motivators:seed" },
+        "objective_ids": ["obj_bw_emp_perf_over_time"] }
+    ],
+    "identity_threats": [
+      { "id": "thr_seniority_not_valued", "strength": 0.7, "basis": "psykido.empathy:seed",
+        "risk_of_overuse": { "level": "high", "basis": "psykido.empathy:seed" },
+        "objective_ids": ["obj_bw_emp_pay_factors"] }
+    ],
+    "belief_gaps": [
+      { "id": "gap_midpoint_means_average", "strength": 0.6, "basis": "psykido.meaning:seed",
+        "risk_of_overuse": { "level": "low", "basis": "psykido.meaning:seed" },
+        "objective_ids": ["obj_bw_emp_pay_factors"] }
+    ],
+    "meaning_anchors": [
+      { "id": "mng_know_where_i_stand", "strength": 0.9, "basis": "psykido.meaning:seed",
+        "risk_of_overuse": { "level": "low", "basis": "psykido.meaning:seed" } }
+    ],
+    "rationalization_patterns": [
+      { "id": "rat_everyone_negotiates_anyway", "strength": 0.5, "basis": "psykido.inhibitors:seed",
+        "risk_of_overuse": { "level": "moderate", "basis": "psykido.inhibitors:seed" } }
+    ],
+    "affective_pattern": "aff_defensive"
+  },
+
+  "baselines": {
+    "self_efficacy":    { "value": 0.5, "basis": "prior:segment_default" },
+    "risk_sensitivity": { "value": 0.7, "basis": "psykido.affect:seed" },
+    "identity_safety":  { "value": 0.4, "basis": "psykido.empathy:seed" },
+    "trust":            { "value": 0.4, "basis": "psykido.affect:seed" }
+  },
+
+  "cadence": {
+    "chunk_tolerance": "short",
+    "density_tolerance": "sparse",
+    "preferred_pace": "steady",
+    "interaction_appetite": "medium"
+  },
+
+  "governance": {
+    "version": 1,
+    "status": "draft",
+    "owner": "audience_agent",
+    "generated_by": "seed.manual.v0",
+    "source_hash": "sha256:9c1f2b3a4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8",
+    "reviewer_notes": "Illustrative segment record for the audience-model contract. Objective ids are the live paytrans objectives; role/tier/segment ids and every disposition factor are SEED values reverse-specified from the reference course, not the product of an Audience Agent pass. Status must stay draft until that pass exists."
+  }
+}
