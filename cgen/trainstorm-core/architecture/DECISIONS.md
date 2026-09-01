@@ -2930,3 +2930,45 @@ ast stores byte-identical. Jake's review items: the candidate voice entry, and t
 read aloud in place.
 
 **Supersedes:** nothing. Ten prior 2026-08-31 blocks and the working process stand.
+
+## 2026-09-01 — Audience hop one: the sibling graph's schema. Segment records, seeded from B-sub; `risk_of_overuse` a gate; LRE Stage 1 = a segment enacted as a synthetic learner
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The Audience Agent's write contract exists, and the Learner Response Engine's first
+rung is defined as a one-directional stage that plans against it. Three calls, Jake's:
+
+- **`schemas/audience-model.schema.json`** (audience-model.v0.1) is the learner/audience model —
+  Band B-sub (ADRA S6.1–S6.6 + S7) as a governed record per SEGMENT, written only by the Audience
+  Agent into a project's `audience/<segment_id>.json`, beside `voice/` and `locales/`. It joins the
+  content graph through `obj_` ids only (mastery, factor scope) — never through elements. Every
+  psychological value is a governed id (`vocab/disposition.enum.json`, eight families, closed) +
+  strength + `basis` — a `<source>:<ref>` reason token, never prose, never a confidence.
+- **`risk_of_overuse` is a gate, carried on every factor.** Schema-required; the planner rule
+  (high: acknowledge, never amplify or repeat · moderate: once per course · low: free) is written
+  and will be enforced when the direction planner exists (D10). `tools/validate_audience.py`
+  refuses an approved record whose high-risk factor is unscoped.
+- **Baselines are exactly four — self_efficacy, risk_sensitivity, identity_safety, trust.** The
+  other four candidates (clarity, agreement, intent_to_act, load) are trajectories, not audience
+  properties; a schema that asserted them at design time would be lying. They belong to the
+  scene's learning contract (D9). "No silent-lying schemas" is now a standing test.
+- **`kind: learner` is reserved for the Responsive Engine** and is illegal in any content project
+  store (gate red, not warning). Same shape as `segment`, so the planner cannot tell synthetic
+  from live — that is the hinge of the two-stage LRE (`architecture/lre-stage1-synthetic-learner.md`).
+- **The psychological primitives are reasoning, not content:** never a property of an element or
+  of the audience record; they appear only in a binding's reason trace.
+
+**Why:** The horizon says build the deterministic contract first and prepay for nothing. A synthetic
+learner that fills the same contract a live one will is the cheapest way to exercise the whole
+LRE loop — state → plan → evidence → re-plan — before a human is in it, with every step reviewable.
+
+**Consequences:** Nothing renders differently; no store changes (byte-identical proven). New gate
+in the sweep: `validate_audience.py --selftest` / `--project`. Deferred and named (D1–D10 in the
+design record): direction facet + planner (next design beat: its line against tone and arc), the
+Stage 1.5 traversal loop (different model, adversarially seeded, bounded, evidence flags against a
+contract), `learner-evidence.schema.json`, the scene learning contract, meaning variants,
+`disposition` seeds promoted by an Audience Agent pass, `derived_from` added to element governance.
+
+**Supersedes:** nothing. Extends unification-map §6 step 5 from "begins the frontier" to "first
+rung built." Prior 2026-08-31 blocks and the working process stand — with one process amendment
+recorded in the Project doc `claude/workflow-patch-series.md`: pull the real repo before designing.

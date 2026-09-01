@@ -13,6 +13,74 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-09-01 (Audience hop one) — The sibling graph gets its schema: the Audience Agent's segment record, seeded from B-sub, `risk_of_overuse` promoted to a gate, and the LRE's Stage-1 "synthetic learner" named as that same record.
+
+*Anchor: branch `drive/audience-model` off `81ce34a` (PR #61). Design conversation 2026-09-01, all
+three calls Jake's: (1) the learner-state draft becomes the Audience Agent's write schema rather than
+a sibling; (2) the eight Bayesian latents are SPLIT — four dispositions stay as audience baselines,
+four trajectories leave for the scene's learning contract ("we simply cannot have any silent-lying
+schemas"); (3) the design record is its own architecture doc, not a fold into the horizon.*
+
+### What this hop is
+
+The first rung of `capability_horizon/learner-response-intelligence` — and deliberately the rung the
+horizon itself recommends: a contract, deterministic gates, no inference machinery. Jake's idea
+(recorded in `architecture/lre-stage1-synthetic-learner.md`): develop the LRE in two stages, the
+first one-directional — generate a static course against a SYNTHETIC learner, a segment enacted as a
+persona — so the planner is written against one learner-state contract that a segment record fills
+today and a live learner record fills later. Stage 2 becomes a change of input source, not of
+architecture. The horizon's "remember the future without prepaying for it," made literal.
+
+### What landed
+
+`schemas/audience-model.schema.json` (audience-model.v0.1) — one record per audience segment; the
+unification map's step 5 ("learner/audience model schema seeded from B-sub, `risk_of_overuse`
+promoted to a gate"). `standing` (S1) with mastery keyed by `obj_` ids — the audience model joins
+content through OBJECTIVES, never elements, so a segment survives re-export and is reusable across
+courses; `disposition` (S6.3–S6.6) — every factor a governed id + strength + reason-token `basis` +
+`risk_of_overuse`; `baselines` (S7) — exactly four; `cadence` (S6.2); `governance` with the analysis
+`source_hash`. `kind: learner` is RESERVED for the Responsive Engine and is illegal in a content
+project store — the boundary between the content graph and the learner-data domain is now a gate
+result, not a paragraph. PII-blind by construction: closed properties everywhere, no free text about
+people, `basis` must be a `<source>:<ref>` token (never prose, never a number — the 08-13 rule "a
+reason statement is better than a value," carried into the learner model).
+
+`vocab/disposition.enum.json` (disposition.v0.1) — eight families, one prefix each (`obj_x_` for
+objections because `obj_` is objectives); thirteen `seed` entries reverse-specified from the paytrans
+reference course so the contract is testable; an APPROVED record may not cite a seed.
+
+`tools/validate_audience.py` — schema · vocab · harm gate (an approved record's high-risk factor must
+be scoped to objectives: high means never amplified, so it must say where) · learner-domain boundary
+· objective anchoring · segment_id uniqueness. Selftest proves red twelve ways, including the two
+that matter most: a trajectory variable smuggled into `baselines`, and a learner-kind record in a
+content store. `reference/example_audience_segment.json` passes; project mode is contract-only until
+the Audience Agent pass writes real records into `audience/`.
+
+### What was found on the way
+
+Today's design work began against the Project's filtered snapshot of the repo, and the repo had
+already claimed the territory: the Audience Agent seat, B-sub, the LRE horizon (503 lines, "do not
+prebuild a learner model or inference machinery"), and `tone` + Dramaturge's arc adjacent to the
+still-missing direction axis. Reconciled before anything landed — the process working as designed —
+and a step zero added to the working-process doc: pull the real repo before designing, not just
+before building.
+
+### Verified
+
+All selftests green (cartographer, couturier, realize, griot, voice, arc, objectives, form, instance,
+socket, audience); lint clean on schemas/vocab/reference/tools; atoms gate PASS; realize → cartographer
+→ couturier regenerated for paytrans and ast_alsap: every tracked store byte-identical (this hop
+touches no projection — the new schema has no consumer yet, by design).
+
+### Deferred, named
+
+Ten items in the design record's register — the direction planner and the Stage 1.5 traversal loop
+(a DIFFERENT model enacting the segment, seeded adversarially from its own inhibitors, bounded passes,
+evidence flags against a scene contract rather than deltas on latents), the evidence schema, the
+scene-level learning contract where the four trajectory variables actually live, meaning variants,
+and `risk_of_overuse` planner enforcement. Next design beat: the direction facet and its line against
+tone and arc.
+
 ## 2026-08-31 (Griot hop two) — Griot runs: six tracks bound to the seeded brand voice, and the course captions its own narration. Voice before audio, both reviewable.
 
 *Anchor: branch `drive/griot-performance` off `39d52f4` (Jake's track-acceptance commit). Two
