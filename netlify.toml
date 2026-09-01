@@ -62,3 +62,19 @@
   to = "/cgen/astellas/projects/ast_alsap/realized_lesson.html"
   status = 200
   force = true
+
+# Schema graph — diagram of record for how the trainstorm-core schemas join
+# (architecture/diagrams/schema-graph.html; edges hand-read, stamped with the
+# commit they were read at). Same file-like pattern as /cgen/alsap/coverage:
+# the page loads its vendored d3 by ABSOLUTE path, so no sibling hrefs to keep.
+[[redirects]]
+  from = "/cgen/schema-graph/"
+  to = "/cgen/schema-graph"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cgen/schema-graph"
+  to = "/cgen/trainstorm-core/architecture/diagrams/schema-graph.html"
+  status = 200
+  force = true
