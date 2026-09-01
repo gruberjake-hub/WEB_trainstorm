@@ -13,6 +13,48 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-09-01 (open-project warrant) — Jake's open-project ID workflow seated in the named seats, not in Headwater. Two front doors; unreachable LOs are a terminal; Case-Author mint gated; outcomes-mode stays parked. Stub only — no Python, no UI.
+
+*Anchor: branch `cursor/open-project-warrant-2b51` off `a2e6655` (PR #64, direction hop). Jake
+2026-09-01: the tried-and-true process for an **open project** (vast messy corpus; there may
+or may not be reachable learning objectives that support the business goal) must live in the
+named seats, not in Headwater. Claude is a co-builder. Working-process DECISIONS block
+untouched. Do not implement a Strategist agent, Case-Author tool, workbench UI, Headwater
+outcomes-mode, chameleon.py, or LRE.*
+
+### What this hop is
+
+A constitution seating, in the chameleon-stub genre. The species already exists: roster
+Strategist ("No warrant, no project"), `goal.schema.json` (reachability REQUIRED), Designer
+lock-before-teaches (roster + Brunswick 2026-08-31 objective-lock), Headwater Direct vs
+Case-Author already in the specialization. This hop names the **two front doors** so an open
+corpus cannot share a plug-and-play upload with an SOP-course, and it gates Case-Author mint
+on a held warrant (or a recorded Direct escape). It does not stand up the agent.
+
+### Two doors
+
+- **Direct (SOP-course):** one bounded SOP/form; the document *is* the syllabus; Headwater
+  Direct mints. Existing mode, not rewritten.
+- **Open-project dossier:** Strategist asks whether a `goal_` with a measure a learning
+  intervention could plausibly move exists. If LOs cannot support the goal, that is a
+  **valid terminal** (no course, or not this course) — do not invent objectives to save the
+  project. Draft `goal_` / dossier as `proposed`; a human ratifies. Designer writes `obj_`
+  that `serves` a **validated** goal; lock before `teaches` binds; no lock without a human.
+  Audience gleans design-time segments from the corpus (no PII; later Authoring-Chameleon
+  input; not LRE). Headwater Case-Author stage 1 emits a committed-design artifact (not
+  atoms); stage 2 mint wakes only when that artifact is validated **and** a warrant is held,
+  or an explicit SOP-course Direct escape is recorded. Headwater still writes only meaning +
+  object + source-type.
+
+Headwater outcomes-mode stays parked. This is not Headwater writing LOs.
+
+### What landed
+
+`agents/strategist/warrant_STUB.md` (wake, writes, no-warrant terminal, HITL propose→accept;
+no `strategist.py`). One Case-Author mint sentence in the Headwater specialization. One
+DECISIONS block. One STRUCTURE tree line; First moves do not claim a tool. One roster pointer
+at the stub. No store, player, realize, voice, or beats change.
+
 ## 2026-09-01 (schema graph) — A diagram of record for how the schemas join, hosted at `/cgen/schema-graph`. Hand-read edges, stamped; a derived generator named, not built.
 
 *Anchor: branch `drive/schema-graph` off `8b349d9` (Audience hop one merge). Jake's ask: "visualize

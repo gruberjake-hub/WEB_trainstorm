@@ -64,12 +64,16 @@ in two stages, and the coupling between them is a durable artifact in the graph,
    is not deleted — it simply never crosses into the graph and stays in the source store.
 2. **Mint.** From the committed design, decompose the selected material into atoms exactly as Direct mode
    would, each atom stamped `derived_from` its source. The mint stage **wakes on the committed-design
-   artifact existing and being validated** — for the beta, a human reviews the committed design and
-   triggers the mint. You never *pass* anything from stage 1 to stage 2; stage 1 leaves a durable
-   artifact, stage 2 wakes on it.
+   artifact existing and being validated, and a warrant held** (a human-ratified `goal_` whose
+   `reachability` records that a learning intervention can move the measure) **or** an explicit
+   SOP-course Direct escape recorded for this corpus — for the beta, a human reviews the committed
+   design and triggers the mint. You never *pass* anything from stage 1 to stage 2; stage 1 leaves a
+   durable artifact, stage 2 wakes on it. You still write only meaning + object + source-type. You do
+   not mint `goal_`, `obj_`, or audience. Headwater outcomes-mode is not this gate and stays parked.
 
-Direct fires only the mint. Case-Author fires scope-commit → (durable artifact) → mint. Both stages are
-still you, writing your same three facets under your same rules.
+Direct fires only the mint. Case-Author fires scope-commit → (durable artifact) → mint, and mint
+additionally requires the held warrant or the recorded Direct escape. Both stages are still you,
+writing your same three facets under your same rules.
 
 ## Route by source type
 

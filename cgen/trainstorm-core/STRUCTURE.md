@@ -109,6 +109,7 @@ trainstorm-core/
 │   ├── alsap_builder/                    ✅ Amanuensis — proposes into `instance`; dispatched 2026-08-20
 │   │   └── 07_examples/dispatch_2026-08-20/findings.md   ✅ first live dispatch record
 │   ├── couturier/ · griot/ · chameleon/  ✅ Couturier v1 writes style; chameleon is a stub (authoring in-scope as contract, runtime/LRE do not build; no chameleon.py)
+│   ├── strategist/                       ⬜ stub contract (`warrant_STUB.md`); no strategist.py — open-project warrant (DECISIONS 2026-09-01)
 │   ├── localize/                         ✅ Dragoman — ⚠ flat `system.md` still un-`git rm`'d
 │   ├── ingest-decompose/                 ⚠ predecessor of headwater_ingest; folder already absent — retire or merge still named
 │   ├── cartographer/                     ✅ prompt + heuristic_v1.md; tools/cartographer.py writes occurrence intent
@@ -293,7 +294,8 @@ sequence, form BR present, and the ASP-9999 instance example are already decided
 re-litigate. The **course half beyond Realizer / Cartographer / Couturier v1** has landed the
 post-2026-08-26 hops below (cite `architecture/DECISIONS.md` dates). Dragoman and `tools/render/`
 PNG pipelines are unbuilt. Authoring Chameleon stays a contract (assumed-audience facets); there is
-no `chameleon.py`.
+no `chameleon.py`. The open-project warrant lives as a stub (`agents/strategist/warrant_STUB.md`);
+there is no `strategist.py`.
 
 Near-term, in dependency order:
 
@@ -371,7 +373,8 @@ goals/objectives that are still `status: example`.
 outcomes-mode; LLM distractor-writer; pretty `/cgen/{client}/{course}` URLs; `/cgen/alsap`
 rewrite; slide-authoring frontend; ingest UI on the static Netlify site; ISO 14971; Procedure B
 on ALSAP; Generator's divergent distractors; Strategist / Designer / Audience as live agents
-(outcomes-course warrant path). Authoring Chameleon stays a contract.
+(open-project warrant is a stub contract, not a tool — `agents/strategist/warrant_STUB.md`; no
+`strategist.py`). Authoring Chameleon stays a contract.
 
 `project/custom_instructions.md` now points at this file and `architecture/DECISIONS.md`.
 `architecture/unification-map.md` still names `element.schema.json` as canon in July prose —

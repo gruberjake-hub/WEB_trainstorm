@@ -3056,3 +3056,70 @@ D1 meaning variants, D5 promoting seed dispositions by a real Audience Agent pas
 `claude/design-beat-direction.md` (drafted the beat, now superseded by
 `architecture/direction-facet.md`). Extends the 2026-09-01 audience block. Prior blocks and the
 working process stand.
+
+## 2026-09-01 — Open-project warrant seated: two front doors; unreachable LOs are a terminal; Case-Author mint gated; Headwater outcomes-mode stays parked
+
+**Signed:** Jake / Claude / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Jake's open-project instructional-design workflow (vast messy corpus; learning
+objectives that support the business goal may or may not be reachable) lives in the **named
+seats**, not in Headwater. This hop seats the contract. It does not stand up a Strategist
+agent, a Case-Author tool, a workbench UI, Headwater outcomes-mode, `chameleon.py`, or LRE.
+
+**Two front doors, recorded. Do not share a plug-and-play upload.**
+
+| Door | When | Who fires |
+|---|---|---|
+| **Direct (SOP-course)** | one bounded SOP/form; the document *is* the syllabus | Headwater Direct — mint. Existing mode. Unchanged this hop. |
+| **Open-project dossier** | messy corpus; LOs that support the goal may or may not be reachable | Strategist warrant first → Designer `obj_` on a **validated** goal → Headwater Case-Author mint only when committed-design is validated **and** a warrant is held (or an explicit SOP-course Direct escape is recorded). |
+
+**Seats (quoted, not a new species):**
+
+1. **Strategist** — first act is the warrant. Roster: *"does a `goal_` node exist — a business
+   outcome, with a measure, that an intervention could plausibly move? No warrant, no
+   project."* Unification-map OPEN-06: warrant gate is *"its first act."* `goal.schema.json`
+   already requires `label`, `measure`, and `reachability` (*"If nothing here is true, the
+   project should not exist"*). If LOs cannot support the goal, that is a **valid terminal**
+   (no course, or not this course). Do not invent objectives to save the project. Writes
+   draft `goal_` / dossier only as `proposed`; a human ratifies. No PII. Stub:
+   `agents/strategist/warrant_STUB.md`, same genre as
+   `agents/chameleon/chameleon_STUB.md` (*"This is not an operating prompt and not
+   an agent"*). No `strategist.py`.
+2. **Audience** — design-time segments gleaned from the corpus (no PII). Later input to
+   Authoring Chameleon. Not LRE / runtime Chameleon.
+3. **Designer** — `obj_` that `serves` a **validated** goal. Lock before `teaches` binds.
+   Roster: *"Objectives never lock without a human conversation; she insists on it."*
+   Brunswick objective-lock (this file, 2026-08-31): *"`validated` here means the warrant
+   holds for building"*; *"Hop three may bind `teaches` against validated objectives."*
+   No lock without a human.
+4. **Headwater Direct** — one bounded SOP/form; document is syllabus; mint. Existing mode
+   in `agents/headwater_ingest/02_system_prompts/core_agent/headwater_system_prompt.md`
+   (*"Input is one artifact whose whole content is in scope: a single SOP, a single form.
+   There is no selection to make; everything in the source becomes canon. Go straight to
+   the mint."*). Direct is not rewritten.
+5. **Headwater Case-Author** — messy corpus. Stage 1 scope-commit emits a
+   **committed-design** artifact (not atoms). Stage 2 mint wakes only when that artifact is
+   validated **and** a warrant is held (or an explicit SOP-course Direct escape is
+   recorded). Headwater still writes only meaning + object + source-type. It does not mint
+   `goal_` or `obj_` or audience.
+
+Headwater **outcomes-mode** stays parked and is not this. This is Strategist / Designer /
+Case-Author coupling, not Headwater writing LOs.
+
+**Why:** An open corpus is not an SOP. Treating it as a plug-and-play upload would skip the
+warrant and invent objectives to save the project — the failure the schema, the roster, and
+the Brunswick lock already name. Direct remains the SOP-course door; the dossier is the
+other door.
+
+**Consequences:**
+- Stub contract only. No Python, no UI, no store writes. `/cgen`, `/cgen/sl`, ALSAP,
+  artwork, paytrans, realize, voice, and beats are untouched.
+- Case-Author mint in the Headwater specialization gains the warrant / Direct-escape gate.
+  Direct mode text is unchanged. No Case-Author tool.
+- Claude is a co-builder: this hop does not freeze them out of Headwater, ontology, or later
+  agent prompts.
+- Working-process block (this file, 2026-08-25) is untouched.
+
+**Supersedes:** nothing. Seats the roster Strategist / Designer / Audience bios and the
+existing Headwater Direct / Case-Author modes; does not replace them. Headwater
+outcomes-mode remains parked. Prior blocks and the working process stand.
