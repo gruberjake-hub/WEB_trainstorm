@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/direction.pack.schema.json",
+  "title": "Direction pack — one audience segment's experiential direction for one project",
+  "description": "The third coordinate of the rendering space. Locale packs key a rendering by LANGUAGE, voice packs by REGISTER; a direction pack keys one by AUDIENCE SEGMENT. It carries no words and no styles: for each element it records WEIGHT (what is load-bearing here) and TEMPO (how it should arrive) — the two things that vary per segment while meaning, tone and arc stay fixed. Written by the Responsive Engine in `resolve` mode (design-time batch) into `direction/<segment_id>.json`; read by Couturier as an upstream signal for primitive selection, never as a primitive itself. TWO PINS govern every entry: `source_hash` pins the ELEMENT's meaning (meaning moved ⇒ the direction decision is stale), and the pack-level `audience_ref.source_hash` pins the segment record it was resolved against (the audience analysis moved ⇒ every binding in the pack is stale). Every entry must carry a non-empty `reason` trace of governed tokens: a binding that cannot say why it exists cannot be reviewed, and review is what licenses the runtime policy later. NO PII: the pack names a segment, never a person; `lrn_`-scoped packs do not exist at this stage.",
+  "type": "object",
+  "required": ["pack_version", "segment_id", "audience_ref", "entries"],
+  "additionalProperties": false,
+  "properties": {
+    "pack_version": { "type": "string", "const": "direction.v0.1" },
+    "segment_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The audience segment this pack directs for. Matches the segment record's `segment_id` and the values elements carry in `audience.segment_scope[]`."
+    },
+    "audience_ref": {
+      "type": "object",
+      "description": "The pin to the segment record this pack was resolved against. Its source_hash is the record's governance.source_hash at resolve time.",
+      "required": ["record_id", "source_hash"],
+      "additionalProperties": false,
+      "properties": {
+        "record_id": { "type": "string", "pattern": "^seg_[A-Za-z0-9_-]+$", "description": "Segment records only. `lrn_` is the Responsive Engine's reserved runtime shape and never appears in a design-time pack." },
+        "source_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+      }
+    },
+    "resolved_by": {
+      "type": "object",
+      "description": "Provenance of the resolve pass. The pack is a derived artifact — regenerating it from the same inputs must produce the same bytes.",
+      "required": ["tool", "policy"],
+      "additionalProperties": false,
+      "properties": {
+        "tool": { "type": "string", "examples": ["tools/responsive_engine.py"] },
+        "policy": { "type": "string", "description": "The rule-set version the resolver ran.", "examples": ["direction_v1"] },
+        "mode": { "type": "string", "enum": ["resolve"], "description": "Only the design-time batch mode writes packs. The `serve` mode is declared and not live; when it is, it resolves per learner and materializes nothing." },
+        "resolved_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "harm_budget": {
+      "type": "object",
+      "description": "Where each high/moderate `risk_of_overuse` factor spent its one permitted acknowledgement. Recorded at pack level because the spend can land on an element that produces no entry (the audience rule agreed with the content's own weighting, so there was no delta to write) — without it, `harm:budget_spent` tokens would point at nothing and the restraint would be invisible to a reviewer.",
+      "propertyNames": { "pattern": "^(inh|obj_x|aln|thr|gap|mng|rat)_[A-Za-z0-9_-]+$" },
+      "additionalProperties": {
+        "type": "object",
+        "required": ["level", "spent_on"],
+        "additionalProperties": false,
+        "properties": {
+          "level": { "type": "string", "enum": ["high", "moderate"] },
+          "spent_on": { "type": "string", "pattern": "^ele_[A-Za-z0-9_]+$" }
+        }
+      }
+    },
+    "entries": {
+      "type": "object",
+      "description": "element_id → direction binding. One binding per element this pack directs; elements with nothing segment-specific to say may be omitted (absence means 'no direction', not 'default written down').",
+      "propertyNames": { "pattern": "^ele_[A-Za-z0-9_]+$" },
+      "additionalProperties": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "required": ["weight", "tempo", "reason", "source_hash", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "weight": { "type": "string", "enum": ["anchor", "lead", "support", "aside"], "description": "Governed by vocab/direction.enum.json · dimensions.weight." },
+        "tempo": { "type": "string", "enum": ["brisk", "measured", "dwell", "progressive"], "description": "Governed by vocab/direction.enum.json · dimensions.tempo." },
+        "reason": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Why this binding exists — an ordered trace of short governed tokens, never prose and never a confidence value (2026-08-13: 'a reason statement is better than a value; the point is human reviewability'). At least one token is required: an unexplained binding cannot be reviewed.",
+          "items": {
+            "type": "string",
+            "pattern": "^(rule|factor|baseline|cadence|mastery|harm):[A-Za-z0-9_.<>=→-]+$",
+            "examples": ["rule:intent_default", "factor:thr_seniority_not_valued", "baseline:identity_safety<0.5", "cadence:chunk_tolerance=short", "mastery:obj_bw_emp_pay_factors<0.3", "harm:high→clamped"]
+          }
+        },
+        "cites": {
+          "type": "array",
+          "description": "The audience-factor ids this binding acted on, extracted from the reason trace so the harm budget is checkable without parsing prose. Governed disposition ids.",
+          "items": { "type": "string", "pattern": "^(inh|obj_x|aln|thr|gap|mng|rat)_[A-Za-z0-9_-]+$" }
+        },
+        "source_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$", "description": "The element's meaning anchor at resolve time. Moved ⇒ this binding is STALE." },
+        "status": { "type": "string", "enum": ["proposed", "accepted"], "description": "The Responsive Engine writes `proposed`; a human accepts by flipping to `accepted` (the beats/scenes pattern). In Stage 1 a human accepts BINDINGS; the accepted corpus is what will later license accepting a POLICY, which is the only way the discipline survives a runtime with no human in the loop." },
+        "reviewer": { "type": "string", "description": "Required on an accepted binding." }
+      },
+      "allOf": [
+        { "if": { "properties": { "status": { "const": "accepted" } }, "required": ["status"] },
+          "then": { "required": ["reviewer"] } }
+      ]
+    }
+  }
+}

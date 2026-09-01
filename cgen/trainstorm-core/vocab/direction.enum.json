@@ -1,0 +1,52 @@
+{
+  "vocabulary_version": "direction.v0.1",
+  "status": "draft_for_build",
+  "owner": "responsive_engine",
+  "description": "Governed DIRECTION vocabulary — the two axes of experiential direction the Responsive Engine binds per audience segment: WEIGHT (within a scene, what is load-bearing and what is subordinate — where attention lands first) and TEMPO (dwell and disclosure — how fast it arrives and whether it arrives whole). Written into direction packs (schemas/direction.pack.schema.json), keyed by element_id, one pack per segment. Read by Couturier as an upstream signal for primitive selection, exactly as tone and intent are read — direction DECIDES, expression REALIZES.",
+  "governance": {
+    "closed_list": true,
+    "rule": "A direction pack may only use ids defined here. A new value requires an entry + version bump — tools/validate_direction.py rejects anything else. Every value must name at least one resolver rule that can PRODUCE it: a value no rule produces is dead vocabulary and does not ship (this is why `pivot` was considered and withheld, below).",
+    "the_test": "Tone, arc and expression are AUDIENCE-INVARIANT — an empathetic statement is empathetic for every segment, a closure beat falls in the same place for everyone, and Couturier dresses the occurrence blind to audience. Direction is the one thing that varies per segment while meaning, tone and arc stay fixed. If a proposed field would be set identically for every segment, it is not direction: it belongs to tone, arc, or expression."
+  },
+  "boundaries": {
+    "not_tone": "tone.enum.json is the affective FEEL the content itself carries (neutral, confident, empathetic, urgent …), authored once by the Designer and identical for every segment. Direction may not restate it.",
+    "not_arc": "beats.catalog.schema.json (Dramaturge) owns the course's supra-atomic form — welcomes, closures, transitions — keyed by PLACEMENT and content-free. Pacing BETWEEN scenes is arc (see the `pacing_interlude` wake); tempo here is pacing WITHIN an element's delivery.",
+    "not_expression": "primitives.registry.json (Couturier) owns how a decision is rendered: `progressive` says the content should arrive in parts; whether that is a REVEAL_GRID or a staged fade is Couturier's call. Likewise GATING (progression waiting on learner action) is expression — it lives on intent_sidecar.gating and the interaction primitive, and is deliberately NOT a tempo value.",
+    "dissolved": "Five values from the 2026-08 'treatment' vocabulary were tested against the spine and dissolved into facets that already own them: assessment-beat → pedagogical intent + interaction_primitive; contrast-frame → the `distinction` script primitive + a two-column layout; interaction-prompt → expression.interaction_primitive; emphasis-beat → tone + rhetorical `persuade`; scene-to-scene pacing → Dramaturge's arc.",
+    "no_scene_level": "There is deliberately NO scene-level direction enum. A scene's character is the aggregate of its elements' weight and tempo; a second vocabulary describing the same thing one level up would drift against the first."
+  },
+  "dimensions": {
+    "weight": {
+      "field": "direction pack entry `weight`",
+      "description": "Within its scene: what this element is FOR, attentionally. Not importance-in-general (that is intent) — salience in this delivery, for this segment.",
+      "values": [
+        { "id": "anchor",  "label": "Anchor",  "status": "specified", "definition": "Grounds and stabilises before the claim lands — orienting or safety-making material that makes the rest receivable. Promoted for segments low in identity_safety or trust.", "produced_by": ["rule:intent_default", "rule:threat_anchor"] },
+        { "id": "lead",    "label": "Lead",    "status": "specified", "definition": "The load-bearing claim of the scene. Attention should land here first and stay longest.", "produced_by": ["rule:intent_default", "rule:belief_gap_lead"] },
+        { "id": "support", "label": "Support", "status": "specified", "definition": "Elaborates or evidences the lead. Subordinate by design; carries no independent claim on attention.", "produced_by": ["rule:intent_default", "rule:harm_clamp"] },
+        { "id": "aside",   "label": "Aside",   "status": "specified", "definition": "Enrichment the learner may pass over without loss — bridging, sourcing, or optional colour. First thing to shed when the segment's density tolerance is low.", "produced_by": ["rule:intent_default", "rule:density_shed"] }
+      ],
+      "withheld": [
+        { "id": "pivot", "reason": "Considered (the element where a scene turns) and withheld: no resolver rule produces it yet, and the governance rule above forbids shipping vocabulary nothing can write. Re-propose with a rule and a version bump." }
+      ]
+    },
+    "tempo": {
+      "field": "direction pack entry `tempo`",
+      "description": "How the element's content should arrive in time: dwell, and whether it discloses whole or in parts.",
+      "values": [
+        { "id": "brisk",       "label": "Brisk",       "status": "specified", "definition": "Minimal dwell — deliver and move. For material this segment already holds, or that carries no load.", "produced_by": ["rule:known_brisk"] },
+        { "id": "measured",    "label": "Measured",    "status": "specified", "definition": "The default pace. No special handling.", "produced_by": ["rule:intent_default", "rule:harm_clamp"] },
+        { "id": "dwell",       "label": "Dwell",       "status": "specified", "definition": "Hold — give the learner time before moving on. For material that is new AND consequential to a segment with low self-efficacy. Never applied to a high-risk factor (see harm clamp).", "produced_by": ["rule:low_efficacy_dwell"] },
+        { "id": "progressive", "label": "Progressive", "status": "specified", "definition": "Discloses in parts rather than at once. For sets larger than the segment's chunk tolerance. Says THAT it comes in parts; Couturier decides HOW.", "produced_by": ["rule:cadence_chunk"] }
+      ]
+    }
+  },
+  "harm_clamp": {
+    "description": "The D10 enforcement of `risk_of_overuse`, the roster's one hard ethical rule (unification-map §2: a gate in the join, not a note in the margin). A direction binding that CITES an audience factor is constrained by that factor's risk level.",
+    "rules": {
+      "high": "Acknowledge, never amplify, never repeat: a binding citing a high-risk factor may not carry weight `lead` or tempo `dwell`, and the factor may be cited at most ONCE per pack.",
+      "moderate": "Once per course: the factor may be cited at most ONCE per pack; no weight/tempo restriction.",
+      "low": "No constraint."
+    },
+    "enforced_by": "tools/validate_direction.py (gate) and tools/responsive_engine.py (the resolver clamps before it writes, and records `harm:` in the reason trace when it does)."
+  }
+}
