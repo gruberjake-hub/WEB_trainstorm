@@ -15,14 +15,16 @@ This gate is the bookkeeping that makes the mint-wake condition real rather than
     TERMINAL      — an unreachable-LO goal (empty trainable slice) is not a held warrant;
                     status=validated against it is not mint-ready.
 
-What it does NOT do: write a committed-design, mint atoms, or stand up a Case-Author tool.
+What it does NOT do: write a committed-design, mint atoms, or promote proposed→validated.
+The propose writer is tools/headwater_case_author.py; the only promoter is the human-run
+tools/committed_design_accept.py --by. Stage-2 mint still does not exist.
 
     python3 tools/validate_committed_design.py --selftest
     python3 tools/validate_committed_design.py --file schemas/committed-design.example.json
     python3 tools/validate_committed_design.py --project ../brunswick/projects/paytrans
 
 With --project and no committed-design document present, the run is a contract-only pass
-(schema compiles) and says so — live designs are optional until a writer hop lands.
+(schema compiles) and says so — live client designs are optional (fixture-only this hop).
 """
 import argparse, json, re, sys
 from jsonschema import Draft202012Validator
@@ -40,13 +42,6 @@ schema_p = P["schemas_dir"] / "committed-design.schema.json"
 if not schema_p.exists():
     raise SystemExit(f"not found: {schema_p}")
 schema = json.loads(schema_p.read_text(encoding="utf-8"))
-
-results = []
-try:
-    Draft202012Validator.check_schema(schema)
-    results.append(("committed-design.schema is valid Draft 2020-12", True, ""))
-except Exception as e:
-    results.append(("committed-design.schema is valid Draft 2020-12", False, str(e)))
 V = Draft202012Validator(schema)
 
 AGENT_SHAPED = re.compile(
@@ -100,7 +95,15 @@ def trainable_substance(goal):
     return isinstance(trainable, str) and bool(trainable.strip())
 
 
-def gate_doc(name, doc, goals_by_id=None):
+def schema_compile_row():
+    try:
+        Draft202012Validator.check_schema(schema)
+        return ("committed-design.schema is valid Draft 2020-12", True, "")
+    except Exception as e:
+        return ("committed-design.schema is valid Draft 2020-12", False, str(e))
+
+
+def gate_doc(name, doc, results, goals_by_id=None):
     """Append results for one committed-design dict. goals_by_id is optional {goal_id: goal}."""
     errs = sorted(V.iter_errors(doc), key=lambda e: list(e.path))
     results.append((f"{name}: validates against schema", not errs,
@@ -178,139 +181,151 @@ def report(rows):
     return ok
 
 
-if args.selftest:
-    GOALS = {
-        "goal_fx_held": {
-            "label": "Operators follow the work instruction without inventing steps.",
-            "measure": "Audit count of skipped-step incidents on the procedure.",
-            "reachability": {
-                "trainable": "Knowing the steps and the verification gate.",
-                "not_trainable": ["Staffing on the line."],
-                "assessed_by": "role_ops_lead",
-            },
-            "status": "validated",
-        },
-        "goal_fx_terminal": {
-            "label": "Reduce complaints 20%.",
-            "measure": "Monthly complaint volume.",
-            "reachability": {
-                "trainable": "",
-                "not_trainable": ["Process, staffing, incentives."],
-                "assessed_by": "role_ops_lead",
-            },
-            "status": "validated",
-        },
-    }
-    good = {
-        "schema_version": "committed-design.v0.1",
-        "store": "committed-design",
-        "design_id": "cd_fx_selftest",
-        "version": 1,
-        "status": "proposed",
-        "client": "fx",
-        "project": "selftest",
-        "proposed_by": "headwater.case_author",
-        "derived_from": {
-            "source_store": "fx/projects/selftest/source",
-            "inventory_refs": [{"id": "doc_fx_sop", "registry": "docs"}],
-        },
-        "selection": {
-            "in_scope": [{"id": "doc_fx_sop", "registry": "docs"}],
-            "left_in_source_store": [],
-        },
-        "framing": {"shape": "One bounded SOP: mint the procedure and its steps."},
-        "warrant_join": {"kind": "held_warrant", "goal_id": "goal_fx_held"},
-    }
-    n0 = len(results)
-    gate_doc("fixture(good)", good, GOALS)
-    results.append(("selftest: clean fixture passes every check",
-                    all(ok for _, ok, _ in results[n0:]), ""))
-
-    escape = json.loads(json.dumps(good))
-    escape["warrant_join"] = {
-        "kind": "direct_escape",
-        "escape_kind": "sop_course",
-        "recorded_by": "jake",
-        "rationale": "This pile is one bounded SOP; the document is the syllabus.",
-    }
-    n1 = len(results)
-    gate_doc("fixture(escape)", escape, GOALS)
-    results.append(("selftest: Direct-escape fixture passes",
-                    all(ok for _, ok, _ in results[n1:]), ""))
-
-    def red(label, mutate, goals=None):
-        doc = json.loads(json.dumps(good))
-        g = json.loads(json.dumps(GOALS if goals is None else goals))
-        mutate(doc, g)
-        hold = results[:]
-        del results[:]
-        gate_doc("fixture(red)", doc, g)
-        caught = any(not ok for _, ok, _ in results)
-        del results[:]
-        results.extend(hold)
-        results.append((label, caught, "" if caught else "mutation was NOT caught"))
-
-    red("selftest: missing warrant-and-escape is caught",
-        lambda d, g: d.pop("warrant_join"))
-    red("selftest: status=validated without human-shaped reviewer is caught",
-        lambda d, g: d.update(status="validated", reviewer="headwater.case_author"))
-    red("selftest: smuggled atom meaning is caught",
-        lambda d, g: d.update(meaning={"source_locale": "en",
-                                       "source_text": "the whole corpus dumped here"}))
-    red("selftest: atom_ id on the design node is caught",
-        lambda d, g: d.update(design_id="atom_fx_smuggled"))
-    red("selftest: unreachable-LO terminal is not validated for mint",
-        lambda d, g: d.update(status="validated", reviewer="jake",
-                              warrant_join={"kind": "held_warrant",
-                                            "goal_id": "goal_fx_terminal"}))
-
-    sys.exit(0 if report(results) else 1)
+def gate_passes(doc, goals_by_id=None):
+    """True iff every gate_doc check for this document passes. Importable; writes nothing."""
+    rows = []
+    gate_doc("gate", doc, rows, goals_by_id)
+    return all(ok for _, ok, _ in rows), rows
 
 
-# --file: gate one document (the schema example, or a draft). No live goal store required
-# unless ontology/goals.json is present AND the join is held_warrant — then join it.
-if args.file:
-    path = __import__("pathlib").Path(args.file)
-    if not path.exists():
-        raise SystemExit(f"not found: {path}")
-    doc = json.loads(path.read_text(encoding="utf-8"))
+def _load_goals_for(doc):
     goals = None
     goals_p = P["schemas_dir"].parent / "ontology" / "goals.json"
     if goals_p.exists() and (doc.get("warrant_join") or {}).get("kind") == "held_warrant":
         store = json.loads(goals_p.read_text(encoding="utf-8"))
-        # example/fixture goal_ ids are not in the live ontology — only join when present
         gid = (doc.get("warrant_join") or {}).get("goal_id")
         if gid in store.get("goals", {}):
             goals = store["goals"]
-    gate_doc(path.name, doc, goals)
+    return goals
+
+
+def main():
+    results = [schema_compile_row()]
+
+    if args.selftest:
+        GOALS = {
+            "goal_fx_held": {
+                "label": "Operators follow the work instruction without inventing steps.",
+                "measure": "Audit count of skipped-step incidents on the procedure.",
+                "reachability": {
+                    "trainable": "Knowing the steps and the verification gate.",
+                    "not_trainable": ["Staffing on the line."],
+                    "assessed_by": "role_ops_lead",
+                },
+                "status": "validated",
+            },
+            "goal_fx_terminal": {
+                "label": "Reduce complaints 20%.",
+                "measure": "Monthly complaint volume.",
+                "reachability": {
+                    "trainable": "",
+                    "not_trainable": ["Process, staffing, incentives."],
+                    "assessed_by": "role_ops_lead",
+                },
+                "status": "validated",
+            },
+        }
+        good = {
+            "schema_version": "committed-design.v0.1",
+            "store": "committed-design",
+            "design_id": "cd_fx_selftest",
+            "version": 1,
+            "status": "proposed",
+            "client": "fx",
+            "project": "selftest",
+            "proposed_by": "headwater.case_author",
+            "derived_from": {
+                "source_store": "fx/projects/selftest/source",
+                "inventory_refs": [{"id": "doc_fx_sop", "registry": "docs"}],
+            },
+            "selection": {
+                "in_scope": [{"id": "doc_fx_sop", "registry": "docs"}],
+                "left_in_source_store": [],
+            },
+            "framing": {"shape": "One bounded SOP: mint the procedure and its steps."},
+            "warrant_join": {"kind": "held_warrant", "goal_id": "goal_fx_held"},
+        }
+        n0 = len(results)
+        gate_doc("fixture(good)", good, results, GOALS)
+        results.append(("selftest: clean fixture passes every check",
+                        all(ok for _, ok, _ in results[n0:]), ""))
+
+        escape = json.loads(json.dumps(good))
+        escape["warrant_join"] = {
+            "kind": "direct_escape",
+            "escape_kind": "sop_course",
+            "recorded_by": "jake",
+            "rationale": "This pile is one bounded SOP; the document is the syllabus.",
+        }
+        n1 = len(results)
+        gate_doc("fixture(escape)", escape, results, GOALS)
+        results.append(("selftest: Direct-escape fixture passes",
+                        all(ok for _, ok, _ in results[n1:]), ""))
+
+        def red(label, mutate, goals=None):
+            doc = json.loads(json.dumps(good))
+            g = json.loads(json.dumps(GOALS if goals is None else goals))
+            mutate(doc, g)
+            scratch = []
+            gate_doc("fixture(red)", doc, scratch, g)
+            caught = any(not ok for _, ok, _ in scratch)
+            results.append((label, caught, "" if caught else "mutation was NOT caught"))
+
+        red("selftest: missing warrant-and-escape is caught",
+            lambda d, g: d.pop("warrant_join"))
+        red("selftest: status=validated without human-shaped reviewer is caught",
+            lambda d, g: d.update(status="validated", reviewer="headwater.case_author"))
+        red("selftest: smuggled atom meaning is caught",
+            lambda d, g: d.update(meaning={"source_locale": "en",
+                                           "source_text": "the whole corpus dumped here"}))
+        red("selftest: atom_ id on the design node is caught",
+            lambda d, g: d.update(design_id="atom_fx_smuggled"))
+        red("selftest: unreachable-LO terminal is not validated for mint",
+            lambda d, g: d.update(status="validated", reviewer="jake",
+                                  warrant_join={"kind": "held_warrant",
+                                                "goal_id": "goal_fx_terminal"}))
+
+        sys.exit(0 if report(results) else 1)
+
+    # --file: gate one document (the schema example, or a draft). No live goal store required
+    # unless ontology/goals.json is present AND the join is held_warrant — then join it.
+    if args.file:
+        path = __import__("pathlib").Path(args.file)
+        if not path.exists():
+            raise SystemExit(f"not found: {path}")
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        gate_doc(path.name, doc, results, _load_goals_for(doc))
+        sys.exit(0 if report(results) else 1)
+
+    # --project (or default resolve): contract-only when no design is on disk.
+    try:
+        PP = harness_paths.resolve()
+        proj = PP["project_dir"]
+    except SystemExit:
+        results.append(("no --project / --file — contract-only pass", True,
+                        "schema compiled; pass --selftest, --file, or --project to gate a document"))
+        sys.exit(0 if report(results) else 1)
+
+    candidates = []
+    root = proj / "committed-design.json"
+    if root.exists():
+        candidates.append(root)
+    dd = proj / "committed-design"
+    if dd.is_dir():
+        candidates.extend(sorted(dd.glob("*.json")))
+    if not candidates:
+        results.append(("no committed-design in project — contract-only pass", True,
+                        f"looked at {root} and {dd}"))
+        sys.exit(0 if report(results) else 1)
+
+    goals = None
+    goals_p = P["schemas_dir"].parent / "ontology" / "goals.json"
+    if goals_p.exists():
+        goals = json.loads(goals_p.read_text(encoding="utf-8")).get("goals", {})
+    for p in candidates:
+        gate_doc(p.name, json.loads(p.read_text(encoding="utf-8")), results, goals)
     sys.exit(0 if report(results) else 1)
 
 
-# --project (or default resolve): contract-only when no design is on disk. No writer this hop.
-try:
-    PP = harness_paths.resolve()
-    proj = PP["project_dir"]
-except SystemExit:
-    results.append(("no --project / --file — contract-only pass", True,
-                    "schema compiled; pass --selftest, --file, or --project to gate a document"))
-    sys.exit(0 if report(results) else 1)
-
-candidates = []
-root = proj / "committed-design.json"
-if root.exists():
-    candidates.append(root)
-dd = proj / "committed-design"
-if dd.is_dir():
-    candidates.extend(sorted(dd.glob("*.json")))
-if not candidates:
-    results.append(("no committed-design in project — contract-only pass", True,
-                    f"looked at {root} and {dd}"))
-    sys.exit(0 if report(results) else 1)
-
-goals = None
-goals_p = P["schemas_dir"].parent / "ontology" / "goals.json"
-if goals_p.exists():
-    goals = json.loads(goals_p.read_text(encoding="utf-8")).get("goals", {})
-for p in candidates:
-    gate_doc(p.name, json.loads(p.read_text(encoding="utf-8")), goals)
-sys.exit(0 if report(results) else 1)
+if __name__ == "__main__":
+    main()

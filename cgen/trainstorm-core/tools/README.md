@@ -149,6 +149,24 @@ From `cgen/trainstorm-core`:
 Headwater Case-Author stage-1 contract (`schemas/committed-design.schema.json`). Schema ·
 warrant-or-escape (exactly one) · HITL (`proposed` until a human sets `validated` with a
 human-shaped reviewer) · not-an-atom (`cd_`, no `meaning.source_text`, no occurrence facets)
-· unreachable-LO terminal is not mint-ready. No writer this hop; with no document in the
-project the run is contract-only and says so. Example is under `schemas/`, not a client
+· unreachable-LO terminal is not mint-ready. Example is under `schemas/`, not a client
 store.
+
+## Case-Author stage 1 (propose)
+
+From `cgen/trainstorm-core`:
+
+    python3 tools/headwater_case_author.py --selftest
+    python3 tools/headwater_case_author.py \
+        --inventory reference/example_corpus_inventory.json \
+        --out reference/example_committed_design.json
+    python3 tools/committed_design_accept.py --selftest
+
+Dramaturge pattern: `headwater_case_author.py` proposes a committed-design (`status: proposed`,
+`proposed_by` stamped, never `reviewer`). It reads a corpus inventory (fixture under
+`reference/`), partitions in_scope vs left_in_source_store, requires warrant_join, gates
+with `validate_committed_design` before write, and will not re-litigate an existing design
+at `--out`. `committed_design_accept.py --by` is the only promoter to `validated`; it
+re-runs the gate and refuses unreachable-LO / missing warrant-and-escape / agent-shaped
+`--by`. Stage-2 mint does not exist. Direct-mode `headwater_ingest*.py` scripts are
+untouched. Do not write a live `cd_` into paytrans / ALSAP / artwork this hop.

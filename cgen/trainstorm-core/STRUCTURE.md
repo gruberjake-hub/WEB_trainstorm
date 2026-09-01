@@ -86,7 +86,7 @@ trainstorm-core/
 │   ├── instance.facet.schema.json        ✅ authored overlay on a pinned template (instance.v0.1)
 │   ├── objectives.schema.json            ✅ intent ontology — objective node contract  (v2: serves + bloom)
 │   ├── goal.schema.json                  ✅ business-outcome node — reachability is a REQUIRED gate
-│   ├── committed-design.schema.json      ⬜ Case-Author stage-1 node (selection + framing, `cd_`); contract only — no writer this hop (DECISIONS 2026-09-01)
+│   ├── committed-design.schema.json      ✅ Case-Author stage-1 node (selection + framing, `cd_`); writer is `tools/headwater_case_author.py` (propose-only); mint does not exist (DECISIONS 2026-09-01)
 │   ├── socket.schema.json                ✅ the INTAKE CONTRACT — derived, never authored (socket.v0.1)
 │   ├── template_manifest.schema.json     ✅
 │   ├── visual-asset.schema.json          ✅ one visual asset registry entry
@@ -147,6 +147,8 @@ trainstorm-core/
 ├── reference/                            # ONE clean, validated example of each layer
 │   ├── example_atom.json                 ✅
 │   ├── example_element.json              ✅ occurrence of example_atom (`composed_from`, no authored content)
+│   ├── example_corpus_inventory.json     ✅ Case-Author stage-1 fixture listing (not a live client dump)
+│   ├── example_committed_design.json     ✅ proposed design from that listing (`cd_`; not paytrans)
 │   ├── sample_script.json / .v2.json     ✅
 │   └── brunswick.reference.course.json   ✅ RATIFIED v1 structural (2026-08-31) — a pointer to the paytrans course, never a copy; v2 scope named (voice, Griot, arc, expression)
 │
@@ -158,6 +160,7 @@ trainstorm-core/
 │   ├── headwater_ingest.py / _form.py    ✅ procedure · form ingests
 │   ├── headwater_ingest_artwork.py       ✅ sibling Headwater ingest for `ast_artwork` (SOP-2290); ALSAP ingest untouched
 │   ├── headwater_ingest_paytrans.py      ✅ sibling Headwater ingest for brunswick/paytrans — first expository corpus (2026-08-31)
+│   ├── headwater_case_author.py          ✅ Case-Author stage 1 — proposes committed-design (status proposed); human-run committed_design_accept.py --by is the only promoter; mint does not exist
 │   ├── project_sop_artwork.py            ✅ sibling SOP-2290 projector
 │   ├── store_merge.py                    ✅ the idempotent merge rule — lives once, both ingests import it
 │   ├── resolve_slot.py                   ✅ the walk: one slot → grounding packet (+ sufficiency)
@@ -296,8 +299,8 @@ re-litigate. The **course half beyond Realizer / Cartographer / Couturier v1** h
 post-2026-08-26 hops below (cite `architecture/DECISIONS.md` dates). Dragoman and `tools/render/`
 PNG pipelines are unbuilt. Authoring Chameleon stays a contract (assumed-audience facets); there is
 no `chameleon.py`. The open-project warrant lives as a stub (`agents/strategist/warrant_STUB.md`);
-there is no `strategist.py`. Case-Author stage 1 is a schema (`schemas/committed-design.schema.json`);
-there is no Case-Author writer and no mint this hop.
+there is no `strategist.py`. Case-Author stage 1 writer is `tools/headwater_case_author.py`
+(propose-only); there is no stage-2 mint this hop.
 
 Near-term, in dependency order:
 
@@ -376,7 +379,8 @@ outcomes-mode; LLM distractor-writer; pretty `/cgen/{client}/{course}` URLs; `/c
 rewrite; slide-authoring frontend; ingest UI on the static Netlify site; ISO 14971; Procedure B
 on ALSAP; Generator's divergent distractors; Strategist / Designer / Audience as live agents
 (open-project warrant is a stub contract, not a tool — `agents/strategist/warrant_STUB.md`; no
-`strategist.py`; committed-design is a schema, not a writer — `schemas/committed-design.schema.json`). Authoring Chameleon stays a contract.
+`strategist.py`; Case-Author stage-1 propose is `tools/headwater_case_author.py`; mint does not
+exist). Authoring Chameleon stays a contract.
 
 `project/custom_instructions.md` now points at this file and `architecture/DECISIONS.md`.
 `architecture/unification-map.md` still names `element.schema.json` as canon in July prose —
