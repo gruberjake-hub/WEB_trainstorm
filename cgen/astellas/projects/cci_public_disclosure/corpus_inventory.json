@@ -1,0 +1,79 @@
+{
+  "_note": "Live (synthetic) Astellas CCI Public Disclosure corpus inventory for Case-Author stage 1. Not the example fixture. Not a mint. Inventory ids are pointers — do not smash into cgen/astellas/registry/docs.registry.json (that registry remains the ALSAP-era closed list). Representative remainder, not 114 fake ids, not the 8.6MB dump. Warrant: accepted doss_ast_cci_pd → goal_ast_cci_library_used (goals v5) + four obj_ast_cci_* (objectives v6).",
+  "client": "astellas",
+  "project": "cci_public_disclosure",
+  "source_store": "astellas/projects/cci_public_disclosure/source",
+  "design_id": "cd_ast_cci_pd",
+  "proposed_by": "headwater.case_author",
+  "design_note": "Proposed live (synthetic) committed-design for astellas/cci_public_disclosure — status proposed; not the example fixture; not a mint. QD-nucleus (SOP-AST-29658 / GUIDE-AST-6011 / FORM-AST-35734) plus a short Q1 living-connection frame. Jake accepts with committed_design_accept.py --by jake.",
+  "framing": {
+    "shape": "QD-nucleus SOP-course — SOP-AST-29658 path, GUIDE-AST-6011 CCI/may-be/not including phase, FORM-AST-35734 as the library Asset Leads complete before IND, discloser follow-or-escalate before ship, plus a short Q1 frame from irreversible already-public failures. Not CM, not Helix/tracker/repo/governing body.",
+    "goal_ref": "goal_ast_cci_library_used",
+    "objective_refs": [
+      "obj_ast_cci_public_irreversible",
+      "obj_ast_cci_classify_with_guide",
+      "obj_ast_cci_complete_form_before_ind",
+      "obj_ast_cci_follow_or_escalate"
+    ]
+  },
+  "warrant_join": {
+    "kind": "held_warrant",
+    "goal_id": "goal_ast_cci_library_used",
+    "objective_refs": [
+      "obj_ast_cci_public_irreversible",
+      "obj_ast_cci_classify_with_guide",
+      "obj_ast_cci_complete_form_before_ind",
+      "obj_ast_cci_follow_or_escalate"
+    ]
+  },
+  "entries": [
+    {
+      "id": "doc_sop_ast_29658",
+      "registry": "docs",
+      "kind": "sop",
+      "label": "SOP-AST-29658 — Public Disclosure path (QD nucleus)"
+    },
+    {
+      "id": "doc_guide_ast_6011",
+      "registry": "docs",
+      "kind": "guide",
+      "label": "GUIDE-AST-6011 — CCI / may-be-CCI / not-CCI including phase (QD nucleus)"
+    },
+    {
+      "id": "doc_form_ast_35734",
+      "registry": "docs",
+      "kind": "form",
+      "label": "FORM-AST-35734 — CCI library Asset Leads complete before IND (QD nucleus)"
+    },
+    {
+      "id": "doc_cci_pd_tracking_tool",
+      "registry": "docs",
+      "kind": "deck",
+      "label": "Upcoming Public Disclosure Tracking Tool (not a form; remainder-bin; not in production)"
+    },
+    {
+      "id": "doc_cci_pd_helix_kachi_trigger",
+      "registry": "docs",
+      "kind": "sow",
+      "label": "Helix/Kachi start-trigger design (remainder-bin; not the trainable slice)"
+    },
+    {
+      "id": "doc_cci_pd_ws3_ri",
+      "registry": "docs",
+      "kind": "faq",
+      "label": "WS3 regulatory-intelligence / project-plan remainder (not a course outcome)"
+    },
+    {
+      "id": "doc_cci_pd_connections_note",
+      "registry": "docs",
+      "kind": "talking_points",
+      "label": "Connections / comms note (org-wide CCI literacy is comms, not instruction)"
+    },
+    {
+      "id": "doc_cci_pd_sh_training_guide",
+      "registry": "docs",
+      "kind": "stakeholder",
+      "label": "SH parking-lot training guide — would launder FORM location; leftover kind so the word guide in the label does not pull it in_scope"
+    }
+  ]
+}

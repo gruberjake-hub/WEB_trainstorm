@@ -33,8 +33,11 @@ from validate_committed_design import (
 # Teachable source-types: these may become canon. Everything else stays in the
 # source store (FAQ, decks, SOW, stakeholder comments, talking points, …).
 # Under-claim unknown kinds — never smash the whole corpus into in_scope.
+# 2026-09-01 named bump: "guide" (GUIDE-AST-* is a teachable object; lying that
+# a GUIDE is an SOP is refused). Do not add deck/faq/sow. Version-note in
+# architecture/DECISIONS.md — do not silently extend.
 IN_SCOPE_KINDS = frozenset({
-    "work_instruction", "sop", "procedure", "form", "template",
+    "work_instruction", "sop", "procedure", "form", "template", "guide",
 })
 
 PROPOSED_BY_DEFAULT = "headwater.case_author"
@@ -141,7 +144,7 @@ def propose(inventory, proposed_by=None):
 
     in_scope, left = classify_selection(entries)
     if not in_scope:
-        raise Refuse("nothing in-scope — no work_instruction/sop/procedure/form/template in the listing")
+        raise Refuse("nothing in-scope — no work_instruction/sop/procedure/form/template/guide in the listing")
 
     wj = inventory.get("warrant_join")
     if not wj:
@@ -261,6 +264,35 @@ def selftest():
     results.append(("selftest: audit_proposal is clean on the real proposal",
                     audit_proposal(doc, inv) == [],
                     str(audit_proposal(doc, inv))))
+
+    # Named bump: kind "guide" is in-scope. A GUIDE is not recast as an SOP.
+    # deck/faq/sow stay leftover. A parking-lot "training guide" with a leftover
+    # kind stays left — classify by kind, not by the word "guide" in the label.
+    ginv = json.loads(json.dumps(inv))
+    ginv["entries"] = [
+        {"id": "doc_fx_sop", "registry": "docs", "kind": "sop",
+         "label": "SOP — durable procedure"},
+        {"id": "doc_fx_guide", "registry": "docs", "kind": "guide",
+         "label": "GUIDE — classify with this"},
+        {"id": "doc_fx_parking_guide", "registry": "docs", "kind": "stakeholder",
+         "label": "Parking-lot training guide — would launder FORM location"},
+        {"id": "doc_fx_deck", "registry": "docs", "kind": "deck", "label": "Deck"},
+        {"id": "doc_fx_faq", "registry": "docs", "kind": "faq", "label": "FAQ"},
+        {"id": "doc_fx_sow", "registry": "docs", "kind": "sow", "label": "SOW"},
+    ]
+    gdoc = propose(ginv)
+    g_in = {r["id"] for r in gdoc["selection"]["in_scope"]}
+    g_left = {r["id"] for r in gdoc["selection"]["left_in_source_store"]}
+    results.append(("selftest: kind guide is in_scope (not recast as sop)",
+                    g_in == {"doc_fx_sop", "doc_fx_guide"},
+                    f"in_scope={g_in!r}"))
+    results.append(("selftest: deck/faq/sow and parking-lot training-guide stay left",
+                    g_left == {"doc_fx_parking_guide", "doc_fx_deck",
+                               "doc_fx_faq", "doc_fx_sow"},
+                    f"left={g_left!r}"))
+    results.append(("selftest: deck/faq/sow are not IN_SCOPE_KINDS",
+                    not ({"deck", "faq", "sow"} & IN_SCOPE_KINDS),
+                    f"IN_SCOPE_KINDS={sorted(IN_SCOPE_KINDS)!r}"))
 
     # Direct-escape inventory path (recorded_by already a human; writer copies, does not invent)
     esc = json.loads(json.dumps(inv))

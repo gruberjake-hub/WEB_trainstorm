@@ -1,0 +1,106 @@
+{
+  "_note": "Proposed live (synthetic) committed-design for astellas/cci_public_disclosure — status proposed; not the example fixture; not a mint. QD-nucleus (SOP-AST-29658 / GUIDE-AST-6011 / FORM-AST-35734) plus a short Q1 living-connection frame. Jake accepts with committed_design_accept.py --by jake.",
+  "schema_version": "committed-design.v0.1",
+  "store": "committed-design",
+  "design_id": "cd_ast_cci_pd",
+  "version": 1,
+  "status": "proposed",
+  "client": "astellas",
+  "project": "cci_public_disclosure",
+  "proposed_by": "headwater.case_author",
+  "derived_from": {
+    "source_store": "astellas/projects/cci_public_disclosure/source",
+    "inventory_refs": [
+      {
+        "id": "doc_sop_ast_29658",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_guide_ast_6011",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_form_ast_35734",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_cci_pd_tracking_tool",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_cci_pd_helix_kachi_trigger",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_cci_pd_ws3_ri",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_cci_pd_connections_note",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_cci_pd_sh_training_guide",
+        "registry": "docs"
+      }
+    ]
+  },
+  "selection": {
+    "in_scope": [
+      {
+        "id": "doc_sop_ast_29658",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_guide_ast_6011",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_form_ast_35734",
+        "registry": "docs"
+      }
+    ],
+    "left_in_source_store": [
+      {
+        "id": "doc_cci_pd_tracking_tool",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_cci_pd_helix_kachi_trigger",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_cci_pd_ws3_ri",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_cci_pd_connections_note",
+        "registry": "docs"
+      },
+      {
+        "id": "doc_cci_pd_sh_training_guide",
+        "registry": "docs"
+      }
+    ]
+  },
+  "framing": {
+    "shape": "QD-nucleus SOP-course — SOP-AST-29658 path, GUIDE-AST-6011 CCI/may-be/not including phase, FORM-AST-35734 as the library Asset Leads complete before IND, discloser follow-or-escalate before ship, plus a short Q1 frame from irreversible already-public failures. Not CM, not Helix/tracker/repo/governing body.",
+    "goal_ref": "goal_ast_cci_library_used",
+    "objective_refs": [
+      "obj_ast_cci_public_irreversible",
+      "obj_ast_cci_classify_with_guide",
+      "obj_ast_cci_complete_form_before_ind",
+      "obj_ast_cci_follow_or_escalate"
+    ]
+  },
+  "warrant_join": {
+    "kind": "held_warrant",
+    "goal_id": "goal_ast_cci_library_used",
+    "objective_refs": [
+      "obj_ast_cci_public_irreversible",
+      "obj_ast_cci_classify_with_guide",
+      "obj_ast_cci_complete_form_before_ind",
+      "obj_ast_cci_follow_or_escalate"
+    ]
+  }
+}

@@ -3399,3 +3399,64 @@ the four we can.
 goal, the six `not_trainable` causes, "validated means the warrant holds for building," and
 accept still not writing ontology stores stand.
 
+---
+
+## 2026-09-01 — First live Case-Author stage-1 propose: `cd_ast_cci_pd` (synthetic CCI Public Disclosure); mint still does not exist; human validates
+
+**Signed:** Jake / Claude / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Headwater Case-Author stage 1 wakes on a live (synthetic) corpus for the first
+time. The QD-nucleus inventory at
+`cgen/astellas/projects/cci_public_disclosure/corpus_inventory.json` is proposed to
+`committed-design.json` (`cd_ast_cci_pd`, status `proposed`, `proposed_by`
+`headwater.case_author`) by `tools/headwater_case_author.py`. The agent does not mint atoms,
+does not set `validated`, does not write `reviewer`. Jake accepts after merge:
+`python tools\committed_design_accept.py --file … --by jake`. Stage-2 mint still does not
+exist.
+
+- **Writer bump (named, not silent):** `IN_SCOPE_KINDS` adds `guide`. GUIDE-AST-6011 is
+  in_scope because `obj_ast_cci_classify_with_guide` requires it; lying that a GUIDE is an
+  SOP is refused. `deck` / `faq` / `sow` / `talking_points` / `stakeholder` stay leftover
+  kinds. The SH parking-lot "training guide" is kind `stakeholder` so the word "guide" in
+  the label does not pull it into in_scope.
+- **Thin project store.** Canonical instances live per-project
+  (`committed-design.schema.json`). The store is inventory + proposed `cd_` only. No
+  `atoms.json`, no `ele_`, no source PDF dump. Inventory refs are pointers, not a smash
+  into `cgen/astellas/registry/docs.registry.json` (that registry remains the live
+  ALSAP-era closed list). `validate_committed_design` does not require docs.registry
+  membership — the example fixture never did.
+- **Selection is a partition.** in_scope: SOP-AST-29658, GUIDE-AST-6011, FORM-AST-35734.
+  left_in_source_store: representative remainder (tracking tool, Helix/Kachi trigger,
+  WS3 RI, connections/comms, SH parking-lot training guide) — enough that
+  `selection_honest` cannot see a smashed corpus; not 114 fake ids; not the 8.6MB dump.
+- **Warrant join.** `held_warrant` on seated `goal_ast_cci_library_used` (goals v5, PR #70)
+  with the four locked `obj_ast_cci_*` (objectives v6, PR #71). Framing is QD-nucleus
+  SOP-course plus a short Q1 living-connection frame. Not CM, not Helix/tracker/repo/
+  governing body.
+- **Not this hop.** Stage-2 mint; atoms; `ele_`; `teaches`; Headwater ingest of the 114
+  files; `strategist.py`; more `obj_`; goal/objectives schema; `/cgen` player; `/cgen/sl`;
+  Audience; schema-graph; Direction; docs.registry smash; overwriting
+  `reference/example_*.json`; `--out` at paytrans / ast_alsap / ast_artwork.
+
+**Why:** PRs #70–#71 seated the warrant and locked the trainable slice. Case-Author stage 1
+had only a fixture. A live propose is the next named act; mint still waits on Jake's
+`--by`.
+
+**Consequences:**
+- Gates: `python3 tools/headwater_case_author.py --selftest`;
+  `python3 tools/validate_committed_design.py --selftest`;
+  `python3 tools/validate_committed_design.py --file` the new `cd_`;
+  `python3 tools/committed_design_accept.py --selftest` (accept still refuses agent `--by`;
+  example stays proposed). Do not run accept on the live `cd_` in this PR.
+- `/cgen`, `/cgen/sl`, ALSAP, artwork, paytrans live stores, realize, cartographer,
+  couturier, Audience / Direction hops are untouched. Working-process block (this file,
+  2026-08-25) is untouched.
+- Claude is a co-builder: this hop does not freeze them out of Headwater, ontology,
+  Audience, Direction, or later agent prompts.
+
+**Supersedes:** the 2026-09-01 Case-Author stage-1 writer block's "Fixture only / No live
+Brunswick/Astellas `cd_`" clause. The Dramaturge pattern, propose-only, human `--by`, no
+stage-2 mint, and "do not re-litigate a claimed `--out`" stand. The 2026-09-01 Designer
+objective-lock block's "Headwater Case-Author mint still waits on a validated `cd_`"
+stands — this hop proposes; it does not validate.
+
