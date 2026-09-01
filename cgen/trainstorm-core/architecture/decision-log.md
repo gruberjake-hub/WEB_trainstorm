@@ -13,6 +13,45 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-09-01 (schema graph) — A diagram of record for how the schemas join, hosted at `/cgen/schema-graph`. Hand-read edges, stamped; a derived generator named, not built.
+
+*Anchor: branch `drive/schema-graph` off `8b349d9` (Audience hop one merge). Jake's ask: "visualize
+the relationships" and host it on trainstorm.ai. No schema, vocab, store or tool changed. First
+drafted against `81ce34a`; main moved (PR #62) before it landed, and the audience model was
+folded in rather than shipping a graph stale on arrival — the drift property named below, live.*
+
+### What landed
+
+`architecture/diagrams/schema-graph.html` — 37 nodes (18 schemas, 13 closed vocabularies, 5
+registries, the locale-pack and scenes stores whose contracts live in a README / a vocab file) and
+90 field-level edges, each read from the file it names and typed as one of: keyed reference,
+binds-under (`atom.bindings.*`), hash pin, derived/realized, governed value / mirror, or
+proposed-not-built. Hover isolates a node's edges with the field on each arrow; click lists every
+join with its exact path. The audience model draws as a sibling graph joining content only through
+objectives and `segment_id`, as its schema says. Vendored `d3.v7.9.0.min.js` beside it and no web
+fonts, because the site CSP is `script-src 'self'` / `style-src 'self'` (`/_headers`, PR #6 — never
+a second CSP). Short URL `/cgen/schema-graph` via the forced-200 rewrite pattern
+`/cgen/alsap/coverage` already uses; the page loads d3 by absolute path so the rewrite has no
+sibling hrefs to keep. Verified headless under the exact site CSP header at both URLs: no
+violations, every node and edge renders, the panel responds.
+
+### What the read surfaced (flagged, not fixed)
+
+`atom.schema.json` still carries `$id: https://astellas.example/…/content-atom.schema.json`
+while every other schema is under `trainstorm.ai`. `tone`, `complexity` and `visual-type` each
+name a field on `element` (`intent.tone`, `audience.complexity`, `expression.visual_type`) the
+element schema does not declare. `locales/` has a README contract but no `locale.pack.schema.json`
+where its sibling voice pack has one. `doc_` / `reg_` registries exist only at the client tier;
+core has no seed although four schemas pattern on them. Each is a one-line PR when wanted.
+
+### What was deliberately not done
+
+The edge list is hand-read, so the page is a snapshot stamped `main@8b349d9` and will drift the
+next time a schema gains a field — same property as `system-map.html`, and it already bit once
+in this hop's own lifetime. The honest fix is a small `tools/schema_graph.py` that emits
+nodes/edges from `$ref`, id-prefix patterns and the vocab `mirrors` lists, with the page reading
+that JSON. Named here; not this hop.
+
 ## 2026-09-01 (Audience hop one) — The sibling graph gets its schema: the Audience Agent's segment record, seeded from B-sub, `risk_of_overuse` promoted to a gate, and the LRE's Stage-1 "synthetic learner" named as that same record.
 
 *Anchor: branch `drive/audience-model` off `81ce34a` (PR #61). Design conversation 2026-09-01, all

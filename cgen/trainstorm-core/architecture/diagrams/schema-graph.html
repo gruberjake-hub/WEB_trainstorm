@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<!-- Diagram of record: how the trainstorm-core schemas, vocabularies, registries and stores reference each other.
+     Edges are HAND-READ from the files they name and stamped with the commit they were read at (see header).
+     They go stale when a schema changes: re-read and bump the stamp. A derived tools/schema_graph.py is named, not built.
+     Self-contained on purpose: site CSP is script-src self, style-src self (see /_headers) - no CDN, no web fonts. -->
+<title>Trainstorm Core Schema Graph</title>
+<style>
+  :root {
+    --bg: #F1F3F6;
+    --surface: #FFFFFF;
+    --surface-2: #E8ECF0;
+    --ink: #16202B;
+    --muted: #5B6B7A;
+    --line: #C7D0D9;
+    --line-strong: #8C9AA8;
+    --atom: #D4571C;
+    --element: #0E7C86;
+    --facet: #A8780A;
+    --warrant: #3C8C4E;
+    --ir: #5A6B8C;
+    --render: #7A4FB5;
+    --expr: #2F6FBF;
+    --audience: #B03A6B;
+    --vocab: #6B7785;
+    --registry: #6B7785;
+    --pin: #C2410C;
+    --edge-key: #16202B;
+    --edge-vocab: #7A4FB5;
+    --edge-pin: #C2410C;
+    --edge-derived: #5B6B7A;
+    --edge-binds: #A8780A;
+    --dim: 0.10;
+    --shadow: 0 1px 2px rgba(22,32,43,.06), 0 6px 20px rgba(22,32,43,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F151B; --surface: #17202A; --surface-2: #1F2A36;
+      --ink: #E6EBF0; --muted: #93A1AF; --line: #2E3A47; --line-strong: #4A5968;
+      --atom: #F07A3E; --element: #3BB4BE; --facet: #D9A63A; --warrant: #63B577;
+      --ir: #8FA2C8; --render: #A98BE0; --expr: #6FA3EA; --audience: #E07AA6; --vocab: #93A1AF; --registry: #93A1AF;
+      --pin: #F0803E; --edge-key: #E6EBF0; --edge-vocab: #A98BE0; --edge-pin: #F0803E;
+      --edge-derived: #93A1AF; --edge-binds: #D9A63A; --dim: 0.12;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F151B; --surface: #17202A; --surface-2: #1F2A36;
+    --ink: #E6EBF0; --muted: #93A1AF; --line: #2E3A47; --line-strong: #4A5968;
+    --atom: #F07A3E; --element: #3BB4BE; --facet: #D9A63A; --warrant: #63B577;
+    --ir: #8FA2C8; --render: #A98BE0; --expr: #6FA3EA; --audience: #E07AA6; --vocab: #93A1AF; --registry: #93A1AF;
+    --pin: #F0803E; --edge-key: #E6EBF0; --edge-vocab: #A98BE0; --edge-pin: #F0803E;
+    --edge-derived: #93A1AF; --edge-binds: #D9A63A; --dim: 0.12;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: system-ui, "Segoe UI", -apple-system, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.45;
+    display: grid; grid-template-rows: auto 1fr; height: 100vh; overflow: hidden;
+  }
+  code, .mono { font-family: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace; }
+
+  header {
+    display: flex; align-items: center; gap: 22px; flex-wrap: wrap;
+    padding: 12px 20px; border-bottom: 1px solid var(--line); background: var(--surface);
+  }
+  header h1 { font-size: 17px; font-weight: 600; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+  header .stamp { color: var(--muted); font-size: 12px; }
+  header .stamp code { font-size: 11.5px; }
+  .toggles { display: flex; gap: 6px 14px; flex-wrap: wrap; margin-left: auto; align-items: center; }
+  .toggles label { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; cursor: pointer; color: var(--ink); }
+  .toggles input { accent-color: var(--ink); margin: 0; }
+  .swatch { display: inline-block; width: 22px; height: 0; border-top: 2px solid var(--edge-key); }
+  .swatch.vocab { border-top: 2px dotted var(--edge-vocab); }
+  .swatch.pin { border-top: 2px dashed var(--edge-pin); }
+  .swatch.derived { border-top: 2px dashed var(--edge-derived); }
+  .swatch.binds { border-top: 3px solid var(--edge-binds); }
+  .swatch.proposed { border-top: 1px dashed var(--line-strong); }
+  header button {
+    font: inherit; font-size: 12.5px; padding: 5px 10px; border-radius: 4px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink); cursor: pointer;
+  }
+  header button:hover { background: var(--surface-2); }
+  header button:focus-visible, .toggles input:focus-visible { outline: 2px solid var(--element); outline-offset: 2px; }
+
+  main { display: grid; grid-template-columns: 1fr 360px; min-height: 0; }
+  #canvas { position: relative; min-width: 0; overflow: hidden; }
+  #canvas svg { width: 100%; height: 100%; display: block; cursor: grab; }
+  #canvas svg:active { cursor: grabbing; }
+  .hint { position: absolute; left: 14px; bottom: 12px; font-size: 11.5px; color: var(--muted); background: color-mix(in srgb, var(--surface) 82%, transparent); padding: 4px 8px; border-radius: 4px; pointer-events: none; }
+
+  /* graph marks */
+  .region rect { fill: none; stroke: var(--line); stroke-dasharray: 3 4; rx: 8; }
+  .region text { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; fill: var(--muted); }
+  .edge { fill: none; stroke-width: 1.4; transition: opacity .15s; }
+  .edge.key { stroke: var(--edge-key); opacity: .38; }
+  .edge.vocab { stroke: var(--edge-vocab); stroke-dasharray: 2 4; opacity: .3; }
+  .edge.pin { stroke: var(--edge-pin); stroke-dasharray: 7 4; opacity: .7; }
+  .edge.derived { stroke: var(--edge-derived); stroke-dasharray: 8 5; opacity: .7; }
+  .edge.binds { stroke: var(--edge-binds); stroke-width: 2.4; opacity: .8; }
+  .edge.proposed { stroke: var(--line-strong); stroke-dasharray: 2 3; stroke-width: 1; opacity: .5; }
+  .edge.self { opacity: .5; }
+  svg.focused .edge { opacity: var(--dim); }
+  svg.focused .edge.lit { opacity: 1; stroke-width: 2.2; }
+  svg.focused .edge.lit.binds { stroke-width: 3; }
+  svg.focused .node { opacity: .28; }
+  svg.focused .node.lit { opacity: 1; }
+  .node { cursor: pointer; transition: opacity .15s; }
+  .node rect.box { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1.2; rx: 5; }
+  .node rect.band { rx: 5; }
+  .node .name { font-family: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 12px; font-weight: 500; fill: var(--ink); }
+  .node .sub { font-size: 10.5px; fill: var(--muted); }
+  .node .key { font-family: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 10px; fill: var(--muted); }
+  .node.chip rect.box { rx: 14; }
+  .node.chip .name { font-size: 11px; }
+  .node.selected rect.box { stroke-width: 2.4; }
+  .node:focus { outline: none; }
+  .node:focus-visible rect.box { stroke: var(--element); stroke-width: 2.4; }
+  .core rect.box { stroke-width: 2; }
+  .g-atom rect.box { stroke: var(--atom); } .g-atom rect.band { fill: var(--atom); }
+  .g-element rect.box { stroke: var(--element); } .g-element rect.band { fill: var(--element); }
+  .g-facet rect.band { fill: var(--facet); }
+  .g-warrant rect.band { fill: var(--warrant); }
+  .g-ir rect.band { fill: var(--ir); }
+  .g-render rect.band { fill: var(--render); }
+  .g-expr rect.band { fill: var(--expr); }
+  .g-audience rect.band { fill: var(--audience); }
+  .g-vocab rect.band, .g-registry rect.band { fill: var(--vocab); }
+  .g-store rect.box { stroke-dasharray: 4 3; }
+  marker path { fill: context-stroke; }
+  .elabel { pointer-events: none; }
+  .elabel rect { fill: var(--surface); stroke: var(--line); stroke-width: .8; rx: 3; }
+  .elabel text { font-family: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 10px; fill: var(--ink); }
+
+  /* panel */
+  aside {
+    border-left: 1px solid var(--line); background: var(--surface); overflow-y: auto; padding: 18px 20px 28px;
+  }
+  aside h2 { margin: 0 0 2px; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  aside h2 code { font-size: 13.5px; }
+  aside .file { color: var(--muted); font-size: 11.5px; margin-bottom: 10px; }
+  aside .group { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  aside .group i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  aside p { margin: 0 0 12px; max-width: 62ch; }
+  aside p.role { font-size: 13.5px; }
+  aside p.note { font-size: 12.5px; color: var(--muted); }
+  aside h3 { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 18px 0 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .conn { display: grid; grid-template-columns: 22px 1fr; gap: 4px 8px; padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: 12.5px; cursor: pointer; }
+  .conn:hover { background: var(--surface-2); margin: 0 -8px; padding: 8px; }
+  .conn .arrow { color: var(--muted); font-family: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace; }
+  .conn .to { font-family: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 12px; font-weight: 500; }
+  .conn .path { grid-column: 2; color: var(--ink); }
+  .conn .path code { font-size: 11.5px; background: var(--surface-2); padding: 1px 4px; border-radius: 3px; }
+  .conn .meta { grid-column: 2; color: var(--muted); font-size: 11.5px; }
+  .tag { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 1px 6px; border-radius: 3px; border: 1px solid var(--line-strong); color: var(--muted); margin-right: 6px; vertical-align: middle; }
+  .tag.key { border-color: var(--edge-key); color: var(--edge-key); }
+  .tag.vocab { border-color: var(--edge-vocab); color: var(--edge-vocab); }
+  .tag.pin { border-color: var(--edge-pin); color: var(--edge-pin); }
+  .tag.binds { border-color: var(--edge-binds); color: var(--edge-binds); }
+  .tag.derived { border-color: var(--edge-derived); color: var(--edge-derived); }
+  .intro p { max-width: 60ch; }
+  .intro .legend { display: grid; grid-template-columns: 28px 1fr; gap: 6px 10px; font-size: 12.5px; margin: 8px 0 14px; align-items: center; }
+  .intro .legend span.l { display: inline-block; width: 24px; }
+  .intro ul { padding-left: 18px; margin: 0 0 12px; font-size: 12.5px; }
+  .intro li { margin-bottom: 4px; }
+  .empty { color: var(--muted); font-size: 12.5px; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; grid-template-rows: 1fr 40vh; } aside { border-left: 0; border-top: 1px solid var(--line); } }
+  @media (prefers-reduced-motion: reduce) { .edge, .node { transition: none; } }
+</style>
+
+</head>
+<body>
+<header>
+  <div>
+    <h1>Trainstorm Core Schema Graph</h1>
+    <div class="stamp">Read from <code>cgen/trainstorm-core</code> at <code>main@8b349d9</code> · 2026-09-01 · click a node for its field-level joins</div>
+  </div>
+  <div class="toggles" id="toggles">
+    <label><span class="swatch"></span><input type="checkbox" data-type="key" checked> keyed reference</label>
+    <label><span class="swatch binds"></span><input type="checkbox" data-type="binds" checked> binds under</label>
+    <label><span class="swatch pin"></span><input type="checkbox" data-type="pin" checked> hash pin</label>
+    <label><span class="swatch derived"></span><input type="checkbox" data-type="derived" checked> derived / realized</label>
+    <label><span class="swatch vocab"></span><input type="checkbox" data-type="vocab" checked> governed value / mirror</label>
+    <label><span class="swatch proposed"></span><input type="checkbox" data-type="proposed"> proposed, not built</label>
+    <button id="reset" type="button">Reset view</button>
+  </div>
+</header>
+
+<main>
+  <div id="canvas">
+    <svg id="svg" viewBox="0 0 1760 1040" role="img" aria-label="Node graph of how the trainstorm-core schemas, vocabularies, registries and stores reference each other, with the content atom and its occurrence element at the centre.">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
+      </defs>
+      <g id="view"></g>
+    </svg>
+    <div class="hint">Scroll to zoom · drag the canvas to pan · drag a node to nudge it · Esc clears selection</div>
+  </div>
+  <aside id="panel"></aside>
+</main>
+
+<script src="/cgen/trainstorm-core/architecture/diagrams/d3.v7.9.0.min.js"></script>
+<script>
+// ---------- DATA (every edge below was read from the file it names) ----------
+const GROUPS = {
+  atom:     { label: 'Content canon',        css: 'g-atom',     color: 'var(--atom)' },
+  element:  { label: 'Occurrence',           css: 'g-element',  color: 'var(--element)' },
+  facet:    { label: 'Source-type facets',   css: 'g-facet',    color: 'var(--facet)' },
+  warrant:  { label: 'Warrant chain',        css: 'g-warrant',  color: 'var(--warrant)' },
+  ir:       { label: 'Generation IR',        css: 'g-ir',       color: 'var(--ir)' },
+  render:   { label: 'Rendering stores',     css: 'g-render',   color: 'var(--render)' },
+  expr:     { label: 'Expression path',      css: 'g-expr',     color: 'var(--expr)' },
+  audience: { label: 'Sibling graph · audience', css: 'g-audience', color: 'var(--audience)' },
+  vocab:    { label: 'Closed vocabulary',    css: 'g-vocab',    color: 'var(--vocab)' },
+  registry: { label: 'Registry (keyed lookup)', css: 'g-registry', color: 'var(--registry)' },
+};
+
+const NODES = [
+  // core
+  { id:'atom', name:'atom.schema.json', sub:'Content Atom · the meaning node', key:'atom_', group:'atom', core:true, x:560, y:450, w:250, h:60,
+    role:'The meaning node. Owns the only embedded payload (meaning.source_text) and content_hash. Everything else is a keyed binding. atom_id is the only content-node key — locale packs, voice packs, registries and the learner model all join here.',
+    note:'Gate: tools/validate_atoms.py. bindings.intent is closed and empty — intent moved to the occurrence (DECISIONS 2026-08-25).' },
+  { id:'element', name:'element.schema.json', sub:'Element · one occurrence of an atom', key:'ele_', group:'element', core:true, x:900, y:450, w:250, h:60,
+    role:'One placement of an atom in a course. Minted at realization (tools/realize.py), never carries authored meaning. Occurrence-level facets bind here: rhetorical, move, teaches, intended_response, expression keys, narration, render.',
+    note:'One atom → many elements. Cartographer writes intent; Couturier writes expression style keys; Realizer mints ids.' },
+  // facets
+  { id:'procedure', name:'procedure.facet.schema.json', sub:'bindings.procedure · SOP steps', group:'facet', x:380, y:660, w:230, h:52,
+    role:'Execution semantics for procedural (SOP) source: step_type, who performs, what records it produces, decision branches. Attached under atom.bindings.procedure. Single-writer: Headwater ingest.' },
+  { id:'form', name:'form.facet.schema.json', sub:'bindings.form · a blank template', group:'facet', x:600, y:660, w:230, h:52,
+    role:'Models a form TEMPLATE (never a submission): field_type, content_disposition, evidence demand, named slots inside retained text. Single-writer: Headwater (form-specialized). v0.5.' },
+  { id:'instance', name:'instance.facet.schema.json', sub:'bindings.instance · authored overlay', group:'facet', x:820, y:660, w:230, h:52,
+    role:'Binds an AUTHORED atom to the template slot it fills — a sparse overlay over a pinned template. Single-writer: the ALSAP Lead via Amanuensis; the only writer is tools/accept_value.py.' },
+  { id:'socket', name:'socket.schema.json', sub:'Intake contract · derived, never authored', group:'facet', x:600, y:830, w:230, h:52,
+    role:'What a stakeholder must supply for a delivered agent to work. tools/project_socket.py walks the template store and emits one demand per unfilled point. Correct the template atom, never this file.' },
+  // warrant
+  { id:'goal', name:'goal.schema.json', sub:'ontology/goals.json · the warrant', key:'goal_', group:'warrant', x:560, y:110, w:250, h:52,
+    role:'The warrant. A goal is what the organisation wants to be different, with a required reachability gate (trainable / not_trainable / assessed_by). Owner: the client\'s business, not L&D.' },
+  { id:'objectives', name:'objectives.schema.json', sub:'ontology/objectives.json', key:'obj_', group:'warrant', x:900, y:110, w:250, h:52,
+    role:'The governed store of learning objectives. Closed for use: an ungoverned obj_ reference is flagged. Points sideways (requires), outward (framework) and upward (serves → goal). bloom lives here, not on content.',
+    note:'Checked by tools/validate_objectives.py (warrant chain, 45/45).' },
+  // audience (sibling graph)
+  { id:'audience', name:'audience-model.schema.json', sub:'audience/<segment_id>.json · segment record', key:'seg_', group:'audience', x:1230, y:95, w:250, h:52,
+    role:'The Audience Agent\'s write schema: one record per SEGMENT (never a person) — standing, disposition factors, four baselines, cadence. The sibling graph beside content; joins it ONLY through objective ids and, downstream, element ids. PII-blind by construction. Also the LRE Stage-1 synthetic learner. lrn_ is reserved for the Responsive Engine and rejected in a content store.',
+    note:'Gate: tools/validate_audience.py. Landed 2026-09-01 (PR #62).' },
+  // IR
+  { id:'primitives', name:'script.primitives.v2.json', sub:'Generation IR · didactic moves', key:'p###', group:'ir', x:390, y:300, w:250, h:52,
+    role:'The semantic generation layer: an ordered array of typed knowledge structures (definition, process_flow, knowledge_check …) emitted from source BEFORE presentation. Realized downstream into elements. v2 puts knowledge_check in response-feature form.' },
+  // render stores
+  { id:'locales', name:'locales/<bcp47>.json', sub:'Locale pack · README contract only', group:'render', x:1230, y:210, w:240, h:52, store:true,
+    role:'Externalized translations keyed by atom_id: { target, status, reviewer, source_hash }. Meaning is translated once per atom, not per occurrence. Optional derived_from chains from an accepted voice entry.' },
+  { id:'voice', name:'voice.pack.schema.json', sub:'voice/<register>.json', group:'render', x:1230, y:330, w:240, h:52,
+    role:'A locale pack shifted in REGISTER instead of language. entries key on atom_id, element_overrides on element_id, beats on beat_id. Two pins per entry: source_hash (the atom) and derived_from (the text worked from).' },
+  { id:'narration', name:'narration.pack.schema.json', sub:'voice/narration/<register>.json', group:'render', x:1230, y:450, w:240, h:52,
+    role:'Scene-level spoken prose, multi-pinned: sources maps every contributing atom_id → content_hash and every woven bt_ → beat_hash. Dragoman narrate mode writes; Griot binds performance to accepted tracks.' },
+  { id:'beats', name:'beats.catalog.schema.json', sub:'occurrences/beats.json · the arc', key:'bt_', group:'render', x:1230, y:570, w:240, h:52,
+    role:'Content-free rhetorical/pedagogical moves keyed by PLACEMENT (lesson_start, scene_end, after_element …), not by atom. Dramaturge proposes; the designer accepts. beat_hash = sha256({beat_id, placement, intent}).' },
+  { id:'scenes', name:'occurrences/scenes.json', sub:'Scene catalog · shaped by scene.enum', group:'element', x:1230, y:690, w:240, h:52, store:true,
+    role:'Authored project data, source of truth for scene membership: ordered ele_ refs, a governed role, optional in-scene check refs into manifest.checks. Realizer reads it and stamps spine.scenes.' },
+  // expression path
+  { id:'primreg', name:'vocab/primitives.registry.json', sub:'text · layout · interaction · style keys', group:'expr', x:900, y:850, w:250, h:52,
+    role:'The keys element.expression may use. layout_primitive keys equal the layout-engine manifest layout ids (canonical, 2026-07-31). Carries the Realizer\'s closed compiler vocabulary (heading/body/step/callout/check → text_primitive). Status: partial.' },
+  { id:'visualasset', name:'visual-asset.schema.json', sub:'visual-assets.registry.json · 255', key:'asset_', group:'expr', x:1230, y:850, w:240, h:52,
+    role:'One registry entry: a reference to an image file plus governed metadata (role, mark_class, scope, content_hash). The map, never the bytes. Elements resolve it through render.asset_ref.' },
+  { id:'manifest', name:'template_manifest.schema.json', sub:'.potx shell · generated, no intent', group:'expr', x:900, y:970, w:250, h:52,
+    role:'Machine-extracted description of a .potx brand shell: theme tokens, per-layout slot geometry, Storyline binding metadata. Pure structure + skin.' },
+  { id:'sidecar', name:'intent_sidecar.schema.json', sub:'layout-engine policy · CI-bounded', group:'expr', x:1230, y:970, w:240, h:52,
+    role:'Human-authored policy over a manifest: selects a layout_primitive from governed intent signals and binds a scene\'s elements (by element_id) into the layout\'s slots. Bounded by layout-engine/ci/validate_sidecar.py.' },
+  // vocab chips (left column)
+  { id:'v_intent', name:'intent.enum.json', sub:'rhetorical · pedagogical', group:'vocab', chip:true, x:118, y:150, w:170, h:32, role:'Two orthogonal dimensions: rhetorical (orient, assert, persuade …) and pedagogical (hook, present, practice, assess, reinforce, transfer …). Owner: instructional_design. Closed list; the validator rejects anything else.' },
+  { id:'v_structure', name:'structure.enum.json', sub:'meaning_kind (list, section …)', group:'vocab', chip:true, x:118, y:215, w:170, h:32, role:'Universal structural meaning.kind values: list, list_item, document, section, statement. A list is a List container + ListItem children, never a \\n-delimited string.' },
+  { id:'v_procedure', name:'procedure.enum.json', sub:'meaning_kind · step_type', group:'vocab', chip:true, x:118, y:280, w:170, h:32, role:'meaning_kind: procedure, procedure_step. step_type: action, decision, verification. Mirrored into procedure.facet.schema.json; the vocab wins.' },
+  { id:'v_form', name:'form.enum.json', sub:'meaning_kind · field_type · disposition', group:'vocab', chip:true, x:118, y:345, w:170, h:32, role:'meaning_kind (form, form_section, form_field), the 13 field_type input primitives, and content_disposition (controlled_standard, authorable, example, instructional_transient). Closed the ad-hoc 20+ type strings seen in raw form models.' },
+  { id:'v_evidence', name:'evidence.enum.json', sub:'evidence_kind · supplied_by', group:'vocab', chip:true, x:118, y:410, w:170, h:32, role:'The socket\'s terms: what KIND of evidence a demand requires and WHO supplies it. Completeness rule: must classify every authorable field_type form.enum permits.' },
+  { id:'v_instance', name:'instance.enum.json', sub:'meaning_kind · disposition_decision', group:'vocab', chip:true, x:118, y:475, w:170, h:32, role:'meaning_kind instance_value; disposition_decision (retained, modified, marked_not_applicable, deleted). Reuses form.enum content_disposition as the template-side value it answers to.' },
+  { id:'v_check', name:'check-shape.enum.json', sub:'invert_definition · sequence_order · closed_choice', group:'vocab', chip:true, x:118, y:540, w:170, h:32, role:'Honest check SHAPES resolved from graph operands (atoms, ele_ records, registry refs, object.order) — not a quiz engine, not LLM distractors. Field: ext.check.shape and manifest.checks[].shape.' },
+  { id:'v_scene', name:'scene.enum.json', sub:'front_matter · procedure_a · form_br …', group:'vocab', chip:true, x:118, y:605, w:170, h:32, role:'The closed roles a scene record may carry, plus the record shape (id, role, heading, kicker, element_ids, checks, from). occurrences/scenes.json is the source of truth when present.' },
+  { id:'v_register', name:'register.enum.json', sub:'warm_direct · formal_institutional …', group:'vocab', chip:true, x:118, y:670, w:170, h:32, role:'The course-level voice coordinate (person, stance, formality). Only a `specified` register admits accepted entries — today that is warm_direct.' },
+  { id:'v_tone', name:'tone.enum.json', sub:'affective tone · upstream signal', group:'vocab', chip:true, x:118, y:735, w:170, h:32, role:'Promoted from the layout engine\'s Script_Normalizer emotional_tone axis. Proposed field element.intent.tone — not yet in element.schema.json.' },
+  { id:'v_complexity', name:'complexity.enum.json', sub:'low · medium · high', group:'vocab', chip:true, x:118, y:800, w:170, h:32, role:'Design-time cognitive-load band. Proposed field element.audience.complexity — distinct from the continuous audience.difficulty knob.' },
+  { id:'v_visualtype', name:'visual-type.enum.json', sub:'photo · diagram · icon …', group:'vocab', chip:true, x:118, y:865, w:170, h:32, role:'The KIND of visual an element wants, advisory. Proposed field element.expression.visual_type; pairs with visual-assets content_type_hints and render.asset_ref.' },
+  { id:'v_disposition', name:'disposition.enum.json', sub:'inh_ · obj_x_ · aln_ · thr_ · gap_ · mng_ · rat_ · aff_', group:'vocab', chip:true, x:118, y:930, w:170, h:32, role:'The closed lists a segment record\'s psychological factors resolve to — eight families, one prefix each (obj_x_ for objections, NOT obj_). Entries carry seed vs specified; an approved record may not cite a seed. Owner: audience_agent.' },
+  // registries (right column)
+  { id:'r_roles', name:'roles.registry.json', sub:'role_ · core seed + client tier', group:'registry', chip:true, x:1600, y:330, w:180, h:32, role:'Governed roles — roles, NEVER people (no PII). Core holds a 4-entry seed; cgen/astellas and cgen/brunswick each hold the client-tier entries the harness resolves (harness_paths.py).' },
+  { id:'r_records', name:'records.registry.json', sub:'rec_ · GxP evidence types', group:'registry', chip:true, x:1600, y:410, w:180, h:32, role:'Record/evidence types — the proof a step happened. Shared by the procedure and form facets; core seed + client tier.' },
+  { id:'r_docs', name:'docs.registry.json', sub:'doc_ · client tier only', group:'registry', chip:true, x:1600, y:490, w:180, h:32, role:'Controlled documents (templates, SOPs, regulations) by id. Lives at cgen/<client>/registry/ — no core seed.' },
+  { id:'r_options', name:'options.registry.json', sub:'reg_ · controlled value sets', group:'registry', chip:true, x:1600, y:570, w:180, h:32, role:'Controlled option sets for select_one / select_many fields and slots. Referenced, never embedded; client tier only.' },
+  { id:'r_glossary', name:'registry/glossary/', sub:'term_ · locked terminology (seed)', group:'registry', chip:true, x:1600, y:650, w:180, h:32, role:'Locked terms the localization agent retrieves. Today a candidates CSV for astellas-pv; the term_ contract is declared on atom.bindings.expression.term_refs.' },
+];
+
+// type: key | binds | pin | derived | vocab | proposed
+const EDGES = [
+  // element ↔ atom
+  { s:'element', t:'atom', type:'key', label:'composed_from', path:'element.composed_from (^atom_) → atom.atom_id', meta:'Required. The 1:many link; meaning and content_hash live on the atom.' },
+  { s:'element', t:'atom', type:'pin', label:'source_hash', path:'element.source_hash echoes atom.content_hash', meta:'Optional stale-detection handle; locale packs do NOT key here.' },
+  { s:'element', t:'element', type:'key', label:'structure', path:'structure.parent_id · prerequisites[] · assessment.feedback_for · assessment.options[] → other element_ids', meta:'Containers and leaves share one type list; parent/child is structure.parent_id.' },
+  { s:'atom', t:'atom', type:'key', label:'object', path:'bindings.object.belongs_to · prerequisites[] → other atom_ids', meta:'The atom\'s place in the object graph, as references.' },
+  // element → warrant / vocab / expression / assets
+  { s:'element', t:'objectives', type:'key', label:'teaches[]', path:'element.intent.teaches[] → obj_ ids in ontology/objectives.json', meta:'Intervention-scoped: the same atom teaches different objectives at different placements.' },
+  { s:'element', t:'v_intent', type:'vocab', label:'rhetorical · move', path:'element.intent.rhetorical mirrors dimensions.rhetorical; element.intent.move mirrors dimensions.pedagogical', meta:'Mirror checked by tools/validate_objectives.py; the vocab is canonical.' },
+  { s:'element', t:'primreg', type:'key', label:'expression.*', path:'expression.text_primitive · motion_primitive · layout_primitive · interaction_primitive · style_ref → registry keys', meta:'Realizer sets text_primitive from the compiler vocabulary; Couturier owns style_ref.' },
+  { s:'element', t:'visualasset', type:'key', label:'render.asset_ref', path:'element.render.asset_ref → visual-asset.asset_id', meta:'The registry holds the reference and metadata; never bytes.' },
+  { s:'element', t:'v_check', type:'vocab', label:'ext.check.shape', path:'element.ext.check.shape ∈ check-shape shapes[].id (also manifest.checks[].shape)', meta:'Stamped by Realizer; the HTML projector reads it.' },
+  { s:'element', t:'v_scene', type:'vocab', label:'ext.scene.role', path:'element.ext.scene.role ∈ scene roles[].id (also spine.scenes[].role)', meta:'Runtime view stamped by Realizer from scenes.json.' },
+  { s:'element', t:'v_tone', type:'proposed', label:'intent.tone', path:'proposed element.intent.tone ∈ tone values[].id', meta:'Not yet in element.schema.json (vocab says "proposed small addition").' },
+  { s:'element', t:'v_complexity', type:'proposed', label:'audience.complexity', path:'proposed element.audience.complexity ∈ complexity values[].id', meta:'Not yet in element.schema.json.' },
+  { s:'element', t:'v_visualtype', type:'proposed', label:'expression.visual_type', path:'proposed element.expression.visual_type ∈ visual-type values[].id', meta:'Not yet in element.schema.json.' },
+  // atom → vocab / registries / facets
+  { s:'atom', t:'v_structure', type:'vocab', label:'meaning.kind', path:'atom.meaning.kind ∈ {list, list_item, document, section, statement}', meta:'meaning.kind stays open otherwise; these structural values are closed.' },
+  { s:'atom', t:'v_procedure', type:'vocab', label:'meaning.kind', path:'atom.meaning.kind ∈ {procedure, procedure_step}', meta:'Applies to atoms carrying the procedure facet.' },
+  { s:'atom', t:'v_form', type:'vocab', label:'meaning.kind', path:'atom.meaning.kind ∈ {form, form_section, form_field}', meta:'Applies to atoms carrying the form facet.' },
+  { s:'atom', t:'v_instance', type:'vocab', label:'meaning.kind', path:'atom.meaning.kind = instance_value', meta:'An instance atom carries no form or procedure facet.' },
+  { s:'atom', t:'r_glossary', type:'key', label:'term_refs[]', path:'atom.bindings.expression.term_refs[] (^term_) → glossary registry', meta:'Locked terminology present in this atom.' },
+  { s:'atom', t:'procedure', type:'binds', label:'bindings.procedure', path:'attaches under atom.bindings.procedure (bindings is extensible: additionalProperties object)', meta:'Owner: Headwater ingest. Applies when meaning.kind is procedure / procedure_step.' },
+  { s:'atom', t:'form', type:'binds', label:'bindings.form', path:'attaches under atom.bindings.form', meta:'Owner: Headwater (form-specialized).' },
+  { s:'atom', t:'instance', type:'binds', label:'bindings.instance', path:'attaches under atom.bindings.instance', meta:'Owner: ALSAP Lead via Amanuensis; written only by tools/accept_value.py.' },
+  // procedure facet
+  { s:'procedure', t:'v_procedure', type:'vocab', label:'step_type', path:'procedure.step_type mirrors dimensions.step_type (action, decision, verification)', meta:'$comment in the schema: mirror kept in sync by conformance check; the vocab wins.' },
+  { s:'procedure', t:'r_roles', type:'key', label:'performed_by[]', path:'procedure.performed_by[] (^role_) → roles.registry', meta:'Roles, never people.' },
+  { s:'procedure', t:'r_records', type:'key', label:'produces_records[]', path:'procedure.produces_records[] (^rec_) → records.registry', meta:'The GxP proof a step happened.' },
+  { s:'procedure', t:'r_docs', type:'key', label:'references[]', path:'procedure.references[] (^(doc|atom)_) → docs.registry or other atoms', meta:'Cited controlled documents / regulations; references, not copies.' },
+  { s:'procedure', t:'atom', type:'key', label:'acceptance_ref · branches', path:'procedure.acceptance_ref (^atom_) · branches[].leads_to (^atom_) · references[] (atom_)', meta:'Acceptance-criterion prose is meaning, so it lives as a referenced atom.' },
+  // form facet
+  { s:'form', t:'v_form', type:'vocab', label:'field_type · content_disposition', path:'form.field_type and form.content_disposition mirror form.enum ids', meta:'A conformance check asserts schema enum == vocab ids.' },
+  { s:'form', t:'v_evidence', type:'vocab', label:'evidence_kind · supplied_by', path:'form.evidence_kind, form.supplied_by and constraints.slots[].evidence_kind / supplied_by mirror evidence.enum', meta:'v0.4 added at both field and slot level; v0.5 tracks evidence.v0.2.' },
+  { s:'form', t:'r_roles', type:'key', label:'performed_by[]', path:'form.performed_by[] (^role_) → roles.registry', meta:'SAME registry as procedure.performed_by; no form-specific copy.' },
+  { s:'form', t:'r_records', type:'key', label:'captures_record', path:'form.captures_record (^rec_) → records.registry', meta:'SAME registry as procedure.produces_records.' },
+  { s:'form', t:'r_options', type:'key', label:'options_ref', path:'form.options_ref (^reg_) and constraints.slots[].options_ref → options.registry', meta:'Reference the option set; never embed it.' },
+  { s:'form', t:'atom', type:'key', label:'conditional_on', path:'form.conditional_on[].field (^atom_) → the field-atom whose value gates this field', meta:'Mirrors procedure.branches at the field level.' },
+  // instance facet
+  { s:'instance', t:'atom', type:'key', label:'instantiates', path:'instance.instantiates (^atom_) → the TEMPLATE atom, resolved against the store named by manifest.instantiates_template', meta:'A legal cross-store reference because it points UP into a governed shared tier.' },
+  { s:'instance', t:'atom', type:'pin', label:'template_source_hash', path:'instance.template_source_hash = template atom\'s content_hash at authoring time', meta:'One walk names every stale instance and exactly where.' },
+  { s:'instance', t:'form', type:'key', label:'fills_slot', path:'instance.fills_slot → form.constraints.slots[].id on the template atom; compound key (atom_id, slot_id)', meta:'Never positional. Its presence is what makes an instance legal over controlled_standard text.' },
+  { s:'instance', t:'r_docs', type:'key', label:'template_document', path:'instance.template_document (^doc_) → docs.registry', meta:'The human-legible half of the pin; instantiates is the machine half.' },
+  { s:'instance', t:'r_roles', type:'key', label:'authored_by', path:'instance.authored_by (^role_) → roles.registry', meta:'A role, never a person.' },
+  { s:'instance', t:'r_options', type:'key', label:'selected_value', path:'instance.selected_value resolves in the set behind the template\'s form.options_ref', meta:'Held as an id, never as the option\'s prose; the gate checks membership.' },
+  { s:'instance', t:'v_instance', type:'vocab', label:'disposition_decision', path:'instance.disposition_decision mirrors instance.enum disposition_decision ids', meta:'Recorded here only when the decision produced an atom (modified); others live in instance_decisions.json.' },
+  // socket
+  { s:'form', t:'socket', type:'derived', label:'project_socket.py', path:'tools/project_socket.py walks the template store: one demand per authorable field and per named slot', meta:'Derived artifact; never hand-edited.' },
+  { s:'socket', t:'atom', type:'key', label:'demands[].source_atom', path:'demands[].source_atom (^atom_); demand_id = atom_id or atom_id#slot_id', meta:'The (atom_id, slot_id) instance key rendered as one string.' },
+  { s:'socket', t:'r_docs', type:'key', label:'template.document', path:'socket.template.document (^doc_) → docs.registry', meta:'' },
+  { s:'socket', t:'v_evidence', type:'vocab', label:'evidence_kind · supplied_by', path:'demands[].evidence_kind, demands[].supplied_by carry evidence.enum ids; storage_rule copied from the vocab entry', meta:'' },
+  { s:'socket', t:'r_roles', type:'key', label:'accountable[]', path:'demands[].accountable[] {id, label, governed} from the template\'s performed_by', meta:'governed flag carried so a reader can run the ungoverned-value drift check.' },
+  { s:'socket', t:'r_options', type:'key', label:'options.options_ref', path:'demands[].options.options_ref + listed values', meta:'A submission outside the set is the invent-guard failure.' },
+  { s:'socket', t:'procedure', type:'key', label:'governed_by[]', path:'demands[].governed_by[] {atom_id, text} — procedure steps from the governing SOP that reference this template', meta:'The authority behind the demand.' },
+  // audience — sibling graph
+  { s:'audience', t:'objectives', type:'key', label:'mastery · factor.objective_ids', path:'standing.mastery[].objective_id (^obj_) and factor.objective_ids[] (^obj_) → ontology/objectives.json', meta:'The audience model joins content through OBJECTIVES, not elements, so a segment record survives re-export.' },
+  { s:'audience', t:'element', type:'key', label:'segment_id', path:'audience.segment_id ↔ element.audience.segment_scope[]', meta:'The design-time join. Per-segment direction bindings by element_id are a planner\'s job — downstream, not built.' },
+  { s:'audience', t:'v_disposition', type:'vocab', label:'factor.id · affective_pattern', path:'disposition.*[].id (^(inh|obj_x|aln|thr|gap|mng|rat)_) and disposition.affective_pattern (^aff_) → disposition.enum ids', meta:'Free text is not allowed; tools/validate_audience.py rejects ungoverned ids.' },
+  { s:'audience', t:'r_roles', type:'key', label:'standing.role', path:'standing.role → roles.registry where one applies', meta:'A population\'s role, never a person\'s title.' },
+  { s:'audience', t:'audience', type:'pin', label:'governance.source_hash', path:'governance.source_hash pins the audience analysis this record was distilled from', meta:'Changed hash ⇒ record stale ⇒ any per-segment direction bindings stale.' },
+  // generation IR
+  { s:'primitives', t:'v_intent', type:'vocab', label:'pedagogical_intent', path:'each primitive\'s pedagogical_intent is a value from intent.enum (pedagogical); defaults per type, enforced by tools/lint.py', meta:'' },
+  { s:'primitives', t:'objectives', type:'key', label:'teaches[]', path:'primitive.teaches[] → obj_ ids; knowledge_check.misconception_predictions[].id is mc_', meta:'Stamped once by the Generator; the Realizer relays it.' },
+  { s:'primitives', t:'element', type:'derived', label:'realized into', path:'primitives are realized downstream into elements; primitive.teaches should equal element.intent.teaches', meta:'source → generator → SCRIPT PRIMITIVES → realizer → ELEMENTS → render agents.' },
+  // warrant
+  { s:'objectives', t:'goal', type:'key', label:'serves[]', path:'objective.serves[] (^goal_) → goals in ontology/goals.json', meta:'The WARRANT. Required once status is validated; checked by tools/validate_objectives.py.' },
+  { s:'objectives', t:'objectives', type:'key', label:'requires[]', path:'objective.requires[] (^obj_) → prerequisite objectives in the same store', meta:'Referential integrity checked outside the schema.' },
+  { s:'goal', t:'r_roles', type:'key', label:'owner · assessed_by', path:'goal.owner and reachability.assessed_by: "a governed role id where one exists"', meta:'Deliberately NOT L&D.' },
+  // rendering stores
+  { s:'locales', t:'atom', type:'key', label:'keyed by atom_id', path:'locales/<lang>.json entries keyed by atom_id: { target, status, reviewer, source_hash }', meta:'Meaning is translated once per atom.' },
+  { s:'locales', t:'atom', type:'pin', label:'source_hash', path:'entry.source_hash pins atom.content_hash', meta:'The meaning gate always judges against the atom, never transitively.' },
+  { s:'locales', t:'voice', type:'pin', label:'derived_from', path:'entry.derived_from {pack: voice/<register>.json, key: atom_id, hash} chains from an accepted voice entry', meta:'Staleness propagates: atom → voice → descendants.' },
+  { s:'locales', t:'element', type:'proposed', label:'overrides', path:'occurrence-level overrides keyed by element_id — not built', meta:'locales/README.md.' },
+  { s:'voice', t:'atom', type:'key', label:'entries', path:'voice.entries keyed ^atom_ → one rendering per atom + register', meta:'' },
+  { s:'voice', t:'atom', type:'pin', label:'source_hash', path:'entry.source_hash pins the ATOM\'s content_hash', meta:'Every rendering at every coordinate is gated against the atom.' },
+  { s:'voice', t:'element', type:'key', label:'element_overrides', path:'voice.element_overrides keyed ^ele_ — only where placement constrains length or form', meta:'Chains from the pack\'s own atom-level entry via derived_from.' },
+  { s:'voice', t:'beats', type:'pin', label:'beats · beat_hash', path:'voice.beats keyed ^bt_; entry.source_hash pins beat_hash, not an atom hash', meta:'Claim-free by the INVERSE guard (tools/localize/voice_gate.py).' },
+  { s:'voice', t:'v_register', type:'vocab', label:'register', path:'voice.register ∈ register values[].id; accepted entries only for a `specified` register', meta:'' },
+  { s:'narration', t:'v_register', type:'vocab', label:'register', path:'narration.register ∈ register values[].id', meta:'' },
+  { s:'narration', t:'atom', type:'pin', label:'sources', path:'track.sources maps ^atom_ → the atom\'s content_hash', meta:'Any source moves, the track is stale.' },
+  { s:'narration', t:'beats', type:'pin', label:'sources', path:'track.sources maps ^bt_ → the beat\'s beat_hash', meta:'' },
+  { s:'narration', t:'scenes', type:'key', label:'tracks', path:'narration.tracks keyed by engine scene id (plus the synthetic lesson_end scene)', meta:'' },
+  { s:'beats', t:'element', type:'key', label:'placement.element_id', path:'beat.placement.element_id (^ele_) when placement.type = after_element', meta:'' },
+  { s:'beats', t:'scenes', type:'key', label:'placement.scene_id', path:'beat.placement.scene_id when placement.type ∈ {scene_start, scene_end}', meta:'' },
+  { s:'beats', t:'v_intent', type:'vocab', label:'intent', path:'beat.intent.pedagogical / rhetorical are governed intent.enum ids', meta:'The validator enforces membership.' },
+  { s:'scenes', t:'v_scene', type:'vocab', label:'role', path:'scene.role ∈ roles[].id; record shape defined in scene.enum', meta:'' },
+  { s:'scenes', t:'element', type:'key', label:'element_ids[]', path:'scene.element_ids[] ordered ^ele_ refs; must resolve on the occurrence store', meta:'Membership is refs, not copied atom text.' },
+  { s:'scenes', t:'v_check', type:'vocab', label:'checks[]', path:'scene.checks[] {shape, see} point at occurrences/manifest.json checks', meta:'Projector-only in-scene checks.' },
+  { s:'v_check', t:'atom', type:'key', label:'operands', path:'shape operands: key_atom_id, contrast_atom_ids[], (sequence) step atom_ids via object.order', meta:'Key in this atom, distractors in sibling atoms.' },
+  { s:'v_check', t:'element', type:'key', label:'host_element_id', path:'shape operand host_element_id — the extra reinforce ele_ that hosts the check', meta:'' },
+  // expression path
+  { s:'manifest', t:'primreg', type:'key', label:'layouts[].id', path:'manifest.layouts[].id IS the layout_primitive key; layouts[].interaction_primitive must be registered', meta:'Layout-engine ids are canonical (decision 2026-07-31).' },
+  { s:'sidecar', t:'manifest', type:'pin', label:'template_ref.sha256', path:'sidecar.template_ref.sha256 must equal manifest.template_ref.sha256', meta:'CI fails the PR otherwise.' },
+  { s:'sidecar', t:'element', type:'key', label:'bindings → element_id', path:'bindings[layout].map slot → selector over the scene\'s element graph; resolves to element_id(s); selector.where filters on governed facets', meta:'Every filled slot is traceable to an element_id.' },
+  { s:'sidecar', t:'primreg', type:'vocab', label:'use · layout ids', path:'selection[].use and bindings keys must be registered layout_primitive keys', meta:'' },
+  { s:'sidecar', t:'v_intent', type:'vocab', label:'selection.when', path:'rule.when values validated against intent.enum', meta:'ci/validate_sidecar.py.' },
+  { s:'sidecar', t:'v_tone', type:'vocab', label:'selection.when', path:'rule.when values validated against tone.enum', meta:'' },
+  { s:'sidecar', t:'v_complexity', type:'vocab', label:'selection.when', path:'rule.when values validated against complexity.enum', meta:'' },
+  { s:'sidecar', t:'v_visualtype', type:'vocab', label:'selection.when', path:'rule.when values validated against visual-type.enum', meta:'' },
+  { s:'visualasset', t:'primreg', type:'key', label:'content_type_hints[]', path:'asset.content_type_hints[] → expression.content_type keys (once the registry is populated)', meta:'Advisory, many-to-many — not a single-writer binding.' },
+  { s:'visualasset', t:'v_visualtype', type:'vocab', label:'pairs_with', path:'visual-type.enum pairs_with visual-assets content_type_hints and render.asset_ref', meta:'Advisory.' },
+  // cross-vocab constraints
+  { s:'v_evidence', t:'v_form', type:'vocab', label:'completeness', path:'evidence.enum must classify every authorable field_type form.enum permits', meta:'Otherwise the gate\'s demand rule is unsatisfiable for a legal template.' },
+  { s:'v_instance', t:'v_form', type:'vocab', label:'reuses', path:'instance.enum reuses form.enum content_disposition — the template-side value a disposition_decision answers to', meta:'Not duplicated.' },
+];
+
+// ---------- RENDER ----------
+const byId = Object.fromEntries(NODES.map(n => [n.id, n]));
+const svg = d3.select('#svg');
+const view = d3.select('#view');
+const zoom = d3.zoom().scaleExtent([0.45, 3]).on('zoom', e => view.attr('transform', e.transform));
+svg.call(zoom);
+
+const REGIONS = [
+  { label:'Warrant chain', members:['goal','objectives'] },
+  { label:'Source-type facets on the atom', members:['procedure','form','instance'] },
+  { label:'Rendering stores · keyed by atom_id / element_id / beat_id', members:['locales','voice','narration','beats','scenes'] },
+  { label:'Expression path · keys, shells, assets', members:['primreg','manifest','visualasset','sidecar'] },
+  { label:'Closed vocabularies', members:NODES.filter(n=>n.group==='vocab').map(n=>n.id) },
+  { label:'Registries', members:NODES.filter(n=>n.group==='registry').map(n=>n.id) },
+];
+const regionG = view.append('g').attr('class','regions');
+function regionBox(r){
+  const ns = r.members.map(id => byId[id]); const pad = 14;
+  const x0 = d3.min(ns, n=>n.x-n.w/2)-pad, x1 = d3.max(ns, n=>n.x+n.w/2)+pad;
+  const y0 = d3.min(ns, n=>n.y-n.h/2)-pad, y1 = d3.max(ns, n=>n.y+n.h/2)+pad;
+  return {x:x0, y:y0, w:x1-x0, h:y1-y0};
+}
+function drawRegions(){
+  regionG.selectAll('g').data(REGIONS).join(enter => {
+    const g = enter.append('g').attr('class','region'); g.append('rect'); g.append('text'); return g;
+  }).each(function(r){
+    const b = regionBox(r), g = d3.select(this);
+    g.select('rect').attr('x',b.x).attr('y',b.y).attr('width',b.w).attr('height',b.h);
+    g.select('text').attr('x',b.x+2).attr('y',b.y-7).text(r.label);
+  });
+}
+drawRegions();
+
+function edgePath(e) {
+  const a = byId[e.s], b = byId[e.t];
+  if (a === b) { // self loop, top-right corner
+    const x = a.x + a.w/2, y = a.y - a.h/2;
+    return `M ${x-28} ${y} C ${x-16} ${y-46}, ${x+44} ${y-46}, ${x+8} ${y+6}`;
+  }
+  const off = (e.idx - (e.count-1)/2) * 14; // spread parallel edges of one pair
+  const dx = b.x - a.x, dy = b.y - a.y;
+  let sx, sy, tx, ty;
+  if (Math.abs(dx) * a.h > Math.abs(dy) * a.w) { // horizontal exit
+    const fy = Math.max(-(a.h/2-12), Math.min(a.h/2-12, dy*0.3));
+    const gy = Math.max(-(b.h/2-12), Math.min(b.h/2-12, -dy*0.3));
+    sx = a.x + Math.sign(dx) * a.w/2; sy = a.y + off + fy;
+    tx = b.x - Math.sign(dx) * b.w/2; ty = b.y + off + gy;
+    const c = Math.max(40, Math.abs(tx - sx) * 0.45);
+    return `M ${sx} ${sy} C ${sx + Math.sign(dx)*c} ${sy + off}, ${tx - Math.sign(dx)*c} ${ty + off}, ${tx} ${ty}`;
+  } else {
+    const fx = Math.max(-(a.w/2-18), Math.min(a.w/2-18, dx*0.4));
+    const gx = Math.max(-(b.w/2-18), Math.min(b.w/2-18, -dx*0.4));
+    sx = a.x + off + fx; sy = a.y + Math.sign(dy) * a.h/2;
+    tx = b.x + off + gx; ty = b.y - Math.sign(dy) * b.h/2;
+    const c = Math.max(30, Math.abs(ty - sy) * 0.45);
+    return `M ${sx} ${sy} C ${sx + off} ${sy + Math.sign(dy)*c}, ${tx + off} ${ty - Math.sign(dy)*c}, ${tx} ${ty}`;
+  }
+}
+
+// merge parallel edges of the same pair for drawing (one path, several facts)
+const pairKey = e => `${e.s}→${e.t}|${e.type}`;
+const drawn = {};
+EDGES.forEach(e => { (drawn[pairKey(e)] ||= { s:e.s, t:e.t, type:e.type, facts:[] }).facts.push(e); });
+const DRAWN = Object.values(drawn);
+{ const groups = {}; DRAWN.forEach(d => { const k = [d.s,d.t].sort().join('|'); (groups[k] ||= []).push(d); });
+  Object.values(groups).forEach(g => g.forEach((d,i) => { d.idx = i; d.count = g.length; d.fwd = (d.s <= d.t); })); }
+
+const edgeG = view.append('g').attr('class','edges');
+const edgeSel = edgeG.selectAll('path').data(DRAWN).join('path')
+  .attr('class', d => `edge ${d.type}${d.s===d.t?' self':''}`)
+  .attr('marker-end','url(#arr)')
+  .attr('d', edgePath);
+
+const nodeG = view.append('g').attr('class','nodes');
+const labelG = view.append('g').attr('class','elabels');
+const nodeSel = nodeG.selectAll('g').data(NODES).join('g')
+  .attr('class', d => `node ${GROUPS[d.group].css}${d.core?' core':''}${d.chip?' chip':''}${d.store?' g-store':''}`)
+  .attr('tabindex', 0)
+  .attr('role','button')
+  .attr('aria-label', d => d.name)
+  .attr('transform', d => `translate(${d.x - d.w/2},${d.y - d.h/2})`);
+
+nodeSel.each(function(d){
+  const g = d3.select(this);
+  g.append('rect').attr('class','box').attr('width', d.w).attr('height', d.h);
+  if (!d.chip) g.append('rect').attr('class','band').attr('x',0).attr('y',0).attr('width',6).attr('height',d.h);
+  if (d.chip) {
+    g.append('rect').attr('class','band').attr('x',10).attr('y',d.h/2-4).attr('width',8).attr('height',8).attr('rx',2);
+    g.append('text').attr('class','name').attr('x',24).attr('y',d.h/2+4).text(d.name);
+  } else {
+    g.append('text').attr('class','name').attr('x',16).attr('y',d.core?24:21).text(d.name);
+    g.append('text').attr('class','sub').attr('x',16).attr('y',d.core?43:38).text(d.sub);
+    if (d.key) g.append('text').attr('class','key').attr('x',d.w-10).attr('y',d.core?24:21).attr('text-anchor','end').text(d.key);
+  }
+});
+
+// drag nodes (nudge only)
+nodeSel.call(d3.drag()
+  .on('drag', function(ev, d){ if (!d._raised) { d3.select(this).raise(); d._raised = true; } d.x += ev.dx; d.y += ev.dy; d3.select(this).attr('transform', `translate(${d.x - d.w/2},${d.y - d.h/2})`); edgeSel.attr('d', edgePath); drawRegions(); if (selected) drawLabels(selected); }));
+
+// ---------- INTERACTION ----------
+let selected = null;
+const enabled = new Set(['key','binds','pin','derived','vocab']);
+function applyFilters(){
+  edgeSel.style('display', d => enabled.has(d.type) ? null : 'none');
+}
+applyFilters();
+d3.selectAll('#toggles input').on('change', function(){
+  this.checked ? enabled.add(this.dataset.type) : enabled.delete(this.dataset.type);
+  applyFilters(); if (selected) focus(selected);
+});
+
+function drawLabels(id){
+  labelG.selectAll('*').remove();
+  if (!id) return;
+  edgeSel.filter(d => (d.s===id || d.t===id) && enabled.has(d.type)).each(function(d){
+    const L = this.getTotalLength(); let tt = d.count === 1 ? 0.42 : 0.28 + d.idx * (0.44 / (d.count - 1)); if (!d.fwd) tt = 1 - tt;
+    const p = this.getPointAtLength(L * (d.s===d.t ? 0.5 : tt));
+    const txt = d.facts.map(f => f.label).join(' · ');
+    const g = labelG.append('g').attr('class','elabel').attr('transform', `translate(${p.x},${d.s===d.t ? p.y-10 : p.y})`);
+    const t = g.append('text').attr('x',0).attr('y',3.5).attr('text-anchor','middle').text(txt);
+    const w = t.node().getComputedTextLength() + 10;
+    g.insert('rect','text').attr('x',-w/2).attr('y',-8).attr('width',w).attr('height',16);
+  });
+}
+function focus(id){
+  svg.classed('focused', true);
+  const lit = new Set([id]);
+  edgeSel.classed('lit', d => { const on = (d.s===id || d.t===id) && enabled.has(d.type); if (on){ lit.add(d.s); lit.add(d.t);} return on; });
+  nodeSel.classed('lit', d => lit.has(d.id)).classed('selected', d => d.id===id);
+  drawLabels(id);
+}
+function unfocus(){ svg.classed('focused', false); drawLabels(null); edgeSel.classed('lit', false); nodeSel.classed('lit', false).classed('selected', false); }
+
+nodeSel.on('mouseenter', (ev,d) => { if (!selected) focus(d.id); })
+  .on('mouseleave', () => { if (!selected) unfocus(); })
+  .on('click', (ev,d) => { ev.stopPropagation(); select(d.id); })
+  .on('keydown', (ev,d) => { if (ev.key==='Enter' || ev.key===' ') { ev.preventDefault(); select(d.id); } });
+svg.on('click', () => { selected = null; unfocus(); renderIntro(); });
+document.addEventListener('keydown', ev => { if (ev.key==='Escape') { selected=null; unfocus(); renderIntro(); } });
+d3.select('#reset').on('click', () => { svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity); });
+
+function select(id){ selected = id; focus(id); renderPanel(id); }
+
+const panel = document.getElementById('panel');
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+function renderIntro(){
+  const counts = {};
+  EDGES.forEach(e => counts[e.type] = (counts[e.type]||0)+1);
+  panel.innerHTML = `
+    <div class="intro">
+      <h2>How the pieces join</h2>
+      <p class="role">${NODES.length} nodes, ${EDGES.length} field-level connections, read from the schemas, vocabularies and registries in <code>cgen/trainstorm-core</code> (plus the three store contracts that live in READMEs and vocab files: locale packs, scenes, and the client-tier registries).</p>
+      <p>The shape to hold: <strong>everything joins on <code>atom_id</code></strong>. The atom owns meaning and <code>content_hash</code>; an element is one occurrence of it (<code>composed_from</code>); facets hang <em>under</em> the atom; every rendering store (locale, voice, narration) keys back to the atom and pins its hash; the warrant chain sits above and is reached only through <code>teaches[]</code>; the audience model is a <em>sibling</em> graph that joins content only through objectives and segment ids.</p>
+      <h3>Edge types</h3>
+      <div class="legend">
+        <span class="swatch"></span><span><strong>keyed reference</strong> — an id in one file resolves in another (${counts.key})</span>
+        <span class="swatch binds"></span><span><strong>binds under</strong> — a facet schema attaches under <code>atom.bindings.*</code> (${counts.binds})</span>
+        <span class="swatch pin"></span><span><strong>hash pin</strong> — a <code>source_hash</code> / <code>sha256</code> that goes stale when its source moves (${counts.pin})</span>
+        <span class="swatch derived"></span><span><strong>derived / realized</strong> — a tool produces one from the other (${counts.derived})</span>
+        <span class="swatch vocab"></span><span><strong>governed value / mirror</strong> — a field's values are a closed list owned elsewhere (${counts.vocab})</span>
+        <span class="swatch proposed"></span><span><strong>proposed, not built</strong> — declared in a vocab or README, absent from the schema (${counts.proposed}; off by default)</span>
+      </div>
+      <h3>Reading tips</h3>
+      <ul>
+        <li>Hover a node to see only its connections; click to pin it and list every join with the exact field path.</li>
+        <li>Dashed boxes are <em>stores</em> whose contract lives in a README or a vocab file rather than a <code>*.schema.json</code>.</li>
+        <li>Grey chips on the left are closed lists; on the right, keyed lookups. Both are single-writer and version-bumped, never silently extended.</li>
+      </ul>
+      <h3>What drifted (worth knowing)</h3>
+      <ul>
+        <li><code>atom.schema.json</code> still carries <code>$id: https://astellas.example/…/content-atom.schema.json</code>; every other schema is under <code>trainstorm.ai</code>.</li>
+        <li>Three vocabularies (tone, complexity, visual-type) name fields on <code>element</code> that the element schema does not yet declare.</li>
+        <li><code>locales/</code> has a README contract but no <code>locale.pack.schema.json</code>, while its sibling voice pack has one.</li>
+        <li><code>docs.registry</code> and <code>options.registry</code> exist only at the client tier (<code>cgen/astellas</code>, <code>cgen/brunswick</code>); core has no seed for <code>doc_</code> / <code>reg_</code>.</li>
+      </ul>
+    </div>`;
+}
+
+function renderPanel(id){
+  const n = byId[id];
+  const out = EDGES.filter(e => e.s===id && e.t!==id);
+  const inn = EDGES.filter(e => e.t===id && e.s!==id);
+  const self = EDGES.filter(e => e.s===id && e.t===id);
+  const row = (e, other, arrow) => `
+    <div class="conn" data-go="${other}">
+      <span class="arrow">${arrow}</span><span class="to">${esc(byId[other].name)}</span>
+      <span class="path"><span class="tag ${e.type}">${e.type==='vocab'?'governed':e.type}</span>${esc(e.path)}</span>
+      ${e.meta ? `<span class="meta">${esc(e.meta)}</span>` : ''}
+    </div>`;
+  panel.innerHTML = `
+    <h2><code>${esc(n.name)}</code></h2>
+    <div class="file">${esc(n.sub)}${n.key ? ` · id prefix <code>${esc(n.key)}</code>` : ''}</div>
+    <div class="group"><i style="background:${GROUPS[n.group].color}"></i>${GROUPS[n.group].label}</div>
+    <p class="role">${esc(n.role)}</p>
+    ${n.note ? `<p class="note">${esc(n.note)}</p>` : ''}
+    ${self.length ? `<h3>Refers to itself</h3>${self.map(e => row(e, id, '↻')).join('')}` : ''}
+    <h3>Points to (${out.length})</h3>
+    ${out.length ? out.map(e => row(e, e.t, '→')).join('') : '<div class="empty">Nothing — a leaf.</div>'}
+    <h3>Pointed at by (${inn.length})</h3>
+    ${inn.length ? inn.map(e => row(e, e.s, '←')).join('') : '<div class="empty">Nothing references this node.</div>'}
+  `;
+  panel.querySelectorAll('.conn').forEach(el => el.addEventListener('click', () => select(el.dataset.go)));
+  panel.scrollTop = 0;
+}
+renderIntro();
+</script>
+</body>
+</html>
