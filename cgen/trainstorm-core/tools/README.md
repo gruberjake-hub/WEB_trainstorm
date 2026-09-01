@@ -137,3 +137,18 @@ expression, not direction. `risk_of_overuse` is enforced, not noted — a high-r
 acknowledged but never amplified (`lead`/`dwell`) and never repeated, with the spend recorded in
 `harm_budget`. Rule set: `agents/responsive_engine/direction_v1.md`. Design record:
 `architecture/direction-facet.md`.
+
+## Committed-design gate
+
+From `cgen/trainstorm-core`:
+
+    python3 tools/validate_committed_design.py --selftest
+    python3 tools/validate_committed_design.py --file schemas/committed-design.example.json
+    python3 tools/validate_committed_design.py --project ../brunswick/projects/paytrans
+
+Headwater Case-Author stage-1 contract (`schemas/committed-design.schema.json`). Schema ·
+warrant-or-escape (exactly one) · HITL (`proposed` until a human sets `validated` with a
+human-shaped reviewer) · not-an-atom (`cd_`, no `meaning.source_text`, no occurrence facets)
+· unreachable-LO terminal is not mint-ready. No writer this hop; with no document in the
+project the run is contract-only and says so. Example is under `schemas/`, not a client
+store.

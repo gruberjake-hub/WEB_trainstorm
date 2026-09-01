@@ -13,6 +13,45 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-09-01 (committed-design contract) — Case-Author stage-1 node is a schema, not a writer. Selection + framing, not atoms. Mint still does not exist. Gate proves the join.
+
+*Anchor: branch `cursor/committed-design-contract-df5d` off `0378baa` (PR #66, open-project
+warrant). Jake: land the committed-design artifact as contract-before-writer. No
+Case-Author tool, no strategist.py, no workbench UI, no Headwater outcomes-mode, no
+chameleon.py, no LRE, no atom minting. Claude is a co-builder. Working-process DECISIONS
+block untouched. Do not change /cgen, /cgen/sl, ALSAP, artwork, paytrans atoms/voice/beats,
+realize, cartographer, couturier.*
+
+### What this hop is
+
+PR #66 seated the mint wake in the Headwater prompt and the Strategist stub: stage 2 wakes
+only when a committed-design is **validated** AND a warrant is held (or an explicit
+SOP-course Direct escape is recorded). This hop gives that artifact a schema so the gate is
+not fiction. It does not stand up a writer or a mint.
+
+### What landed
+
+`schemas/committed-design.schema.json` — project-level document (`cd_`, store
+`committed-design`, `schema_version` `committed-design.v0.1`). `derived_from` is source-store
+/ inventory refs. Selection partitions in-scope vs left-in-source-store (never deleted).
+Framing is the teachable shape; may reference `goal_` / `obj_`, never mints them. Warrant
+join is oneOf held_warrant | direct_escape (`escape_kind`: `sop_course`). Status `proposed` |
+`validated` — species-closed, not an extension of beats or goals. Example at
+`schemas/committed-design.example.json` (proposed, marked example, not paytrans).
+
+`tools/validate_committed_design.py` — schema + exactly-one join + human-shaped reviewer on
+validated + no smuggled atom meaning + no `atom_` id on the node + unreachable-LO terminal
+is not mint-ready. `--selftest` proves those reds. `--project` with no document is
+contract-only. No Python writer.
+
+Headwater Case-Author stage 1 points at the schema. Direct mode unchanged. One DECISIONS
+block. One STRUCTURE tree line under `schemas/`; First moves do not claim a writer exists.
+
+### What this is not
+
+Not atoms. Not a Case-Author tool. Not mint. Not Strategist / Designer / Audience standing
+up. Not LRE. Not a live client design.
+
 ## 2026-09-01 (open-project warrant) — Jake's open-project ID workflow seated in the named seats, not in Headwater. Two front doors; unreachable LOs are a terminal; Case-Author mint gated; outcomes-mode stays parked. Stub only — no Python, no UI.
 
 *Anchor: branch `cursor/open-project-warrant-2b51` off `a2e6655` (PR #64, direction hop). Jake

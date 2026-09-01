@@ -3123,3 +3123,52 @@ other door.
 **Supersedes:** nothing. Seats the roster Strategist / Designer / Audience bios and the
 existing Headwater Direct / Case-Author modes; does not replace them. Headwater
 outcomes-mode remains parked. Prior blocks and the working process stand.
+
+## 2026-09-01 — Committed-design is the Case-Author stage-1 node; contract-before-writer; mint still does not exist this hop
+
+**Signed:** Jake / Claude / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The Case-Author mint gate seated in the 2026-09-01 warrant block is no longer
+prompt fiction. Headwater Case-Author stage 1 emits a durable **committed-design** node —
+selection plus framing, not atoms — and that node has a schema:
+`schemas/committed-design.schema.json`. Stage 2 mint still does not exist this hop. A writer
+does not exist this hop. No tool proposes designs.
+
+- **Not an atom.** Opaque `cd_` id. Never `atom_` / `ele_`. Never `meaning.source_text` dumps
+  of the corpus. Never PII. Never occurrence intent / expression / audience. `goal_` and
+  `obj_` stay Strategist / Designer; this node may **reference** a held `goal_` and locked
+  `obj_` ids.
+- **Selection + framing.** `derived_from` names the corpus as source-store / inventory refs
+  (`doc_` / `rec_`), not embedded blobs. Selection partitions what is in-scope for mint vs
+  left in the source store (never deleted). Framing is the teachable shape, enough for a
+  future mint to know what to decompose.
+- **Warrant join.** Exactly one of: a held/validated `goal_` ref, or a recorded SOP-course
+  **Direct escape**. Not neither. An unreachable-LO terminal is not a held warrant — this
+  artifact is then **not** validated for mint.
+- **Status.** Species-closed v0.1 list: `proposed` | `validated`. Reuses those house words
+  (beats start at `proposed`; the warrant chain ratifies as `validated`) without silently
+  extending `beats.catalog`, voice, or `goal.schema` enums. Agent writes `proposed`. A human
+  sets `validated` and a human-shaped `reviewer`. Escape kind `sop_course` is the same kind
+  of closed list; version-bump to extend.
+- **Gate, not a writer.** `tools/validate_committed_design.py` — schema + warrant-or-escape +
+  HITL reviewer + not-an-atom. `--selftest` proves red. `--project` with no document is a
+  contract-only pass. Example: `schemas/committed-design.example.json` (`status: proposed`,
+  marked example; not a live paytrans design).
+- **Headwater.** Case-Author stage 1 points at this schema. Direct mode is unchanged. No
+  Case-Author tool, no `strategist.py`, no workbench UI, no Headwater outcomes-mode, no
+  `chameleon.py`, no LRE, no atom minting.
+
+**Why:** PR #66 seated the wake condition in the Headwater prompt and the Strategist stub.
+Without a schema the mint gate had nothing to point at. Contract before writer: Jake can
+read one example; Claude is not frozen out of Headwater; nothing proposes designs.
+
+**Consequences:**
+- `/cgen`, `/cgen/sl`, ALSAP, artwork, paytrans atoms/voice/beats, realize, cartographer,
+  and couturier are untouched. Working-process block (this file, 2026-08-25) is untouched.
+- The 2026-09-01 warrant block stands. This hop gives its committed-design sentence a
+  contract. Mint remains unbuilt.
+- Claude is a co-builder: this hop does not freeze them out of Headwater, ontology, or later
+  agent prompts.
+
+**Supersedes:** nothing. Extends the 2026-09-01 warrant block by naming the stage-1 artifact.
+Prior blocks and the working process stand.

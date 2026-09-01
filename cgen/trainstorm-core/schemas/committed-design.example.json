@@ -1,0 +1,38 @@
+{
+  "_note": "EXAMPLE / status proposed — fixture for schemas/committed-design.schema.json. Not a live client design, not paytrans, not a minted goal_/obj_/atom_. Inventory ids are fictional doc_fx_* pointers.",
+  "schema_version": "committed-design.v0.1",
+  "store": "committed-design",
+  "design_id": "cd_fx_scope_commit_example",
+  "version": 1,
+  "status": "proposed",
+  "client": "fx",
+  "project": "example_scope",
+  "proposed_by": "headwater.case_author",
+  "derived_from": {
+    "source_store": "fx/projects/example_scope/source",
+    "inventory_refs": [
+      { "id": "doc_fx_work_instruction", "registry": "docs" },
+      { "id": "doc_fx_related_faq", "registry": "docs" },
+      { "id": "doc_fx_out_of_scope_deck", "registry": "docs" }
+    ]
+  },
+  "selection": {
+    "in_scope": [
+      { "id": "doc_fx_work_instruction", "registry": "docs" }
+    ],
+    "left_in_source_store": [
+      { "id": "doc_fx_related_faq", "registry": "docs" },
+      { "id": "doc_fx_out_of_scope_deck", "registry": "docs" }
+    ]
+  },
+  "framing": {
+    "shape": "One bounded work instruction: identify the durable procedure, decompose to container + step leaves. FAQ and the slide deck stay in the source store.",
+    "goal_ref": "goal_fx_example_outcome",
+    "objective_refs": ["obj_fx_example_apply_procedure"]
+  },
+  "warrant_join": {
+    "kind": "held_warrant",
+    "goal_id": "goal_fx_example_outcome",
+    "objective_refs": ["obj_fx_example_apply_procedure"]
+  }
+}

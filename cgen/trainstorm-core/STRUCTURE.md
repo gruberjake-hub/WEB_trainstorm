@@ -86,6 +86,7 @@ trainstorm-core/
 │   ├── instance.facet.schema.json        ✅ authored overlay on a pinned template (instance.v0.1)
 │   ├── objectives.schema.json            ✅ intent ontology — objective node contract  (v2: serves + bloom)
 │   ├── goal.schema.json                  ✅ business-outcome node — reachability is a REQUIRED gate
+│   ├── committed-design.schema.json      ⬜ Case-Author stage-1 node (selection + framing, `cd_`); contract only — no writer this hop (DECISIONS 2026-09-01)
 │   ├── socket.schema.json                ✅ the INTAKE CONTRACT — derived, never authored (socket.v0.1)
 │   ├── template_manifest.schema.json     ✅
 │   ├── visual-asset.schema.json          ✅ one visual asset registry entry
@@ -188,7 +189,7 @@ trainstorm-core/
 - **Vocabularies:** `*.enum.json` (closed value lists) · `*.registry.json` (keyed lookups)
 - **Locale packs:** `<bcp47>.json` — `en.json`, `ja.json`, `fr-CA.json`
 - **Examples:** `example_*.json` · reference courses: `*.reference.course.json`
-- **Stable ID prefixes** (never reused/edited): `atom_` **content node** (the only key meaning is stored under) · `ele_` **occurrence** of an atom in a course (minted at realization, linked to its atom by `composed_from`, never carries authored text) · `obj_` objective · `goal_` business outcome · `term_` glossary term · `asset_` visual asset · `prim_`/`p###` script primitive · `sce_`/`sec_`/`mod_` structure. Two id spaces, two kinds of node: never mint `ele_` for content, never mint `atom_` for an occurrence (`architecture/DECISIONS.md`, 2026-08-25 occurrence identity; decision-log 2026-08-20 eighth).
+- **Stable ID prefixes** (never reused/edited): `atom_` **content node** (the only key meaning is stored under) · `ele_` **occurrence** of an atom in a course (minted at realization, linked to its atom by `composed_from`, never carries authored text) · `obj_` objective · `goal_` business outcome · `cd_` committed-design (Case-Author stage-1 selection + framing; not an atom) · `term_` glossary term · `asset_` visual asset · `prim_`/`p###` script primitive · `sce_`/`sec_`/`mod_` structure. Two id spaces, two kinds of node: never mint `ele_` for content, never mint `atom_` for an occurrence (`architecture/DECISIONS.md`, 2026-08-25 occurrence identity; decision-log 2026-08-20 eighth). Never mint `atom_` for a committed-design.
 - **Asset ids** are minted from the file's content hash at first ingest (`asset_img_<hash12>`) and then **frozen**. Opaque is correct here — but on re-ingest, match against the registry rather than re-deriving, or a re-exported image mints a second identity for the same asset.
 - **Two new governed closed lists** ship with the visual asset registry, both `v0.1` draft, both bumped by version not by silent extension: `role` (signature · motif · chrome) and `mark_class` (identity · sub_brand · program · third_party). `mark_class` is **required when `role: signature`**, enforced by a conditional in the schema — an unclassified signature is the exact ambiguity it exists to remove. Note it is deliberately *not* named `*_tier`: "tier" already means audience segment here (`tier1_field`, `tier2_msl`).
 
@@ -295,7 +296,8 @@ re-litigate. The **course half beyond Realizer / Cartographer / Couturier v1** h
 post-2026-08-26 hops below (cite `architecture/DECISIONS.md` dates). Dragoman and `tools/render/`
 PNG pipelines are unbuilt. Authoring Chameleon stays a contract (assumed-audience facets); there is
 no `chameleon.py`. The open-project warrant lives as a stub (`agents/strategist/warrant_STUB.md`);
-there is no `strategist.py`.
+there is no `strategist.py`. Case-Author stage 1 is a schema (`schemas/committed-design.schema.json`);
+there is no Case-Author writer and no mint this hop.
 
 Near-term, in dependency order:
 
@@ -374,7 +376,7 @@ outcomes-mode; LLM distractor-writer; pretty `/cgen/{client}/{course}` URLs; `/c
 rewrite; slide-authoring frontend; ingest UI on the static Netlify site; ISO 14971; Procedure B
 on ALSAP; Generator's divergent distractors; Strategist / Designer / Audience as live agents
 (open-project warrant is a stub contract, not a tool — `agents/strategist/warrant_STUB.md`; no
-`strategist.py`). Authoring Chameleon stays a contract.
+`strategist.py`; committed-design is a schema, not a writer — `schemas/committed-design.schema.json`). Authoring Chameleon stays a contract.
 
 `project/custom_instructions.md` now points at this file and `architecture/DECISIONS.md`.
 `architecture/unification-map.md` still names `element.schema.json` as canon in July prose —
