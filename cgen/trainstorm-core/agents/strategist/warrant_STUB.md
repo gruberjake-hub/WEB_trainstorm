@@ -80,8 +80,9 @@ lock without a human.
   lock before `teaches` binds; *"Objectives never lock without a human
   conversation; she insists on it"* (roster). Brunswick 2026-08-31: hop three
   may bind `teaches` only against validated objectives.
-- Not a live agent this hop. No `strategist.py`. No workbench UI. No Case-Author
-  tool.
+- Not a live agent this hop. No `strategist.py`. No workbench UI. Case-Author
+  stage-1 propose is `tools/headwater_case_author.py`; stage-2 mint does not
+  exist.
 
 ## Two front doors (recorded; do not share a plug-and-play upload)
 
