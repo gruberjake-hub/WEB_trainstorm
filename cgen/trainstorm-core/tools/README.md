@@ -100,3 +100,17 @@ ids. Does not write `atoms.json` or `element.intent`. HTML reads those keys so h
 vs reinforce do not look like the same card; extra `reinforce` is a check, not a recap;
 procedure steps on the spine are a job-aid, not four body cards.
 HTML default is the short spine; coverage dump is the sibling file. Run realize then cartographer first.
+
+## Audience gate
+
+From `cgen/trainstorm-core`:
+
+    python3 tools/validate_audience.py --selftest
+    python3 tools/validate_audience.py --project ../brunswick/projects/paytrans
+
+The Audience Agent's gate for segment records (`audience/<segment_id>.json`, schema
+`schemas/audience-model.schema.json`, vocab `vocab/disposition.enum.json`). Schema · governed ids
+(approved records may not cite `seed` entries) · `risk_of_overuse` harm gate · learner-domain
+boundary (`kind: learner` is never legal in a content store) · objective anchoring · segment_id
+uniqueness. With no `audience/` dir the project run is contract-only and says so. Design record:
+`architecture/lre-stage1-synthetic-learner.md`.
