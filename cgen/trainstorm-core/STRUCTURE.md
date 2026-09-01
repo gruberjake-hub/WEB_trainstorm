@@ -87,7 +87,7 @@ trainstorm-core/
 │   ├── objectives.schema.json            ✅ intent ontology — objective node contract  (v2: serves + bloom)
 │   ├── goal.schema.json                  ✅ business-outcome node — reachability is a REQUIRED gate
 │   ├── committed-design.schema.json      ✅ Case-Author stage-1 node (selection + framing, `cd_`); writer is `tools/headwater_case_author.py` (propose-only); mint does not exist (DECISIONS 2026-09-01)
-│   ├── dossier.schema.json               ✅ Strategist open-project warrant snapshot (`doss_`); propose-only; human accept; does not write ontology/goals.json (DECISIONS 2026-09-01)
+│   ├── dossier.schema.json               ✅ Strategist warrant snapshot (`doss_`); propose-only; human accept still does not write the goals store; named next write landed 2026-09-01 (`goal_ast_cci_library_used`, DECISIONS)
 │   ├── socket.schema.json                ✅ the INTAKE CONTRACT — derived, never authored (socket.v0.1)
 │   ├── template_manifest.schema.json     ✅
 │   ├── visual-asset.schema.json          ✅ one visual asset registry entry
@@ -131,7 +131,7 @@ trainstorm-core/
 │
 ├── locales/                              ⬜ externalized translations keyed by atom_id — README only
 ├── ontology/objectives.json              ✅ obj_ nodes — 7 seeded (2 AST009 `status: example`; 5 ALSAP `draft`)
-├── ontology/goals.json                   ✅ goal_ nodes — 2 seeded (1 AST009 `status: example`; 1 ALSAP `draft`); the WARRANT
+├── ontology/goals.json                   ✅ goal_ nodes — 4 (AST009 `example`; ALSAP `draft`; paytrans `validated` 2026-08-31; CCI PD `goal_ast_cci_library_used` `validated` 2026-09-01); still the core seed (no per-project ontology store)
 │
 ├── architecture/                         # docs of record (the .md files sync to Project knowledge)
 │   ├── DECISIONS.md                      ✅ append-only canon, one short block per settled call — if a chat disagrees, this file wins
@@ -151,6 +151,7 @@ trainstorm-core/
 │   ├── example_corpus_inventory.json     ✅ Case-Author stage-1 fixture listing (not a live client dump)
 │   ├── example_committed_design.json     ✅ proposed design from that listing (`cd_`; not paytrans)
 │   ├── example_dossier.json              ✅ proposed Strategist warrant snapshot (`doss_`; not a live engagement)
+│   ├── doss_ast_cci_pd.json              ✅ validated live dossier (reviewer jake, 2026-09-01); not an EXAMPLE fixture; sketch seated as goal_ast_cci_library_used
 │   ├── sample_script.json / .v2.json     ✅
 │   └── brunswick.reference.course.json   ✅ RATIFIED v1 structural (2026-08-31) — a pointer to the paytrans course, never a copy; v2 scope named (voice, Griot, arc, expression)
 │
@@ -164,7 +165,7 @@ trainstorm-core/
 │   ├── headwater_ingest_paytrans.py      ✅ sibling Headwater ingest for brunswick/paytrans — first expository corpus (2026-08-31)
 │   ├── headwater_case_author.py          ✅ Case-Author stage 1 — proposes committed-design (status proposed); human-run committed_design_accept.py --by is the only promoter; mint does not exist
 │   ├── validate_dossier.py               ✅ Strategist dossier gate — schema · warrant terminal · HITL · no atoms · no PII · no strategist.py
-│   ├── dossier_accept.py                 ✅ ONLY writer of dossier `validated`; human-shaped `--by`; writes nothing on refuse; does not write ontology/goals.json
+│   ├── dossier_accept.py                 ✅ ONLY writer of dossier `validated`; human-shaped `--by`; writes nothing on refuse; still does not write ontology/goals.json (named store write is a separate hop — landed 2026-09-01)
 │   ├── project_sop_artwork.py            ✅ sibling SOP-2290 projector
 │   ├── store_merge.py                    ✅ the idempotent merge rule — lives once, both ingests import it
 │   ├── resolve_slot.py                   ✅ the walk: one slot → grounding packet (+ sufficiency)
@@ -307,8 +308,9 @@ no `chameleon.py`. The open-project warrant has an operating prompt
 propose-only dossier store (`schemas/dossier.schema.json`); human-run
 `tools/dossier_accept.py --by` is the only promoter. There is no `strategist.py`.
 Case-Author stage 1 writer is `tools/headwater_case_author.py` (propose-only); there is
-no stage-2 mint this hop. This hop does not mint atoms, lock `obj_`, or write
-`ontology/goals.json`.
+no stage-2 mint this hop. Accepting a dossier still does not write `ontology/goals.json`.
+The named next write landed 2026-09-01: `goal_ast_cci_library_used` in the live store.
+This hop does not mint atoms or lock `obj_`.
 
 Near-term, in dependency order:
 
@@ -388,7 +390,8 @@ rewrite; slide-authoring frontend; ingest UI on the static Netlify site; ISO 149
 on ALSAP; Generator's divergent distractors; Designer as a live agent; Strategist as a
 *compiler* (the operating prompt and dossier store exist; there is still no `strategist.py`;
 Case-Author stage-1 propose is `tools/headwater_case_author.py`; mint does not exist; accepting
-a dossier does not write `ontology/goals.json` — that is a named next hop). Authoring Chameleon
+a dossier still does not write `ontology/goals.json` — the named store write landed 2026-09-01
+as `goal_ast_cci_library_used`; Designer `obj_` lock is not that hop). Authoring Chameleon
 stays a contract.
 
 `project/custom_instructions.md` now points at this file and `architecture/DECISIONS.md`.
