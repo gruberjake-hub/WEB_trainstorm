@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/committed-design.schema.json",
+  "title": "Committed design — Case-Author stage-1 node (selection + framing)",
+  "description": "Headwater Case-Author stage 1 emits this project-level document: what is in-scope for mint, and the teachable shape, stamped derived_from the corpus. It is NOT an atom (no atom_ id, no meaning.source_text, no occurrence intent/expression/audience). Stage 2 mint does not exist in the hop that landed this schema; when it wakes, it wakes on this artifact existing with status validated AND a warrant join that is either a held/validated goal_ or a recorded SOP-course Direct escape — one of those two, not neither. Unreachable-LO terminal (a goal whose trainable slice is empty) means this artifact is NOT validated for mint. Status is proposed until a human validates; the agent never sets validated. Species-closed lists (status, warrant-join kind, escape kind) live here as committed-design.v0.1 — version-bump to extend; do not silently extend beats.catalog proposed/accepted, voice draft/accepted, or goal draft/example/validated. Canonical instances will live per-project; this schema is shared core.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "store",
+    "design_id",
+    "version",
+    "status",
+    "client",
+    "project",
+    "derived_from",
+    "selection",
+    "framing",
+    "warrant_join"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "committed-design.v0.1",
+      "description": "Closed with this schema. A new status value, escape kind, or join kind is a version bump, not a silent extend."
+    },
+    "store": { "const": "committed-design" },
+    "design_id": {
+      "type": "string",
+      "pattern": "^cd_[a-z0-9_]+$",
+      "description": "Opaque id of this design node. Never atom_, never ele_. Minted once; never reused, never edited."
+    },
+    "version": { "type": "integer", "minimum": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["proposed", "validated"],
+      "description": "v0.1 closed list for THIS species. proposed = Headwater Case-Author (or a human) has drafted the selection+framing; validated = a human has ratified it for mint. Reuses the house words (beats start at proposed; the warrant chain ratifies as validated) without extending those other enums. The agent never writes validated."
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Who validated. Required when status is validated; forbidden while proposed. A human handle, never an agent id."
+    },
+    "client": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Client namespace slug (e.g. brunswick). Not a person."
+    },
+    "project": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Project slug (e.g. paytrans). The live design would live under that project; this schema's example is not a live client design."
+    },
+    "proposed_by": {
+      "type": "string",
+      "description": "Provenance of the proposal (e.g. headwater.case_author). Not a ratification."
+    },
+    "derived_from": { "$ref": "#/$defs/derived_from" },
+    "selection": { "$ref": "#/$defs/selection" },
+    "framing": { "$ref": "#/$defs/framing" },
+    "warrant_join": { "$ref": "#/$defs/warrant_join" },
+    "_note": {
+      "type": "string",
+      "maxLength": 800,
+      "description": "Free-text note about this document as a whole — example marker, provenance. House style (goal.schema.json). Never a corpus dump."
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "validated" } }, "required": ["status"] },
+      "then": { "required": ["reviewer"] }
+    },
+    {
+      "if": { "properties": { "status": { "const": "proposed" } }, "required": ["status"] },
+      "then": { "not": { "required": ["reviewer"] } }
+    }
+  ],
+  "$defs": {
+    "inventory_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "description": "A pointer into a client inventory (docs registry, records registry). Refs, never embedded blobs, never atom_ / ele_.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(doc|rec)_[a-z0-9_]+$",
+          "description": "Governed inventory id. doc_ from docs.registry; rec_ from records.registry. Not atom_, not ele_, not cd_."
+        },
+        "registry": {
+          "type": "string",
+          "enum": ["docs", "records"],
+          "description": "Which client registry holds this id."
+        }
+      }
+    },
+    "derived_from": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_store"],
+      "description": "The corpus this design is derived from. Store path + inventory refs. Never the blobs, never meaning.source_text.",
+      "properties": {
+        "source_store": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "description": "Store-relative pointer to the corpus home (client/project source), never the file bytes."
+        },
+        "inventory_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/inventory_ref" },
+          "description": "The inventory entries that constitute the corpus. Refs, not embeddings."
+        }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["in_scope", "left_in_source_store"],
+      "description": "What becomes canon vs what stays in the source store. Left-out material is never deleted.",
+      "properties": {
+        "in_scope": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/inventory_ref" },
+          "description": "Inventory items the mint may decompose. Still resident in the source store until minted."
+        },
+        "left_in_source_store": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/inventory_ref" },
+          "description": "Remains in the source store. Not deleted. Not minted from this design."
+        }
+      }
+    },
+    "framing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["shape"],
+      "description": "The teachable shape — enough for a future mint to know what to decompose. Does not mint goal_ or obj_ (Strategist / Designer). May reference a held goal_ and locked obj_ ids. Never a corpus dump, never PII, never occurrence intent/expression/audience.",
+      "properties": {
+        "shape": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "description": "The bounded teachable object (what this course is), in designer terms. Not source text. Not a syllabus of atoms."
+        },
+        "goal_ref": {
+          "type": "string",
+          "pattern": "^goal_[a-z0-9_]+$",
+          "description": "Optional pointer at a held goal_ (Strategist). A reference, not a mint."
+        },
+        "objective_refs": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^obj_[a-z0-9_]+$" },
+          "uniqueItems": true,
+          "description": "Optional pointers at locked obj_ ids (Designer). References, not a mint."
+        }
+      }
+    },
+    "warrant_join": {
+      "description": "Exactly one of: a held/validated goal_ ref, or a recorded SOP-course Direct escape. Not neither. Unreachable-LO terminal is not a held warrant — the gate rejects status=validated against it. kind / escape_kind are v0.1 closed lists on this species.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "goal_id"],
+          "properties": {
+            "kind": {
+              "const": "held_warrant",
+              "description": "Open-project door: a human-ratified goal_ whose reachability records that a learning intervention can move the measure."
+            },
+            "goal_id": {
+              "type": "string",
+              "pattern": "^goal_[a-z0-9_]+$"
+            },
+            "objective_refs": {
+              "type": "array",
+              "items": { "type": "string", "pattern": "^obj_[a-z0-9_]+$" },
+              "uniqueItems": true,
+              "description": "Locked obj_ ids that serve this goal, when Designer has locked them. Optional at stage 1; mint still does not write them."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "escape_kind", "recorded_by", "rationale"],
+          "properties": {
+            "kind": {
+              "const": "direct_escape",
+              "description": "This pile is actually one bounded SOP-course. Takes the Direct door without pretending a warrant was found."
+            },
+            "escape_kind": {
+              "type": "string",
+              "enum": ["sop_course"],
+              "description": "v0.1 closed list. sop_course = one bounded SOP/form; the document is the syllabus. Version-bump to extend; do not silently add values."
+            },
+            "recorded_by": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Human who recorded the escape. Agent never writes this."
+            },
+            "rationale": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 400,
+              "description": "Why this corpus is one bounded SOP-course, not an open-project dossier."
+            }
+          }
+        }
+      ]
+    }
+  }
+}
