@@ -130,7 +130,7 @@ trainstorm-core/
 │   └── _schema/                          ✅ REMOVED 2026-08-30 — held two drifted copies of schemas that live in schemas/ (one home)
 │
 ├── locales/                              ⬜ externalized translations keyed by atom_id — README only
-├── ontology/objectives.json              ✅ obj_ nodes — 7 seeded (2 AST009 `status: example`; 5 ALSAP `draft`)
+├── ontology/objectives.json              ✅ obj_ nodes — 16 (2 AST009 `example`; 5 ALSAP `draft`; 5 paytrans `obj_bw_emp_*` `validated` 2026-08-31; 4 CCI PD `obj_ast_cci_*` `validated` 2026-09-01, serving `goal_ast_cci_library_used`); still the core seed (no per-project ontology store)
 ├── ontology/goals.json                   ✅ goal_ nodes — 4 (AST009 `example`; ALSAP `draft`; paytrans `validated` 2026-08-31; CCI PD `goal_ast_cci_library_used` `validated` 2026-09-01); still the core seed (no per-project ontology store)
 │
 ├── architecture/                         # docs of record (the .md files sync to Project knowledge)
@@ -310,7 +310,8 @@ propose-only dossier store (`schemas/dossier.schema.json`); human-run
 Case-Author stage 1 writer is `tools/headwater_case_author.py` (propose-only); there is
 no stage-2 mint this hop. Accepting a dossier still does not write `ontology/goals.json`.
 The named next write landed 2026-09-01: `goal_ast_cci_library_used` in the live store.
-This hop does not mint atoms or lock `obj_`.
+Designer `obj_` lock for that goal landed 2026-09-01 (`obj_ast_cci_*`, objectives v6).
+This hop does not mint atoms.
 
 Near-term, in dependency order:
 
@@ -391,7 +392,8 @@ on ALSAP; Generator's divergent distractors; Designer as a live agent; Strategis
 *compiler* (the operating prompt and dossier store exist; there is still no `strategist.py`;
 Case-Author stage-1 propose is `tools/headwater_case_author.py`; mint does not exist; accepting
 a dossier still does not write `ontology/goals.json` — the named store write landed 2026-09-01
-as `goal_ast_cci_library_used`; Designer `obj_` lock is not that hop). Authoring Chameleon
+as `goal_ast_cci_library_used`; Designer `obj_` lock for that goal landed 2026-09-01 as four
+`obj_ast_cci_*` nodes in the core seed). Authoring Chameleon
 stays a contract.
 
 `project/custom_instructions.md` now points at this file and `architecture/DECISIONS.md`.
