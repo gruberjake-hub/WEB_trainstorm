@@ -44,10 +44,10 @@ cgen/
 │   └── registry/{roles,records,docs,options}.registry.json  ✅ seeded v1 at namespace creation; grown by propose→adopt
 │
 ├── astellas/                            # ⚠ THIRD SIBLING — client atom stores + client registries
-│   ├── projects/{ast_alsap,alsap,alsap_asp9999,ast_artwork,cci_public_disclosure}/  ✅ procedure · template · instance · artwork stores; `cci_public_disclosure` is 101 draft atoms (PR #74) + first Realizer pass (101 1:1 `ele_`, QD-nucleus catalog spine; mint still does not write `ele_`)
+│   ├── projects/{ast_alsap,alsap,alsap_asp9999,ast_artwork,cci_public_disclosure}/  ✅ procedure · template · instance · artwork stores; `cci_public_disclosure` is 101 draft atoms (PR #74) + Realizer 1:1 `ele_` (PR #75) + first cartographer+couturier pass via `intent_map` (QD-nucleus spine; mint still does not write `ele_`)
 │   │                                               (`ast_artwork` store **and** `?project=` loader on main, PR #42.
 │   │                                               `/cgen/?project=ast_artwork` plays SOP-2290; `/cgen` stays ALSAP.
-│   │                                               `cci_public_disclosure`: first live stage-2 mint from `cd_ast_cci_pd`, reviewer jake, 2026-09-02; v2.0 QDs; remainder not minted; Realizer 2026-09-02: occurrences/ + realized_lesson.{html,json}; Cartographer/teaches not this hop; inventory refs are pointers, not a docs.registry smash.)
+│   │                                               `cci_public_disclosure`: first live stage-2 mint from `cd_ast_cci_pd`, reviewer jake, 2026-09-02; v2.0 QDs; remainder not minted; Realizer 2026-09-02: occurrences/ + realized_lesson.{html,json}; Cartographer/Couturier 2026-09-02: `occurrences/intent_map.json` binds four `obj_ast_cci_*`; plays at `/cgen/sl/?project=cci_public_disclosure`; inventory refs are pointers, not a docs.registry smash.)
 │   └── registry/{roles,records,docs,options}.registry.json  ✅ client-tier governed ENTRIES
 │
 ├── sl/                                  ✅ player two — Storyline chrome on the same realized_lesson.json (`/cgen` remains stock)
@@ -316,8 +316,9 @@ Case-Author stage 1 writer is `tools/headwater_case_author.py` (propose-only); f
 already recorded). Stage-2 mint is `tools/headwater_case_author_mint.py` +
 `tools/headwater_ingest_cci_pd.py` (v2.0 QDs; remainder not minted). Mint still
 does not write `ele_`. First Realizer pass on that store landed 2026-09-02
-(1:1 `ele_` + QD-nucleus catalog spine). Cartographer / Couturier are not
-this hop.
+(1:1 `ele_` + QD-nucleus catalog spine). First Cartographer + Couturier
+pass on that store landed 2026-09-02 (`intent_map` overlay; four
+`obj_ast_cci_*`; plays at `/cgen/sl/?project=cci_public_disclosure`).
 
 Near-term, in dependency order:
 
@@ -401,7 +402,9 @@ Case-Author stage-1 propose is `tools/headwater_case_author.py`; first live
 recorded); stage-2 mint landed 2026-09-02 as `tools/headwater_case_author_mint.py`
 (v2.0 SOP/GUIDE/FORM; remainder not minted; mint still does not write `ele_`);
 first Realizer pass on `cci_public_disclosure` landed 2026-09-02 (101 1:1 `ele_`,
-QD-nucleus catalog spine; Cartographer/teaches not that hop); accepting a dossier still
+QD-nucleus catalog spine); first Cartographer + Couturier pass on that store
+landed 2026-09-02 (`intent_map` binds four `obj_ast_cci_*`; machinery test,
+not a gold course); accepting a dossier still
 does not write `ontology/goals.json` — the named store write landed 2026-09-01 as
 `goal_ast_cci_library_used`; Designer `obj_` lock for that goal landed 2026-09-01 as four
 `obj_ast_cci_*` nodes in the core seed). Authoring Chameleon
