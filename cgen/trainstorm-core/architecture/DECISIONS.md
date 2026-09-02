@@ -3943,3 +3943,79 @@ inside the dossier, not as a rival schema" — it still does, **by reference**;
 the digest document is not a rival schema, it is the source the dossier
 indexes. The 2026-09-02 Dramaturge/CCI block stands.
 
+## 2026-09-02 — First real dossier: paytrans Context Digest saved whole, harvested verbatim; dossier.v0.2; digest-only is a legal proposed state, never acceptable
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The studio-and-ledger block's first hop, done. Jake ran his
+ingestion prompt **verbatim** in a fresh chat over the paytrans PROJECT
+CONTEXT; the output is saved **whole and unedited** at
+`cgen/brunswick/projects/paytrans/dossier/context_digest.md` (nine sections,
+~7,300 words). A **cold harvest** — a script that locates excerpts in the
+document, never types them — produced `doss_paytrans.json` beside it: 62
+verbatim excerpts indexed across all nine sections, plus audiences (as
+segments), constraints, risks, politics. It is the first `doss_` in the repo.
+
+`schemas/dossier.schema.json` → **dossier.v0.2**, additive:
+
+1. `context_digest.document` `{path, sha256, generated_by, generated_on}` —
+   the digest saved whole, path relative to the dossier file, sha256 of the
+   text with CRLF→LF (autocrlf-safe). The gate requires it on every live
+   dossier; the EXAMPLE fixture may omit it.
+2. Every `context_digest` field is now a **verbatim excerpt or array of
+   excerpts** of that document. `validate_dossier.py` checks substring
+   identity (whitespace-normalized). A paraphrase fails the gate. This is the
+   "harvester extracts, never rewrites" rule made mechanical.
+3. Three fields the ingestion prompt produces and v0.1 had no home for:
+   `concepts` (§3), `assumptions` (§5), `signal_noise` (§6).
+4. The **argued half** — `warrant`, `outcomes`, `roi`, `finding`,
+   `modality_recommendations`, `design_insights` — is required only at
+   `status: validated`. A **digest-only dossier is a legal PROPOSED state**:
+   the digest exists, the argument has not been had. `dossier_accept.py`
+   refuses it ("digest-only dossier — the argument has not been had"). The
+   alternative was Claude inventing warrant verdicts to satisfy the schema,
+   which is exactly the compression the studio-and-ledger block forbids.
+
+Fixture: `schema_version` marker only. Gates: `validate_dossier.py --selftest`
+ALL PASS (new green: digest-only proposed, matching document + verbatim
+excerpt, CRLF-only difference is not a mismatch; new red: live without
+document, sha256 mismatch, missing file, paraphrased excerpt, validated
+without warrant). `dossier_accept.py --selftest` ALL PASS (new refusals:
+digest-only, live without document). `validate_dossier.py --file
+../brunswick/projects/paytrans/dossier/doss_paytrans.json` ALL PASS;
+`dossier_accept.py --file … --by jake` REFUSED as designed.
+
+**Why:** The studio-and-ledger block found the ingestion prompt already in the
+graph and never harvested, and its output compressed to fit six strings. This
+hop is the proof the other way: the same prompt, unedited, produces a digest
+the seat's snapshot mode could not have (stale-corpus finding §7.12; the
+content-holes caution in §6; canonicalized concepts with a live three-vs-four
+pillar inconsistency), and the graph now holds it **whole**, indexed by a
+gate that cannot accept a rewrite.
+
+**Consequences:**
+- Writes: `cgen/brunswick/projects/paytrans/dossier/{context_digest.md,
+  doss_paytrans.json}` (new); `schemas/dossier.schema.json`;
+  `reference/example_dossier.json` (marker); `tools/validate_dossier.py`;
+  `tools/dossier_accept.py`; this block; a `decision-log.md` entry. No atoms,
+  no `obj_`, no `ontology/goals.json`, no Strategist prompt edit (that is hop
+  two), no `strategist.py` (still forbidden — the harvest is a one-off
+  extraction script, not a seat; it lives in this session's record, not in
+  `tools/`, and if it recurs it becomes `tools/dossier_harvest.py` by a
+  later block).
+- The digest names one person by first name in §7.11. The document is kept
+  verbatim by rule; the **index carries only the first sentence** of that
+  item, so the JSON stays person-free. Whether the document itself should be
+  redacted at source (re-run with an instruction) or left as the corpus
+  actually reads is Jake's call, not the harvester's.
+- Not yet: the argument. `doss_paytrans.json` waits for the room — warrant,
+  finding, outcomes — before `dossier_accept.py --by jake` will take it. That
+  is hop two (re-seat the Strategist as the room), or a hand-authored
+  argued half, whichever Jake prefers.
+- The paytrans course already realized (68 atoms) predates this dossier;
+  nothing downstream reads a dossier yet, so no staleness is introduced.
+
+**Supersedes:** nothing. Extends the 2026-09-02 studio-and-ledger block (hop
+one of three) and the Strategist seat block (`context_digest` still lives
+inside the dossier — now by reference, as that block said it should).
+

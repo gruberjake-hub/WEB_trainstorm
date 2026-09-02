@@ -13,6 +13,56 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-09-02 (first real dossier) — paytrans Context Digest saved whole; harvested verbatim; dossier.v0.2; the argument is still owed
+
+*Anchor: main a5ad339 (PR #80, studio-and-ledger). Hop one of that block's three. Jake ran the
+ingestion prompt verbatim in a fresh incognito chat over the paytrans PROJECT CONTEXT and pasted
+the result unedited; Claude saved it whole, bumped the dossier schema, extended the gate, and
+harvested `doss_paytrans.json` by locating excerpts in the document programmatically. Writes listed
+in the DECISIONS block. No code that thinks; one script that copies.*
+
+### What the digest showed about compression
+
+Set the new digest against what `dossier.v0.1` could hold. The seat's snapshot had six string
+fields capped at 1,200 characters. The digest's §2 alone is a sixteen-row table; §3 canonicalizes
+nine concepts and finds a live inconsistency (three pillars in the manager FAQ, four in the
+corporate deck) and a second (merit lump-sum trigger: market maximum vs range maximum); §6 flags
+that four "low-signal" sections are content locked in un-extracted graphics, one of them probably
+operationally essential; §7.12 notices the corpus is stale — every milestone in it has elapsed —
+and says that should gate the reading of §8–9. None of that survives a 1,200-character paraphrase.
+The v0.1 shape was not wrong about what a dossier is; it was wrong about what the digest is. The
+digest is the meaning. The dossier indexes it.
+
+### The honest wrinkle, and what was decided
+
+The v0.1 schema required a warrant (three verdicts + outcome), a finding, ROI, modality
+recommendations and design insights. The digest contains none of these, by the ingestion prompt's
+own rule ("no solutioning"). The options were: invent them (Claude playing Strategist — precisely
+the compression-by-rewrite the studio-and-ledger block forbids), or let a dossier exist before the
+argument. v0.2 takes the second: the argued half is required at `validated`, not at `proposed`.
+The gate passes a digest-only proposed dossier and says so in its own row; `dossier_accept.py`
+refuses it with the reason in words. The graph now distinguishes "we have read the corpus" from
+"we have decided what it warrants," which are different moments in the room.
+
+### The verbatim gate
+
+"A harvester extracts; it never shortens or rewrites" was a rule in a document yesterday. Today it
+is `excerpts_not_verbatim()`: every `context_digest` string must be a whitespace-normalized
+substring of the referenced document, whose sha256 (CRLF→LF, so a Windows checkout is not a
+"moved" document) must match. The selftest proves a paraphrase is red. This is the same shape as
+the inverse guard on beats — a mechanical proof that the index cannot drift from the meaning.
+
+### Carries
+
+- Hop two: re-seat the Strategist as the room, so the argued half gets authored in conversation
+  and snapshotted, not hand-typed into JSON.
+- The harvest script is not in `tools/` on purpose (no `strategist.py`, and no cousin of it by
+  the back door). If a second dossier is harvested the same way, mint `tools/dossier_harvest.py`
+  by its own block.
+- §7.11 of the digest names a person by first name. Index kept person-free; document left as
+  produced. Jake decides whether the source is re-run with a redaction instruction.
+- Astellas dossiers (the Grok run) — same path, when Jake retrieves or re-runs it.
+
 ## 2026-09-02 (studio and ledger) — Conversation is not a writer; generating prompt ≠ harvest; the felt regression was compression
 
 *Anchor: main 74c564d (PR #77). A design beat, not a build hop. Jake opened with visual
