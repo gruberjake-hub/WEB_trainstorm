@@ -13,7 +13,8 @@
     "id": "cci_public_disclosure_short",
     "title": "Public Disclosure of Astellas CCI",
     "title_from": "atom_sop_ast29658",
-    "theme": "astellas"
+    "theme": "astellas",
+    "voice_register": "warm_direct"
   },
   "nav": {
     "linear": true,
@@ -42,6 +43,20 @@
       "kind": "scene",
       "role": "front_matter",
       "components": [
+        {
+          "type": "Body",
+          "props": {
+            "text": "Welcome \u2014 this is about Public Disclosure of Astellas CCI: what's already public, and what it means for you.",
+            "kicker": ""
+          },
+          "meta": {
+            "beat_id": "bt_cci_public_disclosure_welcome",
+            "intent": {
+              "pedagogical": "hook"
+            },
+            "placement": "lesson_start"
+          }
+        },
         {
           "type": "Heading",
           "props": {
@@ -738,6 +753,20 @@
               "depth": 0,
               "head": false
             }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "You're informed. You know what's already public and what it means for you \u2014 and that knowledge is yours to use.",
+            "kicker": ""
+          },
+          "meta": {
+            "beat_id": "bt_cci_public_disclosure_closure",
+            "intent": {
+              "pedagogical": "transfer"
+            },
+            "placement": "lesson_end"
           }
         }
       ]

@@ -3796,4 +3796,85 @@ project does not yet have.
 The 2026-08-31 arc hops (Dramaturge seat, inverse guard, beat injection)
 already named this path; this is the first Astellas/CCI firing of that seat.
 
+---
+
+## 2026-09-02 — CCI PD catalog test-accept + Dragoman beat copy + realize injection (blanket, synthetic)
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Blanket **test-accept** by **jake**, 2026-09-02, on synthetic CCI Public
+Disclosure, to exercise Dragoman / the inverse guard / realize beat injection.
+**Not a design review of wording.** Same paytrans path (arc hops two then three),
+scoped to the two Dramaturge beats from PR #77. No `beat_accept.py`; ratification
+is the catalog status flip.
+
+1. **Catalog.** `occurrences/beats.json`: `bt_cci_public_disclosure_welcome`
+   (lesson_start / hook) and `bt_cci_public_disclosure_closure` (lesson_end /
+   transfer) flip `proposed` → `accepted`. Placement, intent, beat_id, and
+   `from` unchanged. Schema has no reviewer field on beats.
+2. **Dragoman voice mode** (in-session; there is no `dragoman.py`). Prompt:
+   `agents/localize/voice.system.md`. Wrote ONLY beat proposals — no atom-level
+   `entries` for the 101 CCI atoms, no narrate mode, no Griot, no
+   `brands/astellas/*-voice.registry.json`.
+   `voice/proposals/warm_direct.json`: `register` warm_direct, `proposals` `{}`,
+   `beat_proposals` for the two `bt_` ids, each `status: "draft"` (bright line),
+   `source_hash` = `beat_hash` after the catalog flip
+   (`sha256` over canonical `{beat_id, placement, intent}` via
+   `tools/validate_arc.py`). Claim-free `warm_direct` copy:
+   - welcome: "Welcome — this is about Public Disclosure of Astellas CCI: what's already public, and what it means for you."
+   - closure: "You're informed. You know what's already public and what it means for you — and that knowledge is yours to use."
+   Allowlist names (Public Disclosure, Astellas, CCI) come from
+   `lessons.json` / `scenes.json` / client+project, not invention. Zero digits.
+3. **Accept.** `voice_accept.py` is the ONLY writer into `voice/warm_direct.json`.
+   `--by jake` (human handle). Pack created as `{pack_version: voice.v0.1,
+   register, entries: {}}` plus `beats`. Proposals stay draft.
+4. **Realize.** `python3 tools/realize.py --project ../astellas/projects/cci_public_disclosure`
+   injects a beat only when catalog beat is accepted AND pack copy is accepted
+   AND `source_hash` == fresh `beat_hash`. Did not re-run cartographer/couturier
+   as a writer; realize re-stamped the existing couturier/cartographer blocks
+   and added the voice overlay.
+
+From `cgen/trainstorm-core`:
+
+    python3 tools/localize/voice_gate.py --project ../astellas/projects/cci_public_disclosure
+    python3 tools/localize/voice_accept.py --project ../astellas/projects/cci_public_disclosure --register warm_direct --ids bt_cci_public_disclosure_welcome,bt_cci_public_disclosure_closure --by jake
+    python3 tools/validate_voice.py --project ../astellas/projects/cci_public_disclosure
+    python3 tools/validate_arc.py --project ../astellas/projects/cci_public_disclosure
+    python3 tools/realize.py --project ../astellas/projects/cci_public_disclosure
+
+**Still not this hop.** Griot. Narrate mode. An Astellas voice registry. Atom-level
+voice entries. ALSAP or paytrans beats/voice. `/cgen` / `/cgen/sl` rewrites.
+Claude remains a co-builder. Griot still waits on accepted tracks **and** a
+brand voice registry.
+
+**Why:** PR #77 proposed the frame. The remaining hops (ratify → inverse-guard
+copy → human-run accept → realize inject) had to fire on this synthetic store
+without waiting for a local script run. Blanket test-accept is the mechanical
+exercise, not a wording bless.
+
+**Consequences:**
+- Writes: `occurrences/beats.json` (status only); `voice/proposals/warm_direct.json`
+  (two draft beat_proposals); `voice/warm_direct.json` (two accepted beats,
+  reviewer jake, empty `entries`); realize re-projection of
+  `realized_lesson.json` + `occurrences/manifest.json` voice stamp. This block.
+- `voice_gate` ALL PASS (inverse guard claim-free proven on both beats).
+- `voice_accept` 2 accepted by jake, 0 refused.
+- `validate_voice` ALL PASS (both beat_hash fresh). `validate_arc` ALL PASS.
+- Realize: 101 elements unchanged; `meta.voice_register: warm_direct`;
+  manifest `voice.beats_applied` both ids, `applied: 0` atom entries,
+  `stale_fallbacks: []`. `realized_lesson.json` opens on the welcome Body
+  (`placement: lesson_start`) and closes on the closure Body
+  (`placement: lesson_end`). Sidecar HTML / coverage dump still do not show
+  beats (named 2026-08-31 carry).
+- Paytrans beats/voice untouched. ALSAP untouched. Working-process block
+  (this file, 2026-08-25) is untouched. STRUCTURE.md does not claim CCI has
+  no beats/voice; left alone.
+
+**Supersedes:** the 2026-09-02 Dramaturge-wake block's "Still not this hop.
+Griot. Dragoman. Voice / narration copy" clauses as to **Dragoman beat copy
+for these two beats** and as to realize injection of accepted-and-fresh beat
+copy. Griot, narrate, atom-level voice, and the Astellas voice registry still
+wait. The 2026-08-31 arc hops (inverse guard, beat injection) already named
+this path; this is the first Astellas/CCI firing of that writer+realize path.
+
 
