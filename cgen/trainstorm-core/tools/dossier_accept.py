@@ -26,7 +26,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from validate_dossier import (
     gate_doc, gate_passes, human_shaped, is_example_fixture, report, walk_values,
-    strategist_py_absent, digest_sha256, DIGEST_FIELDS,
+    strategist_py_absent, digest_sha256, DIGEST_FIELDS, argument_excerpts,
 )
 
 
@@ -118,6 +118,10 @@ def live_for_accept(example, td):
         doc["context_digest"][f] for f in DIGEST_FIELDS if f in doc["context_digest"]) + "\n"
     (td / "context_digest.md").write_text(text, encoding="utf-8")
     doc["context_digest"]["document"] = {"path": "context_digest.md", "sha256": digest_sha256(text)}
+    memo = "# EXPLORATION\n\n" + "\n\n".join(s for _, s in argument_excerpts(doc)) + "\n"
+    (td / "exploration.md").write_text(memo, encoding="utf-8")
+    doc["argument"] = {"document": {"path": "exploration.md", "sha256": digest_sha256(memo)},
+                       "verdicts_by": "jake"}
     return doc
 
 
@@ -193,6 +197,7 @@ def selftest():
         td = pathlib.Path(td)
         p = td / "dossier.json"
         (td / "context_digest.md").write_bytes((td0 / "context_digest.md").read_bytes())
+        (td / "exploration.md").write_bytes((td0 / "exploration.md").read_bytes())
         before = dump(proposed)
         p.write_text(before, encoding="utf-8")
         # refuse path writes nothing

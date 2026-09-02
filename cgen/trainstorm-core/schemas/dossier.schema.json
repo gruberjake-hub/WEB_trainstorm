@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://trainstorm.ai/schemas/dossier.schema.json",
-  "title": "Strategist dossier — open-project warrant snapshot (propose-only); v0.2 carries the Context Digest by reference",
-  "description": "The Strategist's project-level document: warrant assessment + harvestable context-digest + proposed goal sketches. It is NOT an atom (no atom_ id, no meaning.source_text), NOT a committed-design (no cd_), NOT a write into ontology/goals.json. Status is proposed until a human validates via tools/dossier_accept.py --by; the seat never sets validated. Species-closed lists (status, door, warrant verdicts/outcomes, finding, escape_kind) live here as dossier.v0.2 — version-bump to extend; do not silently extend goal draft/example/validated, beats proposed/accepted, or committed-design enums. Accepting this document promotes the dossier only; writing proposed_goals into the live goals store is a later hop. Canonical instances will live per-project; this schema is shared core. Example fixture stays proposed — not a live validated engagement. v0.2 (2026-09-02, studio-and-ledger): the digest DOCUMENT is saved whole beside the dossier and referenced from context_digest.document (path + sha256); the context_digest fields are VERBATIM EXCERPTS of that document (the gate checks substring identity — a harvester extracts, it never rewrites); three sections the ingestion prompt produces gained fields (concepts, assumptions, signal_noise); and the ARGUED half (warrant, outcomes, roi, finding, modality_recommendations, design_insights) is required only once status is validated — a digest-only dossier may exist as proposed, and dossier_accept.py refuses it until the argument has been had. Nothing about who may validate changed.",
+  "title": "Strategist dossier — open-project warrant snapshot (propose-only); v0.3 carries the Context Digest and the argument by reference",
+  "description": "The Strategist's project-level document: warrant assessment + harvestable context-digest + proposed goal sketches. It is NOT an atom (no atom_ id, no meaning.source_text), NOT a committed-design (no cd_), NOT a write into ontology/goals.json. Status is proposed until a human validates via tools/dossier_accept.py --by; the seat never sets validated. Species-closed lists (status, door, warrant verdicts/outcomes, finding, escape_kind) live here as dossier.v0.3 — version-bump to extend; do not silently extend goal draft/example/validated, beats proposed/accepted, or committed-design enums. Accepting this document promotes the dossier only; writing proposed_goals into the live goals store is a later hop. Canonical instances will live per-project; this schema is shared core. Example fixture stays proposed — not a live validated engagement. v0.2 (2026-09-02, studio-and-ledger): the digest DOCUMENT is saved whole beside the dossier and referenced from context_digest.document (path + sha256); the context_digest fields are VERBATIM EXCERPTS of that document (the gate checks substring identity — a harvester extracts, it never rewrites); three sections the ingestion prompt produces gained fields (concepts, assumptions, signal_noise); and the ARGUED half (warrant, outcomes, roi, finding, modality_recommendations, design_insights) is required only once status is validated — a digest-only dossier may exist as proposed, and dossier_accept.py refuses it until the argument has been had. Nothing about who may validate changed. v0.3 (2026-09-02, same day): the ARGUED half gets the same treatment — the exploration memo is saved whole beside the dossier and referenced from `argument.document`; warrant rationales, Q1 human_case, roi, modality_recommendations and design_insights are verbatim excerpts of it (gate-checked). The three warrant VERDICTS are the one thing never extracted: a human chooses them, recorded in `argument.verdicts_by`.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -22,8 +22,8 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "dossier.v0.2",
-      "description": "Closed with this schema. v0.2 = context_digest by reference + verbatim excerpts + argued half required at validated. A new status, door, verdict, outcome, finding, or escape kind is a version bump, not a silent extend."
+      "const": "dossier.v0.3",
+      "description": "Closed with this schema. v0.2 = context_digest by reference + verbatim excerpts + argued half required at validated. v0.3 = argument by reference; verdicts are a human's. A new status, door, verdict, outcome, finding, or escape kind is a version bump, not a silent extend."
     },
     "store": { "const": "dossier" },
     "dossier_id": {
@@ -64,6 +64,7 @@
     },
     "direct_escape": { "$ref": "#/$defs/direct_escape" },
     "context_digest": { "$ref": "#/$defs/context_digest" },
+    "argument": { "$ref": "#/$defs/argument" },
     "warrant": { "$ref": "#/$defs/warrant" },
     "outcomes": {
       "type": "array",
@@ -197,6 +198,31 @@
           "type": "string",
           "minLength": 1,
           "description": "Human who recorded the escape at accept time. Forbidden while proposed. Agent never writes this."
+        }
+      }
+    },
+    "argument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["document"],
+      "description": "The argued half, by reference. The exploration memo (agents/_studio/02_exploration.md run verbatim over the digest) is saved whole beside the dossier; warrant rationales, Q1 human_case, roi, modality_recommendations and design_insights are verbatim excerpts of it. Verdicts are not excerpts — a human chooses pass/partial/fail and is named in verdicts_by.",
+      "properties": {
+        "document": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "description": "The exploration memo saved whole. Same contract as context_digest.document.",
+          "properties": {
+            "path": { "type": "string", "minLength": 1, "maxLength": 240, "pattern": "^[^\\\\]+\\.md$" },
+            "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "generated_by": { "type": "string", "maxLength": 200 },
+            "generated_on": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+          }
+        },
+        "verdicts_by": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human handle of whoever chose the three warrant verdicts. Provenance of a decision, not a ratification — status stays proposed until dossier_accept.py --by."
         }
       }
     },
