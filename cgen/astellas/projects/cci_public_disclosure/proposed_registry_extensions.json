@@ -1,0 +1,61 @@
+{
+  "_note": "Headwater flagged these: every value resolves to a PROPOSED registry entry because none exist in the current governed ALSAP-era seeds. Adopt into the repo registries by entry + version bump before status>draft. Do not silently grow cgen/astellas/registry/docs.registry.json this hop. Remainder-bin docs (tracking tool, Helix trigger, WS3, comms, SH training-guide) are NOT proposed.",
+  "corpus": "SOP-AST-29658 / GUIDE-AST-6011 / FORM-AST-35734 v2.0 (April 2026; supersede v1.0) — Astellas CCI Public Disclosure QD-nucleus. Authored Headwater decomposition from jake-handed v2.0 QDs, not the Feb 2025 v1 pile. Case-Author stage 2 of validated cd_ast_cci_pd. Remainder inventory not minted.",
+  "roles": [
+    {
+      "id": "role_asset_lead",
+      "label": "Asset Lead",
+      "note": "Completes FORM-AST-35734 with GUIDE-AST-6011 + AMT/SMEs; revises on phase/CCI change; consults PD Lead."
+    },
+    {
+      "id": "role_disclosure_document_coordinator",
+      "label": "Disclosure Document Coordinator",
+      "note": "Prepares disclosure documents, uses the FORM, escalates if not followed."
+    },
+    {
+      "id": "role_disclosing_party",
+      "label": "Disclosing Party",
+      "note": "Posts/uploads public disclosures; follows FORM or escalates before ship."
+    },
+    {
+      "id": "role_pd_lead",
+      "label": "PD Lead",
+      "note": "Maintains GUIDE, facilitates FORM, collects/reports, escalation. Already named as goal_ast_cci_library_used owner; not in governed roles.registry."
+    }
+  ],
+  "records": [
+    {
+      "id": "rec_cci_library",
+      "label": "FORM-AST-35734 CCI library",
+      "note": "Asset-specific CCI library the Asset Lead completes before IND. Template FORM-AST-35734. Not the Public Disclosure Tracking Tool."
+    }
+  ],
+  "docs": [
+    {
+      "id": "doc_sop_ast_29658",
+      "source_number": "SOP-AST-29658",
+      "label": "Public Disclosure of Astellas CCI (v2.0)"
+    },
+    {
+      "id": "doc_guide_ast_6011",
+      "source_number": "GUIDE-AST-6011",
+      "label": "CCI / may-be-CCI / not-CCI including phase (v2.0)"
+    },
+    {
+      "id": "doc_form_ast_35734",
+      "source_number": "FORM-AST-35734",
+      "label": "CCI library Asset Leads complete before IND (v2.0)"
+    },
+    {
+      "id": "doc_pol_1048",
+      "source_number": "POL-1048",
+      "label": "Third-party under contract (cited in SOP out of scope)"
+    },
+    {
+      "id": "doc_pol_317",
+      "source_number": "POL-317",
+      "label": "Third-party under contract (cited in SOP out of scope)"
+    }
+  ],
+  "docs_note": "Proposed, not invented into the governed ALSAP-era docs.registry. Remainder inventory ids are not listed here and are not minted."
+}

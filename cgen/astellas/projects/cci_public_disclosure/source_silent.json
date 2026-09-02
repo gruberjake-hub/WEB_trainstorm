@@ -1,0 +1,17 @@
+{
+  "_note": "Gaps where the source is silent or this hop deliberately does not mint. Named, not invented.",
+  "corpus": "SOP-AST-29658 / GUIDE-AST-6011 / FORM-AST-35734 v2.0 (April 2026; supersede v1.0) — Astellas CCI Public Disclosure QD-nucleus. Authored Headwater decomposition from jake-handed v2.0 QDs, not the Feb 2025 v1 pile. Case-Author stage 2 of validated cd_ast_cci_pd. Remainder inventory not minted.",
+  "gaps": [
+    "governance.owner — inferred team_public_disclosure from PD Lead maintaining the GUIDE; flagged, not a person.",
+    "SOP history/approvals — skipped. No approval-page PII/emails.",
+    "Feb 2025 v1 pile — superseded; v2.0 (April 2026) is what jake handed; v1 not minted.",
+    "Public Disclosure Tracking Tool — named in SOP E source_text as a procedure step. Not in production. Not an obj_. Not leftover doc_cci_pd_tracking_tool. No rec_ minted for it.",
+    "Helix/Kachi start-trigger — remainder. Project ID (Helix) is a FORM field, not a trigger atom.",
+    "WS3 RI, connections/comms, SH parking-lot training-guide — leftover; not minted.",
+    "Health Canada / CTIS incident examples — not in the v2.0 QDs; not invented. Living-connection is the B/C NOTE: already public is not confidential.",
+    "AMT/SMEs, SME/Dept Head/Legal — named as consults in source_text; not proposed as extra roles this hop.",
+    "One-tab-per-phase — instruction atom, not 12 empty Development Phase workbooks.",
+    "GUIDE bullets collapsed into MAY-BE vs Not-CCI leaves per type (CMC, Nonclinical, Clinical, Other); not 80 atoms.",
+    "D.s2 embedded conditional ('if deviation') — candidate decision step; kept as action + flagged, same as ALSAP B.s2."
+  ]
+}

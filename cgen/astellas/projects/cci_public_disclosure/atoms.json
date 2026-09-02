@@ -1,0 +1,2356 @@
+[
+  {
+    "atom_id": "atom_sop_ast29658",
+    "content_hash": "sha256:2b1c1e56052e168411b6d7aa25430156cc6df0247963066231c96051b4bc4c53",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "SOP-AST-29658 v2.0 (April 2026; supersedes v1.0) — define Astellas CCI for disclosure of Astellas information in the public domain, and outline tracking.",
+      "kind": "procedure"
+    },
+    "bindings": {},
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_purpose",
+    "content_hash": "sha256:d2f742a1d70a4ab4ef3a1f92803b745eb519bfcef31e3634763e0e2d4d9d0ee5",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Define Astellas CCI for disclosure of Astellas information in the public domain, and outline tracking.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope",
+    "content_hash": "sha256:d16ceb3e47f17b4ec7573c0ddd7e70c124e000f0597f9e90a6c37dbd824f702d",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "This SOP applies to disclosure of Astellas information in the public domain.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains",
+    "content_hash": "sha256:df96002741125c4f6407d4a093dbca235da562da83e488f34bce12ba215565e2",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Public domains include:",
+      "kind": "list"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_0",
+    "content_hash": "sha256:8aa5e41f31c2828cdc335d70f1fdace36e08a7e798ed81c1f1331f6c3932ab0a",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "ClinicaTrials.gov",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_1",
+    "content_hash": "sha256:3262b719cf3e0635882059e7df575f41aa947592764d3bef9c4ff98625f26a44",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "CTIS",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_2",
+    "content_hash": "sha256:e3b40a4112f84054eccfc1a578f55b7a91dfa36a5cc71a9e455ef65a05cb6b8a",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "EU CTR/EudraCT",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 2
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_3",
+    "content_hash": "sha256:316c6c4bc6cf12e5c8cd6a6995c6e102fb59a621fed307db601db98d2982f516",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "jRCT",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 3
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_4",
+    "content_hash": "sha256:1899b29ac51a75df094958a836da1c4bdfd2b6e0c0e0dd8a3be65abadc4c9d8b",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "national registries",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 4
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_5",
+    "content_hash": "sha256:6d690e57d42a9a5a1a209037b4db53985a17e085d1bcfc6d6770f37ab752bcad",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "company website",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 5
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_6",
+    "content_hash": "sha256:973947e3550fb8beab861178b3ffda5b5096c29c105bb151daea8ceb4270bdeb",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "TrialSummaries.com",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 6
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_7",
+    "content_hash": "sha256:6c15b20ea3b3b4ad65fd066c5d52cb14002a534f175e4cebc7b33eea791003d2",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "journals",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 7
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_8",
+    "content_hash": "sha256:31b6bba421e79dd936f41c6d1e4ea8d87db40ef4dbdf54cca931cc364637f1a7",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "events",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 8
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_9",
+    "content_hash": "sha256:0691ca50d298e9df9c69417c0d4225f1ce31bea53cc26fbf7d7f03e9e3520bcd",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "HMA-EMA RWD catalogue",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 9
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_10",
+    "content_hash": "sha256:654f1b0358bd73f8d44769ce2ce9c30a75e82317db83317e03eda67144539636",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "HA clinical-data sites",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 10
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_11",
+    "content_hash": "sha256:55c65383045b45d0a09ce328fb931ccbb5c4d7444cdeab8ae7f7a1f11186d983",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "HTA sites",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 11
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_domains_12",
+    "content_hash": "sha256:0e37c2c7d5d1e65ef07339b0767782c4a6e725ff81bc514f7702987c3dcc08e6",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "EMA Policy 0043",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_domains",
+        "order": 12
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs",
+    "content_hash": "sha256:f3de7ea8f2b90637503e8e564a5798d1192fed103f7bf92d2dfdb798d3e4c4f4",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Organizations in scope of this SOP.",
+      "kind": "list"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_0",
+    "content_hash": "sha256:a6e9384760384c68c297aa61976e4d1e88e2897b8c593dde3e04ecb27d95aaea",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Alliance Management",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_1",
+    "content_hash": "sha256:760084100c986e057ecdaecb15e43816a8efed5bf795700b1a71028f298318ea",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "BOD",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_2",
+    "content_hash": "sha256:747ad1a2b42d74777ed1280e785ce7f1b41035aec67b1c3f574b032f529adc36",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "COQS",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 2
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_3",
+    "content_hash": "sha256:0afae0d2035f07e7d06646df3cb332d7a9eeea4c9bbd70bc7e798809ff1396c8",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Communications & IR",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 3
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_4",
+    "content_hash": "sha256:fcb2b622946e0e3287874cf5b9e53d2c68e2011840745a17b32c6dcf03ecfc38",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "PPM",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 4
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_5",
+    "content_hash": "sha256:7a2b01b0504c61ced6d7c3c9ed5a8021bef413693ccddeea319bfa140dc8cd2f",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "EDTS",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 5
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_6",
+    "content_hash": "sha256:22fb56d5ba71d3949a01e1736bba81546c6a93f1e258fe94ce5b8d37a6a63602",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Legal & IP",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 6
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_7",
+    "content_hash": "sha256:1a7b59bf3369ccc31972c95acde78b22b3fdd3dadff40573e24a9ea6457600a4",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Market Access & Pricing",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 7
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_8",
+    "content_hash": "sha256:e768bdf106f62fdbc8ac7cd18be192a5f55c2e1ba9617c77be9bec8388e44230",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Global Medical Affairs",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 8
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_9",
+    "content_hash": "sha256:f6bbe06af41c0e597c580aef66b06378af2adf4ffcbca2edc9f5194646c84fb1",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "OD",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 9
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_10",
+    "content_hash": "sha256:89325ee6eaa5d933ab6c94aeb1dcaa376d9f6adb220c84f356c0d2687c89d6d9",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "RAPV",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 10
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_11",
+    "content_hash": "sha256:4ee9099e62e63bce801e1da2a4a5cc49486987c5a3d85d0fcbda8613bad55c75",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Oncology Research",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 11
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_12",
+    "content_hash": "sha256:123a43ad422282de96ca02d1a186ed85d7cf8942a986cd59f12c52353ffc3804",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Cell & Gene Therapy Research",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 12
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_13",
+    "content_hash": "sha256:dfa1282fad98d58edb0ed0af57895eb08d0a053c533b04b6defae196cd044f96",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Innovation Lab",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 13
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_orgs_14",
+    "content_hash": "sha256:8d3a055d04575efb39a8b0b0857d52a8bc88e3047f3f2d17b44b24fc1dbeee91",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Product Development & Manufacturing",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_orgs",
+        "order": 14
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_oos",
+    "content_hash": "sha256:8f0159668dd85834ee1d67d580c953d66642b8d9e970b18f7585d3036cde6d7e",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Out of scope.",
+      "kind": "list"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope",
+        "order": 2
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_oos_0",
+    "content_hash": "sha256:3e651becafcfc035c5555b6c433cb24507a311dddeea4869b6100acbf930a33c",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "corporate/media/IR",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_oos",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_scope_oos_1",
+    "content_hash": "sha256:23b5363933068d7c86351074fe4afcb45bde07d4b4e6458b1a2762a5dbc56de7",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "third-party under contract (POL-1048, POL-317)",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_scope_oos",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_definitions",
+    "content_hash": "sha256:778c83274765c419cac0bab0c63cabbaf8c7b26c0d8fd46261983c0b60afea0a",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Document-specific terms used in this SOP: CCI, Public Disclosure, Public Domain.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658",
+        "order": 2
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_def_cci",
+    "content_hash": "sha256:2bd6e710dd6919cfc4c5544c685d2e6d0319309c53c0e7a4793ae3413dc2a11b",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "CCI: non-public technical/scientific/business know-how, trade secrets, proprietary; also info useful to competitors or harmful if disclosed.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_definitions",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_def_public_disclosure",
+    "content_hash": "sha256:34c3c7656cf2da35bfc39d82712bfad3f65bba11eeb73aec5bb563b3f393b33d",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Public Disclosure: disclosure of Astellas information in the public domain.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_definitions",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_def_public_domain",
+    "content_hash": "sha256:3c562fe78b9b2ff0dc971fa455f2c4938ceaf2a068ba0f2798ee0c1e7b1ed6c8",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Public Domain: ClinicaTrials.gov, CTIS, EU CTR/EudraCT, jRCT, national registries, company website, TrialSummaries.com, journals, events, HMA-EMA RWD catalogue, HA clinical-data sites, HTA sites, EMA Policy 0043.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_definitions",
+        "order": 2
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_overview",
+    "content_hash": "sha256:c361bf0b4bb8c554e23f550c96736b2fc76b8a752361070b4db34a2deb310541",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Packages can contain company secrets AND/OR participant/personnel PI/PPD. GUIDE for classification; FORM is the asset-specific library.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658",
+        "order": 3
+      },
+      "procedure": {
+        "references": [
+          "doc_guide_ast_6011",
+          "doc_form_ast_35734"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_overview_objects",
+    "content_hash": "sha256:fe49dec69fd68f52c24bb9c08f5ab2da96059bb2a75f94b92fcd0e25ff17e11c",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "GUIDE+FORM as objects.",
+      "kind": "list"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_overview",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_overview_objects_0",
+    "content_hash": "sha256:597268a36d2f367eab22ca578ef97a608501414407ae1f42a1212e1cfe3fe494",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "GUIDE-AST-6011 for classification.",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_overview_objects",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_overview_objects_1",
+    "content_hash": "sha256:b8609ce7209cf35b9de3233467bf24d2a8ef7587956cf058166893a4d0ce9bc6",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "FORM-AST-35734 is the asset-specific library.",
+      "kind": "list_item"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_overview_objects",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_roles",
+    "content_hash": "sha256:c58923868a4bff6d6ea6f0b8667ac626a059374d4cd2c31b8a2817e442708655",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Roles and Responsibilities.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658",
+        "order": 4
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_role_asset_lead",
+    "content_hash": "sha256:3adf36c90e0acce1321a8a9b9787842c0affa01a313a0da2bd41551c37186f68",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Asset Lead completes FORM with GUIDE + AMT/SMEs; revises on phase/CCI change; consults PD Lead.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_roles",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_role_ddc",
+    "content_hash": "sha256:75a26a357e5dc18d986dc04fea9496340299f83c0a450ad39e38e21a44eaa272",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Disclosure Document Coordinator prepares docs, uses FORM, escalates if not followed.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_roles",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_role_disclosing_party",
+    "content_hash": "sha256:d1446827530a88803dfdd7b5231d734caa5053c4f7ba8e8fa9f98af714fa2b69",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Disclosing Party posts/uploads, same.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_roles",
+        "order": 2
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_role_pd_lead",
+    "content_hash": "sha256:7ca1a772fd929dd40ac5c297576e5f71f1d7dc4e8d1c70b4a15c83f9b7eefaa1",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "PD Lead maintains GUIDE, facilitates FORM, collects/reports, escalation.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_roles",
+        "order": 3
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_procedures",
+    "content_hash": "sha256:cd09f99aeeaa900641561bb6e29f03858e9ca8382cc7ef7c3f6ab39b839d7bd7",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Procedures.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658",
+        "order": 5
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_intro",
+    "content_hash": "sha256:4f1de3bdf0e81da2bb20a49b12f293740aafd13d9b41d715fb12cf7056ea2c76",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "CN-to-IND.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_procedures",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_a",
+    "content_hash": "sha256:2514868637d4e5a89ee5aa211e08be034a00f095bcdffa5d958ca93d5377a7c9",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "A.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_procedures",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_b",
+    "content_hash": "sha256:408d16f7807586504fc00ce0d753077d3c805f3eb8e6067342487e990ca8775e",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "B. Phase-change.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_procedures",
+        "order": 2
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_c",
+    "content_hash": "sha256:91faf135e0eff4de91d1ae850b238d2fd6aebd63db79c45ed2227865a81144e9",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "C. Ad hoc.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_procedures",
+        "order": 3
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_d",
+    "content_hash": "sha256:4952be9beab445e9bbb9896fc3b4cb7b5d2c293900b9ec72b68408917cc4590e",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "D. Follow FORM or escalate before ship.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_procedures",
+        "order": 4
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_e",
+    "content_hash": "sha256:24669fcbafc44b949e5424a6f24fe7f9f7a95c62633be5412a4e3411edb45182",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "E. Tracking.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_procedures",
+        "order": 5
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_a_s1",
+    "content_hash": "sha256:4ffbc49e832c7b408f34c03bb1fb70929e97a0f2c47849b286c2cf8ccedbfadc",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "PD Lead initiate.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_a",
+        "order": 0
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_pd_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_a_s2",
+    "content_hash": "sha256:fbd71d53470d5515093c95fa6c32648427a884cc9a3183d76c51604d4707c3bb",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Asset Lead classify with GUIDE (may-be consult SME/Dept Head/Legal).",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_a",
+        "order": 1,
+        "prerequisites": [
+          "atom_sop_ast29658_proc_a_s1"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_asset_lead"
+        ],
+        "references": [
+          "doc_guide_ast_6011"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_a_s3",
+    "content_hash": "sha256:78e82fd45569883b23208a1e6a682566ce9139bf094be43f87abeac06bd47a54",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Document on FORM.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_a",
+        "order": 2,
+        "prerequisites": [
+          "atom_sop_ast29658_proc_a_s2"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_asset_lead"
+        ],
+        "produces_records": [
+          "rec_cci_library"
+        ],
+        "references": [
+          "doc_form_ast_35734"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_a_s4",
+    "content_hash": "sha256:01f866eda6136d5a23f78c2a8bd9e65a0b404e9843f9eddd17e121f690dca517",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Inform PD Lead.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_a",
+        "order": 3,
+        "prerequisites": [
+          "atom_sop_ast29658_proc_a_s3"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_asset_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_a_s5",
+    "content_hash": "sha256:d443dee2f6c9db70496ef34edc93abc4e95acac3a7651c77c44d0a81613ece7a",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Archive.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_a",
+        "order": 4,
+        "prerequisites": [
+          "atom_sop_ast29658_proc_a_s4"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_asset_lead"
+        ],
+        "produces_records": [
+          "rec_cci_library"
+        ],
+        "references": [
+          "doc_form_ast_35734"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_a_s6",
+    "content_hash": "sha256:8be76d10841d11180bcaaa308b9608101736886424cecc71d4c2ba0bc5cb7167",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Inform Disclosing Parties.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_a",
+        "order": 5,
+        "prerequisites": [
+          "atom_sop_ast29658_proc_a_s5"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_asset_lead",
+          "role_pd_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_b_s1",
+    "content_hash": "sha256:8aeaed8b7e73e797ab2673ff664907597d146aa9ca8153216d5e86e3967d1df5",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Reassess.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_b",
+        "order": 0
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_asset_lead"
+        ],
+        "references": [
+          "doc_guide_ast_6011",
+          "doc_form_ast_35734",
+          "atom_sop_ast29658_proc_b_note_already_public"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_b_note_already_public",
+    "content_hash": "sha256:a826bfec132f987950197ae0bb3fdbabc479356f7ca2036d95b2e8e8b2232c91",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Check public domain — already public is not confidential.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_b",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_c_s1",
+    "content_hash": "sha256:59aaf69c98c8a43980263a0c2d669bff50785ebc92d8d0ac42c2a6043694b79b",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Ad hoc reassess.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_c",
+        "order": 0
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_asset_lead"
+        ],
+        "references": [
+          "atom_sop_ast29658_proc_b_note_already_public",
+          "doc_guide_ast_6011",
+          "doc_form_ast_35734"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_d_s1",
+    "content_hash": "sha256:b0a55782733350bb58cc9df8980514c4ece1bc7360d356c620b220a281e1652d",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Prepare/post without FORM CCI.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_d",
+        "order": 0
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_disclosure_document_coordinator",
+          "role_disclosing_party"
+        ],
+        "references": [
+          "doc_form_ast_35734"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_d_s2",
+    "content_hash": "sha256:e4e91470617f8bcdf3f168b9786be51191bb9be6159cea42cd3c332553d98335",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "If deviation, contact Asset Lead and PD Lead via publicdisclosure-sm@astellas.com before ship.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_d",
+        "order": 1,
+        "prerequisites": [
+          "atom_sop_ast29658_proc_d_s1"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_disclosure_document_coordinator",
+          "role_disclosing_party",
+          "role_asset_lead",
+          "role_pd_lead"
+        ],
+        "references": [
+          "doc_form_ast_35734"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_e_s1",
+    "content_hash": "sha256:76cd7bffdda40a81b7c6d9966de02206807c00b95e1f01bcd224068cfbd938cf",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Quarterly request.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_e",
+        "order": 0
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_pd_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_e_s2",
+    "content_hash": "sha256:24d0882091713e65021a38ac56d56b5da52c8f67f0f3e450ff37925cc7401591",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Parties provide.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_e",
+        "order": 1,
+        "prerequisites": [
+          "atom_sop_ast29658_proc_e_s1"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_disclosing_party",
+          "role_disclosure_document_coordinator"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_e_s3",
+    "content_hash": "sha256:d7338782ef2a9ece116ec1d5826827536fb132bf484f04522bbc44e9475281e4",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "PD Lead reconcile.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_e",
+        "order": 2,
+        "prerequisites": [
+          "atom_sop_ast29658_proc_e_s2"
+        ]
+      },
+      "procedure": {
+        "step_type": "action",
+        "performed_by": [
+          "role_pd_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_sop_ast29658_proc_e_s4",
+    "content_hash": "sha256:9a976d611724e8d95e571a36ca369af4adf13d3fca8f97b09b485682c65881b3",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Verify in Public Disclosure Tracking Tool.",
+      "kind": "procedure_step"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_sop_ast29658_proc_e",
+        "order": 3,
+        "prerequisites": [
+          "atom_sop_ast29658_proc_e_s3"
+        ]
+      },
+      "procedure": {
+        "step_type": "verification",
+        "performed_by": [
+          "role_pd_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011",
+    "content_hash": "sha256:129ff101a21bc5edc6eb0b73a944fe58f83a694f20e1392f7d2e7fa114d45824",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "GUIDE-AST-6011 v2.0 (April 2026; supersedes v1.0) — CCI / may-be-CCI / not-CCI including phase.",
+      "kind": "procedure"
+    },
+    "bindings": {},
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_purpose",
+    "content_hash": "sha256:18f75b95d99466702f0c5fb7ee07eab6113a652051a6580e209499e3df083cf5",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Standards apply all phases, decreasing later/after MA.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_companion",
+    "content_hash": "sha256:15d171aaced9d29b0d400a79afe5697e73bfc6479ca03dcd788cf67cd1e74e04",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Companion of SOP-AST-29658.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011",
+        "order": 1
+      },
+      "procedure": {
+        "references": [
+          "doc_sop_ast_29658"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_phase_decay",
+    "content_hash": "sha256:94a0c3d32405326ff4ce16179117d11b98e523aa73e4d52fcb5a3d0da267dad7",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Phase-decay: preclinical through Ph4, decreases later/after MA.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011",
+        "order": 2
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_cmc",
+    "content_hash": "sha256:78f3f73d94d1291d60d684de6105e412fed4bd9a958ca18c294dd152d0c0387b",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "CMC.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011",
+        "order": 3
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_cmc_maybe",
+    "content_hash": "sha256:5c55a3166758a33f77eb863fe2bcf3a1079141b3627934afc410ccf45ec566dc",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "MAY-BE: DS names/structure early; quantitative composition; metabolite formulae/pathways that reveal manufacture; polymorphism/sequence; impurities; DS/DP manufacturing methods, sites, CMOs, specs, batch size, unpublished in-house cells; DP packaging technical specs; AAV fact of synthesis/formulation change.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011_cmc",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_cmc_not",
+    "content_hash": "sha256:a32dc0ecbf52a2abaf317c3227933577f47ef909e306db570b9662d2ba15169c",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Not-CCI: published/commercial cell-line names; general characterization; excipient names; standard storage; batch numbers; common techniques; fact of process change except AAV.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011_cmc",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_nonclinical",
+    "content_hash": "sha256:0b19c1b3e58de765c78bb719482bae69435b62edb19e6fe824d814dbb67c3898",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Nonclinical.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011",
+        "order": 4
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_nonclinical_maybe",
+    "content_hash": "sha256:a8f21ee6e46fbf1c46fd847a69fbd78dfbea9366f772186723b464b8588ab457",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "MAY-BE: unpublished novel MoA/concepts; metabolites until NDA/BLA; special substrate; exclusive assays; early results; CRO/site names; future plans; study dates; detailed HA advice; contractual strategy.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011_nonclinical",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_nonclinical_not",
+    "content_hash": "sha256:4553cf20f4fcf281047d98eb5ada72c3f2c386d0d628dc3acdaa2dbfdf629165",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Not-CCI: ELISA/Biacore/common assays; published techniques; country names.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011_nonclinical",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_clinical",
+    "content_hash": "sha256:4ffa9f740017a8a95c5fe5c437ca55a3cc30de05435440876ca939942ad2dcbd",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Clinical.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011",
+        "order": 5
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_clinical_maybe",
+    "content_hash": "sha256:7ddb0db9006beb525b0ffc11ca498f2d417a2067482f5bd238bec2e7950de36c",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "MAY-BE: unpublished patentable unit/daily/max dose (typ. Ph1); novel unqualified biomarkers; exclusive assays; non-label endpoints; third-party questionnaires when contract forbids disclosure.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011_clinical",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_clinical_not",
+    "content_hash": "sha256:b2f399f90205161db63fc5525033c2921632901df46416f6e5a0eca06335c595",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Not-CCI: route/frequency/setting; design; results; CRO names; fact of HA consult.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011_clinical",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_other",
+    "content_hash": "sha256:0f3ab382930b07c6809830e0c3c78d72e78855f9c8ffd268ce452d8ed981262b",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Other.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011",
+        "order": 6
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_other_maybe",
+    "content_hash": "sha256:c7315959018e5134d2ee7ebe708f4861507ae4566358334a8a7605c0c2845359",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "MAY-BE: exposure calc, exposure/sales by country, projected exposure, product cost, net pricing.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011_other",
+        "order": 0
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_guide_ast6011_other_not",
+    "content_hash": "sha256:5c449140c5d9ae6f4b51b8eeebd20ff6f8c9f0eca5165ebf75616fa8882e698c",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Not-CCI: list pricing.",
+      "kind": "procedure"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_guide_ast6011_other",
+        "order": 1
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734",
+    "content_hash": "sha256:e8e2d1601a94a47284af96f62bfed10e115a5d7d2ec6a3f7e2a90d138d9ca841",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "FORM-AST-35734 v2.0 (April 2026; supersedes v1.0) — CCI library.",
+      "kind": "form"
+    },
+    "bindings": {
+      "form": {
+        "captures_record": "rec_cci_library",
+        "performed_by": [
+          "role_asset_lead"
+        ]
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_sec_cover",
+    "content_hash": "sha256:51be1965190449023af5d97ee894f133b91d37fb0ea24c4a549151e52d1bdc76",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Development Phase X.",
+      "kind": "form_section"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734",
+        "order": 0
+      },
+      "form": {}
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_sec_cover_f_version_date",
+    "content_hash": "sha256:d05b14eb5fe8f0026631cdbaa811fb8ee10a49fd01392aa761f774f8ac77b6bf",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Version Date.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734_sec_cover",
+        "order": 0
+      },
+      "form": {
+        "constraints": {
+          "required": true
+        },
+        "evidence_kind": "date",
+        "supplied_by": "authoring_context",
+        "field_type": "date",
+        "content_disposition": "authorable"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_sec_cover_f_asset_code",
+    "content_hash": "sha256:ea1e785143f02c80d632602af57c9abd3c886ed0cefda61ea497dd5049a9b6eb",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Asset code/INN [ASPXXXX].",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734_sec_cover",
+        "order": 1
+      },
+      "form": {
+        "constraints": {
+          "required": true,
+          "slots": [
+            {
+              "id": "asset_code",
+              "marker": "[ASPXXXX]",
+              "expects": "Asset development code or International Non-proprietary Name.",
+              "evidence_kind": "identifier",
+              "supplied_by": "asset_evidence"
+            }
+          ]
+        },
+        "field_type": "text_short",
+        "content_disposition": "controlled_standard"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_sec_cover_f_project_id",
+    "content_hash": "sha256:05eb08b2009181a12a9182f9ca73a641cd5f9e51b716d22bd7542964343c3555",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Project ID (Helix).",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734_sec_cover",
+        "order": 2
+      },
+      "form": {
+        "constraints": {
+          "required": true
+        },
+        "evidence_kind": "identifier",
+        "supplied_by": "asset_evidence",
+        "field_type": "text_short",
+        "content_disposition": "authorable"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_sec_cover_f_dev_phase",
+    "content_hash": "sha256:4210ad79e2a6720a46954d230521e6e2e60472ffb3a0d2c07e8139417dfcae53",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Development Phase.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734_sec_cover",
+        "order": 3
+      },
+      "form": {
+        "constraints": {
+          "required": true
+        },
+        "evidence_kind": "identifier",
+        "supplied_by": "asset_evidence",
+        "field_type": "text_short",
+        "content_disposition": "authorable"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_f_escalate",
+    "content_hash": "sha256:3cf4ee297661eb4c8d75e30871c6df43325f45847c123e3fbdef3d7aca77b640",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "If deviation, contact Asset Lead and PD Lead via publicdisclosure-sm@astellas.com before ship.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734",
+        "order": 1
+      },
+      "form": {
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_sec_library",
+    "content_hash": "sha256:9b93a8cb2d6fc06e0492a623b7882b89581a01ec38cef047fd33b2f27e18f57d",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "CCI library.",
+      "kind": "form_section"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734",
+        "order": 2
+      },
+      "form": {}
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_sec_library_f_columns",
+    "content_hash": "sha256:0aeb1b9d04867b38c30a594b23005b04c29f6d55d40f03b898418af27f246b15",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Type/Subtype/CCI exact text/Notes.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734_sec_library",
+        "order": 0
+      },
+      "form": {
+        "constraints": {
+          "required": true,
+          "repeatable": true
+        },
+        "captures_record": "rec_cci_library",
+        "performed_by": [
+          "role_asset_lead"
+        ],
+        "evidence_kind": "structured_set",
+        "supplied_by": "asset_evidence",
+        "field_type": "table",
+        "content_disposition": "authorable"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_sec_instructions",
+    "content_hash": "sha256:e8deeba894b5ec22ba446a5277a6b4d58a56ef1d932f8a2c72253c0c1307c27f",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Instructions-Examples.",
+      "kind": "form_section"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734",
+        "order": 3
+      },
+      "form": {
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_sec_instructions_f_examples",
+    "content_hash": "sha256:3a04f11e58b6a0c6c622563c941942c8d24fc50ec36bacd7d2d07db338630bc8",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Exact-text examples; complete revision history.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734_sec_instructions",
+        "order": 0
+      },
+      "form": {
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_sec_instructions_f_one_tab_per_phase",
+    "content_hash": "sha256:13ef919219cd66be9fce9302f9439e5aabb3918883311d3698d36aa1eac3dc40",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "One tab per phase.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734_sec_instructions",
+        "order": 1
+      },
+      "form": {
+        "field_type": "text_long",
+        "content_disposition": "instructional_transient"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_sec_revision_history",
+    "content_hash": "sha256:fcc51b2668e7c1eeec0bc593bfb116e076a0c8a8b9db45f10d014c8c9ba7c9cc",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Revision History.",
+      "kind": "form_section"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734",
+        "order": 4
+      },
+      "form": {}
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  },
+  {
+    "atom_id": "atom_form_ast35734_sec_revision_history_f_history_table",
+    "content_hash": "sha256:553cdafb195934d9633c1fc5e091419f0ccd7b2f45dc9e729bb6e0bbacb7509d",
+    "meaning": {
+      "source_locale": "en",
+      "source_text": "Phase, Asset Lead, PD Lead, description, version date.",
+      "kind": "form_field"
+    },
+    "bindings": {
+      "object": {
+        "belongs_to": "atom_form_ast35734_sec_revision_history",
+        "order": 0
+      },
+      "form": {
+        "constraints": {
+          "repeatable": true
+        },
+        "field_type": "table",
+        "content_disposition": "example"
+      }
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "regulatory_binding": "regulatory",
+      "owner": "team_public_disclosure"
+    }
+  }
+]

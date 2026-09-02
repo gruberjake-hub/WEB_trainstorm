@@ -1,0 +1,41 @@
+{
+  "project": "cci_public_disclosure",
+  "corpus_derived_from": "SOP-AST-29658 / GUIDE-AST-6011 / FORM-AST-35734 v2.0 (April 2026; supersede v1.0) — Astellas CCI Public Disclosure QD-nucleus. Authored Headwater decomposition from jake-handed v2.0 QDs, not the Feb 2025 v1 pile. Case-Author stage 2 of validated cd_ast_cci_pd. Remainder inventory not minted.",
+  "headwater_mode": "case_author",
+  "committed_design": "cd_ast_cci_pd",
+  "in_scope": [
+    "doc_form_ast_35734",
+    "doc_guide_ast_6011",
+    "doc_sop_ast_29658"
+  ],
+  "left_unminted": [
+    "doc_cci_pd_connections_note",
+    "doc_cci_pd_helix_kachi_trigger",
+    "doc_cci_pd_sh_training_guide",
+    "doc_cci_pd_tracking_tool",
+    "doc_cci_pd_ws3_ri"
+  ],
+  "atom_count": 101,
+  "written_facets": [
+    "meaning",
+    "bindings.object",
+    "bindings.procedure",
+    "bindings.form"
+  ],
+  "read_only_facets": [
+    "intent",
+    "expression",
+    "audience",
+    "render"
+  ],
+  "approval_roles": [
+    "role_pd_lead",
+    "role_asset_lead"
+  ],
+  "generated_by": "tools/headwater_ingest_cci_pd.py",
+  "source_versions": {
+    "SOP-AST-29658": "2.0",
+    "GUIDE-AST-6011": "2.0",
+    "FORM-AST-35734": "2.0"
+  }
+}
