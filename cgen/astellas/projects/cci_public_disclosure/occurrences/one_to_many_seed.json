@@ -1,0 +1,6 @@
+{
+  "policy": "v1_one_to_many_seed",
+  "project": "cci_public_disclosure",
+  "seed": [],
+  "note": "No honest invert_definition extras this hop. check_v1 needs {subject} is {complement} plus two usable sibling first-sentences. Colon-form defs (CCI / Public Disclosure / Public Domain) are not copulas. Procedure A/D steps are imperatives. The overview_objects_1 copula (FORM-AST-35734 is the asset-specific library) has no usable sibling (GUIDE leaf is under the 50-char bar). The B/C NOTE copula inverts into 'What is Check public domain — already public?' — not a definition. Cloze-without-siblings is not sibling contrast. No LLM distractors. No invented procedure-step MCQ. sequence_order of Procedure A is projector-only of whatever procedure_sequence_atoms returns; this hop does not mint an extra ele_ for it."
+}
