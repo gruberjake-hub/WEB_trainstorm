@@ -168,11 +168,30 @@ Dramaturge pattern: `headwater_case_author.py` proposes a committed-design (`sta
 with `validate_committed_design` before write, and will not re-litigate an existing design
 at `--out`. `committed_design_accept.py --by` is the only promoter to `validated`; it
 re-runs the gate and refuses unreachable-LO / missing warrant-and-escape / agent-shaped
-`--by`. Stage-2 mint does not exist. Direct-mode `headwater_ingest*.py` scripts are
-untouched. Do not write a live `cd_` into paytrans / ALSAP / artwork. First live
-`cd_` is `cgen/astellas/projects/cci_public_disclosure/committed-design.json`
+`--by`. Stage-2 mint is `tools/headwater_case_author_mint.py` (gate) +
+`tools/headwater_ingest_cci_pd.py` (authored QD-nucleus). Direct-mode
+`headwater_ingest*.py` scripts are untouched. Do not write a live `cd_` into
+paytrans / ALSAP / artwork. First live `cd_` is
+`cgen/astellas/projects/cci_public_disclosure/committed-design.json`
 (`cd_ast_cci_pd`, status `validated`, reviewer `jake`, 2026-09-01; accept already
-recorded; re-running `--by` on this file is refused).
+recorded; re-running `--by` on this file is refused). First live stage-2 mint
+is that same `cd_` (v2.0 SOP/GUIDE/FORM; remainder not minted).
+
+## Case-Author stage 2 (mint)
+
+From `cgen/trainstorm-core`:
+
+    python3 tools/headwater_case_author_mint.py --selftest
+    python3 tools/headwater_case_author_mint.py \
+        --file ../astellas/projects/cci_public_disclosure/committed-design.json
+    python3 tools/validate_atoms.py --project ../astellas/projects/cci_public_disclosure
+
+Wakes on a **validated** `cd_` with a human-shaped reviewer and held_warrant XOR
+direct_escape. Held `goal_` must be validated in `ontology/goals.json` with a
+non-empty trainable slice. Refuses proposed / leftover smash / unreachable-LO /
+atom_ design_id / agent-shaped reviewer. Does not mutate the `cd_`. Does not mint
+`ele_`. Sibling ingest writes `atoms.json` via `store_merge` (meaning + object +
+procedure or form). Remainder inventory stays in the source store.
 
 ## Strategist dossier (propose-only)
 

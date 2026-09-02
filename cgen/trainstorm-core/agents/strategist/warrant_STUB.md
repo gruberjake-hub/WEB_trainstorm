@@ -101,7 +101,8 @@ was found**.
 - Not design-commitment / production script (Designer / script later).
 - Not a batch compiler. **No `strategist.py`.** No workbench UI.
   Case-Author stage-1 propose is still `tools/headwater_case_author.py`;
-  stage-2 mint still does not exist. This hop does not mint Case-Author.
+  stage-2 mint is `tools/headwater_case_author_mint.py` (first live: `cd_ast_cci_pd`).
+  This hop does not mint Case-Author.
 - Not atoms. Not `obj_` lock.
 
 The first live wake is still a messy corpus Jake actually has. This contract

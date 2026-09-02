@@ -1,0 +1,3 @@
+# Source binaries jake handed — do not commit PDFs/xlsx (the mint is authored atoms, not a dump).
+source/*.pdf
+source/*.xlsx

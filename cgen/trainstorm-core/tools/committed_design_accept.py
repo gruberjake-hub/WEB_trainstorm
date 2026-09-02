@@ -14,7 +14,8 @@ the propose tool never writes that status.
 Every acceptance re-runs validate_committed_design.gate_doc at acceptance time.
 Refuses: missing --by, agent-shaped --by, missing warrant-and-escape,
 unreachable-LO terminal, status already validated, gate failure.
-Writes nothing on refuse. Does not mint atoms. Stage-2 mint still does not exist.
+Writes nothing on refuse. Does not mint atoms. Stage-2 mint is
+tools/headwater_case_author_mint.py (this script still does not mint).
 """
 import argparse, json, sys, pathlib, tempfile
 
@@ -209,7 +210,7 @@ def main():
         sys.exit(1)
     path.write_text(dump(out), encoding="utf-8")
     print(f"  + {out['design_id']}: validated by {a.by} → {path}")
-    print("Mint still does not exist. Stage 2 is a later hop.")
+    print("Stage-2 mint is tools/headwater_case_author_mint.py --file … (this script does not mint).")
 
 
 if __name__ == "__main__":

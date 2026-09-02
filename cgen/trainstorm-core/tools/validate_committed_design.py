@@ -17,7 +17,8 @@ This gate is the bookkeeping that makes the mint-wake condition real rather than
 
 What it does NOT do: write a committed-design, mint atoms, or promote proposed→validated.
 The propose writer is tools/headwater_case_author.py; the only promoter is the human-run
-tools/committed_design_accept.py --by. Stage-2 mint still does not exist.
+tools/committed_design_accept.py --by. Stage-2 mint is tools/headwater_case_author_mint.py
+(this gate still writes nothing).
 
     python3 tools/validate_committed_design.py --selftest
     python3 tools/validate_committed_design.py --file schemas/committed-design.example.json
