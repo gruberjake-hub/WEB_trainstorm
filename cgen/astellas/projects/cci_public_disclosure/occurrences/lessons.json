@@ -1,0 +1,25 @@
+{
+  "store": "lessons",
+  "project": "cci_public_disclosure",
+  "policy": "v1_lesson_catalog",
+  "spec": "agents/realizer/lesson_v1.md",
+  "default": "cci_public_disclosure_short",
+  "lessons": [
+    {
+      "lesson_id": "cci_public_disclosure_short",
+      "default": true,
+      "projection": "realized_lesson.json",
+      "title": "Public Disclosure of Astellas CCI",
+      "scene_ids": [
+        "why_already_public",
+        "guide_classify",
+        "form_as_object",
+        "asset_lead_path",
+        "discloser_path"
+      ],
+      "lesson_end_check_ids": [],
+      "from": "QD-nucleus default: living-connection, GUIDE classify, FORM as object, Asset Lead Procedure A, discloser Procedure D. Title is authored designer copy — a three-root corpus (SOP / GUIDE / FORM) has no single document-root to name the whole course. Procedure E and remainder stay coverage. No invert-definition extras this hop (no honest sibling copula). Not a Course ele_. Cartographer/teaches not this hop."
+    }
+  ],
+  "note": "Closed project catalog. /cgen?project=cci_public_disclosure loads this file and plays the default. Not a LMS, not SCORM, not a catalog UI. Coverage dump stays a dump. Do not change /cgen this hop."
+}

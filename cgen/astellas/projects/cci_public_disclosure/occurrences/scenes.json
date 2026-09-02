@@ -1,0 +1,97 @@
+{
+  "store": "scenes",
+  "project": "cci_public_disclosure",
+  "policy": "v1_scene_catalog",
+  "spec": "agents/realizer/scenes_v1.md",
+  "vocab": "vocab/scene.enum.json",
+  "scenes": [
+    {
+      "id": "why_already_public",
+      "role": "front_matter",
+      "heading": "Already public is not confidential",
+      "kicker": "Why this",
+      "element_ids": [
+        "ele_sop_ast29658",
+        "ele_sop_ast29658_overview",
+        "ele_sop_ast29658_overview_objects_0",
+        "ele_sop_ast29658_overview_objects_1",
+        "ele_sop_ast29658_proc_b_note_already_public"
+      ],
+      "checks": [],
+      "from": "QD-nucleus living-connection: SOP-AST-29658 root, overview (packages can hold company secrets AND/OR PI/PPD; GUIDE classifies; FORM is the library), the two GUIDE+FORM object leaves, and the B/C NOTE already-public is not confidential. Not a Health Canada/CTIS incident atom. Helix is not a trigger scene."
+    },
+    {
+      "id": "guide_classify",
+      "role": "topic",
+      "heading": "Classify with the GUIDE",
+      "kicker": "GUIDE",
+      "element_ids": [
+        "ele_guide_ast6011",
+        "ele_guide_ast6011_phase_decay",
+        "ele_guide_ast6011_cmc",
+        "ele_guide_ast6011_cmc_maybe",
+        "ele_guide_ast6011_cmc_not",
+        "ele_guide_ast6011_nonclinical",
+        "ele_guide_ast6011_nonclinical_maybe",
+        "ele_guide_ast6011_nonclinical_not",
+        "ele_guide_ast6011_clinical",
+        "ele_guide_ast6011_clinical_maybe",
+        "ele_guide_ast6011_clinical_not",
+        "ele_guide_ast6011_other",
+        "ele_guide_ast6011_other_maybe",
+        "ele_guide_ast6011_other_not"
+      ],
+      "checks": [],
+      "from": "GUIDE-AST-6011 root, phase-decay, and the four type containers with their MAY-BE vs Not-CCI leaves (collapsed; not 80 bullets). Companion/purpose stay coverage. Serves classify-with-guide; teaches is Cartographer later."
+    },
+    {
+      "id": "form_as_object",
+      "role": "topic",
+      "heading": "The FORM is the library",
+      "kicker": "Form",
+      "element_ids": [
+        "ele_form_ast35734",
+        "ele_form_ast35734_sec_cover_f_version_date",
+        "ele_form_ast35734_sec_cover_f_asset_code",
+        "ele_form_ast35734_sec_cover_f_project_id",
+        "ele_form_ast35734_sec_cover_f_dev_phase",
+        "ele_form_ast35734_sec_library_f_columns",
+        "ele_form_ast35734_sec_instructions_f_one_tab_per_phase"
+      ],
+      "checks": [],
+      "from": "FORM-AST-35734 as object in the same atoms.json (not an ALSAP sibling guest). Cover fields, library columns, and the one-tab-per-phase instruction. Helix Project ID is a field present, not a trigger scene. Escalate mailbox lives on the discloser path. Revision-history / examples stay coverage. Not form_br — there is no honest closed fill."
+    },
+    {
+      "id": "asset_lead_path",
+      "role": "procedure_a",
+      "heading": "Asset Lead path — CN to IND",
+      "kicker": "Procedure A",
+      "element_ids": [
+        "ele_sop_ast29658_proc_intro",
+        "ele_sop_ast29658_proc_a_s1",
+        "ele_sop_ast29658_proc_a_s2",
+        "ele_sop_ast29658_proc_a_s3",
+        "ele_sop_ast29658_proc_a_s4",
+        "ele_sop_ast29658_proc_a_s5",
+        "ele_sop_ast29658_proc_a_s6"
+      ],
+      "checks": [],
+      "from": "CN-to-IND intro plus Procedure A steps (initiate / classify with GUIDE / document on FORM / inform PD Lead / archive / inform parties). Thin 'A.' heading stays coverage. sequence_order is not on this scene: the projector's Procedure A selector still applies the 50-char thin bar, so five of six CCI A steps would drop and a one-item sequence is not a check. Catalog membership keeps all six presents. No invented procedure-step MCQ. No extra ele_ for sequence."
+    },
+    {
+      "id": "discloser_path",
+      "role": "topic",
+      "heading": "Follow the FORM or escalate",
+      "kicker": "Discloser",
+      "element_ids": [
+        "ele_sop_ast29658_proc_d",
+        "ele_sop_ast29658_proc_d_s1",
+        "ele_sop_ast29658_proc_d_s2"
+      ],
+      "checks": [],
+      "from": "Procedure D follow-or-escalate before ship. publicdisclosure-sm@astellas.com is a contact on s2, not a person. Disclosing-party / DDC role atoms stay coverage. Not procedure_a (that role is the Asset Lead A path). Procedure E tracking 1:1 ele_ exist in the store and stay off this spine (not_trainable tool)."
+    }
+  ],
+  "lesson_end_check_ids": [],
+  "note": "Closed project catalog — QD-nucleus default spine, not a 101-atom dump and not ALSAP Procedure-A+BR-field heuristics. 36 of 101 occurrences on the spine; Procedure E, remainder inventory, and the rest are coverage, not deleted. Scene headings/kickers are designer copy; membership is refs only. GUIDE and FORM trees are selected here because they live in this atoms.json; sibling form/instance guests are ALSAP-only."
+}
