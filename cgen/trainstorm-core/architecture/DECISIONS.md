@@ -4019,3 +4019,78 @@ gate that cannot accept a rewrite.
 one of three) and the Strategist seat block (`context_digest` still lives
 inside the dossier — now by reference, as that block said it should).
 
+## 2026-09-02 — The argument, had: paytrans exploration memo saved whole; argued half harvested verbatim; verdicts by Jake; dossier.v0.3; `_studio/` seated; `add -A` sweep reversed
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Stopping point two, done the same way as one. Jake ran
+`agents/_studio/02_exploration.md` **verbatim** over `context_digest.md` in a
+fresh chat; the memo is saved **whole and unedited** at
+`cgen/brunswick/projects/paytrans/dossier/exploration.md`. The argued half of
+`doss_paytrans.json` is a cold harvest of it — warrant rationales, Q1
+human_case, `roi`, `modality_recommendations`, `design_insights`, `outcomes`
+— every string located in the memo by script. **The three warrant verdicts
+were chosen by Jake** (value_evidence `pass`, adoption_legitimacy `partial`,
+cynicism_audit `partial`), recorded as `argument.verdicts_by: jake`; the
+gate's own consistency rule then yields `partial_pass` → `course_warranted`.
+No harvester decided anything.
+
+`schemas/dossier.schema.json` → **dossier.v0.3**, additive: `argument`
+`{document {path, sha256, generated_by, generated_on}, verdicts_by}`. The
+gate requires `argument.document` on any live dossier that carries a
+warrant; checks hash and file; checks warrant rationales / human_case / roi /
+modality / design_insights are verbatim in the memo; and refuses an
+agent-shaped or missing `verdicts_by`. Both `--selftest`s ALL PASS (new
+green: argued live dossier; new red: no memo, paraphrased rationale,
+agent-shaped verdicts_by, missing verdicts_by). `validate_dossier.py --file
+…/doss_paytrans.json` ALL PASS. `dossier_accept.py --by jake` **promotes**
+on a tempfile copy; the live file is left `proposed` for Jake to run it.
+
+**`_studio/` seated.** Commit `d3a25e7` ("adding _studio prompts") put the
+three prompts in `agents/_shared/`, kept a second copy in `cgen/prompts/`,
+and — because it was made with `git add -A` — also committed two Astellas
+PROJECT CONTEXT corpora (`cgen/project_context_test{,2}.md`, ~59k lines,
+header carrying an Astellas OneDrive path and username), a stray `.patch`,
+and `rehydrations/ChatGPT_extractions_081326.zip`, in a repo that clones
+anonymously. This hop: `git mv` the three prompts to `agents/_studio/`
+(byte-identical to the `prompts/` copies), delete `cgen/prompts/` (one
+canonical source), add `agents/_studio/README.md` (stopping point → prompt →
+document → harvest → gate), and `git rm` the two context corpora and the
+patch. The rehydrations zip and `reference/example_persona.json` are left
+where they are — not this hop's to judge.
+
+**Why:** A dossier is two documents and one decision. The digest is what the
+corpus says; the memo is what a strong designer makes of it; the verdicts
+are what Jake decides it warrants. v0.2 held the first; v0.3 holds the
+second by the same reference-and-verbatim contract; and the one thing the
+graph must never extract — the decision — is now a gated human field
+rather than a convention.
+
+**Consequences:**
+- Writes: `…/paytrans/dossier/exploration.md` (new), `doss_paytrans.json`
+  (argued half + v0.3 marker), `schemas/dossier.schema.json`,
+  `reference/example_dossier.json` (marker), `tools/validate_dossier.py`,
+  `tools/dossier_accept.py`, `agents/_studio/{README.md,01,02,03}` (moves +
+  README), deletions listed above, this block, a `decision-log.md` entry.
+- **Next human act:** `python3 tools/dossier_accept.py --file
+  ../brunswick/projects/paytrans/dossier/doss_paytrans.json --by jake` → the
+  first *validated* dossier. Acceptance DATA commits straight to main from
+  fresh main, per the working-process block.
+- **History.** Removing the Astellas corpora from the tree leaves them in
+  history (`d3a25e7`). Whether to rewrite history (`git filter-repo`, force
+  push) is Jake's call and a separate act; this block records the exposure,
+  not the remedy.
+- Carries: `02_exploration.md` names Brunswick in its inputs list (kept
+  verbatim; per-engagement overlay is the fix, own block). Fork (digest open
+  question 1) still open — adoption_legitimacy is `partial` for that reason
+  and the memo's §10 says what would change it. Hop two proper (re-seat the
+  Strategist as the room, pointing at `_studio/`) is now unblocked with a
+  worked instance to point at. Stopping point three (`03_design_commitment`)
+  not run.
+- Working-process reminder, learned twice today: **name the files in
+  `git add`.** Never `-A`, `.`, or `commit -a` in this tree.
+
+**Supersedes:** nothing. Extends the two 2026-09-02 studio-and-ledger
+blocks (hop one → this is hop 1b; `_studio/` was proposed in conversation
+and is seated here).
+

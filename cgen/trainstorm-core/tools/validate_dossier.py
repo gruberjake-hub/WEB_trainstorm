@@ -12,6 +12,10 @@ and not a live goals-store write. This gate is the bookkeeping that makes HITL r
                     document; it never replaces it.
     VERBATIM      — every context_digest excerpt is a substring of that document
                     (whitespace-normalized). A harvester extracts; it never rewrites.
+    ARGUMENT      — v0.3: a live dossier that carries a warrant also references its
+                    exploration memo saved whole (argument.document); warrant rationales,
+                    Q1 human_case, roi, modality_recommendations and design_insights are
+                    verbatim excerpts of it. Verdicts are never excerpts — a human's.
     WARRANT       — open_project: three questions + outcome + Q1 human_case, consistent —
                     when present. v0.2: a digest-only dossier (no warrant, no finding) is a
                     legal PROPOSED state — the argument has not been had yet. It is never
@@ -220,11 +224,10 @@ def digest_sha256(text):
     return hashlib.sha256(text.replace("\r\n", "\n").encode("utf-8")).hexdigest()
 
 
-def load_digest_document(doc, base_dir):
-    """(text, path, error). base_dir is the dossier file's directory; None when unknown."""
-    ref = (doc.get("context_digest") or {}).get("document")
+def load_referenced_document(ref, base_dir):
+    """(text, path, error) for a {path, sha256} reference resolved against base_dir."""
     if not isinstance(ref, dict):
-        return None, None, "no context_digest.document"
+        return None, None, "no document reference"
     if base_dir is None:
         return None, None, "dossier location unknown — cannot resolve document.path"
     path = pathlib.Path(base_dir) / ref.get("path", "")
@@ -234,6 +237,35 @@ def load_digest_document(doc, base_dir):
     if digest_sha256(text) != ref.get("sha256"):
         return None, path, "sha256 mismatch — the document moved after harvest; re-harvest"
     return text, path, ""
+
+
+def load_digest_document(doc, base_dir):
+    return load_referenced_document((doc.get("context_digest") or {}).get("document"), base_dir)
+
+
+def argument_excerpts(doc):
+    """(label, string) pairs that must be verbatim in the argument document."""
+    out = []
+    w = doc.get("warrant") or {}
+    for q in ("value_evidence", "adoption_legitimacy", "cynicism_audit"):
+        qq = w.get(q) or {}
+        if qq.get("rationale"):
+            out.append((f"warrant.{q}.rationale", qq["rationale"]))
+        if qq.get("human_case"):
+            out.append((f"warrant.{q}.human_case", qq["human_case"]))
+    if doc.get("roi"):
+        out.append(("roi", doc["roi"]))
+    if doc.get("design_insights"):
+        out.append(("design_insights", doc["design_insights"]))
+    for i, m in enumerate(doc.get("modality_recommendations") or []):
+        out.append((f"modality_recommendations[{i}]", m))
+    return out
+
+
+def argument_not_verbatim(doc, text):
+    hay = norm_ws(text)
+    return [f"{label}: {s[:50]!r}" for label, s in argument_excerpts(doc)
+            if norm_ws(s) not in hay]
 
 
 def excerpts_not_verbatim(doc, text):
@@ -302,6 +334,23 @@ def gate_doc(name, doc, results, base_dir=None):
                 bad = excerpts_not_verbatim(doc, text)
                 results.append((f"{name}: every context_digest excerpt is verbatim in the document",
                                 not bad, "; ".join(bad[:4])))
+
+    # v0.3 — the argued half, saved whole and indexed verbatim; verdicts are a human's
+    has_arg = isinstance(doc.get("argument"), dict)
+    argued = "warrant" in doc or "finding" in doc
+    if argued and not is_example_fixture(doc):
+        results.append((f"{name}: argued dossier references its exploration memo (argument.document)",
+                        has_arg, "argument.document missing — save the memo whole"))
+    if has_arg:
+        text, apath, err = load_referenced_document(doc["argument"].get("document"), base_dir)
+        results.append((f"{name}: argument document exists and sha256 matches", text is not None, err))
+        if text is not None:
+            bad = argument_not_verbatim(doc, text)
+            results.append((f"{name}: warrant rationales / roi / insights / modality are verbatim in the memo",
+                            not bad, "; ".join(bad[:4])))
+        vb = doc["argument"].get("verdicts_by")
+        results.append((f"{name}: warrant verdicts were chosen by a human (argument.verdicts_by)",
+                        human_shaped(vb), f"verdicts_by={vb!r} — verdicts are never extracted or agent-set"))
 
     door = doc.get("door")
     if door == "open_project":
@@ -469,6 +518,10 @@ def main():
             live["context_digest"]["document"] = {"path": "context_digest.md",
                                                   "sha256": digest_sha256(digest_text)}
             live["context_digest"]["overview"] = ["Leadership asked for a course so incident counts drop 20%."]
+            memo_text = "# EXPLORATION\n\n" + "\n\n".join(s for _, s in argument_excerpts(good)) + "\n"
+            (td / "exploration.md").write_text(memo_text, encoding="utf-8")
+            live["argument"] = {"document": {"path": "exploration.md", "sha256": digest_sha256(memo_text)},
+                                "verdicts_by": "jake"}
             n3 = len(results)
             gate_doc("fixture(document)", live, results, base_dir=td)
             results.append(("selftest: live dossier with a matching document + verbatim excerpt passes",
@@ -491,6 +544,20 @@ def main():
             red_live("selftest: paraphrased (non-verbatim) excerpt is caught",
                      lambda d: d["context_digest"].update(
                          overview=["Leadership wants incidents down by a fifth."]))
+
+            # v0.3 — the argued half by reference (memo written above, beside the digest)
+            n4 = len(results)
+            gate_doc("fixture(argument)", live, results, base_dir=td)
+            results.append(("selftest: argued live dossier with a matching memo + verbatim argued half passes",
+                            all(ok for _, ok, _ in results[n4:]), ""))
+            red_live("selftest: argued live dossier without argument.document is caught",
+                     lambda d: d.pop("argument"))
+            red_live("selftest: paraphrased warrant rationale is caught",
+                     lambda d: d["warrant"]["value_evidence"].update(rationale="Roughly what the memo said."))
+            red_live("selftest: agent-shaped verdicts_by is caught",
+                     lambda d: d["argument"].update(verdicts_by="strategist"))
+            red_live("selftest: missing verdicts_by is caught",
+                     lambda d: d["argument"].pop("verdicts_by"))
             # autocrlf: a CRLF checkout of the same document must NOT read as moved
             crlf_scratch = []
             (td / "context_digest.md").write_text(digest_text.replace("\n", "\r\n"),

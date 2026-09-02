@@ -1,13 +1,13 @@
 {
-  "_note": "First real dossier in the graph (studio-and-ledger, 2026-09-02). DIGEST-ONLY: the Context Digest was produced by Jake's ingestion prompt run verbatim and is saved whole as context_digest.md; every context_digest field here is a verbatim excerpt of it (gate-checked). The ARGUED half — warrant, outcomes, roi, finding, modality_recommendations, design_insights — is deliberately absent: the argument has not been had. dossier_accept.py refuses this document until it has. Corpus predates 2026-01-20; see tensions[11] before reading diagnostic_observations as current.",
-  "schema_version": "dossier.v0.2",
+  "_note": "First real dossier in the graph (studio-and-ledger, 2026-09-02). The Context Digest (Jake's ingestion prompt, verbatim) and the exploration memo (agents/_studio/02_exploration.md, verbatim) are saved whole beside this file; every context_digest field and every argued-half string here is a verbatim excerpt of one of them (gate-checked). The three warrant verdicts were chosen by Jake in the room (pass / partial / partial → partial_pass → course_warranted by the gate's own rule); nothing else was decided by a harvester. Corpus predates 2026-01-20; see context_digest.tensions[11] before reading diagnostics as current. Fork (digest open question 1) remains open — adoption_legitimacy is partial for that reason.",
+  "schema_version": "dossier.v0.3",
   "store": "dossier",
   "dossier_id": "doss_paytrans",
   "version": 1,
   "status": "proposed",
   "client": "brunswick",
   "project": "paytrans",
-  "proposed_by": "harvest of context_digest.md (cold extraction; no seat authored these fields)",
+  "proposed_by": "harvest of context_digest.md and exploration.md (cold extraction; verdicts by jake; no seat authored these fields)",
   "derived_from": {
     "source_store": "brunswick/projects/paytrans (manifest.json corpus_derived_from)",
     "notes": "Seven-source corpus (5 pptx, 2 docx, 87 sections) per the digest header; the same BPS corpus the paytrans atoms were minted from, plus the working-team comments. Binaries retained by BPS."
@@ -101,6 +101,42 @@
       "**How much of the existing 2025 role-play content is reusable versus regarded as superseded?** It is the densest behavioral asset available and the only worked model of the target performance, but it is U.S.-framed and pre-dates the decision-quality objective."
     ]
   },
+  "argument": {
+    "document": {
+      "path": "exploration.md",
+      "sha256": "2d1ee9b699ed202a17dd97764dece7fd87d91b163001900a8e0069f36aea72eb",
+      "generated_by": "agents/_studio/02_exploration.md run verbatim over context_digest.md in a fresh chat",
+      "generated_on": "2026-09-02"
+    },
+    "verdicts_by": "jake"
+  },
+  "warrant": {
+    "value_evidence": {
+      "verdict": "pass",
+      "human_case": "You cannot have a good pay conversation about a pay decision nobody wrote down.\nEvery hard moment in this corpus resolves to the same root. Role Play 5 fails because there's no recorded rationale to fall back on. The FAQ escalates to HR precisely at the point where the sanctioned explanations run out. EUPTD's burden-of-proof flip is the same failure with a legal clock attached. The team's own note — \"what is the justification?\" — is this question asked out loud.\nSo the conversation is not the performance. The conversation is the audit of a decision made months earlier. Training managers to talk better without changing what they record is teaching people to improvise receipts.",
+      "rationale": "Burden of proof flipped. Pre-EUPTD, an employee had to demonstrate unfairness. Post-EUPTD, the employer demonstrates fairness, on a two-month clock. That is the entire reason §3 exists, and managers will not adopt the recording behavior unless they understand why it suddenly matters."
+    },
+    "adoption_legitimacy": {
+      "verdict": "partial",
+      "rationale": "Fork B — they don't exist and won't in time. Then a course that teaches \"apply pay principles to inform better decision making\" is teaching a framework that doesn't exist, and the learner will notice inside four minutes. Fork B is not a smaller version of Fork A. It's a different intervention."
+    },
+    "cynicism_audit": {
+      "verdict": "partial",
+      "trust_repair": false,
+      "rationale": "The instinct will be to smooth this. Don't. Learners resolve unacknowledged contradictions by believing the restrictive instruction and quietly discarding the aspirational one, and they discount the whole course while they're at it."
+    },
+    "outcome": "partial_pass"
+  },
+  "outcomes": [
+    {
+      "label": "Write one line of reason at the moment of the decision.",
+      "measure": "It's small, observable, and auditable. You can measure it in Workday without inventing an instrument. Compare that to the confidence survey."
+    },
+    {
+      "label": "For managers everywhere, EUPTD collapses to a single behavior: recognize a formal pay-information request, do not answer it, hand it off within the stated window.",
+      "measure": "A recognition task, not a conversation task — and exactly what e-learning does well."
+    }
+  ],
   "audiences": [
     {
       "segment_id": "global_managers_hr",
@@ -145,5 +181,13 @@
     "| **Implied** | **Reduce HR escalation load — while simultaneously routing heavily to HR.** The FAQ repeatedly instructs managers not to promise anything and to consult their HRBP [S4 §1], yet the training objectives include reducing manager dependence. |",
     "| **Implied** | **Reuse a proven internal change template.** \"Similar approach to Achieve Training Rollout\" appears in the plan title itself [S1 §2] and again in next steps [S6 §8]. Precedent is doing work here that instructional rationale is not. |",
     "**7. Audience scope has drifted.** [S1 §2] scopes employee training to \"Salaried Employees (U.S. & E.U.)\" — excluding hourly employees, despite hourly postings carrying rates or ranges [S4 §1] and hourly grade structures existing [S3 §11]. Works Councils (EMEA) appear in the November draft [S6 §15] and vanish from the January one [S1 §4]; in several EU jurisdictions works councils have consultation rights over exactly this kind of change, which makes their removal a risk rather than a simplification."
-  ]
+  ],
+  "modality_recommendations": [
+    "My lean: C as the spine, B as the practice layer, A's concepts distributed as just-in-time explainers rather than a front-loaded module.",
+    "That is a policy and tooling package with a thin training wrapper. It's less impressive and probably more effective, and someone should say so before forty minutes of e-learning gets built on top of an undefined standard.",
+    "The substantive EUPTD content — gap thresholds, joint pay assessment, equal-value categories, response letters, the two-month clock — is an HR and legal process build. It is not manager training and should stop being scoped as though it were."
+  ],
+  "roi": "If the course produced only this, it would have earned its runtime.\nDependency: somebody has to make the field exist and decide whether it's required. That's a Comp/Workday decision, not an ID decision, and it should be raised this week rather than at script review.",
+  "finding": "course_warranted",
+  "design_insights": "1. Reframe: the conversation is an audit of an earlier decision. Sequence decision-and-record before conversation. (\"You cannot have a good pay conversation about a pay decision nobody wrote down.\")\n2. The one-line rationale at the moment of decision as the course's core behavior. Serves conversation, equity, and EUPTD defensibility at once; auditable without new instrumentation.\n3. Name the transparency boundary explicitly: open about process, controlled about individual numbers. Converts a felt contradiction into an operable rule. Ninety seconds of runtime, disproportionate return.\n4. A reasoning protocol that survives both forks of the criteria question: locate → reason → say the defensible part → name the boundary → route and record.\n5. Deliberate confidence reduction in one specific belief (\"I can explain any position from memory\") while raising it elsewhere. Directly counters the fluency-without-substrate risk.\n6. EUPTD splits by performance, not geography: a four-minute recognize-and-route behavior for all managers; everything substantive belongs to an HR/legal process build.\n7. Three pillars, with transparency as posture rather than a fourth pillar — offered as a ratifiable proposal, not an open question.\n8. Absolution before assessment as the opening instructional move for a low-confidence, avoidant audience."
 }

@@ -13,6 +13,47 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-09-02 (the argument) — exploration memo saved whole; argued half harvested; verdicts are Jake's; `_studio/` seated; the `add -A` sweep
+
+*Anchor: main d3a25e7. Same day, same shape as the first-dossier hop, one stopping point later.
+Jake ran `02_exploration.md` verbatim over the digest and pasted the memo unedited. Claude saved
+it whole, bumped the schema to v0.3 for the argument reference, extended the gate, harvested the
+argued half by locating strings in the memo, and asked Jake for the three verdicts. Then reversed
+the sweep from `d3a25e7`. Writes in the DECISIONS block.*
+
+### What the memo showed
+
+The digest could not have said "this is a decision project wearing a training costume," or
+"you cannot have a good pay conversation about a pay decision nobody wrote down," or found that
+the smallest behavior in the project — one line of reason at the moment of decision — is the
+most valuable one. That is what the second prompt is for, and it is the kind of thing a seat's
+snapshot mode, told "not a dumped essay," would have flattened into a finding enum. Now it sits
+whole beside the digest and the dossier indexes it.
+
+### The line the harvest would not cross
+
+The warrant's three verdicts are enum choices. The memo argues each question but does not
+choose. Choosing is the decision the room exists for — so the harvest did not, and Claude asked
+Jake, with the memo's evidence laid out per question. He chose pass / partial / partial; the
+gate's consistency rule turned that into partial_pass → course_warranted. v0.3 makes this
+structural: `argument.verdicts_by` is required, must be human-shaped, and the selftest proves an
+agent handle is red. The graph now has a field whose only legal value is a person.
+
+### The sweep
+
+`d3a25e7` was `git add -A`. It put the prompts in `_shared/` instead of `_studio/`, kept a
+duplicate in `cgen/prompts/`, and committed two Astellas PROJECT CONTEXT corpora — 59k lines with
+an Astellas OneDrive path and a personal username in the header — plus a stray patch and a
+rehydrations zip, into a repository that clones without credentials. Reversed in the tree this
+hop; history is Jake's decision. Working-process lesson, recorded twice today: name the files.
+
+### Carries
+
+Jake runs `dossier_accept.py --by jake` → first validated dossier. Hop two proper: re-seat the
+Strategist as the room, now with `_studio/` and a worked instance to point at. Stopping point
+three not run. Brunswick named in `02_exploration.md` inputs — overlay, own block. The fork
+(within-grade criteria: exist or not) is still the question that determines the build.
+
 ## 2026-09-02 (first real dossier) — paytrans Context Digest saved whole; harvested verbatim; dossier.v0.2; the argument is still owed
 
 *Anchor: main a5ad339 (PR #80, studio-and-ledger). Hop one of that block's three. Jake ran the

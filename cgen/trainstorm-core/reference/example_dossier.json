@@ -1,6 +1,6 @@
 {
   "_note": "EXAMPLE / status proposed — fixture warrant snapshot, not a live client engagement, not paytrans, not a minted goal_/obj_/atom_/cd_. Fictional fx open-project. Example warrants stay proposed.",
-  "schema_version": "dossier.v0.2",
+  "schema_version": "dossier.v0.3",
   "store": "dossier",
   "dossier_id": "doss_fx_open_project_example",
   "version": 1,
