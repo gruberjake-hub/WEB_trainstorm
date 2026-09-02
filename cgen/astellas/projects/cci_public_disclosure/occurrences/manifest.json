@@ -32,6 +32,50 @@
     "note": "The two instance examples instantiate exactly these FORM-AST-34037 fields (BR profile + rationale). Guest ele_ records composed_from the form atom_id. Not a form dump. Not f_br_guidance or phrasing cousins. Meaning catalog joins the sibling alsap store; SOP and form atoms.json are not copied into."
   },
   "note": "Primary: one ele_ per atom. 1:many seed mints extra occurrences of a couple of teaching-worthy atoms (same composed_from, distinct move, no authored content.text). A small form-field present seed mints guest ele_ records whose composed_from is an alsap form atom_id (agents/realizer/form_field_present_v1.md). A small instance-example seed mints guest ele_ records whose composed_from is an alsap_asp9999 atom_id (agents/realizer/instance_example_v1.md). Cartographer owns occurrence intent; Couturier owns expression style. Realizer binds compiler primitives (text_primitive) from atom kind + move (agents/realizer/primitives_v1.md). Spine is a documented selection of existing ele_ records (agents/realizer/spine_v1.md); the full dump is coverage. Check shapes (invert_definition, sequence_order, closed_choice) live on ext.check / manifest.checks (vocab/check-shape.enum.json). Scene records (id, title heuristic, ordered ele_ refs) live on spine.scenes / ext.scene (vocab/scene.enum.json), stamped from the project catalog (occurrences/scenes.json) when present. The lesson record (id, title heuristic, scene id refs) lives on manifest.lessons (agents/realizer/lesson_v1.md), stamped from the project catalog (occurrences/lessons.json) when present, and points at spine.scenes \u2014 not a Course ele_, not a LMS. Procedure A sequence_order is projector-only of those four presents; composing it from one atom would be a lie. closed_choice is projector-only of the form present + instance fill (options_ref ids; key = selected_value); composing from only one of those two atoms would hide the other half. A re-realize preserves extras, intent, style, and recomputes the same spine, primitives, check shapes, stamps scene records from the catalog (or the heuristic if none), and stamps lesson records from the catalog (HTML derived from lesson_id).",
+  "cartographer": {
+    "policy": "v1_heuristic_compiler",
+    "tool": "tools/cartographer.py",
+    "heuristic": "agents/cartographer/heuristic_v1.md",
+    "move_counts": {
+      "hook": 1,
+      "objective": 2,
+      "present": 96,
+      "activate": 2
+    },
+    "teaches_bound": 32,
+    "low_confidence": 61,
+    "element_count": 101,
+    "ontology": "ontology/objectives.json",
+    "note": "v1 compiler pass over Realizer occurrences, including extra 1:many records. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Extra occurrences keep Realizer-stamped move. Couturier owns expression style; this tool does not wipe it. After writing move, Realizer refreshes text_primitive (compiler form). Lesson spine is Realizer projection (agents/realizer/spine_v1.md); this tool does not own sequence. Does not wipe ext.check, ext.scene, or manifest.lessons. Re-stamps scene records from the project catalog (occurrences/scenes.json) when present. Re-stamps lesson records from the project catalog (occurrences/lessons.json) when present."
+  },
+  "couturier": {
+    "policy": "v1_move_to_look",
+    "tool": "tools/couturier.py",
+    "spec": "agents/couturier/style_map_v1.md",
+    "look_counts": {
+      "brand.instructional": 96,
+      "brand.opening": 1,
+      "brand.prior": 2,
+      "brand.purpose": 2
+    },
+    "dressed": 101,
+    "unmapped": 0,
+    "element_count": 101,
+    "registry": "vocab/primitives.registry.json",
+    "note": "v1 map from occurrence move to expression style keys. Couturier mints no ids, does not rewrite atoms or intent, and does not bind motion / layout_primitive / interaction_primitive. Realizer owns text_primitive (compiler form); this tool preserves it and writes style_ref / content_role / layout_hint. HTML reads these keys for clothes; meaning stays on the atom. Lesson spine is Realizer projection; this tool does not pick the path. Does not wipe manifest.lessons. Re-stamps scene records from the project catalog (occurrences/scenes.json) when present. Re-stamps lesson records from the project catalog (occurrences/lessons.json) when present."
+  },
+  "voice": {
+    "register": "warm_direct",
+    "pack": "warm_direct.json",
+    "applied": 0,
+    "element_overrides": 0,
+    "beats_applied": [
+      "bt_cci_public_disclosure_closure",
+      "bt_cci_public_disclosure_welcome"
+    ],
+    "narration_scenes": [],
+    "stale_fallbacks": []
+  },
   "spine": {
     "policy": "v1_front_matter_callout_procedure_sequence_form_example_then_checks",
     "spec": "agents/realizer/spine_v1.md",
@@ -241,37 +285,5 @@
       "tp_step": 14
     },
     "note": "Closed compiler form on the occurrence (heading/body/step/callout/check). Realizer binds text_primitive from atom kind + occurrence move. Couturier still owns style_ref."
-  },
-  "cartographer": {
-    "policy": "v1_heuristic_compiler",
-    "tool": "tools/cartographer.py",
-    "heuristic": "agents/cartographer/heuristic_v1.md",
-    "move_counts": {
-      "activate": 2,
-      "hook": 1,
-      "objective": 2,
-      "present": 96
-    },
-    "teaches_bound": 32,
-    "low_confidence": 61,
-    "element_count": 101,
-    "ontology": "ontology/objectives.json",
-    "note": "v1 compiler pass over Realizer occurrences, including extra 1:many records. Cartographer writes intent only; it does not mint ele_ ids or rewrite atoms. Extra occurrences keep Realizer-stamped move. Couturier owns expression style; this tool does not wipe it. After writing move, Realizer refreshes text_primitive (compiler form). Lesson spine is Realizer projection (agents/realizer/spine_v1.md); this tool does not own sequence. Does not wipe ext.check, ext.scene, or manifest.lessons. Re-stamps scene records from the project catalog (occurrences/scenes.json) when present. Re-stamps lesson records from the project catalog (occurrences/lessons.json) when present."
-  },
-  "couturier": {
-    "policy": "v1_move_to_look",
-    "tool": "tools/couturier.py",
-    "spec": "agents/couturier/style_map_v1.md",
-    "look_counts": {
-      "brand.instructional": 96,
-      "brand.opening": 1,
-      "brand.prior": 2,
-      "brand.purpose": 2
-    },
-    "dressed": 101,
-    "unmapped": 0,
-    "element_count": 101,
-    "registry": "vocab/primitives.registry.json",
-    "note": "v1 map from occurrence move to expression style keys. Couturier mints no ids, does not rewrite atoms or intent, and does not bind motion / layout_primitive / interaction_primitive. Realizer owns text_primitive (compiler form); this tool preserves it and writes style_ref / content_role / layout_hint. HTML reads these keys for clothes; meaning stays on the atom. Lesson spine is Realizer projection; this tool does not pick the path. Does not wipe manifest.lessons. Re-stamps scene records from the project catalog (occurrences/scenes.json) when present. Re-stamps lesson records from the project catalog (occurrences/lessons.json) when present."
   }
 }

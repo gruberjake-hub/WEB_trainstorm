@@ -1,0 +1,44 @@
+{
+ "proposals_version": "voice.proposals.v0.1",
+ "register": "warm_direct",
+ "project": "astellas/cci_public_disclosure",
+ "provenance": {
+  "prompt_version": "voice-agent.v0.1",
+  "agent": "dragoman.voice (executed in-session per DECISIONS 2026-09-02 CCI expression hop; two beats only — no atom entries, no narrate mode, no Griot)",
+  "authored": "2026-09-02",
+  "beats_authored": "2026-09-02 (catalog beats already jake test-accepted; copy remains draft until voice_accept)"
+ },
+ "proposals": {},
+ "beat_proposals": {
+  "bt_cci_public_disclosure_welcome": {
+   "text": "Welcome — this is about Public Disclosure of Astellas CCI: what's already public, and what it means for you.",
+   "status": "draft",
+   "source_hash": "sha256:4a18d61586f019687b54e1ea824707d64fe95db3469a1749a32b2ffa1e04428c",
+   "confidence": 0.75,
+   "flags": [
+    {
+     "span": "what's already public",
+     "category": "invented-risk",
+     "severity": "low",
+     "note": "names the first-scene distinction as the learner's stake — the course heading carries it, but the welcome itself claims it; confirm"
+    }
+   ],
+   "rationale": "hook: names why you are here (Public Disclosure / already-public / meaning for you), no facts"
+  },
+  "bt_cci_public_disclosure_closure": {
+   "text": "You're informed. You know what's already public and what it means for you — and that knowledge is yours to use.",
+   "status": "draft",
+   "source_hash": "sha256:7f90f5c85f59e64b8d2a1ff6c73807a675b008832773adfeaaead51aa60dc03e",
+   "confidence": 0.8,
+   "flags": [
+    {
+     "span": "You're informed",
+     "category": "invented-risk",
+     "severity": "low",
+     "note": "evaluates the LEARNER, not the disclosure system — the artisan control's closure stance; claim-free about content, but it is an assurance; confirm"
+    }
+   ],
+   "rationale": "transfer: closes the arc the welcome opened; you are informed and the knowledge is yours to use"
+  }
+ }
+}

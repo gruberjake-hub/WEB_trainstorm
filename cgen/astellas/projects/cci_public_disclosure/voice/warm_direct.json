@@ -1,0 +1,19 @@
+{
+ "pack_version": "voice.v0.1",
+ "register": "warm_direct",
+ "entries": {},
+ "beats": {
+  "bt_cci_public_disclosure_welcome": {
+   "text": "Welcome — this is about Public Disclosure of Astellas CCI: what's already public, and what it means for you.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "source_hash": "sha256:4a18d61586f019687b54e1ea824707d64fe95db3469a1749a32b2ffa1e04428c"
+  },
+  "bt_cci_public_disclosure_closure": {
+   "text": "You're informed. You know what's already public and what it means for you — and that knowledge is yours to use.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "source_hash": "sha256:7f90f5c85f59e64b8d2a1ff6c73807a675b008832773adfeaaead51aa60dc03e"
+  }
+ }
+}
