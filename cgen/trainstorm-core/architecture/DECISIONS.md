@@ -3736,4 +3736,64 @@ Cartographer / `teaches`; Couturier" and "Cartographer / `teaches` still
 wait" clauses as to this store. Mint still does not write `ele_`. Empty
 1:many seed, no invented checks, and catalog-not-heuristic-surgery stand.
 
+---
+
+## 2026-09-02 — First Astellas/CCI Dramaturge wake; welcome+closure proposed only; Jake ratifies later
+
+**Signed:** Jake / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Dramaturge's live `missing_arc_frame` wake runs on the five-scene
+`cci_public_disclosure` QD-nucleus lesson. Propose-only. From
+`cgen/trainstorm-core`:
+
+    python3 tools/dramaturge.py --project ../astellas/projects/cci_public_disclosure
+
+Five scenes ≥ `min_scenes` 3 and no lesson frame → two beats, same shape as
+the paytrans first run (`bt_paytrans_welcome` / `bt_paytrans_closure`):
+
+- `bt_cci_public_disclosure_welcome` — placement `lesson_start`, pedagogical
+  `hook`, status `proposed`
+- `bt_cci_public_disclosure_closure` — placement `lesson_end`, pedagogical
+  `transfer`, status `proposed`
+
+**Agent never validates.** There is no `beat_accept.py`. Jake ratifies later
+by flipping status to `accepted` in `occurrences/beats.json` (the paytrans
+designer catalog flip). Do not invent an accept tool this hop.
+
+**Idempotent.** A re-run skips both placements ("already claimed — not
+re-litigating"). `validate_arc` gates before write; `--selftest` stays green.
+
+**Still not this hop.** Griot. Dragoman. Voice / narration copy. An Astellas
+voice registry. Atoms / `ele_`. ALSAP or paytrans beats. `/cgen` / `/cgen/sl`
+rewrites. Realize / cartographer / couturier re-project. Claude remains a
+co-builder of Dramaturge.
+
+Griot still waits on accepted tracks **and** a brand voice registry.
+
+**Why:** PR #75/#76 locked the five-scene QD-nucleus spine and dressed it.
+The lesson has no welcome and no closure — the same missing frame the
+paytrans artisan control had. Dramaturge's one live wake is the seat for
+that. Copy is a later hop, against accepted beats, in a register this
+project does not yet have.
+
+**Consequences:**
+- Writes: `cgen/astellas/projects/cci_public_disclosure/occurrences/beats.json`
+  only (plus this block). Status stays `proposed`. Beats carry no text.
+- `python3 tools/dramaturge.py --project ../astellas/projects/cci_public_disclosure`
+  succeeds; second run proposes nothing. `python3 tools/validate_arc.py
+  --project …` ALL PASS. `python3 tools/validate_arc.py --selftest` ALL PASS.
+- Realize was not re-run. Proposed beats stay off the learner surface until
+  Jake accepts: `load_voice_overlay` injects a beat only when the catalog
+  beat is `accepted` **and** pack copy is `accepted` **and** `source_hash`
+  matches `beat_hash`. CCI has no voice pack. `/cgen/sl` plays
+  `realized_lesson.json`, which still opens on the QD-nucleus scene heading
+  ("Already public is not confidential") and closes on Procedure D — no
+  `beat_id`, no welcome/closure copy.
+- Paytrans beats remain `accepted`. ALSAP untouched. Working-process block
+  (this file, 2026-08-25) is untouched.
+
+**Supersedes:** nothing. The 2026-09-02 cartographer+couturier block stands.
+The 2026-08-31 arc hops (Dramaturge seat, inverse guard, beat injection)
+already named this path; this is the first Astellas/CCI firing of that seat.
+
 
