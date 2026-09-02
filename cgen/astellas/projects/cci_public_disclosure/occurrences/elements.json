@@ -1,0 +1,4273 @@
+[
+  {
+    "element_id": "ele_sop_ast29658",
+    "composed_from": "atom_sop_ast29658",
+    "source_hash": "sha256:2b1c1e56052e168411b6d7aa25430156cc6df0247963066231c96051b4bc4c53",
+    "type": "Course",
+    "intent": {
+      "rhetorical": "orient",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:2b1c1e56052e168411b6d7aa25430156cc6df0247963066231c96051b4bc4c53"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "why_already_public",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_purpose",
+    "composed_from": "atom_sop_ast29658_purpose",
+    "source_hash": "sha256:d2f742a1d70a4ab4ef3a1f92803b745eb519bfcef31e3634763e0e2d4d9d0ee5",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_purpose",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:d2f742a1d70a4ab4ef3a1f92803b745eb519bfcef31e3634763e0e2d4d9d0ee5"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope",
+    "composed_from": "atom_sop_ast29658_scope",
+    "source_hash": "sha256:d16ceb3e47f17b4ec7573c0ddd7e70c124e000f0597f9e90a6c37dbd824f702d",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:d16ceb3e47f17b4ec7573c0ddd7e70c124e000f0597f9e90a6c37dbd824f702d"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains",
+    "composed_from": "atom_sop_ast29658_scope_domains",
+    "source_hash": "sha256:df96002741125c4f6407d4a093dbca235da562da83e488f34bce12ba215565e2",
+    "type": "List",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "organize",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:df96002741125c4f6407d4a093dbca235da562da83e488f34bce12ba215565e2"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_0",
+    "composed_from": "atom_sop_ast29658_scope_domains_0",
+    "source_hash": "sha256:8aa5e41f31c2828cdc335d70f1fdace36e08a7e798ed81c1f1331f6c3932ab0a",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_0",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:8aa5e41f31c2828cdc335d70f1fdace36e08a7e798ed81c1f1331f6c3932ab0a"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_1",
+    "composed_from": "atom_sop_ast29658_scope_domains_1",
+    "source_hash": "sha256:3262b719cf3e0635882059e7df575f41aa947592764d3bef9c4ff98625f26a44",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_1",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:3262b719cf3e0635882059e7df575f41aa947592764d3bef9c4ff98625f26a44"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_2",
+    "composed_from": "atom_sop_ast29658_scope_domains_2",
+    "source_hash": "sha256:e3b40a4112f84054eccfc1a578f55b7a91dfa36a5cc71a9e455ef65a05cb6b8a",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 2
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_2",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:e3b40a4112f84054eccfc1a578f55b7a91dfa36a5cc71a9e455ef65a05cb6b8a"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_3",
+    "composed_from": "atom_sop_ast29658_scope_domains_3",
+    "source_hash": "sha256:316c6c4bc6cf12e5c8cd6a6995c6e102fb59a621fed307db601db98d2982f516",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 3
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_3",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:316c6c4bc6cf12e5c8cd6a6995c6e102fb59a621fed307db601db98d2982f516"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_4",
+    "composed_from": "atom_sop_ast29658_scope_domains_4",
+    "source_hash": "sha256:1899b29ac51a75df094958a836da1c4bdfd2b6e0c0e0dd8a3be65abadc4c9d8b",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 4
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_4",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:1899b29ac51a75df094958a836da1c4bdfd2b6e0c0e0dd8a3be65abadc4c9d8b"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_5",
+    "composed_from": "atom_sop_ast29658_scope_domains_5",
+    "source_hash": "sha256:6d690e57d42a9a5a1a209037b4db53985a17e085d1bcfc6d6770f37ab752bcad",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 5
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_5",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:6d690e57d42a9a5a1a209037b4db53985a17e085d1bcfc6d6770f37ab752bcad"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_6",
+    "composed_from": "atom_sop_ast29658_scope_domains_6",
+    "source_hash": "sha256:973947e3550fb8beab861178b3ffda5b5096c29c105bb151daea8ceb4270bdeb",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 6
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_6",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:973947e3550fb8beab861178b3ffda5b5096c29c105bb151daea8ceb4270bdeb"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_7",
+    "composed_from": "atom_sop_ast29658_scope_domains_7",
+    "source_hash": "sha256:6c15b20ea3b3b4ad65fd066c5d52cb14002a534f175e4cebc7b33eea791003d2",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 7
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_7",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:6c15b20ea3b3b4ad65fd066c5d52cb14002a534f175e4cebc7b33eea791003d2"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_8",
+    "composed_from": "atom_sop_ast29658_scope_domains_8",
+    "source_hash": "sha256:31b6bba421e79dd936f41c6d1e4ea8d87db40ef4dbdf54cca931cc364637f1a7",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 8
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_8",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:31b6bba421e79dd936f41c6d1e4ea8d87db40ef4dbdf54cca931cc364637f1a7"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_9",
+    "composed_from": "atom_sop_ast29658_scope_domains_9",
+    "source_hash": "sha256:0691ca50d298e9df9c69417c0d4225f1ce31bea53cc26fbf7d7f03e9e3520bcd",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 9
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_9",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:0691ca50d298e9df9c69417c0d4225f1ce31bea53cc26fbf7d7f03e9e3520bcd"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_10",
+    "composed_from": "atom_sop_ast29658_scope_domains_10",
+    "source_hash": "sha256:654f1b0358bd73f8d44769ce2ce9c30a75e82317db83317e03eda67144539636",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 10
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_10",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:654f1b0358bd73f8d44769ce2ce9c30a75e82317db83317e03eda67144539636"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_11",
+    "composed_from": "atom_sop_ast29658_scope_domains_11",
+    "source_hash": "sha256:55c65383045b45d0a09ce328fb931ccbb5c4d7444cdeab8ae7f7a1f11186d983",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 11
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_11",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:55c65383045b45d0a09ce328fb931ccbb5c4d7444cdeab8ae7f7a1f11186d983"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_domains_12",
+    "composed_from": "atom_sop_ast29658_scope_domains_12",
+    "source_hash": "sha256:0e37c2c7d5d1e65ef07339b0767782c4a6e725ff81bc514f7702987c3dcc08e6",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_domains",
+      "sequence_index": 12
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_domains_12",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:0e37c2c7d5d1e65ef07339b0767782c4a6e725ff81bc514f7702987c3dcc08e6"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs",
+    "composed_from": "atom_sop_ast29658_scope_orgs",
+    "source_hash": "sha256:f3de7ea8f2b90637503e8e564a5798d1192fed103f7bf92d2dfdb798d3e4c4f4",
+    "type": "List",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "organize",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:f3de7ea8f2b90637503e8e564a5798d1192fed103f7bf92d2dfdb798d3e4c4f4"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_0",
+    "composed_from": "atom_sop_ast29658_scope_orgs_0",
+    "source_hash": "sha256:a6e9384760384c68c297aa61976e4d1e88e2897b8c593dde3e04ecb27d95aaea",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_0",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:a6e9384760384c68c297aa61976e4d1e88e2897b8c593dde3e04ecb27d95aaea"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_1",
+    "composed_from": "atom_sop_ast29658_scope_orgs_1",
+    "source_hash": "sha256:760084100c986e057ecdaecb15e43816a8efed5bf795700b1a71028f298318ea",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_1",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:760084100c986e057ecdaecb15e43816a8efed5bf795700b1a71028f298318ea"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_2",
+    "composed_from": "atom_sop_ast29658_scope_orgs_2",
+    "source_hash": "sha256:747ad1a2b42d74777ed1280e785ce7f1b41035aec67b1c3f574b032f529adc36",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 2
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_2",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:747ad1a2b42d74777ed1280e785ce7f1b41035aec67b1c3f574b032f529adc36"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_3",
+    "composed_from": "atom_sop_ast29658_scope_orgs_3",
+    "source_hash": "sha256:0afae0d2035f07e7d06646df3cb332d7a9eeea4c9bbd70bc7e798809ff1396c8",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 3
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_3",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:0afae0d2035f07e7d06646df3cb332d7a9eeea4c9bbd70bc7e798809ff1396c8"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_4",
+    "composed_from": "atom_sop_ast29658_scope_orgs_4",
+    "source_hash": "sha256:fcb2b622946e0e3287874cf5b9e53d2c68e2011840745a17b32c6dcf03ecfc38",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 4
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_4",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:fcb2b622946e0e3287874cf5b9e53d2c68e2011840745a17b32c6dcf03ecfc38"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_5",
+    "composed_from": "atom_sop_ast29658_scope_orgs_5",
+    "source_hash": "sha256:7a2b01b0504c61ced6d7c3c9ed5a8021bef413693ccddeea319bfa140dc8cd2f",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 5
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_5",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:7a2b01b0504c61ced6d7c3c9ed5a8021bef413693ccddeea319bfa140dc8cd2f"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_6",
+    "composed_from": "atom_sop_ast29658_scope_orgs_6",
+    "source_hash": "sha256:22fb56d5ba71d3949a01e1736bba81546c6a93f1e258fe94ce5b8d37a6a63602",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 6
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_6",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:22fb56d5ba71d3949a01e1736bba81546c6a93f1e258fe94ce5b8d37a6a63602"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_7",
+    "composed_from": "atom_sop_ast29658_scope_orgs_7",
+    "source_hash": "sha256:1a7b59bf3369ccc31972c95acde78b22b3fdd3dadff40573e24a9ea6457600a4",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 7
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_7",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:1a7b59bf3369ccc31972c95acde78b22b3fdd3dadff40573e24a9ea6457600a4"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_8",
+    "composed_from": "atom_sop_ast29658_scope_orgs_8",
+    "source_hash": "sha256:e768bdf106f62fdbc8ac7cd18be192a5f55c2e1ba9617c77be9bec8388e44230",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 8
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_8",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:e768bdf106f62fdbc8ac7cd18be192a5f55c2e1ba9617c77be9bec8388e44230"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_9",
+    "composed_from": "atom_sop_ast29658_scope_orgs_9",
+    "source_hash": "sha256:f6bbe06af41c0e597c580aef66b06378af2adf4ffcbca2edc9f5194646c84fb1",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 9
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_9",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:f6bbe06af41c0e597c580aef66b06378af2adf4ffcbca2edc9f5194646c84fb1"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_10",
+    "composed_from": "atom_sop_ast29658_scope_orgs_10",
+    "source_hash": "sha256:89325ee6eaa5d933ab6c94aeb1dcaa376d9f6adb220c84f356c0d2687c89d6d9",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 10
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_10",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:89325ee6eaa5d933ab6c94aeb1dcaa376d9f6adb220c84f356c0d2687c89d6d9"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_11",
+    "composed_from": "atom_sop_ast29658_scope_orgs_11",
+    "source_hash": "sha256:4ee9099e62e63bce801e1da2a4a5cc49486987c5a3d85d0fcbda8613bad55c75",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 11
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_11",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:4ee9099e62e63bce801e1da2a4a5cc49486987c5a3d85d0fcbda8613bad55c75"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_12",
+    "composed_from": "atom_sop_ast29658_scope_orgs_12",
+    "source_hash": "sha256:123a43ad422282de96ca02d1a186ed85d7cf8942a986cd59f12c52353ffc3804",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 12
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_12",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:123a43ad422282de96ca02d1a186ed85d7cf8942a986cd59f12c52353ffc3804"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_13",
+    "composed_from": "atom_sop_ast29658_scope_orgs_13",
+    "source_hash": "sha256:dfa1282fad98d58edb0ed0af57895eb08d0a053c533b04b6defae196cd044f96",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 13
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_13",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:dfa1282fad98d58edb0ed0af57895eb08d0a053c533b04b6defae196cd044f96"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_orgs_14",
+    "composed_from": "atom_sop_ast29658_scope_orgs_14",
+    "source_hash": "sha256:8d3a055d04575efb39a8b0b0857d52a8bc88e3047f3f2d17b44b24fc1dbeee91",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_orgs",
+      "sequence_index": 14
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_orgs_14",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:8d3a055d04575efb39a8b0b0857d52a8bc88e3047f3f2d17b44b24fc1dbeee91"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_oos",
+    "composed_from": "atom_sop_ast29658_scope_oos",
+    "source_hash": "sha256:8f0159668dd85834ee1d67d580c953d66642b8d9e970b18f7585d3036cde6d7e",
+    "type": "List",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope",
+      "sequence_index": 2
+    },
+    "intent": {
+      "rhetorical": "organize",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_oos",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:8f0159668dd85834ee1d67d580c953d66642b8d9e970b18f7585d3036cde6d7e"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_oos_0",
+    "composed_from": "atom_sop_ast29658_scope_oos_0",
+    "source_hash": "sha256:3e651becafcfc035c5555b6c433cb24507a311dddeea4869b6100acbf930a33c",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_oos",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_oos_0",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:3e651becafcfc035c5555b6c433cb24507a311dddeea4869b6100acbf930a33c"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_scope_oos_1",
+    "composed_from": "atom_sop_ast29658_scope_oos_1",
+    "source_hash": "sha256:23b5363933068d7c86351074fe4afcb45bde07d4b4e6458b1a2762a5dbc56de7",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_scope_oos",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_scope_oos_1",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:23b5363933068d7c86351074fe4afcb45bde07d4b4e6458b1a2762a5dbc56de7"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_definitions",
+    "composed_from": "atom_sop_ast29658_definitions",
+    "source_hash": "sha256:778c83274765c419cac0bab0c63cabbaf8c7b26c0d8fd46261983c0b60afea0a",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658",
+      "sequence_index": 2
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_definitions",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:778c83274765c419cac0bab0c63cabbaf8c7b26c0d8fd46261983c0b60afea0a"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_def_cci",
+    "composed_from": "atom_sop_ast29658_def_cci",
+    "source_hash": "sha256:2bd6e710dd6919cfc4c5544c685d2e6d0319309c53c0e7a4793ae3413dc2a11b",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_definitions",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_def_cci",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:2bd6e710dd6919cfc4c5544c685d2e6d0319309c53c0e7a4793ae3413dc2a11b"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_def_public_disclosure",
+    "composed_from": "atom_sop_ast29658_def_public_disclosure",
+    "source_hash": "sha256:34c3c7656cf2da35bfc39d82712bfad3f65bba11eeb73aec5bb563b3f393b33d",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_definitions",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_def_public_disclosure",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:34c3c7656cf2da35bfc39d82712bfad3f65bba11eeb73aec5bb563b3f393b33d"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_def_public_domain",
+    "composed_from": "atom_sop_ast29658_def_public_domain",
+    "source_hash": "sha256:3c562fe78b9b2ff0dc971fa455f2c4938ceaf2a068ba0f2798ee0c1e7b1ed6c8",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_definitions",
+      "sequence_index": 2
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_def_public_domain",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:3c562fe78b9b2ff0dc971fa455f2c4938ceaf2a068ba0f2798ee0c1e7b1ed6c8"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_overview",
+    "composed_from": "atom_sop_ast29658_overview",
+    "source_hash": "sha256:c361bf0b4bb8c554e23f550c96736b2fc76b8a752361070b4db34a2deb310541",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658",
+      "sequence_index": 3
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_overview",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:c361bf0b4bb8c554e23f550c96736b2fc76b8a752361070b4db34a2deb310541"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "why_already_public",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_overview_objects",
+    "composed_from": "atom_sop_ast29658_overview_objects",
+    "source_hash": "sha256:fe49dec69fd68f52c24bb9c08f5ab2da96059bb2a75f94b92fcd0e25ff17e11c",
+    "type": "List",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_overview",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "organize",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_overview_objects",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:fe49dec69fd68f52c24bb9c08f5ab2da96059bb2a75f94b92fcd0e25ff17e11c"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_overview_objects_0",
+    "composed_from": "atom_sop_ast29658_overview_objects_0",
+    "source_hash": "sha256:597268a36d2f367eab22ca578ef97a608501414407ae1f42a1212e1cfe3fe494",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_overview_objects",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_overview_objects_0",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:597268a36d2f367eab22ca578ef97a608501414407ae1f42a1212e1cfe3fe494"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "why_already_public",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_overview_objects_1",
+    "composed_from": "atom_sop_ast29658_overview_objects_1",
+    "source_hash": "sha256:b8609ce7209cf35b9de3233467bf24d2a8ef7587956cf058166893a4d0ce9bc6",
+    "type": "Bullet",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_overview_objects",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "specify",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_overview_objects_1",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:b8609ce7209cf35b9de3233467bf24d2a8ef7587956cf058166893a4d0ce9bc6"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "list_item",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "why_already_public",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_roles",
+    "composed_from": "atom_sop_ast29658_roles",
+    "source_hash": "sha256:c58923868a4bff6d6ea6f0b8667ac626a059374d4cd2c31b8a2817e442708655",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658",
+      "sequence_index": 4
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_roles",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:c58923868a4bff6d6ea6f0b8667ac626a059374d4cd2c31b8a2817e442708655"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_role_asset_lead",
+    "composed_from": "atom_sop_ast29658_role_asset_lead",
+    "source_hash": "sha256:3adf36c90e0acce1321a8a9b9787842c0affa01a313a0da2bd41551c37186f68",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_roles",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_role_asset_lead",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:3adf36c90e0acce1321a8a9b9787842c0affa01a313a0da2bd41551c37186f68"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_role_ddc",
+    "composed_from": "atom_sop_ast29658_role_ddc",
+    "source_hash": "sha256:75a26a357e5dc18d986dc04fea9496340299f83c0a450ad39e38e21a44eaa272",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_roles",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_role_ddc",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:75a26a357e5dc18d986dc04fea9496340299f83c0a450ad39e38e21a44eaa272"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_role_disclosing_party",
+    "composed_from": "atom_sop_ast29658_role_disclosing_party",
+    "source_hash": "sha256:d1446827530a88803dfdd7b5231d734caa5053c4f7ba8e8fa9f98af714fa2b69",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_roles",
+      "sequence_index": 2
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_role_disclosing_party",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:d1446827530a88803dfdd7b5231d734caa5053c4f7ba8e8fa9f98af714fa2b69"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_role_pd_lead",
+    "composed_from": "atom_sop_ast29658_role_pd_lead",
+    "source_hash": "sha256:7ca1a772fd929dd40ac5c297576e5f71f1d7dc4e8d1c70b4a15c83f9b7eefaa1",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_roles",
+      "sequence_index": 3
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_role_pd_lead",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:7ca1a772fd929dd40ac5c297576e5f71f1d7dc4e8d1c70b4a15c83f9b7eefaa1"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_procedures",
+    "composed_from": "atom_sop_ast29658_procedures",
+    "source_hash": "sha256:cd09f99aeeaa900641561bb6e29f03858e9ca8382cc7ef7c3f6ab39b839d7bd7",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658",
+      "sequence_index": 5
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_procedures",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:cd09f99aeeaa900641561bb6e29f03858e9ca8382cc7ef7c3f6ab39b839d7bd7"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_intro",
+    "composed_from": "atom_sop_ast29658_proc_intro",
+    "source_hash": "sha256:4f1de3bdf0e81da2bb20a49b12f293740aafd13d9b41d715fb12cf7056ea2c76",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_procedures",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_intro",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:4f1de3bdf0e81da2bb20a49b12f293740aafd13d9b41d715fb12cf7056ea2c76"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "asset_lead_path",
+        "role": "procedure_a",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_a",
+    "composed_from": "atom_sop_ast29658_proc_a",
+    "source_hash": "sha256:2514868637d4e5a89ee5aa211e08be034a00f095bcdffa5d958ca93d5377a7c9",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_procedures",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_a",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:2514868637d4e5a89ee5aa211e08be034a00f095bcdffa5d958ca93d5377a7c9"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_b",
+    "composed_from": "atom_sop_ast29658_proc_b",
+    "source_hash": "sha256:408d16f7807586504fc00ce0d753077d3c805f3eb8e6067342487e990ca8775e",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_procedures",
+      "sequence_index": 2
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_b",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:408d16f7807586504fc00ce0d753077d3c805f3eb8e6067342487e990ca8775e"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_c",
+    "composed_from": "atom_sop_ast29658_proc_c",
+    "source_hash": "sha256:91faf135e0eff4de91d1ae850b238d2fd6aebd63db79c45ed2227865a81144e9",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_procedures",
+      "sequence_index": 3
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_c",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:91faf135e0eff4de91d1ae850b238d2fd6aebd63db79c45ed2227865a81144e9"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_d",
+    "composed_from": "atom_sop_ast29658_proc_d",
+    "source_hash": "sha256:4952be9beab445e9bbb9896fc3b4cb7b5d2c293900b9ec72b68408917cc4590e",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_procedures",
+      "sequence_index": 4
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_d",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:4952be9beab445e9bbb9896fc3b4cb7b5d2c293900b9ec72b68408917cc4590e"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "discloser_path",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_e",
+    "composed_from": "atom_sop_ast29658_proc_e",
+    "source_hash": "sha256:24669fcbafc44b949e5424a6f24fe7f9f7a95c62633be5412a4e3411edb45182",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_procedures",
+      "sequence_index": 5
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_e",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:24669fcbafc44b949e5424a6f24fe7f9f7a95c62633be5412a4e3411edb45182"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_a_s1",
+    "composed_from": "atom_sop_ast29658_proc_a_s1",
+    "source_hash": "sha256:4ffbc49e832c7b408f34c03bb1fb70929e97a0f2c47849b286c2cf8ccedbfadc",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_a",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_a_s1",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:4ffbc49e832c7b408f34c03bb1fb70929e97a0f2c47849b286c2cf8ccedbfadc"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      },
+      "scene": {
+        "id": "asset_lead_path",
+        "role": "procedure_a",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_a_s2",
+    "composed_from": "atom_sop_ast29658_proc_a_s2",
+    "source_hash": "sha256:fbd71d53470d5515093c95fa6c32648427a884cc9a3183d76c51604d4707c3bb",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_a",
+      "sequence_index": 1,
+      "prerequisites": [
+        "ele_sop_ast29658_proc_a_s1"
+      ]
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_a_s2",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:fbd71d53470d5515093c95fa6c32648427a884cc9a3183d76c51604d4707c3bb"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      },
+      "scene": {
+        "id": "asset_lead_path",
+        "role": "procedure_a",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_a_s3",
+    "composed_from": "atom_sop_ast29658_proc_a_s3",
+    "source_hash": "sha256:78e82fd45569883b23208a1e6a682566ce9139bf094be43f87abeac06bd47a54",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_a",
+      "sequence_index": 2,
+      "prerequisites": [
+        "ele_sop_ast29658_proc_a_s2"
+      ]
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_a_s3",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:78e82fd45569883b23208a1e6a682566ce9139bf094be43f87abeac06bd47a54"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      },
+      "scene": {
+        "id": "asset_lead_path",
+        "role": "procedure_a",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_a_s4",
+    "composed_from": "atom_sop_ast29658_proc_a_s4",
+    "source_hash": "sha256:01f866eda6136d5a23f78c2a8bd9e65a0b404e9843f9eddd17e121f690dca517",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_a",
+      "sequence_index": 3,
+      "prerequisites": [
+        "ele_sop_ast29658_proc_a_s3"
+      ]
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_a_s4",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:01f866eda6136d5a23f78c2a8bd9e65a0b404e9843f9eddd17e121f690dca517"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      },
+      "scene": {
+        "id": "asset_lead_path",
+        "role": "procedure_a",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_a_s5",
+    "composed_from": "atom_sop_ast29658_proc_a_s5",
+    "source_hash": "sha256:d443dee2f6c9db70496ef34edc93abc4e95acac3a7651c77c44d0a81613ece7a",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_a",
+      "sequence_index": 4,
+      "prerequisites": [
+        "ele_sop_ast29658_proc_a_s4"
+      ]
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_a_s5",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:d443dee2f6c9db70496ef34edc93abc4e95acac3a7651c77c44d0a81613ece7a"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      },
+      "scene": {
+        "id": "asset_lead_path",
+        "role": "procedure_a",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_a_s6",
+    "composed_from": "atom_sop_ast29658_proc_a_s6",
+    "source_hash": "sha256:8be76d10841d11180bcaaa308b9608101736886424cecc71d4c2ba0bc5cb7167",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_a",
+      "sequence_index": 5,
+      "prerequisites": [
+        "ele_sop_ast29658_proc_a_s5"
+      ]
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_a_s6",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:8be76d10841d11180bcaaa308b9608101736886424cecc71d4c2ba0bc5cb7167"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      },
+      "scene": {
+        "id": "asset_lead_path",
+        "role": "procedure_a",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_b_s1",
+    "composed_from": "atom_sop_ast29658_proc_b_s1",
+    "source_hash": "sha256:8aeaed8b7e73e797ab2673ff664907597d146aa9ca8153216d5e86e3967d1df5",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_b",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_b_s1",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:8aeaed8b7e73e797ab2673ff664907597d146aa9ca8153216d5e86e3967d1df5"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_b_note_already_public",
+    "composed_from": "atom_sop_ast29658_proc_b_note_already_public",
+    "source_hash": "sha256:a826bfec132f987950197ae0bb3fdbabc479356f7ca2036d95b2e8e8b2232c91",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_b",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_b_note_already_public",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:a826bfec132f987950197ae0bb3fdbabc479356f7ca2036d95b2e8e8b2232c91"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "why_already_public",
+        "role": "front_matter",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_c_s1",
+    "composed_from": "atom_sop_ast29658_proc_c_s1",
+    "source_hash": "sha256:59aaf69c98c8a43980263a0c2d669bff50785ebc92d8d0ac42c2a6043694b79b",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_c",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_c_s1",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:59aaf69c98c8a43980263a0c2d669bff50785ebc92d8d0ac42c2a6043694b79b"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_d_s1",
+    "composed_from": "atom_sop_ast29658_proc_d_s1",
+    "source_hash": "sha256:b0a55782733350bb58cc9df8980514c4ece1bc7360d356c620b220a281e1652d",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_d",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_d_s1",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:b0a55782733350bb58cc9df8980514c4ece1bc7360d356c620b220a281e1652d"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      },
+      "scene": {
+        "id": "discloser_path",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_d_s2",
+    "composed_from": "atom_sop_ast29658_proc_d_s2",
+    "source_hash": "sha256:e4e91470617f8bcdf3f168b9786be51191bb9be6159cea42cd3c332553d98335",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_d",
+      "sequence_index": 1,
+      "prerequisites": [
+        "ele_sop_ast29658_proc_d_s1"
+      ]
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_d_s2",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:e4e91470617f8bcdf3f168b9786be51191bb9be6159cea42cd3c332553d98335"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      },
+      "scene": {
+        "id": "discloser_path",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_e_s1",
+    "composed_from": "atom_sop_ast29658_proc_e_s1",
+    "source_hash": "sha256:76cd7bffdda40a81b7c6d9966de02206807c00b95e1f01bcd224068cfbd938cf",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_e",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_e_s1",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:76cd7bffdda40a81b7c6d9966de02206807c00b95e1f01bcd224068cfbd938cf"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_e_s2",
+    "composed_from": "atom_sop_ast29658_proc_e_s2",
+    "source_hash": "sha256:24d0882091713e65021a38ac56d56b5da52c8f67f0f3e450ff37925cc7401591",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_e",
+      "sequence_index": 1,
+      "prerequisites": [
+        "ele_sop_ast29658_proc_e_s1"
+      ]
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_e_s2",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:24d0882091713e65021a38ac56d56b5da52c8f67f0f3e450ff37925cc7401591"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_e_s3",
+    "composed_from": "atom_sop_ast29658_proc_e_s3",
+    "source_hash": "sha256:d7338782ef2a9ece116ec1d5826827536fb132bf484f04522bbc44e9475281e4",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_e",
+      "sequence_index": 2,
+      "prerequisites": [
+        "ele_sop_ast29658_proc_e_s2"
+      ]
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_e_s3",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:d7338782ef2a9ece116ec1d5826827536fb132bf484f04522bbc44e9475281e4"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_sop_ast29658_proc_e_s4",
+    "composed_from": "atom_sop_ast29658_proc_e_s4",
+    "source_hash": "sha256:9a976d611724e8d95e571a36ca369af4adf13d3fca8f97b09b485682c65881b3",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_sop_ast29658_proc_e",
+      "sequence_index": 3,
+      "prerequisites": [
+        "ele_sop_ast29658_proc_e_s3"
+      ]
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_sop_ast29658_proc_e_s4",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:9a976d611724e8d95e571a36ca369af4adf13d3fca8f97b09b485682c65881b3"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure_step",
+        "from_move": "present",
+        "text_primitive": "tp_step"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_step"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011",
+    "composed_from": "atom_guide_ast6011",
+    "source_hash": "sha256:129ff101a21bc5edc6eb0b73a944fe58f83a694f20e1392f7d2e7fa114d45824",
+    "type": "Course",
+    "intent": {
+      "rhetorical": "orient",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:129ff101a21bc5edc6eb0b73a944fe58f83a694f20e1392f7d2e7fa114d45824"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_purpose",
+    "composed_from": "atom_guide_ast6011_purpose",
+    "source_hash": "sha256:18f75b95d99466702f0c5fb7ee07eab6113a652051a6580e209499e3df083cf5",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_purpose",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:18f75b95d99466702f0c5fb7ee07eab6113a652051a6580e209499e3df083cf5"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_companion",
+    "composed_from": "atom_guide_ast6011_companion",
+    "source_hash": "sha256:15d171aaced9d29b0d400a79afe5697e73bfc6479ca03dcd788cf67cd1e74e04",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_companion",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:15d171aaced9d29b0d400a79afe5697e73bfc6479ca03dcd788cf67cd1e74e04"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_phase_decay",
+    "composed_from": "atom_guide_ast6011_phase_decay",
+    "source_hash": "sha256:94a0c3d32405326ff4ce16179117d11b98e523aa73e4d52fcb5a3d0da267dad7",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011",
+      "sequence_index": 2
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_phase_decay",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:94a0c3d32405326ff4ce16179117d11b98e523aa73e4d52fcb5a3d0da267dad7"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_cmc",
+    "composed_from": "atom_guide_ast6011_cmc",
+    "source_hash": "sha256:78f3f73d94d1291d60d684de6105e412fed4bd9a958ca18c294dd152d0c0387b",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011",
+      "sequence_index": 3
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_cmc",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:78f3f73d94d1291d60d684de6105e412fed4bd9a958ca18c294dd152d0c0387b"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_cmc_maybe",
+    "composed_from": "atom_guide_ast6011_cmc_maybe",
+    "source_hash": "sha256:5c55a3166758a33f77eb863fe2bcf3a1079141b3627934afc410ccf45ec566dc",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011_cmc",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_cmc_maybe",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:5c55a3166758a33f77eb863fe2bcf3a1079141b3627934afc410ccf45ec566dc"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_cmc_not",
+    "composed_from": "atom_guide_ast6011_cmc_not",
+    "source_hash": "sha256:a32dc0ecbf52a2abaf317c3227933577f47ef909e306db570b9662d2ba15169c",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011_cmc",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_cmc_not",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:a32dc0ecbf52a2abaf317c3227933577f47ef909e306db570b9662d2ba15169c"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_nonclinical",
+    "composed_from": "atom_guide_ast6011_nonclinical",
+    "source_hash": "sha256:0b19c1b3e58de765c78bb719482bae69435b62edb19e6fe824d814dbb67c3898",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011",
+      "sequence_index": 4
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_nonclinical",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:0b19c1b3e58de765c78bb719482bae69435b62edb19e6fe824d814dbb67c3898"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_nonclinical_maybe",
+    "composed_from": "atom_guide_ast6011_nonclinical_maybe",
+    "source_hash": "sha256:a8f21ee6e46fbf1c46fd847a69fbd78dfbea9366f772186723b464b8588ab457",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011_nonclinical",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_nonclinical_maybe",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:a8f21ee6e46fbf1c46fd847a69fbd78dfbea9366f772186723b464b8588ab457"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_nonclinical_not",
+    "composed_from": "atom_guide_ast6011_nonclinical_not",
+    "source_hash": "sha256:4553cf20f4fcf281047d98eb5ada72c3f2c386d0d628dc3acdaa2dbfdf629165",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011_nonclinical",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_nonclinical_not",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:4553cf20f4fcf281047d98eb5ada72c3f2c386d0d628dc3acdaa2dbfdf629165"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_clinical",
+    "composed_from": "atom_guide_ast6011_clinical",
+    "source_hash": "sha256:4ffa9f740017a8a95c5fe5c437ca55a3cc30de05435440876ca939942ad2dcbd",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011",
+      "sequence_index": 5
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_clinical",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:4ffa9f740017a8a95c5fe5c437ca55a3cc30de05435440876ca939942ad2dcbd"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_clinical_maybe",
+    "composed_from": "atom_guide_ast6011_clinical_maybe",
+    "source_hash": "sha256:7ddb0db9006beb525b0ffc11ca498f2d417a2067482f5bd238bec2e7950de36c",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011_clinical",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_clinical_maybe",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:7ddb0db9006beb525b0ffc11ca498f2d417a2067482f5bd238bec2e7950de36c"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_clinical_not",
+    "composed_from": "atom_guide_ast6011_clinical_not",
+    "source_hash": "sha256:b2f399f90205161db63fc5525033c2921632901df46416f6e5a0eca06335c595",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011_clinical",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_clinical_not",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:b2f399f90205161db63fc5525033c2921632901df46416f6e5a0eca06335c595"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_other",
+    "composed_from": "atom_guide_ast6011_other",
+    "source_hash": "sha256:0f3ab382930b07c6809830e0c3c78d72e78855f9c8ffd268ce452d8ed981262b",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011",
+      "sequence_index": 6
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_other",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:0f3ab382930b07c6809830e0c3c78d72e78855f9c8ffd268ce452d8ed981262b"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_other_maybe",
+    "composed_from": "atom_guide_ast6011_other_maybe",
+    "source_hash": "sha256:c7315959018e5134d2ee7ebe708f4861507ae4566358334a8a7605c0c2845359",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011_other",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_other_maybe",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:c7315959018e5134d2ee7ebe708f4861507ae4566358334a8a7605c0c2845359"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_guide_ast6011_other_not",
+    "composed_from": "atom_guide_ast6011_other_not",
+    "source_hash": "sha256:5c449140c5d9ae6f4b51b8eeebd20ff6f8c9f0eca5165ebf75616fa8882e698c",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_guide_ast6011_other",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_guide_ast6011_other_not",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:5c449140c5d9ae6f4b51b8eeebd20ff6f8c9f0eca5165ebf75616fa8882e698c"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "procedure",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "guide_classify",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734",
+    "composed_from": "atom_form_ast35734",
+    "source_hash": "sha256:e8e2d1601a94a47284af96f62bfed10e115a5d7d2ec6a3f7e2a90d138d9ca841",
+    "type": "Course",
+    "intent": {
+      "rhetorical": "orient",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:e8e2d1601a94a47284af96f62bfed10e115a5d7d2ec6a3f7e2a90d138d9ca841"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "form_as_object",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_sec_cover",
+    "composed_from": "atom_form_ast35734_sec_cover",
+    "source_hash": "sha256:51be1965190449023af5d97ee894f133b91d37fb0ea24c4a549151e52d1bdc76",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_form_ast35734",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_sec_cover",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:51be1965190449023af5d97ee894f133b91d37fb0ea24c4a549151e52d1bdc76"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_section",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_sec_cover_f_version_date",
+    "composed_from": "atom_form_ast35734_sec_cover_f_version_date",
+    "source_hash": "sha256:d05b14eb5fe8f0026631cdbaa811fb8ee10a49fd01392aa761f774f8ac77b6bf",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_form_ast35734_sec_cover",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_sec_cover_f_version_date",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:d05b14eb5fe8f0026631cdbaa811fb8ee10a49fd01392aa761f774f8ac77b6bf"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_field",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "form_as_object",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_sec_cover_f_asset_code",
+    "composed_from": "atom_form_ast35734_sec_cover_f_asset_code",
+    "source_hash": "sha256:ea1e785143f02c80d632602af57c9abd3c886ed0cefda61ea497dd5049a9b6eb",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_form_ast35734_sec_cover",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_sec_cover_f_asset_code",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:ea1e785143f02c80d632602af57c9abd3c886ed0cefda61ea497dd5049a9b6eb"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_field",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "form_as_object",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_sec_cover_f_project_id",
+    "composed_from": "atom_form_ast35734_sec_cover_f_project_id",
+    "source_hash": "sha256:05eb08b2009181a12a9182f9ca73a641cd5f9e51b716d22bd7542964343c3555",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_form_ast35734_sec_cover",
+      "sequence_index": 2
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_sec_cover_f_project_id",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:05eb08b2009181a12a9182f9ca73a641cd5f9e51b716d22bd7542964343c3555"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_field",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "form_as_object",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_sec_cover_f_dev_phase",
+    "composed_from": "atom_form_ast35734_sec_cover_f_dev_phase",
+    "source_hash": "sha256:4210ad79e2a6720a46954d230521e6e2e60472ffb3a0d2c07e8139417dfcae53",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_form_ast35734_sec_cover",
+      "sequence_index": 3
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_sec_cover_f_dev_phase",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:4210ad79e2a6720a46954d230521e6e2e60472ffb3a0d2c07e8139417dfcae53"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_field",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "form_as_object",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_f_escalate",
+    "composed_from": "atom_form_ast35734_f_escalate",
+    "source_hash": "sha256:3cf4ee297661eb4c8d75e30871c6df43325f45847c123e3fbdef3d7aca77b640",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_form_ast35734",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_f_escalate",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:3cf4ee297661eb4c8d75e30871c6df43325f45847c123e3fbdef3d7aca77b640"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_field",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_sec_library",
+    "composed_from": "atom_form_ast35734_sec_library",
+    "source_hash": "sha256:9b93a8cb2d6fc06e0492a623b7882b89581a01ec38cef047fd33b2f27e18f57d",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_form_ast35734",
+      "sequence_index": 2
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_sec_library",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:9b93a8cb2d6fc06e0492a623b7882b89581a01ec38cef047fd33b2f27e18f57d"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_section",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_sec_library_f_columns",
+    "composed_from": "atom_form_ast35734_sec_library_f_columns",
+    "source_hash": "sha256:0aeb1b9d04867b38c30a594b23005b04c29f6d55d40f03b898418af27f246b15",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_form_ast35734_sec_library",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_sec_library_f_columns",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:0aeb1b9d04867b38c30a594b23005b04c29f6d55d40f03b898418af27f246b15"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_field",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "form_as_object",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_sec_instructions",
+    "composed_from": "atom_form_ast35734_sec_instructions",
+    "source_hash": "sha256:e8deeba894b5ec22ba446a5277a6b4d58a56ef1d932f8a2c72253c0c1307c27f",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_form_ast35734",
+      "sequence_index": 3
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_sec_instructions",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:e8deeba894b5ec22ba446a5277a6b4d58a56ef1d932f8a2c72253c0c1307c27f"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_section",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_sec_instructions_f_examples",
+    "composed_from": "atom_form_ast35734_sec_instructions_f_examples",
+    "source_hash": "sha256:3a04f11e58b6a0c6c622563c941942c8d24fc50ec36bacd7d2d07db338630bc8",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_form_ast35734_sec_instructions",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_sec_instructions_f_examples",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:3a04f11e58b6a0c6c622563c941942c8d24fc50ec36bacd7d2d07db338630bc8"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_field",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_sec_instructions_f_one_tab_per_phase",
+    "composed_from": "atom_form_ast35734_sec_instructions_f_one_tab_per_phase",
+    "source_hash": "sha256:13ef919219cd66be9fce9302f9439e5aabb3918883311d3698d36aa1eac3dc40",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_form_ast35734_sec_instructions",
+      "sequence_index": 1
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_sec_instructions_f_one_tab_per_phase",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:13ef919219cd66be9fce9302f9439e5aabb3918883311d3698d36aa1eac3dc40"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_field",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      },
+      "scene": {
+        "id": "form_as_object",
+        "role": "topic",
+        "spec": "agents/realizer/scenes_v1.md",
+        "policy": "v1_scenes_on_graph"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_sec_revision_history",
+    "composed_from": "atom_form_ast35734_sec_revision_history",
+    "source_hash": "sha256:fcc51b2668e7c1eeec0bc593bfb116e076a0c8a8b9db45f10d014c8c9ba7c9cc",
+    "type": "Section",
+    "structure": {
+      "parent_id": "ele_form_ast35734",
+      "sequence_index": 4
+    },
+    "intent": {
+      "rhetorical": "structure",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_sec_revision_history",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:fcc51b2668e7c1eeec0bc593bfb116e076a0c8a8b9db45f10d014c8c9ba7c9cc"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_section",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  },
+  {
+    "element_id": "ele_form_ast35734_sec_revision_history_f_history_table",
+    "composed_from": "atom_form_ast35734_sec_revision_history_f_history_table",
+    "source_hash": "sha256:553cdafb195934d9633c1fc5e091419f0ccd7b2f45dc9e729bb6e0bbacb7509d",
+    "type": "Statement",
+    "structure": {
+      "parent_id": "ele_form_ast35734_sec_revision_history",
+      "sequence_index": 0
+    },
+    "intent": {
+      "rhetorical": "assert",
+      "move": "present"
+    },
+    "governance": {
+      "version": 1,
+      "status": "draft",
+      "owner": "realizer",
+      "regulatory_binding": "regulatory"
+    },
+    "ext": {
+      "realized_from": {
+        "atom_id": "atom_form_ast35734_sec_revision_history_f_history_table",
+        "realizer": "tools/realize.py",
+        "policy": "v1_one_occurrence_per_atom",
+        "role": "primary",
+        "content_hash": "sha256:553cdafb195934d9633c1fc5e091419f0ccd7b2f45dc9e729bb6e0bbacb7509d"
+      },
+      "realizer_primitive": {
+        "policy": "v1_atom_to_primitive",
+        "tool": "tools/realize.py",
+        "spec": "agents/realizer/primitives_v1.md",
+        "from_kind": "form_field",
+        "from_move": "present",
+        "text_primitive": "tp_body"
+      }
+    },
+    "expression": {
+      "text_primitive": "tp_body"
+    }
+  }
+]

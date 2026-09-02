@@ -1,0 +1,721 @@
+{
+  "generated_by": "tools/realize.py",
+  "projection_of": {
+    "kind": "lesson",
+    "lesson_id": "cci_public_disclosure_short",
+    "policy": "v1_lesson_on_graph",
+    "spec": "agents/realizer/lesson_v1.md",
+    "engine_policy": "v1_engine_reads_lesson_projection",
+    "graph": "occurrences/",
+    "note": "Course Engine v1 at /cgen reads this projection of the occurrence lesson node (lesson \u2192 scene_ids \u2192 element_ids \u2192 atoms via composed_from; check shapes from manifest.checks). Meaning is resolved from atoms at realize time. meta.theme is the client overlay pack (cgen/brands/<theme>/) \u2014 player chrome, not Couturier style_ref. Not a hand-authored SCORM package. Not cgen/schema/course.schema.json as a rival constitution. Sidecar HTML stays a projector. Rebuild with realize \u2192 cartographer \u2192 couturier."
+  },
+  "meta": {
+    "id": "cci_public_disclosure_short",
+    "title": "Public Disclosure of Astellas CCI",
+    "title_from": "atom_sop_ast29658",
+    "theme": "astellas"
+  },
+  "nav": {
+    "linear": true,
+    "showProgress": true,
+    "startSceneId": "why_already_public",
+    "sceneOrder": [
+      "why_already_public",
+      "guide_classify",
+      "form_as_object",
+      "asset_lead_path",
+      "discloser_path"
+    ]
+  },
+  "paging": {
+    "policy": "v1_one_scene_at_a_time",
+    "spec": "agents/realizer/scenes_v1.md",
+    "scene_count": 5,
+    "step_count": 5,
+    "lesson_end_is_final_step": false,
+    "note": "Player UX on the first-class scene list: one named scene at a time, Next/Back. Definition/purpose checks are a final step after the last scene, not a fourth named scene. Hash is optional. Same membership. Coverage dump stays unpaged."
+  },
+  "scenes": [
+    {
+      "id": "why_already_public",
+      "title": "Already public is not confidential",
+      "kind": "scene",
+      "role": "front_matter",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Already public is not confidential",
+            "kicker": "Why this"
+          },
+          "meta": {
+            "scene_id": "why_already_public",
+            "role": "front_matter"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "SOP-AST-29658 v2.0 (April 2026; supersedes v1.0) \u2014 define Astellas CCI for disclosure of Astellas information in the public domain, and outline tracking.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_sop_ast29658",
+            "composed_from": "atom_sop_ast29658",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_sop_ast29658",
+              "depth": 0,
+              "head": true
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Packages can contain company secrets AND/OR participant/personnel PI/PPD. GUIDE for classification; FORM is the asset-specific library.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_sop_ast29658_overview",
+            "composed_from": "atom_sop_ast29658_overview",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_sop_ast29658",
+              "depth": 1,
+              "head": true
+            }
+          }
+        },
+        {
+          "type": "StepList",
+          "props": {
+            "kicker": "",
+            "title": "GUIDE+FORM as objects.",
+            "ordered": false,
+            "items": [
+              {
+                "id": "ele_sop_ast29658_overview_objects_0",
+                "composed_from": "atom_sop_ast29658_overview_objects_0",
+                "text": "GUIDE-AST-6011 for classification."
+              },
+              {
+                "id": "ele_sop_ast29658_overview_objects_1",
+                "composed_from": "atom_sop_ast29658_overview_objects_1",
+                "text": "FORM-AST-35734 is the asset-specific library."
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_sop_ast29658_overview_objects_0",
+              "ele_sop_ast29658_overview_objects_1"
+            ],
+            "composed_from": [
+              "atom_sop_ast29658_overview_objects_0",
+              "atom_sop_ast29658_overview_objects_1"
+            ],
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_sop_ast29658",
+              "depth": 2,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Check public domain \u2014 already public is not confidential.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_sop_ast29658_proc_b_note_already_public",
+            "composed_from": "atom_sop_ast29658_proc_b_note_already_public",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_sop_ast29658_proc_b_note_already_public",
+              "depth": 0,
+              "head": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "guide_classify",
+      "title": "Classify with the GUIDE",
+      "kind": "scene",
+      "role": "topic",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Classify with the GUIDE",
+            "kicker": "GUIDE"
+          },
+          "meta": {
+            "scene_id": "guide_classify",
+            "role": "topic"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "GUIDE-AST-6011 v2.0 (April 2026; supersedes v1.0) \u2014 CCI / may-be-CCI / not-CCI including phase.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011",
+            "composed_from": "atom_guide_ast6011",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 0,
+              "head": true
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Phase-decay: preclinical through Ph4, decreases later/after MA.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_phase_decay",
+            "composed_from": "atom_guide_ast6011_phase_decay",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 1,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "CMC.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_cmc",
+            "composed_from": "atom_guide_ast6011_cmc",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 1,
+              "head": true
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "MAY-BE: DS names/structure early; quantitative composition; metabolite formulae/pathways that reveal manufacture; polymorphism/sequence; impurities; DS/DP manufacturing methods, sites, CMOs, specs, batch size, unpublished in-house cells; DP packaging technical specs; AAV fact of synthesis/formulation change.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_cmc_maybe",
+            "composed_from": "atom_guide_ast6011_cmc_maybe",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 2,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Not-CCI: published/commercial cell-line names; general characterization; excipient names; standard storage; batch numbers; common techniques; fact of process change except AAV.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_cmc_not",
+            "composed_from": "atom_guide_ast6011_cmc_not",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 2,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Nonclinical.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_nonclinical",
+            "composed_from": "atom_guide_ast6011_nonclinical",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 1,
+              "head": true
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "MAY-BE: unpublished novel MoA/concepts; metabolites until NDA/BLA; special substrate; exclusive assays; early results; CRO/site names; future plans; study dates; detailed HA advice; contractual strategy.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_nonclinical_maybe",
+            "composed_from": "atom_guide_ast6011_nonclinical_maybe",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 2,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Not-CCI: ELISA/Biacore/common assays; published techniques; country names.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_nonclinical_not",
+            "composed_from": "atom_guide_ast6011_nonclinical_not",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 2,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Clinical.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_clinical",
+            "composed_from": "atom_guide_ast6011_clinical",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 1,
+              "head": true
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "MAY-BE: unpublished patentable unit/daily/max dose (typ. Ph1); novel unqualified biomarkers; exclusive assays; non-label endpoints; third-party questionnaires when contract forbids disclosure.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_clinical_maybe",
+            "composed_from": "atom_guide_ast6011_clinical_maybe",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 2,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Not-CCI: route/frequency/setting; design; results; CRO names; fact of HA consult.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_clinical_not",
+            "composed_from": "atom_guide_ast6011_clinical_not",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 2,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Other.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_other",
+            "composed_from": "atom_guide_ast6011_other",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 1,
+              "head": true
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "MAY-BE: exposure calc, exposure/sales by country, projected exposure, product cost, net pricing.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_other_maybe",
+            "composed_from": "atom_guide_ast6011_other_maybe",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 2,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Not-CCI: list pricing.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_guide_ast6011_other_not",
+            "composed_from": "atom_guide_ast6011_other_not",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_guide_ast6011",
+              "depth": 2,
+              "head": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "form_as_object",
+      "title": "The FORM is the library",
+      "kind": "scene",
+      "role": "topic",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "The FORM is the library",
+            "kicker": "Form"
+          },
+          "meta": {
+            "scene_id": "form_as_object",
+            "role": "topic"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "FORM-AST-35734 v2.0 (April 2026; supersedes v1.0) \u2014 CCI library.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_form_ast35734",
+            "composed_from": "atom_form_ast35734",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_form_ast35734",
+              "depth": 0,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Version Date.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_form_ast35734_sec_cover_f_version_date",
+            "composed_from": "atom_form_ast35734_sec_cover_f_version_date",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_form_ast35734_sec_cover_f_version_date",
+              "depth": 0,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Asset code/INN [ASPXXXX].",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_form_ast35734_sec_cover_f_asset_code",
+            "composed_from": "atom_form_ast35734_sec_cover_f_asset_code",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_form_ast35734_sec_cover_f_asset_code",
+              "depth": 0,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Project ID (Helix).",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_form_ast35734_sec_cover_f_project_id",
+            "composed_from": "atom_form_ast35734_sec_cover_f_project_id",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_form_ast35734_sec_cover_f_project_id",
+              "depth": 0,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Development Phase.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_form_ast35734_sec_cover_f_dev_phase",
+            "composed_from": "atom_form_ast35734_sec_cover_f_dev_phase",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_form_ast35734_sec_cover_f_dev_phase",
+              "depth": 0,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "Type/Subtype/CCI exact text/Notes.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_form_ast35734_sec_library_f_columns",
+            "composed_from": "atom_form_ast35734_sec_library_f_columns",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_form_ast35734_sec_library_f_columns",
+              "depth": 0,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "One tab per phase.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_form_ast35734_sec_instructions_f_one_tab_per_phase",
+            "composed_from": "atom_form_ast35734_sec_instructions_f_one_tab_per_phase",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_form_ast35734_sec_instructions_f_one_tab_per_phase",
+              "depth": 0,
+              "head": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "asset_lead_path",
+      "title": "Asset Lead path \u2014 CN to IND",
+      "kind": "scene",
+      "role": "procedure_a",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Asset Lead path \u2014 CN to IND",
+            "kicker": "Procedure A"
+          },
+          "meta": {
+            "scene_id": "asset_lead_path",
+            "role": "procedure_a"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "CN-to-IND.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_sop_ast29658_proc_intro",
+            "composed_from": "atom_sop_ast29658_proc_intro",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_sop_ast29658_proc_intro",
+              "depth": 0,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "StepList",
+          "props": {
+            "kicker": "",
+            "title": "A.",
+            "items": [
+              {
+                "id": "ele_sop_ast29658_proc_a_s1",
+                "composed_from": "atom_sop_ast29658_proc_a_s1",
+                "text": "PD Lead initiate."
+              },
+              {
+                "id": "ele_sop_ast29658_proc_a_s2",
+                "composed_from": "atom_sop_ast29658_proc_a_s2",
+                "text": "Asset Lead classify with GUIDE (may-be consult SME/Dept Head/Legal)."
+              },
+              {
+                "id": "ele_sop_ast29658_proc_a_s3",
+                "composed_from": "atom_sop_ast29658_proc_a_s3",
+                "text": "Document on FORM."
+              },
+              {
+                "id": "ele_sop_ast29658_proc_a_s4",
+                "composed_from": "atom_sop_ast29658_proc_a_s4",
+                "text": "Inform PD Lead."
+              },
+              {
+                "id": "ele_sop_ast29658_proc_a_s5",
+                "composed_from": "atom_sop_ast29658_proc_a_s5",
+                "text": "Archive."
+              },
+              {
+                "id": "ele_sop_ast29658_proc_a_s6",
+                "composed_from": "atom_sop_ast29658_proc_a_s6",
+                "text": "Inform Disclosing Parties."
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_sop_ast29658_proc_a_s1",
+              "ele_sop_ast29658_proc_a_s2",
+              "ele_sop_ast29658_proc_a_s3",
+              "ele_sop_ast29658_proc_a_s4",
+              "ele_sop_ast29658_proc_a_s5",
+              "ele_sop_ast29658_proc_a_s6"
+            ],
+            "composed_from": [
+              "atom_sop_ast29658_proc_a_s1",
+              "atom_sop_ast29658_proc_a_s2",
+              "atom_sop_ast29658_proc_a_s3",
+              "atom_sop_ast29658_proc_a_s4",
+              "atom_sop_ast29658_proc_a_s5",
+              "atom_sop_ast29658_proc_a_s6"
+            ],
+            "text_primitive": "tp_step",
+            "structure": {
+              "group": "atom_sop_ast29658_proc_a",
+              "depth": 0,
+              "head": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "discloser_path",
+      "title": "Follow the FORM or escalate",
+      "kind": "scene",
+      "role": "topic",
+      "components": [
+        {
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Follow the FORM or escalate",
+            "kicker": "Discloser"
+          },
+          "meta": {
+            "scene_id": "discloser_path",
+            "role": "topic"
+          }
+        },
+        {
+          "type": "Body",
+          "props": {
+            "text": "D. Follow FORM or escalate before ship.",
+            "kicker": ""
+          },
+          "meta": {
+            "element_id": "ele_sop_ast29658_proc_d",
+            "composed_from": "atom_sop_ast29658_proc_d",
+            "text_primitive": "tp_body",
+            "structure": {
+              "group": "atom_sop_ast29658_proc_d",
+              "depth": 0,
+              "head": false
+            }
+          }
+        },
+        {
+          "type": "StepList",
+          "props": {
+            "kicker": "",
+            "title": "D. Follow FORM or escalate before ship.",
+            "items": [
+              {
+                "id": "ele_sop_ast29658_proc_d_s1",
+                "composed_from": "atom_sop_ast29658_proc_d_s1",
+                "text": "Prepare/post without FORM CCI."
+              },
+              {
+                "id": "ele_sop_ast29658_proc_d_s2",
+                "composed_from": "atom_sop_ast29658_proc_d_s2",
+                "text": "If deviation, contact Asset Lead and PD Lead via publicdisclosure-sm@astellas.com before ship."
+              }
+            ]
+          },
+          "meta": {
+            "element_ids": [
+              "ele_sop_ast29658_proc_d_s1",
+              "ele_sop_ast29658_proc_d_s2"
+            ],
+            "composed_from": [
+              "atom_sop_ast29658_proc_d_s1",
+              "atom_sop_ast29658_proc_d_s2"
+            ],
+            "text_primitive": "tp_step",
+            "structure": {
+              "group": "atom_sop_ast29658_proc_d",
+              "depth": 0,
+              "head": false
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "vars": {
+    "ccOn": false,
+    "completedScenes": []
+  },
+  "rules": []
+}

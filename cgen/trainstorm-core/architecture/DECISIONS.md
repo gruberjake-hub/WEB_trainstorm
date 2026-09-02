@@ -3563,4 +3563,92 @@ on a later hop." Dramaturge propose-only, human `--by` as the only promoter to
 `validated`, leftover partition, no `ele_`, and "do not re-litigate a claimed
 `--out`" stand. Direct-mode `headwater_ingest*.py` scripts are untouched.
 
+---
+
+## 2026-09-02 — First Realizer pass on live `cci_public_disclosure`; 1:1 `ele_` + QD-nucleus spine; catalog overlay, not a CCI fork of `realize.py`
+
+**Signed:** Jake / Claude / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Realizer v1 wakes on the live CCI atom store. From
+`cgen/trainstorm-core`:
+
+    python3 tools/realize.py --project ../astellas/projects/cci_public_disclosure
+
+Default project remains `ast_alsap` — `--project` is required. The 101 draft
+atoms from PR #74 are locked (SOP/GUIDE/FORM v2.0). `cd_ast_cci_pd` stays
+validated. Four `obj_ast_cci_*` stay locked and are **not** bound this hop
+(`teaches` lives on `ele_` via Cartographer later). Mint still does not write
+`ele_`.
+
+**Catalog, not heuristic surgery.** The default spine is a closed project
+overlay (`occurrences/scenes.json` + `lessons.json`), same house as paytrans /
+ALSAP / artwork. It is the QD-nucleus, not a 101-atom dump and not ALSAP
+Procedure-A+BR-field heuristics. `realize.py` is not rewritten into a CCI-only
+fork. Sibling form/instance guests stay ALSAP-only (`name==ast_alsap`); do not
+fake a sibling. CCI FORM atoms live in the **same** `atoms.json` and receive
+1:1 `ele_` like the SOP/GUIDE trees — `assemble_elements` already walks every
+atom in the store.
+
+Default lesson `cci_public_disclosure_short` (authored title *Public Disclosure
+of Astellas CCI* — a three-root corpus has no single document-root):
+
+1. `why_already_public` (`front_matter`) — SOP root, overview PI/PPD, GUIDE+FORM
+   object leaves, B/C NOTE *already public is not confidential*
+2. `guide_classify` (`topic`) — phase-decay + four type MAY-BE vs Not-CCI
+   (not 80 bullets)
+3. `form_as_object` (`topic`) — cover fields + library columns + one-tab-per-phase.
+   Helix Project ID is a field present, not a trigger scene. Not `form_br` —
+   there is no honest closed fill.
+4. `asset_lead_path` (`procedure_a`) — CN-to-IND intro + Procedure A steps
+   (initiate / classify / document / inform PD Lead / archive / inform parties)
+5. `discloser_path` (`topic`) — Procedure D follow-or-escalate. The mailbox is
+   a contact on D.s2, not a person.
+
+Procedure E tracking exists as 1:1 `ele_` and stays **off** the default spine
+(`not_trainable` tool). Remainder inventory was never atoms. Coverage dump
+keeps the rest.
+
+**1:many seed is empty, and that is honest.** `check_v1` invert_definition needs
+`{subject} is {complement}` plus two usable sibling first-sentences. Colon-form
+defs (CCI / Public Disclosure / Public Domain) are not copulas. Procedure
+steps are imperatives. The one real copula (`FORM-AST-35734 is the
+asset-specific library`) has no usable sibling. The B/C NOTE copula inverts
+into a nonsense stem. Cloze-without-siblings is not sibling contrast. No LLM
+distractors. No invented procedure-step MCQ.
+
+**sequence_order stayed off, catalog preferred over heuristic surgery.** The
+projector still derives Procedure A sequence from `procedure_sequence_atoms`
+(first real branch, skip thin teaching atoms). Five of six CCI A steps are
+under the 50-char thin bar, so the selector returns only s2 and a one-item
+sequence is not a check. Widening that selector would be realize.py surgery
+for one corpus. Catalog membership still places all six A presents on the
+Asset Lead scene. No extra `ele_` for sequence.
+
+**Still not this hop.** Cartographer / `teaches`; Couturier; `/cgen` / `/cgen/sl`
+edits; ALSAP / paytrans / artwork stores; minting more atoms; push to main.
+Claude remains a co-builder.
+
+**Why:** PR #74 minted the QD-nucleus atoms. The course half had never run on
+this store. A catalog overlay is the same move that retired ALSAP-hardcoded
+scenes/lessons on 2026-08-27 and paytrans on 2026-08-31.
+
+**Consequences:**
+- `python3 tools/realize.py --selftest` — ALL PASS (ALSAP fixture).
+- Live run: 101 primary `ele_` (SOP 71 / GUIDE 16 / FORM 14), 0 extras, 0 ALSAP
+  guests. Spine 36 of 101 from the catalog. `element.schema.json` ALL PASS; no
+  authored `content.text`; `teaches` unbound. Re-run is idempotent (101/0/36).
+- `python3 tools/validate_atoms.py --project ../astellas/projects/cci_public_disclosure`
+  still GATE @ draft: PASS. `lint.py` on `occurrences/elements.json` OK.
+- Writes: `occurrences/{elements,manifest}.json`, `realized_lesson.html` /
+  `realized_lesson.json` / `realized_coverage.html`. Catalogs are source of
+  truth and are not rewritten.
+- `/cgen`, `/cgen/sl`, ALSAP, artwork, paytrans live stores, cartographer,
+  couturier, Case-Author tools are untouched. Working-process block (this
+  file, 2026-08-25) is untouched.
+
+**Supersedes:** the 2026-09-02 stage-2 mint block's "Still not this hop.
+Realizer" and "no `ele_`" clauses as to this store. Mint still does not write
+`ele_`. Cartographer / `teaches` still wait. Direct-mode `headwater_ingest*.py`
+scripts are untouched.
+
 
