@@ -5,8 +5,17 @@ The dossier gate — Strategist open-project warrant snapshot.
 The operating prompt proposes (or a human hand-authors) a durable dossier, not atoms
 and not a live goals-store write. This gate is the bookkeeping that makes HITL real:
 
-    SCHEMA        — the document validates against schemas/dossier.schema.json.
-    WARRANT       — open_project: three questions + outcome + Q1 human_case, consistent.
+    SCHEMA        — the document validates against schemas/dossier.schema.json (v0.2).
+    DOCUMENT      — v0.2: a live (non-EXAMPLE) dossier references its Context Digest saved
+                    whole (context_digest.document.path, relative to the dossier file); the
+                    file exists and its sha256 (CRLF→LF) matches. The JSON indexes the
+                    document; it never replaces it.
+    VERBATIM      — every context_digest excerpt is a substring of that document
+                    (whitespace-normalized). A harvester extracts; it never rewrites.
+    WARRANT       — open_project: three questions + outcome + Q1 human_case, consistent —
+                    when present. v0.2: a digest-only dossier (no warrant, no finding) is a
+                    legal PROPOSED state — the argument has not been had yet. It is never
+                    a legal VALIDATED state, and dossier_accept.py refuses it.
                     direct_escape: recorded SOP-course escape, no pretended warrant.
     HITL          — status is proposed until a human validates. validated requires a
                     human-shaped reviewer; the agent never sets it.
@@ -22,8 +31,9 @@ tools/dossier_accept.py --by. There is no strategist.py.
 
     python3 tools/validate_dossier.py --selftest
     python3 tools/validate_dossier.py --file reference/example_dossier.json
+    python3 tools/validate_dossier.py --file ../brunswick/projects/paytrans/dossier/doss_paytrans.json
 """
-import argparse, json, re, sys, pathlib
+import argparse, hashlib, json, re, sys, pathlib
 from jsonschema import Draft202012Validator
 import harness_paths
 
@@ -195,8 +205,54 @@ def smuggled_identity(doc):
     return bad
 
 
-def gate_doc(name, doc, results):
-    """Append results for one dossier dict. Importable; writes nothing."""
+DIGEST_FIELDS = ("overview", "stated_vs_implied", "concepts", "operational_reality",
+                 "assumptions", "signal_noise", "tensions", "diagnostic_observations",
+                 "open_questions")
+WS = re.compile(r"\s+")
+
+
+def norm_ws(s):
+    return WS.sub(" ", s).strip()
+
+
+def digest_sha256(text):
+    """sha256 of the UTF-8 text with CRLF normalized to LF — stable across autocrlf."""
+    return hashlib.sha256(text.replace("\r\n", "\n").encode("utf-8")).hexdigest()
+
+
+def load_digest_document(doc, base_dir):
+    """(text, path, error). base_dir is the dossier file's directory; None when unknown."""
+    ref = (doc.get("context_digest") or {}).get("document")
+    if not isinstance(ref, dict):
+        return None, None, "no context_digest.document"
+    if base_dir is None:
+        return None, None, "dossier location unknown — cannot resolve document.path"
+    path = pathlib.Path(base_dir) / ref.get("path", "")
+    if not path.is_file():
+        return None, path, f"document not found: {path}"
+    text = path.read_text(encoding="utf-8")
+    if digest_sha256(text) != ref.get("sha256"):
+        return None, path, "sha256 mismatch — the document moved after harvest; re-harvest"
+    return text, path, ""
+
+
+def excerpts_not_verbatim(doc, text):
+    """Every context_digest excerpt must appear verbatim (whitespace-normalized) in text."""
+    hay = norm_ws(text)
+    bad = []
+    cd = doc.get("context_digest") or {}
+    for f in DIGEST_FIELDS:
+        v = cd.get(f)
+        items = v if isinstance(v, list) else ([v] if isinstance(v, str) else [])
+        for i, s in enumerate(items):
+            if norm_ws(s) not in hay:
+                bad.append(f"{f}[{i}]: {s[:50]!r}")
+    return bad
+
+
+def gate_doc(name, doc, results, base_dir=None):
+    """Append results for one dossier dict. Importable; writes nothing.
+    base_dir: directory the dossier file lives in (resolves context_digest.document.path)."""
     errs = sorted(V.iter_errors(doc), key=lambda e: list(e.path))
     results.append((f"{name}: validates against schema", not errs,
                     "; ".join(e.message for e in errs)[:180]))
@@ -231,11 +287,33 @@ def gate_doc(name, doc, results):
                     not pii_k and not pii_e,
                     "keys=" + ",".join(pii_k[:6]) + " emails=" + ",".join(pii_e[:3])))
 
+    # v0.2 — the digest document, saved whole and indexed verbatim
+    has_ref = isinstance((doc.get("context_digest") or {}).get("document"), dict)
+    if is_example_fixture(doc) and not has_ref:
+        results.append((f"{name}: EXAMPLE fixture may omit context_digest.document", True, ""))
+    else:
+        results.append((f"{name}: live dossier references its Context Digest document",
+                        has_ref, "context_digest.document missing — save the digest whole"))
+        if has_ref:
+            text, dpath, err = load_digest_document(doc, base_dir)
+            results.append((f"{name}: digest document exists and sha256 matches",
+                            text is not None, err))
+            if text is not None:
+                bad = excerpts_not_verbatim(doc, text)
+                results.append((f"{name}: every context_digest excerpt is verbatim in the document",
+                                not bad, "; ".join(bad[:4])))
+
     door = doc.get("door")
     if door == "open_project":
         w = doc.get("warrant") or {}
-        ok, why = warrant_complete(w)
-        results.append((f"{name}: warrant terminal complete (Q1–Q3 + outcome)", ok, why))
+        argued = "warrant" in doc or "finding" in doc
+        if not argued and doc.get("status") == "proposed":
+            results.append((f"{name}: digest-only proposed dossier (argument not yet had; not acceptable)",
+                            True, ""))
+            ok = False
+        else:
+            ok, why = warrant_complete(w)
+            results.append((f"{name}: warrant terminal complete (Q1–Q3 + outcome)", ok, why))
         if ok:
             cok, cwhy = warrant_consistent(w)
             results.append((f"{name}: warrant outcome consistent with the three verdicts",
@@ -293,10 +371,10 @@ def report(rows):
     return ok
 
 
-def gate_passes(doc):
+def gate_passes(doc, base_dir=None):
     """True iff every gate_doc check for this document passes. Importable; writes nothing."""
     rows = []
-    gate_doc("gate", doc, rows)
+    gate_doc("gate", doc, rows, base_dir=base_dir)
     return all(ok for _, ok, _ in rows), rows
 
 
@@ -365,8 +443,61 @@ def main():
             lambda d: d["audiences"].append({"segment_id": "lead_ops",
                                              "label": "Shift leads",
                                              "name": "Jane Doe"}))
-        red("selftest: missing warrant terminal is caught",
-            lambda d: d.pop("warrant"))
+        red("selftest: validated without a warrant terminal is caught",
+            lambda d: (d.pop("warrant"), d.update(status="validated", reviewer="jake")))
+
+        # v0.2 — digest-only proposed is legal; document reference is checked when present
+        digest_only = json.loads(json.dumps(good))
+        for k in ("warrant", "finding", "outcomes", "roi", "modality_recommendations",
+                  "design_insights", "proposed_goals"):
+            digest_only.pop(k, None)
+        n2 = len(results)
+        gate_doc("fixture(digest-only)", digest_only, results)
+        results.append(("selftest: digest-only PROPOSED dossier passes the gate (argument not yet had)",
+                        all(ok for _, ok, _ in results[n2:]), ""))
+
+        import tempfile
+        with tempfile.TemporaryDirectory() as td:
+            td = pathlib.Path(td)
+            # the fixture's digest strings, saved whole as a tiny document
+            digest_text = "# CONTEXT DIGEST\n\n" + "\n\n".join(
+                good["context_digest"][f] for f in DIGEST_FIELDS if f in good["context_digest"]) + "\n"
+            (td / "context_digest.md").write_text(digest_text, encoding="utf-8")
+            live = json.loads(json.dumps(good))
+            live["_note"] = "selftest live copy — not the reference fixture"
+            live["dossier_id"] = "doss_fx_selftest_document"
+            live["context_digest"]["document"] = {"path": "context_digest.md",
+                                                  "sha256": digest_sha256(digest_text)}
+            live["context_digest"]["overview"] = ["Leadership asked for a course so incident counts drop 20%."]
+            n3 = len(results)
+            gate_doc("fixture(document)", live, results, base_dir=td)
+            results.append(("selftest: live dossier with a matching document + verbatim excerpt passes",
+                            all(ok for _, ok, _ in results[n3:]), ""))
+
+            def red_live(label, mutate):
+                d = json.loads(json.dumps(live))
+                mutate(d)
+                scratch = []
+                gate_doc("fixture(red)", d, scratch, base_dir=td)
+                caught = any(not ok for _, ok, _ in scratch)
+                results.append((label, caught, "" if caught else "mutation was NOT caught"))
+
+            red_live("selftest: live dossier without context_digest.document is caught",
+                     lambda d: d["context_digest"].pop("document"))
+            red_live("selftest: sha256 mismatch (document moved after harvest) is caught",
+                     lambda d: d["context_digest"]["document"].update(sha256="0" * 64))
+            red_live("selftest: missing document file is caught",
+                     lambda d: d["context_digest"]["document"].update(path="elsewhere.md"))
+            red_live("selftest: paraphrased (non-verbatim) excerpt is caught",
+                     lambda d: d["context_digest"].update(
+                         overview=["Leadership wants incidents down by a fifth."]))
+            # autocrlf: a CRLF checkout of the same document must NOT read as moved
+            crlf_scratch = []
+            (td / "context_digest.md").write_text(digest_text.replace("\n", "\r\n"),
+                                                  encoding="utf-8", newline="")
+            gate_doc("fixture(crlf)", live, crlf_scratch, base_dir=td)
+            results.append(("selftest: CRLF-only difference in the document is NOT a mismatch",
+                            all(ok for _, ok, _ in crlf_scratch), ""))
         red("selftest: example fixture cannot auto-validate",
             lambda d: d.update(status="validated", reviewer="jake"))
         red("selftest: decorative goal_ on a no-course terminal is caught",
@@ -387,7 +518,7 @@ def main():
         if not path.exists():
             raise SystemExit(f"not found: {path}")
         doc = json.loads(path.read_text(encoding="utf-8"))
-        gate_doc(path.name, doc, results)
+        gate_doc(path.name, doc, results, base_dir=path.parent)
         sys.exit(0 if report(results) else 1)
 
     results.append(("no --file — contract-only pass", True,
