@@ -1,0 +1,33 @@
+{
+ "store": "beats",
+ "project": "cci_public_disclosure",
+ "policy": "v1_beat_catalog",
+ "spec": "agents/dramaturge/beats_v1.md",
+ "vocab": "vocab/intent.enum.json",
+ "beats": [
+  {
+   "beat_id": "bt_cci_public_disclosure_welcome",
+   "placement": {
+    "type": "lesson_start"
+   },
+   "intent": {
+    "pedagogical": "hook"
+   },
+   "status": "proposed",
+   "from": "missing_arc_frame: 5 scenes, no lesson_start beat — a course that opens on its first topic never told the learner why they're here.",
+   "proposed_by": "dramaturge.v0.1/missing_arc_frame"
+  },
+  {
+   "beat_id": "bt_cci_public_disclosure_closure",
+   "placement": {
+    "type": "lesson_end"
+   },
+   "intent": {
+    "pedagogical": "transfer"
+   },
+   "status": "proposed",
+   "from": "missing_arc_frame: 5 scenes, no lesson_end beat — the artisan control closes ('You're Informed'); the pipeline course just stops.",
+   "proposed_by": "dramaturge.v0.1/missing_arc_frame"
+  }
+ ]
+}
