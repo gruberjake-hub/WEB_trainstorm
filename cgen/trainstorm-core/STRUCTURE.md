@@ -44,10 +44,10 @@ cgen/
 │   └── registry/{roles,records,docs,options}.registry.json  ✅ seeded v1 at namespace creation; grown by propose→adopt
 │
 ├── astellas/                            # ⚠ THIRD SIBLING — client atom stores + client registries
-│   ├── projects/{ast_alsap,alsap,alsap_asp9999,ast_artwork,cci_public_disclosure}/  ✅ procedure · template · instance · artwork stores; `cci_public_disclosure` is a THIN validated `cd_` store (inventory + committed-design; no atoms)
+│   ├── projects/{ast_alsap,alsap,alsap_asp9999,ast_artwork,cci_public_disclosure}/  ✅ procedure · template · instance · artwork stores; `cci_public_disclosure` is the first live Case-Author stage-2 mint (`cd_ast_cci_pd` validated by jake; v2.0 SOP/GUIDE/FORM atoms; remainder not minted)
 │   │                                               (`ast_artwork` store **and** `?project=` loader on main, PR #42.
 │   │                                               `/cgen/?project=ast_artwork` plays SOP-2290; `/cgen` stays ALSAP.
-│   │                                               `cci_public_disclosure`: first live validated `cd_ast_cci_pd`, reviewer jake, 2026-09-01; mint does not exist; inventory refs are pointers, not a docs.registry smash.)
+│   │                                               `cci_public_disclosure`: first live stage-2 mint from `cd_ast_cci_pd`, reviewer jake, 2026-09-02; v2.0 QDs; remainder not minted; inventory refs are pointers, not a docs.registry smash.)
 │   └── registry/{roles,records,docs,options}.registry.json  ✅ client-tier governed ENTRIES
 │
 ├── sl/                                  ✅ player two — Storyline chrome on the same realized_lesson.json (`/cgen` remains stock)
@@ -87,7 +87,7 @@ trainstorm-core/
 │   ├── instance.facet.schema.json        ✅ authored overlay on a pinned template (instance.v0.1)
 │   ├── objectives.schema.json            ✅ intent ontology — objective node contract  (v2: serves + bloom)
 │   ├── goal.schema.json                  ✅ business-outcome node — reachability is a REQUIRED gate
-│   ├── committed-design.schema.json      ✅ Case-Author stage-1 node (selection + framing, `cd_`); writer is `tools/headwater_case_author.py` (propose-only); first live `cd_ast_cci_pd` validated by jake 2026-09-01; mint does not exist (DECISIONS 2026-09-01)
+│   ├── committed-design.schema.json      ✅ Case-Author stage-1 node (selection + framing, `cd_`); writer is `tools/headwater_case_author.py` (propose-only); first live `cd_ast_cci_pd` validated by jake 2026-09-01; stage-2 mint is `tools/headwater_case_author_mint.py` (DECISIONS 2026-09-02)
 │   ├── dossier.schema.json               ✅ Strategist warrant snapshot (`doss_`); propose-only; human accept still does not write the goals store; named next write landed 2026-09-01 (`goal_ast_cci_library_used`, DECISIONS)
 │   ├── socket.schema.json                ✅ the INTAKE CONTRACT — derived, never authored (socket.v0.1)
 │   ├── template_manifest.schema.json     ✅
@@ -164,7 +164,9 @@ trainstorm-core/
 │   ├── headwater_ingest.py / _form.py    ✅ procedure · form ingests
 │   ├── headwater_ingest_artwork.py       ✅ sibling Headwater ingest for `ast_artwork` (SOP-2290); ALSAP ingest untouched
 │   ├── headwater_ingest_paytrans.py      ✅ sibling Headwater ingest for brunswick/paytrans — first expository corpus (2026-08-31)
-│   ├── headwater_case_author.py          ✅ Case-Author stage 1 — proposes committed-design (status proposed); human-run committed_design_accept.py --by is the only promoter; mint does not exist
+│   ├── headwater_case_author.py          ✅ Case-Author stage 1 — proposes committed-design (status proposed); human-run committed_design_accept.py --by is the only promoter
+│   ├── headwater_case_author_mint.py     ✅ Case-Author stage 2 — gates a validated cd_ then runs the sibling ingest; does not mutate the cd_; no ele_
+│   ├── headwater_ingest_cci_pd.py        ✅ sibling Headwater ingest for `cci_public_disclosure` (SOP-AST-29658 / GUIDE-AST-6011 / FORM-AST-35734 v2.0); remainder not minted; ALSAP/artwork/paytrans ingest untouched
 │   ├── validate_dossier.py               ✅ Strategist dossier gate — schema · warrant terminal · HITL · no atoms · no PII · no strategist.py
 │   ├── dossier_accept.py                 ✅ ONLY writer of dossier `validated`; human-shaped `--by`; writes nothing on refuse; still does not write ontology/goals.json (named store write is a separate hop — landed 2026-09-01)
 │   ├── project_sop_artwork.py            ✅ sibling SOP-2290 projector
@@ -311,8 +313,9 @@ propose-only dossier store (`schemas/dossier.schema.json`); human-run
 Case-Author stage 1 writer is `tools/headwater_case_author.py` (propose-only); first live
 `cd_ast_cci_pd` sits at `cgen/astellas/projects/cci_public_disclosure/` (status
 `validated`, reviewer `jake`, 2026-09-01; human-run `committed_design_accept.py --by jake`
-already recorded; this hop does not re-run accept). There is no
-stage-2 mint this hop. This hop does not mint atoms.
+already recorded). Stage-2 mint is `tools/headwater_case_author_mint.py` +
+`tools/headwater_ingest_cci_pd.py` (v2.0 QDs; remainder not minted). This hop does not
+run Realizer / Cartographer / Couturier.
 
 Near-term, in dependency order:
 
@@ -393,7 +396,8 @@ on ALSAP; Generator's divergent distractors; Designer as a live agent; Strategis
 *compiler* (the operating prompt and dossier store exist; there is still no `strategist.py`;
 Case-Author stage-1 propose is `tools/headwater_case_author.py`; first live
 `cd_ast_cci_pd` exists (status `validated`, reviewer `jake`, 2026-09-01; accept already
-recorded; mint does not exist); accepting a dossier still
+recorded); stage-2 mint landed 2026-09-02 as `tools/headwater_case_author_mint.py`
+(v2.0 SOP/GUIDE/FORM; remainder not minted); accepting a dossier still
 does not write `ontology/goals.json` — the named store write landed 2026-09-01 as
 `goal_ast_cci_library_used`; Designer `obj_` lock for that goal landed 2026-09-01 as four
 `obj_ast_cci_*` nodes in the core seed). Authoring Chameleon

@@ -3507,3 +3507,60 @@ it does not validate." The Dramaturge pattern, human `--by` as the only promoter
 no stage-2 mint, and "do not re-litigate a claimed `--out`" stand. Mint still waits
 on a later hop.
 
+---
+
+## 2026-09-02 — First live Case-Author stage-2 mint: `cd_ast_cci_pd`; v2.0 QDs; remainder not minted
+
+**Signed:** Jake / Claude / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Headwater Case-Author stage 2 wakes. `tools/headwater_case_author_mint.py`
+gates a validated `cd_` (`--file`) and, if the wake is legal, runs the sibling ingest
+`tools/headwater_ingest_cci_pd.py` into the project atom store. It does **not** mutate
+the `cd_`. It does **not** mint `ele_`. It does **not** write `bindings.intent` /
+teaches. `--selftest` proves refuse of proposed, leftover smash, and unreachable-LO.
+
+First live mint is `cd_ast_cci_pd` (reviewer **jake**, `held_warrant` on
+`goal_ast_cci_library_used`, four locked `obj_ast_cci_*`). In-scope QDs only, **v2.0**
+(April 2026, supersede v1.0 — not the Feb 2025 v1 pile):
+
+- SOP-AST-29658 — procedure tree (ALSAP kinds). B/C NOTE *already public is not
+  confidential* is the living-connection. E names a Tracking Tool in source_text
+  and does not lock an `obj_` or pretend it is live. History/approvals skipped
+  (no approval-page PII/emails).
+- GUIDE-AST-6011 — four type containers (CMC, Nonclinical, Clinical, Other), each
+  with MAY-BE vs Not-CCI leaves; bullets collapsed; not 80 atoms.
+- FORM-AST-35734 — form specialisation like FORM-AST-34037. Project ID (Helix) is
+  a FIELD, not a trigger. One-tab-per-phase is an instruction atom, not 12 empty
+  workbooks.
+
+Remainder inventory is **not** minted: tracking tool, Helix trigger, WS3, comms,
+SH parking-lot training-guide. Ungoverned roles/records/docs are flagged to
+`proposed_registry_extensions.json`. `cgen/astellas/registry/docs.registry.json`
+is not grown. Source `*.pdf` / `*.xlsx` gitignored in the project. Gate:
+`validate_atoms.py` must PASS at draft.
+
+**Still not this hop.** Realizer; Cartographer; Couturier; `/cgen` player;
+`/cgen/sl`; ALSAP / paytrans / artwork edits; `strategist.py`; chameleon; LRE;
+Headwater outcomes-mode; leftover smash; `ele_`; teaches/intent on atoms.
+
+**Why:** PR #73 recorded jake's accept of `cd_ast_cci_pd`. Stage 2 had a wake
+condition and no writer. This hop is the first live mint: three QDs, authored
+decomposition, remainder stays in the source store.
+
+**Consequences:**
+- Gates: `python3 tools/headwater_case_author_mint.py --selftest`;
+  `python3 tools/headwater_case_author_mint.py --file` the live `cd_`;
+  `python3 tools/validate_atoms.py --project ../astellas/projects/cci_public_disclosure`.
+- `/cgen`, `/cgen/sl`, ALSAP, artwork, paytrans live stores, realize, cartographer,
+  couturier, Audience / Direction hops are untouched. Working-process block (this
+  file, 2026-08-25) is untouched.
+- Claude is a co-builder: this hop does not freeze them out of Headwater, ontology,
+  Audience, Direction, or later agent prompts.
+
+**Supersedes:** the 2026-09-01 accept-recorded block's clauses that stage-2 mint
+still does not exist, that the agent does not mint atoms, and "Mint still waits
+on a later hop." Dramaturge propose-only, human `--by` as the only promoter to
+`validated`, leftover partition, no `ele_`, and "do not re-litigate a claimed
+`--out`" stand. Direct-mode `headwater_ingest*.py` scripts are untouched.
+
+

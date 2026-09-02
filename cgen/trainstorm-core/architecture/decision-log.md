@@ -13,7 +13,48 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-09-02 (Case-Author stage-2 mint) — First live mint from `cd_ast_cci_pd`. v2.0 QDs. Remainder not minted.
+
+*Anchor: branch `cursor/cci-pd-stage2-mint-f377` off main (PR #73,
+human accept of `cd_ast_cci_pd`). Jake: Case-Author stage-2 mint for validated
+`cd_ast_cci_pd`. First live mint. Authored Headwater decomposition of three
+in-scope QDs only. No remainder mint. No `ele_`. No teaches/intent on atoms.
+No PDF/xlsx in git. No push to main. Claude is a co-builder. Working-process
+DECISIONS untouched. Still not Realizer / Cartographer / Couturier / `/cgen` /
+ALSAP/paytrans/artwork edits / `strategist.py` / chameleon / LRE.*
+
+### What this hop is
+
+PRs #70–#73 seated the warrant, locked four `obj_`, proposed the live `cd_`,
+and recorded jake's accept. Stage 2 had a wake condition and no writer. This
+hop is the mint: gate + sibling ingest, three v2.0 QDs, remainder stays put.
+
+### What landed
+
+`tools/headwater_case_author_mint.py` — `--file` a `cd_` JSON. REFUSE unless
+validated + human reviewer + held_warrant XOR direct_escape + held `goal_` in
+`ontology/goals.json` is validated with non-empty trainable. REFUSE leftover
+smash, `atom_` design_id, unvalidated `cd_`, agent-shaped reviewer. Then run
+the sibling ingest. Does not mutate the `cd_`. `--selftest` covers refuse
+proposed / leftover / unreachable-LO.
+
+`tools/headwater_ingest_cci_pd.py` — ALSAP/form sibling. Authored semantic
+acts, not a PDF parser. Writes
+`cgen/astellas/projects/cci_public_disclosure/atoms.json` via `store_merge`.
+meaning + bindings.object + procedure or form. governance draft, regulatory.
+`source_locale` en. No `bindings.intent`. No approval-page PII/emails. Flag
+ungoverned roles/records to `proposed_registry_extensions.json`; do not grow
+ALSAP `docs.registry.json`. v2.0 (Apr 2026) not the Feb 2025 v1 pile. SOP B/C
+NOTE is the living-connection. Do not invent Health Canada/CTIS incident atoms.
+
+### What this is not
+
+Not remainder mint (tracking tool, Helix trigger, WS3, comms, SH training-guide).
+Not `ele_`. Not teaches on atoms. Not Realizer / Cartographer / Couturier.
+Not `/cgen`. Not ALSAP/paytrans/artwork edits. Not `strategist.py`.
+
 ## 2026-09-01 (Strategist operating prompt) — Spine specialization + propose-only dossier. Human accept. Still no strategist.py.
+
 
 *Anchor: branch `cursor/strategist-operating-prompt-2f47` off `bc67588` (PR #68,
 Case-Author stage-1 writer). Jake: replace the Strategist stub with a real operating

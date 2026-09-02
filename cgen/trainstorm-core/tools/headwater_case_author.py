@@ -5,7 +5,7 @@ headwater_case_author — Case-Author stage 1, propose-only (Dramaturge pattern)
 Reads a corpus inventory / source listing and EMITS a committed-design document
 (status "proposed", always). It never mints atoms, never writes validated, never
 sets reviewer. A human-run tools/committed_design_accept.py --by is the only
-promoter. Stage-2 mint does not exist.
+promoter. Stage-2 mint is tools/headwater_case_author_mint.py (does not live here).
 
 Idempotent and deferential: a designer's existing design at --out (whatever its
 status) is never re-proposed — a claimed placement is not re-litigated by a
@@ -414,7 +414,8 @@ def main():
               f"left_in_source_store={len(doc['selection']['left_in_source_store'])} "
               f"warrant={doc['warrant_join']['kind']}")
         print(f"\nproposed → {detail}. Ratify with "
-              "tools/committed_design_accept.py --file … --by <human>. Mint does not exist.")
+              "tools/committed_design_accept.py --file … --by <human>. "
+              "Stage-2 mint is tools/headwater_case_author_mint.py.")
     elif st == "deferred":
         print(f"  · skipped — {detail}")
     elif st == "dry-run":

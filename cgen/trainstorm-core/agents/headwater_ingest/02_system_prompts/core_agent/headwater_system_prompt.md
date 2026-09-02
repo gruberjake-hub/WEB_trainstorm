@@ -19,7 +19,7 @@ Lives at `agents/headwater_ingest/02_system_prompts/core_agent/system_prompt.md`
 | `{{WAKE_ON}}` | a source corpus lands in ingest scope and the router assigns it a mode |
 | `{{VOCAB_REFS}}` | `procedure.enum.json` (`step_type`) · `form.enum.json` (`field_type`, `content_disposition`, form `kind`) · `roles.registry` (`role_…`) · `records.registry` (`rec_…`) · controlled value sets (`reg_…`). Roles and records are **shared** across procedure and form — reuse, never fork. |
 | `{{MODES}}` | **Direct** · **Case-Author** (below) |
-| `{{SCHEMA_REFS}}` | Direct mint: `atom.schema.json` + the source-type facet schema (`procedure` / `form`). Case-Author stage 1: `committed-design.schema.json` (selection + framing; not an atom); runtime `tools/headwater_case_author.py` (propose-only). Case-Author stage 2 mint: the same atom + facet schemas as Direct, waking only on a **validated** committed-design plus a held warrant or recorded Direct escape. Stage-2 mint still does not exist. |
+| `{{SCHEMA_REFS}}` | Direct mint: `atom.schema.json` + the source-type facet schema (`procedure` / `form`). Case-Author stage 1: `committed-design.schema.json` (selection + framing; not an atom); runtime `tools/headwater_case_author.py` (propose-only). Case-Author stage 2 mint: the same atom + facet schemas as Direct; runtime `tools/headwater_case_author_mint.py` wakes only on a **validated** committed-design plus a held warrant or recorded Direct escape; sibling ingest `tools/headwater_ingest_cci_pd.py` (first live mint: `cd_ast_cci_pd`). |
 
 ## The origin-writer exception (read this against the spine's "one rule")
 
@@ -77,7 +77,7 @@ in two stages, and the coupling between them is a durable artifact in the graph,
    **not** validated for mint. You never *pass* anything from stage 1 to stage 2; stage 1 leaves a
    durable artifact, stage 2 wakes on it. You still write only meaning + object + source-type. You do
    not mint `goal_`, `obj_`, or audience. Headwater outcomes-mode is not this gate and stays parked.
-   Stage-1 propose exists; stage-2 mint still does not.
+   Stage-1 propose exists. Stage-2 mint: `tools/headwater_case_author_mint.py` (gate) + sibling ingest. First live mint is `cd_ast_cci_pd` (three in-scope QDs; remainder not minted).
 
 Direct fires only the mint. Case-Author fires scope-commit → (durable artifact) → mint, and mint
 additionally requires the held warrant or the recorded Direct escape. Both stages are still you,
