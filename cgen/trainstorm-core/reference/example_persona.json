@@ -1,0 +1,70 @@
+{
+  "state_id": "per_brunswick_paytx_tenured_hourly",
+  "kind": "persona",
+  "schema_version": "learner-state.v0.1",
+  "as_of": "2026-09-01T15:00:00-05:00",
+  "segment_ref": "us_hourly_tenured",
+
+  "standing": {
+    "role": "role_hourly_production",
+    "tier": "tier_general_workforce",
+    "experience_level": "proficient",
+    "mastery": [
+      { "objective_id": "obj_explain_pay_range_structure", "level": 0.2, "basis": "prior:segment_default" },
+      { "objective_id": "obj_locate_own_range",            "level": 0.1, "basis": "prior:segment_default" },
+      { "objective_id": "obj_describe_total_rewards",     "level": 0.4, "basis": "audience_analysis:BRUN-PAYTX-2026-08" }
+    ],
+    "prior_exposure": ["crs_brunswick_code_of_conduct_2025"]
+  },
+
+  "disposition": {
+    "inhibitors": [
+      { "id": "inh_fear_of_being_underpaid",  "strength": 0.8, "basis": "emap.inhibitors:v2", "objective_ids": ["obj_locate_own_range"] },
+      { "id": "inh_distrust_of_hr_messaging", "strength": 0.6, "basis": "emap.inhibitors:v2" }
+    ],
+    "objections": [
+      { "id": "obj_x_ranges_are_just_legal_cover", "strength": 0.7, "basis": "emap.inhibitors:v2" }
+    ],
+    "aligners": [
+      { "id": "aln_fairness_for_my_crew",  "strength": 0.9, "basis": "emap.motivators:v2" },
+      { "id": "aln_predictability_of_pay", "strength": 0.7, "basis": "emap.motivators:v2" }
+    ],
+    "identity_threats": [
+      { "id": "thr_seniority_not_valued", "strength": 0.7, "basis": "emap.empathy:v2", "objective_ids": ["obj_explain_pay_range_structure"] }
+    ],
+    "belief_gaps": [
+      { "id": "gap_midpoint_means_average_pay", "strength": 0.6, "basis": "emap.meaning:v2" }
+    ],
+    "meaning_anchors": [
+      { "id": "mng_know_where_i_stand", "strength": 0.9, "basis": "emap.meaning:v2" }
+    ],
+    "affective_pattern": "aff_defensive"
+  },
+
+  "dynamics": {
+    "clarity":          { "value": 0.3, "basis": "prior:segment_default" },
+    "agreement":        { "value": 0.3, "basis": "prior:segment_default" },
+    "self_efficacy":    { "value": 0.5, "basis": "prior:segment_default" },
+    "risk_sensitivity": { "value": 0.7, "basis": "emap.affect:v2" },
+    "identity_safety":  { "value": 0.4, "basis": "emap.empathy:v2" },
+    "intent_to_act":    { "value": 0.3, "basis": "prior:segment_default" },
+    "load":             { "value": 0.2, "basis": "prior:segment_default" },
+    "trust":            { "value": 0.4, "basis": "emap.affect:v2" }
+  },
+
+  "cadence": {
+    "chunk_tolerance": "short",
+    "density_tolerance": "sparse",
+    "preferred_pace": "steady",
+    "interaction_appetite": "medium"
+  },
+
+  "governance": {
+    "version": 1,
+    "status": "draft",
+    "owner": "ld_adaptivity",
+    "generated_by": "emap-chain.v2",
+    "source_hash": "sha256:9c1f2b3a4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8",
+    "reviewer_notes": "Illustrative persona for schema validation. Segment, objective, and vocabulary ids are placeholders until vocab/disposition.enum.json and ontology/objectives.json exist."
+  }
+}
