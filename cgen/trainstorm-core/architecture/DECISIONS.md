@@ -3651,4 +3651,89 @@ Realizer" and "no `ele_`" clauses as to this store. Mint still does not write
 `ele_`. Cartographer / `teaches` still wait. Direct-mode `headwater_ingest*.py`
 scripts are untouched.
 
+---
+
+## 2026-09-02 — First non-ALSAP SOP through cartographer + couturier + `/cgen/sl` via `intent_map`; CCI QD-nucleus plays; machinery test, not a gold course
+
+**Signed:** Jake / Claude / App-maker — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Cartographer and Couturier wake on the live
+`cci_public_disclosure` occurrence store. From `cgen/trainstorm-core`:
+
+    python3 tools/cartographer.py --project ../astellas/projects/cci_public_disclosure
+    python3 tools/couturier.py --project ../astellas/projects/cci_public_disclosure
+
+Default project remains `ast_alsap` — `--project` is required. Cartographer
+is still the single writer of `element.intent`. Designer bindings live as
+project data in `occurrences/intent_map.json` (policy `v1_intent_map`), the
+same overlay house as paytrans. `bind_teaches()` stays `[]` for any project
+other than `ast_alsap`; a second SOP does not inherit `obj_explain_alsap_*`.
+Couturier still writes only expression style keys from `intent.move`. It
+does not write intent, mint ids, or invent looks for unmapped moves.
+
+**Playable after merge.** `/cgen/sl/?project=cci_public_disclosure` (and
+stock `/cgen/?project=cci_public_disclosure`) load the existing catalog
+(`occurrences/lessons.json` → `realized_lesson.json`). Default `/cgen` and
+`/cgen/sl` without `?project` stay ALSAP. The SL player was not forked;
+catalog hrefs are already rooted at `/cgen/`. No voiceover chrome (existing
+`lessonHasVoiceoverChrome`). No LLM distractors. No new invert_definition
+extras — the empty `one_to_many_seed` from PR #75 stands. No invented
+checks.
+
+**`intent_map` binds four locked `obj_ast_cci_*` on QD-nucleus spine atoms
+(plus the FORM escalate instructional primary). Live `atom_id`s from
+`atoms.json`:**
+
+- SOP root `atom_sop_ast29658` — one hook election (empty `teaches`). GUIDE
+  (`kind: procedure`) and FORM (`kind: form`) are also no-`belongs_to` roots
+  and would heuristic-hook; the map keeps them `present`.
+- Living-connection (overview PI/PPD, B/C NOTE already-public is not
+  confidential) → `obj_ast_cci_public_irreversible`. Overview object leaves
+  bind the named tool (`GUIDE for classification` /
+  `FORM is the library`).
+- GUIDE phase-decay + four type MAY-BE / Not-CCI leaves →
+  `obj_ast_cci_classify_with_guide`. Thin type headings (CMC. / Nonclinical.
+  / Clinical. / Other.) stay unbound.
+- FORM cover / library columns / one-tab-per-phase + Procedure A steps
+  (complete library before IND) → `obj_ast_cci_complete_form_before_ind`.
+  Helix Project ID is a field, not a trigger obj.
+- Procedure D follow-or-escalate + FORM escalate instructional
+  (`atom_form_ast35734_f_escalate`) → `obj_ast_cci_follow_or_escalate`.
+- Procedure E tracking: not in the map. Empty `teaches` is correct. Do not
+  bind a tracking obj. Do not bind `obj_explain_alsap_*` or `obj_bw_emp_*`.
+
+Intended_response uses the existing non-ALSAP branch of
+`bind_intended_response`. Closed entry shape only (`teaches`, optional
+`move`, optional `why`).
+
+**Still not this hop.** chameleon.py; LRE; workbench UI; strategist.py; more
+`obj_`; remainder mint; ISO 14971; pretty URLs; `/cgen` player rewrite.
+Claude remains a co-builder of Cartographer / Couturier prompts.
+
+**Why:** PR #75 realized 101 1:1 `ele_` and the QD-nucleus catalog spine.
+Jake asked to cook the remaining machinery under real-world conditions —
+not a second gold Brunswick course, not invented checks.
+
+**Consequences:**
+- `python3 tools/cartographer.py --selftest` — ALSAP fixture still green.
+- `python3 tools/couturier.py --selftest`
+- `python3 tools/realize.py --selftest`
+- Live CCI: 101 primary `ele_` (no new ids). One hook. `teaches` bound on 32
+  occurrences: irreversible 2, classify 11, complete-form 15, follow-or-escalate
+  4. Procedure E unbound. No ALSAP / Brunswick `obj_` on CCI `ele_`. Element
+  schema ALL PASS. Couturier dressed 101 / unmapped 0. `atoms.json` and
+  `cd_ast_cci_pd` sha unchanged.
+- Writes: `occurrences/intent_map.json` (authored); cartographer+couturier
+  re-project `occurrences/{elements,manifest}.json` and
+  `realized_lesson.{html,json}` / `realized_coverage.html`. Catalogs
+  (`scenes.json` / `lessons.json` / `one_to_many_seed.json`) are membership
+  source of truth and were not rewritten.
+- `/cgen/sl/?project=cci_public_disclosure` is the click target after Jake
+  pulls. Working-process block (this file, 2026-08-25) is untouched.
+
+**Supersedes:** the 2026-09-02 Realizer-pass block's "Still not this hop.
+Cartographer / `teaches`; Couturier" and "Cartographer / `teaches` still
+wait" clauses as to this store. Mint still does not write `ele_`. Empty
+1:many seed, no invented checks, and catalog-not-heuristic-surgery stand.
+
 

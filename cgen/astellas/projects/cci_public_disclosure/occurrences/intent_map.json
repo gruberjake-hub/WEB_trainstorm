@@ -1,0 +1,203 @@
+{
+  "store": "intent_map",
+  "project": "cci_public_disclosure",
+  "policy": "v1_intent_map",
+  "spec": "agents/cartographer/heuristic_v2_expository.md",
+  "map": {
+    "atom_sop_ast29658": {
+      "teaches": [],
+      "move": "hook",
+      "why": "Elected lesson opening — SOP-AST-29658 is the procedure root on why_already_public. GUIDE and FORM are also no-belongs_to roots (kind procedure / form); without a map move they would heuristic-hook too. One hook in the whole map."
+    },
+    "atom_sop_ast29658_overview": {
+      "teaches": [
+        "obj_ast_cci_public_irreversible"
+      ],
+      "why": "Living-connection: packages can hold company secrets AND/OR participant PI/PPD."
+    },
+    "atom_sop_ast29658_overview_objects_0": {
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ],
+      "why": "Living-connection object leaf: GUIDE-AST-6011 for classification."
+    },
+    "atom_sop_ast29658_overview_objects_1": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ],
+      "why": "Living-connection object leaf: FORM-AST-35734 is the asset-specific library."
+    },
+    "atom_sop_ast29658_proc_b_note_already_public": {
+      "teaches": [
+        "obj_ast_cci_public_irreversible"
+      ],
+      "why": "B/C NOTE: already public is not confidential — irreversible public-domain error."
+    },
+    "atom_guide_ast6011": {
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ],
+      "move": "present",
+      "why": "GUIDE root names CCI / may-be / not-CCI including phase. kind procedure with no belongs_to would heuristic-hook; keep present so the SOP root remains the single opening."
+    },
+    "atom_guide_ast6011_phase_decay": {
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ],
+      "why": "Classification can change by development phase."
+    },
+    "atom_guide_ast6011_cmc": {
+      "teaches": [],
+      "why": "Thin CMC type heading. MAY-BE / Not-CCI leaves carry the classify objective."
+    },
+    "atom_guide_ast6011_cmc_maybe": {
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
+    },
+    "atom_guide_ast6011_cmc_not": {
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
+    },
+    "atom_guide_ast6011_nonclinical": {
+      "teaches": [],
+      "why": "Thin Nonclinical type heading. MAY-BE / Not-CCI leaves carry the classify objective."
+    },
+    "atom_guide_ast6011_nonclinical_maybe": {
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
+    },
+    "atom_guide_ast6011_nonclinical_not": {
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
+    },
+    "atom_guide_ast6011_clinical": {
+      "teaches": [],
+      "why": "Thin Clinical type heading. MAY-BE / Not-CCI leaves carry the classify objective."
+    },
+    "atom_guide_ast6011_clinical_maybe": {
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
+    },
+    "atom_guide_ast6011_clinical_not": {
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
+    },
+    "atom_guide_ast6011_other": {
+      "teaches": [],
+      "why": "Thin Other type heading. MAY-BE / Not-CCI leaves carry the classify objective."
+    },
+    "atom_guide_ast6011_other_maybe": {
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
+    },
+    "atom_guide_ast6011_other_not": {
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
+    },
+    "atom_form_ast35734": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ],
+      "move": "present",
+      "why": "FORM root is the CCI library object. kind form with no object.belongs_to would heuristic-hook; keep present so the SOP root remains the single opening."
+    },
+    "atom_form_ast35734_sec_cover_f_version_date": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
+    },
+    "atom_form_ast35734_sec_cover_f_asset_code": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
+    },
+    "atom_form_ast35734_sec_cover_f_project_id": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ],
+      "why": "Helix Project ID is a FORM cover field, not a trigger objective."
+    },
+    "atom_form_ast35734_sec_cover_f_dev_phase": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
+    },
+    "atom_form_ast35734_sec_library_f_columns": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
+    },
+    "atom_form_ast35734_sec_instructions_f_one_tab_per_phase": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
+    },
+    "atom_sop_ast29658_proc_intro": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ],
+      "why": "CN-to-IND framing for completing the library before IND."
+    },
+    "atom_sop_ast29658_proc_a_s1": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
+    },
+    "atom_sop_ast29658_proc_a_s2": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
+    },
+    "atom_sop_ast29658_proc_a_s3": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
+    },
+    "atom_sop_ast29658_proc_a_s4": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
+    },
+    "atom_sop_ast29658_proc_a_s5": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
+    },
+    "atom_sop_ast29658_proc_a_s6": {
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
+    },
+    "atom_sop_ast29658_proc_d": {
+      "teaches": [
+        "obj_ast_cci_follow_or_escalate"
+      ],
+      "why": "Procedure D heading: follow FORM or escalate before ship."
+    },
+    "atom_sop_ast29658_proc_d_s1": {
+      "teaches": [
+        "obj_ast_cci_follow_or_escalate"
+      ]
+    },
+    "atom_sop_ast29658_proc_d_s2": {
+      "teaches": [
+        "obj_ast_cci_follow_or_escalate"
+      ]
+    },
+    "atom_form_ast35734_f_escalate": {
+      "teaches": [
+        "obj_ast_cci_follow_or_escalate"
+      ],
+      "why": "FORM escalate instructional (instructional_transient). Same mailbox path as Procedure D.s2. Off the default spine; still a primary on the FORM tree."
+    }
+  },
+  "note": "Designer objective bindings as project data (Cartographer heuristic v2). Cartographer stays the single writer of the intent facet; this file is its governed input, validated against ontology/objectives.json and the closed move vocab on load. QD-nucleus spine atoms (36) plus the FORM escalate instructional primary. Procedure E tracking atoms are absent here on purpose — empty teaches is honest (no tracking obj_). Atoms absent here keep heuristic bindings (bind_teaches is [] off ALSAP). Do not bind obj_explain_alsap_* or obj_bw_emp_*. Not a gold course; machinery test of the first non-ALSAP SOP through cartographer + couturier + /cgen/sl."
+}

@@ -55,15 +55,17 @@
           }
         },
         {
-          "type": "Body",
+          "type": "Heading",
           "props": {
+            "level": 2,
             "text": "SOP-AST-29658 v2.0 (April 2026; supersedes v1.0) \u2014 define Astellas CCI for disclosure of Astellas information in the public domain, and outline tracking.",
             "kicker": ""
           },
           "meta": {
             "element_id": "ele_sop_ast29658",
             "composed_from": "atom_sop_ast29658",
-            "text_primitive": "tp_body",
+            "text_primitive": "tp_display",
+            "style_ref": "brand.opening",
             "structure": {
               "group": "atom_sop_ast29658",
               "depth": 0,
@@ -81,6 +83,7 @@
             "element_id": "ele_sop_ast29658_overview",
             "composed_from": "atom_sop_ast29658_overview",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_sop_ast29658",
               "depth": 1,
@@ -117,6 +120,7 @@
               "atom_sop_ast29658_overview_objects_1"
             ],
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_sop_ast29658",
               "depth": 2,
@@ -134,6 +138,7 @@
             "element_id": "ele_sop_ast29658_proc_b_note_already_public",
             "composed_from": "atom_sop_ast29658_proc_b_note_already_public",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_sop_ast29658_proc_b_note_already_public",
               "depth": 0,
@@ -171,6 +176,7 @@
             "element_id": "ele_guide_ast6011",
             "composed_from": "atom_guide_ast6011",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 0,
@@ -188,6 +194,7 @@
             "element_id": "ele_guide_ast6011_phase_decay",
             "composed_from": "atom_guide_ast6011_phase_decay",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 1,
@@ -205,6 +212,7 @@
             "element_id": "ele_guide_ast6011_cmc",
             "composed_from": "atom_guide_ast6011_cmc",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 1,
@@ -222,6 +230,7 @@
             "element_id": "ele_guide_ast6011_cmc_maybe",
             "composed_from": "atom_guide_ast6011_cmc_maybe",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 2,
@@ -239,6 +248,7 @@
             "element_id": "ele_guide_ast6011_cmc_not",
             "composed_from": "atom_guide_ast6011_cmc_not",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 2,
@@ -256,6 +266,7 @@
             "element_id": "ele_guide_ast6011_nonclinical",
             "composed_from": "atom_guide_ast6011_nonclinical",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 1,
@@ -273,6 +284,7 @@
             "element_id": "ele_guide_ast6011_nonclinical_maybe",
             "composed_from": "atom_guide_ast6011_nonclinical_maybe",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 2,
@@ -290,6 +302,7 @@
             "element_id": "ele_guide_ast6011_nonclinical_not",
             "composed_from": "atom_guide_ast6011_nonclinical_not",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 2,
@@ -307,6 +320,7 @@
             "element_id": "ele_guide_ast6011_clinical",
             "composed_from": "atom_guide_ast6011_clinical",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 1,
@@ -324,6 +338,7 @@
             "element_id": "ele_guide_ast6011_clinical_maybe",
             "composed_from": "atom_guide_ast6011_clinical_maybe",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 2,
@@ -341,6 +356,7 @@
             "element_id": "ele_guide_ast6011_clinical_not",
             "composed_from": "atom_guide_ast6011_clinical_not",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 2,
@@ -358,6 +374,7 @@
             "element_id": "ele_guide_ast6011_other",
             "composed_from": "atom_guide_ast6011_other",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 1,
@@ -375,6 +392,7 @@
             "element_id": "ele_guide_ast6011_other_maybe",
             "composed_from": "atom_guide_ast6011_other_maybe",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 2,
@@ -392,6 +410,7 @@
             "element_id": "ele_guide_ast6011_other_not",
             "composed_from": "atom_guide_ast6011_other_not",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_guide_ast6011",
               "depth": 2,
@@ -429,6 +448,7 @@
             "element_id": "ele_form_ast35734",
             "composed_from": "atom_form_ast35734",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_form_ast35734",
               "depth": 0,
@@ -446,6 +466,7 @@
             "element_id": "ele_form_ast35734_sec_cover_f_version_date",
             "composed_from": "atom_form_ast35734_sec_cover_f_version_date",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_form_ast35734_sec_cover_f_version_date",
               "depth": 0,
@@ -463,6 +484,7 @@
             "element_id": "ele_form_ast35734_sec_cover_f_asset_code",
             "composed_from": "atom_form_ast35734_sec_cover_f_asset_code",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_form_ast35734_sec_cover_f_asset_code",
               "depth": 0,
@@ -480,6 +502,7 @@
             "element_id": "ele_form_ast35734_sec_cover_f_project_id",
             "composed_from": "atom_form_ast35734_sec_cover_f_project_id",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_form_ast35734_sec_cover_f_project_id",
               "depth": 0,
@@ -497,6 +520,7 @@
             "element_id": "ele_form_ast35734_sec_cover_f_dev_phase",
             "composed_from": "atom_form_ast35734_sec_cover_f_dev_phase",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_form_ast35734_sec_cover_f_dev_phase",
               "depth": 0,
@@ -514,6 +538,7 @@
             "element_id": "ele_form_ast35734_sec_library_f_columns",
             "composed_from": "atom_form_ast35734_sec_library_f_columns",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_form_ast35734_sec_library_f_columns",
               "depth": 0,
@@ -531,6 +556,7 @@
             "element_id": "ele_form_ast35734_sec_instructions_f_one_tab_per_phase",
             "composed_from": "atom_form_ast35734_sec_instructions_f_one_tab_per_phase",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_form_ast35734_sec_instructions_f_one_tab_per_phase",
               "depth": 0,
@@ -568,6 +594,7 @@
             "element_id": "ele_sop_ast29658_proc_intro",
             "composed_from": "atom_sop_ast29658_proc_intro",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_sop_ast29658_proc_intro",
               "depth": 0,
@@ -631,6 +658,7 @@
               "atom_sop_ast29658_proc_a_s6"
             ],
             "text_primitive": "tp_step",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_sop_ast29658_proc_a",
               "depth": 0,
@@ -668,6 +696,7 @@
             "element_id": "ele_sop_ast29658_proc_d",
             "composed_from": "atom_sop_ast29658_proc_d",
             "text_primitive": "tp_body",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_sop_ast29658_proc_d",
               "depth": 0,
@@ -703,6 +732,7 @@
               "atom_sop_ast29658_proc_d_s2"
             ],
             "text_primitive": "tp_step",
+            "style_ref": "brand.instructional",
             "structure": {
               "group": "atom_sop_ast29658_proc_d",
               "depth": 0,

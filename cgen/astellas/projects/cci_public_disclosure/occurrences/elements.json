@@ -6,7 +6,8 @@
     "type": "Course",
     "intent": {
       "rhetorical": "orient",
-      "move": "present"
+      "move": "hook",
+      "intended_response": "attend to the document title this procedure governs"
     },
     "governance": {
       "version": 1,
@@ -22,13 +23,34 @@
         "role": "primary",
         "content_hash": "sha256:2b1c1e56052e168411b6d7aa25430156cc6df0247963066231c96051b4bc4c53"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "map",
+        "flags": [
+          "root_title",
+          "teaches_unbound",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "hook",
+        "source_hash": "sha256:2b1c1e56052e168411b6d7aa25430156cc6df0247963066231c96051b4bc4c53",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
         "spec": "agents/realizer/primitives_v1.md",
         "from_kind": "procedure",
-        "from_move": "present",
-        "text_primitive": "tp_body"
+        "from_move": "hook",
+        "text_primitive": "tp_display"
       },
       "scene": {
         "id": "why_already_public",
@@ -38,7 +60,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.opening",
+      "text_primitive": "tp_display",
+      "content_role": "title",
+      "layout_hint": "banner"
     }
   },
   {
@@ -51,8 +76,9 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "assert",
+      "move": "objective",
+      "intended_response": "state the process this SOP defines"
     },
     "governance": {
       "version": 1,
@@ -68,17 +94,40 @@
         "role": "primary",
         "content_hash": "sha256:d2f742a1d70a4ab4ef3a1f92803b745eb519bfcef31e3634763e0e2d4d9d0ee5"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "purpose_frame",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "objective",
+        "source_hash": "sha256:d2f742a1d70a4ab4ef3a1f92803b745eb519bfcef31e3634763e0e2d4d9d0ee5",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
         "spec": "agents/realizer/primitives_v1.md",
         "from_kind": "procedure",
-        "from_move": "present",
-        "text_primitive": "tp_body"
+        "from_move": "objective",
+        "text_primitive": "tp_purpose"
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.purpose",
+      "text_primitive": "tp_purpose",
+      "content_role": "purpose",
+      "layout_hint": "purpose_bar"
     }
   },
   {
@@ -91,7 +140,7 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "contextualize",
       "move": "present"
     },
     "governance": {
@@ -108,6 +157,26 @@
         "role": "primary",
         "content_hash": "sha256:d16ceb3e47f17b4ec7573c0ddd7e70c124e000f0597f9e90a6c37dbd824f702d"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:d16ceb3e47f17b4ec7573c0ddd7e70c124e000f0597f9e90a6c37dbd824f702d",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -118,7 +187,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -131,7 +203,7 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "organize",
+      "rhetorical": "structure",
       "move": "present"
     },
     "governance": {
@@ -148,6 +220,26 @@
         "role": "primary",
         "content_hash": "sha256:df96002741125c4f6407d4a093dbca235da562da83e488f34bce12ba215565e2"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:df96002741125c4f6407d4a093dbca235da562da83e488f34bce12ba215565e2",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -158,7 +250,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -188,6 +283,26 @@
         "role": "primary",
         "content_hash": "sha256:8aa5e41f31c2828cdc335d70f1fdace36e08a7e798ed81c1f1331f6c3932ab0a"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:8aa5e41f31c2828cdc335d70f1fdace36e08a7e798ed81c1f1331f6c3932ab0a",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -198,7 +313,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -228,6 +346,26 @@
         "role": "primary",
         "content_hash": "sha256:3262b719cf3e0635882059e7df575f41aa947592764d3bef9c4ff98625f26a44"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:3262b719cf3e0635882059e7df575f41aa947592764d3bef9c4ff98625f26a44",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -238,7 +376,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -268,6 +409,26 @@
         "role": "primary",
         "content_hash": "sha256:e3b40a4112f84054eccfc1a578f55b7a91dfa36a5cc71a9e455ef65a05cb6b8a"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:e3b40a4112f84054eccfc1a578f55b7a91dfa36a5cc71a9e455ef65a05cb6b8a",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -278,7 +439,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -308,6 +472,26 @@
         "role": "primary",
         "content_hash": "sha256:316c6c4bc6cf12e5c8cd6a6995c6e102fb59a621fed307db601db98d2982f516"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:316c6c4bc6cf12e5c8cd6a6995c6e102fb59a621fed307db601db98d2982f516",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -318,7 +502,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -348,6 +535,26 @@
         "role": "primary",
         "content_hash": "sha256:1899b29ac51a75df094958a836da1c4bdfd2b6e0c0e0dd8a3be65abadc4c9d8b"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:1899b29ac51a75df094958a836da1c4bdfd2b6e0c0e0dd8a3be65abadc4c9d8b",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -358,7 +565,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -388,6 +598,26 @@
         "role": "primary",
         "content_hash": "sha256:6d690e57d42a9a5a1a209037b4db53985a17e085d1bcfc6d6770f37ab752bcad"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:6d690e57d42a9a5a1a209037b4db53985a17e085d1bcfc6d6770f37ab752bcad",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -398,7 +628,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -428,6 +661,26 @@
         "role": "primary",
         "content_hash": "sha256:973947e3550fb8beab861178b3ffda5b5096c29c105bb151daea8ceb4270bdeb"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:973947e3550fb8beab861178b3ffda5b5096c29c105bb151daea8ceb4270bdeb",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -438,7 +691,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -468,6 +724,26 @@
         "role": "primary",
         "content_hash": "sha256:6c15b20ea3b3b4ad65fd066c5d52cb14002a534f175e4cebc7b33eea791003d2"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:6c15b20ea3b3b4ad65fd066c5d52cb14002a534f175e4cebc7b33eea791003d2",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -478,7 +754,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -508,6 +787,26 @@
         "role": "primary",
         "content_hash": "sha256:31b6bba421e79dd936f41c6d1e4ea8d87db40ef4dbdf54cca931cc364637f1a7"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:31b6bba421e79dd936f41c6d1e4ea8d87db40ef4dbdf54cca931cc364637f1a7",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -518,7 +817,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -548,6 +850,26 @@
         "role": "primary",
         "content_hash": "sha256:0691ca50d298e9df9c69417c0d4225f1ce31bea53cc26fbf7d7f03e9e3520bcd"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:0691ca50d298e9df9c69417c0d4225f1ce31bea53cc26fbf7d7f03e9e3520bcd",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -558,7 +880,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -588,6 +913,26 @@
         "role": "primary",
         "content_hash": "sha256:654f1b0358bd73f8d44769ce2ce9c30a75e82317db83317e03eda67144539636"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:654f1b0358bd73f8d44769ce2ce9c30a75e82317db83317e03eda67144539636",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -598,7 +943,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -628,6 +976,26 @@
         "role": "primary",
         "content_hash": "sha256:55c65383045b45d0a09ce328fb931ccbb5c4d7444cdeab8ae7f7a1f11186d983"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:55c65383045b45d0a09ce328fb931ccbb5c4d7444cdeab8ae7f7a1f11186d983",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -638,7 +1006,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -668,6 +1039,26 @@
         "role": "primary",
         "content_hash": "sha256:0e37c2c7d5d1e65ef07339b0767782c4a6e725ff81bc514f7702987c3dcc08e6"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:0e37c2c7d5d1e65ef07339b0767782c4a6e725ff81bc514f7702987c3dcc08e6",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -678,7 +1069,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -691,7 +1085,7 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "organize",
+      "rhetorical": "structure",
       "move": "present"
     },
     "governance": {
@@ -708,6 +1102,26 @@
         "role": "primary",
         "content_hash": "sha256:f3de7ea8f2b90637503e8e564a5798d1192fed103f7bf92d2dfdb798d3e4c4f4"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:f3de7ea8f2b90637503e8e564a5798d1192fed103f7bf92d2dfdb798d3e4c4f4",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -718,7 +1132,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -748,6 +1165,26 @@
         "role": "primary",
         "content_hash": "sha256:a6e9384760384c68c297aa61976e4d1e88e2897b8c593dde3e04ecb27d95aaea"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:a6e9384760384c68c297aa61976e4d1e88e2897b8c593dde3e04ecb27d95aaea",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -758,7 +1195,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -788,6 +1228,26 @@
         "role": "primary",
         "content_hash": "sha256:760084100c986e057ecdaecb15e43816a8efed5bf795700b1a71028f298318ea"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:760084100c986e057ecdaecb15e43816a8efed5bf795700b1a71028f298318ea",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -798,7 +1258,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -828,6 +1291,26 @@
         "role": "primary",
         "content_hash": "sha256:747ad1a2b42d74777ed1280e785ce7f1b41035aec67b1c3f574b032f529adc36"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:747ad1a2b42d74777ed1280e785ce7f1b41035aec67b1c3f574b032f529adc36",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -838,7 +1321,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -868,6 +1354,26 @@
         "role": "primary",
         "content_hash": "sha256:0afae0d2035f07e7d06646df3cb332d7a9eeea4c9bbd70bc7e798809ff1396c8"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:0afae0d2035f07e7d06646df3cb332d7a9eeea4c9bbd70bc7e798809ff1396c8",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -878,7 +1384,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -908,6 +1417,26 @@
         "role": "primary",
         "content_hash": "sha256:fcb2b622946e0e3287874cf5b9e53d2c68e2011840745a17b32c6dcf03ecfc38"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:fcb2b622946e0e3287874cf5b9e53d2c68e2011840745a17b32c6dcf03ecfc38",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -918,7 +1447,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -948,6 +1480,26 @@
         "role": "primary",
         "content_hash": "sha256:7a2b01b0504c61ced6d7c3c9ed5a8021bef413693ccddeea319bfa140dc8cd2f"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:7a2b01b0504c61ced6d7c3c9ed5a8021bef413693ccddeea319bfa140dc8cd2f",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -958,7 +1510,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -988,6 +1543,26 @@
         "role": "primary",
         "content_hash": "sha256:22fb56d5ba71d3949a01e1736bba81546c6a93f1e258fe94ce5b8d37a6a63602"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:22fb56d5ba71d3949a01e1736bba81546c6a93f1e258fe94ce5b8d37a6a63602",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -998,7 +1573,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1028,6 +1606,26 @@
         "role": "primary",
         "content_hash": "sha256:1a7b59bf3369ccc31972c95acde78b22b3fdd3dadff40573e24a9ea6457600a4"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:1a7b59bf3369ccc31972c95acde78b22b3fdd3dadff40573e24a9ea6457600a4",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1038,7 +1636,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1068,6 +1669,26 @@
         "role": "primary",
         "content_hash": "sha256:e768bdf106f62fdbc8ac7cd18be192a5f55c2e1ba9617c77be9bec8388e44230"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:e768bdf106f62fdbc8ac7cd18be192a5f55c2e1ba9617c77be9bec8388e44230",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1078,7 +1699,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1108,6 +1732,26 @@
         "role": "primary",
         "content_hash": "sha256:f6bbe06af41c0e597c580aef66b06378af2adf4ffcbca2edc9f5194646c84fb1"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:f6bbe06af41c0e597c580aef66b06378af2adf4ffcbca2edc9f5194646c84fb1",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1118,7 +1762,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1148,6 +1795,26 @@
         "role": "primary",
         "content_hash": "sha256:89325ee6eaa5d933ab6c94aeb1dcaa376d9f6adb220c84f356c0d2687c89d6d9"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:89325ee6eaa5d933ab6c94aeb1dcaa376d9f6adb220c84f356c0d2687c89d6d9",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1158,7 +1825,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1188,6 +1858,26 @@
         "role": "primary",
         "content_hash": "sha256:4ee9099e62e63bce801e1da2a4a5cc49486987c5a3d85d0fcbda8613bad55c75"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:4ee9099e62e63bce801e1da2a4a5cc49486987c5a3d85d0fcbda8613bad55c75",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1198,7 +1888,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1228,6 +1921,26 @@
         "role": "primary",
         "content_hash": "sha256:123a43ad422282de96ca02d1a186ed85d7cf8942a986cd59f12c52353ffc3804"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:123a43ad422282de96ca02d1a186ed85d7cf8942a986cd59f12c52353ffc3804",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1238,7 +1951,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1268,6 +1984,26 @@
         "role": "primary",
         "content_hash": "sha256:dfa1282fad98d58edb0ed0af57895eb08d0a053c533b04b6defae196cd044f96"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:dfa1282fad98d58edb0ed0af57895eb08d0a053c533b04b6defae196cd044f96",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1278,7 +2014,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1308,6 +2047,26 @@
         "role": "primary",
         "content_hash": "sha256:8d3a055d04575efb39a8b0b0857d52a8bc88e3047f3f2d17b44b24fc1dbeee91"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:8d3a055d04575efb39a8b0b0857d52a8bc88e3047f3f2d17b44b24fc1dbeee91",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1318,7 +2077,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1331,7 +2093,7 @@
       "sequence_index": 2
     },
     "intent": {
-      "rhetorical": "organize",
+      "rhetorical": "structure",
       "move": "present"
     },
     "governance": {
@@ -1348,6 +2110,26 @@
         "role": "primary",
         "content_hash": "sha256:8f0159668dd85834ee1d67d580c953d66642b8d9e970b18f7585d3036cde6d7e"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:8f0159668dd85834ee1d67d580c953d66642b8d9e970b18f7585d3036cde6d7e",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1358,7 +2140,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1388,6 +2173,26 @@
         "role": "primary",
         "content_hash": "sha256:3e651becafcfc035c5555b6c433cb24507a311dddeea4869b6100acbf930a33c"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:3e651becafcfc035c5555b6c433cb24507a311dddeea4869b6100acbf930a33c",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1398,7 +2203,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1428,6 +2236,26 @@
         "role": "primary",
         "content_hash": "sha256:23b5363933068d7c86351074fe4afcb45bde07d4b4e6458b1a2762a5dbc56de7"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:23b5363933068d7c86351074fe4afcb45bde07d4b4e6458b1a2762a5dbc56de7",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1438,7 +2266,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1451,8 +2282,9 @@
       "sequence_index": 2
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "support",
+      "move": "activate",
+      "intended_response": "notice why this exists as a prior frame, not as a new fact"
     },
     "governance": {
       "version": 1,
@@ -1468,17 +2300,40 @@
         "role": "primary",
         "content_hash": "sha256:778c83274765c419cac0bab0c63cabbaf8c7b26c0d8fd46261983c0b60afea0a"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "definitions_as_prior_knowledge"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "activate",
+        "source_hash": "sha256:778c83274765c419cac0bab0c63cabbaf8c7b26c0d8fd46261983c0b60afea0a",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_callout"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
         "spec": "agents/realizer/primitives_v1.md",
         "from_kind": "procedure",
-        "from_move": "present",
-        "text_primitive": "tp_body"
+        "from_move": "activate",
+        "text_primitive": "tp_callout"
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.prior",
+      "text_primitive": "tp_callout",
+      "content_role": "callout",
+      "layout_hint": "callout"
     }
   },
   {
@@ -1491,7 +2346,7 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -1508,6 +2363,26 @@
         "role": "primary",
         "content_hash": "sha256:2bd6e710dd6919cfc4c5544c685d2e6d0319309c53c0e7a4793ae3413dc2a11b"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:2bd6e710dd6919cfc4c5544c685d2e6d0319309c53c0e7a4793ae3413dc2a11b",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1518,7 +2393,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1531,7 +2409,7 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -1548,6 +2426,26 @@
         "role": "primary",
         "content_hash": "sha256:34c3c7656cf2da35bfc39d82712bfad3f65bba11eeb73aec5bb563b3f393b33d"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:34c3c7656cf2da35bfc39d82712bfad3f65bba11eeb73aec5bb563b3f393b33d",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1558,7 +2456,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1571,7 +2472,7 @@
       "sequence_index": 2
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -1588,6 +2489,26 @@
         "role": "primary",
         "content_hash": "sha256:3c562fe78b9b2ff0dc971fa455f2c4938ceaf2a068ba0f2798ee0c1e7b1ed6c8"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:3c562fe78b9b2ff0dc971fa455f2c4938ceaf2a068ba0f2798ee0c1e7b1ed6c8",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1598,7 +2519,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1611,8 +2535,11 @@
       "sequence_index": 3
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_public_irreversible"
+      ]
     },
     "governance": {
       "version": 1,
@@ -1627,6 +2554,26 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:c361bf0b4bb8c554e23f550c96736b2fc76b8a752361070b4db34a2deb310541"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:c361bf0b4bb8c554e23f550c96736b2fc76b8a752361070b4db34a2deb310541",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -1644,7 +2591,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1657,7 +2607,7 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "organize",
+      "rhetorical": "structure",
       "move": "present"
     },
     "governance": {
@@ -1674,6 +2624,26 @@
         "role": "primary",
         "content_hash": "sha256:fe49dec69fd68f52c24bb9c08f5ab2da96059bb2a75f94b92fcd0e25ff17e11c"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:fe49dec69fd68f52c24bb9c08f5ab2da96059bb2a75f94b92fcd0e25ff17e11c",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1684,7 +2654,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1698,7 +2671,10 @@
     },
     "intent": {
       "rhetorical": "specify",
-      "move": "present"
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
     },
     "governance": {
       "version": 1,
@@ -1714,6 +2690,26 @@
         "role": "primary",
         "content_hash": "sha256:597268a36d2f367eab22ca578ef97a608501414407ae1f42a1212e1cfe3fe494"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "kind_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:597268a36d2f367eab22ca578ef97a608501414407ae1f42a1212e1cfe3fe494",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1730,7 +2726,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1744,7 +2743,10 @@
     },
     "intent": {
       "rhetorical": "specify",
-      "move": "present"
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -1760,6 +2762,26 @@
         "role": "primary",
         "content_hash": "sha256:b8609ce7209cf35b9de3233467bf24d2a8ef7587956cf058166893a4d0ce9bc6"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "kind_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:b8609ce7209cf35b9de3233467bf24d2a8ef7587956cf058166893a4d0ce9bc6",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1776,7 +2798,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1789,8 +2814,9 @@
       "sequence_index": 4
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "activate",
+      "intended_response": "notice why this exists as a prior frame, not as a new fact"
     },
     "governance": {
       "version": 1,
@@ -1806,17 +2832,41 @@
         "role": "primary",
         "content_hash": "sha256:c58923868a4bff6d6ea6f0b8667ac626a059374d4cd2c31b8a2817e442708655"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "roles_as_prior_knowledge",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "activate",
+        "source_hash": "sha256:c58923868a4bff6d6ea6f0b8667ac626a059374d4cd2c31b8a2817e442708655",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_callout"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
         "spec": "agents/realizer/primitives_v1.md",
         "from_kind": "procedure",
-        "from_move": "present",
-        "text_primitive": "tp_body"
+        "from_move": "activate",
+        "text_primitive": "tp_callout"
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.prior",
+      "text_primitive": "tp_callout",
+      "content_role": "callout",
+      "layout_hint": "callout"
     }
   },
   {
@@ -1829,7 +2879,7 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -1846,6 +2896,26 @@
         "role": "primary",
         "content_hash": "sha256:3adf36c90e0acce1321a8a9b9787842c0affa01a313a0da2bd41551c37186f68"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:3adf36c90e0acce1321a8a9b9787842c0affa01a313a0da2bd41551c37186f68",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1856,7 +2926,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1869,7 +2942,7 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -1886,6 +2959,26 @@
         "role": "primary",
         "content_hash": "sha256:75a26a357e5dc18d986dc04fea9496340299f83c0a450ad39e38e21a44eaa272"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:75a26a357e5dc18d986dc04fea9496340299f83c0a450ad39e38e21a44eaa272",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1896,7 +2989,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1909,7 +3005,7 @@
       "sequence_index": 2
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -1926,6 +3022,26 @@
         "role": "primary",
         "content_hash": "sha256:d1446827530a88803dfdd7b5231d734caa5053c4f7ba8e8fa9f98af714fa2b69"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:d1446827530a88803dfdd7b5231d734caa5053c4f7ba8e8fa9f98af714fa2b69",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1936,7 +3052,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1949,7 +3068,7 @@
       "sequence_index": 3
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -1966,6 +3085,26 @@
         "role": "primary",
         "content_hash": "sha256:7ca1a772fd929dd40ac5c297576e5f71f1d7dc4e8d1c70b4a15c83f9b7eefaa1"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:7ca1a772fd929dd40ac5c297576e5f71f1d7dc4e8d1c70b4a15c83f9b7eefaa1",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -1976,7 +3115,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -1989,7 +3131,7 @@
       "sequence_index": 5
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -2006,6 +3148,25 @@
         "role": "primary",
         "content_hash": "sha256:cd09f99aeeaa900641561bb6e29f03858e9ca8382cc7ef7c3f6ab39b839d7bd7"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:cd09f99aeeaa900641561bb6e29f03858e9ca8382cc7ef7c3f6ab39b839d7bd7",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -2016,7 +3177,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -2029,8 +3193,11 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -2045,6 +3212,26 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:4f1de3bdf0e81da2bb20a49b12f293740aafd13d9b41d715fb12cf7056ea2c76"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:4f1de3bdf0e81da2bb20a49b12f293740aafd13d9b41d715fb12cf7056ea2c76",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -2062,7 +3249,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -2075,7 +3265,7 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -2092,6 +3282,25 @@
         "role": "primary",
         "content_hash": "sha256:2514868637d4e5a89ee5aa211e08be034a00f095bcdffa5d958ca93d5377a7c9"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:2514868637d4e5a89ee5aa211e08be034a00f095bcdffa5d958ca93d5377a7c9",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -2102,7 +3311,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -2115,7 +3327,7 @@
       "sequence_index": 2
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -2132,6 +3344,25 @@
         "role": "primary",
         "content_hash": "sha256:408d16f7807586504fc00ce0d753077d3c805f3eb8e6067342487e990ca8775e"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:408d16f7807586504fc00ce0d753077d3c805f3eb8e6067342487e990ca8775e",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -2142,7 +3373,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -2155,7 +3389,7 @@
       "sequence_index": 3
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -2172,6 +3406,25 @@
         "role": "primary",
         "content_hash": "sha256:91faf135e0eff4de91d1ae850b238d2fd6aebd63db79c45ed2227865a81144e9"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:91faf135e0eff4de91d1ae850b238d2fd6aebd63db79c45ed2227865a81144e9",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -2182,7 +3435,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -2195,8 +3451,11 @@
       "sequence_index": 4
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_follow_or_escalate"
+      ]
     },
     "governance": {
       "version": 1,
@@ -2211,6 +3470,26 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:4952be9beab445e9bbb9896fc3b4cb7b5d2c293900b9ec72b68408917cc4590e"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:4952be9beab445e9bbb9896fc3b4cb7b5d2c293900b9ec72b68408917cc4590e",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -2228,7 +3507,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -2241,7 +3523,7 @@
       "sequence_index": 5
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -2258,6 +3540,25 @@
         "role": "primary",
         "content_hash": "sha256:24669fcbafc44b949e5424a6f24fe7f9f7a95c62633be5412a4e3411edb45182"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:24669fcbafc44b949e5424a6f24fe7f9f7a95c62633be5412a4e3411edb45182",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -2268,7 +3569,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -2282,7 +3586,10 @@
     },
     "intent": {
       "rhetorical": "assert",
-      "move": "present"
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -2297,6 +3604,27 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:4ffbc49e832c7b408f34c03bb1fb70929e97a0f2c47849b286c2cf8ccedbfadc"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "kind_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:4ffbc49e832c7b408f34c03bb1fb70929e97a0f2c47849b286c2cf8ccedbfadc",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -2314,7 +3642,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2331,7 +3662,10 @@
     },
     "intent": {
       "rhetorical": "assert",
-      "move": "present"
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -2346,6 +3680,27 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:fbd71d53470d5515093c95fa6c32648427a884cc9a3183d76c51604d4707c3bb"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "kind_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:fbd71d53470d5515093c95fa6c32648427a884cc9a3183d76c51604d4707c3bb",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -2363,7 +3718,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2380,7 +3738,10 @@
     },
     "intent": {
       "rhetorical": "assert",
-      "move": "present"
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -2395,6 +3756,27 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:78e82fd45569883b23208a1e6a682566ce9139bf094be43f87abeac06bd47a54"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "kind_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:78e82fd45569883b23208a1e6a682566ce9139bf094be43f87abeac06bd47a54",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -2412,7 +3794,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2429,7 +3814,10 @@
     },
     "intent": {
       "rhetorical": "assert",
-      "move": "present"
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -2444,6 +3832,27 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:01f866eda6136d5a23f78c2a8bd9e65a0b404e9843f9eddd17e121f690dca517"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "kind_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:01f866eda6136d5a23f78c2a8bd9e65a0b404e9843f9eddd17e121f690dca517",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -2461,7 +3870,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2478,7 +3890,10 @@
     },
     "intent": {
       "rhetorical": "assert",
-      "move": "present"
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -2493,6 +3908,27 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:d443dee2f6c9db70496ef34edc93abc4e95acac3a7651c77c44d0a81613ece7a"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "kind_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:d443dee2f6c9db70496ef34edc93abc4e95acac3a7651c77c44d0a81613ece7a",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -2510,7 +3946,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2527,7 +3966,10 @@
     },
     "intent": {
       "rhetorical": "assert",
-      "move": "present"
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -2542,6 +3984,27 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:8be76d10841d11180bcaaa308b9608101736886424cecc71d4c2ba0bc5cb7167"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "kind_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:8be76d10841d11180bcaaa308b9608101736886424cecc71d4c2ba0bc5cb7167",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -2559,7 +4022,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2589,6 +4055,27 @@
         "role": "primary",
         "content_hash": "sha256:8aeaed8b7e73e797ab2673ff664907597d146aa9ca8153216d5e86e3967d1df5"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:8aeaed8b7e73e797ab2673ff664907597d146aa9ca8153216d5e86e3967d1df5",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -2599,7 +4086,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2612,8 +4102,11 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_public_irreversible"
+      ]
     },
     "governance": {
       "version": 1,
@@ -2628,6 +4121,26 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:a826bfec132f987950197ae0bb3fdbabc479356f7ca2036d95b2e8e8b2232c91"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:a826bfec132f987950197ae0bb3fdbabc479356f7ca2036d95b2e8e8b2232c91",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -2645,7 +4158,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -2675,6 +4191,27 @@
         "role": "primary",
         "content_hash": "sha256:59aaf69c98c8a43980263a0c2d669bff50785ebc92d8d0ac42c2a6043694b79b"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:59aaf69c98c8a43980263a0c2d669bff50785ebc92d8d0ac42c2a6043694b79b",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -2685,7 +4222,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2699,7 +4239,10 @@
     },
     "intent": {
       "rhetorical": "assert",
-      "move": "present"
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_follow_or_escalate"
+      ]
     },
     "governance": {
       "version": 1,
@@ -2714,6 +4257,27 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:b0a55782733350bb58cc9df8980514c4ece1bc7360d356c620b220a281e1652d"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "kind_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:b0a55782733350bb58cc9df8980514c4ece1bc7360d356c620b220a281e1652d",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -2731,7 +4295,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2748,7 +4315,10 @@
     },
     "intent": {
       "rhetorical": "assert",
-      "move": "present"
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_follow_or_escalate"
+      ]
     },
     "governance": {
       "version": 1,
@@ -2763,6 +4333,27 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:e4e91470617f8bcdf3f168b9786be51191bb9be6159cea42cd3c332553d98335"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "kind_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:e4e91470617f8bcdf3f168b9786be51191bb9be6159cea42cd3c332553d98335",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -2780,7 +4371,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2810,6 +4404,27 @@
         "role": "primary",
         "content_hash": "sha256:76cd7bffdda40a81b7c6d9966de02206807c00b95e1f01bcd224068cfbd938cf"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:76cd7bffdda40a81b7c6d9966de02206807c00b95e1f01bcd224068cfbd938cf",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -2820,7 +4435,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2853,6 +4471,27 @@
         "role": "primary",
         "content_hash": "sha256:24d0882091713e65021a38ac56d56b5da52c8f67f0f3e450ff37925cc7401591"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:24d0882091713e65021a38ac56d56b5da52c8f67f0f3e450ff37925cc7401591",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -2863,7 +4502,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2896,6 +4538,27 @@
         "role": "primary",
         "content_hash": "sha256:d7338782ef2a9ece116ec1d5826827536fb132bf484f04522bbc44e9475281e4"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:d7338782ef2a9ece116ec1d5826827536fb132bf484f04522bbc44e9475281e4",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -2906,7 +4569,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2939,6 +4605,27 @@
         "role": "primary",
         "content_hash": "sha256:9a976d611724e8d95e571a36ca369af4adf13d3fca8f97b09b485682c65881b3"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "kind_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:9a976d611724e8d95e571a36ca369af4adf13d3fca8f97b09b485682c65881b3",
+        "confidence": "high",
+        "flags": [
+          "from_move",
+          "from_primitive_step"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -2949,7 +4636,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_step"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_step",
+      "content_role": "step",
+      "layout_hint": "job_aid"
     }
   },
   {
@@ -2959,7 +4649,10 @@
     "type": "Course",
     "intent": {
       "rhetorical": "orient",
-      "move": "present"
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
     },
     "governance": {
       "version": 1,
@@ -2974,6 +4667,26 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:129ff101a21bc5edc6eb0b73a944fe58f83a694f20e1392f7d2e7fa114d45824"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "map",
+        "flags": [
+          "root_title",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:129ff101a21bc5edc6eb0b73a944fe58f83a694f20e1392f7d2e7fa114d45824",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -2991,7 +4704,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3004,8 +4720,9 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "assert",
+      "move": "objective",
+      "intended_response": "state the process this SOP defines"
     },
     "governance": {
       "version": 1,
@@ -3021,17 +4738,40 @@
         "role": "primary",
         "content_hash": "sha256:18f75b95d99466702f0c5fb7ee07eab6113a652051a6580e209499e3df083cf5"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "purpose_frame",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "objective",
+        "source_hash": "sha256:18f75b95d99466702f0c5fb7ee07eab6113a652051a6580e209499e3df083cf5",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
         "spec": "agents/realizer/primitives_v1.md",
         "from_kind": "procedure",
-        "from_move": "present",
-        "text_primitive": "tp_body"
+        "from_move": "objective",
+        "text_primitive": "tp_purpose"
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.purpose",
+      "text_primitive": "tp_purpose",
+      "content_role": "purpose",
+      "layout_hint": "purpose_bar"
     }
   },
   {
@@ -3044,7 +4784,7 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -3061,6 +4801,26 @@
         "role": "primary",
         "content_hash": "sha256:15d171aaced9d29b0d400a79afe5697e73bfc6479ca03dcd788cf67cd1e74e04"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:15d171aaced9d29b0d400a79afe5697e73bfc6479ca03dcd788cf67cd1e74e04",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3071,7 +4831,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3084,8 +4847,11 @@
       "sequence_index": 2
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3100,6 +4866,26 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:94a0c3d32405326ff4ce16179117d11b98e523aa73e4d52fcb5a3d0da267dad7"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:94a0c3d32405326ff4ce16179117d11b98e523aa73e4d52fcb5a3d0da267dad7",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -3117,7 +4903,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3130,7 +4919,7 @@
       "sequence_index": 3
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -3147,6 +4936,27 @@
         "role": "primary",
         "content_hash": "sha256:78f3f73d94d1291d60d684de6105e412fed4bd9a958ca18c294dd152d0c0387b"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:78f3f73d94d1291d60d684de6105e412fed4bd9a958ca18c294dd152d0c0387b",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3163,7 +4973,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3176,8 +4989,11 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3193,6 +5009,26 @@
         "role": "primary",
         "content_hash": "sha256:5c55a3166758a33f77eb863fe2bcf3a1079141b3627934afc410ccf45ec566dc"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:5c55a3166758a33f77eb863fe2bcf3a1079141b3627934afc410ccf45ec566dc",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3209,7 +5045,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3222,8 +5061,11 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3239,6 +5081,26 @@
         "role": "primary",
         "content_hash": "sha256:a32dc0ecbf52a2abaf317c3227933577f47ef909e306db570b9662d2ba15169c"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:a32dc0ecbf52a2abaf317c3227933577f47ef909e306db570b9662d2ba15169c",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3255,7 +5117,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3268,7 +5133,7 @@
       "sequence_index": 4
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -3285,6 +5150,27 @@
         "role": "primary",
         "content_hash": "sha256:0b19c1b3e58de765c78bb719482bae69435b62edb19e6fe824d814dbb67c3898"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:0b19c1b3e58de765c78bb719482bae69435b62edb19e6fe824d814dbb67c3898",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3301,7 +5187,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3314,8 +5203,11 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3331,6 +5223,26 @@
         "role": "primary",
         "content_hash": "sha256:a8f21ee6e46fbf1c46fd847a69fbd78dfbea9366f772186723b464b8588ab457"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:a8f21ee6e46fbf1c46fd847a69fbd78dfbea9366f772186723b464b8588ab457",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3347,7 +5259,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3360,8 +5275,11 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3377,6 +5295,26 @@
         "role": "primary",
         "content_hash": "sha256:4553cf20f4fcf281047d98eb5ada72c3f2c386d0d628dc3acdaa2dbfdf629165"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:4553cf20f4fcf281047d98eb5ada72c3f2c386d0d628dc3acdaa2dbfdf629165",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3393,7 +5331,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3406,7 +5347,7 @@
       "sequence_index": 5
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -3423,6 +5364,27 @@
         "role": "primary",
         "content_hash": "sha256:4ffa9f740017a8a95c5fe5c437ca55a3cc30de05435440876ca939942ad2dcbd"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:4ffa9f740017a8a95c5fe5c437ca55a3cc30de05435440876ca939942ad2dcbd",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3439,7 +5401,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3452,8 +5417,11 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3469,6 +5437,26 @@
         "role": "primary",
         "content_hash": "sha256:7ddb0db9006beb525b0ffc11ca498f2d417a2067482f5bd238bec2e7950de36c"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:7ddb0db9006beb525b0ffc11ca498f2d417a2067482f5bd238bec2e7950de36c",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3485,7 +5473,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3498,8 +5489,11 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3515,6 +5509,26 @@
         "role": "primary",
         "content_hash": "sha256:b2f399f90205161db63fc5525033c2921632901df46416f6e5a0eca06335c595"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:b2f399f90205161db63fc5525033c2921632901df46416f6e5a0eca06335c595",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3531,7 +5545,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3544,7 +5561,7 @@
       "sequence_index": 6
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -3561,6 +5578,27 @@
         "role": "primary",
         "content_hash": "sha256:0f3ab382930b07c6809830e0c3c78d72e78855f9c8ffd268ce452d8ed981262b"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:0f3ab382930b07c6809830e0c3c78d72e78855f9c8ffd268ce452d8ed981262b",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3577,7 +5615,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3590,8 +5631,11 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3607,6 +5651,26 @@
         "role": "primary",
         "content_hash": "sha256:c7315959018e5134d2ee7ebe708f4861507ae4566358334a8a7605c0c2845359"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:c7315959018e5134d2ee7ebe708f4861507ae4566358334a8a7605c0c2845359",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3623,7 +5687,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3636,8 +5703,11 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "structure",
-      "move": "present"
+      "rhetorical": "organize",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_classify_with_guide"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3653,6 +5723,26 @@
         "role": "primary",
         "content_hash": "sha256:5c449140c5d9ae6f4b51b8eeebd20ff6f8c9f0eca5165ebf75616fa8882e698c"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "section_head_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:5c449140c5d9ae6f4b51b8eeebd20ff6f8c9f0eca5165ebf75616fa8882e698c",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3669,7 +5759,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3679,7 +5772,10 @@
     "type": "Course",
     "intent": {
       "rhetorical": "orient",
-      "move": "present"
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3694,6 +5790,26 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:e8e2d1601a94a47284af96f62bfed10e115a5d7d2ec6a3f7e2a90d138d9ca841"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "map",
+        "flags": [
+          "root_title",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:e8e2d1601a94a47284af96f62bfed10e115a5d7d2ec6a3f7e2a90d138d9ca841",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -3711,7 +5827,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3724,7 +5843,7 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -3741,6 +5860,26 @@
         "role": "primary",
         "content_hash": "sha256:51be1965190449023af5d97ee894f133b91d37fb0ea24c4a549151e52d1bdc76"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:51be1965190449023af5d97ee894f133b91d37fb0ea24c4a549151e52d1bdc76",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3751,7 +5890,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3764,8 +5906,11 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "assert",
-      "move": "present"
+      "rhetorical": "specify",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3781,6 +5926,26 @@
         "role": "primary",
         "content_hash": "sha256:d05b14eb5fe8f0026631cdbaa811fb8ee10a49fd01392aa761f774f8ac77b6bf"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "form_field_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:d05b14eb5fe8f0026631cdbaa811fb8ee10a49fd01392aa761f774f8ac77b6bf",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3797,7 +5962,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3810,8 +5978,11 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "assert",
-      "move": "present"
+      "rhetorical": "specify",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3827,6 +5998,26 @@
         "role": "primary",
         "content_hash": "sha256:ea1e785143f02c80d632602af57c9abd3c886ed0cefda61ea497dd5049a9b6eb"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "form_field_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:ea1e785143f02c80d632602af57c9abd3c886ed0cefda61ea497dd5049a9b6eb",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3843,7 +6034,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3856,8 +6050,11 @@
       "sequence_index": 2
     },
     "intent": {
-      "rhetorical": "assert",
-      "move": "present"
+      "rhetorical": "specify",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3873,6 +6070,26 @@
         "role": "primary",
         "content_hash": "sha256:05eb08b2009181a12a9182f9ca73a641cd5f9e51b716d22bd7542964343c3555"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "form_field_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:05eb08b2009181a12a9182f9ca73a641cd5f9e51b716d22bd7542964343c3555",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3889,7 +6106,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3902,8 +6122,11 @@
       "sequence_index": 3
     },
     "intent": {
-      "rhetorical": "assert",
-      "move": "present"
+      "rhetorical": "specify",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3919,6 +6142,26 @@
         "role": "primary",
         "content_hash": "sha256:4210ad79e2a6720a46954d230521e6e2e60472ffb3a0d2c07e8139417dfcae53"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "form_field_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:4210ad79e2a6720a46954d230521e6e2e60472ffb3a0d2c07e8139417dfcae53",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3935,7 +6178,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3948,8 +6194,11 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "assert",
-      "move": "present"
+      "rhetorical": "specify",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_follow_or_escalate"
+      ]
     },
     "governance": {
       "version": 1,
@@ -3965,6 +6214,26 @@
         "role": "primary",
         "content_hash": "sha256:3cf4ee297661eb4c8d75e30871c6df43325f45847c123e3fbdef3d7aca77b640"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "form_field_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:3cf4ee297661eb4c8d75e30871c6df43325f45847c123e3fbdef3d7aca77b640",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -3975,7 +6244,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -3988,7 +6260,7 @@
       "sequence_index": 2
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -4005,6 +6277,26 @@
         "role": "primary",
         "content_hash": "sha256:9b93a8cb2d6fc06e0492a623b7882b89581a01ec38cef047fd33b2f27e18f57d"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:9b93a8cb2d6fc06e0492a623b7882b89581a01ec38cef047fd33b2f27e18f57d",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -4015,7 +6307,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -4028,8 +6323,11 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "assert",
-      "move": "present"
+      "rhetorical": "specify",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -4044,6 +6342,26 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:0aeb1b9d04867b38c30a594b23005b04c29f6d55d40f03b898418af27f246b15"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "form_field_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:0aeb1b9d04867b38c30a594b23005b04c29f6d55d40f03b898418af27f246b15",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -4061,7 +6379,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -4074,7 +6395,7 @@
       "sequence_index": 3
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -4091,6 +6412,26 @@
         "role": "primary",
         "content_hash": "sha256:e8deeba894b5ec22ba446a5277a6b4d58a56ef1d932f8a2c72253c0c1307c27f"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:e8deeba894b5ec22ba446a5277a6b4d58a56ef1d932f8a2c72253c0c1307c27f",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -4101,7 +6442,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -4114,7 +6458,7 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "assert",
+      "rhetorical": "specify",
       "move": "present"
     },
     "governance": {
@@ -4131,6 +6475,25 @@
         "role": "primary",
         "content_hash": "sha256:3a04f11e58b6a0c6c622563c941942c8d24fc50ec36bacd7d2d07db338630bc8"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "form_field_as_present"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:3a04f11e58b6a0c6c622563c941942c8d24fc50ec36bacd7d2d07db338630bc8",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -4141,7 +6504,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -4154,8 +6520,11 @@
       "sequence_index": 1
     },
     "intent": {
-      "rhetorical": "assert",
-      "move": "present"
+      "rhetorical": "specify",
+      "move": "present",
+      "teaches": [
+        "obj_ast_cci_complete_form_before_ind"
+      ]
     },
     "governance": {
       "version": 1,
@@ -4170,6 +6539,26 @@
         "policy": "v1_one_occurrence_per_atom",
         "role": "primary",
         "content_hash": "sha256:13ef919219cd66be9fce9302f9439e5aabb3918883311d3698d36aa1eac3dc40"
+      },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "form_field_as_present",
+          "intent_map"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:13ef919219cd66be9fce9302f9439e5aabb3918883311d3698d36aa1eac3dc40",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
       },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
@@ -4187,7 +6576,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -4200,7 +6592,7 @@
       "sequence_index": 4
     },
     "intent": {
-      "rhetorical": "structure",
+      "rhetorical": "organize",
       "move": "present"
     },
     "governance": {
@@ -4217,6 +6609,26 @@
         "role": "primary",
         "content_hash": "sha256:fcc51b2668e7c1eeec0bc593bfb116e076a0c8a8b9db45f10d014c8c9ba7c9cc"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "low",
+        "flags": [
+          "section_head_as_present",
+          "teaches_unbound"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:fcc51b2668e7c1eeec0bc593bfb116e076a0c8a8b9db45f10d014c8c9ba7c9cc",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -4227,7 +6639,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   },
   {
@@ -4240,7 +6655,7 @@
       "sequence_index": 0
     },
     "intent": {
-      "rhetorical": "assert",
+      "rhetorical": "specify",
       "move": "present"
     },
     "governance": {
@@ -4257,6 +6672,25 @@
         "role": "primary",
         "content_hash": "sha256:553cdafb195934d9633c1fc5e091419f0ccd7b2f45dc9e729bb6e0bbacb7509d"
       },
+      "cartographer": {
+        "policy": "v1_heuristic_compiler",
+        "tool": "tools/cartographer.py",
+        "confidence": "high",
+        "flags": [
+          "form_field_as_present"
+        ]
+      },
+      "couturier": {
+        "policy": "v1_move_to_look",
+        "tool": "tools/couturier.py",
+        "spec": "agents/couturier/style_map_v1.md",
+        "from_move": "present",
+        "source_hash": "sha256:553cdafb195934d9633c1fc5e091419f0ccd7b2f45dc9e729bb6e0bbacb7509d",
+        "confidence": "high",
+        "flags": [
+          "from_move"
+        ]
+      },
       "realizer_primitive": {
         "policy": "v1_atom_to_primitive",
         "tool": "tools/realize.py",
@@ -4267,7 +6701,10 @@
       }
     },
     "expression": {
-      "text_primitive": "tp_body"
+      "style_ref": "brand.instructional",
+      "text_primitive": "tp_body",
+      "content_role": "body",
+      "layout_hint": "card"
     }
   }
 ]
