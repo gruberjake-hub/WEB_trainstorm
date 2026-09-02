@@ -13,6 +13,76 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-09-02 (studio and ledger) — Conversation is not a writer; generating prompt ≠ harvest; the felt regression was compression
+
+*Anchor: main 74c564d (PR #77). A design beat, not a build hop. Jake opened with visual
+aesthetics — one-off prompts produce fantastic pages and courses; what Couturier produces is
+restrained and one-dimensional — and by the end the same question had been asked of the
+ingestion prompt (the Context Digest) and answered once for both. Writes:
+`architecture/studio-and-ledger.md` (canonical), a DECISIONS block, this entry. No code.*
+
+### What was found, in the order it was found
+
+**Couturier is not restrained; the reservoir is empty.** Seven `style_ref` roles → seven CSS
+classes in `engine/styleRef.js`; six `text_primitive`; six `layout_primitive`, all `.potx`; zero
+`motion_primitive`; 29 tokens in `brunswick.css`. Widening the `move → look` table would point
+at nothing. The one-off prompt does three jobs in one breath — decide the design *language*,
+*compose* the scene, *apply* it to the content — and Couturier was only ever given the third.
+Taste must be **minted** somewhere other than where it is **applied**, for the same reason meaning
+and rendering are different places. The missing middle job is scene-level **composition**: a
+closed set of templates with typed slots, selectable from intent and direction, so variety is
+response rather than randomness.
+
+**There is no in-pipeline LLM call except `localize/build_agent_call.py`.** Jake had said
+minting "mostly only occurs at the atom level with Headwater" — it is sharper than that:
+`headwater_ingest.py` serialises an authored decomposition made in a chat. Judgment happens
+upstream in conversation, a script ratifies, and from there it is all code. Read as a pattern
+rather than a limitation: chat-then-serialise *is* how minting should work for design too, and
+no design session has ever been ingested.
+
+**The ingestion prompt is already in the graph and was never harvested.** The Strategist seat
+folds its nine sections in as "how you think"; `dossier.schema.json` gives it `context_digest`.
+The only dossier in the repo is `reference/example_dossier.json`. The Brunswick/paytrans run
+and the Grok/Astellas run produced the thinking; nothing wrote it down as a `doss_`.
+
+**The compression.** The Strategist spec says "behaviors, not a dumped essay" and "do not emit a
+diagnostic essay unless he asks"; snapshot squeezes the digest to six one-paragraph strings;
+concepts, assumptions and signal-vs-noise have no field. The document that makes the prompt
+good has no home, so each pass through the seat thins it to fit the JSON, and the JSON is all
+the gate checks. Jake had been experiencing that as regression and it was becoming
+dispiriting. It is compression, and it is a plumbing choice.
+
+**The reframe that closed it.** Jake described what he wants as a user: drop a corpus, a model
+asks a few questions, produces the dossier, they argue it, then interventions, objectives, a
+production script — one unified conversation — and worried this violates single-writer.
+Single-writer is a rule about *writes*; a conversation writes nothing. **Seats are the org chart
+of the write; the conversation is the meeting.** The Strategist was built as a writer's spec and
+then asked to be a room. The graph is what the conversation leaves behind so it never has to
+happen twice: same words, keyed, so one changed `content_hash` makes exactly the dependent
+renderings stale and nothing else moves. Deterministic means reproducible downstream of the
+script, not that agents invent the script.
+
+### What was decided
+
+Two rules (DECISIONS block, same date): the room writes nothing, only the harvest writes, by
+owner; generating prompt ≠ harvest prompt — one-off prompts run verbatim and hot, a cold
+harvest extracts slots and carries `derived_from` → the document saved whole, never shortening.
+Design closes the same way at two levels that stay separate: mint the language (specimen sheet
+as acceptance surface, lint gate, registry + brand pack + compositions as canon), then bind per
+scene (Couturier `propose`, keys only, accepted bindings become retrieval exemplars per
+`localization-agent.md` §4).
+
+### Next, in order
+
+First real dossier (paytrans digest saved whole → harvested → schema extended → gate →
+accept). Re-seat the Strategist as the room. First Brunswick design-minting session. Only then
+does Couturier read direction.
+
+### Operator note
+
+Jake's own read — "in a way it's good, because we essentially built the most robust chunk
+first" — is the right one. The chunk that exists is the part that must never be probabilistic.
+
 ## 2026-09-02 (Case-Author stage-2 mint) — First live mint from `cd_ast_cci_pd`. v2.0 QDs. Remainder not minted.
 
 *Anchor: branch `cursor/cci-pd-stage2-mint-f377` off main (PR #73,

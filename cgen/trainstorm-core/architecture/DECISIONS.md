@@ -3797,3 +3797,68 @@ The 2026-08-31 arc hops (Dramaturge seat, inverse guard, beat injection)
 already named this path; this is the first Astellas/CCI firing of that seat.
 
 
+## 2026-09-02 — The studio and the ledger: conversation is not a writer; generating prompt ≠ harvest; documents whole, JSON by reference
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** The free-form designer conversation and the deterministic graph
+are bridged by two rules, written up in `architecture/studio-and-ledger.md`:
+
+1. **The room writes nothing.** A conversation (dossier → interventions →
+   objectives → script, one persona, one voice) is not a facet write and is
+   not bound by single-writer. Only the **harvest** writes, and it writes by
+   owner (dossier → Strategist store; `obj_` → Cartographer; atoms →
+   Headwater; beats → Dramaturge). Seats are the org chart of the write; the
+   designer never sees one.
+2. **Generating prompt ≠ harvest prompt.** Jake's one-off prompts (the
+   ingestion / Context Digest prompt first) run **verbatim, hot** and produce
+   the whole document. A separate **cold harvest** extracts governed slots into
+   the owning store and carries `derived_from` → the saved document. A
+   harvester extracts; it never shortens, paraphrases, or rewrites. The
+   document is the meaning; the JSON is the index.
+
+The same shape closes the visual-design gap, one facet over: design sessions
+**mint** vocabulary (brand pack tokens/components, registry `style_ref` /
+`text_primitive` / `motion_primitive`, scene-level composition templates with
+typed slots) judged on a **specimen sheet** and ratified by a lint gate;
+Couturier later gains a `propose` mode that **binds** from that language per
+scene, status `proposed`, keys only. Taste is data. No agent invents a look at
+render time.
+
+**Why:** Read against main 74c564d: no in-pipeline LLM call exists except
+`localize/build_agent_call.py`; every other seat is a rule table; the design
+reservoir is seven `style_ref`, six `text_primitive`, six `.potx`
+`layout_primitive`, zero `motion_primitive`, 29 brand tokens. The ingestion
+prompt already lives in the Strategist seat with `dossier.schema.json` as its
+home — but the only dossier in the repo is the fixture; the Brunswick and Grok
+runs were never harvested; and the seat's "not a dumped essay" rule plus a
+six-string `context_digest` compressed the nine-section digest to fit the JSON.
+The felt regression was that compression. Probabilistic-before-deterministic
+is already the graph's shape (propose → gate → accept → apply); what was
+missing was the room and the harvest.
+
+**Consequences:**
+- Writes: `architecture/studio-and-ledger.md` (new, canonical), this block, a
+  `decision-log.md` entry. No code, no schema, no store, no prompt edited.
+- Next hops, in order, each its own block: (1) first real dossier —
+  paytrans Context Digest saved whole at
+  `cgen/brunswick/projects/paytrans/dossier/context_digest.md`, harvested to
+  `doss_paytrans.json` with `derived_from`, `dossier.schema.json` extended so
+  `context_digest` carries the reference and the three missing sections
+  (concepts, assumptions, signal-vs-noise), gate, `dossier_accept.py --by`;
+  (2) re-seat the Strategist as the room (dialogue across all four stopping
+  points; snapshot per stopping point; "essay saved whole, snapshot indexes
+  it"); (3) first design-minting session against Brunswick (brand PDF +
+  paytrans scenes + best one-off prompt → proposed brand pack v2 +
+  composition templates + specimen sheet → lint → accept). Couturier reads
+  direction only after (3).
+- The Strategist's "no `strategist.py`" rule stands: the room is a prompt,
+  the harvest is a script, and they are not the same file.
+- Standing carries untouched: Couturier primitive gap (this names its fix,
+  does not do it), engine base stylesheet, Chameleon, acceptance front-end.
+
+**Supersedes:** nothing. Sharpens the Strategist block's "context digest lives
+inside the dossier, not as a rival schema" — it still does, **by reference**;
+the digest document is not a rival schema, it is the source the dossier
+indexes. The 2026-09-02 Dramaturge/CCI block stands.
+
