@@ -1,0 +1,57 @@
+{
+ "store": "narration",
+ "project": "cci_public_disclosure",
+ "policy": "v1_narration_bindings",
+ "spec": "agents/griot/02_system_prompts/core_agent/griot_system_prompt.md",
+ "registry": "brands/astellas/astellas-voice.registry.json",
+ "bindings": {
+  "why_already_public": {
+   "voice_ref": "voice_ast_narrator",
+   "register": "warm_direct",
+   "locale": "en",
+   "narration_source": "voice/narration/warm_direct.json",
+   "script_hash": "sha256:108a5402fbde8733a0ee5dd0094666c5e6e95a46ab86b1ec34aed3de5d69d444",
+   "voiceover_ref": null
+  },
+  "guide_classify": {
+   "voice_ref": "voice_ast_narrator",
+   "register": "warm_direct",
+   "locale": "en",
+   "narration_source": "voice/narration/warm_direct.json",
+   "script_hash": "sha256:3e12dc1e98abba277f5cdc892a71baedd7e46c57cdcca67c5c3cc1ae4a37bc59",
+   "voiceover_ref": null
+  },
+  "form_as_object": {
+   "voice_ref": "voice_ast_narrator",
+   "register": "warm_direct",
+   "locale": "en",
+   "narration_source": "voice/narration/warm_direct.json",
+   "script_hash": "sha256:8329b183c80f91dc2d74f74eb4d9271f51a15491020bfac0c5fde23277f733dd",
+   "voiceover_ref": null
+  },
+  "asset_lead_path": {
+   "voice_ref": "voice_ast_narrator",
+   "register": "warm_direct",
+   "locale": "en",
+   "narration_source": "voice/narration/warm_direct.json",
+   "script_hash": "sha256:66ab60be3be8ada058cddfd99e8304372f50872a9c9f935dd468ac1721982d51",
+   "voiceover_ref": null
+  },
+  "discloser_path": {
+   "voice_ref": "voice_ast_narrator",
+   "register": "warm_direct",
+   "locale": "en",
+   "narration_source": "voice/narration/warm_direct.json",
+   "script_hash": "sha256:af4edd977710e774c4d9f37bc2b18a156c664e07548cace647d0a3dc41458432",
+   "voiceover_ref": null
+  },
+  "lesson_end": {
+   "voice_ref": "voice_ast_narrator",
+   "register": "warm_direct",
+   "locale": "en",
+   "narration_source": "voice/narration/warm_direct.json",
+   "script_hash": "sha256:0c9d29086de5dabdc3f1beec65df99983831c2e0407442048e789d4f07a60416",
+   "voiceover_ref": null
+  }
+ }
+}
