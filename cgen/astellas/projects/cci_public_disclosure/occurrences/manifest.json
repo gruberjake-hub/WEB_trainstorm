@@ -73,7 +73,14 @@
       "bt_cci_public_disclosure_closure",
       "bt_cci_public_disclosure_welcome"
     ],
-    "narration_scenes": [],
+    "narration_scenes": [
+      "asset_lead_path",
+      "discloser_path",
+      "form_as_object",
+      "guide_classify",
+      "lesson_end",
+      "why_already_public"
+    ],
     "stale_fallbacks": []
   },
   "spine": {
