@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shimla — Commander's Edition</title>
+<style>
+  :root{
+    --bg:#0f1a2b; --panel:#16243a; --panel2:#1c2d47; --ink:#e9e4d8; --muted:#a8a294;
+    --saffron:#f0a030; --pine:#5fae8a; --rose:#d76a6a; --line:#2b3d5a; --chip:#243756;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;padding:0 0 80px}
+  a{color:var(--saffron)}
+  .hero{background:linear-gradient(160deg,#182a45 0%,#0f1a2b 70%);border-bottom:1px solid var(--line);padding:40px 24px 28px}
+  .hero .in{max-width:980px;margin:0 auto}
+  .hero h1{margin:0;font-size:34px;letter-spacing:.5px;font-weight:700}
+  .hero h1 span{color:var(--saffron)}
+  .hero .sub{color:var(--muted);margin-top:6px}
+  .hero .ver{display:inline-block;margin-top:14px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;background:var(--chip);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+  nav{position:sticky;top:0;background:rgba(15,26,43,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);z-index:5}
+  nav .in{max-width:980px;margin:0 auto;padding:8px 24px;display:flex;flex-wrap:wrap;gap:6px}
+  nav a{font-size:12px;text-decoration:none;color:var(--ink);background:var(--chip);padding:4px 10px;border-radius:999px;border:1px solid var(--line)}
+  nav a:hover{border-color:var(--saffron)}
+  main{max-width:980px;margin:0 auto;padding:16px 24px}
+  section{margin:36px 0}
+  h2{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--saffron);margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  h3{font-size:17px;margin:22px 0 8px;color:#fff}
+  p{margin:8px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:12px 0}
+  .card.warn{border-left:4px solid var(--rose)}
+  .card.go{border-left:4px solid var(--pine)}
+  .card.note{border-left:4px solid var(--saffron)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+  .twrap{overflow-x:auto}
+  .k{color:var(--saffron);font-weight:600}
+  .ok{color:var(--pine);font-weight:600}
+  .bad{color:var(--rose);font-weight:600}
+  .muted{color:var(--muted)}
+  .small{font-size:13px}
+  ul{margin:6px 0 6px 20px;padding:0}
+  li{margin:4px 0}
+  .status{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+  .tile{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .tile .lab{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+  .tile .val{font-size:16px;font-weight:600;margin-top:4px}
+  .timeline{border-left:2px solid var(--line);margin:10px 0 10px 8px;padding-left:18px}
+  .tl{position:relative;margin:0 0 14px}
+  .tl::before{content:"";position:absolute;left:-24px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--saffron)}
+  .tl.hard::before{background:var(--rose)}
+  .tl .t{font-weight:700;color:#fff}
+  .check{list-style:none;margin:0;padding:0}
+  .check li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line);margin:0}
+  .check input{margin-top:4px;accent-color:var(--pine);width:16px;height:16px;flex:none}
+  .check li.done label{color:var(--muted);text-decoration:line-through}
+  .tag{display:inline-block;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:1px 8px;border-radius:999px;background:var(--chip);border:1px solid var(--line);margin-left:6px;vertical-align:middle}
+  footer{max-width:980px;margin:40px auto 0;padding:16px 24px;color:var(--muted);font-size:12px;border-top:1px solid var(--line)}
+  @media print{body{background:#fff;color:#111} .card,.tile{background:#fff;border-color:#ccc} nav{display:none} h2,.k{color:#8a4b00} .hero{background:#fff;color:#111} .hero h1 span{color:#8a4b00}}
+</style>
+</head>
+<body>
+
+<div class="hero"><div class="in">
+  <h1>Shimla — <span>Commander's Edition</span></h1>
+  <div class="sub">Nicole &amp; Rohil · Wildflower Hall · Oct 2–5, 2026 · ORD → LHR (Southall) → DEL → Chandigarh → Shimla → DEL → home</div>
+  <div class="ver">v4 · Sept 21, 2026 · five days out</div>
+</div></div>
+
+<nav><div class="in">
+  <a href="#status">Status</a><a href="#flights">Flights</a><a href="#seats">Seats &amp; split</a><a href="#docs">Documents</a><a href="#southall">Southall</a><a href="#delhi">Delhi arrival</a><a href="#ground">Ground</a><a href="#lodging">Lodging</a><a href="#schedule">Schedule</a><a href="#wardrobe">Wardrobe</a><a href="#dance">Dancing</a><a href="#work">Work</a><a href="#open">Open</a><a href="#practical">Practical</a><a href="#actions">Actions</a>
+</div></nav>
+
+<main>
+
+<section id="status">
+<h2>Status board</h2>
+<div class="status">
+  <div class="tile"><div class="lab">India e-Visa</div><div class="val ok">GRANTED</div><div class="small muted">Print ×2</div></div>
+  <div class="tile"><div class="lab">UK ETA — Jake</div><div class="val ok">Approved</div><div class="small muted">to Aug 2028</div></div>
+  <div class="tile"><div class="lab">UK ETA — Norah</div><div class="val bad">OUTSTANDING</div><div class="small muted">Gates Southall</div></div>
+  <div class="tile"><div class="lab">e-Arrival cards</div><div class="val">Sept 25–28</div><div class="small muted">Both of you · window opens Thu 9:30 PM CT</div></div>
+  <div class="tile"><div class="lab">Taj Chandigarh</div><div class="val ok">Confirmed</div><div class="small muted">Sept 28 – Oct 2 · two rooms</div></div>
+  <div class="tile"><div class="lab">Wildflower Hall</div><div class="val">Room block?</div><div class="small muted">Confirm with wedding side</div></div>
+  <div class="tile"><div class="lab">Delhi airport hotel</div><div class="val ok">Norah handling</div><div class="small muted">Name + conf. into doc</div></div>
+  <div class="tile"><div class="lab">Drivers, all legs</div><div class="val ok">Norah handling</div><div class="small muted">Backups below</div></div>
+  <div class="tile"><div class="lab">Toy train</div><div class="val muted">Cancelled</div><div class="small muted">Convoy Oct 2 instead</div></div>
+  <div class="tile"><div class="lab">Seats on AA54</div><div class="val bad">None yet</div><div class="small muted">See sequence</div></div>
+  <div class="tile"><div class="lab">PNR split</div><div class="val">After seats</div><div class="small muted">Not before</div></div>
+  <div class="tile"><div class="lab">Turban / dancing</div><div class="val ok">Neither required</div><div class="small muted">Norah has a formal dance</div></div>
+</div>
+</section>
+
+<section id="flights">
+<h2>Flights — British Airways ZHHJUS</h2>
+<div class="card">
+<div class="twrap"><table>
+<tr><th>When</th><th>Flight</th><th>Notes</th></tr>
+<tr><td>Sat Sep 26 · 8:50 PM</td><td><b>ORD T3 → LHR T3</b> · BA1518 / <b>AA54</b> · 787-9 · 8h</td><td>Operated by American. World Traveller Plus (PE). Check in on aa.com.</td></tr>
+<tr><td>Sun Sep 27 · 10:50 AM</td><td>Land LHR T3</td><td>8-hour connection → <b>Southall</b>, re-enter at T5</td></tr>
+<tr><td>Sun Sep 27 · 6:50 PM</td><td><b>LHR T5 → DEL T3</b> · BA257 · 8h40m</td><td></td></tr>
+<tr><td>Mon Sep 28 · 8:00 AM</td><td>Land Delhi T3</td><td>Driver ~10:00 AM</td></tr>
+<tr><td>Tue Oct 6 · 8:10 AM</td><td><b>DEL T3 → LHR T5</b> · BA136 · 9h45m</td><td>Lands 1:25 PM</td></tr>
+<tr><td>Tue Oct 6</td><td><b>LHR → ORD</b></td><td class="bad">Segment was cut off in the PDF — verify it exists, note flight + times</td></tr>
+</table></div>
+<p class="small muted">Both passengers on one record (confirmed via the AA seat map). Two checked bags at 23 kg each. Return is a changeable fare, deliberately.</p>
+</div>
+</section>
+
+<section id="seats">
+<h2>Seats on AA54 — and the split, in that order</h2>
+<div class="card warn">
+<p><b>The situation:</b> aa.com finds the booking — both names, PE cabin, 787-9 — then greys the map: "seat map unavailable for flights on other airlines, contact British Airways." BA says contact AA. This is policy, not a lookup failure: AA doesn't release advance seats to passengers ticketed by another carrier. The Xs mean <i>not available to you</i>, not <i>taken</i>. The lone open middle seat (15E) is the tell.</p>
+</div>
+<div class="timeline">
+  <div class="tl"><div class="t">1 · Call BA — 1-800-247-9297</div>Ask for a <b>seat request on the AA-operated segment</b>. Agents can send an interline request. It's a request, not an assignment — treat it as a coin flip. <span class="ok">If it lands:</span> split Norah onto her own PNR on the same call; have the agent read back seats on <i>both</i> records before hanging up. <span class="bad">If it doesn't:</span> no split.</div>
+  <div class="tl hard"><div class="t">2 · Thu Sept 25, 8:50 PM Chicago — check in on aa.com the minute it opens</div>The map unlocks for BA-ticketed passengers at T-24. On one PNR you're a party of two and auto-assign tries to pair you; on two PNRs it doesn't. PE on the 787-9 is <b>21 seats, 2-3-2</b>. Target an <b>A/C or J/L pair</b>. Everyone else has the same alarm.</div>
+  <div class="tl"><div class="t">3 · Fallback</div>AA Premium Economy counter at ORD — ask to be seated together.</div>
+</div>
+<div class="card note"><p><b>Why split at all:</b> the extension gets decided in India; once split, your return changes in the app without touching Norah's. <b>But an unsplit booking is not a crisis</b> — one BA call from India splits and changes in the same conversation. Sitting apart for eight hours is the worse outcome. Seats first, split second.</p>
+<p class="small muted">Nerd lever: an ExpertFlyer trial shows the real AA54 seat map for the 26th — tells you whether waiting for check-in is safe or whether to lean on the BA agent.</p></div>
+</section>
+
+<section id="docs">
+<h2>Documents</h2>
+<div class="card">
+<div class="twrap"><table>
+<tr><th>Item</th><th>Status</th><th>Detail</th></tr>
+<tr><td>India e-Visa (1-yr e-Tourist)</td><td class="ok">GRANTED</td><td>App ID I004VD0ECD26 · passport A34733245 · email received. <b>Print ×2</b> — pouch + checked bag. Needed at ORD check-in <i>and</i> Delhi immigration; do not discard after boarding.</td></tr>
+<tr><td>UK ETA — Jake</td><td class="ok">Approved</td><td>Ref 2020-0000-6058-1786 · valid to 24 Aug 2028 · nothing to print</td></tr>
+<tr><td>UK ETA — Norah</td><td class="bad">OUTSTANDING</td><td>£16 · gov.uk/eta or the UK ETA app · usually minutes to hours, occasionally up to 3 working days. <b>Apply today.</b> No ETA = no leaving airside at T3 = no Southall.</td></tr>
+<tr><td>e-Arrival card — both</td><td>Sept 25–28</td><td><b>Filed <u>before</u> arrival, within 72 hrs</b> (confirmed Sept 21 — mandatory since Apr 1, 2026; the paper card is gone). Window opens <b>Thu Sept 24, 9:30 PM CT</b>. indianvisaonline.gov.in/earrival · free · ~5 min · needs passport, BA257, arrival Sept 28, Indian address = Taj Chandigarh, Block 9, Sector 17. <b>Screenshot the QR code.</b></td></tr>
+</table></div>
+<p class="small muted">The "72 hours after" thing you half-remember is a hotel C-Form (the hotel's filing, not yours) or FRRO registration (long-stay visas only). Neither applies.</p>
+</div>
+</section>
+
+<section id="southall">
+<h2>Sunday Sept 27 — the Southall layover</h2>
+<div class="card go"><p>Use the 8-hour connection to go landside: Europe's largest gurdwara, the Broadway's wedding-wear shops, the best Punjabi food in the UK. A dress rehearsal for Chandigarh with British plug sockets — and three hours of daylight walking is exactly what the eastbound jet-lag plan wants. <b>Gating item: Norah's UK ETA.</b></p>
+<p class="small">Bags aren't involved — through-checked to DEL on one ticket. <b>Confirm at the AA counter that both bags are tagged DEL; keep the receipts.</b> Buses are £1.75 contactless; each person taps their own card; Apple Pay works here and nowhere else on this trip.</p></div>
+<div class="timeline">
+  <div class="tl"><div class="t">10:50 AM · Land T3</div>Follow <b>Arrivals</b> (not the purple Flight Connections signs). eGates. Skip baggage reclaim.</div>
+  <div class="tl"><div class="t">~11:30 · Landside</div>Underground pedestrian route to <b>Heathrow Central bus station</b>, ~10 min, signposted.</div>
+  <div class="tl"><div class="t">~11:45 · Bus 105</div>Toward Greenford, every 12–15 min. Alight <b>Southall Broadway</b>, ~25–30 min.</div>
+  <div class="tl"><div class="t">12:15–3:30 · Southall</div>Gurdwara first, hungry — langar is the best first meal of the trip. Then the Broadway for the backup kurta. One restaurant, not a crawl.</div>
+  <div class="tl hard"><div class="t">3:30 PM · HARD STOP — Bus 482 from Southall Town Hall</div>Terminates at <b>Terminal 5</b>, no change, ~40 min, every ~20 min. If it isn't in sight by 3:40, walk to Southall station and take the Elizabeth line.</div>
+  <div class="tl"><div class="t">~4:15 · T5 landside → security</div>Boarding passes already issued. Airside by ~4:45, two hours before departure. Gates close 20 min before.</div>
+</div>
+<div class="grid">
+  <div class="card"><h3 style="margin-top:0">Go / no-go</h3><ul class="small"><li>Through eGates by 12:30 → <b>go</b></li><li>After 1:00 → short version: Elizabeth line both ways, one meal, gurdwara</li><li>AA54 lands after ~1:30 → <b>abort</b>, airside T3→T5 bus. Decide on the plane.</li></ul></div>
+  <div class="card"><h3 style="margin-top:0">Gurdwara Sri Guru Singh Sabha</h3><p class="small">Havelock Road, UB2 4NP · +44 20 8574 4311. Cover your head (scarves at the door, or your own bandana), shoes off, no alcohol/tobacco on site, phones away in the prayer hall. Langar: sit in rows on the floor, accept what's served, eat what you take. Donation box, not a fee. <i>Sat Sri Akal</i> works for hello and goodbye.</p></div>
+  <div class="card"><h3 style="margin-top:0">Eat</h3><p class="small"><b>Lahore Karahi</b> (the classic) · <b>Gifto's Lahore Karahi</b> (big, loud, kebabs) · <b>Madhu's</b> (refined, Kenyan-Punjabi). Sweets + chai: <b>Ambala</b> or <b>Jalwa</b>. Jalebi from whichever counter has a crowd.</p></div>
+</div>
+</section>
+
+<section id="delhi">
+<h2>Monday Sept 28 — Delhi arrival</h2>
+<div class="grid">
+  <div class="card"><h3 style="margin-top:0">The hall</h3><p class="small">Norah's friend's verdict on T3: it's chaos; relax and flow. e-Visa holders have their own immigration line. It moves. Realistic curbside: ~10:00 AM. Show the e-Arrival QR and the printed e-Visa.</p></div>
+  <div class="card"><h3 style="margin-top:0">Cash</h3><p class="small"><b>Schwab debit at a bank ATM</b> in arrivals (SBI, HDFC, ICICI, Axis) — not the forex counter. Always choose <b>INR</b> when offered "convert to USD" (that's DCC, a 5–8% tax on your own money). Expect a <b>₹10,000 per-pull cap</b>; take two. Schwab refunds the fees. Travel notice set before leaving. $100–200 USD as deep backup.</p></div>
+  <div class="card"><h3 style="margin-top:0">Phone</h3><p class="small"><b>Verizon TravelPass</b> — $12/day in both the UK and India, 5 GB high-speed/day, charged only on days used. Add it before departure, data roaming ON, it self-activates on a UK tower. ~$120 for the trip as booked. Backup eSIM installed but inactive. WhatsApp stays on the Verizon number.</p></div>
+  <div class="card"><h3 style="margin-top:0">Jet lag</h3><p class="small">Do not nap in a hotel bed. Sleeping in the car is fine. Stay up until 9–10 PM local. The 8 AM landing is close to ideal for eastbound adjustment — daylight resets the clock.</p></div>
+</div>
+</section>
+
+<section id="ground">
+<h2>Ground transport</h2>
+<div class="card go"><p><b>Norah has the driver arrangements handled</b> for every leg. Each carries a self-serve backup below, because the week before a wedding is when transport sheets go sideways. Get driver names + WhatsApp numbers into this doc as they land; confirm the night before each leg.</p></div>
+<div class="twrap"><table>
+<tr><th>Leg</th><th>Plan</th><th>Backup</th></tr>
+<tr><td><b>Sept 28</b> · DEL T3 → Chandigarh</td><td>Driver, ~4–5 hrs, pickup ~10 AM</td><td>Uber Intercity (schedule a cancellable placeholder the night before) or Savaari · ~₹5–7k sedan</td></tr>
+<tr><td><b>Oct 2</b> · Chandigarh → Shimla</td><td>Family convoy, ~4 hrs. <b>Dramamine first</b> — it's hairpins.</td><td>Taj concierge car, or Uber Intercity · ~₹3k sedan</td></tr>
+<tr><td><b>Oct 5</b> · Wildflower Hall → Chandigarh</td><td>Car after the Vidai, ~1 PM → ~5:30–6 PM</td><td>Wildflower Hall desk, booked the night before · ~₹3–4.5k</td></tr>
+<tr><td><b>Oct 5</b> · IXC → DEL</td><td>Evening flight, ~1 hr, $30–60. Book direct with IndiGo / Air India — Indian OTAs decline foreign cards. 6–8 PM buys two more hours of sleep; last one ~9:45 PM.</td><td class="bad">Separate ticket = no protection for BA136. If it cancels: drive to Delhi (~₹6–9k, arrives 3–4 AM) or a late Shatabdi. Decide early.</td></tr>
+</table></div>
+<h3>How to get a driver here</h3>
+<div class="grid small">
+  <div class="card"><b>Plains (Delhi / Chandigarh):</b> Uber Intercity — schedule in-app up to 30 days out, cash accepted. Ola Outstation is the other app. Savaari for a booked driver with English phone support.</div>
+  <div class="card"><b>Hotels:</b> Taj Chandigarh concierge and Wildflower Hall front desk each arrange a car on an hour's notice. Pricier, zero friction, hotel vouches for the driver. Anything on a hill road: this is the move.</div>
+  <div class="card"><b>Hills (Shimla):</b> app cabs barely function; the local taxi union at the stand is how it's done. 2026 anchors: Chandigarh↔Shimla sedan ~₹3,000 / Innova ~₹4,500 · Shimla full day ~₹2,500–3,000 · Shimla→Delhi ~₹9–12k. Plus 5% GST, tolls, ₹500–800 night-halt. October isn't peak.</div>
+</div>
+<p class="small muted">The toy train was cancelled Sept 21 — IRCTC wouldn't cooperate, and there's no version of it worth more phone calls five days out. Consolation: Oct 1 is a full Chandigarh day again, bags travel with you, and the Kalka road is its own kind of scenic.</p>
+</section>
+
+<section id="lodging">
+<h2>Lodging</h2>
+<div class="twrap"><table>
+<tr><th>Nights</th><th>Where</th><th>Status</th></tr>
+<tr><td>Sept 28 – Oct 2 (4)</td><td><b>Taj Chandigarh</b> · Block 9, Sector 17</td><td class="ok">Confirmed — Norah booked, two rooms</td></tr>
+<tr><td>Oct 2 – 5 (3)</td><td><b>Wildflower Hall</b> · Chharabra, Mashobra, Shimla 171012 · +91-177-2648585</td><td>Likely a room block — confirm before booking independently; $330+/night</td></tr>
+<tr><td>Oct 5 (1)</td><td>Delhi airport hotel</td><td class="ok">Norah handling (friend's recommendation) — get name + confirmation into the doc</td></tr>
+</table></div>
+<p class="small">The Taj is <i>in</i> Sector 17: wedding-wear shops are a walk, the concierge is the car backup, laundry is same-day, and there's a pool. Wildflower Hall: 8,250 ft, 23 acres of cedar, Lord Kitchener's old house, Oberoi-run. It was the "reference in India" on the visa application.</p>
+</section>
+
+<section id="schedule">
+<h2>Schedule</h2>
+<div class="card"><h3 style="margin-top:0">Sept 29 – Oct 1 · Chandigarh flex days</h3><p class="small">Meet Rohil's family at their home. <b>Sept 29: buy the Sunday piece.</b> Sept 30 – Oct 1: alterations, sightseeing, jet-lag margin. Norah learns her ceremony dance from the family's video. Oct 2 shops are shut (Gandhi Jayanti).</p></div>
+<div class="card"><h3 style="margin-top:0">Fri Oct 2 · Travel day</h3><p class="small">Convoy to Shimla (Dramamine). Check in. PM: Rohil/Nicole photo shoot · Nicole's mehendi (2–3 hrs) · buffet dinner for the three families · evening free.</p></div>
+<div class="card"><h3 style="margin-top:0">Sat Oct 3 · Pre-wedding</h3>
+<div class="twrap"><table class="small">
+<tr><td>10:00</td><td>Breakfast</td><td></td></tr>
+<tr><td>12:00</td><td>General guest check-in</td><td></td></tr>
+<tr><td>1:00–4:00</td><td><b>Mehendi</b></td><td>Henna; artists on hand. Lunch, drinks, music, dancing. <b>Yellow, expendable outfit.</b></td></tr>
+<tr><td>4:00–5:00</td><td><b>Haldi</b></td><td>Turmeric on the couple. It stains permanently. Hence the expendable outfit.</td></tr>
+<tr><td>7:00–8:00</td><td><b>Choora &amp; Kaleera</b></td><td>Bangles from maternal uncles; the bride shakes ornaments over unmarried women — whoever a piece lands on marries next. Second outfit, jewel tones.</td></tr>
+</table></div></div>
+<div class="card"><h3 style="margin-top:0">Sun Oct 4 · Wedding day</h3>
+<div class="twrap"><table class="small">
+<tr><td>9:00</td><td>Breakfast</td><td></td></tr>
+<tr><td>11:00–12:30</td><td><b>Havan</b></td><td>Fire ritual, offerings. Lunch after.</td></tr>
+<tr><td>2:30</td><td><b>Pagdi</b></td><td>Turban-tying, groom's side. <b>Not you.</b></td></tr>
+<tr><td>3:00</td><td><b>Sehra Bandi</b></td><td>Richa ties the beaded veil on Rohil.</td></tr>
+<tr><td>3:30–4:30</td><td><b>Baraat</b></td><td>Groom's processional. Smith side joins halfway, peels off in the last 5 min to receive Rohil's family. Susan applies a Tilak; garlands and petals.</td></tr>
+<tr><td>4:00</td><td><b>Jaimala</b></td><td>Garland exchange.</td></tr>
+<tr><td>5:00–6:00</td><td><b>Pheras</b></td><td>Seven circuits of the fire. Hindi, with printed English translations.</td></tr>
+<tr><td>7:30–8:30</td><td><b>Sangeet</b></td><td>Guests perform for the couple. <b>Norah performs in a formal segment.</b> Combined with the reception.</td></tr>
+<tr><td>8:30</td><td>Dinner &amp; dancing</td><td>Shawl. It's 8,250 ft and past midnight.</td></tr>
+<tr><td>11:00</td><td>Afterparty</td><td></td></tr>
+</table></div></div>
+<div class="card"><h3 style="margin-top:0">Mon Oct 5 · Departure</h3><p class="small">10:00 breakfast · 11:00 <b>Vidai</b> &amp; games (bride's farewell to her parents' home) · ~1:00 PM depart · hotel safe emptied <i>before</i> breakfast.</p></div>
+</section>
+
+<section id="wardrobe">
+<h2>Wardrobe</h2>
+<div class="card">
+<p><b>Six events, three outfits.</b> Buy in Chandigarh on Sept 29 — Sector 17 (Manyavar, Tasva, Ethnix by Raymond, independents), a walk from the Taj. ₹10–30k ($120–360) ready-to-wear; alterations Sept 30 – Oct 1.</p>
+<div class="twrap"><table class="small">
+<tr><th>When</th><th>What</th><th>Color</th></tr>
+<tr><td>Sat afternoon (Mehendi→Haldi)</td><td>Cheap and expendable</td><td><b>Yellow</b></td></tr>
+<tr><td>Sat evening (Choora)</td><td>Second outfit</td><td>Jewel tones</td></tr>
+<tr><td>Sunday, all day</td><td><b>The investment piece</b> — bandhgala / Jodhpuri suit, not a full sherwani (that's the bride's father and brother). Wearable again in Chicago.</td><td>Royal blue, emerald, teal, wine, deep purple</td></tr>
+</table></div>
+<p class="small"><b>Avoid:</b> solid black, solid white (inauspicious), dominant red (bridal), cream-with-heavy-gold (Rohil's father). <b>Also buy:</b> juttis, and a shawl. <b>Backup kurta:</b> Southall, Sept 27. <b>Headwear:</b> none. Walk into the shop with your measurements, the shoes you'll wear under it, and screenshots of the deck's outfit slides — and ask Rohil's family to come along; it's a welcome ask and a better first meeting than living-room small talk.</p>
+</div>
+</section>
+
+<section id="dance">
+<h2>Dancing</h2>
+<div class="card"><p><b>Not obligated.</b> Norah has a formal piece to learn from a video on arrival; you don't. That said, the Baraat is a processional where standing at the edge is the only wrong move — twenty minutes of a bhangra-basics video and four moves (shoulders on the beat, arms up, lightbulb hand, <i>balle balle</i> hop) turns spectator into welcome participant. An hour of bhangra at 8,250 ft is real cardio; hydrate first. Playlist for the commute if you want it: <i>Gallan Goodiyaan · Kala Chashma · London Thumakda · Nachde Ne Saare · Sadi Gali · Mehndi Laga Ke Rakhna</i>. Southall will be playing all of these out of shop doorways — free listening test.</p></div>
+</section>
+
+<section id="work">
+<h2>The laptop</h2>
+<div class="card note"><p>The Astellas laptop will connect — the VPN doesn't geo-block — but it's <b>vacation time regardless</b>: Astellas doesn't want people working from foreign jurisdictions for tax-residency reasons, and the e-Tourist visa doesn't permit work, including for Trainstorm. So the laptop's job is triage, not work: keep the inbox from becoming an avalanche, nothing that looks like billable output. A 30-minute morning window at the hotel; in the safe otherwise. If the extension happens, this is the constraint that shapes it — two more weeks is two more weeks of PTO, not two weeks of remote work.</p></div>
+</section>
+
+<section id="open">
+<h2>Open decisions</h2>
+<div class="grid">
+  <div class="card"><h3 style="margin-top:0">The extension</h3><p class="small">A week or two for Karan — first contact in about a decade. Decide in India. Blocked on PTO and Karan's availability. The return is changeable for exactly this. Pre-work is the PNR split, sequenced behind seats.</p></div>
+  <div class="card"><h3 style="margin-top:0">The buffer day</h3><p class="small">Even without the Karan weeks, one extra day removes the Oct 5 dash — a real night in Chandigarh, arrive Delhi rested. It's a separate question from the extension; ask Norah as two questions, not one. Her call as much as yours.</p></div>
+</div>
+</section>
+
+<section id="practical">
+<h2>Practical</h2>
+<div class="grid small">
+  <div class="card"><b>Water:</b> bottled only. <b>Payments:</b> cards widely accepted; Apple Pay is not (India); rupees for small stuff. UPI QR codes are everywhere and need an Indian bank account — not yours.</div>
+  <div class="card"><b>Power:</b> two adapters — between them they must cover UK Type G (Heathrow) and India Type C/D (round pins). Taj/Oberoi rooms usually have universal sockets; the Chandigarh house won't. Details in the pack list.</div>
+  <div class="card"><b>Altitude:</b> Wildflower Hall is at 8,250 ft, higher than Shimla town. The deck's "modest, loose-fitting clothes" is plains advice. Bring real layers.</div>
+  <div class="card"><b>Med kit:</b> rehydration salts · Imodium · painkillers · Dramamine (Oct 2 convoy) · prescriptions in original packaging, counted for the long version of the trip. Full list in the pack list.</div>
+  <div class="card"><b>Timing:</b> everything starts late and runs late. The deck says chill vibes. So does Norah's friend about the airport. Believe both.</div>
+  <div class="card"><b>Hindi:</b> haan (yes) · nahin (no) · namaste · shaadi (wedding) · shukriya (thank you) · aapse milkar accha laga (nice to meet you) · mera naam ___ hai · dost (friend) · bhai / behen (brother / sister) · maa / papa. Gurdwara: <i>Sat Sri Akal</i>.</div>
+</div>
+</section>
+
+<section id="actions">
+<h2>Actions — five days out <span class="tag">ticks save in this browser</span></h2>
+<div class="card">
+<ul class="check" id="cklist">
+  <li><input type="checkbox" id="a1"><label for="a1"><b>Norah's UK ETA — today.</b> Gates Southall.</label></li>
+  <li><input type="checkbox" id="a2"><label for="a2"><b>Print the India e-Visa ×2</b>; screenshot to phone.</label></li>
+  <li><input type="checkbox" id="a3"><label for="a3"><b>Call BA:</b> seat request on AA54 → if it lands, split Norah's PNR on the same call and confirm seats on both records. If not, no split.</label></li>
+  <li><input type="checkbox" id="a4"><label for="a4"><b>Thu Sept 24, 9:30 PM CT:</b> e-Arrival window opens — file both (or Friday morning; reminder set).</label></li>
+  <li><input type="checkbox" id="a5"><label for="a5"><b>Thu Sept 25, 8:50 PM CT:</b> aa.com check-in the minute it opens; A/C or J/L pair.</label></li>
+  <li><input type="checkbox" id="a6"><label for="a6">Driver names + WhatsApp numbers for each leg (from Norah) into this doc.</label></li>
+  <li><input type="checkbox" id="a7"><label for="a7">IXC→DEL evening flight Oct 5 booked (IndiGo / Air India direct).</label></li>
+  <li><input type="checkbox" id="a8"><label for="a8">Delhi airport hotel name + confirmation from Norah.</label></li>
+  <li><input type="checkbox" id="a9"><label for="a9">Verify the LHR→ORD segment exists on ZHHJUS.</label></li>
+  <li><input type="checkbox" id="a10"><label for="a10">Verizon TravelPass added · backup eSIM installed · Schwab + credit card travel notices set.</label></li>
+  <li><input type="checkbox" id="a11"><label for="a11">Wildflower Hall room block — confirm with the wedding side.</label></li>
+  <li><input type="checkbox" id="a12"><label for="a12">Med kit + Dramamine; traveler's-diarrhea Rx if the doctor will write it.</label></li>
+  <li><input type="checkbox" id="a13"><label for="a13">Contactless card / Apple Pay set for TfL — one per person.</label></li>
+  <li><input type="checkbox" id="a14"><label for="a14">Work the pack list.</label></li>
+  <li><input type="checkbox" id="a15"><label for="a15"><b>ORD, Sept 26:</b> both bags tagged DEL; keep receipts; both boarding passes issued.</label></li>
+  <li><input type="checkbox" id="a16"><label for="a16"><b>Southall, Sept 27:</b> backup kurta.</label></li>
+  <li><input type="checkbox" id="a17"><label for="a17">Norah's doc → v4 once the updates settle.</label></li>
+</ul>
+</div>
+</section>
+
+</main>
+<footer>Private working document — commander's edition. Companion docs: <i>Shimla Pack List — Jake</i> and Norah's plan. Prices, roaming rates and ATM behavior were current as of Sept 21, 2026; airline seat policy is whatever it is on the day.</footer>
+
+<script>
+(function(){
+  var key='shimla_v4_checks';
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
+  var boxes=document.querySelectorAll('#cklist input');
+  boxes.forEach(function(b){
+    if(saved[b.id]){b.checked=true;b.parentNode.classList.add('done')}
+    b.addEventListener('change',function(){
+      b.parentNode.classList.toggle('done',b.checked);
+      saved[b.id]=b.checked;
+      try{localStorage.setItem(key,JSON.stringify(saved))}catch(e){}
+    });
+  });
+})();
+</script>
+</body>
+</html>
