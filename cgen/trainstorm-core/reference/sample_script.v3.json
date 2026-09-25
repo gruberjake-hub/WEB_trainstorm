@@ -1,0 +1,202 @@
+[
+  {
+    "type": "orientation",
+    "id": "p001",
+    "text": "This module covers how to approve a team expense claim, and what to do when a claim does not fit the rules.",
+    "pedagogical_intent": "objective",
+    "notes": "Worked fixture for script.primitives.v3. Generic, fictional domain; not client content."
+  },
+  {
+    "type": "mental_model",
+    "id": "p002",
+    "model": "An expense approval is a second signature on a promise: the approver is vouching that the spend was necessary, allowed, and evidenced.",
+    "parts": [
+      { "label": "Necessary", "description": "The spend served the work." },
+      { "label": "Allowed", "description": "Policy permits this category and amount." },
+      { "label": "Evidenced", "description": "A receipt shows what was bought, when, and for how much." }
+    ],
+    "explains": "Why a claim that is allowed but unevidenced still cannot be approved.",
+    "limits": "Does not cover corporate-card reconciliation, which runs on a separate control.",
+    "pedagogical_intent": "present"
+  },
+  {
+    "type": "process_flow",
+    "id": "p003",
+    "steps": [
+      { "label": "Submitted" },
+      { "label": "Under review" },
+      { "label": "Approved or returned" },
+      { "label": "Paid" },
+      { "label": "Audited" }
+    ],
+    "cyclical": true,
+    "notes": "Lifecycle map: a returned claim re-enters at Submitted.",
+    "pedagogical_intent": "exemplify"
+  },
+  {
+    "type": "conditional_rule",
+    "id": "p004",
+    "condition": "A single item exceeds the per-item limit for its category.",
+    "then": "Return the claim and ask for pre-approval evidence.",
+    "otherwise": "Continue the review.",
+    "exceptions": ["Travel booked through the company travel desk."],
+    "source_reference": "Expense policy, section 4",
+    "pedagogical_intent": "present"
+  },
+  {
+    "type": "misconception",
+    "id": "p005",
+    "belief": "If the total is under my approval limit, I can approve it.",
+    "why_plausible": "The approval screen shows the total prominently and the limit beside it.",
+    "correction": "The limit is a ceiling on your authority, not a test of the claim. Each item must still be necessary, allowed and evidenced.",
+    "consequence": "Out-of-policy items are paid and surface later in audit.",
+    "pedagogical_intent": "present"
+  },
+  {
+    "type": "worked_example",
+    "id": "p006",
+    "problem": "A three-item claim: taxi, client dinner, and a monitor.",
+    "steps": [
+      { "action": "Check each item's category against policy.", "reasoning": "Allowed is checked per item, not per claim." },
+      { "action": "Match each item to a receipt.", "reasoning": "Evidence is the part approvers most often skip." },
+      { "action": "Return the monitor line only.", "reasoning": "Equipment goes through procurement, so this is the one out-of-policy line." }
+    ],
+    "result": "Partial approval with one line returned, with a reason.",
+    "fade": false,
+    "pedagogical_intent": "exemplify"
+  },
+  {
+    "type": "failure_case",
+    "id": "p007",
+    "situation": "A manager approved twelve months of claims in one batch before a deadline.",
+    "failure": "A duplicated hotel stay was paid twice.",
+    "cause": "Batch approval skipped the per-item receipt match.",
+    "consequence": "Recovery from payroll and an audit finding.",
+    "prevention": "Match receipts item by item, even in a batch.",
+    "pedagogical_intent": "exemplify"
+  },
+  {
+    "type": "evidence_inspection",
+    "id": "p008",
+    "artifact": "A restaurant receipt submitted for a client dinner.",
+    "question": "Does this receipt support the claim as submitted?",
+    "observations": [
+      "The date is a Saturday.",
+      "The attendee count is not shown.",
+      "Alcohol is itemised separately."
+    ],
+    "conclusion": "Ask for the attendee list before approving.",
+    "pedagogical_intent": "practice"
+  },
+  {
+    "type": "role_relevance",
+    "id": "p009",
+    "relevance": "The same returned claim looks different depending on where you sit.",
+    "perspectives": [
+      { "role": "Approver", "sees": "A control working as designed." },
+      { "role": "Claimant", "sees": "A delay to money they are owed, which needs a clear reason." },
+      { "role": "Finance", "sees": "One less item to recover in audit." }
+    ],
+    "pedagogical_intent": "activate"
+  },
+  {
+    "type": "scenario",
+    "id": "p010",
+    "variant": "branching",
+    "situation": "A claim includes a gift for a client, with a receipt.",
+    "decision_points": [
+      {
+        "id": "d1",
+        "prompt": "What do you do?",
+        "branches": [
+          { "label": "Check the gifts policy limit first.", "quality": "optimal", "feedback": "Gifts carry their own limit." },
+          { "label": "Approve it because it has a receipt.", "quality": "incorrect", "feedback": "Evidenced is not the same as allowed." }
+        ]
+      }
+    ],
+    "notes": "Decision point: a single-node branching scenario.",
+    "pedagogical_intent": "practice"
+  },
+  {
+    "type": "scenario",
+    "id": "p011",
+    "variant": "incomplete_information",
+    "situation": "A claim for a conference fee arrives. You do not recognise the event.",
+    "missing_information": ["Whether the conference was pre-approved.", "Whether it relates to the claimant's role."],
+    "decision_points": [
+      {
+        "id": "d1",
+        "prompt": "What is your next move?",
+        "branches": [
+          { "label": "Ask the claimant for the pre-approval reference.", "quality": "optimal" },
+          { "label": "Approve it; conferences are usually fine.", "quality": "incorrect" }
+        ]
+      }
+    ],
+    "pedagogical_intent": "practice"
+  },
+  {
+    "type": "scenario",
+    "id": "p012",
+    "variant": "proceed_clarify_escalate",
+    "situation": "A claim is in policy but the receipt looks altered.",
+    "decision_points": [
+      {
+        "id": "d1",
+        "prompt": "Proceed, clarify, or escalate?",
+        "branches": [
+          { "label": "Approve it.", "action": "proceed", "quality": "incorrect" },
+          { "label": "Ask the claimant about the receipt.", "action": "clarify", "quality": "suboptimal", "feedback": "Suspected alteration is not the approver's to investigate." },
+          { "label": "Refer it to the expense-audit team.", "action": "escalate", "quality": "optimal" }
+        ]
+      }
+    ],
+    "pedagogical_intent": "practice"
+  },
+  {
+    "type": "scenario",
+    "id": "p013",
+    "variant": "competing_principles",
+    "situation": "A long-serving team member's claim is two days past the submission deadline because of a family emergency.",
+    "principles": [
+      { "label": "Consistency", "description": "Rules apply to everyone the same way." },
+      { "label": "Care", "description": "Policy should not punish people for events outside their control." }
+    ],
+    "decision_points": [
+      {
+        "id": "d1",
+        "prompt": "What do you do?",
+        "branches": [
+          { "label": "Return it as late.", "quality": "acceptable", "honors": ["Consistency"] },
+          { "label": "Approve it and record the exception with its reason.", "quality": "acceptable", "honors": ["Care", "Consistency"] },
+          { "label": "Approve it quietly.", "quality": "suboptimal", "honors": ["Care"] }
+        ]
+      }
+    ],
+    "pedagogical_intent": "practice"
+  },
+  {
+    "type": "unresolved_question",
+    "id": "p014",
+    "question": "Can approvers delegate approval while on leave?",
+    "owner_role": "Finance policy owner",
+    "interim_guidance": "Do not delegate. Claims wait until you return, or your own manager approves them.",
+    "revisit_trigger": "Publication of the next expense-policy revision.",
+    "pedagogical_intent": "present"
+  },
+  {
+    "type": "resource_pointer",
+    "id": "p015",
+    "resource": "Expense policy foundations course",
+    "resource_kind": "platform_learning",
+    "location": "Company learning platform",
+    "purpose": "Deeper coverage of categories and limits.",
+    "pedagogical_intent": "transfer"
+  },
+  {
+    "type": "closure",
+    "id": "p016",
+    "takeaway": "Approve items, not totals: necessary, allowed, evidenced.",
+    "pedagogical_intent": "reinforce"
+  }
+]

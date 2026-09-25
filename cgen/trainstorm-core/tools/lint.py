@@ -5,7 +5,8 @@ Trainstorm linter — the guardrail across the content stack.
  
 Runs governance + drift checks on courses, scenes, and scripts:
   • ungoverned intents / pedagogical intents / primitive types (vs vocab + schema)
-  • script validation against schemas/script.primitives.v1.json (v2 when a v2-only field is used)
+  • script validation against schemas/script.primitives.v1.json (v2 when a v2-only field is used,
+    v3 when a v3-only field or primitive type is used)
   • occurrence stores (occurrences/elements.json) validated against schemas/element.schema.json
   • atom stores (atoms.json) are recognised and deferred to tools/validate_atoms.py — not re-gated here
   • list integrity (legacy delimited lists, item_count vs children, parent refs)
@@ -95,7 +96,8 @@ def collect_inputs(paths):
 def load_canon(root):
     """Load the governed vocabularies + the script schema from the repo."""
     canon = {"rhetorical": set(), "pedagogical": set(),
-             "script_schema": None, "script_schema_v2": None, "element_schema": None}
+             "script_schema": None, "script_schema_v2": None, "script_schema_v3": None,
+             "element_schema": None}
     if not root:
         return canon
     ie = os.path.join(root, "vocab", "intent.enum.json")
@@ -105,6 +107,7 @@ def load_canon(root):
         canon["pedagogical"] = {v["id"] for v in dims["pedagogical"]["values"]}
     for key, name in [("script_schema", "script.primitives.v1.json"),
                       ("script_schema_v2", "script.primitives.v2.json"),
+                      ("script_schema_v3", "script.primitives.v3.json"),
                       ("element_schema", "element.schema.json")]:
         p = os.path.join(root, "schemas", name)
         if os.path.exists(p):
@@ -125,10 +128,22 @@ def schema_property_names(schema):
     walk(schema or {})
     return names
 
+def schema_type_names(schema):
+    """Every primitive `type` const a script schema declares in its $defs."""
+    return {d["properties"]["type"]["const"]
+            for d in (schema or {}).get("$defs", {}).values()
+            if isinstance(d, dict) and "const" in d.get("properties", {}).get("type", {})}
+
 def script_schema_for(data, canon):
-    """v1 unless the script uses a property that only v2 declares (derived from the schemas, not
-    hardcoded — so a v3 with new fields is a one-line addition here, not a new rule)."""
-    v1, v2 = canon.get("script_schema"), canon.get("script_schema_v2")
+    """v1 unless the script uses a property that only v2 declares; v3 when it uses a property or a
+    primitive type only v3 declares (all derived from the schemas, not hardcoded)."""
+    v1, v2, v3 = canon.get("script_schema"), canon.get("script_schema_v2"), canon.get("script_schema_v3")
+    prims = [p for p in data if isinstance(p, dict)]
+    if v3 and v2:
+        v3_only_props = schema_property_names(v3) - schema_property_names(v2)
+        v3_only_types = schema_type_names(v3) - schema_type_names(v2)
+        if any(p.get("type") in v3_only_types or any(k in v3_only_props for k in p) for p in prims):
+            return v3, "v3"
     if v1 and v2:
         v2_only = schema_property_names(v2) - schema_property_names(v1)
         if any(k in v2_only for prim in data if isinstance(prim, dict) for k in prim):

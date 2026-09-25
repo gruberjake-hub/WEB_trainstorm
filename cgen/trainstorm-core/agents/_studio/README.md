@@ -16,6 +16,14 @@ into spine voice. A seat that wants one of them references it by path; it does n
 Input to each is the **document** from the stopping point before it — never the JSON. The JSON
 is the index; the document is the meaning.
 
+**Stopping point 3 also takes the move menu** — `03_design_commitment/move_menu.md`, the governed
+list of instructional moves (script.primitives.v3), pasted in beside the digest and memo. The
+prompt stays verbatim; the menu is an input, like the digest. The script labels its moves
+`[move: …]`, and those labels are what the harvest files into the committed design's
+`framing.move_plan` (committed-design.v0.2). The menu is projected from the schema by
+`tools/project_move_menu.py`, so never edit it by hand. `tools/selftest_script_primitives.py`
+fails if the menu has drifted from the schema.
+
 ## Rules (from `architecture/studio-and-ledger.md`)
 
 1. **The room writes nothing.** Running a prompt is not a facet write.
