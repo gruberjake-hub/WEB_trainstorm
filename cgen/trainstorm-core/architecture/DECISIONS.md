@@ -4116,3 +4116,69 @@ and is seated here).
   closure beats present at `lesson_start` / `lesson_end`.
 - **No audio produced.** Audio render is a later step.
 
+## 2026-09-25 — Instructional moves: script.primitives.v3 governs Jake's 17 candidates (reconciled); stopping point 3 takes a projected move menu; committed-design.v0.2 gives the chosen moves a home
+
+**Signed:** Jake / Claude — *PROPOSED until merged; merge is the ratification.*
+
+**Decision:** Jake's 17 candidate instructional primitives go into the **script-primitive layer**,
+the governed vocabulary of knowledge moves, as `schemas/script.primitives.v3.json`. They go in
+reconciled, not as 17 new types (Jake's call, from a design beat):
+
+- **7 new standalone types:** `mental_model`, `conditional_rule`, `misconception`, `failure_case`,
+  `worked_example`, `evidence_inspection`, `unresolved_question`.
+- **The scenario family (4):** the parked `scenario` type (PATCH-script-primitives-scenario.md,
+  drafted for v1 and never applied) lands as the 12th type, with a closed `variant` list:
+  `branching` (a single node = *decision point*), `incomplete_information` (requires
+  `missing_information`), `proceed_clarify_escalate` (every branch requires `action`),
+  `competing_principles` (requires `principles`; no branch may be `optimal`).
+- **3 extensions to existing types:** *lifecycle map* = `process_flow` with `cyclical: true`
+  (no change); *role-perspective switch* = `role_relevance.perspectives` (2+ roles, never
+  persons); *platform-learning referral* = `resource_pointer.resource_kind` (closed:
+  document / system / job_aid / platform_learning / contact_role).
+- **3 that are not moves, routed to their own seats and parked:** *proficiency ladder* →
+  the Designer (a progression across objectives); *shared case with differentiated tasks* →
+  structure + `audience.segment_scope`; *job aid / decision aid* → a render (Realizer layout).
+  Pointing to one is `resource_pointer` with `resource_kind: job_aid`.
+
+v2 is unchanged and still valid. `tools/lint.py` selects v3 when a script uses a v3-only type
+or field, derived from the schemas. Every v3 type carries an `x-menu` annotation, and
+`x-candidate-crosswalk` records where each of the 17 names landed.
+
+**Which agent uses them.** No single agent compiles a course today. The Realizer
+(`realize.py`) is deterministic and cannot choose moves. The Generator, the seat that owns
+script primitives, has no agent. The only place moves are *chosen* is stopping point 3
+(`_studio/03_design_commitment.md`). So the vocabulary reaches it as an **input**:
+`agents/_studio/03_design_commitment/move_menu.md`, projected from v3 by
+`tools/project_move_menu.py` and never hand-edited. The prompt stays verbatim (studio rule 2).
+The script labels moves `[move: …]`. `committed-design.v0.2` adds `framing.move_plan`, where the
+harvest files those labels, and `validate_committed_design.py` checks every move and variant
+against v3 at run time, with no copy of the list in the gate.
+
+**Why:** The candidates are knowledge moves (what a scene *does* instructionally). That is the
+script-primitive layer's question, not `intent.move` (Cartographer, closed Gagné list) and not
+`text_primitive` (the Realizer's clothes). Adding all 17 raw would have duplicated three
+existing types and put three other seats' concerns into this vocabulary, which is the
+ungoverned drift the closed lists exist to catch. The design-commitment room was choosing
+moves with no vocabulary and no place to put the choice; now it has both.
+
+**Consequences:**
+- Writes: `schemas/script.primitives.v3.json` (new), `schemas/committed-design.schema.json`
+  (v0.2, additive; v0.1 documents stay valid), `tools/lint.py`,
+  `tools/validate_committed_design.py`, `tools/project_move_menu.py` (new),
+  `tools/selftest_script_primitives.py` (new), `reference/sample_script.v3.json` (new; generic,
+  fictional domain), `agents/_studio/03_design_commitment/move_menu.md` (generated),
+  `agents/_studio/README.md`, this block, a `decision-log.md` entry.
+- Gates: `selftest_script_primitives.py` ALL PASS (7 red proofs, lint selection v1/v2/v3,
+  menu currency). `validate_committed_design.py --selftest` ALL PASS (new green: v0.2
+  move_plan; new red: ungoverned move, move_plan under a v0.1 marker, variant on a non-scenario,
+  ungoverned variant). Existing committed designs (schema example, reference, cci) still pass.
+  No change to realize / cartographer / couturier; none of them reads the changed files.
+- Not yet (carries): (1) a **harvest** that reads `[move: …]` labels from a saved script into
+  `move_plan`, to be written when stopping point 3 first runs for real. (2) **Realization-table
+  rows** for the 8 new types; the Realizer does not read script primitives yet. (3) **The
+  Generator** is still unseated. (4) The three routed candidates, each in its own seat.
+  (5) `schemas/PATCH-script-primitives-scenario.md` is superseded by v3 and can be removed.
+  (6) Pedagogical-intent defaults on the new types are descriptions, not a governed mapping.
+
+**Supersedes:** the open question in the layout-engine block ("whether a 12th script
+primitive `scenario` … "): answered yes, in v3.

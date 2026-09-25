@@ -13,6 +13,50 @@ and the fix is a new dated block there plus a dated entry here — never a silen
 *Running log of settled architectural decisions. Newest first. One entry = one decision that is
 closed enough to build on; if it reopens, add a new dated entry rather than editing history.*
 
+## 2026-09-25 (instructional moves) — the 17 candidates, reconciled into script.primitives.v3; the room gets a menu; the chosen moves get a home
+
+*Anchor: main e0ba53a. Jake handed over 17 candidate instructional primitives and asked that they
+reach "whatever agent is actually compiling a course." Claude pulled the repo first. It found
+that no single agent compiles a course, ran a two-question design beat (home; scope), and Jake
+picked "v3 vocab + menu" and "reconciled". Writes are listed in the DECISIONS block.*
+
+### Who actually compiles a course
+
+Two things share the job, and neither could take the list as it stood. `realize.py` is the cold
+compiler: five closed `text_primitive` roles, a pure function of atom kind and Cartographer's
+move. It dresses moves but cannot choose them. `_studio/03_design_commitment.md` is the hot
+compiler, the only place a move like "worked example here" is actually chosen. It chooses in
+free prose, and its harvest (`committed-design`) had no field to hold the choice. The Generator
+is the roster's owner of knowledge moves, and nothing runs it: there is no agent folder, and
+only `lint.py` reads v2. So the list belonged in the vocabulary the Generator owns, delivered to
+the room that actually does the choosing.
+
+### Why reconciled, not 17
+
+Checked against v2, three candidates already had homes (lifecycle map = cyclical
+`process_flow`; platform referral = `resource_pointer`; role-perspective switch = an extension
+of `role_relevance`). Four were the scenario family: the parked scenario patch, never applied,
+plus three variants. Three were not moves at all: a proficiency ladder is a progression across
+objectives, a shared case with differentiated tasks is an arrangement plus an audience binding,
+and a job aid is a deliverable. That leaves seven new moves. `unresolved_question` is separate
+from `boundary_statement` on purpose. A boundary is scope the designer *chose*. An unresolved
+question is something the organization *hasn't decided*. The design-commitment prompt already
+demands honesty about the second kind, and until now it had no word for it.
+
+### The menu is a projection
+
+The obvious move, pasting the list into the prompt, would break studio rule 2 and leave a
+second, ungated copy. Instead each v3 type carries `x-menu`, a script projects the menu, and a
+selftest fails if the menu drifts. The schema is canon and the menu is how a person reads it.
+The same logic kept the list out of the committed-design schema: `move_plan.move` is a pattern
+there, and the gate reads v3 for membership.
+
+### Carries
+
+A harvest from `[move: …]` labels into `move_plan` is due when stopping point 3 runs for real.
+The Realizer still needs realization rows for the new types. The Generator is still unseated.
+The three routed candidates each go to their own seat. The scenario PATCH doc is superseded.
+
 ## 2026-09-02 (the argument) — exploration memo saved whole; argued half harvested; verdicts are Jake's; `_studio/` seated; the `add -A` sweep
 
 *Anchor: main d3a25e7. Same day, same shape as the first-dossier hop, one stopping point later.
