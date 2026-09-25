@@ -20,8 +20,8 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "committed-design.v0.1",
-      "description": "Closed with this schema. A new status value, escape kind, or join kind is a version bump, not a silent extend."
+      "enum": ["committed-design.v0.1", "committed-design.v0.2"],
+      "description": "Closed with this schema. v0.2 (2026-09-25) is additive: framing.move_plan. A v0.1 document stays valid; a document carrying move_plan must declare v0.2. A new status value, escape kind, or join kind is a version bump, not a silent extend."
     },
     "store": { "const": "committed-design" },
     "design_id": {
@@ -65,6 +65,10 @@
     }
   },
   "allOf": [
+    {
+      "if": { "properties": { "framing": { "required": ["move_plan"] } }, "required": ["framing"] },
+      "then": { "properties": { "schema_version": { "const": "committed-design.v0.2" } } }
+    },
     {
       "if": { "properties": { "status": { "const": "validated" } }, "required": ["status"] },
       "then": { "required": ["reviewer"] }
@@ -153,6 +157,23 @@
           "items": { "type": "string", "pattern": "^obj_[a-z0-9_]+$" },
           "uniqueItems": true,
           "description": "Optional pointers at locked obj_ ids (Designer). References, not a mint."
+        },
+        "move_plan": {
+          "type": "array",
+          "minItems": 1,
+          "description": "v0.2. The instructional moves the committed script chose, in order, harvested from the `[move: ...]` labels in the saved script (agents/_studio/03_design_commitment/move_menu.md). Each `move` must be a primitive type in schemas/script.primitives.v3.json and each `variant` a v3 scenario variant; tools/validate_committed_design.py checks membership against that schema at run time, so no copy of the list lives here. A plan, not a mint: no atom_, no element, no occurrence intent/expression/audience.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["move"],
+            "properties": {
+              "move": { "type": "string", "pattern": "^[a-z][a-z_]*$", "description": "A script.primitives.v3 type id (e.g. worked_example)." },
+              "variant": { "type": "string", "pattern": "^[a-z][a-z_]*$", "description": "Only with move=scenario: a v3 scenario variant." },
+              "scene": { "type": "string", "minLength": 1, "maxLength": 120, "description": "The script's own scene or section label this move sits in. A label, not script text." },
+              "objective_refs": { "type": "array", "items": { "type": "string", "pattern": "^obj_[a-z0-9_]+$" }, "uniqueItems": true, "description": "Locked obj_ ids this move serves. References, not a mint." },
+              "note": { "type": "string", "maxLength": 240 }
+            }
+          }
         }
       }
     },

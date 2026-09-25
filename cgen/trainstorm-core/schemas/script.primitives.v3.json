@@ -1,0 +1,1436 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trainstorm.ai/schemas/script.primitives.v3.json",
+  "title": "Trainstorm Script Primitives (Generation IR) — v3",
+  "description": "The SEMANTIC generation layer: an ordered array of didactic moves, each a typed knowledge structure, realized DOWNSTREAM into presentation elements. Governed, closed vocabulary — a new primitive type requires a version bump. V3 CHANGE (2026-09-25, Jake's instructional-move candidates, reconciled): adds the parked `scenario` type (PATCH-script-primitives-scenario.md, drafted against v1, never applied) with a closed `variant` list (branching / incomplete_information / proceed_clarify_escalate / competing_principles); adds seven standalone moves (mental_model, conditional_rule, misconception, failure_case, worked_example, evidence_inspection, unresolved_question); extends role_relevance (perspectives) and resource_pointer (resource_kind). v2 is unchanged and stays valid for existing scripts. Every type carries an `x-menu` annotation {label, use_when, not_for}: the design-commitment move menu (agents/_studio/03_design_commitment/move_menu.md) is PROJECTED from these annotations by tools/project_move_menu.py — never hand-edited. `x-candidate-crosswalk` records where each of the 17 candidate names landed, including the three that are not script moves.",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/primitive"
+  },
+  "$defs": {
+    "primitive": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/orientation"
+        },
+        {
+          "$ref": "#/$defs/context_frame"
+        },
+        {
+          "$ref": "#/$defs/definition"
+        },
+        {
+          "$ref": "#/$defs/decomposition"
+        },
+        {
+          "$ref": "#/$defs/distinction"
+        },
+        {
+          "$ref": "#/$defs/process_flow"
+        },
+        {
+          "$ref": "#/$defs/role_relevance"
+        },
+        {
+          "$ref": "#/$defs/knowledge_check"
+        },
+        {
+          "$ref": "#/$defs/boundary_statement"
+        },
+        {
+          "$ref": "#/$defs/resource_pointer"
+        },
+        {
+          "$ref": "#/$defs/closure"
+        },
+        {
+          "$ref": "#/$defs/scenario"
+        },
+        {
+          "$ref": "#/$defs/mental_model"
+        },
+        {
+          "$ref": "#/$defs/conditional_rule"
+        },
+        {
+          "$ref": "#/$defs/misconception"
+        },
+        {
+          "$ref": "#/$defs/failure_case"
+        },
+        {
+          "$ref": "#/$defs/worked_example"
+        },
+        {
+          "$ref": "#/$defs/evidence_inspection"
+        },
+        {
+          "$ref": "#/$defs/unresolved_question"
+        }
+      ]
+    },
+    "labeledPart": {
+      "type": "object",
+      "required": [
+        "label"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "misconceptionPrediction": {
+      "type": "object",
+      "description": "A falsifiable prior about learner error, stated before any learner is observed. IDs are stable (mc_ prefix, minted at generation, never positional) so the Responsive Engine can later place posteriors over them and the realizer can trace each rendered distractor to the misconception it operationalizes.",
+      "required": [
+        "id",
+        "claim"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^mc_[A-Za-z0-9_-]+$"
+        },
+        "claim": {
+          "type": "string",
+          "description": "What learners are predicted to wrongly believe or do, stated as a claim about cognition — not as answer-option text."
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Prior confidence that this misconception is prevalent in the target segment. Seeds the evidence loop."
+        },
+        "source": {
+          "type": "string",
+          "description": "Where the prediction comes from: audience-model entry (segment × objective), SME input, or observed data."
+        },
+        "feedback": {
+          "type": "string",
+          "description": "Remediation shown when a learner's response evidences THIS misconception. Realizes into per-distractor feedback."
+        }
+      }
+    },
+    "orientation": {
+      "type": "object",
+      "description": "Situates the learner: what this is / what's ahead.",
+      "required": [
+        "type",
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "orientation"
+        },
+        "text": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Value from intent.enum.json (pedagogical). Default: objective. Enforced by the linter."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Orientation",
+        "use_when": "Situate the learner: what this is and what is ahead.",
+        "not_for": "Stakes or motivation (context_frame)."
+      }
+    },
+    "context_frame": {
+      "type": "object",
+      "description": "Establishes the problem/stakes that motivate the content.",
+      "required": [
+        "type",
+        "problem"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "context_frame"
+        },
+        "problem": {
+          "type": "string"
+        },
+        "risk": {
+          "type": "string",
+          "description": "What's at stake if unaddressed."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Default: hook (or activate)."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Context frame",
+        "use_when": "Establish the problem and what is at stake if it is unaddressed.",
+        "not_for": "Role-specific relevance (role_relevance)."
+      }
+    },
+    "definition": {
+      "type": "object",
+      "description": "Names and explains a term.",
+      "required": [
+        "type",
+        "term",
+        "meaning"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "definition"
+        },
+        "term": {
+          "type": "string"
+        },
+        "meaning": {
+          "type": "string"
+        },
+        "example": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Default: present."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Definition",
+        "use_when": "Name and explain one term.",
+        "not_for": "A picture of how a system behaves (mental_model)."
+      }
+    },
+    "decomposition": {
+      "type": "object",
+      "description": "Breaks a whole into its constituent parts.",
+      "required": [
+        "type",
+        "whole",
+        "parts"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "decomposition"
+        },
+        "whole": {
+          "type": "string",
+          "description": "The thing being broken down."
+        },
+        "parts": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/labeledPart"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Default: present (or exemplify)."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Decomposition",
+        "use_when": "Break a whole into its parts.",
+        "not_for": "Ordered stages (process_flow)."
+      }
+    },
+    "distinction": {
+      "type": "object",
+      "description": "Contrasts two or more things; often corrects a common confusion.",
+      "required": [
+        "type",
+        "distinguishes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "distinction"
+        },
+        "distinguishes": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/labeledPart"
+          }
+        },
+        "basis": {
+          "type": "string",
+          "description": "The dimension along which they differ."
+        },
+        "common_confusion": {
+          "type": "string",
+          "description": "The misconception this corrects."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Default: exemplify."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Distinction",
+        "use_when": "Contrast two or more things that get confused.",
+        "not_for": "A single wrong belief to dislodge (misconception)."
+      }
+    },
+    "process_flow": {
+      "type": "object",
+      "description": "An ordered sequence of steps or stages.",
+      "required": [
+        "type",
+        "steps"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "process_flow"
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/labeledPart"
+          }
+        },
+        "cyclical": {
+          "type": "boolean",
+          "default": false
+        },
+        "trigger": {
+          "type": "string",
+          "description": "What starts the process."
+        },
+        "outcome": {
+          "type": "string",
+          "description": "What the process produces."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Default: exemplify."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Process flow / lifecycle map",
+        "use_when": "An ordered sequence of steps or stages. Set cyclical=true for a lifecycle map.",
+        "not_for": "A branch on a condition (conditional_rule)."
+      }
+    },
+    "role_relevance": {
+      "type": "object",
+      "description": "Why this matters to the learner's specific role or situation. V3: `perspectives` (2+) makes it a role-perspective switch — the same situation seen through each role.",
+      "required": [
+        "type",
+        "relevance"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "role_relevance"
+        },
+        "relevance": {
+          "type": "string",
+          "description": "Why it matters to the learner."
+        },
+        "role": {
+          "type": "string",
+          "description": "Optional target role/segment (may map to audience.segment_scope)."
+        },
+        "example": {
+          "type": "string",
+          "description": "A concrete 'for you, this means…' instance."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Default: activate (or transfer)."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        },
+        "perspectives": {
+          "type": "array",
+          "minItems": 2,
+          "description": "V3. Role-perspective switch: the same point seen from each role. Roles are role names, never persons.",
+          "items": {
+            "type": "object",
+            "required": [
+              "role",
+              "sees"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "role": {
+                "type": "string",
+                "description": "Role or segment name (may map to audience.segment_scope). Never a person."
+              },
+              "sees": {
+                "type": "string",
+                "description": "What this role notices, needs, or risks here."
+              }
+            }
+          }
+        }
+      },
+      "x-menu": {
+        "label": "Role relevance / role-perspective switch",
+        "use_when": "Why this matters to a role. Use `perspectives` (2+) to show the same thing through several roles' eyes.",
+        "not_for": "One case with different tasks per role (not a move — structure + audience)."
+      }
+    },
+    "knowledge_check": {
+      "type": "object",
+      "description": "V2 FORM — a check for understanding in RESPONSE-FEATURE form. Describes what a correct response must contain, not lettered options. Options are a RENDER: the realizer generates them at realization time (key from expected_response_features; distractors from misconception_predictions via the Generator's divergent pass, with parity constraints — vocabulary, register, length). Render targets choose form (MC/MR/TF/matching/sequence) and capacity (Storyline supports up to 10 choices) as render parameters, not schema facts. If a client or SME mandates fixed verbatim options, that is a render-time constraint recorded against the render target — the primitive stays semantic. Migration from v1: each v1 options[correct=true] label maps into expected_response_features; each incorrect label is restated as the misconception it evidences.",
+      "required": [
+        "type",
+        "prompt",
+        "expected_response_features"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "knowledge_check"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "The question or task, semantically stated. Single-concept; the realizer enforces form rules per target."
+        },
+        "check_type": {
+          "type": "string",
+          "enum": [
+            "recall",
+            "application",
+            "scenario"
+          ]
+        },
+        "expected_response_features": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "description": "What a correct response must contain or demonstrate — competency-aligned features, not option text. The semantic key."
+        },
+        "misconception_predictions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/misconceptionPrediction"
+          },
+          "description": "Structured priors about learner error. Distractors are generated FROM these — never invented alongside the key."
+        },
+        "feedback_correct": {
+          "type": "string",
+          "description": "Shown on a correct response."
+        },
+        "feedback_incorrect": {
+          "type": "string",
+          "description": "Default remediation when no specific misconception is matched. Misconception-specific feedback lives on each prediction."
+        },
+        "source_reference": {
+          "type": "string",
+          "description": "Citation into the source store (authoritative band) grounding this check. Provenance per check — the profiles' discipline, kept."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Default: practice (or assess)."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. For knowledge_check especially, this is the field that should have prevented drift: the check's teaches and the realized element's intent.teaches are testing whether the same objective was meant both times."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Knowledge check",
+        "use_when": "Check understanding: what a correct response must contain.",
+        "not_for": "A graded-quality decision (scenario)."
+      }
+    },
+    "boundary_statement": {
+      "type": "object",
+      "description": "Scope, limits, caveats, or edge cases — what this does or does NOT cover.",
+      "required": [
+        "type",
+        "boundary"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "boundary_statement"
+        },
+        "boundary": {
+          "type": "string",
+          "description": "The limit or caveat."
+        },
+        "applies_when": {
+          "type": "string"
+        },
+        "excludes": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Default: present."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Boundary statement",
+        "use_when": "Scope we CHOSE: what this covers and does not.",
+        "not_for": "Something the organization has NOT decided yet (unresolved_question)."
+      }
+    },
+    "resource_pointer": {
+      "type": "object",
+      "description": "Points to an external resource, system, or job aid.",
+      "required": [
+        "type",
+        "resource"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "resource_pointer"
+        },
+        "resource": {
+          "type": "string",
+          "description": "The resource / system name."
+        },
+        "location": {
+          "type": "string",
+          "description": "Where to find it (portal, URL, system path)."
+        },
+        "purpose": {
+          "type": "string",
+          "description": "What to use it for."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Default: transfer."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        },
+        "resource_kind": {
+          "type": "string",
+          "enum": [
+            "document",
+            "system",
+            "job_aid",
+            "platform_learning",
+            "contact_role"
+          ],
+          "description": "V3, closed. platform_learning = a referral to learning that lives on another platform (LMS course, vendor academy). contact_role = a role to ask, never a named person."
+        }
+      },
+      "x-menu": {
+        "label": "Resource pointer / platform-learning referral",
+        "use_when": "Point to an external resource, system, job aid, or platform course. Set resource_kind.",
+        "not_for": "Building the job aid itself (a render, not a move)."
+      }
+    },
+    "closure": {
+      "type": "object",
+      "description": "Wraps up: recap, key takeaway, and/or call to action.",
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "closure"
+        },
+        "takeaway": {
+          "type": "string",
+          "description": "The one thing to remember."
+        },
+        "recap": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "call_to_action": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Default: reinforce."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Often legitimately omitted here — a closure typically recaps everything the unit taught, not one objective, so 'spans several' is a valid absence of this field, not a gap to fill in."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Closure",
+        "use_when": "Recap, key takeaway, call to action.",
+        "not_for": "New content."
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "description": "A branching decision the learner works through: a real situation, one or more decision points, and choices whose consequences and feedback differ by QUALITY on a gradient — not a single right/wrong check (that is knowledge_check). Structural home for scenario_select interactions; delivery is interactive (behavior-driven / Storyline).",
+      "required": [
+        "type",
+        "situation",
+        "decision_points"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "scenario"
+        },
+        "situation": {
+          "type": "string",
+          "description": "The real-world setup the learner is placed in — the grounding narrative (source-locale meaning)."
+        },
+        "role": {
+          "type": "string",
+          "description": "Optional target role/segment the situation is framed for (may map to audience.segment_scope)."
+        },
+        "decision_points": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Ordered decision nodes. More than one node, or any use of branch.leads_to, makes the scenario multi-step / branching.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "prompt",
+              "branches"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Local node id, referenced by branch.leads_to."
+              },
+              "prompt": {
+                "type": "string",
+                "description": "The decision the learner faces at this node."
+              },
+              "branches": {
+                "type": "array",
+                "minItems": 2,
+                "description": "The choices at this node — two or more.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "label",
+                    "quality"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "description": "The choice as the learner sees it."
+                    },
+                    "quality": {
+                      "type": "string",
+                      "enum": [
+                        "optimal",
+                        "acceptable",
+                        "suboptimal",
+                        "incorrect"
+                      ],
+                      "description": "Graded on a gradient, not a boolean — this is what distinguishes a scenario from a knowledge_check."
+                    },
+                    "consequence": {
+                      "type": "string",
+                      "description": "What happens in the situation if this is chosen (the branching narrative)."
+                    },
+                    "feedback": {
+                      "type": "string",
+                      "description": "Coaching shown for this choice."
+                    },
+                    "leads_to": {
+                      "type": "string",
+                      "description": "Optional decision_point id this choice branches to; omit to end the scenario."
+                    },
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "proceed",
+                        "clarify",
+                        "escalate"
+                      ],
+                      "description": "V3. Which of the three moves this choice is. Required on every branch of a proceed_clarify_escalate scenario."
+                    },
+                    "honors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "V3. Labels (from `principles`) this choice honours. Used by competing_principles."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Value from intent.enum.json (pedagogical). Default: practice (or assess). Enforced by the linter."
+        },
+        "notes": {
+          "type": "string"
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "branching",
+            "incomplete_information",
+            "proceed_clarify_escalate",
+            "competing_principles"
+          ],
+          "default": "branching",
+          "description": "V3, closed. branching = the general form (a single decision point is the 'decision point' move). incomplete_information = the learner must act, or decide what to find out, without all the facts (requires missing_information). proceed_clarify_escalate = every choice is one of the three moves (every branch requires action). competing_principles = a dilemma: two or more legitimate principles pull apart and no choice is 'optimal' (requires principles)."
+        },
+        "missing_information": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "description": "V3. What the learner does not (and cannot yet) know in the situation. Required for incomplete_information."
+        },
+        "principles": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/labeledPart"
+          },
+          "description": "V3. The legitimate principles in tension. Required for competing_principles."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "variant": {
+                "const": "incomplete_information"
+              }
+            },
+            "required": [
+              "variant"
+            ]
+          },
+          "then": {
+            "required": [
+              "missing_information"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "variant": {
+                "const": "proceed_clarify_escalate"
+              }
+            },
+            "required": [
+              "variant"
+            ]
+          },
+          "then": {
+            "properties": {
+              "decision_points": {
+                "items": {
+                  "properties": {
+                    "branches": {
+                      "items": {
+                        "required": [
+                          "action"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "variant": {
+                "const": "competing_principles"
+              }
+            },
+            "required": [
+              "variant"
+            ]
+          },
+          "then": {
+            "required": [
+              "principles"
+            ],
+            "properties": {
+              "decision_points": {
+                "items": {
+                  "properties": {
+                    "branches": {
+                      "items": {
+                        "properties": {
+                          "quality": {
+                            "not": {
+                              "const": "optimal"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "x-menu": {
+        "label": "Scenario (decision point · incomplete information · proceed/clarify/escalate · competing-principles dilemma)",
+        "use_when": "The learner works through a real situation and choices are graded on a gradient (optimal → incorrect), each with a consequence. Pick a variant.",
+        "not_for": "A flat right/wrong check (knowledge_check)."
+      }
+    },
+    "mental_model": {
+      "type": "object",
+      "description": "Gives the learner a working picture of how a system behaves, so they can predict and explain — not just name.",
+      "required": [
+        "type",
+        "model",
+        "explains"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "mental_model"
+        },
+        "model": {
+          "type": "string",
+          "description": "The central picture or analogy, in one or two sentences."
+        },
+        "parts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/labeledPart"
+          },
+          "description": "The moving parts of the model and how each behaves."
+        },
+        "explains": {
+          "type": "string",
+          "description": "What the model lets the learner predict or explain."
+        },
+        "limits": {
+          "type": "string",
+          "description": "Where the model stops being true."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Value from intent.enum.json (pedagogical). Default: present. Enforced by the linter."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Mental-model explanation",
+        "use_when": "The learner needs to reason about how something works, not just what it is called.",
+        "not_for": "Naming a term (definition)."
+      }
+    },
+    "conditional_rule": {
+      "type": "object",
+      "description": "An if/then rule: under this condition, do this (otherwise, that).",
+      "required": [
+        "type",
+        "condition",
+        "then"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "conditional_rule"
+        },
+        "condition": {
+          "type": "string",
+          "description": "The IF."
+        },
+        "then": {
+          "type": "string",
+          "description": "What to do when the condition holds."
+        },
+        "otherwise": {
+          "type": "string",
+          "description": "What to do when it does not."
+        },
+        "exceptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Named cases where the rule does not apply."
+        },
+        "source_reference": {
+          "type": "string",
+          "description": "Where the rule is stated (policy, SOP section). A reference, not the text."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Value from intent.enum.json (pedagogical). Default: present. Enforced by the linter."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Conditional rule",
+        "use_when": "Behaviour depends on a condition the learner must recognise.",
+        "not_for": "Scope we chose not to cover (boundary_statement)."
+      }
+    },
+    "misconception": {
+      "type": "object",
+      "description": "Names a specific wrong belief, why it is plausible, and replaces it. The standalone teaching move; knowledge_check.misconception_predictions stays the assessment-side field.",
+      "required": [
+        "type",
+        "belief",
+        "correction"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "misconception"
+        },
+        "belief": {
+          "type": "string",
+          "description": "The wrong belief, stated the way a learner would hold it."
+        },
+        "why_plausible": {
+          "type": "string",
+          "description": "Why a reasonable person believes it."
+        },
+        "correction": {
+          "type": "string",
+          "description": "What is actually true."
+        },
+        "consequence": {
+          "type": "string",
+          "description": "What goes wrong if the belief is acted on."
+        },
+        "prediction_ref": {
+          "type": "string",
+          "description": "Optional id of a knowledge_check misconception_prediction this move pre-empts."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Value from intent.enum.json (pedagogical). Default: present. Enforced by the linter."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Misconception",
+        "use_when": "A specific wrong belief is common enough to name and dislodge before it is assessed.",
+        "not_for": "Contrasting two correct things (distinction)."
+      }
+    },
+    "failure_case": {
+      "type": "object",
+      "description": "A worked account of something going wrong: what happened, why, and what would have prevented it.",
+      "required": [
+        "type",
+        "situation",
+        "failure",
+        "prevention"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "failure_case"
+        },
+        "situation": {
+          "type": "string"
+        },
+        "failure": {
+          "type": "string",
+          "description": "What went wrong."
+        },
+        "cause": {
+          "type": "string",
+          "description": "Why it went wrong."
+        },
+        "consequence": {
+          "type": "string"
+        },
+        "prevention": {
+          "type": "string",
+          "description": "What would have prevented it."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Value from intent.enum.json (pedagogical). Default: exemplify. Enforced by the linter."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Failure case",
+        "use_when": "Seeing a realistic failure teaches the standard faster than the standard alone.",
+        "not_for": "A choice the learner makes (scenario)."
+      }
+    },
+    "worked_example": {
+      "type": "object",
+      "description": "A problem solved step by step with the reasoning made visible at each step.",
+      "required": [
+        "type",
+        "problem",
+        "steps",
+        "result"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "worked_example"
+        },
+        "problem": {
+          "type": "string"
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": [
+              "action",
+              "reasoning"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "reasoning": {
+                "type": "string",
+                "description": "Why this step — the thinking a novice cannot see."
+              }
+            }
+          }
+        },
+        "result": {
+          "type": "string"
+        },
+        "fade": {
+          "type": "boolean",
+          "default": false,
+          "description": "True when later steps should be left for the learner to complete (a faded example)."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Value from intent.enum.json (pedagogical). Default: exemplify. Enforced by the linter."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Worked example",
+        "use_when": "The learner must apply a method; show it applied with reasoning.",
+        "not_for": "A one-line illustration of a term (definition.example)."
+      }
+    },
+    "evidence_inspection": {
+      "type": "object",
+      "description": "The learner examines an artifact (a record, form, report, screen) and notices what matters in it.",
+      "required": [
+        "type",
+        "artifact",
+        "question",
+        "observations"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "evidence_inspection"
+        },
+        "artifact": {
+          "type": "string",
+          "description": "What the artifact is, described. Not the artifact itself."
+        },
+        "asset_ref": {
+          "type": "string",
+          "description": "Key into the visual-asset store for the artifact. Reference, never embed."
+        },
+        "question": {
+          "type": "string",
+          "description": "What the learner is looking for."
+        },
+        "observations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "description": "What a skilled inspector would notice."
+        },
+        "conclusion": {
+          "type": "string",
+          "description": "What the observations add up to."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Value from intent.enum.json (pedagogical). Default: practice. Enforced by the linter."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Evidence inspection",
+        "use_when": "The skill is reading real artifacts and spotting what matters.",
+        "not_for": "Recall of a fact (knowledge_check)."
+      }
+    },
+    "unresolved_question": {
+      "type": "object",
+      "description": "Honestly marks a question the organization has NOT yet answered, and what to do in the meantime.",
+      "required": [
+        "type",
+        "question",
+        "interim_guidance"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "unresolved_question"
+        },
+        "question": {
+          "type": "string"
+        },
+        "owner_role": {
+          "type": "string",
+          "description": "The role that owns the answer. Never a person."
+        },
+        "interim_guidance": {
+          "type": "string",
+          "description": "What the learner should do until it is resolved."
+        },
+        "revisit_trigger": {
+          "type": "string",
+          "description": "What event resolves or reopens it."
+        },
+        "id": {
+          "type": "string"
+        },
+        "pedagogical_intent": {
+          "type": "string",
+          "description": "Value from intent.enum.json (pedagogical). Default: present. Enforced by the linter."
+        },
+        "teaches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^obj_[A-Za-z0-9_-]+$"
+          },
+          "description": "objective_ids this primitive was drafted toward. Stamped once by the Generator; the Realizer relays it, never re-derives it. Should match the realized element's intent.teaches."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "x-menu": {
+        "label": "Unresolved-question marker",
+        "use_when": "The honest answer is 'not decided yet' — say so rather than imply a procedure exists.",
+        "not_for": "Scope we deliberately excluded (boundary_statement)."
+      }
+    }
+  },
+  "x-candidate-crosswalk": {
+    "_note": "Where each 2026-09-25 candidate landed. `routed` entries are NOT script moves; they belong to another seat and are parked carries in DECISIONS.md.",
+    "Mental-model explanation": {
+      "type": "mental_model"
+    },
+    "Lifecycle map": {
+      "type": "process_flow",
+      "how": "cyclical: true"
+    },
+    "Decision point": {
+      "type": "scenario",
+      "how": "variant branching, one decision point"
+    },
+    "Conditional rule": {
+      "type": "conditional_rule"
+    },
+    "Competing-principles dilemma": {
+      "type": "scenario",
+      "how": "variant competing_principles"
+    },
+    "Misconception": {
+      "type": "misconception"
+    },
+    "Failure case": {
+      "type": "failure_case"
+    },
+    "Worked example": {
+      "type": "worked_example"
+    },
+    "Incomplete-information scenario": {
+      "type": "scenario",
+      "how": "variant incomplete_information"
+    },
+    "Proceed / clarify / escalate decision": {
+      "type": "scenario",
+      "how": "variant proceed_clarify_escalate"
+    },
+    "Role-perspective switch": {
+      "type": "role_relevance",
+      "how": "perspectives (2+)"
+    },
+    "Shared case with differentiated tasks": {
+      "routed": "structure + audience",
+      "why": "One case, tasks keyed by audience.segment_scope — an arrangement of moves, not a move."
+    },
+    "Evidence inspection": {
+      "type": "evidence_inspection"
+    },
+    "Proficiency ladder": {
+      "routed": "Designer — objectives",
+      "why": "A progression across objectives (Bloom levels), not a single move."
+    },
+    "Platform-learning referral": {
+      "type": "resource_pointer",
+      "how": "resource_kind: platform_learning"
+    },
+    "Job aid / decision aid": {
+      "routed": "render — Realizer layout",
+      "why": "A delivery format. Pointing to one is resource_pointer (resource_kind: job_aid); building one is a render."
+    },
+    "Unresolved-question marker": {
+      "type": "unresolved_question"
+    }
+  }
+}
