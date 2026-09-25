@@ -14,6 +14,10 @@ This gate is the bookkeeping that makes the mint-wake condition real rather than
                     no occurrence intent/expression/audience.
     TERMINAL      — an unreachable-LO goal (empty trainable slice) is not a held warrant;
                     status=validated against it is not mint-ready.
+    MOVES         — v0.2: every framing.move_plan[].move is a primitive type in
+                    schemas/script.primitives.v3.json, and every variant is a v3 scenario variant
+                    carried only by a scenario move. Read from the schema at run time — no copy of
+                    the list lives in this gate.
 
 What it does NOT do: write a committed-design, mint atoms, or promote proposed→validated.
 The propose writer is tools/headwater_case_author.py; the only promoter is the human-run
@@ -80,6 +84,21 @@ def walk_values(obj):
         yield obj
 
 
+_V3 = None
+
+
+def v3_vocab():
+    """(types, scenario_variants) from the canonical script.primitives.v3 schema."""
+    global _V3
+    if _V3 is None:
+        s = json.loads((P["schemas_dir"] / "script.primitives.v3.json").read_text(encoding="utf-8"))
+        types = {d["properties"]["type"]["const"] for d in s["$defs"].values()
+                 if isinstance(d, dict) and "const" in d.get("properties", {}).get("type", {})}
+        variants = set(s["$defs"]["scenario"]["properties"]["variant"]["enum"])
+        _V3 = (types, variants)
+    return _V3
+
+
 def human_shaped(value):
     if not isinstance(value, str) or not value.strip():
         return False
@@ -133,6 +152,17 @@ def gate_doc(name, doc, results, goals_by_id=None):
             atomish.append(val)
     results.append((f"{name}: no atom_ id on the design node",
                     not atomish, ", ".join(atomish[:6])))
+
+    plan = (doc.get("framing") or {}).get("move_plan")
+    if plan:
+        types, variants = v3_vocab()
+        bad = [m.get("move") for m in plan if m.get("move") not in types]
+        results.append((f"{name}: every move_plan move is a v3 primitive type",
+                        not bad, "ungoverned: " + ", ".join(map(str, bad[:6]))))
+        badv = [f"{m.get('move')}/{m['variant']}" for m in plan if "variant" in m
+                and (m.get("move") != "scenario" or m["variant"] not in variants)]
+        results.append((f"{name}: every move_plan variant is a v3 scenario variant",
+                        not badv, ", ".join(badv[:6])))
 
     wj = doc.get("warrant_join") or {}
     kind = wj.get("kind")
@@ -281,6 +311,36 @@ def main():
                                            "source_text": "the whole corpus dumped here"}))
         red("selftest: atom_ id on the design node is caught",
             lambda d, g: d.update(design_id="atom_fx_smuggled"))
+        planned = json.loads(json.dumps(good))
+        planned["schema_version"] = "committed-design.v0.2"
+        planned["framing"]["move_plan"] = [
+            {"move": "mental_model", "scene": "How approval works"},
+            {"move": "worked_example", "scene": "How approval works"},
+            {"move": "scenario", "variant": "proceed_clarify_escalate", "scene": "Practice"},
+            {"move": "unresolved_question", "scene": "Open questions"},
+        ]
+        n2 = len(results)
+        gate_doc("fixture(move_plan)", planned, results, GOALS)
+        results.append(("selftest: v0.2 move_plan fixture passes",
+                        all(ok for _, ok, _ in results[n2:]), ""))
+
+        def red_plan(label, plan, version="committed-design.v0.2"):
+            doc = json.loads(json.dumps(good))
+            doc["schema_version"] = version
+            doc["framing"]["move_plan"] = plan
+            scratch = []
+            gate_doc("fixture(red)", doc, scratch, GOALS)
+            caught = any(not ok for _, ok, _ in scratch)
+            results.append((label, caught, "" if caught else "mutation was NOT caught"))
+
+        red_plan("selftest: ungoverned move 'epiphany' is caught", [{"move": "epiphany"}])
+        red_plan("selftest: move_plan under a v0.1 marker is caught",
+                 [{"move": "worked_example"}], version="committed-design.v0.1")
+        red_plan("selftest: variant on a non-scenario move is caught",
+                 [{"move": "worked_example", "variant": "branching"}])
+        red_plan("selftest: ungoverned scenario variant is caught",
+                 [{"move": "scenario", "variant": "choose_your_own"}])
+
         red("selftest: unreachable-LO terminal is not validated for mint",
             lambda d, g: d.update(status="validated", reviewer="jake",
                                   warrant_join={"kind": "held_warrant",
