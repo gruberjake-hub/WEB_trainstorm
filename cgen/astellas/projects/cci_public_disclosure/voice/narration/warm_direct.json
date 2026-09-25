@@ -1,0 +1,86 @@
+{
+ "narration_version": "narration.v0.1",
+ "register": "warm_direct",
+ "tracks": {
+  "why_already_public": {
+   "text": "Welcome — this is about Public Disclosure of Astellas CCI: what's already public, and what it means for you. Here is the starting point: packages can contain company secrets and/or participant and personnel PI/PPD. So how do you know what's confidential? You classify with GUIDE-AST-6011, and you document on FORM-AST-35734 — the asset-specific library. And here is something worth pausing on: already public is not confidential. Check the public domain — if it's already out there, it is not CCI.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "sources": {
+    "atom_sop_ast29658": "sha256:2b1c1e56052e168411b6d7aa25430156cc6df0247963066231c96051b4bc4c53",
+    "atom_sop_ast29658_overview": "sha256:c361bf0b4bb8c554e23f550c96736b2fc76b8a752361070b4db34a2deb310541",
+    "atom_sop_ast29658_overview_objects_0": "sha256:597268a36d2f367eab22ca578ef97a608501414407ae1f42a1212e1cfe3fe494",
+    "atom_sop_ast29658_overview_objects_1": "sha256:b8609ce7209cf35b9de3233467bf24d2a8ef7587956cf058166893a4d0ce9bc6",
+    "atom_sop_ast29658_proc_b_note_already_public": "sha256:a826bfec132f987950197ae0bb3fdbabc479356f7ca2036d95b2e8e8b2232c91",
+    "bt_cci_public_disclosure_welcome": "sha256:4a18d61586f019687b54e1ea824707d64fe95db3469a1749a32b2ffa1e04428c"
+   }
+  },
+  "guide_classify": {
+   "text": "So how do you classify? GUIDE-AST-6011 is your tool — CCI, may-be-CCI, or not-CCI, including phase. And phase matters: standards apply at all phases, but the sensitivity decreases later and after marketing authorization. Here is how the GUIDE breaks it down. CMC: may-be-CCI includes drug-substance names and structure early, quantitative composition, metabolite formulae and pathways that reveal manufacture, polymorphism and sequence, impurities, manufacturing methods, sites, CMOs, specs, batch size, unpublished in-house cells, drug-product packaging technical specs, and AAV fact of synthesis or formulation change. Not-CCI: published or commercial cell-line names, general characterization, excipient names, standard storage, batch numbers, common techniques, and fact of process change except AAV. Nonclinical: may-be-CCI includes unpublished novel mechanism-of-action concepts, metabolites until NDA/BLA, special substrate, exclusive assays, early results, CRO and site names, future plans, study dates, detailed HA advice, and contractual strategy. Not-CCI: ELISA, Biacore, and common assays, published techniques, and country names. Clinical: may-be-CCI includes unpublished patentable unit, daily, or maximum dose — novel unqualified biomarkers, exclusive assays, non-label endpoints, and third-party questionnaires when a contract forbids disclosure. Not-CCI: route, frequency, and setting; design; results; CRO names; and fact of HA consult. Other: may-be-CCI includes exposure calculations, exposure and sales by country, projected exposure, product cost, and net pricing. Not-CCI: list pricing.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "sources": {
+    "atom_guide_ast6011": "sha256:129ff101a21bc5edc6eb0b73a944fe58f83a694f20e1392f7d2e7fa114d45824",
+    "atom_guide_ast6011_phase_decay": "sha256:94a0c3d32405326ff4ce16179117d11b98e523aa73e4d52fcb5a3d0da267dad7",
+    "atom_guide_ast6011_cmc": "sha256:78f3f73d94d1291d60d684de6105e412fed4bd9a958ca18c294dd152d0c0387b",
+    "atom_guide_ast6011_cmc_maybe": "sha256:5c55a3166758a33f77eb863fe2bcf3a1079141b3627934afc410ccf45ec566dc",
+    "atom_guide_ast6011_cmc_not": "sha256:a32dc0ecbf52a2abaf317c3227933577f47ef909e306db570b9662d2ba15169c",
+    "atom_guide_ast6011_nonclinical": "sha256:0b19c1b3e58de765c78bb719482bae69435b62edb19e6fe824d814dbb67c3898",
+    "atom_guide_ast6011_nonclinical_maybe": "sha256:a8f21ee6e46fbf1c46fd847a69fbd78dfbea9366f772186723b464b8588ab457",
+    "atom_guide_ast6011_nonclinical_not": "sha256:4553cf20f4fcf281047d98eb5ada72c3f2c386d0d628dc3acdaa2dbfdf629165",
+    "atom_guide_ast6011_clinical": "sha256:4ffa9f740017a8a95c5fe5c437ca55a3cc30de05435440876ca939942ad2dcbd",
+    "atom_guide_ast6011_clinical_maybe": "sha256:7ddb0db9006beb525b0ffc11ca498f2d417a2067482f5bd238bec2e7950de36c",
+    "atom_guide_ast6011_clinical_not": "sha256:b2f399f90205161db63fc5525033c2921632901df46416f6e5a0eca06335c595",
+    "atom_guide_ast6011_other": "sha256:0f3ab382930b07c6809830e0c3c78d72e78855f9c8ffd268ce452d8ed981262b",
+    "atom_guide_ast6011_other_maybe": "sha256:c7315959018e5134d2ee7ebe708f4861507ae4566358334a8a7605c0c2845359",
+    "atom_guide_ast6011_other_not": "sha256:5c449140c5d9ae6f4b51b8eeebd20ff6f8c9f0eca5165ebf75616fa8882e698c"
+   }
+  },
+  "form_as_object": {
+   "text": "Now, once you have classified, where does it go? FORM-AST-35734 — the CCI library. Think of it as your asset's living record. The cover captures your version date, the asset code or INN — that is the ASPXXXX identifier — the Project ID in Helix, and the development phase. Inside, the library is organized by columns: type, subtype, CCI exact text, and notes. And one practical rule: one tab per phase. That is how each phase gets its own clean workspace in the FORM.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "sources": {
+    "atom_form_ast35734": "sha256:e8e2d1601a94a47284af96f62bfed10e115a5d7d2ec6a3f7e2a90d138d9ca841",
+    "atom_form_ast35734_sec_cover_f_version_date": "sha256:d05b14eb5fe8f0026631cdbaa811fb8ee10a49fd01392aa761f774f8ac77b6bf",
+    "atom_form_ast35734_sec_cover_f_asset_code": "sha256:ea1e785143f02c80d632602af57c9abd3c886ed0cefda61ea497dd5049a9b6eb",
+    "atom_form_ast35734_sec_cover_f_project_id": "sha256:05eb08b2009181a12a9182f9ca73a641cd5f9e51b716d22bd7542964343c3555",
+    "atom_form_ast35734_sec_cover_f_dev_phase": "sha256:4210ad79e2a6720a46954d230521e6e2e60472ffb3a0d2c07e8139417dfcae53",
+    "atom_form_ast35734_sec_library_f_columns": "sha256:0aeb1b9d04867b38c30a594b23005b04c29f6d55d40f03b898418af27f246b15",
+    "atom_form_ast35734_sec_instructions_f_one_tab_per_phase": "sha256:13ef919219cd66be9fce9302f9439e5aabb3918883311d3698d36aa1eac3dc40"
+   }
+  },
+  "asset_lead_path": {
+   "text": "Here is the path when a compound moves from CN to IND. The PD Lead initiates. Then the Asset Lead classifies with the GUIDE — and may consult an SME, a Dept Head, or Legal. Next: document on the FORM. Then inform the PD Lead. Archive. And finally, inform the Disclosing Parties. That is the path — from initiation to notification.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "sources": {
+    "atom_sop_ast29658_proc_intro": "sha256:4f1de3bdf0e81da2bb20a49b12f293740aafd13d9b41d715fb12cf7056ea2c76",
+    "atom_sop_ast29658_proc_a_s1": "sha256:4ffbc49e832c7b408f34c03bb1fb70929e97a0f2c47849b286c2cf8ccedbfadc",
+    "atom_sop_ast29658_proc_a_s2": "sha256:fbd71d53470d5515093c95fa6c32648427a884cc9a3183d76c51604d4707c3bb",
+    "atom_sop_ast29658_proc_a_s3": "sha256:78e82fd45569883b23208a1e6a682566ce9139bf094be43f87abeac06bd47a54",
+    "atom_sop_ast29658_proc_a_s4": "sha256:01f866eda6136d5a23f78c2a8bd9e65a0b404e9843f9eddd17e121f690dca517",
+    "atom_sop_ast29658_proc_a_s5": "sha256:d443dee2f6c9db70496ef34edc93abc4e95acac3a7651c77c44d0a81613ece7a",
+    "atom_sop_ast29658_proc_a_s6": "sha256:8be76d10841d11180bcaaa308b9608101736886424cecc71d4c2ba0bc5cb7167"
+   }
+  },
+  "discloser_path": {
+   "text": "And what about the person doing the disclosing? Procedure D: follow the FORM or escalate before you ship. When you prepare and post, you work without FORM CCI — that is the rule. And if there is a deviation, contact the Asset Lead and the PD Lead via publicdisclosure-sm@astellas.com before you ship. That contact is your escalation path.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "sources": {
+    "atom_sop_ast29658_proc_d": "sha256:4952be9beab445e9bbb9896fc3b4cb7b5d2c293900b9ec72b68408917cc4590e",
+    "atom_sop_ast29658_proc_d_s1": "sha256:b0a55782733350bb58cc9df8980514c4ece1bc7360d356c620b220a281e1652d",
+    "atom_sop_ast29658_proc_d_s2": "sha256:e4e91470617f8bcdf3f168b9786be51191bb9be6159cea42cd3c332553d98335"
+   }
+  },
+  "lesson_end": {
+   "text": "Before you go, a few questions — just making sure the key ideas landed. Take your time. And then: you're informed. You know what's already public and what it means for you — and that knowledge is yours to use.",
+   "status": "accepted",
+   "reviewer": "jake",
+   "sources": {
+    "bt_cci_public_disclosure_closure": "sha256:7f90f5c85f59e64b8d2a1ff6c73807a675b008832773adfeaaead51aa60dc03e"
+   }
+  }
+ }
+}

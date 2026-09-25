@@ -1,0 +1,25 @@
+{
+  "registry_version": "astellas-voice.v0.1",
+  "status": "candidate_for_review",
+  "owner": "griot",
+  "description": "Astellas voice/persona registry — seeded 2026-09-03 as a TEST-ACCEPT artifact for the synthetic CCI Public Disclosure project. ONE candidate voice, reverse-specified from the warm_direct register spec. There is no real Astellas VO direction or brand voice guidance in this repo; this entry is a candidate test seed awaiting real brand review.",
+  "governance": {
+    "closed_list": true,
+    "rule": "Narration bindings may only reference ids defined here. A new voice requires an entry + version bump; the binding tool refuses anything else."
+  },
+  "voices": [
+    {
+      "id": "voice_ast_narrator",
+      "label": "Astellas Narrator",
+      "status": "candidate",
+      "persona": "Regulatory-adjacent, plain, unhurried — second-person address throughout, guiding without urgency, explaining procedure as naturally as giving directions. No softening, no corporate warmth theater; the tone respects the listener's time and intelligence.",
+      "language": "en",
+      "delivery": {
+        "pace": "unhurried",
+        "warmth": "moderate",
+        "formality": "professional_plain"
+      },
+      "provenance": "Reverse-specified from the warm_direct register spec for the synthetic CCI Public Disclosure project (test-accept by jake, 2026-09-03). No client-supplied brand voice guidance or VO direction exists in this repo; candidate until real brand review."
+    }
+  ]
+}

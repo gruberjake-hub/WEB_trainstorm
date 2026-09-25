@@ -161,7 +161,12 @@
             }
           }
         }
-      ]
+      ],
+      "voiceover": {
+        "captionText": "Welcome \u2014 this is about Public Disclosure of Astellas CCI: what's already public, and what it means for you. Here is the starting point: packages can contain company secrets and/or participant and personnel PI/PPD. So how do you know what's confidential? You classify with GUIDE-AST-6011, and you document on FORM-AST-35734 \u2014 the asset-specific library. And here is something worth pausing on: already public is not confidential. Check the public domain \u2014 if it's already out there, it is not CCI.",
+        "voiceRef": "voice_ast_narrator",
+        "locale": "en"
+      }
     },
     {
       "id": "guide_classify",
@@ -433,7 +438,12 @@
             }
           }
         }
-      ]
+      ],
+      "voiceover": {
+        "captionText": "So how do you classify? GUIDE-AST-6011 is your tool \u2014 CCI, may-be-CCI, or not-CCI, including phase. And phase matters: standards apply at all phases, but the sensitivity decreases later and after marketing authorization. Here is how the GUIDE breaks it down. CMC: may-be-CCI includes drug-substance names and structure early, quantitative composition, metabolite formulae and pathways that reveal manufacture, polymorphism and sequence, impurities, manufacturing methods, sites, CMOs, specs, batch size, unpublished in-house cells, drug-product packaging technical specs, and AAV fact of synthesis or formulation change. Not-CCI: published or commercial cell-line names, general characterization, excipient names, standard storage, batch numbers, common techniques, and fact of process change except AAV. Nonclinical: may-be-CCI includes unpublished novel mechanism-of-action concepts, metabolites until NDA/BLA, special substrate, exclusive assays, early results, CRO and site names, future plans, study dates, detailed HA advice, and contractual strategy. Not-CCI: ELISA, Biacore, and common assays, published techniques, and country names. Clinical: may-be-CCI includes unpublished patentable unit, daily, or maximum dose \u2014 novel unqualified biomarkers, exclusive assays, non-label endpoints, and third-party questionnaires when a contract forbids disclosure. Not-CCI: route, frequency, and setting; design; results; CRO names; and fact of HA consult. Other: may-be-CCI includes exposure calculations, exposure and sales by country, projected exposure, product cost, and net pricing. Not-CCI: list pricing.",
+        "voiceRef": "voice_ast_narrator",
+        "locale": "en"
+      }
     },
     {
       "id": "form_as_object",
@@ -579,7 +589,12 @@
             }
           }
         }
-      ]
+      ],
+      "voiceover": {
+        "captionText": "Now, once you have classified, where does it go? FORM-AST-35734 \u2014 the CCI library. Think of it as your asset's living record. The cover captures your version date, the asset code or INN \u2014 that is the ASPXXXX identifier \u2014 the Project ID in Helix, and the development phase. Inside, the library is organized by columns: type, subtype, CCI exact text, and notes. And one practical rule: one tab per phase. That is how each phase gets its own clean workspace in the FORM.",
+        "voiceRef": "voice_ast_narrator",
+        "locale": "en"
+      }
     },
     {
       "id": "asset_lead_path",
@@ -681,7 +696,12 @@
             }
           }
         }
-      ]
+      ],
+      "voiceover": {
+        "captionText": "Here is the path when a compound moves from CN to IND. The PD Lead initiates. Then the Asset Lead classifies with the GUIDE \u2014 and may consult an SME, a Dept Head, or Legal. Next: document on the FORM. Then inform the PD Lead. Archive. And finally, inform the Disclosing Parties. That is the path \u2014 from initiation to notification.",
+        "voiceRef": "voice_ast_narrator",
+        "locale": "en"
+      }
     },
     {
       "id": "discloser_path",
@@ -769,7 +789,12 @@
             "placement": "lesson_end"
           }
         }
-      ]
+      ],
+      "voiceover": {
+        "captionText": "And what about the person doing the disclosing? Procedure D: follow the FORM or escalate before you ship. When you prepare and post, you work without FORM CCI \u2014 that is the rule. And if there is a deviation, contact the Asset Lead and the PD Lead via publicdisclosure-sm@astellas.com before you ship. That contact is your escalation path.",
+        "voiceRef": "voice_ast_narrator",
+        "locale": "en"
+      }
     }
   ],
   "vars": {

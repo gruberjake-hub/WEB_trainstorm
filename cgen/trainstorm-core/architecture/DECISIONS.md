@@ -4094,3 +4094,25 @@ rather than a convention.
 blocks (hop one → this is hop 1b; `_studio/` was proposed in conversation
 and is seated here).
 
+---
+
+### 2026-09-03 — CCI narrate + Griot hop
+
+- **What.** Dragoman narrate mode: drafted 6 spoken tracks for CCI Public
+  Disclosure (`why_already_public`, `guide_classify`, `form_as_object`,
+  `asset_lead_path`, `discloser_path`, `lesson_end`), multi-pinned to scene
+  atoms and accepted beat copy. Gate passed (all green). Tracks test-accepted
+  by jake (blanket test-accept on synthetic Astellas project).
+- **Astellas voice registry.** Seeded `cgen/brands/astellas/astellas-voice.registry.json`
+  with exactly one candidate voice (`voice_ast_narrator`), reverse-specified
+  from the `warm_direct` register spec. This is a test artifact awaiting real
+  brand review — no client-supplied VO direction or brand voice guidance exists
+  in the repo.
+- **Griot.** Bound performance for all 6 tracks: `voice_ref`, `register`,
+  `locale`, `narration_source`, `script_hash`. `voiceover_ref` null — choose,
+  don't produce. Griot wrote no words.
+- **Realize.** `realized_lesson.json` scenes carry `voiceover` with
+  `captionText` (caption-first; no `src` until a render step). Welcome and
+  closure beats present at `lesson_start` / `lesson_end`.
+- **No audio produced.** Audio render is a later step.
+
